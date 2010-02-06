@@ -1,0 +1,10 @@
+Name: Open Source ReMaTool 
+Type: requirement
+Invented on: 2010-02-06
+Invented by: flonatel
+Description: The ReMaTool must be Open Source.
+Rationale: There is the hope, that some people might use this. There
+ is also the hope that there are some people which add the one or
+ other feature.
+Owner: Development
+State: initial
