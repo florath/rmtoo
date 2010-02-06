@@ -9,6 +9,7 @@
 
 import sys
 from optparse import OptionParser
+from RequirementSet import RequirementSet
 
 available_cmds=["check", ]
 
@@ -33,6 +34,8 @@ def parse_cmd_line_opts():
         print("+++ ERROR: invalid command '%s'" % options.command)
         print("+++        must be one of '%s'" % available_cmds)
         sys.exit(1)
+
+    return options
 
 def execute_cmds(opts):
     reqs = RequirementSet(opts.directory)
