@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+#
+# Requirement Management Toolset
+#
+# (c) 2010 by flonatel
+#
+# For licencing details see COPYING
+#
+
+import sys
+from optparse import OptionParser
+
+available_cmds=["check", ]
+
+def parse_cmd_line_opts():
+    parser = OptionParser()
+    parser.add_option("-d", "--directory", dest="directory",
+                  help="Directory with requirements")
+    parser.add_option("-c", "--cmd", dest="command",
+                  help="command to execute: %s" % available_cmds)
+
+    (options, args) = parser.parse_args()
+
+    if options.directory==None:
+        print("+++ ERROR: no directory option is specified")
+        sys.exit(1)
+
+    if options.command==None:
+        print("+++ ERROR: no command specified")
+        sys.exit(1)
+
+    if options.command not in available_cmds:
+        print("+++ ERROR: invalid command '%s'" % options.command)
+        print("+++        must be one of '%s'" % available_cmds)
+        sys.exit(1)
+
+def execute_cmds(opts):
+    reqs = RequirementSet(opts.directory)
+    
+    # Checks are allways done - to be sure that e.g. the dependencies
+    # are correct. 
+    if not reqs.check():
+        print("+++ ERROR: problems with requirements")
+        print("+++        please consult the above error messages")
+        return False
+
+    # When called with 'check' everything is (fine) and finished now.
+    if opts.command=="check":
+        return True
+
+def main():
+    opts = parse_cmd_line_opts()
+    execute_cmds(opts)
+
+if __name__=="__main__":
+    main()
