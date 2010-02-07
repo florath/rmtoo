@@ -1,20 +1,27 @@
 #
 # Requirement Management Toolset
-#  class Req_Name
+#  class ReqName
 #
 # (c) 2010 by flonatel
 #
 # For licencing details see COPYING
 #
 
-#import Modules
-
 class ReqName:
 
     def __init__(self, opts, config):
-        print("--- INIT Req_Name")
         self.opts = opts
         self.config = config
 
     def type(self):
         return "reqtag"
+
+    def rewrite(self, req):
+        # This tag (Name) is mandatory
+        if "Name" not in req.req:
+            print("+++ ERROR: requirement '%s' does not contain the "
+                  + "tag 'Name'" % req.id)
+            req.mark_syntax_error()
+            return
+        req.t_Name = req.req['Name']
+        del req.req['Name']

@@ -9,9 +9,10 @@
 
 class Requirement:
 
-    def __init__(self, fd, rid):
+    def __init__(self, fd, rid, mods):
         self.req = {}
         self.id = rid
+        self.mods = mods
         
         self.lt_empty = 1
         self.lt_comment = 2
@@ -19,7 +20,13 @@ class Requirement:
         self.lt_error = 4
         self.lt_initial = 5
 
+        self.st_fine = 0
+        self.st_error = 1
+
+        self.state = self.st_fine
+        
         self.read(fd)
+        self.handle_modoles_reqtag()
 
     def erase_heading_ws(self, l):
         while len(l)>0 and l[0]==" ":
@@ -70,8 +77,8 @@ class Requirement:
                 continue
             if line_type==self.lt_continue:
                 if last_key==None:
-                    print("+++ ERROR %s:%d: continue line without initial line" %
-                          (self.id, lineno))
+                    print("+++ ERROR %s:%d: continue line without " \
+                              + "initial line" % (self.id, lineno))
                     fine=False
                 self.req[last_key]+=content
                 continue
@@ -89,4 +96,9 @@ class Requirement:
             fine=False
         return fine
 
+    def handle_modoles_reqtag(self):
+        for module in self.mods.reqtag:
+            self.mods.reqtag[module].rewrite(self)
 
+    def mark_syntax_error(self):
+        self.state = self.st_error
