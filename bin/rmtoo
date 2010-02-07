@@ -9,16 +9,19 @@
 
 import sys
 from optparse import OptionParser
-from RequirementSet import RequirementSet
+from rmtoo.lib.RequirementSet import RequirementSet
+from rmtoo.lib.Modules import Modules
 
 available_cmds=["check", ]
 
 def parse_cmd_line_opts():
     parser = OptionParser()
-    parser.add_option("-d", "--directory", dest="directory",
-                  help="Directory with requirements")
     parser.add_option("-c", "--cmd", dest="command",
                   help="command to execute: %s" % available_cmds)
+    parser.add_option("-d", "--directory", dest="directory",
+                  help="Directory with requirements")
+    parser.add_option("-m", "--modules-directory", dest="modules_directory",
+                  help="Directory with modules")
 
     (options, args) = parser.parse_args()
 
@@ -33,6 +36,10 @@ def parse_cmd_line_opts():
     if options.command not in available_cmds:
         print("+++ ERROR: invalid command '%s'" % options.command)
         print("+++        must be one of '%s'" % available_cmds)
+        sys.exit(1)
+
+    if options.modules_directory==None:
+        print("+++ ERROR: no modules_directory option is specified")
         sys.exit(1)
 
     return options
@@ -53,6 +60,7 @@ def execute_cmds(opts):
 
 def main():
     opts = parse_cmd_line_opts()
+    Modules.modules = Modules(opts.modules_directory, opts)
     execute_cmds(opts)
 
 if __name__=="__main__":

@@ -3,4 +3,4 @@
 # correct. 
 # This is intended only for development.
 #
-export PYTHONPATH=$PWD/lib
+export PYTHONPATH=$PWD/rmtoo/lib

@@ -22,6 +22,8 @@ class RequirementSet:
         files = os.listdir(directory)
         for f in files:
             m = re.match("^[IRD]\-.*\.txt$", f)
+            if m==None:
+                continue
             rid = f[:-4]
             fd = file(os.path.join(directory, f))
             req = Requirement(fd, rid)
