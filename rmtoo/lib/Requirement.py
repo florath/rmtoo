@@ -28,6 +28,10 @@ class Requirement:
         self.read(fd)
         self.handle_modoles_reqtag()
 
+        if len(self.req)>0:
+            print("+++ ERROR %s: req not empty. Missing tag handers "
+                  "for '%s'" % (self.id, self.req)) 
+
     def erase_heading_ws(self, l):
         while len(l)>0 and l[0]==" ":
             l = l[1:]
