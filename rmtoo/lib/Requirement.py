@@ -108,3 +108,6 @@ class Requirement:
 
     def mark_syntax_error(self):
         self.state = self.st_error
+
+    def mark_sematic_error(self):
+        self.state = self.st_error

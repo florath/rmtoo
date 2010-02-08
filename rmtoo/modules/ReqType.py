@@ -37,14 +37,14 @@ class ReqType:
     def rewrite(self, req):
         # This tag (Type) is mandatory
         if "Type" not in req.req:
-            print("+++ ERROR: requirement '%s' does not contain the "
+            print("+++ ERROR %s: does not contain the "
                   + "tag 'Type'" % req.id)
             req.mark_syntax_error()
             return
         t = req.req['Type']
         rt = self.find_type(t)
         if rt==None:
-            print("+++ ERROR: requirement '%s' invalid type field '%s': " \
+            print("+++ ERROR %s: invalid type field '%s': " \
                       "must be one of '%s'" % (req.id, t, self.type_keys))
             req.mark_syntax_error()
             return
