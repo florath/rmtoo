@@ -51,14 +51,9 @@ def parse_cmd_line_opts():
     return options
 
 def execute_cmds(opts, mods, config):
-    reqs = RequirementSet(opts.directory, mods, opts, config)
-    
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct. 
-    if not reqs.check():
-        print("+++ ERROR: problems with requirements")
-        print("+++        please consult the above error messages")
-        return False
+    reqs = RequirementSet(opts.directory, mods, opts, config)
 
     # When called with 'check' everything is (fine) and finished now.
     if opts.command=="check":
