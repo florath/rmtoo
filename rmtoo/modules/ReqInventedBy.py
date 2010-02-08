@@ -31,6 +31,6 @@ class ReqInventedBy:
                   (req.id, t, self.config.inventors))
             req.mark_sematic_error()
             return
-        req.t_Inventors = t
+        req.t_InventedBy = t
         del req.req[self.tag]
 

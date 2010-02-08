@@ -57,4 +57,40 @@ class RequirementSet:
                 alls_fine = False
         return alls_fine
 
+    def output_latex_check_master(self, directory):
+        f = file(os.path.join(directory, "requirements.tex"), "r")
 
+        included = set()
+        for line in f:
+            if len(line)>0 and line[-1]=='\n':
+                line = line[:-1]
+            m=re.match("^\\\input\{reqs/(.*)\.tex\}$", line)
+            if m!=None:
+                included.add(m.group(1))
+
+        ks = set(self.reqs.keys())
+
+        if ks < included:
+            print("+++ ERROR: additional reqs in document: '%s'" 
+                  % (included - ks))
+            return False
+
+        if included < ks:
+            print("+++ ERROR: missing reqs in document: '%s'" 
+                  % (ks - included))
+            return False
+
+        if ks!=included:
+            print("+++ OH NO");
+            print("Set is:        %s" % included)
+            print("Set should be: %s" % ks)
+            return False
+
+        return True
+                
+    def output_latex(self, directory):
+        if not self.output_latex_check_master(directory):
+            print("+++ ERROR: please fix errors first")
+            return
+        for r in self.reqs:
+            self.reqs[r].output_latex(os.path.join(directory, "reqs"))

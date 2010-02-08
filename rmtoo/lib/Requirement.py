@@ -7,6 +7,9 @@
 # For licencing details see COPYING
 #
 
+import os
+import time
+
 class Requirement:
 
     def __init__(self, fd, rid, mods, opts, config):
@@ -107,3 +110,23 @@ class Requirement:
 
     def mark_sematic_error(self):
         self.state = self.st_error
+
+    def output_latex(self, directory):
+        f = file(os.path.join(directory, self.id + ".tex"), "w")
+        f.write("""
+\subsection{%s}
+\paragraph{Id} %s
+\paragraph{Priority} %s
+\paragraph{Description} %s
+""" % (self.t_Name, self.id, self.t_Priority, self.t_Description))
+
+        if self.t_Rationale!=None:
+            f.write("\paragraph{Rationale} %s\n" % self.t_Rationale)
+        f.write("""
+
+{\\tiny Owner: %s, Invented on: %s, Invented by: %s}
+
+""" % 
+       (self.t_Owner, time.strftime("%Y-%m-%d", self.t_InventedOn),
+        self.t_InventedBy))
+        f.close()
