@@ -68,16 +68,13 @@ class RDepDependsOn:
             if rr.t_Type \
                     == self.mods.reqtag["ReqType"].rt_design_decision:
                 if dependend.t_Type \
-                        != self.mods.reqtag["ReqType"].rt_requirement \
-                        or \
-                        dependend.t_Type \
-                        != self.mods.reqtag["ReqType"].rt_initial_requirement:
-                    print("+++ ERROR %s: 'Depend on' of design decision "
+                        == self.mods.reqtag["ReqType"].rt_design_decision:
+                    print("+++ ERROR %s: 'Depends on' of design decision "
                           "is not a requirement '%s'" %
                           (rr.id, dependend.id))
                     return
         rr.t_DependOn = t
-        del rr[self.tag]
+        del rr.req[self.tag]
 
     def rewrite(self, reqs):
         # Run through all the requirements and look for the 'Depend
