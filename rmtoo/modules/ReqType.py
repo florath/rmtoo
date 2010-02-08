@@ -6,19 +6,25 @@
 # For licencing details see COPYING
 #
 
+# Note:
+# The type of the requirement is used in the 'Depends on' checker.
+# So if something changes here - possible also there must be changed
+# something.
+
 class ReqType:
+    rt_initial_requirement = 1
+    rt_design_decision = 2
+    rt_requirement = 3
+
     def __init__(self, opts, config):
         self.opts = opts
         self.config = config
 
-        self.rt_initial_requirement = 1
-        self.rt_design_decision = 2
-        self.rt_requirement = 3
 
         self.types = [
-            [ "initial requirement", self.rt_initial_requirement ],
-            [ "design decision", self.rt_design_decision ],
-            [ "requirement", self.rt_requirement ],
+            [ "initial requirement", ReqType.rt_initial_requirement ],
+            [ "design decision", ReqType.rt_design_decision ],
+            [ "requirement", ReqType.rt_requirement ],
             ]
 
         self.type_keys = []

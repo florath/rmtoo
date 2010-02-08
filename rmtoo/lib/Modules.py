@@ -18,6 +18,7 @@ class Modules:
 
         # The different types of tags
         self.reqtag = {}
+        self.reqdeps = {}
 
         self.load(directory)
 
@@ -44,5 +45,5 @@ class Modules:
             # Add the object to the appropriate directory
             exec("self.%s[modulename]=o" % tag)
 
-
-
+        for rd in self.reqdeps:
+            self.reqdeps[rd].set_modules(self)

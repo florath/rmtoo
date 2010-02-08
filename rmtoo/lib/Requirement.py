@@ -28,11 +28,7 @@ class Requirement:
         self.state = self.st_fine
         
         self.read(fd)
-        self.handle_modoles_reqtag()
-
-        if len(self.req)>0:
-            print("+++ ERROR %s: req not empty. Missing tag handers "
-                  "for '%s'" % (self.id, self.req)) 
+        self.handle_modules_reqtag()
 
     def erase_heading_ws(self, l):
         while len(l)>0 and l[0]==" ":
@@ -102,7 +98,7 @@ class Requirement:
             fine=False
         return fine
 
-    def handle_modoles_reqtag(self):
+    def handle_modules_reqtag(self):
         for module in self.mods.reqtag:
             self.mods.reqtag[module].rewrite(self)
 
