@@ -38,11 +38,17 @@ class ReqPriority:
                 return
             # p[0] is the stakeholder
             # p[1] is the given priority
+            if p[0] not in self.config.stakeholders:
+                print("+++ ERROR %s: stakeholder '%s' not known"
+                      % (req.id, p[0]))
+                req.mark_syntax_error()
+                return
             if p[0] in priority_done:
                 print("+++ ERROR %s: stakeholder '%s' voted more than once"
-                      % (req.rid, p[0]))
+                      % (req.id, p[0]))
                 req.mark_syntax_error()
                 return
             priority += float(p[1])
+            priority_done.append(p[1])
         req.t_Priority = priority
         del req.req[self.tag]
