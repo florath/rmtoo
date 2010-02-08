@@ -1,6 +1,5 @@
 #
 # Requirement Management Toolset
-#  class ReqName
 #
 # (c) 2010 by flonatel
 #

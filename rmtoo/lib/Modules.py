@@ -12,7 +12,7 @@ import re
 
 class Modules:
     # Read in the modules directory
-    def __init__(self, directory, opts, config = {}):
+    def __init__(self, directory, opts, config):
         self.opts = opts
         self.config = config
 
@@ -38,7 +38,7 @@ class Modules:
                                 globals(), locals(), modulename)
 
             # Create object from the module
-            o = eval("module.%s(self.config, self.opts)" % modulename)
+            o = eval("module.%s(self.opts, self.config)" % modulename)
             # Query the object itself which type it is
             tag = o.type()
             # Add the object to the appropriate directory

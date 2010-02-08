@@ -20,6 +20,8 @@ def parse_cmd_line_opts():
                   help="command to execute: %s" % available_cmds)
     parser.add_option("-d", "--directory", dest="directory",
                   help="Directory with requirements")
+    parser.add_option("-f", "--file-config", dest="config_file",
+                  help="Config file")
     parser.add_option("-m", "--modules-directory", dest="modules_directory",
                   help="Directory with modules")
 
@@ -42,10 +44,14 @@ def parse_cmd_line_opts():
         print("+++ ERROR: no modules_directory option is specified")
         sys.exit(1)
 
+    if options.config_file==None:
+        print("+++ ERROR: no config_file option is specified")
+        sys.exit(1)
+
     return options
 
-def execute_cmds(opts, mods):
-    reqs = RequirementSet(opts.directory, mods)
+def execute_cmds(opts, mods, config):
+    reqs = RequirementSet(opts.directory, mods, opts, config)
     
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct. 
@@ -58,10 +64,21 @@ def execute_cmds(opts, mods):
     if opts.command=="check":
         return True
 
+def load_config(opts):
+    # Load config file
+    # ('execfile' does not work here.)
+    f = file(opts.config_file, "r")
+    conf_file = f.read()
+    exec(conf_file)
+    config = Config()
+    f.close()
+    return config
+
 def main():
     opts = parse_cmd_line_opts()
-    mods = Modules(opts.modules_directory, opts)
-    execute_cmds(opts, mods)
+    config = load_config(opts)
+    mods = Modules(opts.modules_directory, opts, config)
+    execute_cmds(opts, mods, config)
 
 if __name__=="__main__":
     main()

@@ -14,9 +14,11 @@ from Requirement import Requirement
 
 class RequirementSet:
 
-    def __init__(self, directory, mods):
+    def __init__(self, directory, mods, opts, config):
         self.reqs = {}
         self.mods = mods
+        self.opts = opts
+        self.config = config
         self.read(directory)
 
     def read(self, directory):
@@ -27,6 +29,6 @@ class RequirementSet:
                 continue
             rid = f[:-4]
             fd = file(os.path.join(directory, f))
-            req = Requirement(fd, rid, self.mods)
+            req = Requirement(fd, rid, self.mods, self.opts, self.config)
             self.reqs[req.id] = req
 

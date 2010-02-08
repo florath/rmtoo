@@ -9,10 +9,12 @@
 
 class Requirement:
 
-    def __init__(self, fd, rid, mods):
+    def __init__(self, fd, rid, mods, opts, config):
         self.req = {}
         self.id = rid
         self.mods = mods
+        self.opts = opts
+        self.config = config
         
         self.lt_empty = 1
         self.lt_comment = 2
