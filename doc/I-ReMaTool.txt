@@ -1,9 +1,0 @@
-Name: ReMaTool
-Type: initial requirement
-Invented on: 2010-02-06
-Invented by: flonatel
-Description: ReMaTool must exists.
-Rationale: The world needs a good, usable and free Requirements
- Management Tool.
-Depends on: none
-State: initial

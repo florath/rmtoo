@@ -19,7 +19,7 @@ class ReqOwner:
         # This tag (Owner) is mandatory
         if "Owner" not in req.req:
             print("+++ ERROR %s: does not contain the "
-                  + "tag 'Owner'" % req.id)
+                  "tag 'Owner'" % req.id)
             req.mark_syntax_error()
             return
         # Also the owner must be in the list of stakeholders

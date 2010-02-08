@@ -113,20 +113,29 @@ class Requirement:
 
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
-        f.write("""
-\subsection{%s}
-\paragraph{Id} %s
-\paragraph{Priority} %s
-\paragraph{Description} %s
-""" % (self.t_Name, self.id, self.t_Priority, self.t_Description))
+        f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
+                % (self.t_Name, self.id, self.t_Description))
 
         if self.t_Rationale!=None:
-            f.write("\paragraph{Rationale} %s\n" % self.t_Rationale)
+            f.write("\n\\textbf{Rationale:} %s\n" % self.t_Rationale)
+
+        if self.t_DependOn!=None:
+            f.write("\n\\textbf{Depends on:} ")
+            for d in self.t_DependOn:
+                f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
+            f.write("\n")
+
         f.write("""
-
-{\\tiny Owner: %s, Invented on: %s, Invented by: %s}
-
-""" % 
-       (self.t_Owner, time.strftime("%Y-%m-%d", self.t_InventedOn),
-        self.t_InventedBy))
+\\begin{center}
+\\begin{longtable}{|l|p{7cm}|}\hline
+\\textbf{Id} & %s \\\ \hline
+\\textbf{Priority} & %s \\\ \hline
+\\textbf{Owner} & %s \\\ \hline
+\\textbf{Invented on} & %s \\\ \hline
+\\textbf{Invented by} & %s \\\ \hline
+\end{longtable}
+\end{center}
+""" % (self.id, self.t_Priority, self.t_Owner,
+       time.strftime("%Y-%m-%d", self.t_InventedOn),
+       self.t_InventedBy))
         f.close()

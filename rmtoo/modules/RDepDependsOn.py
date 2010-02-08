@@ -27,6 +27,7 @@ class RDepDependsOn:
                 print("+++ ERROR %s: initial requirement has "
                       "Depend on field." % (rr.id))
                 return
+            rr.t_DependOn = None
             return
         # There must be a 'Depend on'
         if self.tag not in rr.req:
@@ -73,7 +74,7 @@ class RDepDependsOn:
                           "is not a requirement '%s'" %
                           (rr.id, dependend.id))
                     return
-        rr.t_DependOn = t
+        rr.t_DependOn = [t]
         del rr.req[self.tag]
 
     def rewrite(self, reqs):

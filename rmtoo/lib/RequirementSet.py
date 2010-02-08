@@ -92,5 +92,11 @@ class RequirementSet:
         if not self.output_latex_check_master(directory):
             print("+++ ERROR: please fix errors first")
             return
+        reqs_dir = os.path.join(directory, "reqs")
+        try:
+            os.makedirs(reqs_dir)
+        except OSError:
+            # This is not a problem: the directory already exists.
+            pass
         for r in self.reqs:
-            self.reqs[r].output_latex(os.path.join(directory, "reqs"))
+            self.reqs[r].output_latex(reqs_dir)
