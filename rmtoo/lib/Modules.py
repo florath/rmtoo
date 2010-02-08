@@ -34,7 +34,7 @@ class Modules:
                 continue
 
             # Import module
-            print("Importing module '%s'" % modulename)
+            #print("Importing module '%s'" % modulename)
             module = __import__("rmtoo.modules.%s" % modulename,
                                 globals(), locals(), modulename)
 
