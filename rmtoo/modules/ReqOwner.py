@@ -30,5 +30,6 @@ class ReqOwner:
                   (req.id, t, self.config.stakeholders))
             req.mark_sematic_error()
             return
+        # Copy and delete the original
         req.t_Owner = t
         del req.req['Owner']

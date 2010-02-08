@@ -48,6 +48,8 @@ class ReqPriority:
                       % (req.id, p[0]))
                 req.mark_syntax_error()
                 return
+            # ToDo: Check if the priority is in some interval [0, 10]
+            # (and if not: reject it)
             priority += float(p[1])
             priority_done.append(p[1])
         req.t_Priority = priority

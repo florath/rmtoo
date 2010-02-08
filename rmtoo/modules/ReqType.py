@@ -20,13 +20,14 @@ class ReqType:
         self.opts = opts
         self.config = config
 
-
+        # Note: this can someday move to the class 
         self.types = [
             [ "initial requirement", ReqType.rt_initial_requirement ],
             [ "design decision", ReqType.rt_design_decision ],
             [ "requirement", ReqType.rt_requirement ],
             ]
 
+        # Precompute once for all the rewrites
         self.type_keys = []
         for t in self.types:
             self.type_keys.append(t[0])

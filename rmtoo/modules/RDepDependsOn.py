@@ -6,6 +6,9 @@
 # For licencing details see COPYING
 #
 
+# This is executed on the RequirmentSet level (not on the Requirement
+# level!): of course this is needed for inter-dependencies.
+
 class RDepDependsOn:
 
     def __init__(self, opts, config):
@@ -55,8 +58,7 @@ class RDepDependsOn:
 
             # Check if the type dependencies make sense
             # requirement -> design -> requirement
-            # (but never: requirment -> requirement
-            #  or design -> design)
+            # (but never: requirment -> requirement ...
             if rr.t_Type \
                     == self.mods.reqtag["ReqType"].rt_requirement:
                 if dependend.t_Type \
@@ -66,6 +68,7 @@ class RDepDependsOn:
                           (rr.id, dependend.id))
                     return
 
+            #  ... or design -> design)
             if rr.t_Type \
                     == self.mods.reqtag["ReqType"].rt_design_decision:
                 if dependend.t_Type \
@@ -74,6 +77,7 @@ class RDepDependsOn:
                           "is not a requirement '%s'" %
                           (rr.id, dependend.id))
                     return
+        # Copy and delete the original
         rr.t_DependOn = [t]
         del rr.req[self.tag]
 

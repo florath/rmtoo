@@ -19,12 +19,14 @@ class Requirement:
         self.opts = opts
         self.config = config
         
+        # ToDo: Move the things to class scope
         self.lt_empty = 1
         self.lt_comment = 2
         self.lt_continue = 3
         self.lt_error = 4
         self.lt_initial = 5
 
+        # ToDo: Move the things to class scope
         self.st_fine = 0
         self.st_error = 1
 
@@ -37,7 +39,8 @@ class Requirement:
         while len(l)>0 and l[0]==" ":
             l = l[1:]
         return l
-        
+
+    # ToDo: Check for max line length.
     def parse_line(self, line, lineno):
         if len(line)>0 and line[-1]=='\n':
             line = line[:-1]
@@ -65,6 +68,8 @@ class Requirement:
         # Normal 'initial' case
         return self.lt_initial, ls[0], self.erase_heading_ws(ls[1])
 
+    # This implements a finite state automate with a very small number
+    # of states and translations.
     def read(self, fd):
         lineno = 0
         fine=True
@@ -105,9 +110,11 @@ class Requirement:
         for module in self.mods.reqtag:
             self.mods.reqtag[module].rewrite(self)
 
+    # Error is an error (no distinct syntax error)
     def mark_syntax_error(self):
         self.state = self.st_error
 
+    # Error is an error (no distinct sematic error)
     def mark_sematic_error(self):
         self.state = self.st_error
 
@@ -120,6 +127,7 @@ class Requirement:
             f.write("\n\\textbf{Rationale:} %s\n" % self.t_Rationale)
 
         if self.t_DependOn!=None:
+            # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
             for d in self.t_DependOn:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))

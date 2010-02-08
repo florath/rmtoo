@@ -20,4 +20,5 @@ class ReqOpenPoint:
         if "Open Point" in req.req:
             req.t_OpenPoint = req.req['Open Point']
             del req.req['Open Point']
-        
+        # so if not there: fall through
+

@@ -57,6 +57,9 @@ class RequirementSet:
                 alls_fine = False
         return alls_fine
 
+    # This is a major heuristic
+    # ToDo: have a very, very close look, because it might work (or
+    # not) 
     def output_latex_check_master(self, directory):
         f = file(os.path.join(directory, "requirements.tex"), "r")
 
@@ -70,6 +73,8 @@ class RequirementSet:
 
         ks = set(self.reqs.keys())
 
+        # Some very basic checks which are there and which are too
+        # much... 
         if ks < included:
             print("+++ ERROR: additional reqs in document: '%s'" 
                   % (included - ks))

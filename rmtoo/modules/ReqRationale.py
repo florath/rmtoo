@@ -20,6 +20,6 @@ class ReqRationale:
         if "Rationale" not in req.req:
             req.t_Rationale = None
             return
-        
+        # Copy and delete the original
         req.t_Rationale = req.req['Rationale']
         del req.req['Rationale']
