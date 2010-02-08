@@ -21,7 +21,7 @@ class ReqInventedOn:
     def rewrite(self, req):
         # This tag (Invented on) is mandatory
         if self.tag not in req.req:
-            print("+++ ERROR: requirement '%s' does not contain the " \
+            print("+++ ERROR %s does not contain the " \
                   "tag '%s'" % (req.id, self.tag))
             req.mark_syntax_error()
             return
