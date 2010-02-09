@@ -1,8 +1,8 @@
 Name: Use Python
-Type: requirement
+Type: design decision
 Invented on: 2010-02-10
 Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} use python as language for scripts.
 Rationale: python applcations are fast to develop.
-Depends on: D-80Percent
+Depends on: I-80Percent

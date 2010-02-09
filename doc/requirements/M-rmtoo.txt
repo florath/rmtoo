@@ -1,5 +1,5 @@
 Name: rmtoo
-Type: initial requirement
+Type: master requirement
 Invented on: 2010-02-06
 Invented by: flonatel
 Owner: development

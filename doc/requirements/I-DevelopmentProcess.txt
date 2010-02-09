@@ -1,7 +1,7 @@
 Name: Development Process
-Type: design decision
+Type: initial requirement
 Invented on: 2010-02-06
 Invented by: flonatel
 Owner: development
 Description: The development process \textbf{must} be documented.
-Depends on: I-rmtoo
+Depends on: M-rmtoo

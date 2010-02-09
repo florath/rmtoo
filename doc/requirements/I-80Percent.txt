@@ -1,5 +1,5 @@
 Name: 80 Percent Rule
-Type: design decision
+Type: initial requirement
 Invented on: 2010-02-08
 Invented by: flonatel
 Owner: development
@@ -8,4 +8,4 @@ Description: \textsl{rmtoo} \textbf{must} be small: invest 20 percent
 Rationale: To get started, concentrate on the major things, which are
  really needed.\par
  Especially because of the limited time for this project.
-Depends on: I-rmtoo
+Depends on: M-rmtoo

@@ -1,5 +1,5 @@
 Name: Easy Extensible
-Type: design decision
+Type: initial requirement
 Invented on: 2010-02-10
 Invented by: flonatel
 Owner: development
