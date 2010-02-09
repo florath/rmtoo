@@ -120,6 +120,7 @@ class Requirement:
 
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
+        g = file(os.path.join(directory, "dependsgraph.dot"), "a")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
                 % (self.t_Name, self.id, self.t_Description))
 
@@ -131,6 +132,8 @@ class Requirement:
             f.write("\n\\textbf{Depends on:} ")
             for d in self.t_DependOn:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
+                g.write("%s -> %s;\n" % (self.id.replace("-", "_"),
+                                         d.replace("-", "_")))
             f.write("\n")
 
         f.write("""
@@ -146,4 +149,5 @@ class Requirement:
 """ % (self.id, self.t_Priority, self.t_Owner,
        time.strftime("%Y-%m-%d", self.t_InventedOn),
        self.t_InventedBy))
+        g.close()
         f.close()

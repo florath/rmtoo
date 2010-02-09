@@ -78,7 +78,7 @@ class RDepDependsOn:
                           (rr.id, dependend.id))
                     return
         # Copy and delete the original
-        rr.t_DependOn = [t]
+        rr.t_DependOn = t.split()
         del rr.req[self.tag]
 
     def rewrite(self, reqs):

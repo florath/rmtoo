@@ -19,7 +19,7 @@ class ReqDescription:
         # This tag (Description) is mandatory
         if "Description" not in req.req:
             print("+++ ERROR: requirement '%s' does not contain the "
-                  + "tag 'Description'" % req.id)
+                  "tag 'Description'" % req.id)
             req.mark_syntax_error()
             return
         t = req.req['Description']
