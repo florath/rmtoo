@@ -35,7 +35,7 @@ class RequirementSet:
     def read(self, directory):
         files = os.listdir(directory)
         for f in files:
-            m = re.match("^[IRD]\-.*\.txt$", f)
+            m = re.match("^[MIRD]\-.*\.txt$", f)
             if m==None:
                 continue
             rid = f[:-4]

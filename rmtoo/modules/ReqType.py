@@ -12,9 +12,11 @@
 # something.
 
 class ReqType:
-    rt_initial_requirement = 1
-    rt_design_decision = 2
-    rt_requirement = 3
+    # There can only be one (master requirement)
+    rt_master_requirement = 1
+    rt_initial_requirement = 2
+    rt_design_decision = 3
+    rt_requirement = 4
 
     def __init__(self, opts, config):
         self.opts = opts
@@ -22,6 +24,7 @@ class ReqType:
 
         # Note: this can someday move to the class 
         self.types = [
+            [ "master requirement", ReqType.rt_master_requirement ],
             [ "initial requirement", ReqType.rt_initial_requirement ],
             [ "design decision", ReqType.rt_design_decision ],
             [ "requirement", ReqType.rt_requirement ],

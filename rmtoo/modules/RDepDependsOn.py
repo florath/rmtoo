@@ -24,7 +24,7 @@ class RDepDependsOn:
 
     def rewrite_one_req(self, rr, reqs):
         if rr.t_Type \
-                == self.mods.reqtag["ReqType"].rt_initial_requirement:
+                == self.mods.reqtag["ReqType"].rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
@@ -59,6 +59,15 @@ class RDepDependsOn:
             # Check if the type dependencies make sense
             # requirement -> design -> requirement
             # (but never: requirment -> requirement ...
+            if rr.t_Type \
+                    == self.mods.reqtag["ReqType"].rt_initial_requirement:
+                if dependend.t_Type \
+                        != self.mods.reqtag["ReqType"].rt_master_requirement:
+                    print("+++ ERROR %s: 'Depends on' of requirement "
+                          "is not a master requirement '%s'" %
+                          (rr.id, dependend.id))
+                    return
+
             if rr.t_Type \
                     == self.mods.reqtag["ReqType"].rt_requirement:
                 if dependend.t_Type \
