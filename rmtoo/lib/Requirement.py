@@ -130,10 +130,17 @@ class Requirement:
         if self.t_DependOn!=None:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
+            # ToDo: THIS IS UGLY!
+            # ToDo: split latex and dot output
+            if self.id[0]=='M':
+                g.write("%s [color=green]\n" % (self.id[2:]))
+            if self.id[0]=='D':
+                g.write("%s [color=blue]\n" % (self.id[2:]))
+            if self.id[0]=='I':
+                g.write("%s [color=orange]\n" % (self.id[2:]))
             for d in self.t_DependOn:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
-                g.write("%s -> %s;\n" % (self.id.replace("-", "_"),
-                                         d.replace("-", "_")))
+                g.write("%s -> %s;\n" % (self.id[2:], d[2:]))
             f.write("\n")
 
         f.write("""

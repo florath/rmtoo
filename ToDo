@@ -1,0 +1,5 @@
+
+* Split latex output from dot output.
+* Handle types of requirements simple (own class)?
+* Check Start-Letter (ambiguity?)
+

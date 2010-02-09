@@ -1,4 +1,4 @@
-Name: 80 Percent Rule
+Name: Eighty Percent Rule
 Type: initial requirement
 Invented on: 2010-02-08
 Invented by: flonatel

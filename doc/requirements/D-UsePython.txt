@@ -5,4 +5,4 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} use python as language for scripts.
 Rationale: python applcations are fast to develop.
-Depends on: I-80Percent
+Depends on: I-EightyPercent
