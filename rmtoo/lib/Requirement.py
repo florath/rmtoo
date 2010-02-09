@@ -55,7 +55,7 @@ class Requirement:
             return self.lt_continue, None, line
         # 'Normal' line
         ls = line.split(":", 1)
-        if len(ls)==0:
+        if len(ls)==1:
             # No ':' found
             print("+++ ERROR %s:%d: no ':' in line '%s'" %
                   (self.id, lineno, line))
