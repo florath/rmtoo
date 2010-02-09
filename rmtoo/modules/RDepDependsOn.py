@@ -25,23 +25,23 @@ class RDepDependsOn:
     def rewrite_one_req(self, rr, reqs):
         if rr.t_Type \
                 == self.mods.reqtag["ReqType"].rt_initial_requirement:
-            # There must no 'Depend on'
+            # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
-                      "Depend on field." % (rr.id))
+                      "Depends on field." % (rr.id))
                 return
             rr.t_DependOn = None
             return
-        # There must be a 'Depend on'
+        # There must be a 'Depends on'
         if self.tag not in rr.req:
             print("+++ ERROR %s: non-initial requirement has "
-                  "no 'Depend on' field." % (rr.id))
+                  "no 'Depends on' field." % (rr.id))
             return
             
         t = rr.req[self.tag]
         # If there it must not empty
         if len(t)==0:
-            print("+++ ERROR %s: 'Depend on' field has len 0" %
+            print("+++ ERROR %s: 'Depends on' field has len 0" %
                   (rr.id))
             return
 
@@ -49,7 +49,7 @@ class RDepDependsOn:
         tl = t.split()
         for ts in tl:
             if ts not in reqs.reqs:
-                print("+++ ERROR %s: 'Depend on' points to a "
+                print("+++ ERROR %s: 'Depends on' points to a "
                       "non-existing requirement '%s'" %
                       (rr.id, ts))
                 return
@@ -63,7 +63,7 @@ class RDepDependsOn:
                     == self.mods.reqtag["ReqType"].rt_requirement:
                 if dependend.t_Type \
                         != self.mods.reqtag["ReqType"].rt_design_decision:
-                    print("+++ ERROR %s: 'Depend on' of requirement "
+                    print("+++ ERROR %s: 'Depends on' of requirement "
                           "is not a design decision '%s'" %
                           (rr.id, dependend.id))
                     return
