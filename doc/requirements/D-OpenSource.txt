@@ -1,10 +1,10 @@
 Name: Open Source ReMaTool 
-Type: requirement
+Type: design decision
 Invented on: 2010-02-06
 Invented by: flonatel
-Description: The rmtoo must be Open Source.
+Description: \textsl{rmtoo} \textbf{must} be Open Source.
 Rationale: There is the hope, that some people might use this. There
  is also the hope that there are some people which add the one or
  other feature.
 Owner: development
-Depends on: D-DevelopmentProcess
+Depends on: I-rmtoo

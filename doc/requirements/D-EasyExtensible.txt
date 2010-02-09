@@ -1,0 +1,9 @@
+Name: Easy Extensible
+Type: design decision
+Invented on: 2010-02-10
+Invented by: flonatel
+Owner: development
+Description: \textbf{rmtoo} \textbf{must} be easy extensible.
+Rationale: There must no need to redisign the whole program when e.g.
+ adding a requirements tag. 
+Depends on: I-rmtoo

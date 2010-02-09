@@ -7,5 +7,4 @@ Description: \textsl{rmtoo} \textbf{must} exists.
 Rationale: The world needs a good, usable and free Requirements
  Management Tool.\par
  It looks that there are no such programs out.\par
- And... after thinking about... I'm trying to understand why: it's
- complex! 
+ But: it's complex! 

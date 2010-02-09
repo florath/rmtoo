@@ -3,8 +3,9 @@ Type: design decision
 Invented on: 2010-02-08
 Invented by: flonatel
 Owner: development
-Description: \textsl{rmtoo} must be small: invest 20 percent and get
- 80 percent. 
+Description: \textsl{rmtoo} \textbf{must} be small: invest 20 percent
+ and get 80 percent. 
 Rationale: To get started, concentrate on the major things, which are
- really needed.
-Depends on: I-ReMaTool
+ really needed.\par
+ Especially because of the limited time for this project.
+Depends on: I-rmtoo
