@@ -115,7 +115,7 @@ class Requirement:
                 continue
             if line_type==self.lt_initial:
                 if key in self.req:
-                    print("+++ ERROR %s:%d: key '%d' already exists" %
+                    print("+++ ERROR %s:%d: key '%s' already exists" %
                           (self.id, lineno, key))
                     fine=False
                     continue
