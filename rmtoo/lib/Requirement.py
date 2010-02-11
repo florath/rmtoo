@@ -12,6 +12,28 @@ import time
 
 class Requirement:
 
+    # Requirment Type
+    # Each requirement has exactly one type.
+    # The class ReqType sets this from the contents of the file.
+    # Note: There can only be one (master requirement)
+    rt_master_requirement = 1
+    rt_initial_requirement = 2
+    rt_design_decision = 3
+    rt_requirement = 4
+
+    # Line Type
+    # The parse() function returns one of those
+    lt_empty = 1
+    lt_comment = 2
+    lt_continue = 3
+    lt_error = 4
+    lt_initial = 5
+
+    # Status of Requirement
+    # (i.e. is the requirment usable?)
+    st_fine = 0
+    st_error = 1
+
     def __init__(self, fd, rid, mods, opts, config):
         self.req = {}
         self.id = rid
@@ -19,17 +41,6 @@ class Requirement:
         self.opts = opts
         self.config = config
         
-        # ToDo: Move the things to class scope
-        self.lt_empty = 1
-        self.lt_comment = 2
-        self.lt_continue = 3
-        self.lt_error = 4
-        self.lt_initial = 5
-
-        # ToDo: Move the things to class scope
-        self.st_fine = 0
-        self.st_error = 1
-
         self.state = self.st_fine
         
         self.read(fd)
@@ -40,7 +51,6 @@ class Requirement:
             l = l[1:]
         return l
 
-    # ToDo: Check for max line length.
     def parse_line(self, line, lineno):
         if len(line)>0 and line[-1]=='\n':
             line = line[:-1]
@@ -53,6 +63,10 @@ class Requirement:
         # Continue line
         if line[0]==' ':
             return self.lt_continue, None, line
+        # Is the line toooo long?
+        if len(line)>80:
+            print("+++ ERROR %s:%d: line too long (%d chars) '%s'"
+                  % (self.id, lineno, len(line), line))
         # 'Normal' line
         ls = line.split(":", 1)
         if len(ls)==1:

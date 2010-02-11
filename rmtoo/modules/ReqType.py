@@ -6,17 +6,14 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.Requirement import Requirement
+
 # Note:
 # The type of the requirement is used in the 'Depends on' checker.
 # So if something changes here - possible also there must be changed
 # something.
 
 class ReqType:
-    # There can only be one (master requirement)
-    rt_master_requirement = 1
-    rt_initial_requirement = 2
-    rt_design_decision = 3
-    rt_requirement = 4
 
     def __init__(self, opts, config):
         self.opts = opts
@@ -24,10 +21,10 @@ class ReqType:
 
         # Note: this can someday move to the class 
         self.types = [
-            [ "master requirement", ReqType.rt_master_requirement ],
-            [ "initial requirement", ReqType.rt_initial_requirement ],
-            [ "design decision", ReqType.rt_design_decision ],
-            [ "requirement", ReqType.rt_requirement ],
+            [ "master requirement", Requirement.rt_master_requirement ],
+            [ "initial requirement", Requirement.rt_initial_requirement ],
+            [ "design decision", Requirement.rt_design_decision ],
+            [ "requirement", Requirement.rt_requirement ],
             ]
 
         # Precompute once for all the rewrites

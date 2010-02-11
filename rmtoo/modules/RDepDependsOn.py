@@ -6,6 +6,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.Requirement import Requirement
+
 # This is executed on the RequirmentSet level (not on the Requirement
 # level!): of course this is needed for inter-dependencies.
 
@@ -23,8 +25,7 @@ class RDepDependsOn:
         self.mods = mods
 
     def rewrite_one_req(self, rr, reqs):
-        if rr.t_Type \
-                == self.mods.reqtag["ReqType"].rt_master_requirement:
+        if rr.t_Type == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
