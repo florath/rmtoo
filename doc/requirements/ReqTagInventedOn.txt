@@ -1,0 +1,9 @@
+Name: Requirements Invented On
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a 'invented on' tag.
+Rationale: This is the date when the requirment was written.
+Owner: development
+Depends on: Requirements
+Status: open

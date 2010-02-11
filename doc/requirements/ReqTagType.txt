@@ -1,0 +1,10 @@
+Name: Requirements Type
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a type tag.  A type
+ is one of "master requirement", "initial requirement", "requirement"
+ or "detailed design".
+Owner: development
+Depends on: Requirements
+Status: open

@@ -1,0 +1,10 @@
+Name: Easy Editable
+Type: initial requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: The requirements used by \textsl{rmtoo} \textbf{must} be
+ easy editable.
+Rationale: It must not be a pain to change or add something.
+Owner: development
+Depends on: rmtoo
+Status: open

@@ -1,0 +1,8 @@
+Name: Requirements Status
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a status tag.
+Owner: development
+Depends on: Requirements
+Status: open

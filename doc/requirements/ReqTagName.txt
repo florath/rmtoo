@@ -1,0 +1,9 @@
+Name: Requirements Name
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a name tag.
+Rationale: This is a short string (headline) for the requirment.
+Owner: development
+Depends on: Requirements
+Status: open

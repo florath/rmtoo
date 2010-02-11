@@ -1,0 +1,9 @@
+Name: Emacs Mode
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: There \textbf{must} be an Emacs mode which supports the
+ requirment format used by \textsl{rmtoo}.
+Owner: development
+Depends on: UseTxt EasyEditable
+Status: open

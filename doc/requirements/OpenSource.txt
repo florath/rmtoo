@@ -1,4 +1,4 @@
-Name: Open Source ReMaTool 
+Name: Open Source rmtoo
 Type: initial requirement
 Invented on: 2010-02-06
 Invented by: flonatel
@@ -8,3 +8,4 @@ Rationale: There is the hope, that some people might use this. There
  other feature.
 Owner: development
 Depends on: rmtoo
+Status: completed

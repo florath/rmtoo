@@ -12,7 +12,7 @@ from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Modules import Modules
 
-available_cmds=["check", "latex"]
+available_cmds=["check", "latex", "dot"]
 
 def parse_cmd_line_opts():
     parser = OptionParser()
@@ -24,6 +24,8 @@ def parse_cmd_line_opts():
                   help="Config file")
     parser.add_option("-l", "--latex-directory", dest="latex_directory",
                   help="Directory where to put LaTeX output")
+    parser.add_option("-o", "--dot-ouput", dest="dot_output",
+                  help="File where the dot output is stored")
     parser.add_option("-m", "--modules-directory", dest="modules_directory",
                   help="Directory with modules")
 
@@ -67,6 +69,13 @@ def execute_cmds(opts, mods, config):
             print("+++ ERROR: command latex without latex directory")
             sys.exit(1)
         reqs.output_latex(opts.latex_directory)
+        return True
+
+    if opts.command=="dot":
+        if opts.dot_output==None:
+            print("+++ ERROR: command dot without dot output file")
+            sys.exit(1)
+        reqs.output_dot(opts.dot_output)
 
 def load_config(opts):
     # Load config file

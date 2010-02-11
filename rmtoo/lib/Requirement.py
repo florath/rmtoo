@@ -21,6 +21,13 @@ class Requirement:
     rt_design_decision = 3
     rt_requirement = 4
 
+    # Status Type
+    # Each requirement has a Status.
+    # It will be read in and set by the ReqStatus class.
+    # The status must be one of the following:
+    st_open = 1
+    st_completed = 2
+
     # Line Type
     # The parse() function returns one of those
     lt_empty = 1
@@ -29,10 +36,10 @@ class Requirement:
     lt_error = 4
     lt_initial = 5
 
-    # Status of Requirement
+    # Error Status of Requirement
     # (i.e. is the requirment usable?)
-    st_fine = 0
-    st_error = 1
+    er_fine = 0
+    er_error = 1
 
     def __init__(self, fd, rid, mods, opts, config):
         self.req = {}
@@ -41,7 +48,7 @@ class Requirement:
         self.opts = opts
         self.config = config
         
-        self.state = self.st_fine
+        self.state = self.er_fine
         
         self.read(fd)
         self.handle_modules_reqtag()
@@ -126,15 +133,14 @@ class Requirement:
 
     # Error is an error (no distinct syntax error)
     def mark_syntax_error(self):
-        self.state = self.st_error
+        self.state = self.er_error
 
     # Error is an error (no distinct sematic error)
     def mark_sematic_error(self):
-        self.state = self.st_error
+        self.state = self.er_error
 
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
-        g = file(os.path.join(directory, "dependsgraph.dot"), "a")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
                 % (self.t_Name, self.id, self.t_Description))
 
@@ -144,17 +150,8 @@ class Requirement:
         if self.t_DependOn!=None:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
-            # ToDo: THIS IS UGLY!
-            # ToDo: split latex and dot output
-            #if self.id[0]=='M':
-            #    g.write("%s [color=green]\n" % (self.id[2:]))
-            #if self.id[0]=='D':
-            #    g.write("%s [color=blue]\n" % (self.id[2:]))
-            #if self.id[0]=='I':
-            #    g.write("%s [color=orange]\n" % (self.id[2:]))
             for d in self.t_DependOn:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
-                g.write("%s -> %s;\n" % (self.id, d))
             f.write("\n")
 
         f.write("""
@@ -170,5 +167,22 @@ class Requirement:
 """ % (self.id, self.t_Priority, self.t_Owner,
        time.strftime("%Y-%m-%d", self.t_InventedOn),
        self.t_InventedBy))
-        g.close()
         f.close()
+
+    def output_dot(self, dotfile):
+        # Colorize the current requirement depending on type
+        nodeparam = []
+        if self.t_Type == self.rt_initial_requirement:
+            nodeparam.append("color=orange")
+        if self.t_Type == self.rt_design_decision:
+            nodeparam.append("color=green")
+
+        if self.t_Status==self.st_open:
+            nodeparam.append("fontcolor=red")
+
+        if len(nodeparam)>0:
+            dotfile.write("%s [%s]\n" % (self.id, ",".join(nodeparam)))
+
+        if self.t_DependOn!=None:
+            for d in self.t_DependOn:
+                dotfile.write("%s -> %s;\n" % (self.id, d))

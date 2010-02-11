@@ -107,13 +107,15 @@ class RequirementSet:
         except OSError:
             # This is not a problem: the directory already exists.
             pass
-        # Initialize the graph output
-        reqdepgraph = os.path.join(reqs_dir, "dependsgraph.dot")
-        g = file(reqdepgraph, "w")
-        g.write("digraph reqdeps {\nrankdir=BT\n")
-        g.close()
+        # Call all requirments to write their files.
         for r in self.reqs:
             self.reqs[r].output_latex(reqs_dir)
-        g = file(reqdepgraph, "a")
+
+    def output_dot(self, dot_output_file):
+        # Initialize the graph output
+        g = file(dot_output_file, "w")
+        g.write("digraph reqdeps {\nrankdir=BT\n")
+        for r in self.reqs:
+            self.reqs[r].output_dot(g)
         g.write("}")
         g.close()
