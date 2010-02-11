@@ -1,6 +1,7 @@
 #
 # Requirement Management Toolset
-#  class RequirementSet
+#
+#   RequirementSet
 #
 # (c) 2010 by flonatel
 #
@@ -12,6 +13,9 @@ import re
 import sys
 
 from Requirement import Requirement
+
+# This class handles a whole set of requirments.
+# These set must be enclosed, i.e. all references must be resolvable.
 
 class RequirementSet:
 
@@ -35,7 +39,7 @@ class RequirementSet:
     def read(self, directory):
         files = os.listdir(directory)
         for f in files:
-            m = re.match("^[MIRD]\-.*\.txt$", f)
+            m = re.match("^.*\.txt$", f)
             if m==None:
                 continue
             rid = f[:-4]

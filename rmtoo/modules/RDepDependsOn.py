@@ -56,36 +56,6 @@ class RDepDependsOn:
 
             dependend = reqs.reqs[ts]
 
-            # Check if the type dependencies make sense
-            # requirement -> design -> requirement
-            # (but never: requirment -> requirement ...
-            if rr.t_Type \
-                    == self.mods.reqtag["ReqType"].rt_initial_requirement:
-                if dependend.t_Type \
-                        != self.mods.reqtag["ReqType"].rt_master_requirement:
-                    print("+++ ERROR %s: 'Depends on' of requirement "
-                          "is not a master requirement '%s'" %
-                          (rr.id, dependend.id))
-                    return
-
-            if rr.t_Type \
-                    == self.mods.reqtag["ReqType"].rt_requirement:
-                if dependend.t_Type \
-                        != self.mods.reqtag["ReqType"].rt_design_decision:
-                    print("+++ ERROR %s: 'Depends on' of requirement "
-                          "is not a design decision '%s'" %
-                          (rr.id, dependend.id))
-                    return
-
-            #  ... or design -> design)
-            if rr.t_Type \
-                    == self.mods.reqtag["ReqType"].rt_design_decision:
-                if dependend.t_Type \
-                        == self.mods.reqtag["ReqType"].rt_design_decision:
-                    print("+++ ERROR %s: 'Depends on' of design decision "
-                          "is not a requirement '%s'" %
-                          (rr.id, dependend.id))
-                    return
         # Copy and delete the original
         rr.t_DependOn = t.split()
         del rr.req[self.tag]
