@@ -8,11 +8,18 @@
 ;; For licencing details see COPYING
 ;;
 
-(defconst req-mode-types 
-  '("Name:" "Type:" "Invented on:" "Invented by:"
-    "Depends on:" "History:" "Owner:" "Description:" "Status:"
-    "Rationale:")
+(defconst req-tags-plain
+  '("Name" "Type" "Invented on" "Invented by"
+    "Depends on" "History" "Owner" "Description" "Status"
+    "Rationale")
   "List of strings with known REQ types.")
+
+;; Tags must be at the beginning of line, ending with a colon.
+(defconst req-tags-opt
+  (concat
+   '"^"
+   (regexp-opt req-tags-plain)
+   '":"))
 
 (defgroup req-mode nil
   "REQ master file mode configuration."
@@ -32,7 +39,7 @@
 
 (defcustom req-mode-font-lock-keywords
   `((,(regexp-opt req-mode-classes) 0 ,req-mode-class-face)
-    (,(regexp-opt req-mode-types) 0 ,req-mode-type-face))
+    (,req-tags-opt 0 ,req-mode-type-face))
   "Font lock keywords used to highlight text in REQ mode."
   :type 'sexp
   :group 'req-mode)
