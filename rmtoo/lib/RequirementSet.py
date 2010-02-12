@@ -39,7 +39,7 @@ class RequirementSet:
     def read(self, directory):
         files = os.listdir(directory)
         for f in files:
-            m = re.match("^.*\.txt$", f)
+            m = re.match("^.*\.req$", f)
             if m==None:
                 continue
             rid = f[:-4]
