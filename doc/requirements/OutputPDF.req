@@ -1,0 +1,11 @@
+Name: Output of PDF
+Type: design decision
+Invented on: 2010-02-12
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ PDF output. 
+Rationale: Typically the PDF output holds all the requirements and
+ additional explanations.
+Depends on: Output
+Status: open

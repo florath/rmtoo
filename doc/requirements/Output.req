@@ -1,0 +1,12 @@
+Name: Output of Different Artifacts
+Type: initial requirement
+Invented on: 2010-02-12
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ different outputs. 
+Rationale: It's not very easy to e.g. visualize the dependency graph.
+ Also typically for the testing department a document is needed that
+ decribes the requirements (features) of the product.
+Depends on: rmtoo
+Status: open
