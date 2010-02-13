@@ -17,3 +17,10 @@ latex:
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
 		-d doc/requirements -c latex -l doc/latex
 	(cd doc/latex && pdflatex requirements.tex; pdflatex requirements.tex)
+
+.PHONY: clean
+clean:
+	rm -f reqtree.dot reqtree.png doc/latex/reqs/*.tex \
+		doc/latex/requirements.aux doc/latex/requirements.dvi \
+		doc/latex/requirements.log doc/latex/requirements.out \
+		doc/latex/requirements.pdf doc/latex/requirements.toc
