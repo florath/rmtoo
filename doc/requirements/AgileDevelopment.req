@@ -1,0 +1,12 @@
+Name: Agile Development Process
+Type: initial requirement
+Invented on: 2010-02-06
+Invented by: flonatel
+Owner: development
+Description: The development process which is mainly supported by
+ \textsl{rmtoo} \textbf{must} be agile.
+Rationale: This gives a base decision for which features to add to
+ rmtoo. Also the development process of rmtoo is also agile. (Better
+ 'will be' because this feature is not implemented at the moment.)
+Depends on: rmtoo
+Status: open

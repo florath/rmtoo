@@ -1,0 +1,9 @@
+Name: Priority Format
+Type: design decision
+Invented on: 2010-02-13
+Invented by: flonatel
+Description: Priority \textbf{must} be specified in a format, that
+ each stakeholder can give a priority for each requirment.
+Owner: development
+Depends on: PrioComputation
+Status: open

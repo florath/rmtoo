@@ -1,0 +1,13 @@
+Name: Documentation of the Graph output
+Type: requirement
+Invented on: 2010-02-13
+Invented by: flonatel
+Owner: development
+Description: There \textbf{must} be a documentation for the graph
+ output. 
+Rationale: This documentation must describe the different colors
+ (circle, font), lines, ...\par
+ Maybe: do this as a man page\par
+ Or: include a legend in the graph.
+Depends on: Documentation
+Status: open

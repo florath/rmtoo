@@ -11,3 +11,9 @@ reqtree.dot:
 
 reqtree.png: reqtree.dot
 	dot -Tpng -o reqtree.png reqtree.dot
+
+.PHONY: latex
+latex:
+	./bin/rmtoo -m . -f doc/requirements/Config.py \
+		-d doc/requirements -c latex -l doc/latex
+	(cd doc/latex && pdflatex requirements.tex; pdflatex requirements.tex)

@@ -1,0 +1,11 @@
+Name: Priority Computation
+Type: design decision
+Invented on: 2010-02-13
+Invented by: flonatel
+Description: Priority \textbf{must} be computed as a weighted sum of
+ all given stakeholder's priority.
+Rationale: Manager and marketing has typicaly more weight than
+ operations. 
+Owner: development
+Depends on: ReqTagPriority AgileDevelopment
+Status: open

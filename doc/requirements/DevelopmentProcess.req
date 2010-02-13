@@ -1,8 +1,0 @@
-Name: Development Process
-Type: initial requirement
-Invented on: 2010-02-06
-Invented by: flonatel
-Owner: development
-Description: The development process \textbf{must} be documented.
-Depends on: rmtoo
-Status: open
