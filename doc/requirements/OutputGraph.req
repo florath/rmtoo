@@ -1,0 +1,10 @@
+Name: Output of Dependency Graph
+Type: design decision
+Invented on: 2010-02-12
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ a requirements dependency graph.
+Rationale: A graph says more than thousand words.
+Depends on: Output
+Status: open
