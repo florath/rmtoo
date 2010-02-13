@@ -1,0 +1,22 @@
+* User visible changes
+
+** Removed fixed dependencies
+   In v1 there were fixed dependecies between design decisions and
+   requirments.  These were too limitating in every days work, so they
+   were removed.
+
+** New requirments tag: History
+
+** Added Emacs Mode
+   Is located in contrib/req-mode.el
+   Functionality: keyword highlighing
+
+** Requirments ending is now .req
+   To automatically switch to the requirements editing mode in Emacs,
+   a special suffix was needed.
+
+* Internal changes
+
+** Requirment Types handling reorganized
+
+** Added Makefile for internal creation of latex an graph file

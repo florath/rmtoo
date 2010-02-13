@@ -9,10 +9,10 @@
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-rmtoo checks the given requirments and optionally outputs LaTeX source
-and a requirments dependency graph.
+rmtoo checks the given set of requirments and optionally outputs LaTeX
+source and a requirments dependency graph.
 
-To run this, first set the PYTHONPATH to the directoy where everything
+To run rmtoo, first set the PYTHONPATH to the directoy where everything
 was unpacked. (Sourcing the 'setenv.sh' from the current directory
 exactly does this.) (Note: currently rmtoo comes as a tar ball where
 everything is unpacked in a local directory. This will change in
@@ -54,6 +54,11 @@ $ ./bin/rmtoo -m . -f doc/requirements/Config.py \
 To convert the dot file into some graphics, install the graphviz
 package and run:
 $ dot -Tpng -o reqtree.png reqtree.dot
+
+Emacs mode can be loaded in emacs by:
+M-x load-file
+point to contrib/req-mode.el
+All files with suffix .req will now use the REQ editing mode.
 
 If you have some problems, remarks or feature request, you're welcome
 to visit the sourceforge project page at:
