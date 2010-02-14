@@ -8,3 +8,4 @@ Owner: development
 Depends on: EmacsMode
 Status: open
 Class: implementable
+Priority: customers:6

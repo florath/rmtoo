@@ -7,4 +7,4 @@ Rationale: A priority is a number. The higher the number is, the
  higher prioritized is the requirment.
 Owner: development
 Depends on: Requirements
-Status: open
+Status: completed

@@ -1,0 +1,13 @@
+Name: Makefile Dependencies
+Type: requirement
+Invented on: 2010-02-14
+Invented by: flonatel
+Owner: development
+Description: Dependency support for Makefile \textbf{must} be
+ implemented.
+Rationale: The major problem handling everything within a Makefile are
+ the needed dependencies.
+Depends on: Makefile
+Status: open
+Class: implementable
+Priority: customers:7

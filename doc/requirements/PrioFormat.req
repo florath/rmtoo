@@ -6,4 +6,4 @@ Description: Priority \textbf{must} be specified in a format, that
  each stakeholder can give a priority for each requirment.
 Owner: development
 Depends on: PrioComputation
-Status: open
+Status: completed

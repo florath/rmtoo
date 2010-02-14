@@ -11,4 +11,5 @@ Rationale: Software not only needs to be good --- also the 'marketing'
  be, the better \textsl{rmtoo} will be.
 Depends on: Documentation
 Status: open
-Priority: development:10
+Priority: development:10 customers:7
+Class: implementable

@@ -1,0 +1,13 @@
+Name: Makefile
+Type: requirement
+Invented on: 2010-02-14
+Invented by: flonatel
+Owner: development
+Description: Automatic generation of artifacts \textbf{must} be
+ possible by using a Makefile.
+Rationale: This gives the users a simple to 'make all' thing, which in
+ turn calls the needed commands.
+Depends on: AutomaticGeneration
+Status: open
+Class: implementable
+Priority: customers:8

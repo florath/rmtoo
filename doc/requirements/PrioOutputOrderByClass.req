@@ -11,4 +11,4 @@ Rationale: It makes no sense to have one big common list of all
   prioritized requirements.
 Owner: development
 Depends on: OutputPrio Class 
-Status: open
+Status: completed

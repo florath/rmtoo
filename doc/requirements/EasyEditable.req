@@ -8,3 +8,4 @@ Rationale: It must not be a pain to change or add something.
 Owner: development
 Depends on: rmtoo
 Status: open
+Priority: development:3 customers:3

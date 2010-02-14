@@ -11,3 +11,5 @@ Rationale: Because rmtoo is aimed to be used in productive development
  user interaction).
 Depends on: rmtoo
 Status: open
+Priority: development:3
+

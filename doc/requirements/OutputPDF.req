@@ -8,4 +8,4 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
 Rationale: Typically the PDF output holds all the requirements and
  additional explanations.
 Depends on: Output
-Status: open
+Status: completed

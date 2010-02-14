@@ -8,3 +8,5 @@ Rationale: There must no need to redisign the whole program when e.g.
  adding a requirements tag. 
 Depends on: rmtoo
 Status: open
+Priority: development:6
+

@@ -1,0 +1,11 @@
+Name: Requirements Owner
+Type: requirement
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a owner tag.
+Rationale: The ower is the stakeholder who defines the requirment
+ (sometimes different from the one, who writes it down --- which is
+ the 'Invented by' person).
+Owner: development
+Depends on: Requirements
+Status: completed

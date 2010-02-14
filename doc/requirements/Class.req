@@ -13,4 +13,4 @@ Rationale: This is a short string (headline) for the requirment.
  but must be broken down and elaborated more to be implementable.
 Owner: development
 Depends on: ReqTagClass
-Status: open
+Status: completed

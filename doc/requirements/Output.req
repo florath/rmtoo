@@ -10,3 +10,4 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
  decribes the requirements (features) of the product.
 Depends on: rmtoo
 Status: open
+Priority: development:2
