@@ -9,4 +9,6 @@ Rationale: This typically describes the input and output and all the
  parameters needed (but not the ideas behind).
 Depends on: Documentation
 Status: open
-Priority: development:10
+Priority: development:10 customers:5
+Class: implementable
+
