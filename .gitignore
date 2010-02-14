@@ -7,4 +7,7 @@
 *.pdf
 *.out
 doc/latex/reqs/
+doc/latex/reqsprios.tex
+reqtree.dot
+reqtree.png
 
