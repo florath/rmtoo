@@ -1,0 +1,9 @@
+Added priority output for backlog and requirments which must be
+elaborated.  Added requirment tag 'Class' which specifies, if a
+requirement is ready for implementation or need more requirment
+elaboration.  Added requirment tag 'Note'.
+
+Internal changes: Added lot more requirments to rmtoo itself.
+Currently most of the features are now 'self containing'.  It is now
+possible with the help of rmtoo to coordinate rmtoo's development.
+
