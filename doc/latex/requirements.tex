@@ -1,6 +1,11 @@
 \documentclass{article}
 \usepackage{longtable}
-\usepackage[pdftex, bookmarks=true, colorlinks=true]{hyperref}
+\usepackage[pdfauthor={flonatel},%
+pdftitle={Requirment for rmtoo},%
+pdfsubject={Requirment description for rmtoo},%
+pdfkeywords={requirments management tool open source dependency tracking},%
+pagebackref=true,%
+pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \usepackage[a4paper]{geometry}
 
@@ -62,14 +67,15 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
-
-Linux\textregistered is a registered trademark from Linus Torvalds.
 }
 \newpage
 
 \tableofcontents
 
 \newpage
+
+\section{Status}
+\input{reqsprios.tex}
 
 \section{What's all about}
 This is the \textsl{master} requirment where all other (especially the
@@ -94,6 +100,8 @@ describes all the tags.
 \input{reqs/ReqTagType.tex}
 \input{reqs/ReqTagInventedBy.tex}
 \input{reqs/ReqTagInventedOn.tex}
+\input{reqs/ReqTagDescription.tex}
+\input{reqs/ReqTagOwner.tex}
 \input{reqs/ReqTagStatus.tex}
 \input{reqs/Status.tex}
 \input{reqs/ReqTagPriority.tex}
@@ -129,6 +137,10 @@ describes all the tags.
 \section{Agile Development Process}
 \input{reqs/PrioComputation.tex}
 \input{reqs/OutputPrio.tex}
+
+\section{Automatic Creation of Artifacts}
+\input{reqs/Makefile.tex}
+\input{reqs/MakefileDeps.tex}
 
 \end{document}
 

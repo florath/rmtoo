@@ -121,25 +121,51 @@ class RequirementSet:
         g.write("}")
         g.close()
 
-    def output_prios(self, dot_output_file):
+    def output_prios(self, prio_output_file):
         # This is mostly done at this level - because they must be
         # sorted.
-        prios = []
+        prios_impl = []
+        prios_detail = []
         for r in self.reqs:
-            # Only open requirmentes are 
+            # Only open requirmentes are interesting
             if self.reqs[r].is_open():
-                prios.append([self.reqs[r].get_prio(), self.reqs[r].id])
+                if self.reqs[r].is_implementable():
+                    prios_impl.append([self.reqs[r].get_prio(),
+                                       self.reqs[r].id])
+                else:
+                    prios_detail.append([self.reqs[r].get_prio(),
+                                         self.reqs[r].id])
 
         # Sort them after prio
-        sprios = sorted(prios, key=operator.itemgetter(0), reverse=True)
+        sprios_impl = sorted(prios_impl, key=operator.itemgetter(0),
+                             reverse=True)
+        sprios_detail = sorted(prios_detail, key=operator.itemgetter(0),
+                               reverse=True)
 
         # Write everything to a file.
-        f = file(dot_output_file, "w")
-        f.write("*** Current Backlog ***\n\n")
-        f.write("Priority | Requirment ID\n")
-        f.write("-------------------------------------------------\n");
-        for p in sprios:
-            f.write("    %4.0f | %s\n" % (p[0], p[1]))
+        f = file(prio_output_file, "w")
+
+        # Backlog
+        f.write("\subsection{Backlog}\n")
+        f.write("\\begin{longtable}{|r|p{7cm}|} \hline \n")
+        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
+        for p in sprios_impl:
+            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
+                    % (p[0], p[1], p[1]))
+        f.write("\hline\n")
+        f.write("\end{longtable}")
+
+        # Requirments Elaboration
+        f.write("\subsection{Requirments Elaboration}\n")
+        f.write("\\begin{longtable}{|r|p{7cm}|} \hline \n")
+        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
+        for p in sprios_detail:
+            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
+                    % (p[0], p[1], p[1]))
+        f.write("\hline\n")
+        f.write("\end{longtable}")
+
+
         f.close()
 
         

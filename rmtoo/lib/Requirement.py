@@ -151,6 +151,9 @@ class Requirement:
     def is_open(self):
         return self.t_Status == self.st_open
 
+    def is_implementable(self):
+        return self.t_Class == self.ct_implementable
+
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
@@ -159,12 +162,25 @@ class Requirement:
         if self.t_Rationale!=None:
             f.write("\n\\textbf{Rationale:} %s\n" % self.t_Rationale)
 
+        if self.t_Note!=None:
+            f.write("\n\\textbf{Note:} %s\n" % self.t_Note)
+
         if self.t_DependOn!=None:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
             for d in self.t_DependOn:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
             f.write("\n")
+
+        if self.t_Status==self.st_completed:
+            status="completed"
+        else:
+            status="open"
+
+        if self.t_Class==self.ct_implementable:
+            clstr="implementable"
+        else:
+            clstr="detailable"
 
         f.write("""
 \\begin{center}
@@ -174,11 +190,13 @@ class Requirement:
 \\textbf{Owner} & %s \\\ \hline
 \\textbf{Invented on} & %s \\\ \hline
 \\textbf{Invented by} & %s \\\ \hline
+\\textbf{Status} & %s \\\ \hline
+\\textbf{Class} & %s \\\ \hline
 \end{longtable}
 \end{center}
 """ % (self.id, self.t_Priority, self.t_Owner,
        time.strftime("%Y-%m-%d", self.t_InventedOn),
-       self.t_InventedBy))
+       self.t_InventedBy, status, clstr))
         f.close()
 
     def output_dot(self, dotfile):
