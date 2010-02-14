@@ -139,6 +139,12 @@ class Requirement:
     def mark_sematic_error(self):
         self.state = self.er_error
 
+    def get_prio(self):
+        return self.t_Priority
+
+    def is_open(self):
+        return self.t_Status == self.st_open
+
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 

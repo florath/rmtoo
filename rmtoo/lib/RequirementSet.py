@@ -11,6 +11,7 @@
 import os
 import re
 import sys
+import operator
 
 from Requirement import Requirement
 
@@ -119,3 +120,26 @@ class RequirementSet:
             self.reqs[r].output_dot(g)
         g.write("}")
         g.close()
+
+    def output_prios(self, dot_output_file):
+        # This is mostly done at this level - because they must be
+        # sorted.
+        prios = []
+        for r in self.reqs:
+            # Only open requirmentes are 
+            if self.reqs[r].is_open():
+                prios.append([self.reqs[r].get_prio(), self.reqs[r].id])
+
+        # Sort them after prio
+        sprios = sorted(prios, key=operator.itemgetter(0), reverse=True)
+
+        # Write everything to a file.
+        f = file(dot_output_file, "w")
+        f.write("*** Current Backlog ***\n\n")
+        f.write("Priority | Requirment ID\n")
+        f.write("-------------------------------------------------\n");
+        for p in sprios:
+            f.write("    %4.0f | %s\n" % (p[0], p[1]))
+        f.close()
+
+        

@@ -7,4 +7,4 @@ Description: There \textbf{must} be an Emacs mode which supports the
 Owner: development
 Depends on: UseTxt EasyEditable
 Status: open
-
+Priority: development:7

@@ -12,7 +12,7 @@ from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Modules import Modules
 
-available_cmds=["check", "latex", "dot"]
+available_cmds=["check", "latex", "dot", "prios"]
 
 def parse_cmd_line_opts():
     parser = OptionParser()
@@ -24,10 +24,12 @@ def parse_cmd_line_opts():
                   help="Config file")
     parser.add_option("-l", "--latex-directory", dest="latex_directory",
                   help="Directory where to put LaTeX output")
-    parser.add_option("-o", "--dot-ouput", dest="dot_output",
-                  help="File where the dot output is stored")
     parser.add_option("-m", "--modules-directory", dest="modules_directory",
                   help="Directory with modules")
+    parser.add_option("-o", "--dot-ouput", dest="dot_output",
+                  help="File where the dot output is stored")
+    parser.add_option("-p", "--prios-ouput", dest="prios_output",
+                  help="File where the prios output is stored")
 
     (options, args) = parser.parse_args()
 
@@ -76,6 +78,14 @@ def execute_cmds(opts, mods, config):
             print("+++ ERROR: command dot without dot output file")
             sys.exit(1)
         reqs.output_dot(opts.dot_output)
+        return True
+
+    if opts.command=="prios":
+        if opts.prios_output==None:
+            print("+++ ERROR: command prios without prios output file")
+            sys.exit(1)
+        reqs.output_prios(opts.prios_output)
+        return True
 
 def load_config(opts):
     # Load config file
