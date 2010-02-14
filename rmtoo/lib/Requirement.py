@@ -28,6 +28,12 @@ class Requirement:
     st_open = 1
     st_completed = 2
 
+    # Class Type
+    # This specifies, if this node is really a node or if this can /
+    # must be elaborated in more detail.
+    ct_implementable = 1
+    ct_detailable = 2
+
     # Line Type
     # The parse() function returns one of those
     lt_empty = 1
