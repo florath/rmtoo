@@ -32,7 +32,8 @@ do
     cp -r $d package/${PACKAGE_NAME}
 done
 
-mv ttt/* package/${PACKAGE_NAME}/doc
+# The picture and the pdf are delivered seperatly
+# mv ttt/* package/${PACKAGE_NAME}/doc
 
 # Do not deliver emacs backup files
 find package/${PACKAGE_NAME} -name "*~" | xargs rm
@@ -47,4 +48,5 @@ gzip -9 ${PACKAGE_NAME}.tar
 mv package/${PACKAGE_NAME}.tar.gz .
 
 # Clean up
-rm -fr package ttt
+rm -fr package
+# ttt

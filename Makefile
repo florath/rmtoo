@@ -20,7 +20,9 @@ latex:
 		-d doc/requirements -c prios -p doc/latex/reqsprios.tex
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
 		-d doc/requirements -c latex -l doc/latex
-	(cd doc/latex && pdflatex requirements.tex; pdflatex requirements.tex)
+	(cd doc/latex && pdflatex requirements.tex; \
+		pdflatex requirements.tex; \
+		pdflatex requirements.tex)
 
 .PHONY: clean
 clean:
