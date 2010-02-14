@@ -1,0 +1,14 @@
+Name: Priority Output Order By Class
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: The priority output \textbf{must} be ordered by class.
+Rationale: It makes no sense to have one big common list of all
+ prioritized requirments.\par
+  For real daily live use the lists must be separated and ordered by
+  the class. So there is one list for the developer (e.g. the backlog)
+  and one list for the SCRUM master who can then elaborate the highest
+  prioritized requirements.
+Owner: development
+Depends on: OutputPrio Class 
+Status: open

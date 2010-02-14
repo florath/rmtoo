@@ -1,0 +1,11 @@
+Name: Priority Output LaTeX
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: The priority output \textbf{must} have LaTeX format.
+Rationale: There were first experiments using plain files (*.txt) ---
+ but this was not really usable --- especially when classes were
+ added. 
+Owner: development
+Depends on: OutputPrio
+Status: open

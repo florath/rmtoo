@@ -1,0 +1,10 @@
+Name: Emacs Mode Indentation
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: The Emacs mode \textbf{must} provide functionality for
+ automatic indentation.
+Owner: development
+Depends on: EmacsMode
+Status: open
+Class: implementable

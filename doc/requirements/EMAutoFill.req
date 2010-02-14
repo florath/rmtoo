@@ -1,0 +1,10 @@
+Name: Emace Mode Auto Fill Mode
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: The Emacs mode \textsl{must} switch on auto-fill-mode by
+ default. 
+Owner: development
+Depends on: EmacsMode
+Status: open
+Class: implementable

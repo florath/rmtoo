@@ -1,0 +1,16 @@
+Name: Class
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: The class tag \textbf{must} be one of: 'implementable' or
+ 'detailable'. 
+Rationale: This is a short string (headline) for the requirment.
+ 
+ 'implementable' means that the requirment is that detailed, that is
+ can be implemented.
+
+ 'detailable' means that the requirment is not directly implementable
+ but must be broken down and elaborated more to be implementable.
+Owner: development
+Depends on: ReqTagClass
+Status: open

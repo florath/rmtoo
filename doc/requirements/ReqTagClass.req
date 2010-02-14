@@ -1,0 +1,9 @@
+Name: Requirments Class
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Description: Each requirement \textbf{must} have a class tag.
+Rationale: The class decides which class type the requirment is.
+Owner: development
+Depends on: Requirements
+Status: open
