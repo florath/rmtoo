@@ -60,6 +60,9 @@ $ pdflatex requirements.tex
 
 The pdflatex might be run twice to get the references resolved.
 
+If you include the priority list, please have a look there how to
+create. 
+
 
 --- Dependency Graph ---
 
@@ -78,7 +81,7 @@ To get a prioritized list of open requirments (which can be used as
 the current backlog) call:
 
 $ ./bin/rmtoo -m . -f doc/requirements/Config.py \
-       -d doc/requirements -c prios -p reqsprios.txt
+       -d doc/requirements -c prios -p doc/latex/reqsprios.tex
 
 
 --- Emacs Mode ---
