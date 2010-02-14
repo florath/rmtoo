@@ -3,5 +3,8 @@
 #
 
 class Config:
-    stakeholders = ["development", ]
+    # development - team at flonatel
+    # users - users from the Internet (sourceforge replies and wishes)
+    # customers - people and companies who are flonatel's customers
+    stakeholders = ["development", "users", "customers"]
     inventors = ["flonatel", ]
