@@ -19,5 +19,5 @@ class ReqHistory:
     def rewrite(self, req):
     	# This is optional
         if self.tag in req.req:
-            req.t_Hinstory = req.req[self.tag]
+            req.t_History = req.req[self.tag]
             del req.req[self.tag]
