@@ -5,7 +5,7 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} use txt-files for
  documenting requirments. 
-Rationale: There is no need for a special editor; normal editors (such
+Rationale: There is no need for a special editor - normal editors (such
  as emacs and vi) can be used.
 Depends on: EightyPercent
 Status: completed
