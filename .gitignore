@@ -4,10 +4,10 @@
 *.dvi
 *.log
 *.toc
-*.pdf
 *.out
 doc/latex/reqs/
 doc/latex/reqsprios.tex
+doc/latex/requirements.pdf
 reqtree.dot
 reqtree.png
 
