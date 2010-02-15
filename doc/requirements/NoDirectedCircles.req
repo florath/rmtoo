@@ -1,0 +1,14 @@
+Name: No Directed Circles Allowed
+Type: requirement
+Invented on: 2010-02-15
+Invented by: flonatel
+Description: Directed circles in requirements dependencies
+ \textbf{must} be rejected.
+Rationale: Directed circles make no sense in requirements management
+ and make traceability impossible.
+Owner: development
+Depends on: Traceability
+Status: open
+Priority: development:9
+Class: implementable
+
