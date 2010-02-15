@@ -115,7 +115,8 @@ class RequirementSet:
     def output_dot(self, dot_output_file):
         # Initialize the graph output
         g = file(dot_output_file, "w")
-        g.write("digraph reqdeps {\nrankdir=BT\nmclimit=10.0\nnslimit=10.0\n")
+        g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
+                "nslimit=10.0;\n")
         for r in self.reqs:
             self.reqs[r].output_dot(g)
         g.write("}")

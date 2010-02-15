@@ -211,7 +211,7 @@ class Requirement:
             nodeparam.append("fontcolor=red")
 
         if len(nodeparam)>0:
-            dotfile.write("%s [%s]\n" % (self.id, ",".join(nodeparam)))
+            dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
         if self.t_DependOn!=None:
             for d in self.t_DependOn:
