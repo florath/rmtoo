@@ -18,7 +18,7 @@ class ReqDescription:
     def rewrite(self, req):
         # This tag (Description) is mandatory
         if "Description" not in req.req:
-            print("+++ ERROR: requirement '%s' does not contain the "
+            print("+++ ERROR %s: does not contain the "
                   "tag 'Description'" % req.id)
             req.mark_syntax_error()
             return
