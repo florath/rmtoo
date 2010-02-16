@@ -144,7 +144,7 @@ class RequirementSet:
 
         # Backlog
         f.write("\subsection{Backlog}\n")
-        f.write("\\begin{longtable}{|r|p{7cm}|} \hline \n")
+        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead \n")
         f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
         for p in sprios_impl:
             f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
@@ -154,7 +154,7 @@ class RequirementSet:
 
         # Requirments Elaboration
         f.write("\subsection{Requirments Elaboration}\n")
-        f.write("\\begin{longtable}{|r|p{7cm}|} \hline \n")
+        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead \n")
         f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
         for p in sprios_detail:
             f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
