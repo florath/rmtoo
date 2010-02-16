@@ -183,8 +183,8 @@ class Requirement:
             clstr="detailable"
 
         f.write("""
-\\begin{center}
-\\begin{longtable}{|l|p{7cm}|}\hline
+\\begin{longtable}{|l|p{7cm}|}
+\\hline\endhead
 \\textbf{Id} & %s \\\ \hline
 \\textbf{Priority} & %s \\\ \hline
 \\textbf{Owner} & %s \\\ \hline
@@ -193,7 +193,6 @@ class Requirement:
 \\textbf{Status} & %s \\\ \hline
 \\textbf{Class} & %s \\\ \hline
 \end{longtable}
-\end{center}
 """ % (self.id, self.t_Priority, self.t_Owner,
        time.strftime("%Y-%m-%d", self.t_InventedOn),
        self.t_InventedBy, status, clstr))
