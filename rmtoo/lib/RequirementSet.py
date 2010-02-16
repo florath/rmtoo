@@ -144,10 +144,10 @@ class RequirementSet:
 
         # Backlog
         f.write("\subsection{Backlog}\n")
-        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead \n")
-        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
+        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead\n")
+        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\ \hline\n")
         for p in sprios_impl:
-            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
+            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\ \hline\n"
                     % (p[0], p[1], p[1]))
         f.write("\hline\n")
         f.write("\end{longtable}")
