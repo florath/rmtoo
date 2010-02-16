@@ -1,6 +1,4 @@
-
 .PHONY: all
-
 all: reqtree.png
 
 .PHONY: reqtree.dot
