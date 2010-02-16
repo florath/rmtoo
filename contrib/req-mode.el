@@ -11,7 +11,7 @@
 (defconst req-tags-plain
   '("Name" "Type" "Invented on" "Invented by"
     "Depends on" "History" "Owner" "Description" "Status"
-    "Rationale" "Class")
+    "Rationale" "Class" "Priority")
   "List of strings with known REQ types.")
 
 ;; Tags must be at the beginning of line, ending with a colon.
