@@ -78,25 +78,21 @@ class RequirementSet:
 
         ks = set(self.reqs.keys())
 
-        # Some very basic checks which are there and which are too
-        # much... 
-        if ks < included:
-            print("+++ ERROR: additional reqs in document: '%s'" 
-                  % (included - ks))
-            return False
+        not_included = ks - included
+        must_included = included - ks
 
-        if included < ks:
+        too_much_or_less = False
+        if len(not_included)>0:
             print("+++ ERROR: missing reqs in document: '%s'" 
-                  % (ks - included))
-            return False
+                  % not_included)
+            too_much_or_less = True
 
-        if ks!=included:
-            print("+++ OH NO");
-            print("Set is:        %s" % included)
-            print("Set should be: %s" % ks)
-            return False
+        if len(must_included)>0:
+            print("+++ ERROR: additional reqs in document: '%s'" 
+                  % must_included)
+            too_much_or_less = True
 
-        return True
+        return not too_much_or_less
                 
     def output_latex(self, directory):
         if not self.output_latex_check_master(directory):
