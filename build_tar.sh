@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # The first and one and only argument must be the version number. 
@@ -14,7 +13,7 @@ PACKAGE_NAME=rmtoo-$1
 # Create requirments dependency graph and PDF.
 make clean
 make all
-make latex
+make latex >make_latex.log 2>&1
 
 # Temporary store documents in an own directory: a make clean will
 # remove them - but we need it.
@@ -36,9 +35,9 @@ done
 # mv ttt/* package/${PACKAGE_NAME}/doc
 
 # Do not deliver emacs backup files
-find package/${PACKAGE_NAME} -name "*~" | xargs rm
+find package/${PACKAGE_NAME} -name "*~" | xargs rm -f
 # Do not deliver compiled python files
-find package/${PACKAGE_NAME} -name "*.pyc" | xargs rm
+find package/${PACKAGE_NAME} -name "*.pyc" | xargs rm -f
 
 # Create tag ball
 (cd package
