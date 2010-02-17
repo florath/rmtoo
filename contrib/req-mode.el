@@ -55,12 +55,40 @@
 (defvar req-mode-menu nil
   "Menubar used in REQ mode.")
 
+;;; Indentation
+;;; (loosly based on the sample major mode coming with emacs)
+(defun req-indent-line ()
+  "Indent current line of requirment."
+  (interactive)
+  (let ((savep (> (current-column) (current-indentation)))
+	(indent (condition-case nil (max (req-calculate-indentation) 0)
+		  (error 0))))
+    (if savep
+	(save-excursion (indent-line-to indent))
+      (indent-line-to indent))))
+
+(defun req-calculate-indentation ()
+  "Return the column to which the current line should be indented."
+  (or
+   ;; Stick the first line at column 0.
+   (and (= (point-min) (line-beginning-position)) 0)
+   ;; Keywords start at column 0.
+   (and (looking-at req-tags-opt) 0)
+   ;; One is the one for normal lines (which are part of a block for
+   ;; the key). 
+   1))
+
 ;;;###autoload
 (define-derived-mode req-mode text-mode "REQ"
   "Major mode for viewing and editing requirment files."
   (set (make-local-variable 'font-lock-defaults)
        '(req-mode-font-lock-keywords nil nil ((?_ . "w"))))
+  (set (make-local-variable 'comment-start) "# ")
+  (set (make-local-variable 'comment-start-skip) "#+\\s-*")
+  (set (make-local-variable 'indent-line-function) 'req-indent-line)
+  ;; Just write the requirments
   (auto-fill-mode)
+  ;; Mostly all is plain text
   (flyspell-mode))
 
 ;;;###autoload
