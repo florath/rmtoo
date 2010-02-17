@@ -59,7 +59,9 @@
 (define-derived-mode req-mode text-mode "REQ"
   "Major mode for viewing and editing requirment files."
   (set (make-local-variable 'font-lock-defaults)
-       '(req-mode-font-lock-keywords nil nil ((?_ . "w")))))
+       '(req-mode-font-lock-keywords nil nil ((?_ . "w"))))
+  (auto-fill-mode)
+  (flyspell-mode))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.req\\'" . req-mode))
