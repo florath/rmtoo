@@ -47,7 +47,7 @@
 ;; Syntax table.
 (defvar req-mode-syntax-table
   (let ((table (make-syntax-table)))
-    (modify-syntax-entry ?\; "<   " table)
+    (modify-syntax-entry ?\# "<   " table)
     (modify-syntax-entry ?\n ">   " table)
     table)
   "Syntax table in use in REQ buffers.")
