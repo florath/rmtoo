@@ -38,6 +38,8 @@ done
 find package/${PACKAGE_NAME} -name "*~" | xargs rm -f
 # Do not deliver compiled python files
 find package/${PACKAGE_NAME} -name "*.pyc" | xargs rm -f
+# Also remove the presentation (will be delivered seperatly)
+rm -fr package/${PACKAGE_NAME}/doc/presentations
 
 # Create tag ball
 (cd package
