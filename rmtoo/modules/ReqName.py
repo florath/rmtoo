@@ -6,21 +6,18 @@
 # For licencing details see COPYING
 #
 
-class ReqName:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqName(ReqTagGeneric):
+    tag = "Name"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def type(self):
-        return "reqtag"
-
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
         # This tag (Name) is mandatory
-        if "Name" not in req.req:
-            print("+++ ERROR: requirement '%s' does not contain the "
-                  + "tag 'Name'" % req.id)
-            req.mark_syntax_error()
-            return
-        req.t_Name = req.req['Name']
-        del req.req['Name']
+        if not self.check_mandatory_tag(rid, req):
+            return False, None, None
+        t = req['Name']
+        del req['Name']
+        return True, self.tag, t

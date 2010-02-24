@@ -12,11 +12,11 @@ from rmtoo.lib.Requirement import Requirement
 # level!): of course this is needed for inter-dependencies.
 
 class RDepDependsOn:
+    tag = "Depends on"
 
     def __init__(self, opts, config):
         self.opts = opts
         self.config = config
-        self.tag = "Depends on"
 
     def type(self):
         return "reqdeps"
@@ -24,8 +24,9 @@ class RDepDependsOn:
     def set_modules(self, mods):
         self.mods = mods
 
+    # The rewriting of one requirment is done 'in place'.
     def rewrite_one_req(self, rr, reqs):
-        if rr.t_Type == Requirement.rt_master_requirement:
+        if rr.tags["Type"] == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
@@ -49,22 +50,21 @@ class RDepDependsOn:
         # Step through the list
         tl = t.split()
         for ts in tl:
-            if ts not in reqs.reqs:
+            if ts not in reqs:
                 print("+++ ERROR %s: 'Depends on' points to a "
                       "non-existing requirement '%s'" %
                       (rr.id, ts))
                 return
 
-            dependend = reqs.reqs[ts]
+            dependend = reqs[ts]
 
         # Copy and delete the original
-        rr.t_DependOn = t.split()
+        rr.tags["Depends on"] = t.split()
         del rr.req[self.tag]
 
     def rewrite(self, reqs):
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)
-        for r in reqs.reqs:
-            rr = reqs.reqs[r]
-            self.rewrite_one_req(rr, reqs)
+        for k, v in reqs.items():
+            self.rewrite_one_req(v, reqs)
 

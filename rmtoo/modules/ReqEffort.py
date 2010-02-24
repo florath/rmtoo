@@ -1,5 +1,5 @@
 #
-# Requirement Management Toolset
+# Effort Tag Class
 #
 # (c) 2010 by flonatel
 #
@@ -8,11 +8,12 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
-class ReqRationale(ReqTagGeneric):
-    tag = "Rationale"
+class ReqEffort(ReqTagGeneric):
+    tag = "Effort"
 
     def __init__(self, opts, config):
         ReqTagGeneric.__init__(self, opts, config)
 
     def rewrite(self, rid, req):
         return self.handle_optional_tag(req)
+

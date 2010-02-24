@@ -20,12 +20,20 @@ from Requirement import Requirement
 
 class RequirementSet:
 
+    er_fine = 0
+    er_error = 1
+
     def __init__(self, directory, mods, opts, config):
         self.reqs = {}
         self.mods = mods
         self.opts = opts
+        self.state = self.er_fine
         self.config = config
-        self.read(directory)
+        
+        everythings_fine = self.read(directory)
+        if not everythings_fine:
+            print("+++ ERROR: There were errors in the requirments")
+            return
 
         # Dependencies can be done, if all requirements are successfully
         # read in.
@@ -38,6 +46,7 @@ class RequirementSet:
             sys.exit(1)
 
     def read(self, directory):
+        everythings_fine = True
         files = os.listdir(directory)
         for f in files:
             m = re.match("^.*\.req$", f)
@@ -46,11 +55,24 @@ class RequirementSet:
             rid = f[:-4]
             fd = file(os.path.join(directory, f))
             req = Requirement(fd, rid, self.mods, self.opts, self.config)
-            self.reqs[req.id] = req
+            if req.ok():
+                self.reqs[req.id] = req
+            else:
+                print("+++ ERROR %s: could not be parsed" % req.id)
+                everythings_fine = False
+        return everythings_fine
 
+    # This is mostly the same functionallaty of similar method of the
+    # class Requirement.
+    # ToDo: Unify this!
     def handle_modules_reqdeps(self):
-        for module in self.mods.reqdeps:
-            self.mods.reqdeps[module].rewrite(self)
+        for modkey, module in self.mods.reqdeps.items():
+            state = module.rewrite(self.reqs)
+            if state==False:
+                # Some sematic error occured.
+                self.state = self.er_error
+                # Continue (do not return immeditely) to get also
+                # possible other errors.
 
     def check_left_tags(self):
         alls_fine = True

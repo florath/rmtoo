@@ -1,6 +1,5 @@
 #
-# Requirement Management Toolset
-#  class Requirement
+# Requirement class itself
 #
 # (c) 2010 by flonatel
 #
@@ -9,6 +8,8 @@
 
 import os
 import time
+
+from rmtoo.lib.RequirementParser import RequirementParser
 
 class Requirement:
 
@@ -34,108 +35,66 @@ class Requirement:
     ct_implementable = 1
     ct_detailable = 2
 
-    # Line Type
-    # The parse() function returns one of those
-    lt_empty = 1
-    lt_comment = 2
-    lt_continue = 3
-    lt_error = 4
-    lt_initial = 5
-
     # Error Status of Requirement
     # (i.e. is the requirment usable?)
     er_fine = 0
     er_error = 1
 
     def __init__(self, fd, rid, mods, opts, config):
-        self.req = {}
+        self.tags = {}
         self.id = rid
         self.mods = mods
         self.opts = opts
         self.config = config
         
         self.state = self.er_fine
-        
-        self.read(fd)
-        self.handle_modules_reqtag()
+        self.input(fd)
 
-    def erase_heading_ws(self, l):
-        while len(l)>0 and l[0]==" ":
-            l = l[1:]
-        return l
+    def input(self, fd):
+        # Read it in from the file (Syntactic input)
+        req = RequirementParser.read(fd)
+        if req == None:
+            self.state = self.er_error
+            print("+++ ERROR %s: parser returned error" % self.id)
+            return
 
-    def parse_line(self, line, lineno):
-        if len(line)>0 and line[-1]=='\n':
-            line = line[:-1]
-        # Empty line
-        if len(line)==0:
-            return self.lt_empty, None, None
-        # Comment line
-        if line[0]=='#':
-            return self.lt_comment, None, None
-        # Continue line
-        if line[0]==' ':
-            return self.lt_continue, None, line
-        # Is the line toooo long?
-        if len(line)>80:
-            print("+++ ERROR %s:%d: line too long (%d chars) '%s'"
-                  % (self.id, lineno, len(line), line))
-        # 'Normal' line
-        ls = line.split(":", 1)
-        if len(ls)==1:
-            # No ':' found
-            print("+++ ERROR %s:%d: no ':' in line '%s'" %
-                  (self.id, lineno, line))
-            return self.lt_error, None, None
-        if len(ls[0])==0:
-            # ':' is first char in line
-            print("+++ ERROR %s:%d: no char before ':'" %
-                  (self.id, lineno))
-            return self.lt_error, None, None
-        # Normal 'initial' case
-        return self.lt_initial, ls[0], self.erase_heading_ws(ls[1])
+        # Handle all the modules (Semantic input)
+        self.handle_modules_reqtag(req)
 
-    # This implements a finite state automate with a very small number
-    # of states and translations.
-    def read(self, fd):
-        lineno = 0
-        fine=True
-        last_key = None
-        for line in fd:
-            lineno+=1
-            line_type, key, content = self.parse_line(line, lineno)
+        # Do not check for remaining tags here. There must be some
+        # left over: all those that work on the whole requirement set
+        # (e.g. 'Depends on').
 
-            if line_type==self.lt_empty:
-                continue
-            if line_type==self.lt_comment:
-                continue
-            if line_type==self.lt_error:
-                fine=False
-                continue
-            if line_type==self.lt_continue:
-                if last_key==None:
-                    print("+++ ERROR %s:%d: continue line without " \
-                              + "initial line" % (self.id, lineno))
-                    fine=False
-                self.req[last_key]+=content
-                continue
-            if line_type==self.lt_initial:
-                if key in self.req:
-                    print("+++ ERROR %s:%d: key '%s' already exists" %
-                          (self.id, lineno, key))
-                    fine=False
-                    continue
-                self.req[key] = content
-                last_key = key
-                continue
-            print("+++ ERROR %s:%d: Invalid line_type '%d'" %
-                  (self.id, lineno, line_type))
-            fine=False
-        return fine
+        # If everything's fine, store the rest of the req for later
+        # inspection.
+        self.req = req
 
-    def handle_modules_reqtag(self):
-        for module in self.mods.reqtag:
-            self.mods.reqtag[module].rewrite(self)
+    def handle_modules_reqtag(self, reqs):
+        for modkey, module in self.mods.reqtag.items():
+            state, key, value = module.rewrite(self.id, reqs)
+            if state==False:
+                # Some sematic error occured: do not interpret key or
+                # value.
+                # The error message was already eliminated - so do
+                # only one generic
+                print("+++ ERROR %s: semantic error occured in '%s'"
+                      % (self.id, modkey))
+                self.state = self.er_error
+                # Continue (do not return immeditely) to get also
+                # possible other errors.
+            else:
+                # Check if there is already a key with the current key
+                # in the map.
+                if key in self.tags:
+                    print("+++ ERROR %s: tag '%s' already defined" %
+                          (self.id, key))
+                    self.state = er_error
+                    # Also continue to get possible further error
+                    # messages.
+                self.tags[key] = value
+
+    def ok(self):
+        return self.state==self.er_fine
 
     # Error is an error (no distinct syntax error)
     def mark_syntax_error(self):
@@ -154,6 +113,7 @@ class Requirement:
     def is_implementable(self):
         return self.t_Class == self.ct_implementable
 
+    # ToDo: outputXXX should be also done using the tag classes.
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
@@ -201,17 +161,17 @@ class Requirement:
     def output_dot(self, dotfile):
         # Colorize the current requirement depending on type
         nodeparam = []
-        if self.t_Type == self.rt_initial_requirement:
+        if self.tags["Type"] == self.rt_initial_requirement:
             nodeparam.append("color=orange")
-        if self.t_Type == self.rt_design_decision:
+        if self.tags["Type"] == self.rt_design_decision:
             nodeparam.append("color=green")
 
-        if self.t_Status==self.st_open:
+        if self.tags["Status"] == self.st_open:
             nodeparam.append("fontcolor=red")
 
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
-        if self.t_DependOn!=None:
-            for d in self.t_DependOn:
+        if "Depends on" in self.tags:
+            for d in self.tags["Depends on"]:
                 dotfile.write("%s -> %s;\n" % (self.id, d))

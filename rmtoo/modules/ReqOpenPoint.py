@@ -6,19 +6,14 @@
 # For licencing details see COPYING
 #
 
-class ReqOpenPoint:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqOpenPoint(ReqTagGeneric):
+    tag = "Open Point"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def type(self):
-        return "reqtag"
-
-    def rewrite(self, req):
-        # This tag (Open Point) is optional
-        if "Open Point" in req.req:
-            req.t_OpenPoint = req.req['Open Point']
-            del req.req['Open Point']
-        # so if not there: fall through
+    def rewrite(self, rid, req):
+        return self.handle_optional_tag(req)
 

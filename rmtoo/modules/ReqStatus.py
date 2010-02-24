@@ -7,34 +7,28 @@
 #
 
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
-class ReqStatus:
+class ReqStatus(ReqTagGeneric):
     tag = "Status"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-        
-    def type(self):
-        return "reqtag"
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def rewrite(self, req):
-        # This tag (Status) is mandatory
-        if self.tag not in req.req:
-            print("+++ ERROR %s: does not contain the "
-                  "tag 'Status'" % req.id)
-            req.mark_syntax_error()
-            return
-        t = req.req[self.tag]
+    def rewrite(self, rid, req):
+        if not self.check_mandatory_tag(rid, req):
+            return False, None, None
 
+        # Handle Status semantics
+        t = req[self.tag]
         if t=="open":
-            req.t_Status = Requirement.st_open
+            v = Requirement.st_open
         elif t=="completed":
-            req.t_Status = Requirement.st_completed
+            v = Requirement.st_completed
         else:
             print("+++ ERROR %s: Status tag invalid '%s'" 
-                  % (req.id, t))
-            req.mark_syntax_error()
+                  % (rid, t))
             return
 
-        del req.req[self.tag]
+        del req[self.tag]
+        return True, self.tag, v

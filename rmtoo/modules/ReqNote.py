@@ -6,21 +6,15 @@
 # For licencing details see COPYING
 #
 
-class ReqNote:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqNote(ReqTagGeneric):
     tag = "Note"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-        
-    def type(self):
-        return "reqtag"
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
     	# This is optional
-        if self.tag in req.req:
-            req.t_Note = req.req[self.tag]
-            del req.req[self.tag]
-        else:
-            req.t_Note = None
+        return self.handle_optional_tag(req)
 

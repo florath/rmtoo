@@ -6,18 +6,14 @@
 # For licencing details see COPYING
 #
 
-class ReqHistory:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqHistory(ReqTagGeneric):
     tag = "History"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-        
-    def type(self):
-        return "reqtag"
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
     	# This is optional
-        if self.tag in req.req:
-            req.t_History = req.req[self.tag]
-            del req.req[self.tag]
+        return self.handle_optional_tag(req)

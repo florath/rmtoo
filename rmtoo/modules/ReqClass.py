@@ -7,20 +7,18 @@
 #
 
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 # Note:
 # The class of the requirement is used in the 'Depends on' checker.
 # So if something changes here - possible also there must be changed
 # something.
 
-class ReqClass:
+class ReqClass(ReqTagGeneric):
+    tag = "Class"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-
-    def type(self):
-        return "reqtag"
+        ReqTagGeneric.__init__(self, opts, config)
 
     def find_class(self, tag):
         for t in self.classs:
@@ -28,21 +26,22 @@ class ReqClass:
                 return t
         return None
 
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
         # This tag (Class) is mandatory optional
         # (which means: if it's not there, there is a default - but
-        # every requirment do own one class.
-        if "Class" not in req.req:
-            req.t_Class = Requirement.ct_detailable
+        # every requirment do own one class)
+        if "Class" not in req:
+            v = Requirement.ct_detailable
         else:
-            t = req.req['Class']
+            t = req['Class']
             if t=="implementable":
-                req.t_Class = Requirement.ct_implementable
+                v = Requirement.ct_implementable
             elif t=="detailable":
-                req.t_Class = Requirement.ct_detailable
+                v = Requirement.ct_detailable
             else:
                 print("+++ ERROR %s: invalid class field '%s': " 
                       "must be one of 'implementable' or 'detailable'"
-                      % (req.id, t))
-                return
-            del req.req['Class']
+                      % (rid, t))
+                return False, None, None
+            del req['Class']
+        return True, self.tag, v

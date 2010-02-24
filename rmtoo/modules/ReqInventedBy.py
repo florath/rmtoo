@@ -6,31 +6,26 @@
 # For licencing details see COPYING
 #
 
-class ReqInventedBy:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqInventedBy(ReqTagGeneric):
+    tag = "Invented by"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-        self.tag = "Invented by"
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def type(self):
-        return "reqtag"
-
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
         # This tag (Invented by) is mandatory
-        if self.tag not in req.req:
-            print("+++ ERROR %s does not contain the " \
-                  "tag '%s'" % (req.id, self.tag))
-            req.mark_syntax_error()
-            return
-        t = req.req[self.tag]
+        if not self.check_mandatory_tag(rid, req):
+            return False, None, None
+
+        t = req[self.tag]
         # This must be one of the inventors
         if t not in self.config.inventors:
             print("+++ ERROR %s: invalid invented by '%s'. Must be one "
                   "of the inventors '%s'" %
-                  (req.id, t, self.config.inventors))
-            req.mark_sematic_error()
-            return
-        req.t_InventedBy = t
-        del req.req[self.tag]
+                  (rid, t, self.config.inventors))
+            return False, None, None
 
+        del req[self.tag]
+        return True, self.tag, t

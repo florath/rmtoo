@@ -6,30 +6,26 @@
 # For licencing details see COPYING
 #
 
-class ReqOwner:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqOwner(ReqTagGeneric):
+    tag = "Owner"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def type(self):
-        return "reqtag"
-
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
         # This tag (Owner) is mandatory
-        if "Owner" not in req.req:
-            print("+++ ERROR %s: does not contain the "
-                  "tag 'Owner'" % req.id)
-            req.mark_syntax_error()
-            return
+        if not self.check_mandatory_tag(rid, req):
+            return False, None, None
+
         # Also the owner must be in the list of stakeholders
-        t = req.req['Owner']
+        t = req[self.tag]
         if t not in self.config.stakeholders:
             print("+++ ERROR %s: invalid owner '%s'. Must be one "
                   "of the stakeholder '%s'" %
-                  (req.id, t, self.config.stakeholders))
-            req.mark_sematic_error()
+                  (rid, t, self.config.stakeholders))
             return
         # Copy and delete the original
-        req.t_Owner = t
-        del req.req['Owner']
+        del req['Owner']
+        return True, self.tag, t

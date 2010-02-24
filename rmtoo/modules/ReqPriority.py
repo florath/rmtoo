@@ -1,29 +1,26 @@
 #
-# Requirement Management Toolset
+# Requirement Tag Priority
 #
 # (c) 2010 by flonatel
 #
 # For licencing details see COPYING
 #
 
-class ReqPriority:
+from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+
+class ReqPriority(ReqTagGeneric):
+    tag = "Priority"
 
     def __init__(self, opts, config):
-        self.opts = opts
-        self.config = config
-        self.tag = "Priority"
+        ReqTagGeneric.__init__(self, opts, config)
 
-    def type(self):
-        return "reqtag"
-
-    def rewrite(self, req):
+    def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
-        if self.tag not in req.req:
-            req.t_Priority = 0.0
-            return
+        if self.tag not in req:
+            return True, self.tag, 0.0
         # Compute the priority.  This is done by adding the simple
         # priorities. 
-        t = req.req[self.tag]
+        t = req[self.tag]
         lop = t.split()
         # The (computed) priority
         priority = 0.0
@@ -33,24 +30,22 @@ class ReqPriority:
             p = l.split(":", 1)
             if len(p)!=2:
                 print("+++ ERROR %s: faulty priority declaration '%s'"
-                      % (req.rid, l))
-                req.mark_syntax_error()
-                return
+                      % (rid, l))
+                return False, None, None
             # p[0] is the stakeholder
             # p[1] is the given priority
             if p[0] not in self.config.stakeholders:
                 print("+++ ERROR %s: stakeholder '%s' not known"
-                      % (req.id, p[0]))
-                req.mark_syntax_error()
-                return
+                      % (rid, p[0]))
+                return False, None, None
             if p[0] in priority_done:
                 print("+++ ERROR %s: stakeholder '%s' voted more than once"
-                      % (req.id, p[0]))
-                req.mark_syntax_error()
+                      % (rid, p[0]))
                 return
             # ToDo: Check if the priority is in some interval [0, 10]
             # (and if not: reject it)
             priority += float(p[1])
             priority_done.append(p[1])
-        req.t_Priority = priority
-        del req.req[self.tag]
+
+        del req[self.tag]
+        return True, self.tag, priority
