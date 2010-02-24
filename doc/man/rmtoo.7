@@ -1,0 +1,89 @@
+.\" 
+.\" Man page for whole package rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo 7 2010-02-24 "Linux" "Requirements Management"
+.SH NAME
+rmtoo \- requirements management tool
+.SH DESCRIPTION
+The
+.B rmtoo
+package is used to read in a set of requirements and create artifacts
+from them. 
+.SH OVERVIEW
+The
+.B rmtoo
+requirement management tool works on a set of requirements.  It reads
+them in, parses them, preprocesses them, checks for syntactic and
+semantic problems.  If there is no error found, typically exactly one
+artifact is written out.
+.P
+This page is an overview page.  It gives a short overview over the
+.B rmtoo 
+parameters.  Also it points to other man pages where information about
+input and output files can be found.
+.SH INTRODUCTION
+The
+.B rmtoo
+reads in a set of requirements.  These requirements are stored in
+different files in the file system.  The files are plain text files
+with a special formatting.  The filename's suffix for the requirement
+files must be
+.I .req
+and all files must resist in one directory.
+.P
+The files are read in.  Then they are parsed: comment and empty lines
+are deleted.  From the rest a dictionary of key-value pairs is built.
+It is possible to have the value spread over more than one line.
+.P
+For a detailed specification about the format of the input files, see
+the 
+.B rmtoo-req-format
+man page.
+.P
+The key-value pairs are internally checked.  If the check succeeds, it
+is possible to output a list, graph or other artifact.
+.SH "SEE ALSO"
+.B All man pages referenced in this section do not yet exist.  They will be written in future.
+.P
+.B rmtoo(1)
+- executable for requirement mangement
+.P
+.B rmtoo-req-format(5)
+- format description for the requirement files
+.P
+.B rmtoo-req-emacs-mode(7)
+- major mode for Emacs for writing requirements
+.P
+.B rmtoo-art-req-dep-graph(1)
+- output description of the requirement dependency graph
+.P
+.B rmtoo-art-latex(1)
+- output description for LaTeX output of all requirements
+.P
+.B rmtoo-art-backlog(1)
+- output description for the backlog
+.P
+.B rmtoo-art-elaboration(1)
+- output list of requirements for elaboration
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

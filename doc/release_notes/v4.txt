@@ -1,13 +1,13 @@
 
-User visible changes: Added presentation to introduce rmtoo to new
-users.  Added 'Class' and 'Priority' for Emacs-mode
-font-high-lightning.  Fixed output for graph.  Minor changes to
-requirements for rmtoo.  Removed 'underfull vbox' warning for LaTeX
-conversion.  In Emacs-mode 'req-mode' auto-fill-mode and flyspell-mode
-are now switched on by default.  In 'req-mode' comments are now
-correctly highlighted.  In 'req-mode' (automatic) indent now works.
-Added tag 'Completed on'.  Added tag 'Effort'.  Redesigned LaTeX
-mandatory tag output.
+User visible changes: Add presentation to introduce rmtoo to new
+users.  Add 'Class' and 'Priority' for Emacs-mode font-high-lightning.
+Fixed output for graph.  Minor changes to requirements for rmtoo.
+Removed 'underfull vbox' warning for LaTeX conversion.  In Emacs-mode
+'req-mode' auto-fill-mode and flyspell-mode are now switched on by
+default.  In 'req-mode' comments are now correctly highlighted.  In
+'req-mode' (automatic) indent now works.  Added tag 'Completed on'.
+Added tag 'Effort'.  Redesigned LaTeX mandatory tag output.  Added
+overview man-page.
 
 Internal changes: Major internal change in interface to modules.
 Minor cleanup of the Makefile.
