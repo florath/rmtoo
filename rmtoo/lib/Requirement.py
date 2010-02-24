@@ -105,39 +105,39 @@ class Requirement:
         self.state = self.er_error
 
     def get_prio(self):
-        return self.t_Priority
+        return self.tags["Priority"]
 
     def is_open(self):
-        return self.t_Status == self.st_open
+        return self.tags["Status"] == self.st_open
 
     def is_implementable(self):
-        return self.t_Class == self.ct_implementable
+        return self.tags["Class"] == self.ct_implementable
 
     # ToDo: outputXXX should be also done using the tag classes.
     def output_latex(self, directory):
         f = file(os.path.join(directory, self.id + ".tex"), "w")
         f.write("\subsection{%s}\label{%s}\n\\textbf{Description:} %s\n" 
-                % (self.t_Name, self.id, self.t_Description))
+                % (self.tags["Name"], self.id, self.tags["Description"]))
 
-        if self.t_Rationale!=None:
-            f.write("\n\\textbf{Rationale:} %s\n" % self.t_Rationale)
+        if "Rationale" in self.tags:
+            f.write("\n\\textbf{Rationale:} %s\n" % self.tags["Rationale"])
 
-        if self.t_Note!=None:
-            f.write("\n\\textbf{Note:} %s\n" % self.t_Note)
+        if "Note" in self.tags:
+            f.write("\n\\textbf{Note:} %s\n" % self.tags["Note"])
 
-        if self.t_DependOn!=None:
+        if "Depends on" in self.tags:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
-            for d in self.t_DependOn:
+            for d in self.tags["Depends on"]:
                 f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
             f.write("\n")
 
-        if self.t_Status==self.st_completed:
-            status="completed"
+        if self.tags["Status"]==self.st_completed:
+            status = "completed"
         else:
-            status="open"
+            status = "open"
 
-        if self.t_Class==self.ct_implementable:
+        if self.tags["Class"]==self.ct_implementable:
             clstr="implementable"
         else:
             clstr="detailable"
@@ -153,9 +153,9 @@ class Requirement:
 \\textbf{Status} & %s \\\ \hline
 \\textbf{Class} & %s \\\ \hline
 \end{longtable}
-""" % (self.id, self.t_Priority, self.t_Owner,
-       time.strftime("%Y-%m-%d", self.t_InventedOn),
-       self.t_InventedBy, status, clstr))
+""" % (self.id, self.tags["Priority"], self.tags["Owner"],
+       time.strftime("%Y-%m-%d", self.tags["Invented on"]),
+       self.tags["Invented by"], status, clstr))
         f.close()
 
     def output_dot(self, dotfile):
