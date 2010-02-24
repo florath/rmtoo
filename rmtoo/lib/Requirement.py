@@ -142,20 +142,18 @@ class Requirement:
         else:
             clstr="detailable"
 
-        f.write("""
-\\begin{longtable}{|l|p{7cm}|}
-\\hline\endhead
-\\textbf{Id} & %s \\\ \hline
-\\textbf{Priority} & %s \\\ \hline
-\\textbf{Owner} & %s \\\ \hline
-\\textbf{Invented on} & %s \\\ \hline
-\\textbf{Invented by} & %s \\\ \hline
-\\textbf{Status} & %s \\\ \hline
-\\textbf{Class} & %s \\\ \hline
-\end{longtable}
-""" % (self.id, self.tags["Priority"], self.tags["Owner"],
-       time.strftime("%Y-%m-%d", self.tags["Invented on"]),
-       self.tags["Invented by"], status, clstr))
+        f.write("{\small \\begin{longtable}{rlrlrl}\n"
+                "\\textbf{Id:} & %s & "
+                "\\textbf{Priority:} & %s & "
+                "\\textbf{Owner:} & %s \\\ \n"
+                "\\textbf{Invented on:} & %s & "
+                "\\textbf{Invented by:} & %s & "
+                "\\textbf{Status:} & %s \\\ \n"
+                "\\textbf{Class:} & %s & & & & \\\ \n"
+                "\end{longtable} }"
+                % (self.id, self.tags["Priority"], self.tags["Owner"],
+                   time.strftime("%Y-%m-%d", self.tags["Invented on"]),
+                   self.tags["Invented by"], status, clstr))
         f.close()
 
     def output_dot(self, dotfile):
