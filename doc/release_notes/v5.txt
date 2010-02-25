@@ -1,0 +1,2 @@
+User visible changes: Add man page for rmtoo invocation.
+
