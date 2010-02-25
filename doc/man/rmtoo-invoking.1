@@ -1,0 +1,64 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo 1 2010-02-25 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo \- requirements management tool
+.SH SYNOPSIS
+.B rmtoo
+.B \-c
+.I cmd
+.B \-d
+.I reqdir
+.B \-f
+.I cfgfile
+.B [\-h]
+.B [\-m
+.I moduledir]
+.B [\-l
+.I latexdir]
+.B [\-d
+.I dotfile]
+.B [\-p
+.I priofile]
+.SH DESCRIPTION
+The
+.B rmtoo
+is a requirment management tool.  It understand long and short command
+line options.
+
+
+
+
+  -h, --help            show this help message and exit
+  -c COMMAND, --cmd=COMMAND
+                        command to execute: ['check', 'latex', 'dot', 'prios']
+  -d DIRECTORY, --directory=DIRECTORY
+                        Directory with requirements
+  -f CONFIG_FILE, --file-config=CONFIG_FILE
+                        Config file
+  -l LATEX_DIRECTORY, --latex-directory=LATEX_DIRECTORY
+                        Directory where to put LaTeX output
+  -m MODULES_DIRECTORY, --modules-directory=MODULES_DIRECTORY
+                        Directory with modules
+  -o DOT_OUTPUT, --dot-ouput=DOT_OUTPUT
+                        File where the dot output is stored
+  -p PRIOS_OUTPUT, --prios-ouput=PRIOS_OUTPUT
+                        File where the prios output is stored

@@ -18,14 +18,36 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 7 2010-02-24 "Linux" "Requirements Management"
+.TH rmtoo 7 2010-02-24 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH DESCRIPTION
 The
 .B rmtoo
 package is used to read in a set of requirements and create artifacts
-from them. 
+from them.
+.SH IDEA
+.B rmtoo
+uses a different approach than most other requirement management
+tools: it comes as a command line tool which is optimized for handling
+of requirements.  The power of
+.B rmtoo
+is that a typical development environment can perfectly handle the
+input and output files.  Example: if there is a need for handling
+baselines (and mostly there is), use a revision control system of your
+choice (git, mercurial, subversion, ...).  They
+.B can
+handle different revisions, baselining, tagging, branching and many
+different things
+.B perfectly
+well.
+.P
+.B Let one thing do one thing.
+.P
+.B rmtoo
+is
+.B no
+integrated 'do-everything' tool as it comes with no GUI at all.
 .SH OVERVIEW
 The
 .B rmtoo
@@ -62,8 +84,8 @@ is possible to output a list, graph or other artifact.
 .SH "SEE ALSO"
 .B All man pages referenced in this section do not yet exist.  They will be written in future.
 .P
-.B rmtoo(1)
-- executable for requirement mangement
+.B rmtoo-invoking(1)
+- overview over command line parameters executable for requirement mangement
 .P
 .B rmtoo-req-format(5)
 - format description for the requirement files
