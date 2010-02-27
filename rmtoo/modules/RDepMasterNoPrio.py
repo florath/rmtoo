@@ -20,3 +20,8 @@ class RDepMasterNoPrio:
     def set_modules(self, mods):
         self.mods = mods
 
+    def rewrite(self, reqset):
+        if reqset.graph_master_node.tags["Priority"]!=0.0:
+            print("+++ ERROR: master requirement has a priority")
+            return False
+        return True
