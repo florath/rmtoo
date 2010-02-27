@@ -1,2 +1,6 @@
-User visible changes: Add man page for rmtoo invocation.
+User visible changes: Add man page for rmtoo invocation.  Add
+additional check: there can be only one master requirement.  In LaTeX
+output both dependency directions are now available.
+
+Internal changes: The graph and the anti-graph are now build.
 
