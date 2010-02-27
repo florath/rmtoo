@@ -19,6 +19,7 @@ from rmtoo.lib.Requirement import Requirement
 # level!): of course this is needed for inter-dependencies.
 
 class RDepDependsOn:
+    depends_on = []
     tag = "Depends on"
 
     def __init__(self, opts, config):
