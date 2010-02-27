@@ -46,6 +46,11 @@ class Requirement:
         self.mods = mods
         self.opts = opts
         self.config = config
+
+        # To build up the graph: depends on and the anti depends on
+        # lists. 
+        self.depends_on = []
+        self.anti_depends_on = []
         
         self.state = self.er_fine
         self.input(fd)
@@ -125,11 +130,19 @@ class Requirement:
         if "Note" in self.tags:
             f.write("\n\\textbf{Note:} %s\n" % self.tags["Note"])
 
-        if "Depends on" in self.tags:
+        # Only output the depends on when there are fields for output.
+        if len(self.depends_on)>0:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
-            for d in self.tags["Depends on"]:
-                f.write("\\ref{%s} \\nameref{%s}  " % (d, d))
+            for d in self.depends_on:
+                f.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
+            f.write("\n")
+
+        if len(self.anti_depends_on)>0:
+            # Create links to the corresponding dependency nodes.
+            f.write("\n\\textbf{Dependend:} ")
+            for d in self.anti_depends_on:
+                f.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
             f.write("\n")
 
         if self.tags["Status"]==self.st_completed:
@@ -142,7 +155,7 @@ class Requirement:
         else:
             clstr="detailable"
 
-        f.write("{\small \\begin{longtable}{rlrlrl}\n"
+        f.write("\n{\small \\begin{longtable}{rlrlrl}\n"
                 "\\textbf{Id:} & %s & "
                 "\\textbf{Priority:} & %s & "
                 "\\textbf{Owner:} & %s \\\ \n"
@@ -170,6 +183,5 @@ class Requirement:
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
-        if "Depends on" in self.tags:
-            for d in self.tags["Depends on"]:
-                dotfile.write("%s -> %s;\n" % (self.id, d))
+        for d in self.depends_on:
+            dotfile.write("%s -> %s;\n" % (self.id, d.id))

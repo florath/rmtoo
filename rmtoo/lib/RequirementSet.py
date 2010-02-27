@@ -67,7 +67,7 @@ class RequirementSet:
     # ToDo: Unify this!
     def handle_modules_reqdeps(self):
         for modkey, module in self.mods.reqdeps.items():
-            state = module.rewrite(self.reqs)
+            state = module.rewrite(self)
             if state==False:
                 # Some sematic error occured.
                 self.state = self.er_error

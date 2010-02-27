@@ -1,5 +1,5 @@
 #
-# Requirement Management Toolset
+# Requirments Depends On Tag handling
 #
 # (c) 2010 by flonatel
 #
@@ -8,6 +8,13 @@
 
 from rmtoo.lib.Requirement import Requirement
 
+# This class handles the creation of the full directred graphs: one
+# 'Depends on' and one 'Dependent'.  Both graphs are digraphs.
+#
+# Because this is the central functionalaity where a lot of other
+# modules depend on, these things are directy written to the
+# Requirments and RequirementSet object.
+#
 # This is executed on the RequirmentSet level (not on the Requirement
 # level!): of course this is needed for inter-dependencies.
 
@@ -25,46 +32,71 @@ class RDepDependsOn:
         self.mods = mods
 
     # The rewriting of one requirment is done 'in place'.
-    def rewrite_one_req(self, rr, reqs):
+    def rewrite_one_req(self, rr, reqset):
         if rr.tags["Type"] == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
                       "Depends on field." % (rr.id))
-                return
-            rr.t_DependOn = None
-            return
-        # There must be a 'Depends on'
+                return False
+            # It self does not have any depends on nodes
+            rr.graph_depends_on = None
+            # This is the master!
+            # Check if there is already another master:
+            if reqset.graph_master_node!=None:
+                print("+++ ERROR %s: Another master is already there. "
+                      "There can only be one." % (rr.id))
+                return False
+            # Write a link to the master node to the RequirmentSet.
+            reqset.graph_master_node = rr
+            return True
+
+        # For all other requirments types there must be a 'Depends on'
         if self.tag not in rr.req:
             print("+++ ERROR %s: non-initial requirement has "
                   "no 'Depends on' field." % (rr.id))
-            return
-            
+            return False
+
         t = rr.req[self.tag]
-        # If there it must not empty
+        # If available, it must not empty
         if len(t)==0:
             print("+++ ERROR %s: 'Depends on' field has len 0" %
                   (rr.id))
-            return
+            return False
 
         # Step through the list
         tl = t.split()
         for ts in tl:
-            if ts not in reqs:
+            if ts not in reqset.reqs:
                 print("+++ ERROR %s: 'Depends on' points to a "
                       "non-existing requirement '%s'" %
                       (rr.id, ts))
-                return
+                return False
 
-            dependend = reqs[ts]
+            # Mark down the depends on...
+            dependend = reqset.reqs[ts]
+            rr.depends_on.append(dependend)
+            # ... and also the other direction: in the pointed node
+            # mark that the current node points to this.
+            dependend.anti_depends_on.append(rr)
 
-        # Copy and delete the original
-        rr.tags["Depends on"] = t.split()
+        # Copy and delete the original tag
+        ## XXX Not neede any more? rr.tags["Depends on"] = t.split()
         del rr.req[self.tag]
+        return True
 
-    def rewrite(self, reqs):
+    def rewrite(self, reqset):
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)
-        for k, v in reqs.items():
-            self.rewrite_one_req(v, reqs)
+        everythings_fine = True
+        # Prepare the Master Node
+        reqset.graph_master_node = None
+        for k, v in reqset.reqs.items():
+            if not self.rewrite_one_req(v, reqset):
+                everythings_fine = False
+        # Double check if one was found
+        if reqset.graph_master_node==None:
+            print("+++ ERROR: no master requirement found")
+            return False
+        return everythings_fine
 
