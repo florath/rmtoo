@@ -6,5 +6,6 @@ master requirement has no priority.
 Internal changes: The graph and the anti-graph are now build.  Add
 possibility to specify dependencies between modules.  Add beginning of
 a digraph library - which is needed for detecting directed circles.
+Added toplogical sort into new digraph library.
 
 
