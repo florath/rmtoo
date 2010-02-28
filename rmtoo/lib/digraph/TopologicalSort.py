@@ -19,8 +19,11 @@ def topological_sort(dg):
     # List of topological sorted nodes
     tsort = []
     # List of nodes already visited.
+    # (This is held here - local to the algorithm - to not modify the
+    # nodes themselfs.) 
     visited = []
 
+    # Recursive deep first search function
     def visit(node):
         if not node in visited:
             visited.append(node)
@@ -28,6 +31,7 @@ def topological_sort(dg):
                 visit(m)
             tsort.append(node)
     
+    # The 'main' function of the topological sort
     for node in dg.nodes:
         visit(node)
 
