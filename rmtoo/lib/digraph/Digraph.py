@@ -26,15 +26,12 @@ class Digraph:
                 l.append(o.name)
             return l
 
-    # Create an empty digraph
-    def __init__(self):
-        # The digraph itself contains a list of all nodes.
-        self.nodes = []
-
     # Create a digraph from the given dictionary representation. 
-    def __init__(self, d):
+    # If no dictionary is given, an empty digraph will be created.
+    def __init__(self, d=None):
         self.nodes = []
-        self.create_from_dict(d)
+        if d!=None:
+            self.create_from_dict(d)
 
     # Creates an edge from a to b - both must be nodes.
     def create_edge(self, a, b):
