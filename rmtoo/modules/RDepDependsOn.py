@@ -76,10 +76,10 @@ class RDepDependsOn:
 
             # Mark down the depends on...
             dependend = reqset.reqs[ts]
-            rr.depends_on.append(dependend)
+            rr.outgoing.append(dependend)
             # ... and also the other direction: in the pointed node
             # mark that the current node points to this.
-            dependend.anti_depends_on.append(rr)
+            dependend.incoming.append(rr)
 
         # Copy and delete the original tag
         ## XXX Not neede any more? rr.tags["Depends on"] = t.split()

@@ -10,8 +10,9 @@ import os
 import time
 
 from rmtoo.lib.RequirementParser import RequirementParser
+from rmtoo.lib.digraph.Digraph import Digraph
 
-class Requirement:
+class Requirement(Digraph.Node):
 
     # Requirment Type
     # Each requirement has exactly one type.
@@ -41,17 +42,14 @@ class Requirement:
     er_error = 1
 
     def __init__(self, fd, rid, mods, opts, config):
+        Digraph.Node.__init__(self, rid)
+
         self.tags = {}
         self.id = rid
         self.mods = mods
         self.opts = opts
         self.config = config
 
-        # To build up the graph: depends on and the anti depends on
-        # lists. 
-        self.depends_on = []
-        self.anti_depends_on = []
-        
         self.state = self.er_fine
         self.input(fd)
 

@@ -14,16 +14,19 @@ import sys
 import operator
 
 from Requirement import Requirement
+from rmtoo.lib.digraph.Digraph import Digraph
 
 # This class handles a whole set of requirments.
 # These set must be enclosed, i.e. all references must be resolvable.
 
-class RequirementSet:
+class RequirementSet(Digraph):
 
     er_fine = 0
     er_error = 1
 
     def __init__(self, directory, mods, opts, config):
+        Digraph.__init__(self)
+
         self.reqs = {}
         self.mods = mods
         self.opts = opts

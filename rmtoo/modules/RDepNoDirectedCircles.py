@@ -53,7 +53,7 @@ class RDepNoDirectedCircles:
             S.append(v_name)
 
             # Step though all adjacent edges of the current node.
-            for vl in v.depends_on:
+            for vl in v.outgoing:
                 # Only for the not-yet discovered
                 if vl.id in U:
                     # recursive call the algorithm
