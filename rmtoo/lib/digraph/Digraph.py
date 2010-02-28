@@ -19,7 +19,7 @@ class Digraph:
             self.name = name
 
         # Return the names of all outgoing nodes as a list.
-        def outgoing_as_list(self):
+        def outgoing_as_named_list(self):
             # Start with an empty list
             l = []
             for o in self.outgoing:
@@ -65,6 +65,6 @@ class Digraph:
         # Start with an empty dictionary
         rv = {}
         for n in self.nodes:
-            rv[n.name] = n.outgoing_as_list()
+            rv[n.name] = n.outgoing_as_named_list()
         return rv
             
