@@ -7,7 +7,7 @@
 #
 
 class RDepPriority:
-    depends_on = ["RDepDependsOn", "RDepMasterNoPrio"]
+    depends_on = ["RDepDependsOn", "RDepMasterNoPrio", "RDepNoDirectedCircles"]
 
     def __init__(self, opts, config):
         self.opts = opts

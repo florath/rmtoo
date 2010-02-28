@@ -17,7 +17,7 @@ class ReqPriority(ReqTagGeneric):
     def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
         if self.tag not in req:
-            return True, self.tag, 0.0
+            return True, self.tag, None
         # Compute the priority.  This is done by adding the simple
         # priorities. 
         t = req[self.tag]

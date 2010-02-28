@@ -1,8 +1,10 @@
 User visible changes: Add man page for rmtoo invocation.  Add
 additional check: there can be only one master requirement.  In LaTeX
-output both dependency directions are now available.
+output both dependency directions are now available.  Check that
+master requirement has no priority.
 
 Internal changes: The graph and the anti-graph are now build.  Add
-possibility to specify dependencies between modules.
+possibility to specify dependencies between modules.  Add beginning of
+a digraph library - which is needed for detecting directed circles.
 
 
