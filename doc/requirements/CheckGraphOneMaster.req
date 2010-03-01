@@ -1,0 +1,13 @@
+Name: Graph Check for Exact One Master Requirement
+Type: requirement
+Invented on: 2010-03-01
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} check that there exactly one
+ master requirement.
+Rationale: The master requirement does not have any successors.  It is
+ the only requirement without successors.  There must be only one
+ master requirement --- which is the base or root of everything. 
+Depends on: CheckGraph
+Status: open
+Priority: development:10

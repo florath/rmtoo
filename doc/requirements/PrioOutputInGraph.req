@@ -1,0 +1,11 @@
+Name: Priority Output in Graph
+Type: design decision
+Invented on: 2010-03-01
+Invented by: flonatel
+Description: The priority output \textbf{must} be included in graph
+ for all open requirements.
+Rationale: This gives a great overview what must be done.
+Owner: development
+Depends on: OutputPrio
+Status: open
+Priority: development:8

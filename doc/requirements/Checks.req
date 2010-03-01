@@ -1,0 +1,12 @@
+Name: Checks
+Type: design decision
+Invented on: 2010-03-01
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} check requirements.
+Rationale: Because there is no database or other implicit check,
+ \textsl{rmtoo} must do consistency checks every time it reads in the
+ requirements. 
+Depends on: UseTxt
+Status: open
+Priority: development:8 management:10

@@ -1,0 +1,12 @@
+Name: Requirement Priority Check
+Type: requirement
+Invented on: 2010-03-01
+Invented by: flonatel
+Description: The priority \textbf{must} be a number between (and
+ including) 0 and 10.
+Rationale: Note that for internal computations the number is
+ normalized. 
+Owner: development
+Depends on: ReqTagPriority CheckSyntax
+Status: completed
+Priority: development:8

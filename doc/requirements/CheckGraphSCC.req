@@ -1,0 +1,14 @@
+Name: Graph Check for Strongly Connected Component
+Type: requirement
+Invented on: 2010-03-01
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} check that there is no
+ strongly connected component in the requirement dependency with a
+ size of two or larger.
+Rationale: Directed circles are strongly connected components.  A lot
+ of other algorithms and assumptions do not work any more, if there
+ are circles in the requirement graph.
+Depends on: CheckGraph
+Status: open
+Priority: development:10

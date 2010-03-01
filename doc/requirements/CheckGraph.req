@@ -1,0 +1,12 @@
+Name: Graph Checks
+Type: design decision
+Invented on: 2010-03-01
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} check the requirements for
+ graph errors.
+Rationale: Graph errors are errors which result in a broken
+ requirement dependency graph, e.g. a circular dependency.
+Depends on: Checks
+Status: open
+Priority: development:9
