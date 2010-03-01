@@ -1,11 +1,15 @@
 User visible changes: Add man page for rmtoo invocation.  Add
 additional check: there can be only one master requirement.  In LaTeX
-output both dependency directions are now available.  Check that
-master requirement has no priority.
+output both dependency directions are now available.  The Emacs
+req-mode.el is now included in the tar ball.  Priority of requirements
+is now included in the graph.  Better error handling during
+requirement dependency handling.  Usable priority computation now
+ready: based on parents and own weight.  Add a lot more requirments
+for rmtoo itself.
 
 Internal changes: The graph and the anti-graph are now build.  Add
-possibility to specify dependencies between modules.  Add beginning of
-a digraph library - which is needed for detecting directed circles.
-Added toplogical sort into new digraph library.
-
+possibility to specify dependencies between modules.  Add a digraph
+library - which is needed for detecting directed circles.  Add
+toplogical sort into new digraph library.  Fixed problem of
+integration of digraph library into the RequirementSet class.
 
