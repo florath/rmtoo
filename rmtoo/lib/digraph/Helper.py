@@ -27,3 +27,12 @@ def node_sl_to_node_name_sl(node_sl):
     for n in node_sl:
         node_name_sl.append(node_set_to_node_name_set(n))
     return node_name_sl
+
+# Remove all lists in the list which has maximal one element.  The
+# other lists convert to names.
+def remove_single_element_lists_name_rest(scc):
+    res = []
+    for s in scc:
+        if len(s)>1:
+            res.append(node_list_to_node_name_list(s))
+    return res
