@@ -18,6 +18,9 @@ class Digraph:
             self.outgoing = []
             self.name = name
 
+        def __hash__(self):
+            return self.name.__hash__()
+
         # Return the names of all outgoing nodes as a list.
         def outgoing_as_named_list(self):
             # Start with an empty list
