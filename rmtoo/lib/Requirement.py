@@ -129,17 +129,17 @@ class Requirement(Digraph.Node):
             f.write("\n\\textbf{Note:} %s\n" % self.tags["Note"])
 
         # Only output the depends on when there are fields for output.
-        if len(self.depends_on)>0:
+        if len(self.outgoing)>0:
             # Create links to the corresponding labels.
             f.write("\n\\textbf{Depends on:} ")
-            for d in self.depends_on:
+            for d in self.outgoing:
                 f.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
             f.write("\n")
 
-        if len(self.anti_depends_on)>0:
+        if len(self.incoming)>0:
             # Create links to the corresponding dependency nodes.
-            f.write("\n\\textbf{Dependend:} ")
-            for d in self.anti_depends_on:
+            f.write("\n\\textbf{Dependent:} ")
+            for d in self.incoming:
                 f.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
             f.write("\n")
 
@@ -155,14 +155,14 @@ class Requirement(Digraph.Node):
 
         f.write("\n{\small \\begin{longtable}{rlrlrl}\n"
                 "\\textbf{Id:} & %s & "
-                "\\textbf{Priority:} & %s & "
+                "\\textbf{Priority:} & %4.2f & "
                 "\\textbf{Owner:} & %s \\\ \n"
                 "\\textbf{Invented on:} & %s & "
                 "\\textbf{Invented by:} & %s & "
                 "\\textbf{Status:} & %s \\\ \n"
                 "\\textbf{Class:} & %s & & & & \\\ \n"
                 "\end{longtable} }"
-                % (self.id, self.tags["Priority"], self.tags["Owner"],
+                % (self.id, self.tags["Priority"]*10, self.tags["Owner"],
                    time.strftime("%Y-%m-%d", self.tags["Invented on"]),
                    self.tags["Invented by"], status, clstr))
         f.close()

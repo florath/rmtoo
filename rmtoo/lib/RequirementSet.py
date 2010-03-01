@@ -184,8 +184,8 @@ class RequirementSet(Digraph):
         f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead\n")
         f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\ \hline\n")
         for p in sprios_impl:
-            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\ \hline\n"
-                    % (p[0], p[1], p[1]))
+            f.write("%4.2f & \\ref{%s} \\nameref{%s} \\\ \hline\n"
+                    % (p[0]*10, p[1], p[1]))
         f.write("\hline\n")
         f.write("\end{longtable}")
 
@@ -194,11 +194,10 @@ class RequirementSet(Digraph):
         f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead \n")
         f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
         for p in sprios_detail:
-            f.write("%4.0f & \\ref{%s} \\nameref{%s} \\\\\n"
-                    % (p[0], p[1], p[1]))
+            f.write("%4.2f & \\ref{%s} \\nameref{%s} \\\\\n"
+                    % (p[0]*10, p[1], p[1]))
         f.write("\hline\n")
         f.write("\end{longtable}")
-
 
         f.close()
 
