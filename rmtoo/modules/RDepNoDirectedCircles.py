@@ -6,6 +6,12 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.digraph.StronglyConnectedComponents \
+    import strongly_connected_components
+from rmtoo.lib.digraph.StronglyConnectedComponents \
+    import check_for_strongly_connected_components
+from rmtoo.lib.digraph.Helper import remove_single_element_lists_name_rest
+
 class RDepNoDirectedCircles:
     depends_on = ["RDepDependsOn"]
     
@@ -19,71 +25,15 @@ class RDepNoDirectedCircles:
     def set_modules(self, mods):
         self.mods = mods
 
-    # The main entry point for Trajans algorithm
-    def algo_trajan(self, reqset):
-        
-        # Here is a set of variables that is also accessed from the
-        # inner algorithm method.
-
-        # Counter for the Deepth First Search
-        # ToDo: plain int does not work - Why?
-        md = [0]
-        # Set of not yet visited nodes
-        U = []
-        for u in reqset.reqs:
-            U.append(u)
-        # Stack where nodes of strongly connected components are
-        # stored. 
-        S = []
-
-        # The algorithm in recursive.  This is the method that is
-        # called from itself.
-        def trajan_inner(v_name):
-            print("TI %s" % v_name)
-            # This node is visited - mark it.
-            U.remove(v_name)
-            v = reqset.reqs[v_name]
-            # Mark the node that we have visited it
-            print("TI dfs=%d" % md[0])
-            v.graph_algo_trajan_dfs = md[0]
-            v.graph_algo_trajan_lowlink = md[0]
-            # Increment the counter
-            md[0] += 1
-            # Push the current node to the stack
-            S.append(v_name)
-
-            # Step though all adjacent edges of the current node.
-            for vl in v.outgoing:
-                # Only for the not-yet discovered
-                if vl.id in U:
-                    # recursive call the algorithm
-                    trajan_inner(vl.id)
-                    v.graph_algo_trajan_lowlink = \
-                        min(v.graph_algo_trajan_lowlink,
-                            vl.graph_algo_trajan_lowlink)
-                elif vl.id in S:
-                    v.graph_algo_trajan_lowlink = \
-                        min(v.graph_algo_trajan_lowlink,
-                            vl.graph_algo_trajan_lowlink)
-
-            if v.graph_algo_trajan_lowlink == v.graph_algo_trajan_dfs:
-                print("SZK found: %s" % S)
-
-        # While there are unvisited nodes, call the inner Trajan
-        # algorithm. 
-        while len(U)>0:
-            # Get one from the unvisited nodes
-            v_name = U[0]
-            trajan_inner(v_name)
-
     # The rewrite function here does mostly a search for strongly
-    # connected components.  It uses the algorithm from trajan for
-    # this. 
+    # connected components.  It uses the algorithm from Trajan for
+    # this - which is implemented in the digraph library.
     def rewrite(self, reqset):
-        res= self.algo_trajan(reqset)
-        if res!=None:
+        scc = strongly_connected_components(reqset)
+        result = check_for_strongly_connected_components(scc)
+        if result==True:
             print("+++ ERROR: There is at least one circular "
-                  "dependency component: '%s'" % res)
+                  "dependency component: '%s'" % 
+                  remove_single_element_lists_name_rest(scc))
             return False
         return True
-
