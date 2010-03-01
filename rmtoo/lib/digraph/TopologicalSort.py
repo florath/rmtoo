@@ -10,8 +10,6 @@
 # Digraph. 
 #
 
-import copy
-
 # This algorithm is based upon a depth first search with 'making' some
 # special nodes.
 # The result is the topological sorted list of nodes.
