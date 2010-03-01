@@ -8,6 +8,13 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
+# A priority is a number between 0 and 1.
+# The stakeholders can name a number between 0 and 10 (only full
+# numbers) which are scaled down to the interval [0..1].
+# If a priority is not given, a priority of 0 is assumed - which in
+# turn means, that the whole subtree has priority 0.
+# The computed priority is the average of all stakeholders numbers.
+
 class ReqPriority(ReqTagGeneric):
     tag = "Priority"
 
@@ -17,13 +24,14 @@ class ReqPriority(ReqTagGeneric):
     def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
         if self.tag not in req:
-            return True, self.tag, None
+            return True, "Factor", 0.0
         # Compute the priority.  This is done by adding the simple
-        # priorities. 
+        # priorities and afterwars build the average from this.
         t = req[self.tag]
         lop = t.split()
         # The (computed) priority
-        priority = 0.0
+        priority_sum = 0.0
+        num_stakeholders = 0
         # A list to check if each stakeholder votes maximal one time.
         priority_done = []
         for l in lop:
@@ -41,11 +49,20 @@ class ReqPriority(ReqTagGeneric):
             if p[0] in priority_done:
                 print("+++ ERROR %s: stakeholder '%s' voted more than once"
                       % (rid, p[0]))
-                return
-            # ToDo: Check if the priority is in some interval [0, 10]
-            # (and if not: reject it)
-            priority += float(p[1])
-            priority_done.append(p[1])
+                return False, None, None
+            # Convert it to a float - so it's easier to compare.
+            f = float(p[1])
+            # Check if in valid range [0..10]
+            if f<0 or f>10:
+                print("+++ ERROR %s: invalid priority '%f' - must "
+                      "be between 0 and 10" % (rid, f))
+                return False, None, None
+            # Compute new sum...
+            priority_sum += f/10
+            # ... and increase the stakeholders count.
+            num_stakeholders += 1
+            # Flag stakeholder that he voted already
+            priority_done.append(p[0])
 
         del req[self.tag]
-        return True, self.tag, priority
+        return True, "Factor", priority_sum/float(num_stakeholders)
