@@ -26,7 +26,7 @@ mv reqtree.png ttt
 make clean
 
 mkdir -p package/${PACKAGE_NAME}
-for d in bin COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme.txt Makefile
+for d in bin COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme.txt Makefile contrib
 do
     cp -r $d package/${PACKAGE_NAME}
 done
