@@ -177,9 +177,11 @@ class Requirement(Digraph.Node):
 
         if self.tags["Status"] == self.st_open:
             nodeparam.append("fontcolor=red")
+            nodeparam.append('label="%s\\n[%4.2f]"' %
+                             (self.id, self.tags["Priority"]*10))
 
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
-        for d in self.depends_on:
+        for d in self.outgoing:
             dotfile.write("%s -> %s;\n" % (self.id, d.id))
