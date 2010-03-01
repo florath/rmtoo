@@ -26,7 +26,7 @@ pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \vfill
 
-14. February 2010
+01. March 2010
 
 \vfill
 
@@ -86,7 +86,7 @@ initial requirements) depend on. There can only be one master requirment.
 This is the section containing all the initial requirments.
 \input{reqs/Requirements.tex}
 \input{reqs/AgileDevelopment.tex}
-\input{reqs/EightyPercent.tex}
+\input{reqs/Simplicity.tex}
 \input{reqs/OpenSource.tex}
 \input{reqs/EasyExtensible.tex}
 \input{reqs/AutomaticGeneration.tex}
@@ -109,6 +109,15 @@ describes all the tags.
 \input{reqs/ReqTagClass.tex}
 \input{reqs/Class.tex}
 
+\section{Input}
+\input{reqs/Checks.tex}
+\input{reqs/CheckSemantic.tex}
+\input{reqs/CheckSyntax.tex}
+\input{reqs/CheckGraph.tex}
+\input{reqs/CheckGraphOneMaster.tex}
+\input{reqs/CheckGraphSCC.tex}
+\input{reqs/ReqTagPriorityCheck.tex}
+
 \section{Implementation Decisions}
 \input{reqs/UseTxt.tex}
 \input{reqs/UsePython.tex}
@@ -120,6 +129,7 @@ describes all the tags.
 \input{reqs/OutputPDF.tex}
 \input{reqs/OutputGraph.tex}
 \input{reqs/PrioOutputLaTeX.tex}
+\input{reqs/PrioOutputInGraph.tex}
 \input{reqs/PrioOutputOrderByClass.tex}
 
 \section{Emacs Mode}
