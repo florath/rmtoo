@@ -41,6 +41,11 @@ class RequirementSet(Digraph):
         # Dependencies can be done, if all requirements are successfully
         # read in.
         self.handle_modules_reqdeps()
+        # If there was an error, the state flag is set:
+        if self.state != self.er_fine:
+            print("+++ ERROR: there was a problem handling the "
+                  "requirement set modules")
+            sys.exit(1)
 
         # The must no be left
         if not self.check_left_tags():
@@ -59,7 +64,12 @@ class RequirementSet(Digraph):
             fd = file(os.path.join(directory, f))
             req = Requirement(fd, rid, self.mods, self.opts, self.config)
             if req.ok():
+                # Store in the map, so that it is easy to access the
+                # node by id.
                 self.reqs[req.id] = req
+                # Also store it in the digraph's node list for simple
+                # access to the digraph algorithms.
+                self.nodes.append(req)
             else:
                 print("+++ ERROR %s: could not be parsed" % req.id)
                 everythings_fine = False
@@ -75,8 +85,9 @@ class RequirementSet(Digraph):
             if state==False:
                 # Some sematic error occured.
                 self.state = self.er_error
-                # Continue (do not return immeditely) to get also
-                # possible other errors.
+                # Do not continue - return immediately, because some
+                # algorithms rely on the correct run from others.
+                return
 
     def check_left_tags(self):
         alls_fine = True
