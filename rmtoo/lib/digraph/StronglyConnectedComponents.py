@@ -36,14 +36,8 @@ def strongly_connected_components(dg):
 
         # For all successors of v:
         for vl in v.outgoing:
-            #print("+++ INNTRO +++")
-            #print(vl.name)
-            #print(indizes)
-            #print(lowlinks)
-
             # Only check it, if it is not visited already.
             if vl not in indizes:
-                #print("NOT VISITED")
                 trajan(vl)
                 lowlinks[v] = min(lowlinks[v], lowlinks[vl])
             elif vl in S:
@@ -51,16 +45,13 @@ def strongly_connected_components(dg):
 
         # Is this a SCC?
         if lowlinks[v] == indizes[v]:
-            #print("SCC: ")
             new_scc = []
             while len(S)>0:
                 vv = S.pop()
-                #print(vv.name)
                 new_scc.append(vv)
                 if vv == v:
                     break
             scc.append(new_scc)
-
 
     # The 'main' of the algorithm: for every node (which is not yet)
     # already indexed, call the trajan() function.
@@ -70,3 +61,17 @@ def strongly_connected_components(dg):
 
     # Return the result
     return scc
+
+# This checks if there are at least one strongly connected component
+# with a size equal or larger than the given number.
+# The default '2' checks, if there is at least one strongly connected
+# component which contains more than one node.
+def check_for_strongly_connected_components(scc, minsize=2):
+    for s in scc:
+        if len(s)>=minsize:
+            # Jep there is one scc -> jump out.
+            return True
+    # Nope - no sccs.
+    return False
+
+
