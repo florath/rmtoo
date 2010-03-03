@@ -180,6 +180,9 @@ class Requirement(Digraph.Node):
             nodeparam.append('label="%s\\n[%4.2f]"' %
                              (self.id, self.tags["Priority"]*10))
 
+        if self.tags["Class"] == self.ct_implementable:
+            nodeparam.append("shape=octagon")
+
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
