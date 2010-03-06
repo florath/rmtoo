@@ -1,0 +1,13 @@
+Name: Debian Package
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} be distributed as a
+ Debian package. 
+Rationale: This is the main development platform --- and currently the
+ most used platform for \textsl{rmtoo}.
+Owner: development
+Depends on: Packaging
+Status: not done
+Priority: management:8
+Class: implementable

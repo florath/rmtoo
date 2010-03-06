@@ -1,0 +1,12 @@
+Name: Completed Requirement
+Type: requirement
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: It \textbf{must} be possible to check if a requirement is
+ completed, i.e. it and all the children are finished.
+Rationale: This can be used for a 'not yet finished' list as an output
+ artifact. 
+Owner: development
+Depends on: Requirements
+Status: finished
+Priority: management:1

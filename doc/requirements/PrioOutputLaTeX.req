@@ -9,3 +9,4 @@ Rationale: There were first experiments using plain files (*.txt) ---
 Owner: development
 Depends on: OutputPrio
 Status: finished
+Class: implementable

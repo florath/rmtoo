@@ -1,0 +1,11 @@
+Name: Ease of Use
+Type: initial requirement
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} be easy to use.
+Rationale: Only then it will be used.
+Owner: development
+Depends on: rmtoo
+Status: not done
+Priority: management:10
+

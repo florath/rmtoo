@@ -7,3 +7,4 @@ Description: Status \textbf{must} have one of the following states:
 Owner: development
 Depends on: ReqTagStatus
 Status: finished
+Class: implementable

@@ -1,0 +1,13 @@
+Name: Packaging
+Type: requirement
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} be distributed as a
+ package. 
+Rationale: This makes it very easy to install and update
+ \textsl{rmtoo}. 
+Owner: development
+Depends on: EaseOfUse
+Status: not done
+Priority: management:10
+

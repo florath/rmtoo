@@ -1,0 +1,12 @@
+Name: Test Before Packaging
+Type: requirement
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: The packaging procedure \textbf{must} guarantee that all
+ tests are successfully run before packaging.
+Rationale: This gives the possibility to run a set of regression test
+ and check the whole functionality of rmtoo.
+Owner: development
+Depends on: Testing Packaging
+Status: not done
+Priority: development:10

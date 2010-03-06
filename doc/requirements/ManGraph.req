@@ -5,6 +5,8 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with a man page which
  describes the requirement dependency graph.
+Rationale: This documentation must describe the different colors
+ (circle, font), lines, ...\par
 Depends on: DocManPage
 Status: not done
 Priority: development:3 customers:7
