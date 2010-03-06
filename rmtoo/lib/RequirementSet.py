@@ -179,25 +179,30 @@ class RequirementSet(Digraph):
         # Write everything to a file.
         f = file(prio_output_file, "w")
 
-        # Backlog
-        f.write("\subsection{Backlog}\n")
-        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead\n")
-        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\ \hline\n")
-        for p in sprios_impl:
-            f.write("%4.2f & \\ref{%s} \\nameref{%s} \\\ \hline\n"
-                    % (p[0]*10, p[1], p[1]))
-        f.write("\hline\n")
-        f.write("\end{longtable}")
+        # Local function which outputs one set of requirments.
+        def output_prio_table(name, l):
+            f.write("\subsection{%s}\n" % name)
+            f.write("\\begin{longtable}{|r|c|p{7cm}||r|r|} \hline\n")
+            f.write("\\textbf{Prio} & \\textbf{Chap} & "
+                    "\\textbf{Requirement Id} & \\textbf{EfE} & "
+                    "\\textbf{Sum} \\\ \hline\endhead\n")
+            s=0
+            for p in l:
+                if self.reqs[p[1]].tags["Effort estimation"]!=None:
+                    efest=self.reqs[p[1]].tags["Effort estimation"]
+                    s+=efest
+                    efest_str=str(efest)
+                else:
+                    efest_str=" "
 
-        # Requirments Elaboration
-        f.write("\subsection{Requirments Elaboration}\n")
-        f.write("\\begin{longtable}{|r|p{7cm}|} \hline\endhead \n")
-        f.write("\\textbf{Priority} & \\textbf{Requirement Id}\\\\ \hline\n")
-        for p in sprios_detail:
-            f.write("%4.2f & \\ref{%s} \\nameref{%s} \\\\\n"
-                    % (p[0]*10, p[1], p[1]))
-        f.write("\hline\n")
-        f.write("\end{longtable}")
+                f.write("%4.2f & \\ref{%s} & \\nameref{%s} & %s & %s "
+                        "\\\ \hline\n"
+                        % (p[0]*10, p[1], p[1], efest_str, s))
+            f.write("\end{longtable}")
+
+        # Really output the priority tables.
+        output_prio_table("Backlog", sprios_impl)
+        output_prio_table("Requirements Elaboration List", sprios_detail)
 
         f.close()
 
