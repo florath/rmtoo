@@ -10,5 +10,5 @@ Rationale: Directed circles are strongly connected components.  A lot
  of other algorithms and assumptions do not work any more, if there
  are circles in the requirement graph.
 Depends on: CheckGraph
-Status: open
+Status: not done
 Priority: development:10

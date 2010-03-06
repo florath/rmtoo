@@ -10,4 +10,4 @@ Rationale: This makes sure that it is possible to zero out things that
  not so important things.
 Owner: development
 Depends on: ReqTagPriority AgileDevelopment
-Status: completed
+Status: finished

@@ -3,8 +3,7 @@ Type: design decision
 Invented on: 2010-02-11
 Invented by: flonatel
 Description: Status \textbf{must} have one of the following states:
- open, completed. 
-Rationale: That's is what's about.
+ 'not done', 'finished'. 
 Owner: development
 Depends on: ReqTagStatus
-Status: completed
+Status: finished

@@ -6,4 +6,4 @@ Description: Each requirement \textbf{must} have a description tag.
 Rationale: This is the description what the requirment must fulfill.
 Owner: development
 Depends on: Requirements
-Status: completed
+Status: finished

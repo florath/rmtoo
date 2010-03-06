@@ -8,5 +8,5 @@ Rationale: Note that for internal computations the number is
  normalized. 
 Owner: development
 Depends on: ReqTagPriority CheckSyntax
-Status: completed
+Status: finished
 Priority: development:8

@@ -8,6 +8,6 @@ Description: \textsl{rmtoo} \textbf{must} check the requirements for
 Rationale: Syntax errors are parse errors or other 'low level'
  errors. 
 Depends on: Checks
-Status: open
+Status: not done
 Priority: development:9
 

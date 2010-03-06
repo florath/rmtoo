@@ -8,6 +8,6 @@ Description: Automatic generation of artifacts \textbf{must} be
 Rationale: This gives the users a simple to 'make all' thing, which in
  turn calls the needed commands.
 Depends on: AutomaticGeneration
-Status: open
+Status: not done
 Class: implementable
 Priority: customers:8

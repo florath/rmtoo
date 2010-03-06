@@ -8,7 +8,7 @@ Rationale: Directed circles make no sense in requirements management
  and make traceability impossible.
 Owner: development
 Depends on: Traceability
-Status: open
+Status: not done
 Priority: development:9
 Class: implementable
 

@@ -6,6 +6,6 @@ Description: \textsl{rmtoo} \textbf{must} work on requirments.
 Rationale: That's is what's about.
 Owner: development
 Depends on: rmtoo
-Status: open
+Status: not done
 Priority: development:10
 

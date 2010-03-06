@@ -6,4 +6,4 @@ Description: Each requirement \textbf{must} have a name tag.
 Rationale: This is a short string (headline) for the requirment.
 Owner: development
 Depends on: Requirements
-Status: completed
+Status: finished
