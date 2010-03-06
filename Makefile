@@ -1,5 +1,5 @@
 .PHONY: all
-all: reqtree.png
+all: reqtree.png latex
 
 .PHONY: reqtree.dot
 
