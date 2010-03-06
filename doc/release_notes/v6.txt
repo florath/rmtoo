@@ -12,5 +12,9 @@ requirements elaboration.
 A man page was added which describes the format of the requirements
 input file. (rmtoo-req-format.5)
 
+Requirements with Class implementable are drawn as octogons in the
+requirements dependency graph.
+
+HTML home page is now included in the repository.
 
 
