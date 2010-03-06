@@ -28,3 +28,11 @@ clean:
 		doc/latex/requirements.aux doc/latex/requirements.dvi \
 		doc/latex/requirements.log doc/latex/requirements.out \
 		doc/latex/requirements.pdf doc/latex/requirements.toc
+
+
+
+PYSETUP = python setup.py
+
+.PHONY: install
+install:
+	$(PYSETUP) install --prefix=${DESTDIR}

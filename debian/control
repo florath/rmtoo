@@ -7,24 +7,18 @@ Standards-Version: 3.7.3
 Homepage: http://www.gnu4u.org/rmtoo
 
 Package: rmtoo
-Architecture: any
-Version: 6
+Architecture: all
 Depends: python (<< 2.6), python (>= 2.4)
 Recommends: graphviz (>=2.20), texlive-latex-base (>=2007.dfsg.2), texlive-latex-extra (>=2007.dfsg.17), texlive-latex-recommended (>=2007.dfsg.2)
 Description: requirements management tool
-
-rmtoo uses a different approach than most other requirement management
-tools: it comes as a command line tool which is optimized for handling
-of requirements.  The power of rmtoo is that a typical development
-environment can perfectly handle the input and output files.  Example:
-if there is a need for handling baselines (and mostly there is), use a
-revision control system of your choice (git, mercurial, subversion,
-...).  They can handle different revisions, baselining, tagging,
-branching and many different things perfectly well.
-
-  Let one thing do one thing.
-
-rmtoo is no integrated ’do-everything’ tool as it comes with no GUI at
-all.
-
-
+ rmtoo uses a different approach than most other requirement management
+ tools: it comes as a command line tool which is optimized for handling
+ of requirements.  The power of rmtoo is that a typical development
+ environment can perfectly handle the input and output files.  Example:
+ if there is a need for handling baselines (and mostly there is), use a
+ revision control system of your choice (git, mercurial, subversion,
+ ...).  They can handle different revisions, baselining, tagging,
+ branching and many different things perfectly well.
+ Let one thing do one thing.
+ rmtoo is no integrated ’do-everything’ tool as it comes with no GUI at
+ all.
