@@ -8,6 +8,6 @@ Description: Dependency support for Makefile \textbf{must} be
 Rationale: The major problem handling everything within a Makefile are
  the needed dependencies.
 Depends on: Makefile
-Status: open
+Status: not done
 Class: implementable
 Priority: customers:7

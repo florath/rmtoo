@@ -6,5 +6,5 @@ Description: Each requirement \textbf{must} have a 'invented on' tag.
 Rationale: This is the date when the requirement was written.
 Owner: development
 Depends on: Requirements
-Status: completed
+Status: finished
 

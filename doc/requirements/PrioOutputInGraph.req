@@ -7,5 +7,5 @@ Description: The priority output \textbf{must} be included in graph
 Rationale: This gives a great overview what must be done.
 Owner: development
 Depends on: OutputPrio
-Status: open
+Status: not done
 Priority: development:8

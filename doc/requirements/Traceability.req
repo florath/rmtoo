@@ -8,5 +8,5 @@ Rationale: Maked means e.g. colorized in the graph. There is the need
  for a tag 'last changed' and 'last checked'.
 Owner: development
 Depends on: EasyEditable
-Status: open
+Status: not done
 Priority: development:5

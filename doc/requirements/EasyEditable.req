@@ -7,5 +7,5 @@ Description: The requirements used by \textsl{rmtoo} \textbf{must} be
 Rationale: It must not be a pain to change or add something.
 Owner: development
 Depends on: rmtoo
-Status: open
+Status: not done
 Priority: development:3 customers:3

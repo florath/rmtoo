@@ -10,6 +10,6 @@ Rationale: Because rmtoo is aimed to be used in productive development
  (e.g. PDFs, graphs, ...) must be generated automatically (without
  user interaction).
 Depends on: rmtoo
-Status: open
+Status: not done
 Priority: development:3
 

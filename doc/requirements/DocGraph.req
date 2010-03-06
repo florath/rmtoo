@@ -10,5 +10,6 @@ Rationale: This documentation must describe the different colors
  Maybe: do this as a man page\par
  Or: include a legend in the graph.
 Depends on: Documentation
-Status: open
+Status: not done
 Priority: development:1
+Class: implementable

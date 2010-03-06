@@ -21,10 +21,10 @@ class ReqStatus(ReqTagGeneric):
 
         # Handle Status semantics
         t = req[self.tag]
-        if t=="open":
-            v = Requirement.st_open
-        elif t=="completed":
-            v = Requirement.st_completed
+        if t=="not done":
+            v = Requirement.st_not_done
+        elif t=="finished":
+            v = Requirement.st_finished
         else:
             print("+++ ERROR %s: Status tag invalid '%s'" 
                   % (rid, t))

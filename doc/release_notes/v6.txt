@@ -1,0 +1,16 @@
+User visible changes:
+
+New tag 'Effort estimation' was added.  This makes it possible to get
+an impression about the remaining work to do.  Effort estimation is
+also included in the priority lists.  It is directly shown how much
+effort it is to implement everything up to a certain priority.
+
+Status values changed from 'open' to 'not done' and from 'completed'
+to finished.  This wording fits better for implementation and
+requirements elaboration.
+
+A man page was added which describes the format of the requirements
+input file. (rmtoo-req-format.5)
+
+
+

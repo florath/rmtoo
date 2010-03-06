@@ -9,5 +9,5 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
  Also typically for the testing department a document is needed that
  decribes the requirements (features) of the product.
 Depends on: rmtoo
-Status: open
+Status: not done
 Priority: development:2

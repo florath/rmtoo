@@ -8,7 +8,7 @@ Description: \textsl{rmtoo} \textbf{must} come with a (*nix) man page
 Rationale: This typically describes the input and output and all the
  parameters needed (but not the ideas behind).
 Depends on: Documentation
-Status: open
+Status: not done
 Priority: development:10 customers:5
 Class: implementable
 

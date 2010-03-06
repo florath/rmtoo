@@ -8,5 +8,5 @@ Rationale: Because there is no database or other implicit check,
  \textsl{rmtoo} must do consistency checks every time it reads in the
  requirements. 
 Depends on: UseTxt
-Status: open
+Status: not done
 Priority: development:8 management:10
