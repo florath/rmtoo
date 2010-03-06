@@ -1,0 +1,13 @@
+Name: Man Page LaTeX Output
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a man page which
+ describes the generated LaTeX output.
+Rationale: The man page should also give some hints how to use the
+ LaTeX file.
+Depends on: DocManPage
+Status: not done
+Priority: development:3 customers:7
+Class: implementable

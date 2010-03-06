@@ -1,0 +1,13 @@
+Name: Effort Estimation Measure
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: The effort estimation \textbf{must} be given as
+ (abstract) effort points.
+Rationale: This given an independence between 'real' effort
+ (e.g. days) and estimated which can be easy re-based to a 'real'
+ effort after some (SCRUM) Sprints.
+Owner: development
+Depends on: ReqTagEffortEst
+Status: not done
+Class: implementable

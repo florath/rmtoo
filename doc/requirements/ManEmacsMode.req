@@ -1,0 +1,11 @@
+Name: Man Page Emacs Mode
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a man page
+ describing the Emacs Mode.
+Depends on: DocManPage
+Status: not done
+Priority: development:3 customers:7
+Class: implementable

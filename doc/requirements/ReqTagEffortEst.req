@@ -1,0 +1,12 @@
+Name: Requirement Tag Effort Estimation
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: Each requirement \textbf{may} have a tag 'Effort
+ estimation'. 
+Rationale: This gives a hint how much effort is pending.
+Owner: development
+Depends on: Requirements
+Status: not done
+Class: implementable
+Priority: customers:10

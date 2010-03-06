@@ -1,0 +1,11 @@
+Name: Man Page Artifact Elaboration List
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a man page which
+ describes the output of the elaboration list.
+Depends on: DocManPage
+Status: not done
+Priority: development:3 customers:7
+Class: implementable

@@ -1,0 +1,14 @@
+Name: Emace Mode Value Highlighting
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: The Emacs mode \textsl{must} highlight values which are
+ limited to a set of possible values.
+Rationale: E.g. in the Status line 'not done' and 'finished' should be
+ highlighted --- but these words should not highlighted in e.g. the
+ Description section.
+Owner: development
+Depends on: EmacsMode
+Status: not done
+Class: detailable
+Priority: customers:6

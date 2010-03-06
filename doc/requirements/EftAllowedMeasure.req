@@ -1,0 +1,13 @@
+Name: Effort Estimation Allowed Measure Unit
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: The effort estimation \textbf{must} be one of {0, 1, 2,
+ 3, 5, 8, 13, 21}.
+Rationale: This is the typically used start of the fibonacci numbers
+ for this.  0 is no effort, 1 is tiny effort and so on until 21 is
+ huge effort.
+Owner: development
+Depends on: ReqTagEffortEst
+Status: not done
+Class: implementable

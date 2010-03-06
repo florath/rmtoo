@@ -1,0 +1,13 @@
+Name: Priority output Include Effort Estimation
+Type: design decision
+Invented on: 2010-03-06
+Invented by: flonatel
+Description: The priority output list \textbf{must} include the effort
+ estimation for each requirement.  If no effort estimation is given,
+ the output must be an empty field.
+Rationale: This gives a good overview which requirements need which
+ effort. 
+Owner: development
+Depends on: ReqTagEffortEst OutputPrio
+Status: not done
+Class: implementable
