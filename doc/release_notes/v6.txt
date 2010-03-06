@@ -10,7 +10,8 @@ to finished.  This wording fits better for implementation and
 requirements elaboration.
 
 A man page was added which describes the format of the requirements
-input file. (rmtoo-req-format.5)
+input file (rmtoo-req-format.5).  Add man page for rmtoo incvocation
+(rmtoo-invoking.1). 
 
 Requirements with Class implementable are drawn as octogons in the
 requirements dependency graph.
