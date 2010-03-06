@@ -27,8 +27,8 @@ class Requirement(Digraph.Node):
     # Each requirement has a Status.
     # It will be read in and set by the ReqStatus class.
     # The status must be one of the following:
-    st_open = 1
-    st_completed = 2
+    st_not_done = 1
+    st_finished = 2
 
     # Class Type
     # This specifies, if this node is really a node or if this can /
@@ -111,7 +111,7 @@ class Requirement(Digraph.Node):
         return self.tags["Priority"]
 
     def is_open(self):
-        return self.tags["Status"] == self.st_open
+        return self.tags["Status"] == self.st_not_done
 
     def is_implementable(self):
         return self.tags["Class"] == self.ct_implementable
@@ -143,7 +143,7 @@ class Requirement(Digraph.Node):
                 f.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
             f.write("\n")
 
-        if self.tags["Status"]==self.st_completed:
+        if self.tags["Status"]==self.st_finished:
             status = "completed"
         else:
             status = "open"
@@ -175,10 +175,13 @@ class Requirement(Digraph.Node):
         if self.tags["Type"] == self.rt_design_decision:
             nodeparam.append("color=green")
 
-        if self.tags["Status"] == self.st_open:
+        if self.tags["Status"] == self.st_not_done:
             nodeparam.append("fontcolor=red")
             nodeparam.append('label="%s\\n[%4.2f]"' %
                              (self.id, self.tags["Priority"]*10))
+
+        if self.tags["Class"] == self.ct_implementable:
+            nodeparam.append("shape=octagon")
 
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
