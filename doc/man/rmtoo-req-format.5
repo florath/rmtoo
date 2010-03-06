@@ -1,0 +1,144 @@
+.\" 
+.\" Man page for rmtoo requirements input format
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-req-format 7 2010-03-05 "File Formats" "Requirements Management"
+.SH NAME
+rmtoo-req-format \- requirements management tool: requirements format
+.SH FILE FORMAT
+Each requirement must be in its own file.  The filename must be end
+in '.req'.  Only ASCII characters are allowed.  Each line must at
+maximum 80 characters long.
+.P
+The requirement must be written as a set of 'key: value' pairs.  A
+value is extended if the first column of a line is a space.
+.SH KEYS
+The following keys with the described syntax and semantic exists: 
+.SH KEY 'Name'
+This value of this key is a short headline for the requirement.  It
+is used as a section headline in the output document.
+.SH KEY 'Type'
+This value can be one of 'master requirement', 'requirement' and
+'design decision'.
+.P
+There can only be one 'master requirement'.  This is the requirement
+(product, artifact) the whole project is about.  This can be
+typically have the project title as the name.  There can only be one
+'master requirement' in a whole set.
+.SH KEY 'Invented on'
+The value of 'Invented on' is the date when the requirement was
+written.  The format must be YYYY-MM-DD.
+.SH KEY 'Invented by'
+This value is the name of the author of the requirement.  The author
+is the person who wrote the requirement.  It must not be necessary
+one of the stakeholders.
+.SH KEY 'Owner'
+This is the owner of the requirement.  He is responsible for the
+requirement.
+.SH KEY 'Description'
+The description is the formulation of the requirement.  There must be
+one of the words 'must' or 'shall'.  The following words are not
+allowed: may, possible, might, and, or.
+Requirements must be testable.
+.P
+Requirements must be positive; negative requirements can mostly not
+tested. 
+.SH KEY 'Rationale'
+This is optional.  This gives a hint and some more details about the
+requirement.  Typically some background information is given here. 
+.SH KEY 'Depends on'
+Each requirement (except the master requirement) must have one or
+more parents where this requirements depends on.
+.SH KEY 'Status'
+The status can be one of 'open' or 'completed'.
+.SH KEY 'Class'
+This gives the class of the requirement.  Currently two values are
+possible 'implementable' or 'detailable'.
+.P
+.B implementable
+means that the requirement is detailed enough to start with
+implementation. 
+.B detailable
+means that the requirement must be elaborated before they can be
+implemented. 
+.SH KEY 'Priority'
+Each requirement must have a priority.  The effective priority is
+computed by the currently given priority multiplied by a normalized
+maximum priority of all parents.
+.P
+The format is 'stakeholer:num'. 'num' must be a number between and
+including 0 and 10.  It is possible to specify more than one
+stakeholders separating them with a space.
+.SH KEY 'Effort estimation'
+The effort estimation is done with the help of an abstract
+measurement so called 'effort points':
+.P
+.B 0
+- no effort
+.P
+.B 1
+- tiny effort
+.P
+.B 2
+- very small effort (two times a tiny effort)
+.P
+.B 3
+- small effort (same as a tiny and a very small effort)
+.P
+.B 5
+- medium effort (same as a very small and a small effort)
+.P
+.B 8
+- big effort (same as a small and a medium effort)
+.P
+.B 13
+- very big effort (same as big effort and a medium effort)
+.P
+.B 21
+- huge effort (same as very big effort and big effort)
+.SH EXAMPLE
+Note that the following example has some initial indent resulting
+from the word processing program.  The keywords must start at the
+first column.  Additional lines must have a space in column one.
+.sp
+.RS
+.nf
+
+\f Name: Example Requirement
+\f Type: requirement
+\f Invented on: 2010-02-14
+\f Invented by: Mustermann
+\f Description: The example application must use TCP/IP for
+\f  communication with the database instance.
+\f Rationale: Here are some reasons why this must be
+\f  implemented in this way.
+\f Owner: security
+\f Depends on: OtherRequirement
+\f Status: open
+
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview over rmtoo requirements management tool.  All references
+can be found there.
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
