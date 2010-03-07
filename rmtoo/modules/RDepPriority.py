@@ -30,9 +30,6 @@ class RDepPriority:
     # subtree, if the new priority is higher.
     def rewrite(self, reqset):
 
-        def prioritize(node, inc_weight):
-            node.tags["Priority"] = node.tags["Factor"] * inc_weight
-
         # The second argument (the number) is the weight of the
         # incoming edge.
         def handle_priorization(node, inc_weight):

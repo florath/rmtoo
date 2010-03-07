@@ -6,6 +6,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
 class Digraph:
 
     class Node:
@@ -67,4 +69,43 @@ class Digraph:
         for n in self.nodes:
             rv[n.name] = n.outgoing_as_named_list()
         return rv
+            
+    # Find a node with a given name
+    def find(self, name):
+        for n in self.nodes:
+            if name==n.name:
+                return n
+        return None
+
+    # Build up a dictionary with name:node pairs.
+    # This will only be done, iff every node has a name (None is not a
+    # name) and all names are different.
+    def build_named_nodes(self):
+        self.named_nodes = {}
+        for n in self.nodes:
+            if n.name==None:
+                # Delete the whole dictionary first
+                self.named_nodes = None
+                raise RMTException(20, "cannot create node dictionary "
+                                   "- node has no name")
+            if n.name in self.nodes:
+                # Also: delete the whole dictionary first.
+                self.named_nodes = None
+                raise RMTException(21, "same name for (at least) two "
+                                   "nodes '%s'" % n.name)
+
+            # Ok. Then put it into the dictionary:
+            self.named_nodes[n.name] = n
+
+    # This is the appropriate accessor: get the content only if there
+    # is the dictionary.
+    def get_named_node(self, name):
+        if self.named_nodes==None:
+            raise RMTException(22, "no named_nodes dictionary available "
+                               "- maybe call 'build_named_nodes()' first")
+        if name not in self.named_nodes:
+            raise RMTException(23, "node with name '%s' not available"
+                               % name)
+        # When all checks succeed: return the value
+        return self.named_nodes[name]
             
