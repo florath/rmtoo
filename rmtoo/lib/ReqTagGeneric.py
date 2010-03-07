@@ -6,6 +6,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
 #
 # This class is the base class of mostly all tags.
 # It handles basic setup as well as handling of common cases.
@@ -24,13 +26,11 @@ class ReqTagGeneric:
     # does not perform any other check.
     # Returns 'True' if the tag is available and 'False' if the tag is
     # not available.
-    def check_mandatory_tag(self, rid, r):
+    def check_mandatory_tag(self, rid, r, eid):
         # The given tag is mandatory
         if self.tag not in r:
-            print("+++ ERROR: requirement '%s' does not contain the "
-                  "tag '%s'" % (rid, self.tag))
-            # It's a syntax thing.
-            return False
+            raise RMTException(eid, "'%s' does not contain the "
+                               "tag '%s'" % (rid, self.tag))
         return True
 
     # The method 'handle_optional_tag()' handles optional tags in the

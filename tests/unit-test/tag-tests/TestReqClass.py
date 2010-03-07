@@ -61,4 +61,4 @@ class TestReqClass:
             status, name, value = rt.rewrite("Class-test", req)
             assert(False)
         except RMTException, rmte:
-            print(rmte)
+            assert(rmte.eid==1)

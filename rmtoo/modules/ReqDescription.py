@@ -6,6 +6,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqDescription(ReqTagGeneric):
@@ -16,8 +17,7 @@ class ReqDescription(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Description) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
+        self.check_mandatory_tag(rid, req, 2)
 
         t = req[self.tag]
         # It must not be too long.
@@ -27,10 +27,8 @@ class ReqDescription(ReqTagGeneric):
         # ToDo: Check for words which must appear in a requirement,
         # like 'have to' or 'must'.
         if len(t)>1024:
-            print("+++ ERROR %s: Description is much too long: %d characters"
-                  % (rid, len(t)))
-            print("+++        Please consider split up this requirement")
-            return False, None, None
+            raise RMTException(3, "%s: Description is much too long: "
+                               "%d characters" % (rid, len(t)))
         if len(t)>255:
             print("+++ WARNING %s: Description is too long: %d characters"
                   % (rid, len(t)))
