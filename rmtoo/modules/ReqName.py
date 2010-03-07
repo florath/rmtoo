@@ -16,8 +16,8 @@ class ReqName(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Name) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
-        t = req['Name']
-        del req['Name']
-        return True, self.tag, t
+        self.check_mandatory_tag(rid, req, 9)
+
+        t = req[self.tag]
+        del req[self.tag]
+        return self.tag, t
