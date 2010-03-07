@@ -7,6 +7,7 @@
 #
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.RMTException import RMTException
 
 class ReqInventedBy(ReqTagGeneric):
     tag = "Invented by"
@@ -16,16 +17,14 @@ class ReqInventedBy(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Invented by) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
+        self.check_mandatory_tag(rid, req, 5)
 
         t = req[self.tag]
         # This must be one of the inventors
         if t not in self.config.inventors:
-            print("+++ ERROR %s: invalid invented by '%s'. Must be one "
-                  "of the inventors '%s'" %
-                  (rid, t, self.config.inventors))
-            return False, None, None
+            raise RMTException(6, "%s: invalid invented by '%s'. Must be one "
+                               "of the inventors '%s'" %
+                               (rid, t, self.config.inventors))
 
         del req[self.tag]
-        return True, self.tag, t
+        return self.tag, t

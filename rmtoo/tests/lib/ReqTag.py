@@ -8,6 +8,9 @@
 # For licencing details see COPYING
 #
 
+class TestConfig:
+    pass
+
 def create_parameters():
-    return {}, {}, {}
+    return {}, TestConfig(), {}
 
