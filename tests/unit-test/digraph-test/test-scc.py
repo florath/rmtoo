@@ -10,10 +10,12 @@
 
 import unittest
 
-from Digraph import Digraph
-from StronglyConnectedComponents import strongly_connected_components
-from StronglyConnectedComponents import check_for_strongly_connected_components
-from Helper import node_sl_to_node_name_sl
+from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.digraph.StronglyConnectedComponents \
+    import strongly_connected_components
+from rmtoo.lib.digraph.StronglyConnectedComponents \
+    import check_for_strongly_connected_components
+from rmtoo.lib.digraph.Helper import node_sl_to_node_name_sl
 
 class SCCTests(unittest.TestCase):
 

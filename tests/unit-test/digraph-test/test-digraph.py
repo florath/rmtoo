@@ -9,7 +9,7 @@
 #
 
 import unittest
-from Digraph import Digraph
+from rmtoo.lib.digraph.Digraph import Digraph
 
 class DigraphTests(unittest.TestCase):
 

@@ -10,9 +10,9 @@
 
 import unittest
 
-from Digraph import Digraph
-from TopologicalSort import topological_sort
-from Helper import node_list_to_node_name_list
+from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
 class MyGraph(Digraph):
 
