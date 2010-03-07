@@ -23,13 +23,22 @@ class Digraph:
         def __hash__(self):
             return self.name.__hash__()
 
-        # Return the names of all outgoing nodes as a list.
-        def outgoing_as_named_list(self):
+        # Return given list as list of names.
+        @staticmethod
+        def as_named_list(il):
             # Start with an empty list
             l = []
-            for o in self.outgoing:
+            for o in il:
                 l.append(o.name)
             return l
+
+        # Return the names of all outgoing nodes as a list.
+        def outgoing_as_named_list(self):
+            return self.as_named_list(self.outgoing)
+
+        # Return the names of all incoming nodes as a list.
+        def incoming_as_named_list(self):
+            return self.as_named_list(self.incoming)
 
     # Create a digraph from the given dictionary representation. 
     # If no dictionary is given, an empty digraph will be created.

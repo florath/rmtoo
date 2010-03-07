@@ -18,6 +18,15 @@ class ReqSet(Digraph):
 class TestConfig:
     pass
 
+# Create a set of parameters for the test-cases
 def create_parameters(d=None):
     return {}, TestConfig(), ReqSet(d)
 
+# This is a test (minimalistic) requirement
+class TestReq(Digraph.Node):
+
+    def __init__(self, name, tags, req=None):
+        Digraph.Node.__init__(self, name)
+        self.id = name
+        self.tags = tags
+        self.req = req
