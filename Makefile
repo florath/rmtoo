@@ -36,3 +36,7 @@ PYSETUP = python setup.py
 .PHONY: install
 install:
 	$(PYSETUP) install --prefix=${DESTDIR}
+
+.PHONY: tests
+tests:
+	nosetests -v --with-coverage -s

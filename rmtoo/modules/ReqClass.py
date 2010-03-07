@@ -6,6 +6,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
@@ -20,12 +21,6 @@ class ReqClass(ReqTagGeneric):
     def __init__(self, opts, config):
         ReqTagGeneric.__init__(self, opts, config)
 
-    def find_class(self, tag):
-        for t in self.classs:
-            if tag==t[0]:
-                return t
-        return None
-
     def rewrite(self, rid, req):
         # This tag (Class) is mandatory optional
         # (which means: if it's not there, there is a default - but
@@ -39,9 +34,9 @@ class ReqClass(ReqTagGeneric):
             elif t=="detailable":
                 v = Requirement.ct_detailable
             else:
-                print("+++ ERROR %s: invalid class field '%s': " 
-                      "must be one of 'implementable' or 'detailable'"
-                      % (rid, t))
-                return False, None, None
+                raise RMTException(
+                    1, "%s: invalid class field '%s': " 
+                    "must be one of 'implementable' or 'detailable'"
+                    % (rid, t))
             del req['Class']
         return True, self.tag, v
