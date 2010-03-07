@@ -9,4 +9,5 @@ Rationale: There must no need to redisign the whole program when e.g.
 Depends on: rmtoo
 Status: not done
 Priority: development:6
+Effort estimation: 5
 

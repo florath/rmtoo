@@ -9,5 +9,5 @@ Rationale: This gives a good overview which requirements need which
  effort. 
 Owner: development
 Depends on: ReqTagEffortEst OutputPrio
-Status: not done
+Status: finished
 Class: implementable

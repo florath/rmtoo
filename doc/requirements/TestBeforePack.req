@@ -10,3 +10,5 @@ Owner: development
 Depends on: Testing Packaging
 Status: not done
 Priority: development:10
+Effort estimation: 3
+Class: implementable

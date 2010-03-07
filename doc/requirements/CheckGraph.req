@@ -8,5 +8,5 @@ Description: \textsl{rmtoo} \textbf{must} check the requirements for
 Rationale: Graph errors are errors which result in a broken
  requirement dependency graph, e.g. a circular dependency.
 Depends on: Checks
-Status: not done
+Status: finished
 Priority: development:9

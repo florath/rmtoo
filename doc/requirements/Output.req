@@ -11,3 +11,5 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
 Depends on: rmtoo
 Status: not done
 Priority: development:2
+Effort estimation: 8
+

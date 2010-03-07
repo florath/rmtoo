@@ -8,7 +8,7 @@ Description: \textsl{rmtoo} \textbf{must} use txt-files for
 Rationale: There is no need for a special editor - normal editors (such
  as emacs and vi) can be used.
 Depends on: Simplicity
-Status: not done
+Status: finished
 Priority: development:10
 
 

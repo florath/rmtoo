@@ -6,6 +6,6 @@ Description: The Emacs mode \textsl{must} switch on flyspell-mode by
  default. 
 Owner: development
 Depends on: EmacsMode
-Status: not done
+Status: finished
 Class: implementable
 Priority: customers:6

@@ -7,6 +7,6 @@ Description: Each requirement \textbf{may} have a tag 'Effort
 Rationale: This gives a hint how much effort is pending.
 Owner: development
 Depends on: Requirements
-Status: not done
+Status: finished
 Class: implementable
 Priority: customers:10

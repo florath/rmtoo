@@ -6,6 +6,6 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with an overview man
  page. 
 Depends on: DocManPage
-Status: not done
+Status: finished
 Priority: development:3 customers:7
 Class: implementable

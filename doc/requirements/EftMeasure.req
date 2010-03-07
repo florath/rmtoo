@@ -9,5 +9,5 @@ Rationale: This given an independence between 'real' effort
  effort after some (SCRUM) Sprints.
 Owner: development
 Depends on: ReqTagEffortEst
-Status: not done
+Status: finished
 Class: implementable

@@ -11,3 +11,4 @@ Depends on: Makefile
 Status: not done
 Class: implementable
 Priority: customers:7
+Effort estimation: 8
