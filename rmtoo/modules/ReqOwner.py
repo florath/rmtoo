@@ -6,6 +6,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqOwner(ReqTagGeneric):
@@ -16,16 +17,14 @@ class ReqOwner(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Owner) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
+        self.check_mandatory_tag(rid, req, 10)
 
         # Also the owner must be in the list of stakeholders
         t = req[self.tag]
         if t not in self.config.stakeholders:
-            print("+++ ERROR %s: invalid owner '%s'. Must be one "
-                  "of the stakeholder '%s'" %
-                  (rid, t, self.config.stakeholders))
-            return
+            raise RMTException(11, "%s: invalid owner '%s'. Must be one "
+                               "of the stakeholder '%s'" %
+                               (rid, t, self.config.stakeholders))
         # Copy and delete the original
-        del req['Owner']
-        return True, self.tag, t
+        del req[self.tag]
+        return self.tag, t
