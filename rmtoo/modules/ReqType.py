@@ -6,6 +6,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
@@ -41,15 +42,14 @@ class ReqType(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Type) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
+        self.check_mandatory_tag(rid, req, 18)
 
         t = req[self.tag]
         rt = self.find_type(t)
         if rt==None:
-            print("+++ ERROR %s: invalid type field '%s': " \
-                      "must be one of '%s'" % (rid, t, self.type_keys))
-            return False, None, None
+            raise RMTException(19, "%s: invalid type field '%s': "
+                                   "must be one of '%s'" %
+                               (rid, t, self.type_keys))
 
         del req[self.tag]
-        return True, self.tag, rt[1]
+        return self.tag, rt[1]
