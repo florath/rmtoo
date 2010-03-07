@@ -6,6 +6,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 # A priority is a number between 0 and 1.
@@ -24,7 +25,7 @@ class ReqPriority(ReqTagGeneric):
     def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
         if self.tag not in req:
-            return True, "Factor", 0.0
+            return "Factor", 0.0
         # Compute the priority.  This is done by adding the simple
         # priorities and afterwars build the average from this.
         t = req[self.tag]
@@ -36,27 +37,23 @@ class ReqPriority(ReqTagGeneric):
         priority_done = []
         for l in lop:
             p = l.split(":", 1)
-            if len(p)!=2:
-                print("+++ ERROR %s: faulty priority declaration '%s'"
-                      % (rid, l))
-                return False, None, None
+            if len(p)!=2 or len(p[1])==0:
+                raise RMTException(12, "%s: faulty priority declaration '%s'"
+                                   % (rid, l))
             # p[0] is the stakeholder
             # p[1] is the given priority
             if p[0] not in self.config.stakeholders:
-                print("+++ ERROR %s: stakeholder '%s' not known"
-                      % (rid, p[0]))
-                return False, None, None
+                raise RMTException(13, "%s: stakeholder '%s' not known"
+                                   % (rid, p[0]))
             if p[0] in priority_done:
-                print("+++ ERROR %s: stakeholder '%s' voted more than once"
-                      % (rid, p[0]))
-                return False, None, None
+                raise RMTException(14, "%s: stakeholder '%s' voted more "
+                                   "than once" % (rid, p[0]))
             # Convert it to a float - so it's easier to compare.
             f = float(p[1])
             # Check if in valid range [0..10]
             if f<0 or f>10:
-                print("+++ ERROR %s: invalid priority '%f' - must "
-                      "be between 0 and 10" % (rid, f))
-                return False, None, None
+                raise RMTException(15, "%s: invalid priority '%f' - must "
+                                   "be between 0 and 10" % (rid, f))
             # Compute new sum...
             priority_sum += f/10
             # ... and increase the stakeholders count.
@@ -65,4 +62,4 @@ class ReqPriority(ReqTagGeneric):
             priority_done.append(p[0])
 
         del req[self.tag]
-        return True, "Factor", priority_sum/float(num_stakeholders)
+        return "Factor", priority_sum/float(num_stakeholders)
