@@ -58,3 +58,97 @@ class TestRDepDependsOn:
         assert(reqset.reqs["B"].incoming_as_named_list()==["C"])
         assert(reqset.reqs["C"].outgoing_as_named_list()==["A", "B"])
         assert(reqset.reqs["C"].incoming_as_named_list()==[])
+
+    def test_negative_01(self):
+        "Master requirement with Depends on field"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {"Depends on": "A"})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+        
+        assert(status==False)
+
+    def test_negative_02(self):
+        "Two nodes as master requirement"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_master_requirement},
+                         {})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+        
+        assert(status==False)
+
+    def test_negative_03(self):
+        "Normal requirement has no 'Depends on'"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_requirement},
+                         {})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+        
+        assert(status==False)
+
+    def test_negative_04(self):
+        "Normal requirement has no 'Depends on'"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_requirement},
+                         {"Depends on": ""})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+        
+        assert(status==False)
+
+    def test_negative_05(self):
+        "'Depends on' points to a non existing requirement"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_requirement},
+                         {"Depends on": "C"})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+
+        assert(status==False)
+
+    def test_negative_06(self):
+        "Set without any master requirement"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_requirement},
+                         {"Depends on": "B"}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_requirement},
+                         {"Depends on": "A"})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+
+        assert(status==False)
+
