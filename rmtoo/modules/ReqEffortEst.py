@@ -8,9 +8,8 @@
 
 #
 # The 'Effort estimation' must be one of
-#   0, 1, 2, 3, 5, 8, 13
+#   0, 1, 2, 3, 5, 8, 13, 21
 #
-# (see Roman Pichler 'SCRUM', dpunkt.verlag, 2008)
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 

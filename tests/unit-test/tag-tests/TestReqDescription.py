@@ -21,8 +21,7 @@ class TestReqClass:
         req = {"Description": "short"}
 
         rt = ReqDescription(opts, config)
-        status, name, value = rt.rewrite("Description-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Description-test", req)
         assert(name=="Description")
         assert(value=="short")
 
@@ -34,8 +33,7 @@ class TestReqClass:
         req = {"Description": d}
 
         rt = ReqDescription(opts, config)
-        status, name, value = rt.rewrite("Description-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Description-test", req)
         assert(name=="Description")
         assert(value==d)
 
@@ -49,8 +47,7 @@ class TestReqClass:
         req = {"Description": long_text}
 
         rt = ReqDescription(opts, config)
-        status, name, value = rt.rewrite("Description-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Description-test", req)
         assert(name=="Description")
         assert(value==long_text)
 
@@ -62,7 +59,7 @@ class TestReqClass:
 
         rt = ReqDescription(opts, config)
         try:
-            status, name, value = rt.rewrite("Description-test", req)
+            name, value = rt.rewrite("Description-test", req)
             assert(False)
         except RMTException, rmte:
             assert(rmte.eid==2)
@@ -78,7 +75,7 @@ class TestReqClass:
 
         rt = ReqDescription(opts, config)
         try:
-            status, name, value = rt.rewrite("Description-test", req)
+            name, value = rt.rewrite("Description-test", req)
             assert(False)
         except RMTException, rmte:
             assert(rmte.eid==3)

@@ -36,5 +36,5 @@ class ReqDescription(ReqTagGeneric):
         # Copy and delete the original
         del req[self.tag]
 
-        return True, self.tag, t
+        return self.tag, t
             

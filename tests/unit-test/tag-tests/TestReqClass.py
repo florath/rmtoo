@@ -21,8 +21,7 @@ class TestReqClass:
         req = {}
 
         rt = ReqClass(opts, config)
-        status, name, value = rt.rewrite("Class-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
         assert(value==Requirement.ct_detailable)
 
@@ -33,8 +32,7 @@ class TestReqClass:
         req = {"Class": "detailable"}
 
         rt = ReqClass(opts, config)
-        status, name, value = rt.rewrite("Class-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
         assert(value==Requirement.ct_detailable)
 
@@ -45,8 +43,7 @@ class TestReqClass:
         req = {"Class": "implementable"}
 
         rt = ReqClass(opts, config)
-        status, name, value = rt.rewrite("Class-test", req)
-        assert(status==True)
+        name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
         assert(value==Requirement.ct_implementable)
 
@@ -58,7 +55,7 @@ class TestReqClass:
 
         rt = ReqClass(opts, config)
         try:
-            status, name, value = rt.rewrite("Class-test", req)
+            name, value = rt.rewrite("Class-test", req)
             assert(False)
         except RMTException, rmte:
             assert(rmte.eid==1)

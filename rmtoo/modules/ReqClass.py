@@ -39,4 +39,4 @@ class ReqClass(ReqTagGeneric):
                     "must be one of 'implementable' or 'detailable'"
                     % (rid, t))
             del req['Class']
-        return True, self.tag, v
+        return self.tag, v

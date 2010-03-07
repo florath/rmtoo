@@ -31,7 +31,6 @@ class ReqTagGeneric:
         if self.tag not in r:
             raise RMTException(eid, "'%s' does not contain the "
                                "tag '%s'" % (rid, self.tag))
-        return True
 
     # The method 'handle_optional_tag()' handles optional tags in the
     # sense, that it copies over the content to the class object
@@ -45,6 +44,6 @@ class ReqTagGeneric:
         if self.tag in r:
             v = r[self.tag]
             del r[self.tag]
-            return True, self.tag, v
+            return self.tag, v
 
-        return True, self.tag, None
+        return self.tag, None
