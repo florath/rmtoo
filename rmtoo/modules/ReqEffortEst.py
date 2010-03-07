@@ -12,6 +12,7 @@
 #
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.RMTException import RMTException
 
 class ReqEffortEst(ReqTagGeneric):
     tag = "Effort estimation"
@@ -22,17 +23,15 @@ class ReqEffortEst(ReqTagGeneric):
 
     def rewrite(self, rid, req):
     	# This is optional
-        state, tag, value = self.handle_optional_tag(req)
+        tag, value = self.handle_optional_tag(req)
         if value==None:
-            return state, tag, value
+            return tag, value
 
         v = int(value)
 
         if v not in self.valid_values:
-            print("+++ ERROR %s: effort estimation must be one of %s"
-                  % self.valid_values)
-            return False, None, None
-
-        return True, tag, v
+            raise RMTException(4, "%s: effort estimation must be one of %s"
+                               % (rid, self.valid_values))
+        return tag, v
 
             

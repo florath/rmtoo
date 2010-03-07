@@ -11,6 +11,7 @@
 from rmtoo.modules.ReqDescription import ReqDescription
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.tests.lib.ReqTag import create_parameters
 
 class TestReqClass:
 
