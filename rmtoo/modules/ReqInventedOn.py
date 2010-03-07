@@ -8,6 +8,7 @@
 
 import time
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.RMTException import RMTException
 
 class ReqInventedOn(ReqTagGeneric):
     tag = "Invented on"
@@ -17,17 +18,16 @@ class ReqInventedOn(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         # This tag (Invented on) is mandatory
-        if not self.check_mandatory_tag(rid, req):
-            return False, None, None
+        self.check_mandatory_tag(rid, req, 7)
 
         t = req[self.tag]
         try:
             # It's better to check, if the date is ok
             pt = time.strptime(t, "%Y-%m-%d")
             del req[self.tag]
-            return True, self.tag, pt
+            return self.tag, pt
         except ValueError, ve:
-            print("+++ ERROR %s: invalid date specified (must be YYYY-MM-DD) "
-                  "was '%s'" % (rid, t)) 
-            return False, None, None
+            raise RMTException(8, "%s: invalid date specified (must be "
+                               "YYYY-MM-DD) was '%s'" % (rid, t))
+
             

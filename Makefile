@@ -39,4 +39,4 @@ install:
 
 .PHONY: tests
 tests:
-	nosetests -v --with-coverage -s
+	nosetests -v --with-coverage -s --cover-package=rmtoo
