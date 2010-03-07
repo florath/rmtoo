@@ -34,4 +34,3 @@ class ReqEffortEst(ReqTagGeneric):
                                % (rid, self.valid_values))
         return tag, v
 
-            
