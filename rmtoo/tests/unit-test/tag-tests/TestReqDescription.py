@@ -16,8 +16,7 @@ class TestReqClass:
 
     def test_positive_01(self):
         "Requirement Tag Description - one word Description"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         req = {"Description": "short"}
 
         rt = ReqDescription(opts, config)
@@ -27,8 +26,7 @@ class TestReqClass:
 
     def test_positive_02(self):
         "Requirement Tag Description - some words Description"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         d = "This are some words description."
         req = {"Description": d}
 
@@ -39,8 +37,7 @@ class TestReqClass:
 
     def test_positive_03(self):
         "Requirement Tag Description - 500 chars description"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         long_text = ""
         for c in xrange(0, 500):
             long_text += "A"
@@ -53,9 +50,7 @@ class TestReqClass:
 
     def test_negative_01(self):
         "Requirement Tag Description - empty reqs"
-        opts = {}
-        config = {}
-        req = {}
+        opts, config, req = create_parameters()
 
         rt = ReqDescription(opts, config)
         try:
@@ -66,8 +61,7 @@ class TestReqClass:
 
     def test_negative_02(self):
         "Requirement Tag Description - description much too long"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         long_text = ""
         for c in xrange(0, 1500):
             long_text += "A"

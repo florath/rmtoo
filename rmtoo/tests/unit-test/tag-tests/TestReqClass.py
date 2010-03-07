@@ -11,14 +11,13 @@
 from rmtoo.modules.ReqClass import ReqClass
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.tests.lib.ReqTag import create_parameters
 
 class TestReqClass:
 
     def test_positive_01(self):
-        "Requirement Tag Class - no Class given"
-        opts = {}
-        config = {}
-        req = {}
+        "Requirement Tag Class - no Class tag given"
+        opts, config, req = create_parameters()
 
         rt = ReqClass(opts, config)
         name, value = rt.rewrite("Class-test", req)
@@ -26,9 +25,8 @@ class TestReqClass:
         assert(value==Requirement.ct_detailable)
 
     def test_positive_02(self):
-        "Requirement Tag Class - no Class detailable"
-        opts = {}
-        config = {}
+        "Requirement Tag Class - Class set to 'detailable'"
+        opts, config, req = create_parameters()
         req = {"Class": "detailable"}
 
         rt = ReqClass(opts, config)
@@ -38,8 +36,7 @@ class TestReqClass:
 
     def test_positive_03(self):
         "Requirement Tag Class - no Class implementable"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         req = {"Class": "implementable"}
 
         rt = ReqClass(opts, config)
@@ -49,8 +46,7 @@ class TestReqClass:
 
     def test_negative_01(self):
         "Requirement Tag Class - unsupported Class value"
-        opts = {}
-        config = {}
+        opts, config, req = create_parameters()
         req = {"Class": "something_completly_different"}
 
         rt = ReqClass(opts, config)

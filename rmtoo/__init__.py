@@ -7,7 +7,7 @@
 #
 
 __package__ = "rmtoo"
-__all__ = ["modules", "lib" ]
+__all__ = ["modules", "lib", "tests" ]
 
 #
 # Add shared library path to sys.path
