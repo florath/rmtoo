@@ -74,18 +74,8 @@ class Requirement(Digraph.Node):
 
     def handle_modules_reqtag(self, reqs):
         for modkey, module in self.mods.reqtag.items():
-            state, key, value = module.rewrite(self.id, reqs)
-            if state==False:
-                # Some sematic error occured: do not interpret key or
-                # value.
-                # The error message was already eliminated - so do
-                # only one generic
-                print("+++ ERROR %s: semantic error occured in '%s'"
-                      % (self.id, modkey))
-                self.state = self.er_error
-                # Continue (do not return immeditely) to get also
-                # possible other errors.
-            else:
+            try:
+                key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key
                 # in the map.
                 if key in self.tags:
@@ -95,6 +85,17 @@ class Requirement(Digraph.Node):
                     # Also continue to get possible further error
                     # messages.
                 self.tags[key] = value
+            except RMTException, rmte:
+                # Some sematic error occured: do not interpret key or
+                # value.
+                # The error message was already eliminated - so do
+                # only one generic
+                print("+++ ERROR %s: semantic error occured in '%s'"
+                      % (self.id, modkey))
+                print("+++ root cause is: '%s'" % rmte)
+                self.state = self.er_error
+                # Continue (do not return immeditely) to get also
+                # possible other errors.
 
     def ok(self):
         return self.state==self.er_fine
