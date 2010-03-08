@@ -11,6 +11,7 @@ import time
 
 from rmtoo.lib.RequirementParser import RequirementParser
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.RMTException import RMTException
 
 class Requirement(Digraph.Node):
 

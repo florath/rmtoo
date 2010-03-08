@@ -7,11 +7,7 @@
 #
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-
-
-
+export DH_VERBOSE=1
 
 configure: configure-stamp
 configure-stamp:
@@ -54,23 +50,27 @@ install: build
 
 # Build architecture-independent files here.
 binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
+
+	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/requirements
+	install doc/requirements/*.req debian/rmtoo/usr/share/doc/rmtoo/requirements
+
 	dh_installexamples
 #	dh_install
 #	dh_installmenu
 #	dh_installdebconf	
 #	dh_installlogrotate
-#	dh_installemacsen
+	dh_installemacsen
+
+	mkdir -p debian/rmtoo/usr/share/emacs/site-lisp/rmtoo
+	install contrib/req-mode.el debian/rmtoo/usr/share/emacs/site-lisp/rmtoo
+
 #	dh_installpam
 #	dh_installmime
-#	dh_python
+	dh_pycentral
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
@@ -86,6 +86,10 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build install
+# We have nothing to do by default.
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure

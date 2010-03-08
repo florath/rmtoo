@@ -1,6 +1,25 @@
-rmtoo for Debian
-----------------
 
-<possible notes regarding this package - if none, delete this file>
+rmtoo 6 is the first version which comes prepackaged as a Debian
+package. 
 
- -- Andreas Florath <sf@flonatel.org>  Sat, 06 Mar 2010 15:02:27 +0100
+Documentation is placed under /usr/share/doc/rmtoo
+
+The documentation includes the requirements dependency graph and the
+requirements.pdf document from rmtoo itself.
+
+The package also includes the regression and unit tests.
+It is possible to run them with:
+$ cd /usr/share/pyshared/rmtoo
+$ nosetests --verbosity=3 --with-coverage --cover-package=rmtoo
+
+(nosetest might complain about a '[Errno 13] Permission denied',
+because the file '.coverage' cannot be written - this can be ignored.) 
+
+Currently about 74% test coverage is reached with the included tests. 
+
+Happy requirements writing!
+
+Andreas Florath
+sf@flonatel.org
+03-2010
+

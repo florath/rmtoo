@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-req-format 7 2010-03-05 "File Formats" "Requirements Management"
+.TH rmtoo-req-format 5 2010-03-05 "File Formats" "Requirements Management"
 .SH NAME
 rmtoo-req-format \- requirements management tool: requirements format
 .SH FILE FORMAT
@@ -34,13 +34,13 @@ The following keys with the described syntax and semantic exists:
 This value of this key is a short headline for the requirement.  It
 is used as a section headline in the output document.
 .SH KEY 'Type'
-This value can be one of 'master requirement', 'requirement' and
-'design decision'.
+This value can be one of \fImaster requirement\fR, \fIrequirement\fR and
+\fIdesign decision\fR.
 .P
 There can only be one 'master requirement'.  This is the requirement
 (product, artifact) the whole project is about.  This can be
 typically have the project title as the name.  There can only be one
-'master requirement' in a whole set.
+\fImaster requirement\fR in a whole set.
 .SH KEY 'Invented on'
 The value of 'Invented on' is the date when the requirement was
 written.  The format must be YYYY-MM-DD.
@@ -119,18 +119,17 @@ first column.  Additional lines must have a space in column one.
 .sp
 .RS
 .nf
-
-\f Name: Example Requirement
-\f Type: requirement
-\f Invented on: 2010-02-14
-\f Invented by: Mustermann
-\f Description: The example application must use TCP/IP for
-\f  communication with the database instance.
-\f Rationale: Here are some reasons why this must be
-\f  implemented in this way.
-\f Owner: security
-\f Depends on: OtherRequirement
-\f Status: open
+Name: Example Requirement
+Type: requirement
+Invented on: 2010-02-14
+Invented by: Mustermann
+Description: The example application must use TCP/IP for
+ communication with the database instance.
+Rationale: Here are some reasons why this must be
+ implemented in this way.
+Owner: security
+Depends on: OtherRequirement
+Status: open
 
 .SH "SEE ALSO"
 .B rmtoo(7)

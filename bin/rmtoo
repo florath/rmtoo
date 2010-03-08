@@ -47,8 +47,8 @@ def parse_cmd_line_opts():
         sys.exit(1)
 
     if options.modules_directory==None:
-        print("+++ ERROR: no modules_directory option is specified")
-        sys.exit(1)
+        # If there is no modules directory given, use the pycentral one.
+        options.modules_directory = "/usr/share/pyshared"
 
     if options.config_file==None:
         print("+++ ERROR: no config_file option is specified")

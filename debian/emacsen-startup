@@ -19,7 +19,6 @@
 ;; removed but not purged, and we should skip the setup.
   (when (file-directory-p package-dir)
         (setq load-path (cons package-dir load-path))
-       (autoload 'rmtoo-mode "rmtoo-mode"
-         "Major mode for editing rmtoo files." t)
-       (add-to-list 'auto-mode-alist '("\\.rmtoo$" . rmtoo-mode))))
-
+       (autoload 'req-mode "req-mode"
+         "Major mode for editing requirement files for rmtoo." t)
+       (add-to-list 'auto-mode-alist '("\\.req$" . req-mode))))

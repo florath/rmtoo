@@ -10,4 +10,8 @@ doc/latex/reqsprios.tex
 doc/latex/requirements.pdf
 reqtree.dot
 reqtree.png
+.coverage
+configure-stamp
+build-stamp
+ttt
 

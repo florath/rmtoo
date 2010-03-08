@@ -27,7 +27,8 @@ clean:
 	rm -f reqtree.dot reqtree.png doc/latex/reqs/*.tex \
 		doc/latex/requirements.aux doc/latex/requirements.dvi \
 		doc/latex/requirements.log doc/latex/requirements.out \
-		doc/latex/requirements.pdf doc/latex/requirements.toc
+		doc/latex/requirements.pdf doc/latex/requirements.toc 
+	rm -fr debian/rmtoo build
 
 
 
@@ -35,8 +36,13 @@ PYSETUP = python setup.py
 
 .PHONY: install
 install:
-	$(PYSETUP) install --prefix=${DESTDIR}
+	$(PYSETUP) install --prefix=${DESTDIR}/usr \
+		--install-scripts=${DESTDIR}/usr/bin
 
 .PHONY: tests
 tests:
 	nosetests -v --with-coverage -s --cover-package=rmtoo
+
+.PHONY: deb
+deb:
+	debuild -I -Imake_latex.log

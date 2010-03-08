@@ -18,4 +18,16 @@ requirements dependency graph.
 
 HTML home page is now included in the repository.
 
+Tests included: 83 unit- and regression tests are now included.  It is
+possible to run the tests after installing the package to check if
+everything works.  Currently there is a test coverage of about 74%. 
+
+Debian package available starting with this release.
+
+
+Internal Changes:
+
+Interface of Requirement Tag module classes changed: this improves the
+error handling.
+
 
