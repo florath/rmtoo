@@ -73,5 +73,3 @@ def check_for_strongly_connected_components(scc, minsize=2):
             return True
     # Nope - no sccs.
     return False
-
-
