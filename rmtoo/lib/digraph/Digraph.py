@@ -67,6 +67,9 @@ class Digraph:
         # Second run: run thorugh all nodes and create the edges.
         for node_name, outs in d.items():
             for o in outs:
+                if o not in named_nodes:
+                    raise RMTException(24, "Node '%s' is referenced "
+                                       "but not specified" % o)
                 self.create_edge(named_nodes[node_name],
                                  named_nodes[o])
 
@@ -97,7 +100,7 @@ class Digraph:
                 self.named_nodes = None
                 raise RMTException(20, "cannot create node dictionary "
                                    "- node has no name")
-            if n.name in self.nodes:
+            if n.name in self.named_nodes:
                 # Also: delete the whole dictionary first.
                 self.named_nodes = None
                 raise RMTException(21, "same name for (at least) two "
@@ -109,7 +112,7 @@ class Digraph:
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
     def get_named_node(self, name):
-        if self.named_nodes==None:
+        if not hasattr(self, "named_nodes") or self.named_nodes==None:
             raise RMTException(22, "no named_nodes dictionary available "
                                "- maybe call 'build_named_nodes()' first")
         if name not in self.named_nodes:
