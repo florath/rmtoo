@@ -79,8 +79,7 @@ class RequirementSet(Digraph):
     # class Requirement.
     # ToDo: Unify this!
     def handle_modules_reqdeps(self):
-        for modkey in self.mods.reqdeps_sorted:
-            module = self.mods.reqdeps[modkey]
+        for module in self.mods.reqdeps_sorted:
             state = module.rewrite(self)
             if state==False:
                 # Some sematic error occured.
