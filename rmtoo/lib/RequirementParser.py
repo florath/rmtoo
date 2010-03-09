@@ -32,7 +32,7 @@ class RequirementParser:
     # 3) If line_type is initial: the tag and the beginning of the
     #    characters for the tag.
     @staticmethod
-    def parse_line(line, lineno):
+    def parse_line(rid, line, lineno):
         if len(line)>0 and line[-1]=='\n':
             line = line[:-1]
         # Empty line
@@ -47,18 +47,19 @@ class RequirementParser:
         # Is the line toooo long?
         if len(line)>80:
             print("+++ ERROR %s:%d: line too long (%d chars) '%s'"
-                  % (self.id, lineno, len(line), line))
+                  % (rid, lineno, len(line), line))
+            return RequirementParser.lt_error, None, None
         # 'Normal' line
         ls = line.split(":", 1)
         if len(ls)==1:
             # No ':' found
             print("+++ ERROR %s:%d: no ':' in line '%s'" %
-                  (self.id, lineno, line))
+                  (rid, lineno, line))
             return RequirementParser.lt_error, None, None
         if len(ls[0])==0:
             # ':' is first char in line
             print("+++ ERROR %s:%d: no char before ':'" %
-                  (self.id, lineno))
+                  (rid, lineno))
             return RequirementParser.lt_error, None, None
         # Normal 'initial' case
         return RequirementParser.lt_initial, ls[0], \
@@ -67,7 +68,7 @@ class RequirementParser:
     # This implements a finite state automate with a small number
     # of states and transitions.
     @staticmethod
-    def read(fd):
+    def read(rid, fd):
         # This dictionaly is the container where the input is
         # collected.
         reqs = {}
@@ -78,7 +79,7 @@ class RequirementParser:
         last_key = None
         for line in fd:
             lineno += 1
-            line_type, key, content = RequirementParser.parse_line(line, lineno)
+            line_type, key, content = RequirementParser.parse_line(rid, line, lineno)
 
             # Skip empty lines
             if line_type==RequirementParser.lt_empty:
@@ -95,16 +96,17 @@ class RequirementParser:
             # tag. 
             if line_type==RequirementParser.lt_continue:
                 if last_key==None:
-                    print("+++ ERROR %s:%d: continue line without " \
-                              + "initial line" % (RequirementParser.id, lineno))
+                    print("+++ ERROR %s:%d: continue line without "
+                          "initial line" % (rid, lineno))
                     fine = False
+                    continue
                 reqs[last_key] += content
                 continue
             # New line with initial tag.
             if line_type==RequirementParser.lt_initial:
                 if key in reqs:
                     print("+++ ERROR %s:%d: key '%s' already exists" %
-                          (RequirementParser.id, lineno, key))
+                          (rid, lineno, key))
                     fine = False
                     continue
                 reqs[key] = content
@@ -113,8 +115,9 @@ class RequirementParser:
             # Uups: nothing of them all: must be something strange.
             # Results in an error.
             print("+++ ERROR %s:%d: Invalid line_type '%d'" %
-                  (RequirementParser.id, lineno, line_type))
-            fine = False
+                  (rid, lineno, line_type))
+            print("+++ please report this to sf@flonatel.org")
+            assert(False)
 
         if fine:
             return reqs
