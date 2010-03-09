@@ -11,11 +11,13 @@ from rmtoo.lib.digraph.StronglyConnectedComponents \
 from rmtoo.lib.digraph.StronglyConnectedComponents \
     import check_for_strongly_connected_components
 from rmtoo.lib.digraph.Helper import remove_single_element_lists_name_rest
+from rmtoo.lib.digraph.Digraph import Digraph
 
-class RDepNoDirectedCircles:
+class RDepNoDirectedCircles(Digraph.Node):
     depends_on = ["RDepDependsOn"]
     
     def __init__(self, opts, config):
+        Digraph.Node.__init__(self, "RDepNoDirectedCircles")
         self.opts = opts
         self.config = config
 

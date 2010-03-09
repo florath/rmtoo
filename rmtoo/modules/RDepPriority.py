@@ -6,16 +6,19 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.digraph.Digraph import Digraph
+
 #
 # This class computes the priority.
 #
 # If one node has priority 0, the whole subtree has also priority 0.
 # A node has always the maximum of possible priorities.
 #
-class RDepPriority:
+class RDepPriority(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles"]
 
     def __init__(self, opts, config):
+        Digraph.Node.__init__(self, "RDepPriority")
         self.opts = opts
         self.config = config
 

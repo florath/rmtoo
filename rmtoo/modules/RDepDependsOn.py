@@ -7,6 +7,7 @@
 #
 
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.digraph.Digraph import Digraph
 
 # This class handles the creation of the full directred graphs: one
 # 'Depends on' and one 'Dependent'.  Both graphs are digraphs.
@@ -18,11 +19,12 @@ from rmtoo.lib.Requirement import Requirement
 # This is executed on the RequirmentSet level (not on the Requirement
 # level!): of course this is needed for inter-dependencies.
 
-class RDepDependsOn:
+class RDepDependsOn(Digraph.Node):
     depends_on = []
     tag = "Depends on"
 
     def __init__(self, opts, config):
+        Digraph.Node.__init__(self, "RDepDependsOn")
         self.opts = opts
         self.config = config
 
