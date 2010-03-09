@@ -3,6 +3,8 @@ User visible changes:
 Fixes bug in requirement parser printing incorrect error messages.
 Parser now prints out the requirement id when an error occurs.
 Corrects check for uniqueness of node's names (ids).
+More tests are added - some minor bugs were found and fixed; resulting
+in 88% test coverage. 
 
 
 Internal Changes:
