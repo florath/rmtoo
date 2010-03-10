@@ -155,7 +155,7 @@ class Requirement(Digraph.Node):
         else:
             clstr="detailable"
 
-        f.write("\n{\small \\begin{longtable}{rlrlrl}\n"
+        f.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n"
                 "\\textbf{Id:} & %s & "
                 "\\textbf{Priority:} & %4.2f & "
                 "\\textbf{Owner:} & %s \\\ \n"
@@ -163,7 +163,7 @@ class Requirement(Digraph.Node):
                 "\\textbf{Invented by:} & %s & "
                 "\\textbf{Status:} & %s \\\ \n"
                 "\\textbf{Class:} & %s & & & & \\\ \n"
-                "\end{longtable} }"
+                "\end{tabular}\end{center} }"
                 % (self.id, self.tags["Priority"]*10, self.tags["Owner"],
                    time.strftime("%Y-%m-%d", self.tags["Invented on"]),
                    self.tags["Invented by"], status, clstr))
