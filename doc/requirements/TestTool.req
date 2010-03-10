@@ -1,0 +1,12 @@
+Name: Test Tool: python-nose
+Type: design decision
+Invented on: 2010-03-10
+Invented by: flonatel
+Description: Test \textbf{must} be started with \textsl{nosetests}.
+Rationale: \textsl{nosetests} is a common used test tool which
+ integrates fine in the \textsl{rmtoo} development environment.
+Owner: development
+Depends on: TestIntegration TestUnit UsePython
+Status: not done
+Priority: development:10
+Effort estimation: 5

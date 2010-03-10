@@ -1,0 +1,11 @@
+Name: Output of HTML
+Type: design decision
+Invented on: 2010-03-10
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ HTML output. 
+Rationale: This gives a fast possibility to check requirements.
+Depends on: Output
+Status: not done
+Effort estimation: 13

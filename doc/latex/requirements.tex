@@ -1,6 +1,11 @@
 \documentclass{article}
 \usepackage{longtable}
+% When latex aborts with
+%  pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
+%  fstartlink.
+% Comment that line with draft out and inpect the errornous page
 \usepackage[pdfauthor={flonatel},%
+%draft,%
 pdftitle={Requirment for rmtoo},%
 pdfsubject={Requirment description for rmtoo},%
 pdfkeywords={requirments management tool open source dependency tracking},%
@@ -8,6 +13,7 @@ pagebackref=true,%
 pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \usepackage[a4paper]{geometry}
+
 
 \parindent0em
 
@@ -131,7 +137,9 @@ describes all the tags.
 
 \section{Output}
 \input{reqs/Output.tex}
+\input{reqs/ModularOutput.tex}
 \input{reqs/OutputPDF.tex}
+\input{reqs/OutputHTML.tex}
 \input{reqs/OutputGraph.tex}
 \input{reqs/PrioOutputLaTeX.tex}
 \input{reqs/PrioOutputInGraph.tex}
@@ -169,6 +177,9 @@ describes all the tags.
 \section{Testing}
 \input{reqs/Testing.tex}
 \input{reqs/TestBeforePack.tex}
+\input{reqs/TestIntegration.tex}
+\input{reqs/TestUnit.tex}
+\input{reqs/TestTool.tex}
 
 \section{Deployment and Packaging}
 \input{reqs/Packaging.tex}
