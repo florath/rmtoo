@@ -6,6 +6,11 @@ Corrects check for uniqueness of node's names (ids).
 More tests are added - some minor bugs were found and fixed; resulting
 in 88% test coverage. 
 
+Fixes 'Effort estimation' highlighting problem in Emace mode.
+
+LaTeX 'longtable' is replaced with 'tabular': The longtable
+environment run into problems with PDF links.
+
 
 Internal Changes:
 
