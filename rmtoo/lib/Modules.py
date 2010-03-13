@@ -9,6 +9,7 @@
 
 import os
 import re
+import copy
 
 from rmtoo.lib.digraph.StronglyConnectedComponents \
     import strongly_connected_components
@@ -28,7 +29,8 @@ from rmtoo.lib.RMTException import RMTException
 class Modules(Digraph):
     # Read in the modules directory
     def __init__(self, directory, opts, config,
-                 add_dir_components = ["rmtoo", "modules"]):
+                 add_dir_components = ["rmtoo", "modules"],
+                 mod_components = ["rmtoo", "modules"]):
         Digraph.__init__(self)
         self.opts = opts
         self.config = config
@@ -47,9 +49,9 @@ class Modules(Digraph):
             dir_components = directory.split("/")
         dir_components.extend(add_dir_components)
 
-        self.load(dir_components)
+        self.load(dir_components, mod_components)
 
-    def load(self, dir_components):
+    def load(self, dir_components, mod_components):
         for filename in os.listdir(os.path.join(*dir_components)):
             if not filename.endswith(".py"):
                 continue
@@ -59,9 +61,16 @@ class Modules(Digraph):
             if modulename == "__init__":
                 continue
 
+            # Because the mod_components can be empty, before using
+            # the mod_components append the modulename to the list.
+            # This must be done on a copy of the original list.
+            mc = copy.deepcopy(mod_components)
+            mc.append(modulename)
+
             # Import module
-            module = __import__("%s.%s" % (".".join(dir_components),
-                                           modulename),
+            #print("Loading module '%s' from '%s'" %
+            #      (modulename, ".".join(mod_components)))
+            module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 
             # Create object from the module
@@ -109,8 +118,4 @@ class Modules(Digraph):
 
     def topological_sort(self):
         # Do a topoligical sort on the reqdeps modules.
-        tsorted_graph = topological_sort(self)
-        # Note that the things where everything depends on is at the
-        # end; therefore it must be reversed.
-        ### tsorted_graph.reverse()
-        self.reqdeps_sorted = tsorted_graph
+        self.reqdeps_sorted = topological_sort(self)

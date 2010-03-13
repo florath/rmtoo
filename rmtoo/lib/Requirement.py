@@ -185,6 +185,10 @@ class Requirement(Digraph.Node):
         if self.tags["Class"] == self.ct_implementable:
             nodeparam.append("shape=octagon")
 
+        if self.tags["Topic"] == "internal":
+            nodeparam.append("fillcolor=lightblue")
+            nodeparam.append("style=filled")
+
         if len(nodeparam)>0:
             dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
 
