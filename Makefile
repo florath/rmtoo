@@ -5,7 +5,7 @@ all: reqtree.png latex
 
 reqtree.dot:
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
-		-d doc/requirements -c dot -o reqtree.dot -l doc/latex
+		-d doc/requirements -c dot -o reqtree.dot
 
 reqtree.png: reqtree.dot
 	dot -Tpng -o reqtree.png reqtree.dot
@@ -15,7 +15,7 @@ reqtree.png: reqtree.dot
 .PHONY: latex
 latex:
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
-		-d doc/requirements -c prios -p doc/latex/reqsprios.tex
+		-d doc/requirements -c prios -o doc/latex/reqsprios.tex
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
 		-d doc/requirements -c latex -l doc/latex
 	(cd doc/latex && pdflatex requirements.tex; \
