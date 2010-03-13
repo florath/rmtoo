@@ -1,0 +1,13 @@
+Name: Output of Text Document Use Same Base
+Type: requirement
+Invented on: 2010-03-12
+Invented by: flonatel
+Owner: development
+Description: The output of the text document \textbf{must} use the
+ same description for all different outputs.
+Rationale: I.e. with the help of one document description, it must be
+ possible to generate different formats.
+Depends on: OutputDocument
+Status: not done
+Priority: customers:8
+Effort estimation: 13

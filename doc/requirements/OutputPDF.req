@@ -7,5 +7,8 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
  PDF output. 
 Rationale: Typically the PDF output holds all the requirements and
  additional explanations.
-Depends on: Output
-Status: finished
+Depends on: OutputDocument OutputTextSameBase
+Status: not done
+Effort estimation: 13
+Priority: management:8
+
