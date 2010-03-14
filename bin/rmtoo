@@ -10,38 +10,25 @@
 import sys
 from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
+from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.Modules import Modules
-
-available_cmds=["check", "latex", "dot", "prios", "stats_reqs_cnt"]
 
 def parse_cmd_line_opts():
     parser = OptionParser()
-    parser.add_option("-c", "--cmd", dest="command",
-                  help="command to execute: %s" % available_cmds)
     parser.add_option("-d", "--directory", dest="directory",
                   help="Directory with requirements")
     parser.add_option("-f", "--file-config", dest="config_file",
                   help="Config file")
-    parser.add_option("-l", "--latex-directory", dest="latex_directory",
-                  help="Directory where to put LaTeX output")
     parser.add_option("-m", "--modules-directory", dest="modules_directory",
                   help="Directory with modules")
-    parser.add_option("-o", "--ouput", dest="output",
-                  help="File where the output is stored")
+    parser.add_option("-c", "--create-makefile-dependencies",
+                      dest="create_makefile_dependencies",
+                      help="Create makefile dependencies")
 
     (options, args) = parser.parse_args()
 
     if options.directory==None:
         print("+++ ERROR: no directory option is specified")
-        sys.exit(1)
-
-    if options.command==None:
-        print("+++ ERROR: no command specified")
-        sys.exit(1)
-
-    if options.command not in available_cmds:
-        print("+++ ERROR: invalid command '%s'" % options.command)
-        print("+++        must be one of '%s'" % available_cmds)
         sys.exit(1)
 
     if options.modules_directory==None:
@@ -52,45 +39,34 @@ def parse_cmd_line_opts():
         print("+++ ERROR: no config_file option is specified")
         sys.exit(1)
 
+    if len(args)>=1:
+        options.base_version = args[0]
+
+    if len(args)==2:
+        options.other_version = args[1]
+    else:
+        options.other_version = None
+
+    if len(args)>2:
+        print("+++ ERROR: too many args")
+        sys.exit(1)
+
     return options
 
 def execute_cmds(opts, mods, config):
     # Checks are allways done - to be sure that e.g. the dependencies
-    # are correct. 
-    reqs = RequirementSet(opts.directory, mods, opts, config)
+    # are correct.
+    rc = ReqsContinuum(opts.directory, mods, opts, config)
+    reqs = rc.base_requirements_set
 
-    # When called with 'check' everything is (fine) and finished now.
-    if opts.command=="check":
-        return True
+    # When only the dependencies are needed, output them to the given
+    # file. 
+    if opts.create_makefile_dependencies!=None:
+        rc.create_makefile_dependencies(opts.create_makefile_dependencies)
+        return
 
-    # Output LaTeX document
-    if opts.command=="latex":
-        if opts.latex_directory==None:
-            print("+++ ERROR: command latex without latex directory")
-            sys.exit(1)
-        reqs.output_latex(opts.latex_directory)
-        return True
-
-    if opts.command=="dot":
-        if opts.output==None:
-            print("+++ ERROR: command dot without dot output file")
-            sys.exit(1)
-        reqs.output_dot(opts.output)
-        return True
-
-    if opts.command=="prios":
-        if opts.output==None:
-            print("+++ ERROR: command prios without prios output file")
-            sys.exit(1)
-        reqs.output_prios(opts.output)
-        return True
-
-    if opts.command=="stats_reqs_cnt":
-        if opts.output==None:
-            print("+++ ERROR: command prios without prios output file")
-            sys.exit(1)
-        reqs.stats_reqs_cnt(opts.output)
-        return True
+    # Output everything
+    rc.output()
 
 def load_config(opts):
     # Load config file

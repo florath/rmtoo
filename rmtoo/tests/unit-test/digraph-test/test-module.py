@@ -17,7 +17,7 @@ mod_base_dir = "rmtoo/tests/unit-test/core-tests/testdata"
 mods_name = mod_base_dir.split("/")
 
 def mods_list(lm):
-    print("MODSNAME '%s'" % mods_name)
+    #print("MODSNAME '%s'" % mods_name)
     ml=copy.deepcopy(mods_name)
     ml.append(lm)
     return ml

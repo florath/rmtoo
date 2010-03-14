@@ -12,6 +12,7 @@ import os
 import re
 import sys
 import operator
+import StringIO
 
 from Requirement import Requirement
 from rmtoo.lib.digraph.Digraph import Digraph
@@ -24,7 +25,7 @@ class RequirementSet(Digraph):
     er_fine = 0
     er_error = 1
 
-    def __init__(self, directory, mods, opts, config):
+    def __init__(self, mods, opts, config):
         Digraph.__init__(self)
 
         self.reqs = {}
@@ -32,12 +33,8 @@ class RequirementSet(Digraph):
         self.opts = opts
         self.state = self.er_fine
         self.config = config
-        
-        everythings_fine = self.read(directory)
-        if not everythings_fine:
-            print("+++ ERROR: There were errors in the requirments")
-            return
 
+    def handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
         # read in.
         self.handle_modules_reqdeps()
@@ -45,13 +42,23 @@ class RequirementSet(Digraph):
         if self.state != self.er_fine:
             print("+++ ERROR: there was a problem handling the "
                   "requirement set modules")
-            sys.exit(1)
+            return False
 
         # The must no be left
         if not self.check_left_tags():
             print("+++ ERROR there were errors encountered during parsing "
                   "and checking - can't continue")
-            sys.exit(1)
+            return False
+
+        return True
+
+    def read_from_filesystem(self, directory):
+        everythings_fine = self.read(directory)
+        if not everythings_fine:
+            print("+++ ERROR: There were errors in the requirments")
+            return False
+
+        return self.handle_modules()
 
     def read(self, directory):
         everythings_fine = True
@@ -74,6 +81,32 @@ class RequirementSet(Digraph):
                 print("+++ ERROR %s: could not be parsed" % req.id)
                 everythings_fine = False
         return everythings_fine
+
+    def read_from_git_tree(self, tree):
+        everythings_fine = True
+        files = tree.items()
+        for f in files:
+            m = re.match("^.*\.req$", f[0])
+            if m==None:
+                continue
+            rid = f[0][:-4]
+            req = Requirement(StringIO.StringIO(f[1].data), 
+                              rid, self.mods, self.opts, self.config)
+            if req.ok():
+                # Store in the map, so that it is easy to access the
+                # node by id.
+                self.reqs[req.id] = req
+                # Also store it in the digraph's node list for simple
+                # access to the digraph algorithms.
+                self.nodes.append(req)
+            else:
+                print("+++ ERROR %s: could not be parsed" % req.id)
+                everythings_fine = False
+
+        if not everythings_fine:
+            return False
+        return self.handle_modules()
+
 
     # This is mostly the same functionallaty of similar method of the
     # class Requirement.
@@ -144,7 +177,21 @@ class RequirementSet(Digraph):
         for r in self.reqs:
             self.reqs[r].output_latex(reqs_dir)
 
-    def output_dot(self, dot_output_file):
+    # This is the corresponding makefile dependency outputter.
+    def cmad_latex(self, ofile, req_subdir, directory):
+        reqs_latex_dir = os.path.join(directory, "reqs")
+        # Print out the REQS_TEX variable
+        ofile.write("REQS_TEX=")
+        for r in self.reqs:
+            ofile.write("%s/%s.tex " % (reqs_latex_dir, self.reqs[r].id))
+        ofile.write("\n")
+        # For each requirement get the dependency correct
+        for r in self.reqs:
+            ofile.write("%s/%s.tex: %s/%s.req\n\t${CALL_RMTOO}\n"
+                        % (reqs_latex_dir, self.reqs[r].id,
+                           req_subdir, self.reqs[r].id))
+
+    def output_graph(self, dot_output_file):
         # Initialize the graph output
         g = file(dot_output_file, "w")
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"

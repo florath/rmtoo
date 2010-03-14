@@ -1,5 +1,18 @@
 User visible changes:
 
+Starting from v7 rmtoo supports git for history and version tracking.
+The first small application of this is the requirement count
+statistic.
+
+Makefile dependency tracking is now done which the help of rmtoo
+itself.  When called with a special command line parameter, it outputs
+the depend file which can be read in by a Makefile.
+
+Moved the output parameter handling from the command line to the
+config file.  This gives rmtoo the chance to write more than one
+output file at a time (parsing in history takes time and this must be
+done only once for all output formats).
+
 Fixes bug in requirement parser printing incorrect error messages.
 Parser now prints out the requirement id when an error occurs.
 Corrects check for uniqueness of node's names (ids).
