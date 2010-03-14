@@ -205,4 +205,5 @@ class RequirementSet(Digraph):
 
         f.close()
 
-        
+    def stats_reqs_cnt(self, outputfilename):
+        statfile = file(outputfilename, "w")

@@ -12,7 +12,7 @@ from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Modules import Modules
 
-available_cmds=["check", "latex", "dot", "prios"]
+available_cmds=["check", "latex", "dot", "prios", "stats_reqs_cnt"]
 
 def parse_cmd_line_opts():
     parser = OptionParser()
@@ -83,6 +83,13 @@ def execute_cmds(opts, mods, config):
             print("+++ ERROR: command prios without prios output file")
             sys.exit(1)
         reqs.output_prios(opts.output)
+        return True
+
+    if opts.command=="stats_reqs_cnt":
+        if opts.output==None:
+            print("+++ ERROR: command prios without prios output file")
+            sys.exit(1)
+        reqs.stats_reqs_cnt(opts.output)
         return True
 
 def load_config(opts):
