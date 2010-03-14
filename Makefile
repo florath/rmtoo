@@ -1,23 +1,32 @@
 .PHONY: all
-all: reqtree.png latex
+all: reqtree.png doc/latex/requirements.pdf
 
-.PHONY: reqtree.dot
+#
+# This is the way the rmtoo must be called.
+#
+CALL_RMTOO=./bin/rmtoo -m . -f doc/requirements/Config.py -d doc/requirements
 
-reqtree.dot:
+#
+# Dependency handling
+#  The file .rmtoo_dependencies is created by rmtoo itself.
+#
+include .rmtoo_dependencies
+
+# And how to make the dependencies
+.rmtoo_dependencies:
 	./bin/rmtoo -m . -f doc/requirements/Config.py \
-		-d doc/requirements -c dot -o reqtree.dot
+		-d doc/requirements \
+		--create-makefile-dependencies=.rmtoo_dependencies
 
 reqtree.png: reqtree.dot
 	dot -Tpng -o reqtree.png reqtree.dot
 
 # Two calls are needed: one for the requirments converting and one for
 # backlog creation.
-.PHONY: latex
-latex:
-	./bin/rmtoo -m . -f doc/requirements/Config.py \
-		-d doc/requirements -c prios -o doc/latex/reqsprios.tex
-	./bin/rmtoo -m . -f doc/requirements/Config.py \
-		-d doc/requirements -c latex -l doc/latex
+doc/latex/requirements.pdf: ${REQS_TEX} doc/latex/requirements.tex
+	(cd doc/latex && \
+	   gnuplot ../../contrib/gnuplot_stats_reqs_cnt.inc && \
+	   epstopdf stats_reqs_cnt.eps)
 	(cd doc/latex && pdflatex requirements.tex; \
 		pdflatex requirements.tex; \
 		pdflatex requirements.tex)
@@ -29,8 +38,6 @@ clean:
 		doc/latex/requirements.log doc/latex/requirements.out \
 		doc/latex/requirements.pdf doc/latex/requirements.toc 
 	rm -fr debian/rmtoo build
-
-
 
 PYSETUP = python setup.py
 
