@@ -6,3 +6,6 @@ o use git for all requirement read in
   - possibility to do effort vorhersage
   - gives the base for traceability (think about!)
 o change text output to base on a topic structure
+o Makefile dependencies must be done directly in the python tool
+  itself (This is the one which knows about.)
+
