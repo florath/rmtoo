@@ -18,6 +18,9 @@ exactly does this.) (Note: currently rmtoo comes as a tar ball where
 everything is unpacked in a local directory. This will change in
 future.) 
 
+You might want to install the 'python-git' package first.  To
+postprocess the statistics output, gnuplot is needed.
+
 You can get a short help by calling:
 $ ./bin/rmtoo -h
 
