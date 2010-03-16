@@ -13,7 +13,6 @@ PACKAGE_NAME=rmtoo-$1
 # Create requirments dependency graph and PDF.
 make clean
 make all
-make latex >make_latex.log 2>&1
 
 # Temporary store documents in an own directory: a make clean will
 # remove them - but we need it.
