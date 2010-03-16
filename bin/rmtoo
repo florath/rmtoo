@@ -57,7 +57,7 @@ def execute_cmds(opts, mods, config):
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct.
     rc = ReqsContinuum(opts.directory, mods, opts, config)
-    reqs = rc.base_requirements_set
+    reqs = rc.base_requirement_set
 
     # When only the dependencies are needed, output them to the given
     # file. 

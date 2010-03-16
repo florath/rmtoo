@@ -15,16 +15,32 @@ import time
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
 
+#
+# The Continuum holds all the RequirementSets from the history,
+# i.e. all which are known to git.  It also holds the current
+# available (possible not checked in) pointer to the appropriate files
+# in the file system.
+#
+
 class ReqsContinuum:
 
     # If vers==None the default 'HEAD' is used.
-    def __init__(self, directory, mods, opts, config, vers = "HEAD"):
+    def __init__(self, directory, mods, opts, config, vers = "FILES"):
         self.mods = mods
         self.opts = opts
         self.config = config
+        self.directory = directory
+        # Set up the git repository
         self.create_repo(directory)
-        self.set_base_commit(vers)
-        self.create_base_reqset()
+        if vers!="FILES":
+            self.set_base_commit(vers)
+            self.create_base_reqset_from_git()
+        else:
+            # Even if FILES is given, for handling the tree (history
+            # and statistics) some git version is needed.
+            self.set_base_commit("HEAD")
+            self.create_base_reqset_from_git()
+            self.create_base_reqset_from_files()
 
     # This method sets up the repository and splits out the repository
     # dir from the requirements dir.
@@ -47,8 +63,6 @@ class ReqsContinuum:
         self.reqs_subdir = directory[len(rpath):]
         self.reqs_subdir_parts = self.reqs_subdir.split("/")
 
-        print("Reqs Subdir='%s'" % self.reqs_subdir)
-
     # Depending on the vers set the base commit (i.e. the base which
     # to work with during the livetime of the continuum object.)
     def set_base_commit(self, vers):
@@ -60,11 +74,17 @@ class ReqsContinuum:
             tree = tree[d]
         return tree
 
-    def create_base_reqset(self):
-        self.base_requirements_set = \
+    def create_base_reqset_from_git(self):
+        self.base_requirement_set = \
             RequirementSet(self.mods, self.opts, self.config)
         reqs_tree = self.get_reqs_tree(self.base_commit.tree)
-        self.base_requirements_set.read_from_git_tree(reqs_tree)
+        self.base_requirement_set.read_from_git_tree(reqs_tree)
+        self.base_git_requirement_set = self.base_requirement_set
+
+    def create_base_reqset_from_files(self):
+        self.base_requirement_set = \
+            RequirementSet(self.mods, self.opts, self.config)
+        self.base_requirement_set.read_from_filesystem(self.directory)
 
     # Output all the things should be
     def output(self):
@@ -77,17 +97,17 @@ class ReqsContinuum:
     # Output: Prios
     def output_prios(self, ofilename):
         # Currently just pass this to the RequirementSet
-        self.base_requirements_set.output_prios(ofilename)
+        self.base_requirement_set.output_prios(ofilename)
 
     # Output: LaTeX
     def output_latex(self, ofilename):
         # Currently just pass this to the RequirementSet
-        self.base_requirements_set.output_latex(ofilename)
+        self.base_requirement_set.output_latex(ofilename)
 
     # Output: Graph
     def output_graph(self, ofilename):
         # Currently just pass this to the RequirementSet
-        self.base_requirements_set.output_graph(ofilename)
+        self.base_requirement_set.output_graph(ofilename)
 
     # Output: Statistics on Requirement Count
     # Note: because this goes the whole history back it takes some
@@ -169,7 +189,7 @@ class ReqsContinuum:
 
     # CMAD latex
     def cmad_latex(self, fd, directory):
-        self.base_requirements_set.cmad_latex(
+        self.base_requirement_set.cmad_latex(
             fd, self.opts.directory, directory)
 
     # CMAD Stats requirements count
