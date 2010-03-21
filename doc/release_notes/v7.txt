@@ -26,9 +26,7 @@ environment run into problems with PDF links.
 
 Tag 'Topic' was added to prepare the upcoming new output engine. 
 
-Command line parameters change: '-o' is used for all different
-outputs. 
-
+Man pages were adapted to reflect the current situation.
 
 Internal Changes:
 

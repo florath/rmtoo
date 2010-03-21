@@ -18,13 +18,11 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 1 2010-03-06 "User Commands" "Requirements Management"
+.TH rmtoo 1 2010-03-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH SYNOPSIS
 .B rmtoo
-.B \-c
-.I cmd
 .B \-d
 .I reqdir
 .B \-f
@@ -32,27 +30,14 @@ rmtoo \- requirements management tool
 .B [\-h]
 .B [\-m
 .I moduledir]
-.B [\-l
-.I latexdir]
-.B [\-d
-.I dotfile]
-.B [\-p
-.I priofile]
+.B [-c
+.I makefile_deps]
 .SH DESCRIPTION
 The
 .B rmtoo
 is a requirment management tool.  It understand long and short command
-line options.
+line options.  For a detailed functional description see rmtoo(7).
 .SH OPTIONS
-.TP
-\fB\-\-block\-size\fR=\fISIZE\fR
-use SIZE\-byte blocks
-
-.TP
-\fB\-c\fR \fICOMMAND\fR, \fB\-\-cmd\fR=\fICOMMAND\fR
-command to execute.  This must be one of
-\fBcheck\fR, \fBlatex\fR, \fBdot\fR or \fBprios\fR.  See \fBCOMMAND\fR
-section for further information.
 .TP
 \fB\-d\fR \fIDIRECTORY\fR, \fB\-\-directory\fR=\fIDIRECTORY\fR
 The directory with the requirements files.
@@ -63,9 +48,6 @@ The directory with the requirements files.
 \fB\-h\fR, \fB\-\-help\fR
 Display a short usage help.
 .TP
-\fB\-l\fR \fILATEX_DIRECTORY\fR, \fB\-\-latex-directory\fR=\fILATEX_DIRECTORY\fR
-The directory where the LaTeX output files are stored.
-.TP
 \fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
 The directory where the rmtoo modules can be found.  When the program
 was installed by standard system routines (e.g. as a deb or a rpm
@@ -73,29 +55,15 @@ package) this option is not necessary.  When using rmtoo from the
 repository or from a release tar ball this must point to the main
 directory.
 .TP
-\fB\-o\fR \fIDOT_OUTPUT\fR, \fB\-\-dot-ouput\fR=\fIDOT_OUTPUT\fR
-The filename of the requirements dependency graph stored as a dot
-output file. 
-.TP
-\fB\-p\fR \fIPRIOS_OUTPUT\fR, \fB\-\-prios-ouput\fR=\fIPRIOS_OUTPUT\fR
-The filename of the file where the priority list output is stored.
-.SH COMMAND
-rmtoo is invoked with exactly one command:
-.P
-\fBcheck\fR checks the syntax and the semantics of the requirements
-files.  It does not write any output at all.  If it finds problems or
-errors it prints them out.
-.P
-\fBlatex\fR handles the output to latex. Please refer to
-\fBrmtoo-art-latex(1)\fR for a detailed discussion about the LaTeX
-output.
-.P
-\fBdot\fR outputs the requirements dependency graph in a format
-compatible to \fBdot(1)\fR.  Please refer to
-\fBrmtoo-art-req-dep-graph(1)\fR for more details.
-.P
-\fBprios\fR outputs the priority lists. See
-\fBrmtoo-art-prio-lists(1)\fR for details about the priority lists.
+\fB\-c\fR \fIMAKEFILE_DEPS\fR, \fB\-\-create-makefile-dependencies\fR=\fIMAKEFILE_DEPS\fR
+For handling the invocation of
+.B rmtoo
+with the help of a Makefile, \fImake\fR itself must know the
+dependencies. When called with this option, 
+.B rmtoo
+only creates the dependency file.  The dependency depends also from
+the config file: when changing output artifacts of curse the
+dependencies change.
 .SH RETURN
 .B rmtoo
 returns 0 when all commands are successfully completed and a value not
@@ -103,6 +71,11 @@ equal 0 when there was a problem.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
+.SH LIMITATIONS
+Currently the makefile dependency creation are a best effort.  It
+should work in mostly all times, but there are situations where not
+all dependencies are tracked - especially when adding new requirement
+files. 
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT

@@ -18,29 +18,33 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 7 2010-02-24 "User Commands" "Requirements Management"
+.TH rmtoo 7 2010-03-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH DESCRIPTION
 The
 .B rmtoo
-package is used to read in a set of requirements and create artifacts
+package is used to work on a set of requirements and create artifacts
 from them.
 .SH IDEA
 .B rmtoo
-uses a different approach than most other requirement management
-tools: it comes as a command line tool which is optimized for handling
-of requirements.  The power of
+uses a different approach than most other requirements management
+tools: it comes as a command line tool optimized for handling of 
+requirements.  The power of
 .B rmtoo
 is that a typical development environment can perfectly handle the
-input and output files.  Example: if there is a need for handling
-baselines (and mostly there is), use a revision control system of your
-choice (git, mercurial, subversion, ...).  They
-.B can
-handle different revisions, baselining, tagging, branching and many
-different things
-.B perfectly
-well.
+input files as they are plain text files.  
+.P
+.B rmtoo
+input files can ba handled by mostly all standard *nix standard
+commands like grep(1), awk(1) or sed(1).  For replacing text commands
+like streplace(1) can be used.
+.P
+For handling history and baselines an arbitrary revision control
+system can be used (like git, mercurial, subcersion, ...).
+Nevertheless currently
+.B rmtoo
+supports \fIgit\fR natively for version access and statistics.
 .P
 .B Let one thing do one thing.
 .P
@@ -53,12 +57,12 @@ The
 .B rmtoo
 requirement management tool works on a set of requirements.  It reads
 them in, parses them, preprocesses them, checks for syntactic and
-semantic problems.  If there is no error found, typically exactly one
-artifact is written out.
+semantic problems.  If there is no error found, all artifacts which
+are specified are outputted. 
 .P
 This page is an overview page.  It gives a short overview over the
 .B rmtoo 
-parameters.  Also it points to other man pages where information about
+usage.  Also it points to other man pages where information about
 input and output files can be found.
 .SH INTRODUCTION
 The
@@ -90,6 +94,11 @@ is possible to output a list, graph or other artifact.
 .B rmtoo-invoking(1)
 - overview over command line parameters executable for requirement mangement
 .P
+.B rmtoo-config(5)
+- description of the \fIConfig.py\fR file which is needed for 
+.B rmtoo
+environment definition and output specification.
+.P
 .B rmtoo-req-emacs-mode(7)
 - major mode for Emacs for writing requirements
 .P
@@ -102,6 +111,9 @@ is possible to output a list, graph or other artifact.
 .B rmtoo-art-prio-lists(1)
 - output description for the backlog and list of requirements for
 elaboration. 
+.P
+.B rmtoo-art-reqs-history-cnt(1)
+- output description of the requirement history count.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
