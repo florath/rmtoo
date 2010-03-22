@@ -26,7 +26,8 @@ environment run into problems with PDF links.
 
 Tag 'Topic' was added to prepare the upcoming new output engine. 
 
-Man pages were adapted to reflect the current situation.
+Man pages were adapted to reflect the current situation.  Man page for
+configuration was added.
 
 Internal Changes:
 
