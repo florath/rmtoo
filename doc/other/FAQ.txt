@@ -1,0 +1,86 @@
+
+Frequently Asked Questions
+==========================
+
+* Getting Started with rmtoo
+
+** What is the file format?
+   The file should be plain text. The file should contain a sequence
+   of details.  Each detail is a group of lines, in name: value
+   pairs. For multiline values, indent by one space on the lines 
+   after the first. It's possible to leave a blank line between
+   requirements, for readability.
+   Please consult the rmtoo-req-format(5) man page for further
+   information. 
+
+** What tags are supported?
+   Currently the following tags are supported:
+     Class
+     Depends on 
+     Description
+     Effort estimation
+     Invented by
+     Invented on
+     Name     
+     Owner    
+     Priority 
+     Rationale
+     Status
+     Type
+   For a detailes discussion about the semantic see the
+   rmtoo-req-format(5) man page.
+
+** Can I split a large set of requirements into a set of separate files?
+   You must - each requirment must go in one file.
+
+** Does a requirement has a unique id?
+   Yes - each requirement has an id which is the case sensitive name
+   of the file where it's described in - without the suffix.
+   Example: file name 'OutputPrio.req' -> id 'OutputPrio'
+
+** Are there any guidelines for the use of 'Id'?
+   Just write a unique phrase, the shorter the better.  You can also
+   use numbers if you want.
+   It's typically easier to handle the requirements when the 'Id'
+   gives a hint about the content.
+
+** How do I specify Depends?
+   Give only one 'Depends on' field per requirement.
+   The value should be the 'Id' of the requirement you are depending on.
+   You must specify a 'Depends on' - except of the master requirement.
+
+** How do I put paragraphs in the Rationale?
+   To start a new paragraph, write \par at end of the current
+   paragraph. This is a \latex\ command.
+
+** Are there any guidlines for the use of Effort estimation?
+   The effort estimation is meant to be a symbolic effort point number
+   as used in SCRUM.  Please consult the rmtoo-req-format(5) man page
+   for detailed information.
+
+** What units are expected in the Effort estimation field?
+   None - this is a symbolic number.  See rmtoo-req-format(5) man
+   page. 
+
+** What values are valid for the Status field?
+   Supported values for the 'Status' field are 'not done' and
+   'finished'.  See rmtoo-req-format(5) man page. 
+
+** What values are valid for the Type field?
+   Supported values are 'master requirement', 'requirement' and
+   'design decision'.  Please consult the rmtoo-req-format(5) man page
+   for details.
+
+** What does 'Class' do? How should it be used?
+   Class can be one of 'implementable' or 'detailable'.  If a
+   requirement is at a detail level that it can be implemented, the
+   Class should be set to 'implementable'.  In the other case (the
+   default) the requirement must be elaborated and some dependent
+   requirements must be defined. Please consult the
+   rmtoo-req-format(5) man page for details.
+
+** How should I remove a requirement?
+   Remove it from the file system (with rm), then remove it from the
+   tip (with 'git rm') then to a checkin.
+
+
