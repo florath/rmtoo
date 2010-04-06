@@ -48,7 +48,7 @@ install:
 
 .PHONY: tests
 tests:
-	nosetests -v --with-coverage -s --cover-package=rmtoo
+	nosetests -w rmtoo -v --with-coverage -s --cover-package=rmtoo
 
 .PHONY: deb
 deb:
