@@ -41,11 +41,9 @@ def parse_cmd_line_opts():
 
     if len(args)>=1:
         options.base_version = args[0]
-
-    if len(args)==2:
-        options.other_version = args[1]
     else:
-        options.other_version = None
+        # If nothing is given 'FILES' is assumed.
+        options.base_version = "FILES"
 
     if len(args)>2:
         print("+++ ERROR: too many args")
