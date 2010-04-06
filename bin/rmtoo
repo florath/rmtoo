@@ -55,12 +55,8 @@ def parse_cmd_line_opts():
 def execute_cmds(opts, mods, config):
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct.
-    vers = "FILES"
-    if opts.base_version!=None:
-        vers = opts.base_version
-
     try:
-        rc = ReqsContinuum(opts.directory, mods, opts, config, vers)
+        rc = ReqsContinuum(opts.directory, mods, opts, config)
         reqs = rc.base_requirement_set
     except git.errors.GitCommandError, gce:
         print("+++ ERROR: Problem accessing git tree: '%s'" % gce)
