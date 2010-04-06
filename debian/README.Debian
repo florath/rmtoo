@@ -1,5 +1,5 @@
 
-rmtoo 6 is the first version which comes prepackaged as a Debian
+Starting with version 6 rmtoo is also distributed as a Debian
 package. 
 
 Documentation is placed under /usr/share/doc/rmtoo
@@ -21,5 +21,5 @@ Happy requirements writing!
 
 Andreas Florath
 sf@flonatel.org
-03-2010
+2010-04-06
 

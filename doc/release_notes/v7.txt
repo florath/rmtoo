@@ -1,4 +1,5 @@
-User visible changes:
+User visible changes
+--------------------
 
 Starting from v7 rmtoo supports git for history and version tracking.
 The first small application of this is the requirement count
@@ -17,7 +18,7 @@ Fixes bug in requirement parser printing incorrect error messages.
 Parser now prints out the requirement id when an error occurs.
 Corrects check for uniqueness of node's names (ids).
 More tests are added - some minor bugs were found and fixed; resulting 
-in 88% test coverage. 
+in 87% test coverage. 
 
 Fixes 'Effort estimation' highlighting problem in Emace mode.
 
@@ -29,7 +30,14 @@ Tag 'Topic' was added to prepare the upcoming new output engine.
 Man pages were adapted to reflect the current situation.  Man page for
 configuration was added.
 
-Internal Changes:
+Documentation enhancements.  Added FAQ document with 'Getting Started'
+chapter.
+
+Fixed problem when running the tests from an installed Debian package.
+
+
+Internal Changes
+----------------
 
 Modules loading uses same digraph infrastructure as the
 requirement(set).  Code cleanup.  Much better internal error
