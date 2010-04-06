@@ -24,15 +24,14 @@ from rmtoo.lib.RequirementSet import RequirementSet
 
 class ReqsContinuum:
 
-    # If vers==None the default 'HEAD' is used.
-    def __init__(self, directory, mods, opts, config, vers = "FILES"):
+    def __init__(self, directory, mods, opts, config):
         self.mods = mods
         self.opts = opts
         self.config = config
         self.directory = directory
         # Set up the git repository
         self.create_repo(directory)
-        if vers!="FILES":
+        if opts.base_version!="FILES":
             self.set_base_commit(vers)
             self.create_base_reqset_from_git()
         else:
@@ -77,9 +76,13 @@ class ReqsContinuum:
     def create_base_reqset_from_git(self):
         self.base_requirement_set = \
             RequirementSet(self.mods, self.opts, self.config)
-        reqs_tree = self.get_reqs_tree(self.base_commit.tree)
-        self.base_requirement_set.read_from_git_tree(reqs_tree)
-        self.base_git_requirement_set = self.base_requirement_set
+        try:
+            reqs_tree = self.get_reqs_tree(self.base_commit.tree)
+            self.base_requirement_set.read_from_git_tree(reqs_tree)
+            self.base_git_requirement_set = self.base_requirement_set
+        except KeyError, ke:
+            # This is thrown if the requirements are not git based.
+            self.base_git_requirement_set = None
 
     def create_base_reqset_from_files(self):
         self.base_requirement_set = \
@@ -111,12 +114,8 @@ class ReqsContinuum:
 
     # Output: Statistics on Requirement Count
     # Note: because this goes the whole history back it takes some
-    # time. 
-    def output_stats_reqs_cnt(self, ofilename):
-        # This can be done only by counting - so this can be done
-        # here. 
-        ofile = file(ofilename, "w")
-
+    # time.
+    def output_stats_reqs_cnt_repo(self, ofile):
         # Get the commit count
         commit_count = self.repo.commit_count()
         # The commits are retreived in steps of 10 (by default)
@@ -146,6 +145,23 @@ class ReqsContinuum:
                 except KeyError, k:
                     # no doc/requirements in this commit. Skip error
                     pass
+
+    # If there is no repo available, just output the current date /
+    # time and the current number of requirements
+    def output_stats_reqs_cnt_files(self, ofile):
+        ofile.write("%s %d\n" %
+                    (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
+                     len(self.base_requirement_set.reqs)))
+
+    def output_stats_reqs_cnt(self, ofilename):
+        # This can be done only by counting - so this can be done
+        # here. 
+        ofile = file(ofilename, "w")
+
+        if self.base_git_requirement_set==None:
+            self.output_stats_reqs_cnt_files(ofile)
+        else:
+            self.output_stats_reqs_cnt_repo(ofile)
         
         # Clean up the file.
         ofile.close()
