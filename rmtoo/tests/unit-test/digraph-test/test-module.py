@@ -13,12 +13,13 @@ from rmtoo.lib.Modules import Modules
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
-mod_base_dir = "rmtoo/tests/unit-test/core-tests/testdata"
+mod_base_dir = "tests/unit-test/core-tests/testdata"
 mods_name = mod_base_dir.split("/")
 
 def mods_list(lm):
     #print("MODSNAME '%s'" % mods_name)
-    ml=copy.deepcopy(mods_name)
+    ml=["rmtoo"]
+    ml.extend(mods_name)
     ml.append(lm)
     return ml
 
