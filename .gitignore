@@ -18,3 +18,8 @@ doc/latex/stats_reqs_cnt.pdf
 reqtree.dot
 reqtree.png
 ttt
+debian/files
+debian/rmtoo.postinst.debhelper
+debian/rmtoo.preinst.debhelper
+debian/rmtoo.prerm.debhelper
+debian/rmtoo.substvars

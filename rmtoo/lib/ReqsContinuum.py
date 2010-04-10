@@ -29,17 +29,45 @@ class ReqsContinuum:
         self.opts = opts
         self.config = config
         self.directory = directory
-        # Set up the git repository
+
+        # Check for command line parameters.
+        self.handle_clp(opts.base_version)
+        # At this point, 
+        #  self.use_files is True, iff local files should be used
+
+        # Check, if there is a git repo available
         self.create_repo(directory)
-        if opts.base_version!="FILES":
+        # At this point, 
+        #  self.repo_available is True, iff a repo is available
+        # The repo itself can be found in self.repo.
+
+        # Check if the combination of the (non)existance of a repo and
+        # the command line paramters make any sense.
+        if self.use_files==False and self.repo_available==False:
+            raise RMTException(29, "No FILES specified but there "
+                               "is no git repository available for "
+                               "the requirements")            
+
+        # Depending on the set of input to work on, prepare the files...
+        if self.use_files:
+            self.create_base_reqset_from_files()
+
+        # ... and repository.
+        # Even if FILES is specified, for handling the tree
+        # (history and statistics) some git version is needed.
+        if self.repo_available:
+            # When the files should be used - HEAD will be used for
+            # git repository (if available)
+            vers = opts.base_version
+            if self.use_files:
+                vers = "HEAD"
             self.set_base_commit(vers)
             self.create_base_reqset_from_git()
-        else:
-            # Even if FILES is given, for handling the tree (history
-            # and statistics) some git version is needed.
-            self.set_base_commit("HEAD")
-            self.create_base_reqset_from_git()
-            self.create_base_reqset_from_files()
+
+    # Depending on the command line parameter and if there is a git
+    # available, the handling of commands look different.
+    def handle_clp(self, bv):
+        self.use_files = (bv=="FILES")
 
     # This method sets up the repository and splits out the repository
     # dir from the requirements dir.
@@ -50,17 +78,23 @@ class ReqsContinuum:
         if not os.path.isabs(directory):
             directory = os.path.abspath(directory)
 
-        self.repo = git.Repo(directory)
-        # The path is always absolute and ends in a '.git': therefore
-        # cut off the '.git'.
-        rpath = self.repo.path[:-4]
+        try:
+            self.repo = git.Repo(directory)
+            self.repo_available = True
+            # The path is always absolute and ends in a '.git': therefore
+            # cut off the '.git'.
+            rpath = self.repo.path[:-4]
 
-        if not directory.startswith(rpath):
-            raise RMTException(28, "Cannot split up the given "
-                               "directory name")
+            if not directory.startswith(rpath):
+                raise RMTException(28, "Cannot split up the given "
+                                   "directory name")
         
-        self.reqs_subdir = directory[len(rpath):]
-        self.reqs_subdir_parts = self.reqs_subdir.split("/")
+            self.reqs_subdir = directory[len(rpath):]
+            self.reqs_subdir_parts = self.reqs_subdir.split("/")
+        except git.errors.InvalidGitRepositoryError, igre:
+            # There is no git repo here - therefore nothing to do.
+            self.repo = None
+            self.repo_available = False
 
     # Depending on the vers set the base commit (i.e. the base which
     # to work with during the livetime of the continuum object.)
@@ -154,14 +188,15 @@ class ReqsContinuum:
                      len(self.base_requirement_set.reqs)))
 
     def output_stats_reqs_cnt(self, ofilename):
-        # This can be done only by counting - so this can be done
-        # here. 
+        # This can be done only when a repo is available.  If no repo
+        # is available output only the current number of
+        # requirements. 
         ofile = file(ofilename, "w")
 
-        if self.base_git_requirement_set==None:
-            self.output_stats_reqs_cnt_files(ofile)
-        else:
+        if self.repo_available:
             self.output_stats_reqs_cnt_repo(ofile)
+        else:
+            self.output_stats_reqs_cnt_files(ofile)
         
         # Clean up the file.
         ofile.close()
@@ -172,31 +207,17 @@ class ReqsContinuum:
         ofile = file(ofilename, "w")
         self.cmad_write_reqs_list(ofile)
         for ok, ov in self.config.output_specs.items():
-            # Call the methos with all the given parameters
+            # Call the methods with all the given parameters
             eval("self.cmad_%s(ofile, *%s)" % (ok, ov))
         # Shut down the file.
         ofile.close()
 
     # CMAD write REQS list
     def cmad_write_reqs_list(self, ofile):
-        reqs=[]
-        # XXX This is nearly a copy: unify this!
-        # Get a list of all REQS files
-        try:
-            tree = self.get_reqs_tree(self.base_commit.tree)
-            for f in tree.items():
-                # Only add the files ending in '.req'.
-                m = re.match("^.*\.req$", f[0])
-                if m==None:
-                    continue
-                reqs.append(f[0])
-        except KeyError, k:
-            # no doc/requirements in this commit. Skip error
-            pass
         # Write out the list
         ofile.write("REQS=")
-        for r in reqs:
-            ofile.write("%s " % os.path.join(self.opts.directory, r))
+        for r in self.base_requirement_set.reqs:
+            ofile.write("%s.req " % os.path.join(self.opts.directory, r))
         ofile.write("\n")
 
     # CMAD prios

@@ -1,0 +1,7 @@
+User visible changes
+--------------------
+
+Fixed a bug which makes it impossible to create the makefile
+dependencies when there was no git repository available for the
+requirements. (Thanks to Grotefeld).
+
