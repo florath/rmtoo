@@ -159,7 +159,6 @@ class ReqsContinuum:
             # Get all the next bulk of commits
             commits = PyGitCompat.Commit.iter_commits(
                 self.repo, self.commit_bulk_size, commits_seen)
-            #print("Commits bulk Cnt: %d" % len(commits))
 
             # Step though the commits and count the number of requirements
             for commit in commits:

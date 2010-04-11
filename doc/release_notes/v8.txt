@@ -9,5 +9,6 @@ Add a pygit compatibility layer.  This version of rmtoo should now
 work with version 0.1.6 (with comes with some linux distributions) and
 also with version 0.2.0 (which is the latest beta).
 
-
-
+Readded the command line options '-p', '-o' and '-l' which vanished
+during refactoring of the input / output handling in version 7.  These
+options are depricated and will vanish in some versions.
