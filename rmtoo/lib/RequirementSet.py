@@ -15,6 +15,7 @@ import operator
 import StringIO
 
 from Requirement import Requirement
+from PyGitCompat import PyGitCompat
 from rmtoo.lib.digraph.Digraph import Digraph
 
 # This class handles a whole set of requirments.
@@ -84,13 +85,13 @@ class RequirementSet(Digraph):
 
     def read_from_git_tree(self, tree):
         everythings_fine = True
-        files = tree.items()
+        files = PyGitCompat.Tree.items(tree)
         for f in files:
-            m = re.match("^.*\.req$", f[0])
+            m = re.match("^.*\.req$", PyGitCompat.Tree.iter_name(f))
             if m==None:
                 continue
-            rid = f[0][:-4]
-            req = Requirement(StringIO.StringIO(f[1].data), 
+            rid = PyGitCompat.Tree.iter_name(f)[:-4]
+            req = Requirement(StringIO.StringIO(PyGitCompat.Tree.iter_data(f)), 
                               rid, self.mods, self.opts, self.config)
             if req.ok():
                 # Store in the map, so that it is easy to access the

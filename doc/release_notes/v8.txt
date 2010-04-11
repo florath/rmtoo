@@ -3,5 +3,11 @@ User visible changes
 
 Fixed a bug which makes it impossible to create the makefile
 dependencies when there was no git repository available for the
-requirements. (Thanks to Grotefeld).
+requirements. (Thanks to Grotefeld)
+
+Add a pygit compatibility layer.  This version of rmtoo should now
+work with version 0.1.6 (with comes with some linux distributions) and
+also with version 0.2.0 (which is the latest beta).
+
+
 

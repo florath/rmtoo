@@ -14,6 +14,7 @@ import time
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
+from rmtoo.lib.PyGitCompat import PyGitCompat
 
 #
 # The Continuum holds all the RequirementSets from the history,
@@ -23,6 +24,8 @@ from rmtoo.lib.RequirementSet import RequirementSet
 #
 
 class ReqsContinuum:
+
+    commit_bulk_size = 10
 
     def __init__(self, directory, mods, opts, config):
         self.mods = mods
@@ -81,9 +84,7 @@ class ReqsContinuum:
         try:
             self.repo = git.Repo(directory)
             self.repo_available = True
-            # The path is always absolute and ends in a '.git': therefore
-            # cut off the '.git'.
-            rpath = self.repo.path[:-4]
+            rpath = PyGitCompat.Repo.git_dir(self.repo)
 
             if not directory.startswith(rpath):
                 raise RMTException(28, "Cannot split up the given "
@@ -151,30 +152,32 @@ class ReqsContinuum:
     # time.
     def output_stats_reqs_cnt_repo(self, ofile):
         # Get the commit count
-        commit_count = self.repo.commit_count()
+        commit_count = PyGitCompat.Commit.commit_count(self.repo)
         # The commits are retreived in steps of 10 (by default)
         commits_seen = 0
         while commits_seen < commit_count:
             # Get all the next bulk of commits
-            commits = self.repo.commits(max_count=10, skip=commits_seen)
+            commits = PyGitCompat.Commit.iter_commits(
+                self.repo, self.commit_bulk_size, commits_seen)
             #print("Commits bulk Cnt: %d" % len(commits))
-            commits_seen += len(commits)
 
             # Step though the commits and count the number of requirements
             for commit in commits:
+                commits_seen += 1
                 reqs_in_commit = 0
 
                 try:
                     tree = self.get_reqs_tree(commit.tree)
-                    for f in tree.items():
+                    for f in PyGitCompat.Tree.items(tree):
                         # Only count the files ending in '.req'.
-                        m = re.match("^.*\.req$", f[0])
+                        m = re.match("^.*\.req$", PyGitCompat.Tree.iter_name(f))
                         if m==None:
                             continue
                         reqs_in_commit += 1
                     ofile.write("%s %d\n" %
                                 (time.strftime("%Y-%m-%d_%H:%M:%S",
-                                               commit.authored_date),
+                                               PyGitCompat.Commit.
+                                               authored_date_lt(commit)),
                                  reqs_in_commit))
                 except KeyError, k:
                     # no doc/requirements in this commit. Skip error
