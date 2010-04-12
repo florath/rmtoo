@@ -127,7 +127,24 @@ class ReqsContinuum:
     # Output all the things should be
     def output(self):
         for ok, ov in self.config.output_specs.items():
+            # Load the appropriate module
+            print("OUTPUT MODULE '%s'" % ok)
+            print(                os.path.join(self.opts.modules_directory, "rmtoo", "outputs", ok) )
+
+            o = ["rmtoo", "outputs", ok]
+
+            output_module = __import__(
+                os.path.join(self.opts.modules_directory, "rmtoo", "outputs",
+                             ok),
+                globals(), locals(), ".".join(o))
+
+            print("OUTPUT MODULE %s" % output_module)
+
             # Call the methos with all the given parameters
+            # 
+
+            print("OUTPUTS: %s" % self.outputs)
+
             eval("self.output_%s(*%s)" % (ok, ov))
 
     ### Output methods

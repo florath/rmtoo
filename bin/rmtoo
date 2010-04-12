@@ -63,7 +63,7 @@ def parse_cmd_line_opts():
 
     return options
 
-def execute_cmds(opts, mods, config):
+def execute_cmds(opts, config, mods):
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct.
     try:
@@ -133,7 +133,7 @@ def main():
     compat_old_clp(opts, config)
 
     mods = Modules(opts.modules_directory, opts, config)
-    execute_cmds(opts, mods, config)
+    execute_cmds(opts, config, mods)
 
 if __name__=="__main__":
     main()
