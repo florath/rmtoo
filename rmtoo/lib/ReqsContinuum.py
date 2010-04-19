@@ -128,31 +128,29 @@ class ReqsContinuum:
     def output(self):
         for ok, ov in self.config.output_specs.items():
             # Load the appropriate module
-            print("OUTPUT MODULE '%s'" % ok)
-            print(                os.path.join(self.opts.modules_directory, "rmtoo", "outputs", ok) )
 
+            # Concat the needed names
             o = ["rmtoo", "outputs", ok]
+            ostr = ".".join(o)
+            
+            # Module name
+            mod_name = os.path.join(
+                self.opts.modules_directory, "rmtoo", "outputs", ok)
 
-            output_module = __import__(
-                os.path.join(self.opts.modules_directory, "rmtoo", "outputs",
-                             ok),
-                globals(), locals(), ".".join(o))
+            # Load the module
+            output_module = __import__(ostr, globals(), locals(), ostr)
 
-            print("OUTPUT MODULE %s" % output_module)
+            # Call the constructor
+            o = eval("output_module.%s()" % ok)
 
-            # Call the methos with all the given parameters
-            # 
+            # Call the output method
+            o.output(self)
 
-            print("OUTPUTS: %s" % self.outputs)
-
-            eval("self.output_%s(*%s)" % (ok, ov))
 
     ### Output methods
             
     # Output: Prios
-    def output_prios(self, ofilename):
-        # Currently just pass this to the RequirementSet
-        self.base_requirement_set.output_prios(ofilename)
+    # def output_prios(self, ofilename):
 
     # Output: LaTeX
     def output_latex(self, ofilename):

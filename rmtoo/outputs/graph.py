@@ -1,13 +1,13 @@
 #
-# LaTeX output class
+# graph output class
 #
 # (c) 2010 by flonatel
 #
 # For licencing details see COPYING
 #
 
-class latex:
+class graph:
 
     def output(self, reqscont):
-        print("OTUPTU LATEX")
+        print("OTUPTU GRAPH")
 
