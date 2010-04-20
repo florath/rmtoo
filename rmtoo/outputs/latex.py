@@ -6,8 +6,60 @@
 # For licencing details see COPYING
 #
 
+import os
+import re
+
 class latex:
 
-    def output(self, reqscont):
-        print("OTUPTU LATEX")
+    def __init__(self, param):
+        self.directory = param[0]
 
+    def output(self, reqscont):
+        # Currently just pass this to the RequirementSet
+        self.output_reqset(reqscont.base_requirement_set)
+
+    # This is a major heuristic
+    # ToDo: have a very, very close look, because it might work (or
+    # not) 
+    def output_latex_check_master(self, reqset):
+        f = file(os.path.join(self.directory, "requirements.tex"), "r")
+
+        included = set()
+        for line in f:
+            if len(line)>0 and line[-1]=='\n':
+                line = line[:-1]
+            m=re.match("^\\\input\{reqs/(.*)\.tex\}$", line)
+            if m!=None:
+                included.add(m.group(1))
+
+        ks = set(reqset.reqs.keys())
+
+        not_included = ks - included
+        must_included = included - ks
+
+        too_much_or_less = False
+        if len(not_included)>0:
+            print("+++ ERROR: missing reqs in document: '%s'" 
+                  % not_included)
+            too_much_or_less = True
+
+        if len(must_included)>0:
+            print("+++ ERROR: additional reqs in document: '%s'" 
+                  % must_included)
+            too_much_or_less = True
+
+        return not too_much_or_less
+                
+    def output_reqset(self, reqset):
+        if not self.output_latex_check_master(reqset):
+            print("+++ ERROR: please fix errors first")
+            return
+        reqs_dir = os.path.join(self.directory, "reqs")
+        try:
+            os.makedirs(reqs_dir)
+        except OSError:
+            # This is not a problem: the directory already exists.
+            pass
+        # Call all requirments to write their files.
+        for r in reqset.reqs:
+            reqset.reqs[r].output_latex(reqs_dir)

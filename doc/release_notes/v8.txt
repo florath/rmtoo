@@ -12,3 +12,8 @@ also with version 0.2.0 (which is the latest beta).
 Readded the command line options '-p', '-o' and '-l' which vanished
 during refactoring of the input / output handling in version 7.  These
 options are depricated and will vanish in some versions.
+
+Internal Changes
+----------------
+
+Output methods are factored out in a separate class.

@@ -168,29 +168,3 @@ class Requirement(Digraph.Node):
                    time.strftime("%Y-%m-%d", self.tags["Invented on"]),
                    self.tags["Invented by"], status, clstr))
         f.close()
-
-    def output_dot(self, dotfile):
-        # Colorize the current requirement depending on type
-        nodeparam = []
-        if self.tags["Type"] == self.rt_initial_requirement:
-            nodeparam.append("color=orange")
-        if self.tags["Type"] == self.rt_design_decision:
-            nodeparam.append("color=green")
-
-        if self.tags["Status"] == self.st_not_done:
-            nodeparam.append("fontcolor=red")
-            nodeparam.append('label="%s\\n[%4.2f]"' %
-                             (self.id, self.tags["Priority"]*10))
-
-        if self.tags["Class"] == self.ct_implementable:
-            nodeparam.append("shape=octagon")
-
-        if self.tags["Topic"] == "internal":
-            nodeparam.append("fillcolor=lightblue")
-            nodeparam.append("style=filled")
-
-        if len(nodeparam)>0:
-            dotfile.write("%s [%s];\n" % (self.id, ",".join(nodeparam)))
-
-        for d in self.outgoing:
-            dotfile.write("%s -> %s;\n" % (self.id, d.id))

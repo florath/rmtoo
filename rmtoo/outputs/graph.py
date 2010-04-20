@@ -8,6 +8,45 @@
 
 class graph:
 
-    def output(self, reqscont):
-        print("OTUPTU GRAPH")
+    def __init__(self, param):
+        self.output_filename = param[0]
 
+    def output(self, reqscont):
+        # Currently just pass this to the RequirementSet
+        self.output_reqset(reqscont.base_requirement_set)
+
+    def output_reqset(self, reqset):
+        # Initialize the graph output
+        g = file(self.output_filename, "w")
+        g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
+                "nslimit=10.0;ranksep=1;\n")
+        for r in reqset.reqs:
+            self.output_req(reqset.reqs[r], g)
+        g.write("}")
+        g.close()
+
+    def output_req(self, req, dotfile):
+        # Colorize the current requirement depending on type
+        nodeparam = []
+        if req.tags["Type"] == req.rt_initial_requirement:
+            nodeparam.append("color=orange")
+        if req.tags["Type"] == req.rt_design_decision:
+            nodeparam.append("color=green")
+
+        if req.tags["Status"] == req.st_not_done:
+            nodeparam.append("fontcolor=red")
+            nodeparam.append('label="%s\\n[%4.2f]"' %
+                             (req.id, req.tags["Priority"]*10))
+
+        if req.tags["Class"] == req.ct_implementable:
+            nodeparam.append("shape=octagon")
+
+        if req.tags["Topic"] == "internal":
+            nodeparam.append("fillcolor=lightblue")
+            nodeparam.append("style=filled")
+
+        if len(nodeparam)>0:
+            dotfile.write("%s [%s];\n" % (req.id, ",".join(nodeparam)))
+
+        for d in req.outgoing:
+            dotfile.write("%s -> %s;\n" % (req.id, d.id))
