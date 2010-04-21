@@ -10,10 +10,6 @@ class Config:
     inventors = ["flonatel", ]
 
     output_specs = \
-        { "latex": ["doc/latex"],
-          "prios": ["doc/latex/reqsprios.tex"],
-          "graph": ["reqtree.dot"],
-          "stats_reqs_cnt": ["doc/latex/stats_reqs_cnt.csv"],
-
+        { 
           "xml1": ["requirements.xml"]
         }

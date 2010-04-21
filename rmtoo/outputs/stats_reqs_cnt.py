@@ -6,23 +6,32 @@
 # For licencing details see COPYING
 #
 
+import re
+import time
+
+from rmtoo.lib.PyGitCompat import PyGitCompat
+
 class stats_reqs_cnt:
 
     def __init__(self, param):
         self.output_filename = param[0]
 
+    # Create MAkefile Dependencies
+    def cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+
     # Output: Statistics on Requirement Count
     # Note: because this goes the whole history back it takes some
     # time.
-    def output_stats_reqs_cnt_repo(self, ofile):
+    def output_stats_reqs_cnt_repo(self, reqscont, ofile):
         # Get the commit count
-        commit_count = PyGitCompat.Commit.commit_count(self.repo)
+        commit_count = PyGitCompat.Commit.commit_count(reqscont.repo)
         # The commits are retreived in steps of 10 (by default)
         commits_seen = 0
         while commits_seen < commit_count:
             # Get all the next bulk of commits
             commits = PyGitCompat.Commit.iter_commits(
-                self.repo, self.commit_bulk_size, commits_seen)
+                reqscont.repo, reqscont.commit_bulk_size, commits_seen)
 
             # Step though the commits and count the number of requirements
             for commit in commits:
@@ -30,7 +39,7 @@ class stats_reqs_cnt:
                 reqs_in_commit = 0
 
                 try:
-                    tree = self.get_reqs_tree(commit.tree)
+                    tree = reqscont.get_reqs_tree(commit.tree)
                     for f in PyGitCompat.Tree.items(tree):
                         # Only count the files ending in '.req'.
                         m = re.match("^.*\.req$", PyGitCompat.Tree.iter_name(f))
@@ -59,13 +68,11 @@ class stats_reqs_cnt:
         # requirements. 
         ofile = file(self.output_filename, "w")
 
-        if self.repo_available:
-            self.output_stats_reqs_cnt_repo(ofile)
+        if reqscont.repo_available:
+            self.output_stats_reqs_cnt_repo(reqscont, ofile)
         else:
             self.output_stats_reqs_cnt_files(ofile)
         
         # Clean up the file.
         ofile.close()
 
-    def output(self, reqscont):
-        print("OTUPTU stats_reqs_cnt")

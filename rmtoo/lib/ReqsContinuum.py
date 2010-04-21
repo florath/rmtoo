@@ -9,8 +9,6 @@
 
 import git
 import os
-import re
-import time
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -124,25 +122,27 @@ class ReqsContinuum:
             RequirementSet(self.mods, self.opts, self.config)
         self.base_requirement_set.read_from_filesystem(self.directory)
 
+    # Handle the output module loading
+    def load_output_module(self, mod_name):
+        # Concat the needed names
+        o = ["rmtoo", "outputs", mod_name]
+        ostr = ".".join(o)
+            
+        # Load the module
+        return __import__(ostr, globals(), locals(), ostr)
+
+    # Load the module and also call the constructor
+    def load_output_mod_call_constructor(self, mod_name, params):
+        # Load the appropriate module
+        output_module = self.load_output_module(mod_name)
+        # Call the constructor
+        return eval("output_module.%s(%s)" % (mod_name, params))
+        
     # Output all the things should be
     def output(self):
         for ok, ov in self.config.output_specs.items():
-            # Load the appropriate module
-
-            # Concat the needed names
-            o = ["rmtoo", "outputs", ok]
-            ostr = ".".join(o)
-            
-            # Module name
-            mod_name = os.path.join(
-                self.opts.modules_directory, "rmtoo", "outputs", ok)
-
-            # Load the module
-            output_module = __import__(ostr, globals(), locals(), ostr)
-
-            # Call the constructor
-            o = eval("output_module.%s(%s)" % (ok, ov))
-
+            # Create the object from the module
+            o = self.load_output_mod_call_constructor(ok, ov)
             # Call the output method
             o.output(self)
 
@@ -152,8 +152,10 @@ class ReqsContinuum:
         ofile = file(ofilename, "w")
         self.cmad_write_reqs_list(ofile)
         for ok, ov in self.config.output_specs.items():
-            # Call the methods with all the given parameters
-            eval("self.cmad_%s(ofile, *%s)" % (ok, ov))
+            # Create the object from the module
+            o = self.load_output_mod_call_constructor(ok, ov)
+            # Call the cmad method
+            o.cmad(self, ofile)
         # Shut down the file.
         ofile.close()
 
@@ -165,20 +167,3 @@ class ReqsContinuum:
             ofile.write("%s.req " % os.path.join(self.opts.directory, r))
         ofile.write("\n")
 
-    # CMAD prios
-    def cmad_prios(self, fd, ofilename):
-        fd.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (ofilename))
-
-    # CMAD latex
-    def cmad_latex(self, fd, directory):
-        self.base_requirement_set.cmad_latex(
-            fd, self.opts.directory, directory)
-
-    # CMAD Stats requirements count
-    def cmad_stats_reqs_cnt(self, fd, ofilename):
-        fd.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (ofilename))
-
-    # CMAD graph
-    def cmad_graph(self, fd, ofilename):
-        fd.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (ofilename))
-        

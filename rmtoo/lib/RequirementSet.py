@@ -132,18 +132,3 @@ class RequirementSet(Digraph):
                 alls_fine = False
         return alls_fine
 
-
-    # This is the corresponding makefile dependency outputter.
-    def cmad_latex(self, ofile, req_subdir, directory):
-        reqs_latex_dir = os.path.join(directory, "reqs")
-        # Print out the REQS_TEX variable
-        ofile.write("REQS_TEX=")
-        for r in self.reqs:
-            ofile.write("%s/%s.tex " % (reqs_latex_dir, self.reqs[r].id))
-        ofile.write("\n")
-        # For each requirement get the dependency correct
-        for r in self.reqs:
-            ofile.write("%s/%s.tex: %s/%s.req\n\t${CALL_RMTOO}\n"
-                        % (reqs_latex_dir, self.reqs[r].id,
-                           req_subdir, self.reqs[r].id))
-

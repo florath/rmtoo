@@ -14,6 +14,24 @@ class latex:
     def __init__(self, param):
         self.directory = param[0]
 
+    # Create MAkefile Dependencies
+    def cmad(self, reqscont, ofile):
+        self.cmad_reqset(reqscont.base_requirement_set, ofile,
+                         reqscont.opts.directory)
+
+    def cmad_reqset(self, reqset, ofile, req_subdir):
+        reqs_latex_dir = os.path.join(self.directory, "reqs")
+        # Print out the REQS_TEX variable
+        ofile.write("REQS_TEX=")
+        for r in reqset.reqs:
+            ofile.write("%s/reqs/%s.tex " % (self.directory, reqset.reqs[r].id))
+        ofile.write("\n")
+        # For each requirement get the dependency correct
+        for r in reqset.reqs:
+            ofile.write("%s/reqs/%s.tex: %s/%s.req\n\t${CALL_RMTOO}\n"
+                        % (self.directory, reqset.reqs[r].id,
+                           req_subdir, reqset.reqs[r].id))
+
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
         self.output_reqset(reqscont.base_requirement_set)

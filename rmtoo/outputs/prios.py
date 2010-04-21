@@ -13,6 +13,10 @@ class prios:
     def __init__(self, param):
         self.output_filename = param[0]
 
+    # Create MAkefile Dependencies
+    def cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
         self.output_reqset(reqscont.base_requirement_set)
