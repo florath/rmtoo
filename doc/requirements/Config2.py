@@ -11,5 +11,5 @@ class Config:
 
     output_specs = \
         { 
-          "xml1": ["requirements.xml"]
+          "xml_ganttproject_1": ["requirements.gan", 2.1]
         }

@@ -15,6 +15,12 @@ options are depricated and will vanish in some versions.
 
 Add first version of xml output handling class.
 
+Add experimental output class for writing ganntproject xml files. This
+output class is alpha software at the moment. It is not decided if
+this is supported in future: there are some major open problems with
+this interface.
+
+
 Internal Changes
 ----------------
 
