@@ -57,10 +57,10 @@ class stats_reqs_cnt:
 
     # If there is no repo available, just output the current date /
     # time and the current number of requirements
-    def output_stats_reqs_cnt_files(self, ofile):
+    def output_stats_reqs_cnt_files(self, reqscont, ofile):
         ofile.write("%s %d\n" %
                     (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
-                     len(self.base_requirement_set.reqs)))
+                     len(reqscont.base_requirement_set.reqs)))
 
     def output(self, reqscont):
         # This can be done only when a repo is available.  If no repo
@@ -71,7 +71,7 @@ class stats_reqs_cnt:
         if reqscont.repo_available:
             self.output_stats_reqs_cnt_repo(reqscont, ofile)
         else:
-            self.output_stats_reqs_cnt_files(ofile)
+            self.output_stats_reqs_cnt_files(reqscont, ofile)
         
         # Clean up the file.
         ofile.close()
