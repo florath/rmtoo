@@ -4,7 +4,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '7'
+version = '8'
 
 def adjust(input, output):
     if os.path.exists(output):
