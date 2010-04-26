@@ -1,0 +1,14 @@
+Name: Output XML File
+Type: requirement
+Invented on: 2010-04-26
+Invented by: flonatel
+Owner: customers
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ XML output. 
+Rationale: XML is used in many projects to import data or exchange
+ data. This should be an implementation which supports output of one
+ set of requirements.
+Depends on: Output
+Status: not done
+Priority: development:2 customers:2
+Effort estimation: 8
