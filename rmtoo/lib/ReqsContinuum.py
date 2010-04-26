@@ -49,10 +49,6 @@ class ReqsContinuum:
                                "is no git repository available for "
                                "the requirements")            
 
-        # Depending on the set of input to work on, prepare the files...
-        if self.use_files:
-            self.create_base_reqset_from_files()
-
         # ... and repository.
         # Even if FILES is specified, for handling the tree
         # (history and statistics) some git version is needed.
@@ -63,6 +59,14 @@ class ReqsContinuum:
             if self.use_files:
                 vers = "HEAD"
             self.set_base_commit(vers)
+        else:
+            # If there is no repo, the FILES are used
+            self.use_files = True
+
+        # Depending on the set of input to work on, prepare the files...
+        if self.use_files:
+            self.create_base_reqset_from_files()
+        else:
             self.create_base_reqset_from_git()
 
     # Depending on the command line parameter and if there is a git
