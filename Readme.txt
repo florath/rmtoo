@@ -51,55 +51,32 @@ fields, so please have a look at the files at doc/requirements to get
 an impression, what is possible.
 
 
---- Check them all ---
+--- Check and create them all ---
 
-To simply check the requirments, do
-$ ./bin/rmtoo -m . -f doc/requirements/Config.py \
-      -d doc/requirements -c check 
-
-If there are some errors, they will be printed.
-If everything is fine, nothing will be printed.
-
-
---- LaTeX Output ---
-
-For LaTeX output, run:
-$ ./bin/rmtoo -m . -f doc/requirements/Config.py \
-       -d doc/requirements -c latex -l doc/latex
-(Note: the file requirement.tex is parsed and checked, if all
-available requirments are included.)
-
-This converts all requirments into 'tex' files under doc/latex/reqs
-and generates a dot file 'doc/latex/reqs/dependsgraph.dot'.
-
-To generate a PDF from the LaTeX sources, do:
-$ cd doc/latex
-$ pdflatex requirements.tex
-
-The pdflatex might be run twice to get the references resolved.
-
-If you include the priority list, please have a look there how to
-create. 
+Try a 
+$ make 
+$ make test
+The configuration file where the output artifacts are configured are
+doc/requirements/Config.py.
 
 
---- Dependency Graph ---
+--- Documentation ---
 
-To output the requirements dependency graph (as a .dot file), use
-$ ./bin/rmtoo -m . -f doc/requirements/Config.py \
-       -d doc/requirements -c dot -o reqtree.dot
+There is a growing number of man pages. They are placed in the
+'doc/man' folder.  If you use the tar file or the sources, try using
+$ man -l doc/man/rmtoo.7
+When you use the package, just try
+$ man rmtoo
+This gives a short introduction what rmtoo is.  This man page also
+includes all the references to other man pages.
 
-To convert the dot file into some graphics, install the graphviz
-package and run:
-$ dot -Tpng -o reqtree.png reqtree.dot
+There is also a FAQ. It is placed under 'doc/other/FAQ.txt' or when
+using the package it's placed in '/usr/share/doc/rmtoo'.
 
-
---- Priority List ---
-
-To get a prioritized list of open requirments (which can be used as
-the current backlog) call:
-
-$ ./bin/rmtoo -m . -f doc/requirements/Config.py \
-       -d doc/requirements -c prios -p doc/latex/reqsprios.tex
+There is also a presentation about the design and features of
+rmtoo. The current version can be found in the download section of the
+sourceforge project page.  Please visit the projects home page
+'http://www.gnu4u.org/rmtoo' for appropriate links.
 
 
 --- Emacs Mode ---
@@ -124,10 +101,13 @@ All files with suffix .req will now use the REQ editing mode.
 --- Tailer ---
 
 If you have some problems, remarks or feature request, you're welcome
-to visit the sourceforge project page at:
+to visit the project home page
+   http://www.gnu4u.org/rmtoo
+or the sourceforge project page
    http://sourceforge.net/projects/rmtoo
 or write a mail.
 
 Andreas Florath
 sf@flonatel.org
-2010-04-06
+2010-04-28
+
