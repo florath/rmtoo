@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{longtable}
+\usepackage{graphicx}
+% When latex aborts with
+%  pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
+%  fstartlink.
+% Comment that line with draft out and inpect the errornous page
+\usepackage[pdfauthor={flonatel},%
+%draft,%
+pdftitle={Requirment for rmtoo},%
+pdfsubject={Requirment description for rmtoo},%
+pdfkeywords={requirments management tool open source dependency tracking},%
+pagebackref=true,%
+pdftex, bookmarks=true, colorlinks=true]{hyperref}
+
+\usepackage[a4paper]{geometry}
+
+
+\parindent0em
+
+\begin{document}
+\thispagestyle{empty}
+
+\mbox{}
+
+\vfill
+
+{\LARGE\textbf{Requirements for rmtoo}}
+
+\vfill
+
+{\Large\textbf{written by Andreas Florath}}
+
+\vfill
+
+26. April 2010
+
+\vfill
+
+\newpage
+
+\mbox{}
+
+\vfill
+
+{\small
+
+\copyright 2010 by florath nanosystems \& telecommunications GmbH \& Co. KG
+--- www.flonatel.org 
+
+All rights reserved.
+
+Redistribution and use in physical and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+Redistributions must retain the above copyright notice, this list of
+conditions and the following disclaimer.
+
+Neither the name of the florath nanosystems \& telecommunications GmbH
+\& Co. KG nor the names of its contributors may be used to endorse or
+promote products derived from this software without specific prior
+written permission.
+
+THIS DOCUMENTATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+}
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Status}
+\input{reqsprios.tex}
+
+\input{topics/WhatsAbout.tex}
+\input{topics/InitialReqs.tex}
+\input{topics/ReqTags.tex}
+
+\section{Input}
+\input{reqs/Checks.tex}
+\input{reqs/CheckSemantic.tex}
+\input{reqs/CheckSyntax.tex}
+\input{reqs/CheckGraph.tex}
+\input{reqs/CheckGraphOneMaster.tex}
+\input{reqs/CheckGraphSCC.tex}
+\input{reqs/ReqTagPriorityCheck.tex}
+
+\section{Implementation Decisions}
+\input{reqs/UseTxt.tex}
+\input{reqs/UsePython.tex}
+\input{reqs/Traceability.tex}
+\input{reqs/NoDirectedCircles.tex}
+\input{reqs/Completed.tex}
+
+\section{Output}
+\input{reqs/Output.tex}
+\input{reqs/ModularOutput.tex}
+\input{reqs/OutputPDF.tex}
+\input{reqs/OutputDocument.tex}
+\input{reqs/OutputHTML.tex}
+\input{reqs/OutputGraph.tex}
+\input{reqs/OutputTextSameBase.tex}
+\input{reqs/OutputBaseTags.tex}
+\input{reqs/OutputBaseReqRefs.tex}
+\input{reqs/OutputXML.tex}
+\input{reqs/OutputXMLGanttProject.tex}
+\input{reqs/PrioOutputLaTeX.tex}
+\input{reqs/PrioOutputInGraph.tex}
+\input{reqs/PrioOutputOrderByClass.tex}
+\input{reqs/PrioOutputEft.tex}
+
+\section{Emacs Mode}
+\input{reqs/EmacsMode.tex}
+\input{reqs/EMTraceability.tex}
+\input{reqs/EMIndentation.tex}
+\input{reqs/EMHighLightTags.tex}
+\input{reqs/EMAutoFill.tex}
+\input{reqs/EMFlyspellMode.tex}
+\input{reqs/EMValueHighlight.tex}
+
+\section{Documentation}
+\input{reqs/DocManPage.tex}
+\input{reqs/DocSlides.tex}
+\input{reqs/ManOverview.tex}
+\input{reqs/ManLaTeX.tex}
+\input{reqs/ManReqFormat.tex}
+\input{reqs/ManArtElabList.tex}
+\input{reqs/ManGraph.tex}
+\input{reqs/ManEmacsMode.tex}
+\input{reqs/ManArtBacklog.tex}
+
+\section{Agile Development Process}
+\input{reqs/PrioComputation.tex}
+\input{reqs/OutputPrio.tex}
+
+\section{Automatic Creation of Artifacts}
+\input{reqs/Makefile.tex}
+\input{reqs/MakefileDeps.tex}
+
+\section{Testing}
+\input{reqs/Testing.tex}
+\input{reqs/TestBeforePack.tex}
+\input{reqs/TestIntegration.tex}
+\input{reqs/TestUnit.tex}
+\input{reqs/TestTool.tex}
+
+\section{Deployment and Packaging}
+\input{reqs/Packaging.tex}
+\input{reqs/PackDebian.tex}
+
+\section{Statistics}
+\subsection{Requirements Count Statistics}
+\includegraphics{stats_reqs_cnt.pdf}
+
+\end{document}
+
+% \input{reqs/.tex}
+
