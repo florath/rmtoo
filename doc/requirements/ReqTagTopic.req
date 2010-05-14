@@ -1,0 +1,12 @@
+Name: Topic
+Type: design decision
+Invented on: 2010-05-14
+Invented by: flonatel
+Description: Each requirement \textbf{should} have a topic tag.
+Rationale: The topic tag defines the relation of requirement to a
+ special topic.
+Owner: development
+Priority: development:10
+Depends on: ReqTags
+Status: not done
+Topic: ReqTags

@@ -1,0 +1,13 @@
+Name: Requirement generics: Order of Tags
+Type: requirement
+Invented on: 2010-05-16
+Invented by: flonatel
+Description: The order of tags in a requirements description
+ \textbf{must} be independent of the semantic.
+Rationale: Order doesn't matter.
+Owner: development
+Depends on: Requirements
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Topic: InitialReqs

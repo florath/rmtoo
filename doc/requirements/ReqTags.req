@@ -1,0 +1,13 @@
+Name: Requirement Tags
+Type: requirement
+Invented on: 2010-05-16
+Invented by: flonatel
+Description: Each requirement description \textbf{must} include a set
+ of tag-value pairs.
+Rationale: This can be easily implemented.
+Owner: development
+Depends on: Requirements
+Status: not done
+Priority: development:10
+Effort estimation: 3
+Topic: InitialReqs

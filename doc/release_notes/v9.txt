@@ -1,0 +1,4 @@
+User visible changes
+--------------------
+
+Added requirements for topic handling.

@@ -1,0 +1,6 @@
+Name: Requirement Tags
+Text: Each requirment has a couple of tags and values.  This
+ section describes all the tags.
+IncludeRequirements: full
+SubTopic: ReqTagEffortDesc
+SubTopic: ReqTagFormatDesc
