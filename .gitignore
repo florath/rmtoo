@@ -23,3 +23,6 @@ debian/rmtoo.postinst.debhelper
 debian/rmtoo.preinst.debhelper
 debian/rmtoo.prerm.debhelper
 debian/rmtoo.substvars
+build
+debian/rmtoo
+requirements.xml
