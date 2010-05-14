@@ -136,4 +136,8 @@ def main():
     execute_cmds(opts, config, mods)
 
 if __name__=="__main__":
-    main()
+    try:
+        main()
+    except RMTException, rmte:
+        print("+++ ERROR: Exception occured: %s" % rmte)
+        sys.exit(1)

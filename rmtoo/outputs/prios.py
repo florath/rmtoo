@@ -7,6 +7,7 @@
 #
 
 import operator
+from rmtoo.lib.RMTException import RMTException
 
 class prios:
 
@@ -27,14 +28,18 @@ class prios:
         prios_impl = []
         prios_detail = []
         for r in reqset.reqs:
-            # Only open requirmentes are interesting
-            if reqset.reqs[r].is_open():
-                if reqset.reqs[r].is_implementable():
-                    prios_impl.append([reqset.reqs[r].get_prio(),
-                                       reqset.reqs[r].id])
-                else:
-                    prios_detail.append([reqset.reqs[r].get_prio(),
-                                         reqset.reqs[r].id])
+            try:
+                # Only open requirementes are interesting
+                if reqset.reqs[r].is_open():
+                    if reqset.reqs[r].is_implementable():
+                        prios_impl.append([reqset.reqs[r].get_prio(),
+                                           reqset.reqs[r].id])
+                    else:
+                        prios_detail.append([reqset.reqs[r].get_prio(),
+                                             reqset.reqs[r].id])
+            except KeyError, ke:
+                raise RMTException(35, "%s: KeyError: %s" % 
+                                   (reqset.reqs[r].id, ke))
 
         # Sort them after prio
         sprios_impl = sorted(prios_impl, key=operator.itemgetter(0),

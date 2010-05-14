@@ -14,4 +14,7 @@ class RMTException(Exception):
         self.eid = eid
         self.msg = msg
 
+    def __str__(self):
+        return "%3d: %s" % (self.eid, self.msg)
+
 
