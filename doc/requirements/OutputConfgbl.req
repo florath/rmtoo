@@ -1,0 +1,13 @@
+Name: Output of Text Document must be configurable
+Type: requirement
+Invented on: 2010-05-14
+Invented by: flonatel
+Owner: development
+Description: The output of the created document \textbf{must} be
+ configurable. 
+Note: This can be done e.g. by supporting LaTeX macros or HTML CSS
+ tags. 
+Depends on: Output
+Status: not done
+Priority: customers:8
+Effort estimation: 8

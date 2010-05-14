@@ -1,0 +1,14 @@
+Name: Topic generics: Format independent  
+Type: requirement
+Invented on: 2010-05-14
+Invented by: flonatel
+Description: The format of the topic \textbf{must} be output
+ independent. 
+Rationale: It must be possible to create a wide range of possible
+ formats, e.g. least LaTeX and HTML.
+Owner: development
+Depends on: Topics
+Status: not done
+Priority: development:10
+Effort estimation: 13
+Topic: Topic

@@ -7,7 +7,7 @@ Description: The output of the text document \textbf{must} use the
  same description for all different outputs.
 Rationale: I.e. with the help of one document description, it must be
  possible to generate different formats.
-Depends on: OutputDocument
+Depends on: OutputDocument TopicGenFormat
 Status: not done
 Priority: customers:8
 Effort estimation: 13

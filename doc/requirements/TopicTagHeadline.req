@@ -1,0 +1,11 @@
+Name: Topic Headline
+Type: requirement
+Invented on: 2010-05-14
+Invented by: flonatel
+Description: Each topic \textbf{must} have a name tag.
+Rationale: This is a short string (headline) for the topic.
+Owner: development
+Depends on: TopicTags
+Status: not done
+Priority: development:10
+Topic: TopicTags

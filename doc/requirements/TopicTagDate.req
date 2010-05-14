@@ -1,0 +1,11 @@
+Name: Topic Date
+Type: requirement
+Invented on: 2010-05-14
+Invented by: flonatel
+Description: Each topic \textbf{might} have a date tag.
+Note: This is mainly used for the whole document on the front page.
+Owner: development
+Depends on: TopicTags
+Status: not done
+Priority: development:10
+Topic: TopicTags
