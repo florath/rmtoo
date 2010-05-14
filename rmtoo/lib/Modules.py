@@ -47,6 +47,11 @@ class Modules(Digraph):
             dir_components = []
         else:
             dir_components = directory.split("/")
+            # When using an absolute path, the first component is
+            # empty though! Remove this and prepend a / for the next
+            # one. 
+            if len(dir_components)>0 and dir_components[0]=="":
+                dir_components[0] = "/"
         dir_components.extend(add_dir_components)
 
         self.load(dir_components, mod_components)
