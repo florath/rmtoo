@@ -6,7 +6,7 @@ Description: Each requirement \textbf{must} have a priority.
 Rationale: A priority is a number. The higher the number is, the
  higher prioritized is the requirment.
 Owner: development
-Depends on: Requirements
+Depends on: ReqTags
 Status: finished
 Priority: development:8
 Topic: ReqTags

@@ -5,6 +5,6 @@ Invented by: flonatel
 Description: Each requirement \textbf{must} have a 'invented by' tag.
 Rationale: This names the original (initial) author of the requirment.
 Owner: development
-Depends on: Requirements
+Depends on: ReqTags
 Status: finished
 Topic: ReqTags

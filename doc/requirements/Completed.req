@@ -7,6 +7,6 @@ Description: It \textbf{must} be possible to check if a requirement is
 Rationale: This can be used for a 'not yet finished' list as an output
  artifact. 
 Owner: development
-Depends on: Requirements
+Depends on: AutomaticGeneration
 Status: finished
 Priority: management:1
