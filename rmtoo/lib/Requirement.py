@@ -9,7 +9,7 @@
 import os
 import time
 
-from rmtoo.lib.RequirementParser import RequirementParser
+from rmtoo.lib.Parser import Parser
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 
@@ -56,7 +56,7 @@ class Requirement(Digraph.Node):
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
-        req = RequirementParser.read(self.id, fd)
+        req = Parser.read_as_map(self.id, fd)
         if req == None:
             self.state = self.er_error
             print("+++ ERROR %s: parser returned error" % self.id)
