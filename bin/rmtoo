@@ -14,6 +14,7 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.Modules import Modules
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.OutputHandler import OutputHandler
 
 def parse_cmd_line_opts():
     parser = OptionParser()
@@ -74,14 +75,23 @@ def execute_cmds(opts, config, mods):
         print("    Is the given version correct?");
         return
 
+    # Setup the OutputHandler
+    # Note: this can be more than one!
+    ohandler = OutputHandler(config)
+
     # When only the dependencies are needed, output them to the given
     # file. 
     if opts.create_makefile_dependencies!=None:
-        rc.create_makefile_dependencies(opts.create_makefile_dependencies)
+        ofile = file(opts.create_makefile_dependencies, "w")
+        # Write out the REQS=
+        rc.cmad_write_reqs_list(ofile)
+        # Write out the rest
+        ohandler.create_makefile_dependencies(ofile, rc)
+        ofile.close()
         return
 
     # Output everything
-    rc.output()
+    ohandler.output(rc)
 
 def load_config(opts):
     # Load config file

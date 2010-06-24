@@ -9,3 +9,4 @@ Depends on: EmacsMode
 Status: finished
 Class: implementable
 Priority: customers:6
+Topic: EmacsMode

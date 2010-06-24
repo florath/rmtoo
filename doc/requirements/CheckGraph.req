@@ -10,3 +10,4 @@ Rationale: Graph errors are errors which result in a broken
 Depends on: Checks
 Status: finished
 Priority: development:9
+Topic: Input

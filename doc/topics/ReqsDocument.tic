@@ -1,7 +1,15 @@
 Name: rmtoo
-Author: Andreas Florath
-Date: 2010-05-18
 SubTopic: Introduction
 SubTopic: WhatsAbout
 SubTopic: InitialReqs
 SubTopic: ReqTags
+SubTopic: Topic
+SubTopic: Input
+SubTopic: Output
+SubTopic: ImplementationDecisions
+SubTopic: EmacsMode
+SubTopic: Documentation
+SubTopic: AgileDevProcess
+SubTopic: AutoCreationOfArtifacts
+SubTopic: Testing
+SubTopic: Deployment

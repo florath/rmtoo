@@ -17,5 +17,9 @@ class ReqTopic(ReqTagGeneric):
         ReqTagGeneric.__init__(self, opts, config)
 
     def rewrite(self, rid, req):
-    	# This is optional
-        return self.handle_optional_tag(req)
+        # This tag (Name) is mandatory
+        self.check_mandatory_tag(rid, req, 9)
+
+        t = req[self.tag]
+        del req[self.tag]
+        return self.tag, t

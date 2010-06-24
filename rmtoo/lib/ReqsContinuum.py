@@ -126,43 +126,6 @@ class ReqsContinuum:
             RequirementSet(self.mods, self.opts, self.config)
         self.base_requirement_set.read_from_filesystem(self.directory)
 
-    # Handle the output module loading
-    def load_output_module(self, mod_name):
-        # Concat the needed names
-        o = ["rmtoo", "outputs", mod_name]
-        ostr = ".".join(o)
-            
-        # Load the module
-        return __import__(ostr, globals(), locals(), ostr)
-
-    # Load the module and also call the constructor
-    def load_output_mod_call_constructor(self, mod_name, params):
-        # Load the appropriate module
-        output_module = self.load_output_module(mod_name)
-        # Call the constructor
-        return eval("output_module.%s(%s)" % (mod_name, params))
-        
-    # Output all the things should be
-    def output(self):
-        for ok, ov in self.config.output_specs.items():
-            # Create the object from the module
-            o = self.load_output_mod_call_constructor(ok, ov)
-            # Call the output method
-            o.output(self)
-
-    ### Dependency generation
-
-    def create_makefile_dependencies(self, ofilename):
-        ofile = file(ofilename, "w")
-        self.cmad_write_reqs_list(ofile)
-        for ok, ov in self.config.output_specs.items():
-            # Create the object from the module
-            o = self.load_output_mod_call_constructor(ok, ov)
-            # Call the cmad method
-            o.cmad(self, ofile)
-        # Shut down the file.
-        ofile.close()
-
     # CMAD write REQS list
     def cmad_write_reqs_list(self, ofile):
         # Write out the list

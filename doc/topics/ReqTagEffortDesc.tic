@@ -1,3 +1,4 @@
 Name: Effort Description
-Description: This section descibes the format of the effort estimation
+Text: This section descibes the format of the effort estimation
  input fields and their semantic.
+IncludeRequirements: full

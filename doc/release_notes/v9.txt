@@ -1,7 +1,12 @@
 User visible changes
 --------------------
 
-Added requirements for topic handling.
+Add requirements for topic handling.
+
+Add topic handling.  The output document is now handles completly
+different: each requirement points to a topic where it belongs
+to.  (Note that this is not compatible with the old versions of rmtoo
+input files any more.)
 
 
 Internal Changes

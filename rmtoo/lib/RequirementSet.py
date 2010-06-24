@@ -28,7 +28,6 @@ class RequirementSet(Digraph):
 
     def __init__(self, mods, opts, config):
         Digraph.__init__(self)
-
         self.reqs = {}
         self.mods = mods
         self.opts = opts

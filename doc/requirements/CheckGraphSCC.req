@@ -12,3 +12,4 @@ Rationale: Directed circles are strongly connected components.  A lot
 Depends on: CheckGraph
 Status: finished
 Priority: development:10
+Topic: Input

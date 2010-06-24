@@ -11,5 +11,8 @@ class Config:
 
     output_specs = \
         { 
-          "latex2": ["doc/latex"]
+          "prios": ["doc/latex2/reqsprios.tex"],
+          "graph": ["reqtree.dot"],
+          "stats_reqs_cnt": ["doc/latex2/stats_reqs_cnt.csv"],
+          "latex2": ["doc/latex2/reqtopics.tex", ["doc/topics", "ReqsDocument"] ]
         }

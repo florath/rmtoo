@@ -11,4 +11,4 @@ Owner: development
 Depends on: EftMeasure
 Status: finished
 Class: implementable
-Topic: ReqTagFormatDesc
+Topic: ReqTagEffortDesc

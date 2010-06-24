@@ -6,3 +6,4 @@ Description: The Emacs mode \textbf{must} provide tag highlighting.
 Owner: development
 Depends on: EmacsMode
 Status: finished
+Topic: EmacsMode
