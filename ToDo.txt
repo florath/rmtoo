@@ -1,3 +1,7 @@
+for v9
+o man page for new topic thingies
+o Dependencies to topic files
+
 new features
 o use git for all requirement read in
   - add paeameter --base which gets a version string which
@@ -8,5 +12,4 @@ o use git for all requirement read in
 o change text output to base on a topic structure
 o Makefile dependencies must be done directly in the python tool
   itself (This is the one which knows about.)
-o Every topic should go to a separate output file?
 

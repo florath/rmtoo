@@ -1,4 +1,5 @@
 Name: Initial Requirements
 Text: This is the section containing all the initial
  requirements. 
+IncludeRequirements: full
 
