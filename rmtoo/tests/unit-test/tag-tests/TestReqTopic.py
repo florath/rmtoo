@@ -1,38 +1,37 @@
 #
 # Requirement Management Toolset
 #
-# Unit test for ReqName
+#  Unit test for ReqTopic
 #
 # (c) 2010 by flonatel
 #
 # For licencing details see COPYING
 #
 
-from rmtoo.modules.ReqName import ReqName
+from rmtoo.modules.ReqTopic import ReqTopic
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 
-class TestReqName:
+class TestReqTopic:
 
     def test_positive_01(self):
-        "Requirement Tag Name - tag given"
+        "Requirement Tag Topic - tag given"
         opts, config, req = create_parameters()
-        req["Name"] = "This is something"
+        req["Topic"] = "This is something"
 
-        rt = ReqName(opts, config)
-        name, value = rt.rewrite("Name-test", req)
-        assert(name=="Name")
+        rt = ReqTopic(opts, config)
+        name, value = rt.rewrite("Topic-test", req)
+        assert(name=="Topic")
         assert(value=="This is something")
 
     def test_negative_01(self):
-        "Requirement Tag Name - no Name set"
+        "Requirement Tag Topic - no Topic set"
         opts, config, req = create_parameters()
 
-        rt = ReqName(opts, config)
+        rt = ReqTopic(opts, config)
         try:
-            name, value = rt.rewrite("Name-test", req)
+            name, value = rt.rewrite("Topic-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==37)
-
+            assert(rmte.eid==9)

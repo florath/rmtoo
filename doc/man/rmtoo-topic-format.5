@@ -1,0 +1,70 @@
+.\" 
+.\" Man page for rmtoo topic input format
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-tomic-format 5 2010-06-25 "File Formats" "Requirements Management"
+.SH NAME
+rmtoo-topic-format \- requirements management tool: topic format
+.SH FILE FORMAT
+Each topic must be in its own file.  The filename must end
+in '.tic'.  Only ASCII characters are allowed.  Each line must at
+maximum 80 characters long.
+.P
+The topic must be written as a set of 'key: value' pairs.  A
+value is extended if the first column of a line is a space.
+.P
+A key can exists multiple times in a topic data file.  Order matters.
+.SH KEYS
+The following keys with the described syntax and semantic exists: 
+.SH KEY 'Name'
+The value is the name of the topic.  This is used as a chapter
+headline in the output document.
+.SH KEY 'Text'
+The text value will be copied into the output document.
+.SH KEY 'IncludeRequirements'
+This is the position where all the requirements are inserted
+in the output document.  The value must be the string 'full'.
+.SH KEY 'SubTopic'
+The value of the subtopic must be the id of another topic.  This
+topic is inserted at the point of occurance.
+.SH EXAMPLE
+Note that the following example has some initial indent resulting
+from the word processing program.  The keywords must start at the
+first column.  Additional lines must have a space in column one.
+.sp
+.RS
+.nf
+Name: Example Topic
+Text: This is an indrocution to the Example Topic.
+SubTopic: SomeMoreDetails
+Text: The text appears between the SomeMoreDetails
+ topic and the requirements themselves.
+IncludeRequirements: full
+Text: The text after the requirements.
+
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview over rmtoo requirements management tool.  All references
+can be found there.
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+

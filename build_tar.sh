@@ -18,7 +18,7 @@ make all
 # remove them - but we need it.
 rm -fr ttt
 mkdir ttt
-mv doc/latex/requirements.pdf ttt
+mv doc/latex2/requirements.pdf ttt
 mv reqtree.png ttt
 
 # Clean up everything before copying into the tar ball directory.

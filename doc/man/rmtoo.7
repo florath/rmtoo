@@ -40,6 +40,15 @@ input files can ba handled by mostly all standard *nix standard
 commands like grep(1), awk(1) or sed(1).  For replacing text commands
 like streplace(1) can be used.
 .P
+The output of requirements is handled based on groups of
+requirements - so called Topics.  Each requirement belongs to
+exactly one topic.  Typically a Topic corresponds to one section; a 
+Topic can have sub-Topic (sub-sections).  Example: a Topic
+corresponds to a chapter in a PDF document or a page in HTML output.
+Output limitation is based on Topics also: e.g. it is possible
+to just have a subset of all Topics in the requirements dependency
+graph. 
+.P
 For handling history and baselines an arbitrary revision control
 system can be used (like git, mercurial, subcersion, ...).
 Nevertheless currently
@@ -86,18 +95,21 @@ man page.
 The key-value pairs are internally checked.  If the check succeeds, it
 is possible to output a list, graph or other artifact.
 .SH "SEE ALSO"
+.B rmtoo-invoking(1)
+- overview over command line parameters executable for requirement mangement
+.P
 .B rmtoo-req-format(5)
 - format description for the requirement files
 .P
-.B All man pages referenced in this section do not yet exist.  They will be written in future.
-.P
-.B rmtoo-invoking(1)
-- overview over command line parameters executable for requirement mangement
+.B rmtoo-topic-format(5)
+- format description for the topic files
 .P
 .B rmtoo-config(5)
 - description of the \fIConfig.py\fR file which is needed for 
 .B rmtoo
 environment definition and output specification.
+.P
+.B All the following man pages referenced in this section do not yet exist.  They will be written in future.
 .P
 .B rmtoo-req-emacs-mode(7)
 - major mode for Emacs for writing requirements

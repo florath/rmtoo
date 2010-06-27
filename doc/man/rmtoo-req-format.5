@@ -28,6 +28,8 @@ maximum 80 characters long.
 .P
 The requirement must be written as a set of 'key: value' pairs.  A
 value is extended if the first column of a line is a space.
+.P
+A key can only exists once in a requirement description file. 
 .SH KEYS
 The following keys with the described syntax and semantic exists: 
 .SH KEY 'Name'
@@ -67,6 +69,8 @@ Each requirement (except the master requirement) must have one or
 more parents where this requirements depends on.
 .SH KEY 'Status'
 The status can be one of 'not done' or 'finished'.
+.SH KEY 'Topic'
+This is the topic this requirement belongs to.
 .SH KEY 'Class'
 This gives the class of the requirement.  Currently two values are
 possible 'implementable' or 'detailable'.

@@ -1,7 +1,7 @@
 #
 # Requirement Management Toolset
 #
-# Unit test for RequirementParser
+# Unit test for Parser
 #
 # (c) 2010 on flonatel
 #

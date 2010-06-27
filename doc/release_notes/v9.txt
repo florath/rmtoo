@@ -14,3 +14,5 @@ Internal Changes
 
 Refactored the Parser class: it now supports parsing of files with
 tags which appear many times.  This is needed for the topic feature.
+
+Add more unit-tests.

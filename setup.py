@@ -4,7 +4,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '8'
+version = '9'
 
 def adjust(input, output):
     if os.path.exists(output):
@@ -36,6 +36,9 @@ setup(name=package, version=version,
                 'rmtoo/tests/unit-test/core-tests/testdata/modules02',
                 'rmtoo/tests/unit-test/core-tests/testdata/modules03',
                 'rmtoo/tests/unit-test/core-tests/testdata/modules04',
+                'rmtoo/tests/unit-test/topic-tests',
+                'rmtoo/tests/unit-test/topic-tests/testdata',
+                'rmtoo/tests/unit-test/topic-tests/testdata/topicset01',
                 ],
       license="GPL V3",
       platforms="all",
