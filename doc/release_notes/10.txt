@@ -3,6 +3,8 @@ User visible changes
 
 Bug#2967323 fixed: status field of example in man page updated.
 
+Add Topic tag to emacs mode.
+
 
 Internal Changes
 ----------------

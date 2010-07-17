@@ -45,3 +45,10 @@ class Topic:
 
     def add_req(self, req):
         self.reqs.append(req)
+
+    # Returns the name of the game
+    def get_name(self):
+        for nt in self.t:
+            if nt[0] == "Name":
+                return nt[1]
+        return None
