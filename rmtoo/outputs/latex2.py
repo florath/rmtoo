@@ -1,5 +1,5 @@
 #
-# LaTeX2 output class
+# LaTeX output class version 2
 #
 # (c) 2010 by flonatel
 #
