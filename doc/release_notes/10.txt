@@ -5,6 +5,8 @@ Bug#2967323 fixed: status field of example in man page updated.
 
 Add Topic tag to emacs mode.
 
+Bug#3031142 fixed: check for connected component added.
+
 
 Internal Changes
 ----------------

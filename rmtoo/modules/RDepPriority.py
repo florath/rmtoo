@@ -15,7 +15,8 @@ from rmtoo.lib.digraph.Digraph import Digraph
 # A node has always the maximum of possible priorities.
 #
 class RDepPriority(Digraph.Node):
-    depends_on = ["RDepDependsOn", "RDepNoDirectedCircles"]
+    depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
+                  "RDepOneComponent"]
 
     def __init__(self, opts, config):
         Digraph.Node.__init__(self, "RDepPriority")

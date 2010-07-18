@@ -15,6 +15,19 @@ class CC_Components:
     def len(self):
         return len(self.cs)
 
+    @staticmethod
+    def set_as_string(cs):
+        r = set()
+        for c in cs:
+            r.add(c.name)
+        return r
+
+    def as_string(self):
+        r = []
+        for cs in self.cs:
+            r.append(self.set_as_string(cs))
+        return r
+
     def add_component(self, n):
         self.cs.append(set([n]))
 
