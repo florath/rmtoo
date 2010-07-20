@@ -7,6 +7,7 @@ Add Topic tag to emacs mode.
 
 Bug#3031142 fixed: check for connected component added.
 
+Add dependency handling for topic handling.
 
 Internal Changes
 ----------------

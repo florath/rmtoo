@@ -11,8 +11,12 @@ from rmtoo.lib.RMTException import RMTException
 
 class prios:
 
-    def __init__(self, topics, param):
-        self.output_filename = param[0]
+    def __init__(self, param):
+        self.topic_name = param[0]
+        self.output_filename = param[1]
+
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
 
     # Create MAkefile Dependencies
     def cmad(self, reqscont, ofile):

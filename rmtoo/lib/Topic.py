@@ -21,13 +21,13 @@ import os
 
 class Topic(Digraph.Node):
 
-    def __init__(self, tdir, tname, tmaster_map, tlevel=0, 
+    def __init__(self, tdir, tname, dg, tlevel=0, 
                  tsuper=None):
         Digraph.Node.__init__(self, tname)
         self.dir = tdir
         # Master map is needed for deciping requirements into the
         # appropriate topic.
-        self.master_map = tmaster_map
+        self.digraph = dg
         # Identiation level of this topic
         self.level = tlevel
         self.super = tsuper
@@ -36,18 +36,27 @@ class Topic(Digraph.Node):
 
         self.read()
 
+    # Create Makefile Dependencies
+    def cmad(self, reqscont, ofile, tname):
+        for req in self.reqs:
+            # Add all the included requirements
+            ofile.write(" %s.req" % 
+                         os.path.join(reqscont.opts.directory, req.name))
+        # Add all the subtopics
+        for n in self.outgoing:
+            ofile.write(" ${TOPIC_%s_%s_DEPS}" % (tname, n.name))
+
     # Read in a specific topic
     def read(self):
-        self.master_map[self.id] = self
-        fd = file(os.path.join(self.dir, self.id + ".tic"))
-        self.t = Parser.read_as_list(self.id, fd)
+        self.digraph.add_node(self)
+        fd = file(os.path.join(self.dir, self.name + ".tic"))
+        self.t = Parser.read_as_list(self.name, fd)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
             if tag[0]=="SubTopic":
-                ntopic = Topic(self.dir, tag[1], self.master_map,
+                ntopic = Topic(self.dir, tag[1], self.digraph,
                                self.level+1, self)
-                Digraph.create_edge(self, ntopic)
-                ### XXX Needed anymore ?tag.append(ntopic)
+                self.outgoing.append(ntopic)
         fd.close()
 
     def add_req(self, req):

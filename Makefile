@@ -1,5 +1,6 @@
 .PHONY: all
-all: reqtree.png doc/latex2/requirements.pdf
+.PHONY: all_html
+all: reqtree.png doc/latex2/requirements.pdf all_html
 
 #
 # This is the way the rmtoo must be called.
@@ -11,6 +12,8 @@ CALL_RMTOO=./bin/rmtoo -m . -f doc/requirements/Config3.py -d doc/requirements
 #  The file .rmtoo_dependencies is created by rmtoo itself.
 #
 include .rmtoo_dependencies
+
+all_html: ${OUTPUT_HTML}
 
 # And how to make the dependencies
 .rmtoo_dependencies:

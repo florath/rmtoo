@@ -20,9 +20,12 @@ class latex2:
         "subsection",
         "subsubsection" ]
 
-    def __init__(self, topics, param):
-        self.filename = param[0]
-        self.topic_set = topics.get(param[1])
+    def __init__(self, param):
+        self.topic_name = param[0]
+        self.filename = param[1]
+
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

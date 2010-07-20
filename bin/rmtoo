@@ -14,6 +14,7 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.Modules import Modules
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.TopicHandler import TopicHandler
 from rmtoo.lib.OutputHandler import OutputHandler
 
 def parse_cmd_line_opts():
@@ -81,6 +82,7 @@ def execute_cmds(opts, config, mods):
     # before the OutputHandler itself - because different output
     # handler may reference the same Topic.
     topics = TopicHandler(config)
+    topics.depict(reqs)
     ohandler = OutputHandler(config, topics)
 
     # When only the dependencies are needed, output them to the given

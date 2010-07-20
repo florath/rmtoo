@@ -13,36 +13,39 @@ from rmtoo.lib.TopicSet import TopicSet
 
 class html:
 
-    def __init__(self, topics, param):
-        self.output_dir = param[0]
-        self.topic_set = topics.get(param[1])
+    def __init__(self, param):
+        self.topic_name = param[0]
+        self.output_dir = param[1]
         self.html_header_filename = param[2]
         self.html_footer_filename = param[3]
         self.read_html_arts()
 
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
+
     # Create Makefile Dependencies
+    # Basic idea: each HTML file is dependend of the approriate topic
+    # file plus the header and the footer.
+    # Each html file depends on it's topic file
     def cmad(self, reqscont, ofile):
         # Emit the dependencies for the topic
         self.topic_set.cmad(reqscont, ofile)
 
-        # Each html file depends on it's topic file
         reqset = reqscont.base_requirement_set
-        # For each requirement get the dependency correct
-        for r in reqset.reqs:
-            ofile.write("%s: " % self.filename)
-            ofile.write("%s/%s.req "
-                        % (reqscont.opts.directory,
-                           reqset.reqs[r].id))
-        ofile.write("\n\t${CALL_RMTOO}\n")
 
+        # Dependencies of every single topic html page
+        for topic in self.topic_set.nodes:
+            ofile.write("%s.html: %s %s ${%s}\n\t${CALL_RMTOO}\n" %
+                        (os.path.join(self.output_dir, topic.name),
+                         self.html_header_filename,
+                         self.html_footer_filename,
+                         self.topic_set.create_makefile_name(topic.name)))
 
-
-        ofile.write("REQS_HTML= %s %s" % (self.html_header_filename,
-                                          self.html_footer_filename))
-        for r in reqset.reqs:
-            ofile.write(" %s/%s" %(
-
-    
+        # All HTML files
+        ofile.write("OUTPUT_HTML=")
+        for topic in self.topic_set.nodes:
+            ofile.write("%s.html " % os.path.join(self.output_dir, topic.name))
+        ofile.write("\n")
 
     def read_html_arts(self):
         fd = file(self.html_header_filename, "r")
@@ -61,19 +64,33 @@ class html:
         # Fiddle the requirements into the topics
         self.topic_set.depict(reqset)
         # Call the topic to write out everything
-        self.output_html_topic(self.topic_set.topic)
+        self.output_html_topic(self.topic_set.get_master())
 
     def output_html_topic(self, topic):
+        # If not already there, create the directory.
+
+        try:
+            os.makedirs(self.output_dir)
+        except OSError, ose:
+            # It's ok if already there
+            pass
+
         # Each Topic will be stored in an seperate html file.
-        fd = file(os.path.join(self.output_dir, topic.id + ".html"),
+        fd = file(os.path.join(self.output_dir, topic.name + ".html"),
                   "w")
         fd.write(self.html_header)
-        
+
+        # Subtopics go in a ul
+        ul_open = False
         for t in topic.t:
             assert(len(t)>=2)
 
             tag = t[0]
             val = t[1]
+
+            if tag != "SubTopic" and ul_open:
+                fd.write("</ul></span>")
+                ul_open = False
 
             if tag == "Name":
                 # The Name itself depends on the level.
@@ -82,10 +99,15 @@ class html:
                 continue
 
             if tag == "SubTopic":
+                if not ul_open:
+                    fd.write('<span class="subtopiclist"><ul>')
+                    ul_open = True
+
+                rtopic = topic.find_outgoing(val)
                 # A link to the other file.
-                fd.write('<a href="%s.html">%s</a>\n' % 
-                         (val, t[2].get_name()))
-                self.output_html_topic(t[2])
+                fd.write('<li><a href="%s.html">%s</a></li>\n' % 
+                         (val, rtopic.get_name()))
+                self.output_html_topic(rtopic)
                 continue
 
             if tag == "Text":
@@ -95,6 +117,9 @@ class html:
             if tag == "IncludeRequirements":
                 self.output_requirements(fd, topic)
                 continue
+
+        if ul_open:
+            fd.write("</ul></span>")
 
         fd.write(self.html_footer)
         fd.close()

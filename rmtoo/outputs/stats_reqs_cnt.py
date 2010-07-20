@@ -13,8 +13,12 @@ from rmtoo.lib.PyGitCompat import PyGitCompat
 
 class stats_reqs_cnt:
 
-    def __init__(self, topics, param):
-        self.output_filename = param[0]
+    def __init__(self, param):
+        self.topic_name = param[0]
+        self.output_filename = param[1]
+
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

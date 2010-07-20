@@ -9,10 +9,14 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
+    topic_specs = \
+        {
+          "ts_common": ["doc/topics", "ReqsDocument"],
+        }
+
     output_specs = \
         { 
-          "html": ["doc/html/reqs",
-                   ["doc/topics", "ReqsDocument"],
-                   "doc/html/header.html",
+          "html": ["ts_common", 
+                   "doc/html/reqs", "doc/html/header.html",
                    "doc/html/footer.html"],
         }

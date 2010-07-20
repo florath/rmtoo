@@ -11,7 +11,6 @@ from rmtoo.lib.RMTException import RMTException
 class Digraph:
 
     class Node:
-
         def __init__(self, name=None):
             # Incoming and outgoing are lists of nodes.  Typically one
             # direction is provided and the other can be automatically
@@ -40,6 +39,13 @@ class Digraph:
         def incoming_as_named_list(self):
             return self.as_named_list(self.incoming)
 
+        # Find a subnode with the given name
+        def find_outgoing(self, name):
+            for o in self.outgoing:
+                if o.name==name:
+                    return o
+            return None
+
     # Create a digraph from the given dictionary representation. 
     # If no dictionary is given, an empty digraph will be created.
     def __init__(self, d=None):
@@ -52,6 +58,15 @@ class Digraph:
     def create_edge(a, b):
         a.outgoing.append(b)
         b.incoming.append(a)
+
+    # Adds a new node to the graph
+    def add_node(self, a):
+        # Check if the node which the same name is already there.
+        for n in self.nodes:
+            if n.name==a.name:
+                raise RMTException(39, "Node with name '%s' already exists"
+                                   % a.name)
+        self.nodes.append(a)
 
     # Low level creation method, which really does the job of
     # converting a given dictionary to a digraph

@@ -10,50 +10,71 @@
 # For licencing details see COPYING
 #
 
-from rmtoo.lib.Topic import Topic
-from rmtoo.lib.RMTException import RMTException
+import os
 
-class TopicSet:
+from rmtoo.lib.Topic import Topic
+from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
+
+class TopicSet(Digraph):
     
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
     def __init__(self, name, tparam):
+        Digraph.__init__(self)
         assert(len(tparam)==2)
         self.name = name
         self.topic_dir = tparam[0]
         self.master_topic = tparam[1]
         # Was the cmad() method already called?
         self.cmad_already_called = False
-        # This holds a map from id->object
-        self.master_map = {}
         self.read_topics(self.topic_dir, self.master_topic)
 
+    def create_makefile_name(self, topicn):
+        return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
+
+    def get_master(self):
+        return self.get_named_node(self.master_topic)
+
     # Create Makefile Dependencies
-    # This must not be called more than once
     def cmad(self, reqscont, ofile):
+        # This must not be called more than once
         if self.cmad_already_called:
             return
         self.cmad_already_called = True
-        tsort = topological_sort(self.topic)
-        # XXXX
+
+        # Because the variables must be defined before they can be
+        # accessed, the topological sort is needed here.
+        tsort = topological_sort(self)
         for t in tsort:
-            putptu.sss.sss.t
+            ofile.write("%s: %s.tic" %
+                        (self.create_makefile_name(t.name),
+                         os.path.join(self.topic_dir, t.name)))
+            # Path the dependency handling of the requirements to the
+            # Topic object itself.
+            t.cmad(reqscont, ofile, self.name)
+            ofile.write("\n")
 
     def read_topics(self, tdir, initial_topic):
-        self.topic = Topic(tdir, initial_topic, self.master_map)
+        Topic(tdir, initial_topic, self)
 
     # Resolve the 'Topic' tag of the requirement to the correct
     # topic. 
     def depict(self, reqset):
+        # The named_node dictionary must exists before it is possible
+        # to access it. 
+        self.build_named_nodes()
         for req in reqset.nodes:
             if "Topic" in req.tags \
                     and req.tags["Topic"]!=None:
                 # A referenced topic must exists!
                 ref_topic = req.tags["Topic"]
-                if not ref_topic in self.master_map:
+                if not ref_topic in self.named_nodes:
                     raise RMTException(36, "Topic '%s' referenced "
                                        "by '%s' - but topic does not exists"
                                        % (ref_topic, req.id))
-                self.master_map[ref_topic].add_req(req)
+                self.named_nodes[ref_topic].add_req(req)
 

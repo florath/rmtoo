@@ -32,8 +32,10 @@ class OutputHandler:
         # Load the appropriate module
         output_module = self.load_output_module(mod_name)
         # Call the constructor
-        return eval("output_module.%s(%s)"
-                    % (mod_name, self.topics, params))
+        obj = eval("output_module.%s(%s)"
+                   % (mod_name, params))
+        obj.set_topics(self.topics)
+        return obj
 
     # Initializas the list of all needed output modules.
     # The list is given in the configuration file.
