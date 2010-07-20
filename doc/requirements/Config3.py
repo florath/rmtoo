@@ -9,15 +9,19 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
+    topic_specs = \
+        {
+          "ts_common": ["doc/topics", "ReqsDocument"],
+        }
+
     output_specs = \
         { 
           "prios": ["doc/latex2/reqsprios.tex"],
           "graph": ["reqtree.dot"],
           "stats_reqs_cnt": ["doc/latex2/stats_reqs_cnt.csv"],
           "latex2": ["doc/latex2/reqtopics.tex",
-                     ["doc/topics", "ReqsDocument"] ],
-          "html": ["doc/html/reqs",
-                   ["doc/topics", "ReqsDocument"],
+                     "ts_common"],
+          "html": ["doc/html/reqs", "ts_common",
                    "doc/html/header.html",
                    "doc/html/footer.html"],
         }

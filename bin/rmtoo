@@ -77,7 +77,11 @@ def execute_cmds(opts, config, mods):
 
     # Setup the OutputHandler
     # Note: this can be more than one!
-    ohandler = OutputHandler(config)
+    # For the topic based output also all the Topics are needed -
+    # before the OutputHandler itself - because different output
+    # handler may reference the same Topic.
+    topics = TopicHandler(config)
+    ohandler = OutputHandler(config, topics)
 
     # When only the dependencies are needed, output them to the given
     # file. 

@@ -13,7 +13,7 @@ from rmtoo.lib.Requirement import Requirement
 
 class xml1:
 
-    def __init__(self, param):
+    def __init__(self, topics, param):
         self.output_filename = param[0]
 
     # Create MAkefile Dependencies

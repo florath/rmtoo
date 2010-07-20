@@ -10,8 +10,9 @@
 
 class OutputHandler:
 
-    def __init__(self, config):
+    def __init__(self, config, topics):
         self.config = config
+        self.topics = topics
         self.omods = []
         self.init_output_modules()
 
@@ -31,7 +32,8 @@ class OutputHandler:
         # Load the appropriate module
         output_module = self.load_output_module(mod_name)
         # Call the constructor
-        return eval("output_module.%s(%s)" % (mod_name, params))
+        return eval("output_module.%s(%s)"
+                    % (mod_name, self.topics, params))
 
     # Initializas the list of all needed output modules.
     # The list is given in the configuration file.

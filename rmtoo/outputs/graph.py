@@ -8,7 +8,8 @@
 
 class graph:
 
-    def __init__(self, param):
+    def __init__(self, topics, param):
+        # ??? self.topics = topics
         self.output_filename = param[0]
 
     # Create MAkefile Dependencies

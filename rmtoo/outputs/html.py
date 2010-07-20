@@ -13,12 +13,36 @@ from rmtoo.lib.TopicSet import TopicSet
 
 class html:
 
-    def __init__(self, param):
+    def __init__(self, topics, param):
         self.output_dir = param[0]
-        self.topic_set = TopicSet(param[1])
+        self.topic_set = topics.get(param[1])
         self.html_header_filename = param[2]
         self.html_footer_filename = param[3]
         self.read_html_arts()
+
+    # Create Makefile Dependencies
+    def cmad(self, reqscont, ofile):
+        # Emit the dependencies for the topic
+        self.topic_set.cmad(reqscont, ofile)
+
+        # Each html file depends on it's topic file
+        reqset = reqscont.base_requirement_set
+        # For each requirement get the dependency correct
+        for r in reqset.reqs:
+            ofile.write("%s: " % self.filename)
+            ofile.write("%s/%s.req "
+                        % (reqscont.opts.directory,
+                           reqset.reqs[r].id))
+        ofile.write("\n\t${CALL_RMTOO}\n")
+
+
+
+        ofile.write("REQS_HTML= %s %s" % (self.html_header_filename,
+                                          self.html_footer_filename))
+        for r in reqset.reqs:
+            ofile.write(" %s/%s" %(
+
+    
 
     def read_html_arts(self):
         fd = file(self.html_header_filename, "r")

@@ -48,7 +48,8 @@ class Digraph:
             self.create_from_dict(d)
 
     # Creates an edge from a to b - both must be nodes.
-    def create_edge(self, a, b):
+    @staticmethod
+    def create_edge(a, b):
         a.outgoing.append(b)
         b.incoming.append(a)
 
@@ -120,4 +121,4 @@ class Digraph:
                                % name)
         # When all checks succeed: return the value
         return self.named_nodes[name]
-            
+  
