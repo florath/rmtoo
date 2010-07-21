@@ -53,11 +53,11 @@ class latex2:
     def output_latex_topic_set(self, topic_set):
         fd = file(self.filename, "w")
         # The TopicSet itself needs no output.
-        self.output_latex_topic(fd, topic_set.topic)
+        self.output_latex_topic(fd, topic_set.get_master())
         fd.close()
 
     def output_latex_topic(self, fd, topic):
-        fd.write("%% Output topic '%s'\n" % topic.id)
+        fd.write("%% Output topic '%s'\n" % topic.name)
         for t in topic.t:
             assert(len(t)>=2)
 
@@ -70,7 +70,8 @@ class latex2:
                 continue
 
             if tag == "SubTopic":
-                self.output_latex_topic(fd, t[2])
+                rtopic = topic.find_outgoing(val)
+                self.output_latex_topic(fd, rtopic)
                 continue
 
             if tag == "Text":

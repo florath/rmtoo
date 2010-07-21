@@ -16,7 +16,5 @@ class Config:
 
     output_specs = \
         { 
-          "html": ["ts_common", 
-                   "doc/html/reqs", "doc/html/header.html",
-                   "doc/html/footer.html"],
+          "graph2": ["ts_common", "req-graph2.dot"],
         }

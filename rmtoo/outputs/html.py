@@ -10,6 +10,7 @@ import os
 import time
 
 from rmtoo.lib.TopicSet import TopicSet
+from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 
 class html:
 
@@ -61,14 +62,11 @@ class html:
         self.output_reqset(reqscont.base_requirement_set)
 
     def output_reqset(self, reqset):
-        # Fiddle the requirements into the topics
-        self.topic_set.depict(reqset)
         # Call the topic to write out everything
         self.output_html_topic(self.topic_set.get_master())
 
     def output_html_topic(self, topic):
         # If not already there, create the directory.
-
         try:
             os.makedirs(self.output_dir)
         except OSError, ose:
@@ -111,7 +109,8 @@ class html:
                 continue
 
             if tag == "Text":
-                fd.write("%s\n" % val)
+                fd.write('<p><span class="fltext">%s</span></p>\n'
+                         % LaTeXMarkup.replace_html(val))
                 continue
 
             if tag == "IncludeRequirements":
@@ -129,32 +128,51 @@ class html:
             self.output_requirement(fd, req, topic.level + 1)
 
     def output_requirement(self, fd, req, level):
-        fd.write("<!- REQ '%s' -->\n" % req.id)
+        fd.write("\n<!- REQ '%s' -->\n" % req.id)
+        fd.write('<h%d><a name="%s">%s</a></h%d>\n' % 
+                 (level+1, req.id, req.tags["Name"], level+1))
+        fd.write("<dl>")
 
-        fd.write("<h%d> xxxxx {%s}\label{%s}\n\\textbf{Description:} %s\n" 
-                 % (level+1, req.tags["Name"],
-                    req.id, req.tags["Description"]))
+        fd.write('<dt><span class="dlt_description">Description</span>'
+                 '</dt><dd><span class="dlv_description">%s</span></dd>' % 
+                  LaTeXMarkup.replace_html(req.tags["Description"]))
 
-        if "Rationale" in req.tags:
-            fd.write("\n\\textbf{Rationale:} %s\n" % req.tags["Rationale"])
+        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
+            fd.write('<dt><span class="dlt_rationale">Rationale</span>'
+                     '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
+                     LaTeXMarkup.replace_html_par(req.tags["Rationale"]))
 
-        if "Note" in req.tags:
-            fd.write("\n\\textbf{Note:} %s\n" % req.tags["Note"])
+        if "Note" in req.tags and req.tags["Note"]!=None:
+            fd.write('<dt><span class="dlt_note">Note</span></dt>'
+                     '<dd><span class="dlv_note">%s</span></dd>' 
+                     % req.tags["Note"])
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:
             # Create links to the corresponding labels.
-            fd.write("\n\\textbf{Depends on:} ")
+            fd.write('<dt><span class="dlt_depends_on">Depends on:'
+                     '</span></dt><dd><span class="dlv_depends_on"')
+            is_first = True
             for d in req.outgoing:
-                fd.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
-            fd.write("\n")
+                if not is_first:
+                    fd.write(", ")
+                is_first=False
+                fd.write('<a href="%s.html#%s">%s</a>' % 
+                         (d.tags["Topic"], d.id, d.id))
+            fd.write("</span></dd>")
 
         if len(req.incoming)>0:
             # Create links to the corresponding dependency nodes.
-            fd.write("\n\\textbf{Dependent:} ")
+            fd.write('<dt><span class="dlt_dependent">Dependent'
+                     '</span></dt><dd><span class="dlv_dependent">')
+            is_first = True
             for d in req.incoming:
-                fd.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
-            fd.write("\n")
+                if not is_first:
+                    fd.write(", ")
+                is_first=False
+                fd.write('<a href="%s.html#%s">%s</a>' % 
+                         (d.tags["Topic"], d.id, d.id))
+            fd.write("</span></dd>")
 
         if req.tags["Status"]==req.st_finished:
             status = "completed"
@@ -166,15 +184,25 @@ class html:
         else:
             clstr="detailable"
 
-        fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n"
-                 "\\textbf{Id:} & %s & "
-                 "\\textbf{Priority:} & %4.2f & "
-                 "\\textbf{Owner:} & %s \\\ \n"
-                 "\\textbf{Invented on:} & %s & "
-                 "\\textbf{Invented by:} & %s & "
-                 "\\textbf{Status:} & %s \\\ \n"
-                 "\\textbf{Class:} & %s & & & & \\\ \n"
-                 "\end{tabular}\end{center} }"
+        fd.write('<dt><span class="dlt_id">Id</span></dt>'
+                 '<dd><span class="dlv_id">%s</span></dd>'
+                 '<dt><span class="dlt_priority">Priority</span></dt>'
+                 '<dd><span class="dlv_priority">%4.2f</span></dd>'
+                 '<dt><span class="dlt_owner">Owner</span></dt>'
+                 '<dd><span class="dlv_owner">%s</span></dd>'
+                 '<dt><span class="dlt_invented_on">Invented on</span></dt>'
+                 '<dd><span class="dlv_invented_on">%s</span></dd>'
+                 '<dt><span class="dlt_invented_by">Invented by</span></dt>'
+                 '<dd><span class="dlv_invented_by">%s</span></dd>'
+                 '<dt><span class="dlt_status">Status</span></dt>'
+                 '<dd><span class="dlv_status">%s</span></dd>'
+                 '<dt><span class="dlt_class">Class</span></dt>'
+                 '<dd><span class="dlv_class">%s</span></dd>'
                  % (req.id, req.tags["Priority"]*10, req.tags["Owner"],
                     time.strftime("%Y-%m-%d", req.tags["Invented on"]),
                     req.tags["Invented by"], status, clstr))
+        fd.write("</dl>")
+
+        # Mark the end of the requirment - then it is possible to add
+        # some ruler here
+        fd.write('<div class="requirment_end"> </div>')

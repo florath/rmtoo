@@ -26,3 +26,4 @@ debian/rmtoo.substvars
 build
 debian/rmtoo
 requirements.xml
+doc/html/reqs

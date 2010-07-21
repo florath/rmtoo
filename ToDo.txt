@@ -1,8 +1,19 @@
-for v9
-o man page for new topic thingies
-
 for v10
 o Finish started HTML output
+o Finish graph2 output
+
+for v11
+o add analyse modules
+  - count number of incoming and outgoing in reqs and emit warning
+    when limit is reached
+  - count number of internal (in topic) links and compare to external
+    (out topic) refs
+  - check for 'no' words like 'and', 'or', 'many', 'some', ... and
+    emit warning.
+
+Soon
+o man page for new topic thingies
+
 
 new features
 o use git for all requirement read in

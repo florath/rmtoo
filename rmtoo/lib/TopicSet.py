@@ -18,6 +18,8 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
+import traceback
+
 class TopicSet(Digraph):
     
     # The 'tparam' must be a list:
