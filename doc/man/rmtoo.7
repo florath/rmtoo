@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 7 2010-03-21 "User Commands" "Requirements Management"
+.TH rmtoo 7 2010-07-22 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH DESCRIPTION
@@ -43,11 +43,9 @@ like streplace(1) can be used.
 The output of requirements is handled based on groups of
 requirements - so called Topics.  Each requirement belongs to
 exactly one topic.  Typically a Topic corresponds to one section; a 
-Topic can have sub-Topic (sub-sections).  Example: a Topic
-corresponds to a chapter in a PDF document or a page in HTML output.
-Output limitation is based on Topics also: e.g. it is possible
-to just have a subset of all Topics in the requirements dependency
-graph. 
+Topic can have sub-Topic (sub-sections).  For further information
+please consult the section
+.B TOPIC
 .P
 For handling history and baselines an arbitrary revision control
 system can be used (like git, mercurial, subcersion, ...).
@@ -94,6 +92,34 @@ man page.
 .P
 The key-value pairs are internally checked.  If the check succeeds, it
 is possible to output a list, graph or other artifact.
+.SH TOPIC
+.B rmtoo
+uses a unique way of describing and handling output: so called
+.B topics.
+A topic is a description of one set of related requirements.  It has a
+name and contains text, requirements and other topics.  With topics it
+is possible to build hierarchy output document structures.  In a PDF
+file a topic may be one chapter which includes other topics which are
+handled as e.g. sections.  Using HTML output, each topic corresponds
+to one HTML page, while a subtopic is a link to the appropriate
+(sub-)topics HTML page representation.  When using graph output the
+requirements of a topic are clustered.
+.P
+This makes it possible to define the output structure once (in so
+called topic files) and use this structure over and over for all
+different output artifacts.
+.P
+It is possible (by adding one additional line in the configuration
+file) to create an independent and a self-contained (set of)
+document(s) from an arbitrary sub-topic.  This makes it possible
+e.g. to create a own document for the marketing department which is
+not interested in technical decisions and security requirements.
+.P
+Of course it is also possible to map one set of requirements to some
+completely different sets of topics.  This makes it possible to have
+one set of requirements for the internal used project documentation
+and for an external company which delivers only one small part of the
+whole project.
 .SH "SEE ALSO"
 .B rmtoo-invoking(1)
 - overview over command line parameters executable for requirement mangement
@@ -114,10 +140,16 @@ environment definition and output specification.
 .B rmtoo-req-emacs-mode(7)
 - major mode for Emacs for writing requirements
 .P
+.B rmtoo-tic-emacs-mode(7)
+- major mode for Emacs for writing topics
+.P
 .B rmtoo-art-req-dep-graph(1)
 - output description of the requirement dependency graph
 .P
-.B rmtoo-art-latex(1)
+.B rmtoo-art-req-dep-graph2(1)
+- output description of the requirement dependency graph - version 2
+.P
+.B rmtoo-art-latex2(1)
 - output description for LaTeX output of all requirements
 .P
 .B rmtoo-art-prio-lists(1)
