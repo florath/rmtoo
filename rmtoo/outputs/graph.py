@@ -28,8 +28,9 @@ class graph:
         g = file(self.output_filename, "w")
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-        for r in reqset.reqs:
-            self.output_req(reqset.reqs[r], g)
+        # Only output the nodes which are connected to the chosen topic. 
+        for r in self.topic_set.all_reqs:
+            self.output_req(r, g)
         g.write("}")
         g.close()
 

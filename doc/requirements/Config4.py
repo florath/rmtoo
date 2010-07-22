@@ -12,9 +12,11 @@ class Config:
     topic_specs = \
         {
           "ts_common": ["doc/topics", "ReqsDocument"],
+          "ts_input_only": ["doc/topics", "Input"],
         }
 
     output_specs = \
         { 
-          "graph2": ["ts_common", "req-graph2.dot"],
+          "graph": ["ts_input_only", "req-graph1-input.dot"],
+#          "graph": ["ts_common", "req-graph1-all.dot"],
         }

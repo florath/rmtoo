@@ -34,6 +34,9 @@ class TopicSet(Digraph):
         # Was the cmad() method already called?
         self.cmad_already_called = False
         self.read_topics(self.topic_dir, self.master_topic)
+        # self.all_reqs is set by the function 'depict' and contains
+        # all requirements which are referenced by one of the topics
+        # in this topic set.
 
     def create_makefile_name(self, topicn):
         return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
@@ -66,6 +69,7 @@ class TopicSet(Digraph):
     # Resolve the 'Topic' tag of the requirement to the correct
     # topic. 
     def depict(self, reqset):
+        self.all_reqs = set()
         # The named_node dictionary must exists before it is possible
         # to access it. 
         self.build_named_nodes()
@@ -75,8 +79,12 @@ class TopicSet(Digraph):
                 # A referenced topic must exists!
                 ref_topic = req.tags["Topic"]
                 if not ref_topic in self.named_nodes:
-                    raise RMTException(36, "Topic '%s' referenced "
-                                       "by '%s' - but topic does not exists"
-                                       % (ref_topic, req.id))
-                self.named_nodes[ref_topic].add_req(req)
-
+                    print("+++ WARNING: Topic '%s' referenced "
+                          "by '%s' - but topic does not exists"
+                          % (ref_topic, req.id))
+                    print("+++ This might occur if only a subset of "
+                          "requirements are envolved in the current "
+                          "chosen topic")
+                else:
+                    self.named_nodes[ref_topic].add_req(req)
+                    self.all_reqs.add(req)

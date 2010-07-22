@@ -8,6 +8,9 @@ still missing some small features like table of contents.
 Add graph2 output which is a requirement dependency graph based on
 topics.
 
+graph ouput only outputs requirements which are referenced by the
+topic.
+
 Bug#2967323 fixed: status field of example in man page updated.
 
 Add Topic tag to emacs requirement mode.
