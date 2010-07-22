@@ -2,8 +2,11 @@ User visible changes
 --------------------
 
 Add HTML output. It is fully usabale, including all links. It's based
-on the new topic based output.  It is not yet that complete,
-e.g. there is no table of contents.
+on the new topic based output.  This feature is mostly usable, but
+still missing some small features like table of contents.
+
+Add graph2 output which is a requirement dependency graph based on
+topics.
 
 Bug#2967323 fixed: status field of example in man page updated.
 
