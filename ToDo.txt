@@ -1,6 +1,9 @@
 for v10
 o Finish started HTML output
 o Finish graph2 output
+o add restriction to used requirements only
+o Move Config map into a container that it is possible to specify
+  multiple calls for the same output module
 
 for v11
 o add analyse modules
@@ -13,7 +16,6 @@ o add analyse modules
 
 Soon
 o man page for new topic thingies
-
 
 new features
 o use git for all requirement read in
