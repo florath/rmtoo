@@ -33,7 +33,8 @@ class graph:
         g.write("}")
         g.close()
 
-    def output_req(self, req, dotfile):
+    @staticmethod
+    def node_attributes(req):
         # Colorize the current requirement depending on type
         nodeparam = []
         if req.tags["Type"] == req.rt_initial_requirement:
@@ -53,8 +54,11 @@ class graph:
             nodeparam.append("fillcolor=lightblue")
             nodeparam.append("style=filled")
 
-        if len(nodeparam)>0:
-            dotfile.write("%s [%s];\n" % (req.id, ",".join(nodeparam)))
+        return ",".join(nodeparam)
+
+    def output_req(self, req, dotfile):
+        dotfile.write("%s [%s];\n" %
+                      (req.id, self.node_attributes(req)))
 
         for d in req.outgoing:
             dotfile.write("%s -> %s;\n" % (req.id, d.id))

@@ -9,6 +9,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.outputs.graph import graph
+
 class graph2:
 
     def __init__(self, param):
@@ -51,8 +53,9 @@ class graph2:
             self.output_topic(dotfile, t)
 
         for req in topic.reqs:
-            dotfile.write(' node [label="%s"] %s;\n'
-                          % (req.name, req.name))
+            dotfile.write(' node [%s] %s;\n'
+                          % (graph.node_attributes(req),
+                             req.name))
         dotfile.write('\n}\n')
 
     # This writes out the edges
