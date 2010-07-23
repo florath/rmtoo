@@ -1,0 +1,73 @@
+
+This is a description of the next and next-next generation of to be
+implemented features.
+
+There is no exact time line because the amount of time spend for this
+tools changes from time to time (depending on many factors).  From
+history it may be assumed that it takes about 6 to 8 weeks from one
+version to the next.
+
+Also the version number shown here might change: if there are other
+requests from customers this will be done first.  Also it might be
+that from time to time there is a bug-fix release of rmtoo.
+
+There are some major aim to go for:
+o Get rmtoo listed in the INCOSE tool survey.
+o Get rmtoo added to at least one Linux distribution (preferred
+  Debian)
+
+v10
+===
+o Finish started HTML output
+o  include appropriate man-page
+o Finish graph2 output
+o  include appropriate man-page
+o add restriction to used requirements only for all output types
+o Move Config map into a container that it is possible to specify
+  multiple calls for the same output module
+
+v11
+===
+o add analyse modules
+  - count number of incoming and outgoing in reqs and emit warning
+    when limit is reached
+  - count number of internal (in topic) links and compare to external
+    (out topic) refs
+  - check for 'no' words like 'and', 'or', 'many', 'some', ... and
+    emit warning.
+
+v12
+===
+o finish / write all lost man-pages
+o Update presentation:
+  - Add section about topics
+    (Adapt latex output)
+  - Add HTML-Output
+  - Rewrite graph output
+  - Add graph2 output
+  - Add code analyze 
+    + count in / out
+    + topic count
+    + word-checking
+
+v13
+===
+o Add glossary
+o Add man page
+o Add to presentation
+
+v14
+===
+o Increase test case coverage to minimum 90%
+
+v15
+===
+o Include sub-graphs in the PDF and HTML documentation
+  - Topic based (all reqs of a topic)
+  - req based (all reqs dependend and depend on one req)
+o Adapt man pages
+o Adapt presentation
+
+==> This will be the point of time to get rmtoo into one Linux
+    distribution and send out the form to INCOSE.
+
