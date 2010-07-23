@@ -1,0 +1,80 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-html 1 2010-07-23 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-html \- requirements management tool: html artifact
+.SH DESCRIPTION
+The
+.B rmtoo
+is a requirment management tool is able to output one topic and all
+possible subtopics including the containing requirements as a set of
+HTML documents.
+.SH CONFIGURATION
+
+
+.  It understand long and short command
+line options.  For a detailed functional description see rmtoo(7).
+.SH OPTIONS
+.TP
+\fB\-d\fR \fIDIRECTORY\fR, \fB\-\-directory\fR=\fIDIRECTORY\fR
+The directory with the requirements files.
+.TP
+\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
+The directory with the requirements files.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display a short usage help.
+.TP
+\fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
+The directory where the rmtoo modules can be found.  When the program
+was installed by standard system routines (e.g. as a deb or a rpm
+package) this option is not necessary.  When using rmtoo from the
+repository or from a release tar ball this must point to the main
+directory.
+.TP
+\fB\-c\fR \fIMAKEFILE_DEPS\fR, \fB\-\-create-makefile-dependencies\fR=\fIMAKEFILE_DEPS\fR
+For handling the invocation of
+.B rmtoo
+with the help of a Makefile, \fImake\fR itself must know the
+dependencies. When called with this option, 
+.B rmtoo
+only creates the dependency file.  The dependency depends also from
+the config file: when changing output artifacts of curse the
+dependencies change.
+.SH RETURN
+.B rmtoo
+returns 0 when all commands are successfully completed and a value not
+equal 0 when there was a problem.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH LIMITATIONS
+Currently the makefile dependency creation are a best effort.  It
+should work in mostly all times, but there are situations where not
+all dependencies are tracked - especially when adding new requirement
+files. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+
