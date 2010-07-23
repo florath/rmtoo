@@ -15,12 +15,21 @@ class Config:
         }
 
     output_specs = \
-        { 
-          "prios": ["ts_common", "doc/latex2/reqsprios.tex"],
-          "graph": ["ts_common", "reqtree.dot"],
-          "stats_reqs_cnt": ["ts_common", "doc/latex2/stats_reqs_cnt.csv"],
-          "latex2": ["ts_common", "doc/latex2/reqtopics.tex"],
-          "html": ["ts_common", 
-                   "doc/html/reqs", "doc/html/header.html",
-                   "doc/html/footer.html"],
-        }
+        [ 
+          ["prios", 
+           ["ts_common", "doc/latex2/reqsprios.tex"]],
+
+          ["graph",
+           ["ts_common", "reqtree.dot"]],
+
+          ["stats_reqs_cnt", 
+           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+
+          ["latex2", 
+           ["ts_common", "doc/latex2/reqtopics.tex"]],
+
+          ["html", 
+           ["ts_common", 
+            "doc/html/reqs", "doc/html/header.html",
+            "doc/html/footer.html"]],
+        ]

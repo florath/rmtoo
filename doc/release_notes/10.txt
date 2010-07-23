@@ -11,13 +11,23 @@ topics.
 graph ouput only outputs requirements which are referenced by the
 topic.
 
-Bug#2967323 fixed: status field of example in man page updated.
-
 Add Topic tag to emacs requirement mode.
 
-Bug#3031142 fixed: check for connected component added.
-
 Add dependency handling for topic handling.
+
+Fixed the Config class: now it is possible to use the same output
+module multiple times with different set of parameters.  Note: the new
+version is not compatible with the old Config files.  There is the
+need to repleace the 'output_specs' dictionary with an appropriate
+list. 
+
+Removed old and depricated command line parameters -o / -l / -p: it is
+not longer possible to support these because it contradicts the way
+the config is build.
+
+Bug#2967323 fixed: status field of example in man page updated.
+
+Bug#3031142 fixed: check for connected component added.
 
 
 Internal Changes

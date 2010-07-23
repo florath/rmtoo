@@ -109,45 +109,9 @@ def load_config(opts):
     f.close()
     return config
 
-def compat_old_clp(opts, config):
-    # When the old '-o' was given, insert this into the config section.
-    if opts.dot_output!=None:
-        if "graph" in config.output_specs:
-            raise RMTException(32, "Double specified: dot output "
-                               "is given in the config file as well as on "
-                               "the command line - please use just one")
-        # print("+++ WARNING: '-o' is depricated and will vanish in "
-        #       "             one of the next releases")
-        config.output_specs["graph"] = [opts.dot_output]
-
-    # Same for '-p' but for the priority output.
-    if opts.prios_output!=None:
-        if "prios" in config.output_specs:
-            raise RMTException(33, "Double specified: prios output "
-                               "is given in the config file as well as on "
-                               "the command line - please use just one")
-        # print("+++ WARNING: '-p' is depricated and will vanish in "
-        #       "             one of the next releases")
-        config.output_specs["prios"] = [opts.prios_output]
-
-    # Same for '-l' but for the latex output.
-    if opts.latex_directory!=None:
-        if "latex" in config.output_specs:
-            raise RMTException(34, "Double specified: latex output "
-                               "is given in the config file as well as on "
-                               "the command line - please use just one")
-        # print("+++ WARNING: '-l' is depricated and will vanish in "
-        #       "             one of the next releases")
-        config.output_specs["latex"] = [opts.latex_directory]
-
 def main():
     opts = parse_cmd_line_opts()
     config = load_config(opts)
-
-    # For a limited time only (nobody knows when this will end)
-    # re-insert the old '-p' and '-o' options - as a user needs this.
-    compat_old_clp(opts, config)
-
     mods = Modules(opts.modules_directory, opts, config)
     execute_cmds(opts, config, mods)
 

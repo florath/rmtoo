@@ -11,6 +11,9 @@ Also the version number shown here might change: if there are other
 requests from customers this will be done first.  Also it might be
 that from time to time there is a bug-fix release of rmtoo.
 
+The history of this file, i. e. the already implemented features can
+be found the appropriate release notes.
+
 There are some major aim to go for:
 o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
@@ -22,9 +25,8 @@ o Finish started HTML output
 o  include appropriate man-page
 o Finish graph2 output
 o  include appropriate man-page
-o add restriction to used requirements only for all output types
-o Move Config map into a container that it is possible to specify
-  multiple calls for the same output module
+o add restriction to use requirements only for all output types
+o Rewrite the INTRODUCTION chapter in rmtoo.7
 
 v11
 ===
@@ -53,8 +55,8 @@ o Update presentation:
 v13
 ===
 o Add glossary
-o Add man page
-o Add to presentation
+o Add man page for glossary
+o Add glossary to presentation
 
 v14
 ===
@@ -67,6 +69,7 @@ o Include sub-graphs in the PDF and HTML documentation
   - req based (all reqs dependend and depend on one req)
 o Adapt man pages
 o Adapt presentation
+
 
 ==> This will be the point of time to get rmtoo into one Linux
     distribution and send out the form to INCOSE.

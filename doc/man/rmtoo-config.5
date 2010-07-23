@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-config 5 2010-03-23 "User Commands" "Requirements Management"
+.TH rmtoo-config 5 2010-07-23 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-config \- requirements management tool configuration file
 .SH DESCRIPTION
@@ -31,6 +31,10 @@ detailed description about command line parameters see
 The configuration file is a python file which must define a class
 named \fIConfig\fR.  See the \fBDETAILS\fR section for an explanation
 about the configuration parameters.
+.SH NOTE
+.B Please note that some of the referenced man pages may currently
+.B not exists.  Please consult rmtoo(7) for a list of available
+.B man pages.
 .SH EXAMPLE
 The following example is the configuration file for the 
 .B rmtoo
@@ -39,16 +43,33 @@ requirements which can be found at \fIrequirements/Config.py\fR.
 .RS
 .nf
 class Config:
-    stakeholders = ["development", "management",
-	            "users", "customers"]
+    stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
-    output_specs = \\
-        { "latex": ["doc/latex"],
-          "prios": ["doc/latex/reqsprios.tex"],
-          "graph": ["reqtree.dot"],
-          "stats_reqs_cnt": ["doc/latex/stats_reqs_cnt.csv"]
+    topic_specs = \
+        {
+          "ts_common": ["doc/topics", "ReqsDocument"],
         }
+
+    output_specs = \
+        [ 
+          ["prios", 
+           ["ts_common", "doc/latex2/reqsprios.tex"]],
+
+          ["graph",
+           ["ts_common", "reqtree.dot"]],
+
+          ["stats_reqs_cnt", 
+           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+
+          ["latex2", 
+           ["ts_common", "doc/latex2/reqtopics.tex"]],
+
+          ["html", 
+           ["ts_common", 
+            "doc/html/reqs", "doc/html/header.html",
+            "doc/html/footer.html"]],
+        ]
 
 .SH DETAILS
 The class \fBConfig\fR must contain some class level variables.
@@ -60,21 +81,23 @@ Stakeholders can own a and prioritize a requirement.  Tags:
 This must be a list of string specifying inventors.  Inventors can
 invent a requirement. Tags: \fIInvented by\fR.
 .SS output_specs
-The variable \fIoutput_specs\fR must be a dictionary (map).  The key
-must one of \fIlatex\fR, \fIprios\fR, \fIgraph\fR or
-\fIstats_reqs_cnt\fR.  See section \fBOUTPUT\fR for further details.
+The variable \fIoutput_specs\fR must be a list which contains pairs.
+Each pair itself is a list containing two elements: the first is the
+name of the output module, the second is the list of parameters for
+the given output module.  For details about the different output
+modules, see section \fBOUTPUT\fR for further details.
 .SH OUTPUT
 The output which 
 .B rmtoo
 writes out in different formats must be specified with the help of the
 \fIoutput_specs\fR variable.  The key describes the artifact to
 output, the value is specific to the chosen output parameter.
-.SS latex
-When \fIlatex\fR is specified as output,
+.SS latex2
+When \fIlatex2\fR is specified as output,
 .B rmtoo
 outputs a LaTeX document as output.  For a detailed description about
 the needed parameters and a detailed description, see
-\fBrmtoo-art-latex(1)\fR. 
+\fBrmtoo-art-latex2(1)\fR. 
 .SS prios
 This outputs a small LaTeX formatted artifact which includes the
 priority list and the requirements elaboration list.  For more details
@@ -83,6 +106,10 @@ consult \fBrmtoo-art-prio-lists(1)\fR.
 When this option is specified a requirements dependency graph is
 written.  Please see \fBrmtoo-art-req-dep-graph(1)\fR for more
 details.
+.SS graph2
+This is similar to the graph - but additionally groups the output
+requirements within the same topic as a cluster.  Please see
+\fBrmtoo-art-req-dep-graph2(1)\fR for more details.
 .SS stats_reqs_cnt
 When using \fIgit\fR as the underlying revision control system it is
 possible to create a history of the number of requirements.  See

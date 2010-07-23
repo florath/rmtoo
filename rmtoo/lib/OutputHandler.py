@@ -40,7 +40,7 @@ class OutputHandler:
     # Initializas the list of all needed output modules.
     # The list is given in the configuration file.
     def init_output_modules(self):
-        for ok, ov in self.config.output_specs.items():
+        for ok, ov in self.config.output_specs:
             # Create the object from the module
             o = self.load_output_mod_call_constructor(ok, ov)
             self.omods.append(o)
@@ -48,7 +48,7 @@ class OutputHandler:
     ### Dependency generation
 
     def create_makefile_dependencies(self, ofile, rc):
-        for ok, ov in self.config.output_specs.items():
+        for ok, ov in self.config.output_specs:
             # Create the object from the module
             o = self.load_output_mod_call_constructor(ok, ov)
             # Call the cmad method
