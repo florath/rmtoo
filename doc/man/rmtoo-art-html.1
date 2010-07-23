@@ -24,53 +24,67 @@ rmtoo-art-html \- requirements management tool: html artifact
 .SH DESCRIPTION
 The
 .B rmtoo
-is a requirment management tool is able to output one topic and all
+requirment management tool is able to output one topic and all
 possible subtopics including the containing requirements as a set of
 HTML documents.
+.P
+Each HTML page is generated out of three parts: a header, a middle
+part and a footer.  The header and footer are files which are copied
+into each HTML page and are the same for all pages.  The middle part
+is automatically generated.
+.SH HEADER
+The header must include the whole HTML header including the opening
+html, full head and opening body tags.
+.P
+The header may also contain the definitions for the css tags which are
+used in the middle part. See section \fBCSS\fR for more details.
+.SH MIDDLE PART
+The middle part is automatically generated.  The topic description is
+used as a base for layout, text and requirements.
+.SH FOOTER
+The footer can contain arbritary HTML code.  It is copied to the end
+of each page.  At least closing body and html tags must be included.
+.SH CSS
+Mostly each element in a requirement has a separate CSS class.
+Therefore it is possible to format mostly every single bit of a
+requirement output as wanted.  Please consult
+\fIdoc/html/header.html\fR for an example.
+Here is a list of all special
+.B rmtoo
+CSS classes used by the requirements output.  Of course additional
+standard CSS classes or attributes (like h1, h2, a and so on) can be
+defined.
+.TP
+\fBfltext\fR
+The floating text which is specified in the \fIText:\fR tag in the
+topic description.
+.TP
+\fBrequirment_end\fR
+A separator can be defined here. This ends up a requirement.
+.TP
+\fBdlt_<name>\fR
+The tag (key) of mostly all requirements keys can be defined. Example:
+dlt_description 
+.TP
+\fBdlv_<name>\fR
+The tag (key) of mostly all requirements keys can be defined. Example:
+dlv_description 
 .SH CONFIGURATION
-
-
-.  It understand long and short command
-line options.  For a detailed functional description see rmtoo(7).
-.SH OPTIONS
+To configure HTML output, a pair in the Config class must be added.
+The first field must set to \fIhtml\fR.
+.P
+The second parameter is a list which contains four elements:
 .TP
-\fB\-d\fR \fIDIRECTORY\fR, \fB\-\-directory\fR=\fIDIRECTORY\fR
-The directory with the requirements files.
+name (reference) to a set of topics.
 .TP
-\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
-The directory with the requirements files.
+output directory of the HTML files.
 .TP
-\fB\-h\fR, \fB\-\-help\fR
-Display a short usage help.
+HTML header file name.
 .TP
-\fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
-The directory where the rmtoo modules can be found.  When the program
-was installed by standard system routines (e.g. as a deb or a rpm
-package) this option is not necessary.  When using rmtoo from the
-repository or from a release tar ball this must point to the main
-directory.
-.TP
-\fB\-c\fR \fIMAKEFILE_DEPS\fR, \fB\-\-create-makefile-dependencies\fR=\fIMAKEFILE_DEPS\fR
-For handling the invocation of
-.B rmtoo
-with the help of a Makefile, \fImake\fR itself must know the
-dependencies. When called with this option, 
-.B rmtoo
-only creates the dependency file.  The dependency depends also from
-the config file: when changing output artifacts of curse the
-dependencies change.
-.SH RETURN
-.B rmtoo
-returns 0 when all commands are successfully completed and a value not
-equal 0 when there was a problem.
+HTML footer file name.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
-.SH LIMITATIONS
-Currently the makefile dependency creation are a best effort.  It
-should work in mostly all times, but there are situations where not
-all dependencies are tracked - especially when adding new requirement
-files. 
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT

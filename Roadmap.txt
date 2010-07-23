@@ -21,8 +21,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v10
 ===
-o Finish started HTML output
-o  include appropriate man-page
 o Finish graph2 output
 o  include appropriate man-page
 o add restriction to use requirements only for all output types
