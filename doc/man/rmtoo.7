@@ -74,24 +74,18 @@ input and output files can be found.
 .SH INTRODUCTION
 The
 .B rmtoo
-reads in a set of requirements.  These requirements are stored in
-different files in the file system.  The files are plain text files
-with special formatting.  The filename's suffix for the requirement
-files must be
-.I .req
-and all files must resist in one directory.
+reads in a set of input files: requirements and topics.
 .P
-The files are read in.  Then they are parsed: comment and empty lines
-are deleted.  From the rest a dictionary of key-value pairs is built.
-It is possible to have the value spread over more than one line.
+These files are plain text files stored in the file system.
+.B rmtoo
+parses these files and runs some checks on them.  These
+checks include syntax checks, semantic checks and some heuristics to
+get hints for increasing the quality of the requirements.
 .P
-For a detailed specification about the format of the input files, see
-the 
-.B rmtoo-req-format
-man page.
-.P
-The key-value pairs are internally checked.  If the check succeeds, it
-is possible to output a list, graph or other artifact.
+After passing these checks,
+.B rmtoo
+outputs all configured artifacts, like PDF or HTML documents,
+dependency graph or statistics.
 .SH TOPIC
 .B rmtoo
 uses a unique way of describing and handling output: so called
