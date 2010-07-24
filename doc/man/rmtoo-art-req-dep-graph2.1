@@ -1,0 +1,57 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-req-dep-graph2 1 2010-07-24 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-req-dep-graph2 \- requirements management tool: requirements
+dependency graph shaping 2
+.SH DESCRIPTION
+The
+.B rmtoo
+requirement management tool is able to output one topic and all
+possible subtopics including the containing requirements in a
+requirement dependency graph.
+.P
+This is mostly the same output as described in
+\fBrmtoo-art-req-dep-graph(1)\fR except one difference: requirements
+related to one topic are grouped together as a \fIcluster\fR,
+i. e. are drawn near to each other with a box around them.
+.P
+This graph gives a good impression about the quality of the topic
+grouping: if there are mostly all links inside the box with only a few
+to the outside, the topic grouping is done well.  If there are mostly
+no connections inside the box and a lot of to the outside, you should
+think about rearranging the topic grouping.
+.P
+.SH CONFIGURATION and SETUP
+The key for the configuration must be \fIgraph2\fR.
+.P
+All other information about configuration and calling \fIdot\fR can be
+found in \fBrmtoo-art-req-dep-graph(1)\fR.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

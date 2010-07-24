@@ -21,8 +21,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v10
 ===
-o Finish graph2 output
-o  include appropriate man-page
 o add restriction to use requirements only for all output types
 o Rewrite the INTRODUCTION chapter in rmtoo.7
 

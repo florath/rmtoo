@@ -1,6 +1,6 @@
 .PHONY: all
 .PHONY: all_html
-all: reqtree.png doc/latex2/requirements.pdf all_html
+all: doc/latex2/requirements.pdf req-graph1.png req-graph2.png all_html
 
 #
 # This is the way the rmtoo must be called.
@@ -21,8 +21,11 @@ all_html: ${OUTPUT_HTML}
 		-d doc/requirements \
 		--create-makefile-dependencies=.rmtoo_dependencies
 
-reqtree.png: reqtree.dot
-	dot -Tpng -o reqtree.png reqtree.dot
+req-graph1.png: req-graph1.dot
+	dot -Tpng -o req-graph1.png req-graph1.dot
+
+req-graph2.png: req-graph2.dot
+	dot -Tpng -o req-graph2.png req-graph2.dot
 
 # Two calls are needed: one for the requirments converting and one for
 # backlog creation.

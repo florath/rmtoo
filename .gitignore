@@ -15,8 +15,10 @@ doc/latex2/stats_reqs_cnt.csv
 doc/latex2/stats_reqs_cnt.eps
 doc/latex2/stats_reqs_cnt.pdf
 doc/latex2/reqtopics.tex
-reqtree.dot
-reqtree.png
+req-graph1.dot
+req-graph1.png
+req-graph2.dot
+req-graph2.png
 ttt
 debian/files
 debian/rmtoo.postinst.debhelper

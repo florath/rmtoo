@@ -10,7 +10,7 @@ Add graph2 output which is a requirement dependency graph based on
 topics.
 
 graph ouput only outputs requirements which are referenced by the
-topic.
+topic. Man page is also included.
 
 Add Topic tag to emacs requirement mode.
 
