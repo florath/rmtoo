@@ -1,10 +1,10 @@
-Name: Man Page Artifact Backlog
+Name: Man Page Artifact Requirements History Count
 Type: design decision
-Invented on: 2010-03-06
+Invented on: 2010-07-26
 Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with a man page which
- describes the backlog output.
+ describes the output of the requirements history count graph.
 Depends on: ManSecArtifacts
 Status: not done
 Priority: development:3 customers:7

@@ -9,7 +9,7 @@ Rationale: This gives the possibility to link a requirement itself to
  a topic / theme / chapter.
 Owner: development
 Depends on: Input
-Status: not done
+Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: InitialReqs

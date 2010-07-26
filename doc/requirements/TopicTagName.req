@@ -6,6 +6,6 @@ Description: Each topic \textbf{must} have a name tag.
 Rationale: This is a short string (headline) for the topic.
 Owner: development
 Depends on: TopicTags
-Status: not done
+Status: finished
 Priority: development:10
 Topic: Topic

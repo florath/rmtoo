@@ -8,6 +8,6 @@ Note: The subtopic must point to another topic. The subtopic is
  headline - and possible sub-sub-topics as sub-sections.
 Owner: development
 Depends on: TopicTags
-Status: not done
+Status: finished
 Priority: development:10
 Topic: Topic

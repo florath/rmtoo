@@ -10,9 +10,11 @@ Rationale: For experimentation there should be a output module
  file.
 Note: This was suggested by a customer - but currently some details
  are unknown.  So the first version will be a implementation to get
- the requirements sorted.
+ the requirements sorted.\par
+ There are no more requirements for this feature.  So it is seen as
+ finished.
 Depends on: OutputXML
-Status: not done
+Status: finished
 Priority: development:2 customers:2
 Effort estimation: 8
 Topic: Output

@@ -7,7 +7,7 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
  HTML output. 
 Rationale: This gives a fast possibility to check requirements.
 Depends on: OutputDocument OutputTextSameBase
-Status: not done
+Status: finished
 Effort estimation: 13
 Priority: management:8
 Topic: Output

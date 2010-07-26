@@ -1,0 +1,18 @@
+Name: Glossary must be available
+Type: initial requirement
+Invented on: 2010-07-26
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} support the possibility to
+ define terms in a glossary.
+Rationale: Typically a requirements management document used specific
+ terms over and over.  The glossary gives a possibility to define
+ those terms once.\par
+ Different output modules can use them for e.g. automatically linking
+ the terms to their explanation.
+Owner: development
+Depends on: Input
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Class: detailable
+Topic: InitialReqs

@@ -7,7 +7,7 @@ Description: Each requirement description \textbf{must} include a set
 Rationale: This can be easily implemented.
 Owner: development
 Depends on: Requirements
-Status: not done
+Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: InitialReqs

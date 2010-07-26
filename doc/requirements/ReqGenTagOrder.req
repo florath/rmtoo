@@ -7,7 +7,7 @@ Description: The order of tags in a requirements description
 Rationale: Order doesn't matter.
 Owner: development
 Depends on: Requirements
-Status: not done
+Status: finished
 Priority: development:10
 Effort estimation: 8
 Topic: InitialReqs

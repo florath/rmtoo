@@ -1,13 +1,12 @@
-Name: Emacs Mode
+Name: Emacs Mode for Topics
 Type: requirement
-Invented on: 2010-02-11
+Invented on: 2010-07-26
 Invented by: flonatel
 Description: There \textbf{must} be an Emacs mode which supports the
- text file format used by \textsl{rmtoo}.
+ topics file format.
 Owner: development
-Depends on: UseTxt EasyEditable
+Depends on: EmacsMode Topics
 Status: not done
 Priority: development:7
 Effort estimation: 8
 Topic: EmacsMode
-

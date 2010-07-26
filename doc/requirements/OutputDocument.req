@@ -8,7 +8,7 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
 Rationale: Different types mean, that it must be possible to convert
  one document to a LaTeX / PDF document or e.g. to a HTML document.
 Depends on: Output
-Status: not done
+Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output

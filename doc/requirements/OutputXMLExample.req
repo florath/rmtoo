@@ -1,0 +1,15 @@
+Name: Output XML Example Implementation
+Type: requirement
+Invented on: 2010-07-26
+Invented by: flonatel
+Owner: customers
+Description: \textsl{rmtoo} \textbf{must} implement an example XML
+ output class.
+Rationale: To show how to implement (customer) specific XML output
+ modules, this example XML output can be used as a reference
+ implementation. 
+Depends on: OutputXML
+Status: finished
+Priority: development:2 customers:2
+Effort estimation: 3
+Topic: Output

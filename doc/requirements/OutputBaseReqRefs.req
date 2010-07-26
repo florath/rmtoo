@@ -7,12 +7,13 @@ Description: The text base description for the different output
  formats \textbf{must} be organized in a way that requirements can
  reference to one specific part.
 Note: The 'specific part' will by typically a chapter or section
- in an document.
+ in an document.\par
+ This is implemented using 'topics'.
 Rationale: During writing a requirement it is (mostly) clear to which
  topic the requirement belongs to.  So it makes sense to define it
  there. 
 Depends on: OutputDocument
-Status: not done
+Status: finished
 Priority: customers:8
 Effort estimation: 13
 Topic: Output

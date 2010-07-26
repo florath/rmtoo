@@ -9,7 +9,7 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
  Also typically for the testing department a document is needed that
  decribes the requirements (features) of the product.
 Depends on: rmtoo
-Status: not done
+Status: finished
 Priority: development:2
 Effort estimation: 8
 Topic: Output
