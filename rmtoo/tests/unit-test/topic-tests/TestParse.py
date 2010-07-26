@@ -16,7 +16,7 @@ class TestParse:
     def test_positive_01(self):
         "TopicSet - constructor with only one element"
         try:
-            topicset = TopicSet("bkdkd")
+            topicset = TopicSet("bkdkd", ["ahah"])
             assert(False)
         except AssertionError, ae:
             pass
@@ -24,12 +24,14 @@ class TestParse:
     def test_positive_02(self):
         "TopicSet - valid"
         topicset = TopicSet(
+            "test-name01",
             ["tests/unit-test/topic-tests/testdata/topicset01",
              "t01"])
 
     def test_positive_03(self):
         "TopicSet - valid with empty requirement set"
         topicset = TopicSet(
+            "test-name02",
             ["tests/unit-test/topic-tests/testdata/topicset01",
              "t01"])
 
