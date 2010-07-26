@@ -1,0 +1,62 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-latex2 1 2010-07-26 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-latex2 \- requirements management tool: latex2 artifact
+.SH DESCRIPTION
+The
+.B rmtoo
+requirment management tool is able to output one topic and all
+possible subtopics including the containing requirements as a LaTeX
+output.
+.P
+Each topic is output as one level logical structuring level.  The
+outermost level will be a \fIchapter\fR, the next sub-topic will be a
+\fIsection\fR and so on.
+.P
+Text from the topic is directly copied into the document.
+.P
+At the moment there is no possibility to configure the LaTeX output
+itself.
+.SH CONFIGURATION
+The key in the Config class must be \fIlatex2\fR.
+.P
+The list of values must be a pair of a reference to the used topic and
+a file name where the LaTeX output will be stored.
+.SH USAGE
+Typically the LaTeX file in included with \fIinclude\fR or \fIinput\fR
+directly from the master LaTeX document.  Please consult the file
+\fIdoc/latex2/requirements.tex\fR document as an example.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available
+documentation. 
+.SH HISTORY
+This is called '2' because it is the second version of the LaTeX
+output module.  The first module used a pre-topic method to handle the
+output - which is not supported anymore.
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+
