@@ -20,7 +20,10 @@ class Config:
            ["ts_common", "doc/latex2/reqsprios.tex"]],
 
           ["graph",
-           ["ts_common", "reqtree.dot"]],
+           ["ts_common", "req-graph1.dot"]],
+
+          ["graph2",
+           ["ts_common", "req-graph2.dot"]],
 
           ["stats_reqs_cnt", 
            ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
