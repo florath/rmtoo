@@ -1,0 +1,13 @@
+Name: Graph Check for Connected Component
+Type: requirement
+Invented on: 2010-06-26
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} check that the requirements
+ dependency graph consists of only one component.
+Rationale: There must maximal one component - each node must be
+ reachable by the master requirement.
+Depends on: CheckGraph
+Status: finished
+Priority: development:10
+Topic: Input
