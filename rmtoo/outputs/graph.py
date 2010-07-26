@@ -19,6 +19,8 @@ class graph:
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
         
+    # Note that currently the 'reqscont' is not used in case of topics
+    # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
         self.output_reqset(reqscont.base_requirement_set)

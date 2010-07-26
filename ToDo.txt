@@ -1,4 +1,6 @@
 
+o output level in 'prios.py' must be configurable
+
 Soon
 o man page for new topic thingies
 

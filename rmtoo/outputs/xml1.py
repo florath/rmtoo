@@ -79,7 +79,7 @@ class xml1:
         reqset_xml = doc.createElement("reqset")
         sobj.appendChild(reqset_xml)
 
-        for req, v in reqset.reqs.iteritems():
+        for v in self.topic_set.all_reqs:
             self.output_req(v, doc, reqset_xml)
 
     def output(self, reqscont):

@@ -40,13 +40,13 @@ class latex2:
         ofile.write("\n\t${CALL_RMTOO}\n")
 
     # The real output
+    # Note that currently the 'reqscont' is not used in case of topics
+    # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
         self.output_reqset(reqscont.base_requirement_set)
 
     def output_reqset(self, reqset):
-        # Fiddle the requirements into the topics
-        self.topic_set.depict(reqset)
         # Call the topic to write out everything
         self.output_latex_topic_set(self.topic_set)
 

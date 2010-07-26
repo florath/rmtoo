@@ -57,6 +57,8 @@ class html:
         fd.close()
 
     # The real output
+    # Note that currently the 'reqscont' is not used in case of topics
+    # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
         self.output_reqset(reqscont.base_requirement_set)

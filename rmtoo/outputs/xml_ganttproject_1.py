@@ -74,7 +74,7 @@ class xml_ganttproject_1:
         sobj.appendChild(xml_task)
 
     def output_reqset(self, reqset, doc, sobj):
-        for req, v in reqset.reqs.iteritems():
+        for v in self.topic_set.all_reqs:
             self.output_req(v, reqset, doc, sobj)
 
     def output(self, reqscont):
