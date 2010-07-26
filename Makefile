@@ -2,6 +2,13 @@
 .PHONY: all_html
 all: doc/latex2/requirements.pdf req-graph1.png req-graph2.png all_html
 
+# Adding new files (especially requirements) can not automatically
+# handled.  The 'force' target tries to handle this.
+.PHONY: force
+force: 
+	rm .rmtoo_dependencies
+	${MAKE} all
+
 #
 # This is the way the rmtoo must be called.
 #
@@ -39,7 +46,8 @@ doc/latex2/requirements.pdf: ${REQS_LATEX2} doc/latex2/requirements.tex
 
 .PHONY: clean
 clean:
-	rm -f reqtree.dot reqtree.png doc/latex2/reqtopics.tex \
+	rm -f req-graph1.png req-graph2.png doc/latex2/reqtopics.tex \
+		req-graph1.dot req-graph2.dot \
 		doc/latex2/requirements.aux doc/latex2/requirements.dvi \
 		doc/latex2/requirements.log doc/latex2/requirements.out \
 		doc/latex2/requirements.pdf doc/latex2/requirements.toc 
