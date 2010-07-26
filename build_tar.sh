@@ -19,7 +19,7 @@ make all
 rm -fr ttt
 mkdir ttt
 mv doc/latex2/requirements.pdf ttt
-mv reqtree.png ttt
+mv req-graph1.png req-graph2.png ttt
 
 # Clean up everything before copying into the tar ball directory.
 make clean

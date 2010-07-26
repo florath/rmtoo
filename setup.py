@@ -4,7 +4,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '9'
+version = '10'
 
 def adjust(input, output):
     if os.path.exists(output):
@@ -24,7 +24,7 @@ setup(name=package, version=version,
       description='Requirements Management Tool',
       author='Andreas Florath',
       author_email='sf@flonatel.org',
-      url='http://www.gnu4u.org/rmtoo',
+      url='http://rmtoo.gnu4u.org',
       packages=['rmtoo', 'rmtoo/lib', 'rmtoo/lib/digraph',
                 'rmtoo/modules', 'rmtoo/tests',
                 'rmtoo/tests/lib', 'rmtoo/tests/syntax-test',
@@ -39,6 +39,7 @@ setup(name=package, version=version,
                 'rmtoo/tests/unit-test/topic-tests',
                 'rmtoo/tests/unit-test/topic-tests/testdata',
                 'rmtoo/tests/unit-test/topic-tests/testdata/topicset01',
+                'rmtoo/tests/output-test',
                 ],
       license="GPL V3",
       platforms="all",

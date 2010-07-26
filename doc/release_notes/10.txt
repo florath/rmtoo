@@ -33,5 +33,12 @@ Bug#2967323 fixed: status field of example in man page updated.
 
 Bug#3031142 fixed: check for connected component added.
 
+Added empty test classes for new python files.  This decreases the
+total test coverage to about 57%.
+
+Reorganized many requirements and adapted their state to reflect
+reality.
+
+
 Internal Changes
 ----------------

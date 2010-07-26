@@ -19,12 +19,10 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
-v10
-===
-o add restriction to use requirements only for all output types
-
 v11
 ===
+o The new graph2 topic based output revealed that the requirement
+  topic relation can be optimized.
 o add analyse modules
   - count number of incoming and outgoing in reqs and emit warning
     when limit is reached
