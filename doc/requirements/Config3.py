@@ -9,6 +9,8 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
+    reqs_dir = "doc/requirments"
+
     topic_specs = \
         {
           "ts_common": ["doc/topics", "ReqsDocument"],

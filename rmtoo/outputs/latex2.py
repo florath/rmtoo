@@ -44,7 +44,7 @@ class latex2:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.base_requirement_set)
+        self.output_reqset(reqscont.continnum_latest())
 
     def output_reqset(self, reqset):
         # Call the topic to write out everything

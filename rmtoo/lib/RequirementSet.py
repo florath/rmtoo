@@ -11,12 +11,14 @@
 import os
 import re
 import sys
+import time
 import operator
 import StringIO
 
 from Requirement import Requirement
 from PyGitCompat import PyGitCompat
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.MemLogStore import MemLogStore
 
 # This class handles a whole set of requirments.
 # These set must be enclosed, i.e. all references must be resolvable.
@@ -31,8 +33,11 @@ class RequirementSet(Digraph):
         self.reqs = {}
         self.mods = mods
         self.opts = opts
+        # The requirement set is only (fully) usable, when everything
+        # is fine.
         self.state = self.er_fine
         self.config = config
+        self.logger = MemLogStore()
 
     def handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
@@ -52,6 +57,9 @@ class RequirementSet(Digraph):
 
         return True
 
+    # Read the whole requirement set from files stored in the
+    # filesystem (which is typically the latest version when a repo is
+    # available). 
     def read_from_filesystem(self, directory):
         everythings_fine = self.read(directory)
         if not everythings_fine:
@@ -80,9 +88,16 @@ class RequirementSet(Digraph):
             else:
                 print("+++ ERROR %s: could not be parsed" % req.id)
                 everythings_fine = False
+        self.ts = time.time()
         return everythings_fine
 
     def read_from_git_tree(self, tree):
+        assert(False)
+
+        # Rework needed:
+        # Read in everything from the repo
+        # All (error / log) output should go to a local log-buffer.
+
         everythings_fine = True
         files = PyGitCompat.Tree.items(tree)
         for f in files:
@@ -131,3 +146,13 @@ class RequirementSet(Digraph):
                 alls_fine = False
         return alls_fine
 
+    # Return the timestamp of the whole Requirment Set.
+    # This is the current time for FILES and the checkin point of time
+    # for files from the repo.
+    def timestamp(self):
+        return self.ts
+
+    # Return the number of requirments in this RequirementSet.  This
+    # is e.g. needed for statistics.
+    def reqs_count(self):
+        return len(self.reqs)

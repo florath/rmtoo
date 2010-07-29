@@ -32,7 +32,7 @@ class html:
         # Emit the dependencies for the topic
         self.topic_set.cmad(reqscont, ofile)
 
-        reqset = reqscont.base_requirement_set
+        reqset = reqscont.continnum_latest()
 
         # Dependencies of every single topic html page
         for topic in self.topic_set.nodes:
@@ -61,7 +61,7 @@ class html:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.base_requirement_set)
+        self.output_reqset(reqscont.continnum_latest())
 
     def output_reqset(self, reqset):
         # Call the topic to write out everything

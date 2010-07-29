@@ -24,6 +24,7 @@ class stats_reqs_cnt:
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
+    # XXXX NOT USED ANYMORE
     # Output: Statistics on Requirement Count
     # Note: because this goes the whole history back it takes some
     # time.
@@ -59,6 +60,7 @@ class stats_reqs_cnt:
                     # no doc/requirements in this commit. Skip error
                     pass
 
+    # XXXX NOT USED ANYMORE
     # If there is no repo available, just output the current date /
     # time and the current number of requirements
     def output_stats_reqs_cnt_files(self, reqscont, ofile):
@@ -66,17 +68,20 @@ class stats_reqs_cnt:
                     (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
                      len(reqscont.base_requirement_set.reqs)))
 
+
     def output(self, reqscont):
-        # This can be done only when a repo is available.  If no repo
-        # is available output only the current number of
-        # requirements. 
+        # Depending on the number of elements in the continuum, this
+        # might be a list or, if only FILES should be used, exactly
+        # one value (the current time).
         ofile = file(self.output_filename, "w")
 
-        if reqscont.repo_available:
-            self.output_stats_reqs_cnt_repo(reqscont, ofile)
-        else:
-            self.output_stats_reqs_cnt_files(reqscont, ofile)
-        
+        for cid in reqscont.continuum_order:
+            rs = reqscont.continuum[cid]
+            ofile.write("%s %d\n" %
+                        (time.strftime("%Y-%m-%d_%H:%M:%S", 
+                                       time.localtime(rs.timestamp())),
+                         rs.reqs_count()))
+
         # Clean up the file.
         ofile.close()
 
