@@ -12,7 +12,7 @@ force:
 #
 # This is the way the rmtoo must be called.
 #
-CALL_RMTOO=./bin/rmtoo -m . -f doc/requirements/Config3.py -d doc/requirements
+CALL_RMTOO=./bin/rmtoo -m . -f doc/requirements/Config3.py
 
 #
 # Dependency handling
