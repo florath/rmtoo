@@ -36,7 +36,7 @@ class TestReqOwner:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==10)
+            assert(rmte.id()==10)
 
     def test_negative_02(self):
         "Requirement Tag Owner - invalid tag given"
@@ -49,5 +49,5 @@ class TestReqOwner:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==11)
+            assert(rmte.id()==11)
 

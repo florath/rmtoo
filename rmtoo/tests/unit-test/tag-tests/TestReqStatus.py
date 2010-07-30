@@ -44,7 +44,7 @@ class TestReqStatus:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==16)
+            assert(rmte.id()==16)
 
     def test_negative_02(self):
         "Requirement Tag Status - invalid tag given"
@@ -56,5 +56,5 @@ class TestReqStatus:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==17)
+            assert(rmte.id()==17)
 

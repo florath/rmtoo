@@ -22,10 +22,10 @@ class TestBB001:
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
         # The count stats is always different because of the timestamp
-        assert(len(diffs)==1)
+        assert(len(diffs)==0)
         # ['---  \n',
         #  '+++  \n', 
         #  '@@ -1,1 +1,1 @@\n',
         #  '-2010-07-29_21:47:26 1\n',
         #  '+2010-07-29_21:26:21 1\n']
-        assert(len(diffs["stats_reqs_cnt.csv"])==5)
+        #assert(len(diffs["stats_reqs_cnt.csv"])==5)

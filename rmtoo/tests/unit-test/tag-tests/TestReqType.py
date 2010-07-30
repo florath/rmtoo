@@ -64,7 +64,7 @@ class TestReqType:
             name, value = rt.rewrite("Type-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==18)
+            assert(rmte.id()==18)
 
     def test_negative_02(self):
         "Requirement Tag Type - invalid tag given"
@@ -76,5 +76,5 @@ class TestReqType:
             name, value = rt.rewrite("Type-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==19)
+            assert(rmte.id()==19)
 

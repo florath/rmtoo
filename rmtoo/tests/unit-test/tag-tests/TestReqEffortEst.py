@@ -47,4 +47,4 @@ class TestReqClass:
                 name, value = rt.rewrite("EffortEstimation-test", req)
                 assert(False)
             except RMTException, rmte:
-                assert(rmte.eid==4)
+                assert(rmte.id()==4)

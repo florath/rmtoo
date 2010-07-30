@@ -34,4 +34,4 @@ class TestReqTopic:
             name, value = rt.rewrite("Topic-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==9)
+            assert(rmte.id()==9)

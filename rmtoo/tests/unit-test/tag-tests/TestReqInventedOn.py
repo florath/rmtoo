@@ -34,7 +34,7 @@ class TestReqInventedOn:
             name, value = rt.rewrite("InventedOn-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==7)
+            assert(rmte.id()==7)
 
     def test_negative_02(self):
         "Requirement Tag Invented on - invalid tag given"
@@ -46,5 +46,5 @@ class TestReqInventedOn:
             name, value = rt.rewrite("InventedOn-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==8)
+            assert(rmte.id()==8)
 

@@ -58,7 +58,7 @@ class TestReqClass:
             name, value = rt.rewrite("Description-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==2)
+            assert(rmte.id()==2)
 
     def test_negative_02(self):
         "Requirement Tag Description - description much too long"
@@ -73,5 +73,5 @@ class TestReqClass:
             name, value = rt.rewrite("Description-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==3)
+            assert(rmte.id()==3)
 

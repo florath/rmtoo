@@ -57,7 +57,7 @@ class TestReqPriority:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==12)
+            assert(rmte.id()==12)
 
     def test_negative_02(self):
         "Requirement Tag Priority - invalid stakeholder"
@@ -70,7 +70,7 @@ class TestReqPriority:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==13)
+            assert(rmte.id()==13)
 
     def test_negative_03(self):
         "Requirement Tag Priority - stakeholder voted more than once"
@@ -83,7 +83,7 @@ class TestReqPriority:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==14)
+            assert(rmte.id()==14)
 
     def test_negative_04(self):
         "Requirement Tag Priority - invalid priority (too big)"
@@ -96,7 +96,7 @@ class TestReqPriority:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==15)
+            assert(rmte.id()==15)
 
     def test_negative_05(self):
         "Requirement Tag Priority - invalid priority (too small)"
@@ -109,4 +109,4 @@ class TestReqPriority:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==15)
+            assert(rmte.id()==15)

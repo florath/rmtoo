@@ -34,5 +34,5 @@ class TestReqName:
             name, value = rt.rewrite("Name-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==37)
+            assert(rmte.id()==37)
 
