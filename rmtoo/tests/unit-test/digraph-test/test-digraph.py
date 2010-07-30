@@ -48,7 +48,7 @@ class TestDigraph:
             d = Digraph(d)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==24)
+            assert(rmte.id()==24)
 
     def test_constructor_006(self):
         "Test conversion from dictionary: two node circle"
@@ -92,7 +92,7 @@ class TestDigraph:
             dg.build_named_nodes()
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==20)
+            assert(rmte.id()==20)
 
     def test_build_named_nodes_02(self):
         "Digraph build named nodes with two nodes with same name"
@@ -108,7 +108,7 @@ class TestDigraph:
             dg.build_named_nodes()
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==21)
+            assert(rmte.id()==21)
 
     def test_get_named_node_01(self):
         "Digraph get named node with map available"
@@ -129,7 +129,7 @@ class TestDigraph:
             n = dg.get_named_node("NotThere")
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==23)
+            assert(rmte.id()==23)
 
     def test_get_named_node_03(self):
         "Digraph get named node with map not available"
@@ -140,8 +140,5 @@ class TestDigraph:
             n = dg.get_named_node("NotThere")
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==22)
-
-
-
+            assert(rmte.id()==22)
 

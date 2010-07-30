@@ -79,7 +79,8 @@ class Modules(Digraph):
                                 globals(), locals(), modulename)
 
             # Create object from the module
-            o = eval("module.%s(self.opts, self.config)" % modulename)
+            o = eval("module.%s(self.opts, self.config)"
+                     % modulename)
             # Query the object itself which type it is
             tag = o.type()
             # Add the object to the appropriate directory

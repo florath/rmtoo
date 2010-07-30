@@ -10,11 +10,13 @@
 
 class RMTException(Exception):
 
-    def __init__(self, eid, msg):
-        self.eid = eid
+    def __init__(self, lid, msg, efile=None):
+        self.lid = lid
         self.msg = msg
+        self.efile = efile
 
     def __str__(self):
-        return "%3d: %s" % (self.eid, self.msg)
+        return "%3d: %s" % (self.lid, self.msg)
 
-
+    def id(self):
+        return self.lid

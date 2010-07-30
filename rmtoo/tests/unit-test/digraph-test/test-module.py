@@ -44,7 +44,7 @@ class TestModule:
                            {}, {}, [], mods_list("modules03"))
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==27)
+            assert(rmte.id()==27)
 
     def test_simple_04(self):
         "Module test with cyclic dependency "
@@ -53,5 +53,5 @@ class TestModule:
                            {}, {}, [], mods_list("modules04"))
             assert(False)
         except RMTException, rmte:
-            assert(rmte.eid==26)
+            assert(rmte.id()==26)
 

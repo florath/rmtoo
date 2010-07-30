@@ -71,9 +71,8 @@ class RDepDependsOn(Digraph.Node):
         tl = t.split()
         for ts in tl:
             if ts not in reqset.reqs:
-                print("+++ ERROR %s: 'Depends on' points to a "
-                      "non-existing requirement '%s'" %
-                      (rr.id, ts))
+                reqset.error(47, "'Depends on' points to a "
+                             "non-existing requirement '%s'" % ts, rr.id)
                 return False
 
             # Mark down the depends on...
@@ -99,7 +98,7 @@ class RDepDependsOn(Digraph.Node):
                 everythings_fine = False
         # Double check if one was found
         if reqset.graph_master_node==None:
-            print("+++ ERROR: no master requirement found")
+            reqset.error(48, "no master requirement found")
             return False
         return everythings_fine
 

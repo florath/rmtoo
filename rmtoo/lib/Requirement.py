@@ -12,6 +12,7 @@ import time
 from rmtoo.lib.Parser import Parser
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.MemLogStore import MemLogStore
 
 class Requirement(Digraph.Node):
 
@@ -42,11 +43,12 @@ class Requirement(Digraph.Node):
     er_fine = 0
     er_error = 1
 
-    def __init__(self, fd, rid, mods, opts, config):
+    def __init__(self, fd, rid, mls, mods, opts, config):
         Digraph.Node.__init__(self, rid)
 
         self.tags = {}
         self.id = rid
+        self.mls = mls
         self.mods = mods
         self.opts = opts
         self.config = config
@@ -59,7 +61,7 @@ class Requirement(Digraph.Node):
         req = Parser.read_as_map(self.id, fd)
         if req == None:
             self.state = self.er_error
-            print("+++ ERROR %s: parser returned error" % self.id)
+            self.mls.error(42, "parser returned error", self.id)
             return
 
         # Handle all the modules (Semantic input)
@@ -89,11 +91,10 @@ class Requirement(Digraph.Node):
             except RMTException, rmte:
                 # Some sematic error occured: do not interpret key or
                 # value.
-                # The error message was already eliminated - so do
-                # only one generic
-                print("+++ ERROR %s: semantic error occured in '%s'"
-                      % (self.id, modkey))
-                print("+++ root cause is: '%s'" % rmte)
+                self.mls.error(rmte.lid, rmte.msg, rmte.efile)
+                self.mls.error(41, "semantic error occured in "
+                               "module '%s'" % modkey, self.id)
+                #print("+++ root cause is: '%s'" % rmte)
                 self.state = self.er_error
                 # Continue (do not return immeditely) to get also
                 # possible other errors.

@@ -9,7 +9,13 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
-    reqs_dir = "doc/requirments"
+    reqs_spec = \
+        [
+           "doc/requirements",
+           #["138be32f1985aec694934263f02e47292deaac91", "FILES"]
+           #["v5", "FILES"]
+           ["FILES", "FILES"]
+        ]
 
     topic_specs = \
         {

@@ -11,3 +11,15 @@ time consuming for a big history).
 
 Internal Changes
 ----------------
+
+Completely rewrote of the interface to a version control system
+o modularized the access: this makes it possible to easily add other
+  version control systems.  The first reference implementation is for
+  git.
+o git-python is currently changing dramatically.  There were API
+  changes from 0.1x to 0.2 and there are also some from 0.2 to
+  0.3.  Because it is much work (especially testing different
+  versions) it was decided to include git-python and the depending
+  libraries into the rmtoo package.  When the interface (API) is
+  fixed, they will removed.
+

@@ -16,20 +16,20 @@ import operator
 import StringIO
 
 from Requirement import Requirement
-from PyGitCompat import PyGitCompat
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.MemLogStore import MemLogStore
 
 # This class handles a whole set of requirments.
 # These set must be enclosed, i.e. all references must be resolvable.
 
-class RequirementSet(Digraph):
+class RequirementSet(Digraph, MemLogStore):
 
     er_fine = 0
     er_error = 1
 
     def __init__(self, mods, opts, config):
         Digraph.__init__(self)
+        MemLogStore.__init__(self)
         self.reqs = {}
         self.mods = mods
         self.opts = opts
@@ -37,7 +37,7 @@ class RequirementSet(Digraph):
         # is fine.
         self.state = self.er_fine
         self.config = config
-        self.logger = MemLogStore()
+        self.version_id = None
 
     def handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
@@ -45,8 +45,8 @@ class RequirementSet(Digraph):
         self.handle_modules_reqdeps()
         # If there was an error, the state flag is set:
         if self.state != self.er_fine:
-            print("+++ ERROR: there was a problem handling the "
-                  "requirement set modules")
+            self.error(43, "there was a problem handling the "
+                       "requirement set modules")
             return False
 
         # The must no be left
@@ -63,10 +63,20 @@ class RequirementSet(Digraph):
     def read_from_filesystem(self, directory):
         everythings_fine = self.read(directory)
         if not everythings_fine:
-            print("+++ ERROR: There were errors in the requirments")
+            self.error(44, "There were errors in the requirment set")
+            self.state = self.er_error
             return False
 
         return self.handle_modules()
+
+    # Add requirement: this is needed when reading from VCS.
+    def add_req(self, req):
+        # Store in the map, so that it is easy to access the
+        # node by id.
+        self.reqs[req.id] = req
+        # Also store it in the digraph's node list for simple
+        # access to the digraph algorithms.
+        self.nodes.append(req)
 
     def read(self, directory):
         everythings_fine = True
@@ -77,7 +87,7 @@ class RequirementSet(Digraph):
                 continue
             rid = f[:-4]
             fd = file(os.path.join(directory, f))
-            req = Requirement(fd, rid, self.mods, self.opts, self.config)
+            req = Requirement(fd, rid, self, self.mods, self.opts, self.config)
             if req.ok():
                 # Store in the map, so that it is easy to access the
                 # node by id.
@@ -86,42 +96,10 @@ class RequirementSet(Digraph):
                 # access to the digraph algorithms.
                 self.nodes.append(req)
             else:
-                print("+++ ERROR %s: could not be parsed" % req.id)
+                self.error(45, "could not be parsed", req.id)
                 everythings_fine = False
         self.ts = time.time()
         return everythings_fine
-
-    def read_from_git_tree(self, tree):
-        assert(False)
-
-        # Rework needed:
-        # Read in everything from the repo
-        # All (error / log) output should go to a local log-buffer.
-
-        everythings_fine = True
-        files = PyGitCompat.Tree.items(tree)
-        for f in files:
-            m = re.match("^.*\.req$", PyGitCompat.Tree.iter_name(f))
-            if m==None:
-                continue
-            rid = PyGitCompat.Tree.iter_name(f)[:-4]
-            req = Requirement(StringIO.StringIO(PyGitCompat.Tree.iter_data(f)), 
-                              rid, self.mods, self.opts, self.config)
-            if req.ok():
-                # Store in the map, so that it is easy to access the
-                # node by id.
-                self.reqs[req.id] = req
-                # Also store it in the digraph's node list for simple
-                # access to the digraph algorithms.
-                self.nodes.append(req)
-            else:
-                print("+++ ERROR %s: could not be parsed" % req.id)
-                everythings_fine = False
-
-        if not everythings_fine:
-            return False
-        return self.handle_modules()
-
 
     # This is mostly the same functionallaty of similar method of the
     # class Requirement.
@@ -156,3 +134,13 @@ class RequirementSet(Digraph):
     # is e.g. needed for statistics.
     def reqs_count(self):
         return len(self.reqs)
+
+    def not_usable(self):
+        self.state = self.er_error
+
+    def is_usable(self):
+        return self.state == self.er_fine
+        
+    def set_version_id(self, vid):
+        self.version_id = vid
+

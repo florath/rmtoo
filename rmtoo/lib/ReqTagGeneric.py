@@ -29,8 +29,8 @@ class ReqTagGeneric:
     def check_mandatory_tag(self, rid, r, eid):
         # The given tag is mandatory
         if self.tag not in r:
-            raise RMTException(eid, "'%s' does not contain the "
-                               "tag '%s'" % (rid, self.tag))
+            raise RMTException(eid, "Does not contain the "
+                               "tag '%s'" % self.tag, rid)
 
     # The method 'handle_optional_tag()' handles optional tags in the
     # sense, that it copies over the content to the class object

@@ -7,6 +7,10 @@
 
                    USE AT YOUR OWN RISK!
 
+     PLEASE NOTE THAT rmToo IS UNDER HEAVY DEVELOPMENT!
+    EVERYTHING (ESPECIALLY INPUT FILES AND COMMMAND LINE
+          PARAMERERS AND CONFIG) WILL CHANGE!
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 rmtoo checks the given set of requirments and optionally outputs LaTeX
@@ -23,11 +27,11 @@ where everything is unpacked in a local directory)
 rmtoo is written in python.  At least version 2.5 of python is
 needed. 
 
-Starting with version 7, python-git is needed.  Current Ubuntu
-versions ship this; Debian currently ships this only with testing -
-which can be added to a normal lenny system.  If your distribution
-does not support this, you might want to install it directly from the
-home page http://gitorious.org/git-python.
+Starting with version 11, git-python is shipped with rmtoo.
+The API is changing rapidly - there are currently three different APIs
+out there.  As soon as the change rate settles, the git-python will be
+removed from the package and the OS / distribution version should be
+used. git-python home page is at http://gitorious.org/git-python.
 
 When you want to create the document, LaTeX is needed.
 
@@ -50,7 +54,7 @@ requirments of the rmtoo itself).  In the FAQ document does exist a
 
 Try a 
 $ make 
-$ make test
+$ make tests
 The configuration file where the output artifacts are configured are
 doc/requirements/ConfigX.py.
 
@@ -101,5 +105,5 @@ or write a mail.
 
 Andreas Florath
 sf@flonatel.org
-2010-07-22
+2010-07-30
 

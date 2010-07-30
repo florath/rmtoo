@@ -9,11 +9,13 @@
 #
 
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.MemLogStore import MemLogStore
 
-class ReqSet(Digraph):
+class ReqSet(Digraph, MemLogStore):
 
     def __init__(self, d=None):
         Digraph.__init__(self, d)
+        MemLogStore.__init__(self)
 
 class TestConfig:
     pass

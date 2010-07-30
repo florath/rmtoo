@@ -11,7 +11,6 @@
 # For licencing details see COPYING
 #
 import sys
-import git
 from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
@@ -52,19 +51,9 @@ def execute_cmds(opts, config, mods):
     try:
         rc = ReqsContinuum(mods, opts, config)
         reqs = rc.continnum_latest()
-    except git.errors.GitCommandError, gce:
-        print("+++ ERROR: Problem accessing git tree: '%s'" % gce)
-        print("    Is the given version correct?");
+    except RMTException, rmte:
+        print("+++ ERROR: Problem reading in the continuum: '%s'" % rmte)
         return
-
-    # Setup the OutputHandler
-    # Note: this can be more than one!
-    # For the topic based output also all the Topics are needed -
-    # before the OutputHandler itself - because different output
-    # handler may reference the same Topic.
-    topics = TopicHandler(config)
-    topics.depict(reqs)
-    ohandler = OutputHandler(config, topics)
 
     # When only the dependencies are needed, output them to the given
     # file. 
@@ -76,6 +65,22 @@ def execute_cmds(opts, config, mods):
         ohandler.create_makefile_dependencies(ofile, rc)
         ofile.close()
         return
+
+    # If there is a problem with the last requirement set included in
+    # the requirements continuum, print out the errors here and stop
+    # processing.
+    if not reqs.is_usable():
+        reqs.write_log(sys.stderr)
+        return
+
+    # Setup the OutputHandler
+    # Note: this can be more than one!
+    # For the topic based output also all the Topics are needed -
+    # before the OutputHandler itself - because different output
+    # handler may reference the same Topic.
+    topics = TopicHandler(config)
+    topics.depict(reqs)
+    ohandler = OutputHandler(config, topics)
 
     # Output everything
     ohandler.output(rc)

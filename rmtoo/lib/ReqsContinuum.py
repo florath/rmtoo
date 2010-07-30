@@ -7,12 +7,11 @@
 # For licencing details see COPYING
 #
 
-import git
 import os
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.PyGitCompat import PyGitCompat
+from rmtoo.lib.VersionControlSystem import VCSException, VersionControlSystem
 
 #
 # The Continuum holds all the RequirementSets from the history,
@@ -31,6 +30,7 @@ class ReqsContinuum:
         self.config = config
 
         # This is the list of all requirements sets - ordered by time.
+        # (The newest versions are on top - sorted backwards.)
         self.continuum_order = []
         # The continnum itself - accessable by the version.
         self.continuum = {}
@@ -41,8 +41,9 @@ class ReqsContinuum:
         self.continuum_order.append(cid)
         self.continuum[cid] = req_set
 
+    # The last is the first (backward order)
     def continnum_latest(self):
-        return self.continuum[self.continuum_order[-1]]
+        return self.continuum[self.continuum_order[0]]
 
     def repo_access_needed(self):
         # Only if FILES:FILES is specified, there is no need to access
@@ -61,16 +62,17 @@ class ReqsContinuum:
                                    "repository is needed - but there is "
                                    "none" % self.config.reqs_spec[1])
 
+        # Maybe add also the FILES:
+        if end_vers=="FILES":
+            self.create_continuum_from_file()
+        # Maybe add also some old versions
         if start_vers!="FILES":
             # When there is FILES given as last parameter - get
             # everything from start_vers upto HEAD
             end_repo = end_vers
             if end_vers=="FILES":
                 end_repo = "HEAD"
-            self.create_continuum_from_git(start_vers, end_repo)
-        # Maybe add also the FILES:
-        if end_vers=="FILES":
-            self.create_continuum_from_file()
+            self.create_continuum_from_vcs(start_vers, end_repo)
 
     # This method sets up the repository and splits out the repository
     # dir from the requirements dir.
@@ -82,52 +84,25 @@ class ReqsContinuum:
         if not os.path.isabs(directory):
             directory = os.path.abspath(directory)
 
+        # If this is None - there is no repo available.
+        self.repo = None
+
         try:
-            self.repo = git.Repo(directory)
-            self.repo_available = True
-            rpath = PyGitCompat.Repo.git_dir(self.repo)
+            self.repo = VersionControlSystem.create(directory)
+            return True
+        except VCSException:
+            # There is no vcs repo here - therefore nothing to do.
+            pass
+        return False
 
-            if not directory.startswith(rpath):
-                raise RMTException(28, "Cannot split up the given "
-                                   "directory name")
-        
-            self.reqs_subdir = directory[len(rpath):]
-            self.reqs_subdir_parts = self.reqs_subdir.split("/")
-        except git.errors.InvalidGitRepositoryError, igre:
-            # There is no git repo here - therefore nothing to do.
-            self.repo = None
-            self.repo_available = False
+    ## The following functions read in the continuum - from the
+    ## different I/O layers. 
 
-    # Build up the requirements tree
-    # ??? NEEDED?
-    def get_reqs_tree(self, tree):
-        for d in self.reqs_subdir_parts:
-            tree = tree[d]
-        return tree
-
-    # ???? THIS NEEDS MAJOR REWORK!!!!
-    def create_base_reqset_from_git(self, start_vers, end_vers):
-        assert(False)
-        rs = RequirementSet(self.mods, self.opts, self.config)
-        try:
-            reqs_tree = self.get_reqs_tree(self.base_commit.tree)
-            self.base_requirement_set.read_from_git_tree(reqs_tree)
-            self.base_git_requirement_set = self.base_requirement_set
-        except KeyError, ke:
-            # This is thrown if the requirements are not git based.
-            self.base_git_requirement_set = None
+    def create_continuum_from_vcs(self, start_vers, end_vers):
+        self.repo.read_history(self, start_vers, end_vers)
 
     def create_continuum_from_file(self):
         rs = RequirementSet(self.mods, self.opts, self.config)
         rs.read_from_filesystem(self.config.reqs_spec[0])
         self.continuum_add("FILES", rs)
-
-    # CMAD write REQS list
-    # ??? SHOULD NOT USED ANY MORE.
-    def cmad_write_reqs_list_777(self, ofile):
-        # Write out the list
-        ofile.write("REQS=")
-        for r in self.base_requirement_set.reqs:
-            ofile.write("%s.req " % os.path.join(self.opts.directory, r))
-        ofile.write("\n")
 

@@ -85,7 +85,10 @@ class Parser:
         fine = True
         # This stores the last seen key for handling continue lines. 
         last_key = None
-        for line in fd:
+        # Use the read() method here, because some VCS only provide a
+        # very basic I/O handling.
+        lines = fd.read().split("\n")
+        for line in lines:
             lineno += 1
             line_type, key, content = Parser.parse_line(rid, line, lineno)
 
