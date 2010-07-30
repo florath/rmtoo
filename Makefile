@@ -62,8 +62,14 @@ install:
 
 .PHONY: tests
 tests:
-	nosetests -w rmtoo -v --with-coverage -s --cover-package=rmtoo
+	nosetests -w rmtoo -v --with-coverage -s \
+		--cover-package=rmtoo.lib,rmtoo.output,rmtoo.modules
 
 .PHONY: deb
 deb:
 	debuild -I -Imake_latex.log
+
+.PHONY: last_test
+last_test:
+	nosetests -w rmtoo -v -s --cover-package=rmtoo \
+		tests/blackbox-test/bb001-test/test-bb001.py
