@@ -49,7 +49,7 @@ def parse_cmd_line_opts(args):
 
     return options
 
-def execute_cmds(opts, config, mods):
+def execute_cmds(opts, config, mods, mstdout, mstderr):
     # Checks are allways done - to be sure that e.g. the dependencies
     # are correct.
     try:
@@ -74,12 +74,18 @@ def execute_cmds(opts, config, mods):
     # the requirements continuum, print out the errors here and stop
     # processing.
     if not reqs.is_usable():
-        reqs.write_log(sys.stderr)
+        reqs.write_log(mstderr)
         return
 
     # The requirments are syntatically correct now: therefore it is
     # possible to do some analytics on them
-    Analytics.run(reqs)
+    if not Analytics.run(reqs):
+        reqs.write_log(mstderr)
+
+        if hasattr(config, 'analytics_specs') \
+                and 'stop_on_errors' in config.analytics_specs \
+                and config.analytics_specs['stop_on_errors']:
+            return
 
     # Setup the OutputHandler
     # Note: this can be more than one!
@@ -103,15 +109,15 @@ def load_config(opts):
     f.close()
     return config
 
-def main_impl(args):
+def main_impl(args, mstdout, mstderr):
     opts = parse_cmd_line_opts(args)
     config = load_config(opts)
     mods = Modules(opts.modules_directory, opts, config)
-    execute_cmds(opts, config, mods)
+    execute_cmds(opts, config, mods, mstdout, mstderr)
 
-def main(args):
+def main(args, mstdout, mstderr):
     try:
-        main_impl(args)
+        main_impl(args, mstdout, mstderr)
     except RMTException, rmte:
         print("+++ ERROR: Exception occured: %s" % rmte)
         sys.exit(1)

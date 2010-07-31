@@ -10,10 +10,15 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.analytics.HotSpot import HotSpot
+
 class Analytics:
 
     # The argument to the analytics modules is the (latest) set of
     # requirments.  (It makes sense only to check them.)
     @staticmethod
     def run(reqs):
-        pass
+        ok = True
+        if not HotSpot.run(reqs):
+            ok = False
+        return ok

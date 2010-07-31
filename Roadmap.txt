@@ -36,6 +36,7 @@ o add analyse modules
     (out topic) refs
   - check for 'no' words like 'and', 'or', 'many', 'some', ... and
     emit warning.
+o add man pages for each
 
 v12
 ===
