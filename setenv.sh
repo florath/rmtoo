@@ -3,4 +3,4 @@
 # correct. 
 # This is intended only for development.
 #
-export PYTHONPATH=$PWD:$PWD/rmtoo/contrib
+export PYTHONPATH=$PWD

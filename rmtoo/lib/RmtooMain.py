@@ -10,7 +10,10 @@
 #
 # For licencing details see COPYING
 #
+
+import os
 import sys
+
 from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
@@ -96,6 +99,7 @@ def load_config(opts):
     return config
 
 def main_impl(args):
+    adapt_sys_path()
     opts = parse_cmd_line_opts(args)
     config = load_config(opts)
     mods = Modules(opts.modules_directory, opts, config)

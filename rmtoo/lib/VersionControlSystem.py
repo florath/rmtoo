@@ -12,8 +12,23 @@
 # For licencing details see COPYING
 #
 
-import re
+import os
+import sys
+
+# To find the correct version of git-python (and friends) [the rmtoo
+# local version must be used], the sys.path is scanned and when a
+# sp/rmtoo/contrib is found, this is included (prepended) to sys.path.
+# This can be removed once the git-pyhton is removed.
+# (Calling this durint the main does not help - because this might
+# already been loaded.) 
+for sp in sys.path:
+    rc = os.path.join(sp, 'rmtoo/contrib')
+    if os.path.exists(rc):
+        sys.path.insert(0, rc)
+        break
 import git
+
+import re
 import StringIO
 
 from rmtoo.lib.RMTException import RMTException

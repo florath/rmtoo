@@ -14,7 +14,7 @@ mdir = "tests/blackbox-test/bb002-test"
 class TestBB001:
 
     def test_pos_001(self):
-        "BB Basic with one requirement - reqs only from FILES"
+        "BB Hotspot in the middle of the graph"
 
         clear_result_is(mdir)
         main(["-f", mdir + "/input/Config2.py", "-m", ".."])
