@@ -5,9 +5,10 @@ Moved directory specification from command line to the
 Config.reqs_dir.  This change makes all calls (especially in
 Makefiles) incompatible with the new version.
 
-A new command line option '--without-history' was added: When this is
-used, there is no history (a la git traceback) done (which is very
-time consuming for a big history).
+Added range specification for history: now any tag or git version id
+can be used to define the start and the end of the processes files.  A
+special constant 'FILES' allows even to specifies the local (which
+might have changes compared to the last checked in version).
 
 Internal Changes
 ----------------

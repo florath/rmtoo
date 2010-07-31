@@ -21,6 +21,7 @@ from rmtoo.lib.Modules import Modules
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicHandler import TopicHandler
 from rmtoo.lib.OutputHandler import OutputHandler
+from rmtoo.lib.Analytics import Analytics
 
 def parse_cmd_line_opts(args):
     parser = OptionParser()
@@ -76,6 +77,10 @@ def execute_cmds(opts, config, mods):
         reqs.write_log(sys.stderr)
         return
 
+    # The requirments are syntatically correct now: therefore it is
+    # possible to do some analytics on them
+    Analytics.run(reqs)
+
     # Setup the OutputHandler
     # Note: this can be more than one!
     # For the topic based output also all the Topics are needed -
@@ -99,7 +104,6 @@ def load_config(opts):
     return config
 
 def main_impl(args):
-    adapt_sys_path()
     opts = parse_cmd_line_opts(args)
     config = load_config(opts)
     mods = Modules(opts.modules_directory, opts, config)
