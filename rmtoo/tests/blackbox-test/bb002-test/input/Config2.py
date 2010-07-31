@@ -18,6 +18,10 @@ class Config:
         {
           "ts_common": [basedir + "input/topics", "ReqsDocument"],
         }
+
+    analytics_specs = \
+        { "stop_on_errors": False,
+        }
     
     output_specs = \
         [ 

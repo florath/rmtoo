@@ -7,7 +7,7 @@
 #
 
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import clear_result_is, compare_results
+from rmtoo.tests.lib.BBHelper import clear_result_is, compare_results, create_std_log, cleanup_std_log
 
 mdir = "tests/blackbox-test/bb002-test"
 
@@ -17,9 +17,10 @@ class TestBB001:
         "BB Hotspot in the middle of the graph"
 
         clear_result_is(mdir)
-        main(["-f", mdir + "/input/Config2.py", "-m", ".."])
+        mout, merr = create_std_log(mdir)
+        main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr)
+        cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
         assert(len(diffs)==0)
-

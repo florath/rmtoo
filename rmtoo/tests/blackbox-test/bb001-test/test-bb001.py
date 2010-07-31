@@ -7,7 +7,7 @@
 #
 
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import clear_result_is, compare_results
+from rmtoo.tests.lib.BBHelper import clear_result_is, compare_results, create_std_log, cleanup_std_log
 
 mdir = "tests/blackbox-test/bb001-test"
 
@@ -17,24 +17,21 @@ class TestBB001:
         "BB Basic with one requirement - reqs only from git"
 
         clear_result_is(mdir)
-        main(["-f", mdir + "/input/Config1.py", "-m", ".."])
+        mout, merr = create_std_log(mdir)
+        main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr)
+        cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
-        # The count stats is always different because of the timestamp
         assert(len(diffs)==0)
-        # ['---  \n',
-        #  '+++  \n', 
-        #  '@@ -1,1 +1,1 @@\n',
-        #  '-2010-07-29_21:47:26 1\n',
-        #  '+2010-07-29_21:26:21 1\n']
-        #assert(len(diffs["stats_reqs_cnt.csv"])==5)
 
     def test_pos_002(self):
         "BB Basic with one requirement - reqs only from FILES"
 
         clear_result_is(mdir)
-        main(["-f", mdir + "/input/Config2.py", "-m", ".."])
+        mout, merr = create_std_log(mdir)
+        main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr)
+        cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)

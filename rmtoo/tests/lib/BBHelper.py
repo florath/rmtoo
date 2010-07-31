@@ -64,3 +64,13 @@ def compare_results(mdir):
             r[df] = ud
 
     return missing_files, additional_files, r
+
+# Open up the stdout and stderr files for testing proposes
+def create_std_log(mdir):
+    mout = file(os.path.join(mdir, "result_is", "stdout"), "w")
+    merr = file(os.path.join(mdir, "result_is", "stderr"), "w")
+    return mout, merr
+
+def cleanup_std_log(mout, merr):
+    mout.close()
+    merr.close()
