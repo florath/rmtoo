@@ -83,4 +83,7 @@ Frequently Asked Questions
    Remove it from the file system (with rm), then remove it from the
    tip (with 'git rm') then to a checkin.
 
+** Is is possible to rename the rmtoo directory?
+   No - this is not possible.  Mostly all python files assume that the
+   top level directory is called 'rmtoo'.
 
