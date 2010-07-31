@@ -126,7 +126,8 @@ class html:
         fd.close()
 
     def output_requirements(self, fd, topic):
-        for req in topic.reqs:
+        # Output must be sorted - to be comparable
+        for req in sorted(topic.reqs, key = lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1)
 
     def output_requirement(self, fd, req, level):

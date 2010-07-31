@@ -86,7 +86,7 @@ class latex2:
                   "topic file" % tag)
 
     def output_requirements(self, fd, topic):
-        for req in topic.reqs:
+        for req in sorted(topic.reqs, key = lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1)
 
     def output_requirement(self, fd, req, level):
@@ -139,5 +139,4 @@ class latex2:
                  % (req.id, req.tags["Priority"]*10, req.tags["Owner"],
                     time.strftime("%Y-%m-%d", req.tags["Invented on"]),
                     req.tags["Invented by"], status, clstr))
-
 
