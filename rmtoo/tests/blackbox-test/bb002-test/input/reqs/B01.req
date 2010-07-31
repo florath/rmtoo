@@ -1,0 +1,12 @@
+Name: B01
+Type: requirement
+Invented on: 2010-07-31
+Invented by: flonatel
+Owner: development
+Description: B01 \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Depends on: A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A11 A12
+Topic: B1
+

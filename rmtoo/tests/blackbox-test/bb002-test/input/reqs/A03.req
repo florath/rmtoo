@@ -1,0 +1,12 @@
+Name: A03
+Type: requirement
+Invented on: 2010-07-31
+Invented by: flonatel
+Owner: development
+Description: A03 \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Depends on: M
+Topic: B1
+

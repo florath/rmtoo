@@ -1,0 +1,12 @@
+Name: C03
+Type: requirement
+Invented on: 2010-07-31
+Invented by: flonatel
+Owner: development
+Description: C03 \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Depends on: B01
+Topic: B1
+
