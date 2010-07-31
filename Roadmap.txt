@@ -21,6 +21,8 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v11
 ===
+o Man page: add config description for reqs_xxx correct
+o Man page: add section about environment setup (PYTHONPATH and so on). 
 o The output of the topic / html page must in some kind be sorted - to
   get things comparable.
 o Document the new command line parameters / Config params
@@ -61,6 +63,9 @@ o Increase test case coverage to minimum 90%
 
 v15
 ===
+o Add new para from rmtoo.7 to the presentation.
+o Add '10 Gründe rmtoo zu nutzen'
+o Add '10 Gründe rmtoo nicht zu nutzen'
 o Include sub-graphs in the PDF and HTML documentation
   - Topic based (all reqs of a topic)
   - req based (all reqs dependend and depend on one req)
