@@ -1,0 +1,12 @@
+Name: Clean up Vincent and Jules
+Type: requirement
+Invented on: 1994-04-04
+Invented by: VincentAndJules
+Owner: executive
+Description: Vincent and Jules \textbf{must} be cleaned.
+Rationale: Both are splattered with blood.
+Depends on: CreateOrder
+Status: not done
+Priority: executive:10
+Effort estimation: 5
+Topic: PulpFiction

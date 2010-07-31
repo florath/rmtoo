@@ -1,0 +1,14 @@
+Name: Create Order
+Type: master requirement
+Invented on: 1994-04-04
+Invented by: VincentAndJules
+Owner: executive
+Description: The accidental death of a man \textbf{must} be
+ disguised. 
+Rationale: There are some different things which must be cleaned and
+ others which must vanish.
+Note: There is only 40 minutes time to do the whole job.
+Status: not done
+Priority: executive:10
+Effort estimation: 13
+Topic: PulpFiction
