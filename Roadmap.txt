@@ -21,7 +21,10 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v11
 ===
-o Document the new command line parameters (man page / Readme?)
+o The output of the topic / html page must in some kind be sorted - to
+  get things comparable.
+o Document the new command line parameters / Config params
+  (man page / Readme?)
 o The new graph2 topic based output revealed that the requirement
   topic relation can be optimized.
 o add analyse modules

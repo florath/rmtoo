@@ -11,7 +11,7 @@ class Config:
     reqs_spec = \
         [
            basedir + "input/reqs",
-           ["FILES", "FILES"]
+           ["a92e470b9bdc87673530bbe9cc8a57afe6d832e2", "a92e470b9bdc87673530bbe9cc8a57afe6d832e2"]
         ]
 
     topic_specs = \
