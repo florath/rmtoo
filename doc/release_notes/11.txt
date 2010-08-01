@@ -10,6 +10,10 @@ can be used to define the start and the end of the processes files.  A
 special constant 'FILES' allows even to specifies the local (which
 might have changes compared to the last checked in version).
 
+Added analytics mode: 
+o Limits the number of incoming and outgoing links
+o Checks for good and bad words.
+
 Internal Changes
 ----------------
 

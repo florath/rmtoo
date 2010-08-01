@@ -19,15 +19,15 @@ class HotSpot:
         ok = True
         for _, req in reqs.reqs.iteritems():
             if len(req.incoming)>HotSpot.max_incoming:
-                reqs.error(49, "Number of incoming "
-                           "links is too high: %d" % 
-                           len(req.incoming), req.id)
+                req.analytics["HotSpot"] = \
+                    [-10, ["Number of incoming links is too high: %d" % 
+                      len(req.incoming)]]
                 ok = False
                
             if len(req.outgoing)>HotSpot.max_outgoing:
-                reqs.error(50, "Number of outgoing "
-                           "links is too high: %d" % 
-                           len(req.outgoing), req.id)
+                req.analytics["HotSpot"] = \
+                    [-10, ["Number of outgoing links is too high: %d" % 
+                      len(req.outgoing)]]
                 ok = False
 
         return ok

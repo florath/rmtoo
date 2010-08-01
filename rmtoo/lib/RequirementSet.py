@@ -144,3 +144,7 @@ class RequirementSet(Digraph, MemLogStore):
     def set_version_id(self, vid):
         self.version_id = vid
 
+    # Write out the analytics results.
+    def write_analytics_result(self, mstderr):
+        for _, req in self.reqs.iteritems():
+            req.write_analytics_result(mstderr)

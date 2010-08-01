@@ -11,6 +11,7 @@
 #
 
 from rmtoo.lib.analytics.HotSpot import HotSpot
+from rmtoo.lib.analytics.DescWords import DescWords
 
 class Analytics:
 
@@ -20,5 +21,7 @@ class Analytics:
     def run(reqs):
         ok = True
         if not HotSpot.run(reqs):
+            ok = False
+        if not DescWords.run(reqs):
             ok = False
         return ok

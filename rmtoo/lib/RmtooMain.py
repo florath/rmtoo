@@ -81,6 +81,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
     # possible to do some analytics on them
     if not Analytics.run(reqs):
         reqs.write_log(mstderr)
+        reqs.write_analytics_result(mstderr)
 
         if hasattr(config, 'analytics_specs') \
                 and 'stop_on_errors' in config.analytics_specs \

@@ -21,6 +21,13 @@ class LaTeXMarkup2HTML:
         "<i>\\1</i>",
         ]
 
+class LaTeXMarkup2Txt:
+    convert_markup = [
+        "",
+        "\\1",
+        "\\1",
+        ]
+
 class LaTeXMarkup:
     markup = [
         "\\\\par",               # New paragraph
@@ -44,3 +51,7 @@ class LaTeXMarkup:
         return "<p>" + LaTeXMarkup.replace_generic(
             LaTeXMarkup2HTML.convert_markup, t) + "</p>"
         
+    @staticmethod
+    def replace_txt(t):
+        return LaTeXMarkup.replace_generic(
+            LaTeXMarkup2Txt.convert_markup, t)

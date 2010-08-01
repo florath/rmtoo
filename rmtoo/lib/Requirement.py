@@ -53,6 +53,9 @@ class Requirement(Digraph.Node):
         self.opts = opts
         self.config = config
 
+        # The analytic modules store the results in this map:
+        self.analytics = {}
+
         self.state = self.er_fine
         self.input(fd)
 
@@ -118,4 +121,14 @@ class Requirement(Digraph.Node):
 
     def is_implementable(self):
         return self.tags["Class"] == self.ct_implementable
+
+    # Write out the analytics results.
+    def write_analytics_result(self, mstderr):
+        for k, v in self.analytics.iteritems():
+            if v[0]<0:
+                mstderr.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
+                              % (k, self.id, v[0]))
+                for l in v[1]:
+                    mstderr.write("+++ Error:Analytics:%s:%s:%s\n" % 
+                                  (k, self.id, l))
 

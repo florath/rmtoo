@@ -2,7 +2,7 @@ Name: rmtoo must work on Requirments
 Type: initial requirement
 Invented on: 2010-02-11
 Invented by: flonatel
-Description: \textsl{rmtoo} \textbf{must} work on requirments.
+Description: \textsl{rmtoo} \textbf{must} work on requirements.
 Rationale: That's is what's about.
 Owner: development
 Depends on: Input
