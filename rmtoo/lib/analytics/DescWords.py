@@ -23,13 +23,14 @@ class DescWords:
     # The numbers are provided on a level between [-100, 100] where
     # -100 is a very very bad word and 100 is a very very good.
     words = [
-        [ re.compile("^.*\..+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
+        [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
         [ re.compile("^.* about .*$"), -15, "Usage of the word 'about'"],
         [ re.compile("^.* and .*$"), -10, "Usage of the word 'and'"],
         [ re.compile("^.* approximately .*$"), -100, "Usage of the word 'approximately'"],
         [ re.compile("^.* etc\.? .*$"), -40, "Usage of the word 'etc'"],
         [ re.compile("^.* e\.g\. .*$"), -40, "Usage of the word 'e.g.'"],
         [ re.compile("^.* i\.e\. .*$"), -40, "Usage of the word 'i.e.'"],
+        [ re.compile("^.* many .*$"), -20, "Usage of the word 'many'"],
         [ re.compile("^.* may .*$"), 5, "Usage of the word 'may'"],
         [ re.compile("^.* maybe .*$"), -50, "Usage of the word 'maybe'"],
         [ re.compile("^.* must .*$"),  25, "Usage of the word 'must'"],
