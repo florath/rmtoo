@@ -12,6 +12,8 @@
 
 from rmtoo.lib.analytics.HotSpot import HotSpot
 from rmtoo.lib.analytics.DescWords import DescWords
+from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
+from rmtoo.lib.analytics.TopicCohe import TopicCohe
 
 class Analytics:
 
@@ -20,8 +22,9 @@ class Analytics:
     @staticmethod
     def run(reqs):
         ok = True
-        if not HotSpot.run(reqs):
-            ok = False
-        if not DescWords.run(reqs):
-            ok = False
+        
+        for ana in HotSpot, DescWords, ReqTopicCohe, TopicCohe:
+            if not ana.run(reqs):
+                ok = False
+
         return ok

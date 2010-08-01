@@ -57,7 +57,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         reqs = rc.continnum_latest()
     except RMTException, rmte:
         print("+++ ERROR: Problem reading in the continuum: '%s'" % rmte)
-        return
+        return False
 
     # When only the dependencies are needed, output them to the given
     # file. 
@@ -68,14 +68,14 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         # Write out the rest
         ohandler.create_makefile_dependencies(ofile, rc)
         ofile.close()
-        return
+        return True
 
     # If there is a problem with the last requirement set included in
     # the requirements continuum, print out the errors here and stop
     # processing.
     if not reqs.is_usable():
         reqs.write_log(mstderr)
-        return
+        return False
 
     # The requirments are syntatically correct now: therefore it is
     # possible to do some analytics on them
@@ -86,7 +86,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         if hasattr(config, 'analytics_specs') \
                 and 'stop_on_errors' in config.analytics_specs \
                 and config.analytics_specs['stop_on_errors']:
-            return
+            return False
 
     # Setup the OutputHandler
     # Note: this can be more than one!
@@ -99,6 +99,8 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
 
     # Output everything
     ohandler.output(rc)
+    
+    return True
 
 def load_config(opts):
     # Load config file
@@ -114,11 +116,12 @@ def main_impl(args, mstdout, mstderr):
     opts = parse_cmd_line_opts(args)
     config = load_config(opts)
     mods = Modules(opts.modules_directory, opts, config)
-    execute_cmds(opts, config, mods, mstdout, mstderr)
+    return execute_cmds(opts, config, mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr):
     try:
-        main_impl(args, mstdout, mstderr)
+        if not main_impl(args, mstdout, mstderr):
+            sys.exit(1)
     except RMTException, rmte:
         print("+++ ERROR: Exception occured: %s" % rmte)
         sys.exit(1)

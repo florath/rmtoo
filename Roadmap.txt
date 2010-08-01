@@ -21,6 +21,8 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v11
 ===
+o The code analyse modules resulted in 61 problems with the current
+  requirements!  Those have to be fixed!
 o Man page: add config description for reqs_xxx correct (also FILES
   constant) 
 o Man page: add section about environment setup (PYTHONPATH and so on). 
@@ -30,14 +32,16 @@ o Document the new command line parameters / Config params
   (man page / Readme?)
 o The new graph2 topic based output revealed that the requirement
   topic relation can be optimized.
-o add analyse modules
+x add analyse modules
   - count number of incoming and outgoing in reqs and emit warning
     when limit is reached
   - count number of internal (in topic) links and compare to external
     (out topic) refs
+  - count number of internal links in a topic on a requirments base
   - check for 'no' words like 'and', 'or', 'many', 'some', ... and
     emit warning.
 o add man pages for each
+o Add the requirements for each!
 
 v12
 ===
@@ -65,7 +69,7 @@ o Increase test case coverage to minimum 90%
 
 v15
 ===
-o Add new para from rmtoo.7 to the presentation.
+o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'
 o Add '10 Gründe rmtoo nicht zu nutzen'
 o Include sub-graphs in the PDF and HTML documentation

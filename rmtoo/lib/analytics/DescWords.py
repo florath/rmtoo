@@ -22,6 +22,8 @@ class DescWords:
     # assumed. 
     # The numbers are provided on a level between [-100, 100] where
     # -100 is a very very bad word and 100 is a very very good.
+    # Do not add the single word 'not': only do this in pairs,
+    # e.g. 'must not'.
     words = [
         [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
         [ re.compile("^.* about .*$"), -15, "Usage of the word 'about'"],
@@ -36,7 +38,7 @@ class DescWords:
         [ re.compile("^.* must .*$"),  25, "Usage of the word 'must'"],
         [ re.compile("^.* or .*$"), -15, "Usage of the word 'or'"],
         [ re.compile("^.* perhaps .*$"), -100, "Usage of the word 'perhaps'"],
-        [ re.compile("^.* should .*$"), 15, "Usage of the word 'should'"],
+        [ re.compile("^.* shall .*$"), 15, "Usage of the word 'shall'"],
         [ re.compile("^.* some .*$"), -25, "Usage of the word 'some'"],
         [ re.compile("^.* vaguely .*$"), -25, "Usage of the word 'vaguely'"],
     ]

@@ -23,8 +23,6 @@
 rmtoo \- requirements management tool
 .SH SYNOPSIS
 .B rmtoo
-.B \-d
-.I reqdir
 .B \-f
 .I cfgfile
 .B [\-h]
@@ -38,9 +36,6 @@ The
 is a requirment management tool.  It understand long and short command
 line options.  For a detailed functional description see rmtoo(7).
 .SH OPTIONS
-.TP
-\fB\-d\fR \fIDIRECTORY\fR, \fB\-\-directory\fR=\fIDIRECTORY\fR
-The directory with the requirements files.
 .TP
 \fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
 The directory with the requirements files.
@@ -64,6 +59,17 @@ dependencies. When called with this option,
 only creates the dependency file.  The dependency depends also from
 the config file: when changing output artifacts of curse the
 dependencies change.
+.SH ENVIRONMENT
+When usins the packages (e.g. deb) the system environment is be set up
+in the way that
+.B rmtoo
+can immediately be used.  When using other ways (e.g. downloading the
+sources or using the tar file), the PYTHONPATH must be set.  This must
+be set to the directory which contains the
+.B rmtoo
+directory which contains e.g. the lib and modules directory.  In the
+tar file and the sources there is a file called setenv.sh which does
+exactly the right thing.
 .SH RETURN
 .B rmtoo
 returns 0 when all commands are successfully completed and a value not

@@ -13,6 +13,8 @@ might have changes compared to the last checked in version).
 Added analytics mode: 
 o Limits the number of incoming and outgoing links.
 o Checks for good and bad words.
+o Requirement based topic coherence (based on links)
+o Topic coherence (based on links)
 
 
 Internal Changes
@@ -28,4 +30,7 @@ o git-python is currently changing dramatically.  There were API
   versions) it was decided to include git-python and the depending
   libraries into the rmtoo package.  When the interface (API) is
   fixed, they will removed.
+
+Started to add blackbox tests. This increases the coverage rate from
+56% to about 85%.
 

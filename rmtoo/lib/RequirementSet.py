@@ -39,6 +39,9 @@ class RequirementSet(Digraph, MemLogStore):
         self.config = config
         self.version_id = None
 
+        # The analytic modules store the results in this map:
+        self.analytics = {}
+
     def handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
         # read in.
@@ -144,7 +147,16 @@ class RequirementSet(Digraph, MemLogStore):
     def set_version_id(self, vid):
         self.version_id = vid
 
+    def own_write_analytics_result(self, mstderr):
+        for k, v in self.analytics.iteritems():
+            if v[0]<0:
+                mstderr.write("+++ Error:Analytics:%s:result is '%+3d'\n"
+                              % (k, v[0]))
+                for l in v[1]:
+                    mstderr.write("+++ Error:Analytics:%s:%s\n" % (k, l))
+
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):
+        self.own_write_analytics_result(mstderr)
         for _, req in self.reqs.iteritems():
             req.write_analytics_result(mstderr)
