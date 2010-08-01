@@ -2,7 +2,7 @@ User visible changes
 --------------------
 
 Moved directory specification from command line to the
-Config.reqs_dir.  This change makes all calls (especially in
+Config.reqs_dir.  This change makes all rmtoo calls (especially in 
 Makefiles) incompatible with the new version.
 
 Added range specification for history: now any tag or git version id
@@ -11,8 +11,9 @@ special constant 'FILES' allows even to specifies the local (which
 might have changes compared to the last checked in version).
 
 Added analytics mode: 
-o Limits the number of incoming and outgoing links
+o Limits the number of incoming and outgoing links.
 o Checks for good and bad words.
+
 
 Internal Changes
 ----------------
