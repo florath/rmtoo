@@ -33,18 +33,20 @@ class DescWords:
         [ re.compile("^.* e\.g\. .*$"), -40, "Usage of the word 'e.g.'"],
         [ re.compile("^.* i\.e\. .*$"), -40, "Usage of the word 'i.e.'"],
         [ re.compile("^.* many .*$"), -20, "Usage of the word 'many'"],
-        [ re.compile("^.* may .*$"), 5, "Usage of the word 'may'"],
+        [ re.compile("^.* may .*$"), 10, "Usage of the word 'may'"],
         [ re.compile("^.* maybe .*$"), -50, "Usage of the word 'maybe'"],
+        [ re.compile("^.* might .*$"), 10, "Usage of the word 'might'"],
         [ re.compile("^.* must .*$"),  25, "Usage of the word 'must'"],
         [ re.compile("^.* or .*$"), -15, "Usage of the word 'or'"],
         [ re.compile("^.* perhaps .*$"), -100, "Usage of the word 'perhaps'"],
+        [ re.compile("^.* should .*$"), 15, "Usage of the word 'should'"],
         [ re.compile("^.* shall .*$"), 15, "Usage of the word 'shall'"],
         [ re.compile("^.* some .*$"), -25, "Usage of the word 'some'"],
         [ re.compile("^.* vaguely .*$"), -25, "Usage of the word 'vaguely'"],
     ]
 
     @staticmethod
-    def run(reqs):
+    def run(config, reqs, topics):
         ok = True
         for _, req in reqs.reqs.iteritems():
             # Must be at least some positive things to get this
