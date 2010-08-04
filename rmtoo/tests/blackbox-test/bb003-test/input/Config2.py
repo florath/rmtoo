@@ -20,7 +20,9 @@ class Config:
         }
 
     analytics_specs = \
-        { "stop_on_errors": False,
+        {
+           "stop_on_errors": False,
+           "topics": "ts_common",
         }
     
     output_specs = \
