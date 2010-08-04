@@ -46,17 +46,18 @@ class graph2:
     # This writes out all the subgraphs and nodes
     def output_topic(self, dotfile, topic):
         ident = "          "[0:topic.level]
-        dotfile.write('%ssubgraph cluster_%s {\n'
-                      ' label="%s";\n' % (ident, topic.name, topic.name))
+        # The _GRAPH_ is there to differentiate between topics and
+        # possible equally named requiremnts. 
+        dotfile.write('%ssubgraph cluster_GRAPH_%s {\n'
+                      ' label="Topic: %s";\n' % (ident, topic.name, topic.name))
 
         # Write out the sub-sub-graphs
         for t in sorted(topic.outgoing, key = lambda t: t.name):
             self.output_topic(dotfile, t)
 
         for req in sorted(topic.reqs, key = lambda r: r.id):
-            dotfile.write('%snode [%s] %s;\n'
-                          % (ident, graph.node_attributes(req),
-                             req.name))
+            dotfile.write('%s%s [%s];\n'
+                          % (ident, req.name, graph.node_attributes(req)))
         dotfile.write('%s}\n' % ident)
 
     # This writes out the edges
