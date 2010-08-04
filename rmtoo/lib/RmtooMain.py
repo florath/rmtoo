@@ -59,6 +59,15 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         print("+++ ERROR: Problem reading in the continuum: '%s'" % rmte)
         return False
 
+    # Setup the OutputHandler
+    # Note: this can be more than one!
+    # For the topic based output also all the Topics are needed -
+    # before the OutputHandler itself - because different output
+    # handler may reference the same Topic.
+    topics = TopicHandler(config)
+    topics.depict(reqs)
+    ohandler = OutputHandler(config, topics)
+
     # When only the dependencies are needed, output them to the given
     # file. 
     if opts.create_makefile_dependencies!=None:
@@ -79,7 +88,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
 
     # The requirments are syntatically correct now: therefore it is
     # possible to do some analytics on them
-    if not Analytics.run(reqs):
+    if not Analytics.run(config, reqs, topics):
         reqs.write_log(mstderr)
         reqs.write_analytics_result(mstderr)
 
@@ -87,15 +96,6 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
                 and 'stop_on_errors' in config.analytics_specs \
                 and config.analytics_specs['stop_on_errors']:
             return False
-
-    # Setup the OutputHandler
-    # Note: this can be more than one!
-    # For the topic based output also all the Topics are needed -
-    # before the OutputHandler itself - because different output
-    # handler may reference the same Topic.
-    topics = TopicHandler(config)
-    topics.depict(reqs)
-    ohandler = OutputHandler(config, topics)
 
     # Output everything
     ohandler.output(rc)

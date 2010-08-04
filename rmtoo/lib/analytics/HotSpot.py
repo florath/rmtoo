@@ -15,7 +15,7 @@ class HotSpot:
     max_outgoing = 7
     
     @staticmethod
-    def run(reqs):
+    def run(config, reqs, topics):
         ok = True
         for _, req in reqs.reqs.iteritems():
             if len(req.incoming)>HotSpot.max_incoming:

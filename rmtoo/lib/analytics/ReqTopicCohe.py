@@ -23,7 +23,7 @@ class ReqTopicCohe:
         return in_cnt, out_cnt
 
     @staticmethod
-    def run(reqs):
+    def run(config, reqs, topics):
         ok = True
         for _, req in reqs.reqs.iteritems():
             it_in, it_out = ReqTopicCohe.count_in_out_topic(

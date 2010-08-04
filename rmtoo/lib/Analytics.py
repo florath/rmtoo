@@ -20,11 +20,11 @@ class Analytics:
     # The argument to the analytics modules is the (latest) set of
     # requirments.  (It makes sense only to check them.)
     @staticmethod
-    def run(reqs):
+    def run(config, reqs, topics):
         ok = True
         
         for ana in HotSpot, DescWords, ReqTopicCohe, TopicCohe:
-            if not ana.run(reqs):
+            if not ana.run(config, reqs, topics):
                 ok = False
 
         return ok

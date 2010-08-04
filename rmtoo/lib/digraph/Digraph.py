@@ -46,6 +46,24 @@ class Digraph:
                     return o
             return None
 
+        # This checks, if onode is in the ancient (parent, parent of
+        # parent, ...) of the current node.
+        # A depth first search is done.
+        def is_self_of_ancient(self, onode):
+            # Check for break
+            if self==onode:
+                # Stop iff found.
+                return True
+
+            # If not (yet) found: have a look at the ancestors.
+            for node in self.incoming:
+                if node.is_self_of_ancient(onode):
+                    # Found is somewhere in history.
+                    return True
+
+            # Did not find the other node.
+            return False
+
     # Create a digraph from the given dictionary representation. 
     # If no dictionary is given, an empty digraph will be created.
     def __init__(self, d=None):

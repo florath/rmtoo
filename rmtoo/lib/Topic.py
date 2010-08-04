@@ -56,7 +56,9 @@ class Topic(Digraph.Node):
             if tag[0]=="SubTopic":
                 ntopic = Topic(self.dir, tag[1], self.digraph,
                                self.level+1, self)
-                self.outgoing.append(ntopic)
+                #self.outgoing.append(ntopic)
+                Digraph.create_edge(self, ntopic)
+                #self.outgoing.append(ntopic)
         fd.close()
 
     def add_req(self, req):
