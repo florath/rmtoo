@@ -22,6 +22,12 @@ class Config:
           "ts_common": ["doc/topics", "ReqsDocument"],
         }
 
+    analytics_specs = \
+        { 
+           "stop_on_errors": False,
+           "topics": "ts_common",
+        }
+
     output_specs = \
         [ 
           ["prios", 

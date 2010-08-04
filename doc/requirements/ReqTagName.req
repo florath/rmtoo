@@ -5,6 +5,6 @@ Invented by: flonatel
 Description: Each requirement \textbf{must} have a name tag.
 Rationale: This is a short string (headline) for the requirment.
 Owner: development
-Depends on: ReqTags
+Depends on: ReqTagsBasic
 Status: finished
 Topic: ReqTags

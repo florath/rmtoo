@@ -16,6 +16,8 @@ o Checks for good and bad words.
 o Requirement based topic coherence (based on links)
 o Topic coherence (based on links)
 
+Removed bug in graph2 output which under certain conditions makes dot
+to render one node more than once.
 
 Internal Changes
 ----------------

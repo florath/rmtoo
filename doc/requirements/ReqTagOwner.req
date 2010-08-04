@@ -7,6 +7,6 @@ Rationale: The ower is the stakeholder who defines the requirment
  (sometimes different from the one, who writes it down --- which is
  the 'Invented by' person).
 Owner: development
-Depends on: ReqTags
+Depends on: ReqTagsBasic
 Status: finished
 Topic: ReqTags
