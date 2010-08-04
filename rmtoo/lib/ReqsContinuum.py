@@ -95,6 +95,7 @@ class ReqsContinuum:
             pass
         return False
 
+
     ## The following functions read in the continuum - from the
     ## different I/O layers. 
 
@@ -105,4 +106,14 @@ class ReqsContinuum:
         rs = RequirementSet(self.mods, self.opts, self.config)
         rs.read_from_filesystem(self.config.reqs_spec[0])
         self.continuum_add("FILES", rs)
+
+
+    # The cmad for the requirments set
+    def cmad_write_reqs_list(self, ofile):
+        # Write out the list
+        ofile.write("REQS=")
+        for r in self.continnum_latest().reqs:
+            ofile.write("%s.req " % os.path.join(self.config.reqs_spec[0], r))
+        ofile.write("\n")
+
 

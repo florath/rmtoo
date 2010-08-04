@@ -31,6 +31,8 @@ class DescWords:
         [ re.compile("^.* approximately .*$"), -100, "Usage of the word 'approximately'"],
         [ re.compile("^.* etc\.? .*$"), -40, "Usage of the word 'etc'"],
         [ re.compile("^.* e\.g\. .*$"), -40, "Usage of the word 'e.g.'"],
+        [ re.compile("^.* has to .*$"), 20, "Usage of the word 'has to'"],
+        [ re.compile("^.* have to .*$"), 20, "Usage of the word 'have to'"],
         [ re.compile("^.* i\.e\. .*$"), -40, "Usage of the word 'i.e.'"],
         [ re.compile("^.* many .*$"), -20, "Usage of the word 'many'"],
         [ re.compile("^.* may .*$"), 10, "Usage of the word 'may'"],

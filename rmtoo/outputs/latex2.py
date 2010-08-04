@@ -30,12 +30,12 @@ class latex2:
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("REQS_LATEX2=%s\n" % self.filename)
-        reqset = reqscont.base_requirement_set
+        reqset = reqscont.continnum_latest()
         # For each requirement get the dependency correct
         ofile.write("%s: " % self.filename)
         for r in reqset.reqs:
             ofile.write("%s/%s.req "
-                        % (reqscont.opts.directory,
+                        % (reqscont.config.reqs_spec[0],
                            reqset.reqs[r].id))
         ofile.write("\n\t${CALL_RMTOO}\n")
 
