@@ -1,0 +1,16 @@
+Name: Analytics: Topic Coherence
+Type: requirement
+Invented on: 2010-08-05
+Invented by: flonatel
+Description: There \textbf{must} be an analytics module which compares
+ the coherence inside one topic to the outside of a topic.
+Rationale: If there are too many links to the outside, a topic is
+ mostly not well chosen.
+Note: This means that all the links inside a topic are counted and
+ compared to the ones which point to the outside.
+Owner: development
+Depends on: Analytics
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: InitialReqs

@@ -1,0 +1,13 @@
+Name: Man Page Analytics Requirement Topic Coherence
+Type: requirement
+Invented on: 2010-08-06
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a man page which
+ describes the Requirement Topic Coherence analytic module.
+Depends on: ManSecAnalytics
+Status: not done
+Priority: development:3 customers:7
+Class: implementable
+Effort estimation: 3
+Topic: Documentation
