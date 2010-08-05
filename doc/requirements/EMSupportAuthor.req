@@ -1,0 +1,14 @@
+Name: Emacs Mode: Support Author
+Type: requirement
+Invented on: 2010-02-11
+Invented by: flonatel
+Description: The Emacs Mode \textbf{must} be implemented in the way
+ that it supports the author / writer of a requirement.
+Note: This can be done by e.g. switching on some different commonly
+ used minor modes like flyspell and auto-fill.
+Owner: development
+Depends on: EmacsMode
+Status: finished
+Priority: development:7
+Effort estimation: 8
+Topic: EmacsMode

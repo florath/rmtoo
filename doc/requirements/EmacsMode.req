@@ -5,7 +5,7 @@ Invented by: flonatel
 Description: There \textbf{must} be an Emacs mode which supports the
  text file format used by \textsl{rmtoo}.
 Owner: development
-Depends on: UseTxt EasyEditable
+Depends on: EasyEditable
 Status: not done
 Priority: development:7
 Effort estimation: 8

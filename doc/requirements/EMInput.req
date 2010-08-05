@@ -1,0 +1,12 @@
+Name: Emacs Mode for all Inputs
+Type: requirement
+Invented on: 2010-08-06
+Invented by: flonatel
+Description: For each input format ther \textbf{must} be an Emacs mode
+ which supports the file format.
+Owner: development
+Depends on: EmacsMode
+Status: not done
+Priority: development:7
+Effort estimation: 8
+Topic: EmacsMode

@@ -25,7 +25,6 @@ all_html: ${OUTPUT_HTML}
 # And how to make the dependencies
 .rmtoo_dependencies:
 	./bin/rmtoo -m . -f doc/requirements/Config3.py \
-		-d doc/requirements \
 		--create-makefile-dependencies=.rmtoo_dependencies
 
 req-graph1.png: req-graph1.dot

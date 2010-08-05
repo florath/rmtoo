@@ -1,12 +1,12 @@
 Name: Different Inputs
-Type: initial requirement
+Type: requirement
 Invented on: 2010-05-16
 Invented by: flonatel
 Description: \textsl{rmtoo} \textbf{must} support different types of
  input files - one type for each usage.
 Note: A usage is e.g. documenting requirements or handling topics.
 Owner: development
-Depends on: rmtoo
+Depends on: Processing
 Status: not done
 Priority: development:10
 Effort estimation: 8

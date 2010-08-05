@@ -1,5 +1,5 @@
 Name: rmtoo Automated Testing
-Type: initial requirement
+Type: requirement
 Invented on: 2010-03-04
 Invented by: flonatel
 Description: Each feature of \textsl{rmtoo} \textbf{must} be

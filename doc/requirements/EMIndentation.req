@@ -5,7 +5,7 @@ Invented by: flonatel
 Description: The Emacs mode \textbf{must} provide functionality for
  automatic indentation.
 Owner: development
-Depends on: EmacsMode
+Depends on: EMSupportAuthor
 Status: finished
 Class: implementable
 Priority: customers:6
