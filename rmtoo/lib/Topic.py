@@ -41,7 +41,7 @@ class Topic(Digraph.Node):
         for req in self.reqs:
             # Add all the included requirements
             ofile.write(" %s.req" % 
-                         os.path.join(reqscont.opts.directory, req.name))
+                         os.path.join(reqscont.config.reqs_spec[0], req.name))
         # Add all the subtopics
         for n in self.outgoing:
             ofile.write(" ${TOPIC_%s_%s_DEPS}" % (tname, n.name))
