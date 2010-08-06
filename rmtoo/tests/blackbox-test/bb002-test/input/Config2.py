@@ -46,4 +46,7 @@ class Config:
            ["ts_common", 
             basedir + "result_is/html", basedir + "input/header.html",
             basedir + "input/footer.html"]],
+
+          ["xml_ganttproject_1",
+           ["ts_common", basedir + "result_is/gantt.xml", 1]],
         ]

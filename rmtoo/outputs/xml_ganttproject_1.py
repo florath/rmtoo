@@ -22,14 +22,18 @@ from rmtoo.lib.Requirement import Requirement
 class xml_ganttproject_1:
 
     def __init__(self, param):
-        self.output_filename = param[0]
-        self.effot_factor = param[1]
+        self.topic_name = param[0]
+        self.output_filename = param[1]
+        self.effot_factor = param[2]
         self.req_ids = {}
         self.next_id = 1
 
-    # Create MAkefile Dependencies
+    # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
 
     # Get an id: if the req is not there a new id will be generated.
     def get_req_id(self, name):
@@ -95,7 +99,7 @@ class xml_ganttproject_1:
             xml_taskdisplaycolumns.appendChild(xml_tpd)
         
         # Output all the 'tasks' (i.e. requirements)
-        self.output_reqset(reqscont.base_requirement_set, doc, xml_project)
+        self.output_reqset(reqscont.continnum_latest(), doc, xml_project)
 
         fd = file(self.output_filename, "w")
         fd.write(doc.toprettyxml())
