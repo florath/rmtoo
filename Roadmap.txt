@@ -43,6 +43,11 @@ x add analyse modules
 o add man pages for each
 o Add the requirements for each!
 
+???
+===
+o Add output for openoffice calc that makes it possible to price each
+  requirment. 
+
 v12
 ===
 o finish / write all lost man-pages
