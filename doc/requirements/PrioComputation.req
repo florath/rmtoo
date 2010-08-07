@@ -11,4 +11,4 @@ Rationale: This makes sure that it is possible to zero out things that
 Owner: development
 Depends on: ReqTagPriority AgileDevelopment
 Status: finished
-Topic: AgileDevProcess
+Topic: ReqTagFormatDesc

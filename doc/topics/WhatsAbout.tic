@@ -1,6 +1,3 @@
 Name: What's all about
-Text: This is the \textsl{master} requirment where all other
- (especially the initial requirements) depend on. There can only be
- one master requirment.
 IncludeRequirements: full
-SubTopic: InitialReqs
+SubTopic: Basics

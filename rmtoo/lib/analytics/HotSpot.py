@@ -11,8 +11,8 @@
 
 class HotSpot:
 
-    max_incoming = 4
-    max_outgoing = 7
+    max_incoming = 7
+    max_outgoing = 4
     
     @staticmethod
     def run(config, reqs, topics):
