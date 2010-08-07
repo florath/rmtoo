@@ -45,8 +45,16 @@ o Add the requirements for each!
 
 ???
 ===
+[It might be possible that there is an extra release for the following
+features - one customer requests these - and they are needed soon.]
 o Add output for openoffice calc that makes it possible to price each
-  requirment. 
+  requirement. 
+o Add additional graph output which takes the stored csv list from the
+  openoffice calc and renders prices and dependencies in the
+  requirements dependency graph.
+o Write requirements for these features.
+o Add documentation for this (man-page, Presentation)
+o Add test cases for this feature.
 
 v12
 ===
@@ -61,6 +69,7 @@ o Update presentation:
     + count in / out
     + topic count
     + word-checking
+  - Pricing feature
 
 v13
 ===
@@ -87,3 +96,8 @@ o Adapt presentation
 ==> This will be the point of time to get rmtoo into one Linux
     distribution and send out the form to INCOSE.
 
+
+OTHER / LATER
+=============
+o output level in 'prios.py' must be configurable
+o traceability of changes
