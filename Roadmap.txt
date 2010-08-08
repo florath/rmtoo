@@ -101,4 +101,6 @@ o traceability of changes
 o Translations / Intenationalization
   - Input: possible define a new set of tags - one for each language.
   - Analytics: define a set of words (regexps) for different
-    languages. 
+    languages.
+o Topic includereqs: There is the need to at least specify ONE
+  requirement which is located before all others.
