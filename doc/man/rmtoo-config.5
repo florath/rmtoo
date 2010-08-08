@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-config 5 2010-07-23 "User Commands" "Requirements Management"
+.TH rmtoo-config 5 2010-08-08 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-config \- requirements management tool configuration file
 .SH DESCRIPTION
@@ -38,7 +38,15 @@ about the configuration parameters.
 .SH EXAMPLE
 The following example is the configuration file for the 
 .B rmtoo
-requirements which can be found at \fIrequirements/Config.py\fR.
+requirements management tool.
+.P
+In the example, three different sets of documents (output artifacts)
+will be created: one document set containing prios, graph, stats,
+latex2 and html e.g. for internal use is called \fIall_topics\fR.  One
+document for marketing which contains the latex2 document and the
+requirements dependency graph called \fImarketing_topic\fR.  One
+document for a customer which uses a separate set of requirements.
+This is called \fIcustomer_topic\fR.
 .sp
 .RS
 .nf
@@ -46,31 +54,49 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
+    reqs_spec = \
+        [
+           "doc/requirements",
+           ["93c4951bed1a01c82342e370be891a5fc569985f", "FILES"]
+        ]
+
     topic_specs = \
         {
           "all_topics": ["doc/topics", "ReqsDocument"],
           "marketing_topic": ["doc/topics", "Marketing"],
-          "marketing_topic": ["doc/cust_topics", "Customer"],
+          "customer_topic": ["doc/cust_topics", "Customer"],
         }
 
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", "doc/latex2/reqsprios.tex"]],
+           ["all_topics", "doc/latex2/reqsprios.tex"]],
 
           ["graph",
-           ["ts_common", "reqtree.dot"]],
+           ["all_topics", "reqtree.dot"]],
 
           ["stats_reqs_cnt", 
-           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+           ["all_topics", "doc/latex2/stats_reqs_cnt.csv"]],
 
           ["latex2", 
-           ["ts_common", "doc/latex2/reqtopics.tex"]],
+           ["all_topics", "doc/latex2/reqtopics.tex"]],
 
           ["html", 
-           ["ts_common", 
+           ["all_topics", 
             "doc/html/reqs", "doc/html/header.html",
             "doc/html/footer.html"]],
+
+
+          ["graph",
+           ["marketing_topic", "marketing_reqtree.dot"]],
+
+          ["latex2",
+           ["marketing_topic", "doc/latex2/marketing.tex"]],
+
+
+          ["latex2",
+           ["customer_topic", "doc/latex2/customer.tex"]],
+
         ]
 
 .SH DETAILS
@@ -82,6 +108,31 @@ Stakeholders can own a and prioritize a requirement.  Tags:
 .SS inventors
 This must be a list of string specifying inventors.  Inventors can
 invent a requirement. Tags: \fIInvented by\fR.
+.SS reqs_spec
+This is the definition of the set of requirements \fBrmtoo\fR uses.
+It is a list of two entries: the first entry is the name of the
+directory where all the requirements can be found.  The second is a
+list (pair) of start and end specification: these are either git
+version numbers (md5 sums) or tag names. The given interval is used
+during the run of \fBrmtoo\fR and everything e.g. statistics in based
+(only) on this interval.  Mostly all operations are done on the second
+entry.  Additional to the git version strings, the special string
+\fIFILES\fR can be used.  This references to the local stored files.
+.P
+When both elements are the same, only this unique version is used.
+When using only files (e.g. during requirements elaboration) an entry
+like ["FILES", "FILES"] makes sense here: then only the locally stored
+files are used.
+.P
+An entry like ["v9", "HEAD"] specifies all checked in files (ignoring
+possible changes of local files) beginning from the tag v9 up to the
+HEAD of git.
+.SS topic_specs
+The configuration parameter \fItopic_spec\fR is a map.  The key is the
+name with which the entry can be referenced.  The value is a list
+containing two elements.  The first is the directory where all the
+topics for this topic set can be found.  The second is the initial
+(first) topic.
 .SS output_specs
 The variable \fIoutput_specs\fR must be a list which contains pairs.
 Each pair itself is a list containing two elements: the first is the
