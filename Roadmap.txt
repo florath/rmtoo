@@ -39,7 +39,6 @@ x add analyse modules
   - check for 'no' words like 'and', 'or', 'many', 'some', ... and
     emit warning.
 o add man pages for each
-o Add the requirements for each!
 
 ???
 ===
@@ -99,3 +98,7 @@ OTHER / LATER
 =============
 o output level in 'prios.py' must be configurable
 o traceability of changes
+o Translations / Intenationalization
+  - Input: possible define a new set of tags - one for each language.
+  - Analytics: define a set of words (regexps) for different
+    languages. 
