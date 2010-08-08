@@ -1,4 +1,7 @@
 Name: Effort Description
+#Text: \begin{center}
+# \includegraphics[width=3cm]{../../graphs/st_ReqTagEffortDesc.png}
+# \end{center}\par
 Text: This section descibes the format of the effort estimation
  input fields and their semantic.
 IncludeRequirements: full

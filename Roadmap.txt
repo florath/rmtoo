@@ -23,6 +23,7 @@ v11
 ===
 o Man page: add config description for reqs_xxx correct (also FILES
   constant) 
+o Man page for gantt (also include in rmtoo-config).
 o Man page: add section about environment setup (PYTHONPATH and so on). 
 o The output of the topic / html page must in some kind be sorted - to
   get things comparable.
