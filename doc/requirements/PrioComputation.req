@@ -9,6 +9,6 @@ Rationale: This makes sure that it is possible to zero out things that
  are not needed and that important things have a higher priority than
  not so important things.
 Owner: development
-Depends on: ReqTagPriority AgileDevelopment
+Depends on: ReqTagPriority
 Status: finished
 Topic: ReqTagFormatDesc

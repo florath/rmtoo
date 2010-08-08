@@ -21,9 +21,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v11
 ===
-o The code analyse modules resulted in 61 problems with the current
-  requirements!  Those have to be fixed!
-  2010-08-07: Still 38 to go...
 o Man page: add config description for reqs_xxx correct (also FILES
   constant) 
 o Man page: add section about environment setup (PYTHONPATH and so on). 

@@ -7,7 +7,7 @@ Description: It \textbf{must} be possible, to output a list of all
  \textsl{open} requirements sorted by priority.
 Rationale: This are typically those requirments which must be worked
  on first in an agile development process.
-Depends on: Output ReqTagPriority AgileDevelopment
+Depends on: Output ReqTagPriority
 Status: finished
 Priority: development:10
 Topic: Output

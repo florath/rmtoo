@@ -15,6 +15,8 @@ o Limits the number of incoming and outgoing links.
 o Checks for good and bad words.
 o Requirement based topic coherence (based on links)
 o Topic coherence (based on links)
+Based on these results a major redesign on the rmtoo requirements was
+done. 
 
 Removed bug in graph2 output which under certain conditions makes dot
 to render one node more than once.

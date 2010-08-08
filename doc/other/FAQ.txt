@@ -83,7 +83,14 @@ Frequently Asked Questions
    Remove it from the file system (with rm), then remove it from the
    tip (with 'git rm') then to a checkin.
 
+* Every day usage
+
 ** Is is possible to rename the rmtoo directory?
    No - this is not possible.  Mostly all python files assume that the
    top level directory is called 'rmtoo'.
 
+** rmtoo prints 'make: *** No rule to make target ...'
+   This typically happes when an requirement was removed or
+   renamed. In this case the automatically generated dependency file
+   must be deleted (typically with 'rm .rmtoo_dependencies') or a
+   'make force' will do this for you.
