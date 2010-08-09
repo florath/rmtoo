@@ -48,11 +48,11 @@ class ReqsContinuum:
     def repo_access_needed(self):
         # Only if FILES:FILES is specified, there is no need to access
         # the repo.
-        return self.config.reqs_spec[1]!=["FILES", "FILES"]
+        return self.config.reqs_spec["commit_interval"]!=["FILES", "FILES"]
 
     def init_continuum(self):
-        start_vers = self.config.reqs_spec[1][0]
-        end_vers = self.config.reqs_spec[1][1]
+        start_vers = self.config.reqs_spec["commit_interval"][0]
+        end_vers = self.config.reqs_spec["commit_interval"][1]
 
         # Should the repo be accessed?
         if self.repo_access_needed():
@@ -60,7 +60,8 @@ class ReqsContinuum:
             if not self.create_repo():
                 raise RMTException(40, "Based on the config '%s' a "
                                    "repository is needed - but there is "
-                                   "none" % self.config.reqs_spec[1])
+                                   "none" % self.config.reqs_spec[
+                        "commit_interval"])
 
         # Maybe add also the FILES:
         if end_vers=="FILES":
@@ -77,7 +78,7 @@ class ReqsContinuum:
     # This method sets up the repository and splits out the repository
     # dir from the requirements dir.
     def create_repo(self):
-        directory = self.config.reqs_spec[0]
+        directory = self.config.reqs_spec["directory"]
         # When the directory is not absolute, convert it to an
         # absolute path that it can be comparted to the outcome of the
         # git.Repo. 
@@ -104,7 +105,7 @@ class ReqsContinuum:
 
     def create_continuum_from_file(self):
         rs = RequirementSet(self.mods, self.opts, self.config)
-        rs.read_from_filesystem(self.config.reqs_spec[0])
+        rs.read_from_filesystem(self.config.reqs_spec["directory"])
         self.continuum_add("FILES", rs)
 
 
