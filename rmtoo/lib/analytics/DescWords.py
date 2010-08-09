@@ -24,7 +24,7 @@ class DescWords:
     # -100 is a very very bad word and 100 is a very very good.
     # Do not add the single word 'not': only do this in pairs,
     # e.g. 'must not'.
-    words = [
+    words_en_GB = [
         [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
         [ re.compile("^.* about .*$"), -15, "Usage of the word 'about'"],
         [ re.compile("^.* and .*$"), -10, "Usage of the word 'and'"],
@@ -47,15 +47,32 @@ class DescWords:
         [ re.compile("^.* vaguely .*$"), -25, "Usage of the word 'vaguely'"],
     ]
 
+    words = { "en_GB": words_en_GB }
+
+    @staticmethod
+    def get_lang(config):
+        if "default_language" in config.reqs_spec:
+            if config.reqs_spec["default_language"] in words:
+                return DescWords.words[config.reqs_spec["default_language"]]
+            else:
+                return None
+        return DescWords.words["en_GB"]
+
     @staticmethod
     def run(config, reqs, topics):
+        # Try to get the correct language
+        lwords = DescWords.get_lang(config)
+        # If language is not available, this analytics make no sense.
+        if lwords==None:
+            return True
+
         ok = True
         for _, req in reqs.reqs.iteritems():
             # Must be at least some positive things to get this
             # positive. (An empty description is a bad one.)
             level = -10
             log = []
-            for wre, wlvl, wdsc in DescWords.words:
+            for wre, wlvl, wdsc in lwords:
                 plain_txt = LaTeXMarkup.replace_txt(
                     req.tags["Description"]).strip()
                 if wre.match(plain_txt):
