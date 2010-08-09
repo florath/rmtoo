@@ -1,4 +1,6 @@
 #
+# -*- coding: utf-8 -*-
+#
 # Analytics: Description Words
 #
 #  The Description is the critical part of the requirement. This
@@ -47,12 +49,25 @@ class DescWords:
         [ re.compile("^.* vaguely .*$"), -25, "Usage of the word 'vaguely'"],
     ]
 
-    words = { "en_GB": words_en_GB }
+    words_de_DE = [
+        [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
+        [ re.compile("^.* ca\. .*$"), -75, "Usage of the word 'ca.'"],
+        [ re.compile("^.* möglicherweise .*$"), -100, "Usage of the word 'möglicherweise'"],
+        [ re.compile("^.* muss .*$"), 25, "Usage of the word 'muss'"],
+        [ re.compile("^.* oder .*$"), -15, "Usage of the word 'oder'"],
+        [ re.compile("^.* und .*$"), -10, "Usage of the word 'und'"],
+        [ re.compile("^.* usw..*$"), -40, "Usage of the word 'usw'"],
+        [ re.compile("^.* vielleicht .*$"), -25, "Usage of the word 'vielleicht'"],
+        [ re.compile("^.* z\.B\. .*$"), -40, "Usage of the word 'z.B.'"],
+    ]
+
+    words = { "en_GB": words_en_GB,
+              "de_DE": words_de_DE, }
 
     @staticmethod
     def get_lang(config):
         if "default_language" in config.reqs_spec:
-            if config.reqs_spec["default_language"] in words:
+            if config.reqs_spec["default_language"] in DescWords.words:
                 return DescWords.words[config.reqs_spec["default_language"]]
             else:
                 return None
