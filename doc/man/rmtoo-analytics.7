@@ -1,0 +1,82 @@
+.\" 
+.\" Man page for rmtoo analytics introduction.
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo 7 2010-08-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-analytics \- requirements management tool: analytics modules
+.SH DESCRIPTION
+The
+.B rmtoo
+package can check some different aspects of requirements properties.
+The tool has some built in heuristics to decide if a requirement or
+topic is a \fIgood\fR or a \fIbad\fR one.
+.SH NOTE
+.B The analytics modules must be seen as alpha.  A lot of research
+.B and statistics must be done to get a stable and usable version
+.B of the analytics modules. 
+.P
+Nevertheless the currently implemented measurements and heuristics may
+lead to hints for better requirements and topics.
+.SH IDEA
+It is mostly impossible to decide whether a requirement is a good
+one.  A lot of things must be known; mostly even the expertise in the
+described topic is needed for a decision.
+.P
+But it is often easy to decide, that a requirement is a bad one.  Bad
+requirements contain words like \fIapproximately\fR or \fIperhaps\fR.
+Even words like \fIor\fR or \fIand\fR typically render a requirement
+as bad.  A requirements which is longer than some ten words or 
+than one sentence is typically also not a good requirement.
+.SH IMPLEMENTATION
+The analytics modules are called after the requirements and topics are
+read in and parsed.  It is configurable if \fBrmtoo\fR should stop if
+it finds problems or not.
+.SH CONFIGURATION
+The \fIanalytics_specs\fR section is responsible for handling the
+analytics modules.  It is a dictionary.
+.P
+All analytic modules work on one set on requirements - which is
+specified in the \fIreqs_spec\fR section (see \fBrmtoo-config(5)\fR
+for more details).  All analytic modules also work on one set of
+topics.  The used topic set must be the value of the key
+\fItopics\fR.
+.P
+The configuration key \fIstop_on_errors\fR specifies if \fBrmtoo\fR
+should stop when a possible problem was detected.
+.P
+It might be possible that analytic modules support other configuration
+options.  Please consult the appropriate man pages.
+.P
+Example specification section:
+.sp
+.RS
+.nf
+    analytics_specs = { 
+           "stop_on_errors": False,
+           "topics": "ts_common",
+        }
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

@@ -1,0 +1,47 @@
+.\" 
+.\" Man page for rmtoo analytics: Topic Coherence.
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-analytics-topic-coherence 7 2010-08-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-analytics-topic-coherence \- requirements management tool: analytics
+module for detecting topic coherence
+.SH DESCRIPTION
+This analytics module checks for the coherence inside a topic.
+.SH IDEA
+A \fItopic\fR as used in
+.B rmtoo
+is a collection of requirements with one topic.  Therefore there must
+be some kind of coherence within the topic itself.  This analytics
+module checks the number of topic internal links, links to
+requirements which contain to a parent topic and the number of links
+to other topics.
+.P
+If the relation of outer links is too high compared to the number of
+inner links, an error is emitted.
+.SH CONFIGURATION
+This module cannot be configured.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

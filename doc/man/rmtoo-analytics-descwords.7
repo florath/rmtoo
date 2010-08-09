@@ -1,0 +1,51 @@
+.\" 
+.\" Man page for rmtoo analytics: Desc Words.
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-analytics-descwords 7 2010-08-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-analytics-descwords \- requirements management tool: analytics
+module for words in tag description
+.SH DESCRIPTION
+The
+.B rmtoo
+analytics module \fIdescwords\fR uses a heuristic to evaluate the
+quality of the \fIDescription\fR tag of the requirement.
+.SH IDEA
+For each supported language a set of often used words are defined as
+regular expressions.  When a regular expression matches, depending on
+the value of the regular expression, a specific number is added.
+.P
+E.g. good words like \fImust\fR have a positive value, bad words like
+\fIpossible\fR have a negative value.
+.P
+All these values are added for each description.  When the result is
+negative, it is assumed that the quality of the requirement is not
+good.  In this case an error is printed.
+.SH CONFIGURATION
+Currently implemented are word (regular expression) lists for
+\fIen_GB\fR and \fIde_DE\fR.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

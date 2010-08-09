@@ -1,0 +1,54 @@
+.\" 
+.\" Man page for rmtoo analytics: HotSpot.
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-analytics-hotspot 7 2010-08-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-analytics-hotspot \- requirements management tool: analytics
+module for detecting hotspots
+.SH DESCRIPTION
+The
+.B rmtoo
+analytics module \fIhotspots\fR uses a heuristic to check whether a
+requirement is a HotSpot or not.  A HotSpot is a requirement with many
+incoming or outgoing edges.
+.SH IDEA
+It was discovered that often in a set of requirements there are some
+requirements 
+where a lot of other requirements depend on - or which depend on a
+large number of other requirements.
+.P
+These so called HotSpots typically hint to a region in the
+requirements dependency graph where redesign must be done and some
+work must be spend.
+.P
+The current implementation is based on the idea that each requirement
+is a problem which must be solved by a 'Devide et Impera'.  It doesn't
+make sense to divide in tens of sub-problems.  It is mostly better to
+go for only some major and then divide them further down.
+.SH CONFIGURATION
+This module cannot be configured.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

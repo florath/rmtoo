@@ -1,0 +1,47 @@
+.\" 
+.\" Man page for rmtoo analytics: Requirements based Topic Coherence.
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-analytics-req-topic-coherence 7 2010-08-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-analytics-req-topic-coherence \- requirements management tool: analytics
+module for detecting topic coherence inside one requirement
+.SH DESCRIPTION
+This analytics module checks for the coherence of each requirement
+inside a topic. 
+.SH IDEA
+A \fItopic\fR as used in
+.B rmtoo
+is a collection of requirements with one topic.  Therefore each
+requirement should have a better coherence inside the topic than to
+the outside.
+.P
+The difference to \fBrmtoo-analytics-topic-coherence.7\fR is, that
+here the heuristic is based on one requirement whereas there the
+heuristic is based on the whole topic.
+.SH CONFIGURATION
+This module cannot be configured.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
