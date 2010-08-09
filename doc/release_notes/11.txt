@@ -12,12 +12,13 @@ might have changes compared to the last checked in version).
 
 Added analytics mode: 
 o Limits the number of incoming and outgoing links.
-o Checks for good and bad words.
+o Checks for good and bad words (en_GB and de_DE - both incomplete).
 o Requirement based topic coherence (based on links)
 o Topic coherence (based on links)
 Add requirements for the analytics.
 Based on the results a major redesign on the rmtoo requirements was
-done. 
+done.
+Analytics mode is currently in alpha state.
 
 Removed bug in graph2 output which under certain conditions makes dot
 to render one node more than once.
@@ -43,6 +44,6 @@ o git-python is currently changing dramatically.  There were API
   fixed, they will removed.
 
 Started to add blackbox tests. This increases the coverage rate from
-56% to about 85%.  Added gnatt project output checks to blackbox
+56% to about 83%.  Added gnatt project output checks to blackbox
 tests. 
 

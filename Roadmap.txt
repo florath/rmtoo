@@ -19,18 +19,6 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
-v11
-===
-x add analyse modules
-  - count number of incoming and outgoing in reqs and emit warning
-    when limit is reached
-  - count number of internal (in topic) links and compare to external
-    (out topic) refs
-  - count number of internal links in a topic on a requirments base
-  - check for 'no' words like 'and', 'or', 'many', 'some', ... and
-    emit warning.
-o add man pages for each
-
 ???
 ===
 [It might be possible that there is an extra release for the following
