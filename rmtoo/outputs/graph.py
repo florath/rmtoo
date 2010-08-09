@@ -31,7 +31,7 @@ class graph:
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
         # Only output the nodes which are connected to the chosen topic. 
-        for r in self.topic_set.all_reqs:
+        for r in sorted(self.topic_set.all_reqs, key = lambda r: r.id):
             self.output_req(r, g)
         g.write("}")
         g.close()
