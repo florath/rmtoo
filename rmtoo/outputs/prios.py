@@ -49,9 +49,9 @@ class prios:
         prios_impl, prios_detail = self.get_reqs_impl_detail()
 
         # Sort them after prio
-        sprios_impl = sorted(prios_impl, key=operator.itemgetter(0),
+        sprios_impl = sorted(prios_impl, key=operator.itemgetter(0, 1),
                              reverse=True)
-        sprios_detail = sorted(prios_detail, key=operator.itemgetter(0),
+        sprios_detail = sorted(prios_detail, key=operator.itemgetter(0, 1),
                                reverse=True)
 
         # Write everything to a file.
