@@ -14,7 +14,7 @@ mdir = "tests/blackbox-test/bb003-test"
 class TestBB001:
 
     def test_pos_001(self):
-        "BB Hotspot in the middle of the graph"
+        "Pulp Fiction's Mr Wulf in English"
 
         clear_result_is(mdir)
         mout, merr = create_std_log(mdir)
