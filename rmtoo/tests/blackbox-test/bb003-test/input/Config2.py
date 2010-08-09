@@ -9,10 +9,11 @@ class Config:
     inventors = ["VincentAndJules", "Wulf"]
 
     reqs_spec = \
-        [
-           basedir + "input/reqs",
-           ["FILES", "FILES"]
-        ]
+        {
+           "directory": basedir + "input/reqs",
+           "commit_interval": ["FILES", "FILES"],
+           "default_language": "en_GB",
+        }
 
     topic_specs = \
         {
