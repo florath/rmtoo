@@ -19,6 +19,11 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
+V11
+===
+o Adapt blackbox tests that they can run from within the package
+  (Need adaption on the output dir: result_is).
+
 ???
 ===
 [It might be possible that there is an extra release for the following
