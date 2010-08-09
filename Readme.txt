@@ -27,11 +27,12 @@ where everything is unpacked in a local directory)
 rmtoo is written in python.  At least version 2.5 of python is
 needed. 
 
-Starting with version 11, git-python is shipped with rmtoo.
-The API is changing rapidly - there are currently three different APIs
-out there.  As soon as the change rate settles, the git-python will be
-removed from the package and the OS / distribution version should be
-used. git-python home page is at http://gitorious.org/git-python.
+Starting with version 11, git-python is shipped with rmtoo.  The API
+of git-python is changing rapidly - there are currently three
+different APIs out there.  As soon as the change rate settles, the
+git-python will be removed from the package and the OS / distribution
+version should be used. git-python home page is at
+http://gitorious.org/git-python.
 
 When you want to create the document, LaTeX is needed.
 
@@ -105,5 +106,5 @@ or write a mail.
 
 Andreas Florath
 sf@flonatel.org
-2010-07-30
+2010-08-08
 

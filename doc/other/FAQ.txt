@@ -4,7 +4,7 @@ Frequently Asked Questions
 
 * Getting Started with rmtoo
 
-** What is the file format?
+** What is the input file format?
    The file should be plain text. The file should contain a sequence
    of details.  Each detail is a group of lines, in name: value
    pairs. For multiline values, indent by one space on the lines 
@@ -33,7 +33,7 @@ Frequently Asked Questions
 ** Can I split a large set of requirements into a set of separate files?
    You must - each requirment must go in one file.
 
-** Does a requirement has a unique id?
+** Does a requirement have a unique id?
    Yes - each requirement has an id which is the case sensitive name
    of the file where it's described in - without the suffix.
    Example: file name 'OutputPrio.req' -> id 'OutputPrio'

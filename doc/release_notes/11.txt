@@ -22,6 +22,12 @@ done.
 Removed bug in graph2 output which under certain conditions makes dot
 to render one node more than once.
 
+Output (especially of topics) is sorted now by the id / name.  This
+was neccessary because when unsorted results are not comparable for
+black box tests.
+
+Enhanced many man-pages.
+
 Internal Changes
 ----------------
 
