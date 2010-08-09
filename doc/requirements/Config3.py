@@ -18,7 +18,7 @@ class Config:
            #["v5", "FILES"]
            "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
-        ]
+        }
 
     topic_specs = \
         {

@@ -12,9 +12,10 @@ class Config:
     inventors = ["flonatel", ]
 
     reqs_spec = \
-        [
-           "doc/requirements",
-           ["FILES", "FILES"]
+        {
+           "directory": "doc/requirements",
+           "commit_interval": ["FILES", "FILES"],
+           "default_language": "en_GB",
         ]
 
     topic_specs = \
