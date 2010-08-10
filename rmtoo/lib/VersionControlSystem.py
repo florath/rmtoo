@@ -21,6 +21,8 @@ import sys
 # This can be removed once the git-pyhton is removed.
 # (Calling this durint the main does not help - because this might
 # already been loaded.) 
+# Note that this is a hack which will be removed when the API 
+# to the git-python is stable.
 for sp in sys.path:
     rc = os.path.join(sp, 'rmtoo/contrib')
     if os.path.exists(rc):
@@ -37,12 +39,18 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 
 class VCSException(Exception):
-    pass
+
+    def __init__(self, msg):
+        self.msg = msg
 
 class VCSGit:
 
     def __init__(self, directory):
-        self.repo = git.Repo(directory)
+        try:
+            self.repo = git.Repo(directory)
+        except git.InvalidGitRepositoryError, ie:
+            raise VCSException("Error opening git repository: %s"
+                               % ie)
         self.set_directories(directory)
 
     # Some variables are needed to access the files themself.
