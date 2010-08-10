@@ -35,7 +35,7 @@ class latex2:
         ofile.write("%s: " % self.filename)
         for r in reqset.reqs:
             ofile.write("%s/%s.req "
-                        % (reqscont.config.reqs_spec[0],
+                        % (reqscont.config.reqs_spec["directory"],
                            reqset.reqs[r].id))
         ofile.write("\n\t${CALL_RMTOO}\n")
 

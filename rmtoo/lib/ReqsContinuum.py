@@ -114,7 +114,8 @@ class ReqsContinuum:
         # Write out the list
         ofile.write("REQS=")
         for r in self.continnum_latest().reqs:
-            ofile.write("%s.req " % os.path.join(self.config.reqs_spec[0], r))
+            ofile.write("%s.req " % os.path.join(
+                    self.config.reqs_spec["directory"], r))
         ofile.write("\n")
 
 
