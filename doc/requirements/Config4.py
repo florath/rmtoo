@@ -9,14 +9,31 @@ class Config:
     stakeholders = ["development", "management", "users", "customers"]
     inventors = ["flonatel", ]
 
+    reqs_spec = \
+        {
+           "directory": "doc/requirements",
+           #"commit_interval": 
+           #  ["138be32f1985aec694934263f02e47292deaac91", "FILES"],
+           #"commit_interval": 
+           #["v5", "FILES"]
+           "commit_interval": ["FILES", "FILES"],
+           "default_language": "en_GB",
+        }
+
     topic_specs = \
         {
           "ts_common": ["doc/topics", "ReqsDocument"],
          # "ts_input_only": ["doc/topics", "Input"],
         }
 
+    analytics_specs = \
+        { 
+           "stop_on_errors": False,
+           "topics": "ts_common",
+        }
+
     output_specs = \
         [
-          ["prios", 
-           ["ts_common", "doc/latex2/reqsprios.tex"]],
+          ["oopricing1", 
+           ["ts_common", "reqspricing.ods"]],
         ]
