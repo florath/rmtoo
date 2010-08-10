@@ -19,15 +19,8 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
-V11
+v12
 ===
-o Adapt blackbox tests that they can run from within the package
-  (Need adaption on the output dir: result_is).
-
-???
-===
-[It might be possible that there is an extra release for the following
-features - one customer requests these - and they are needed soon.]
 o Add output for openoffice calc that makes it possible to price each
   requirement. 
 o Add additional graph output which takes the stored csv list from the
@@ -37,7 +30,7 @@ o Write requirements for these features.
 o Add documentation for this (man-page, Presentation)
 o Add test cases for this feature.
 
-v12
+v13
 ===
 o finish / write all lost man-pages
 o Update presentation:
@@ -52,17 +45,17 @@ o Update presentation:
     + word-checking
   - Pricing feature
 
-v13
+v14
 ===
 o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
 
-v14
+v15
 ===
 o Increase test case coverage to minimum 90%
 
-v15
+v16
 ===
 o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'
