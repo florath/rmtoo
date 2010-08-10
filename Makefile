@@ -54,8 +54,17 @@ clean:
 
 PYSETUP = python setup.py
 
+.PHONY: prepare_install
+prepare_install:
+	echo "add_data = [" >add_data.py
+	find rmtoo/tests -type f | \
+	 while read f; do d=`dirname $$f` ; printf "\t('share/pyshared/%s', ['%s']),\n" $$d $$f; done >>add_data.py
+	echo "]" >>add_data.py
+
+#	 grep -v ".py" | \
+
 .PHONY: install
-install:
+install: prepare_install
 	$(PYSETUP) install --prefix=${DESTDIR}/usr \
 		--install-scripts=${DESTDIR}/usr/bin
 

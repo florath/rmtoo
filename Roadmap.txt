@@ -88,3 +88,4 @@ o Translations / Intenationalization
     languages.
 o Topic includereqs: There is the need to at least specify ONE
   requirement which is located before all others.
+o Add version number to rmtoo -v or something

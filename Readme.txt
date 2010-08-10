@@ -53,12 +53,18 @@ requirments of the rmtoo itself).  In the FAQ document does exist a
 
 --- Check and create them all ---
 
-Try a 
+When using the tar ball, you can try a 
 $ make 
 $ make tests
 The configuration file where the output artifacts are configured are
 doc/requirements/ConfigX.py.
 
+When using the Debian package, it is possibe to run all the tests.
+$ cd /usr/share/pyshared/rmtoo
+$ nosetests -v -s
+(Note that some test cases will fail, because they assume that
+there is a git-history available - which is not.)
+The documents can be found under '/usr/share/doc/rmtoo'.
 
 --- Documentation ---
 

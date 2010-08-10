@@ -1,8 +1,13 @@
 doc/man/rmtoo.7
+doc/man/rmtoo-analytics.7
+doc/man/rmtoo-analytics-descwords.7
+doc/man/rmtoo-analytics-hotspot.7
+doc/man/rmtoo-analytics-req-topic-coherence.7
+doc/man/rmtoo-analytics-topic-coherence.7
+doc/man/rmtoo-art-html.1
+doc/man/rmtoo-art-latex2.1
+doc/man/rmtoo-art-req-dep-graph2.1
 doc/man/rmtoo-config.5
 doc/man/rmtoo-invoking.1
 doc/man/rmtoo-req-format.5
 doc/man/rmtoo-topic-format.5
-doc/man/rmtoo-art-html.1
-doc/man/rmtoo-art-latex2.1
-doc/man/rmtoo-art-req-dep-graph2.1
