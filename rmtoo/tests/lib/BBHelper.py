@@ -9,11 +9,7 @@
 import os
 import shutil
 import difflib
-
-def clear_result_is(mdir):
-    p = os.path.join(mdir, "result_is")
-    shutil.rmtree(p)
-    os.makedirs(p)
+import tempfile
 
 def find(mdir):
     r = set()
@@ -26,7 +22,7 @@ def find(mdir):
     return r
 
 def unified_diff(mdir, fname):
-    fa = file(os.path.join(mdir, "result_is", fname), "r")
+    fa = file(os.path.join(os.environ["rmtoo_test_dir"], fname), "r")
     a = fa.readlines()
     fa.close()
 
@@ -49,7 +45,7 @@ def unified_diff(mdir, fname):
 # The differences is a map where the key is the filename and the
 # content is a unified diff output.
 def compare_results(mdir):
-    files_is = find(os.path.join(mdir, "result_is"))
+    files_is = find(os.path.join(os.environ["rmtoo_test_dir"]))
     files_should = find(os.path.join(mdir, "result_should"))
 
     missing_files = files_is - files_should
@@ -67,10 +63,25 @@ def compare_results(mdir):
 
 # Open up the stdout and stderr files for testing proposes
 def create_std_log(mdir):
-    mout = file(os.path.join(mdir, "result_is", "stdout"), "w")
-    merr = file(os.path.join(mdir, "result_is", "stderr"), "w")
+    mout = file(os.path.join(mdir, "stdout"), "w")
+    merr = file(os.path.join(mdir, "stderr"), "w")
     return mout, merr
 
 def cleanup_std_log(mout, merr):
     mout.close()
     merr.close()
+
+# Creates a temporary directory
+def create_tmp_dir():
+    return tempfile.mkdtemp(prefix="rmtoo-tst-ris-")
+
+def delete_result_is_dir():
+    assert(os.environ["rmtoo_test_dir"]!=None)
+    shutil.rmtree(os.environ["rmtoo_test_dir"])
+    del(os.environ["rmtoo_test_dir"])
+
+def prepare_result_is_dir():
+    td = create_tmp_dir()
+    os.environ["rmtoo_test_dir"] = td
+    mout, merr = create_std_log(td)
+    return mout, merr

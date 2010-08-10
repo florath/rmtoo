@@ -1,0 +1,14 @@
+Name: Ordnung widerherstellen
+Type: master requirement
+Invented on: 1994-04-04
+Invented by: VincentAndJules
+Owner: executive
+Description: The unglückliche Unfall, der einen Mann getötet hat,
+ \textbf{muss} versteckt werden.
+Rationale: Es gibt einige dreckige und mit Blut verschmierte Sachen,
+ die gereinigt werden müssen.
+Note: Sie haben nur 40 Minuten für alles.
+Status: not done
+Priority: executive:10
+Effort estimation: 13
+Topic: PulpFiction

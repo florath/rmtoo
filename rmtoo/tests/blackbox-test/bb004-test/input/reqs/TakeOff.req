@@ -1,0 +1,15 @@
+Name: Ausziehen
+Type: requirement
+Invented on: 1994-04-04
+Invented by: Wulf
+Owner: executive
+Description: Vincent und Jules \textbf{müssen} ihre Kleider
+ ausziehen. 
+Rationale: Sie sind blutig.
+Note: Wulf: 'Bis auf den nackten Arsch'.
+Depends on: CleanUpVicentAndJules
+Status: not done
+Priority: executive:10
+Effort estimation: 2
+Topic: PulpFiction
+Class: implementable

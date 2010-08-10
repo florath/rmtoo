@@ -9,12 +9,12 @@
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, cleanup_std_log, delete_result_is_dir
 
-mdir = "tests/blackbox-test/bb003-test"
+mdir = "tests/blackbox-test/bb004-test"
 
 class TestBB001:
 
     def test_pos_001(self):
-        "Pulp Fiction's Mr Wulf in English"
+        "Pulp Fiction's Mr Wulf in German"
 
         mout, merr = prepare_result_is_dir()
         main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr)

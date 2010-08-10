@@ -1,0 +1,14 @@
+Name: Sitze grob reinigen
+Type: requirement
+Invented on: 1994-04-04
+Invented by: Wulf
+Owner: executive
+Description: Die Autositzte \textbf{müssen} grob gereinigt werden.
+Rationale: Es ist nicht möglich sie vollständig zu reinigen - es
+ werden noch Decken hinübergelegt.
+Depends on: CleanUpSeats
+Status: not done
+Priority: executive:10
+Effort estimation: 2
+Topic: PulpFiction
+Class: implementable

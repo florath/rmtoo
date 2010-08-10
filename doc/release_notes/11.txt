@@ -46,4 +46,3 @@ o git-python is currently changing dramatically.  There were API
 Started to add blackbox tests. This increases the coverage rate from
 56% to about 83%.  Added gnatt project output checks to blackbox
 tests. 
-

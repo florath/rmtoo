@@ -1,0 +1,14 @@
+Name: Leiche in den Kofferraum
+Type: requirement
+Invented on: 1994-04-04
+Invented by: Wulf
+Owner: executive
+Description: Die Leiche \textbf{muss} in den Kofferraum.
+Rationale: Das fahrende Auto darf kein Aufsehen erregen - so kann der
+ Tote transportiert werden.
+Depends on: DeadManDisapper
+Status: not done
+Class: implementable
+Priority: executive:10
+Effort estimation: 5
+Topic: PulpFiction

@@ -6,8 +6,10 @@
 # For licencing details see COPYING
 #
 
+import os
+
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import clear_result_is, compare_results, create_std_log, cleanup_std_log
+from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, cleanup_std_log, delete_result_is_dir
 
 mdir = "tests/blackbox-test/bb001-test"
 
@@ -16,20 +18,19 @@ class TestBB001:
     def test_pos_001(self):
         "BB Basic with one requirement - reqs only from git"
 
-        clear_result_is(mdir)
-        mout, merr = create_std_log(mdir)
+        mout, merr = prepare_result_is_dir()
         main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr)
         cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
         assert(len(diffs)==0)
+        delete_result_is_dir()
 
     def test_pos_002(self):
         "BB Basic with one requirement - reqs only from FILES"
 
-        clear_result_is(mdir)
-        mout, merr = create_std_log(mdir)
+        mout, merr = prepare_result_is_dir()
         main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr)
         cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
@@ -48,3 +49,4 @@ class TestBB001:
         #  '+2010-07-29_21:17:15 1\n',
         #  '+2010-07-29_21:09:03 1\n']
         assert(len(diffs["stats_reqs_cnt.csv"])==9)
+        delete_result_is_dir()

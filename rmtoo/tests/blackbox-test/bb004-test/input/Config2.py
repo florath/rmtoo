@@ -2,7 +2,7 @@ import os
 
 class Config:
 
-    basedir = "tests/blackbox-test/bb003-test/"
+    basedir = "tests/blackbox-test/bb004-test/"
     result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["executive", ]
@@ -13,7 +13,7 @@ class Config:
         {
            "directory": basedir + "input/reqs",
            "commit_interval": ["FILES", "FILES"],
-           "default_language": "en_GB",
+           "default_language": "de_DE",
         }
 
     topic_specs = \

@@ -29,4 +29,3 @@ build
 debian/rmtoo
 requirements.xml
 doc/html/reqs
-rmtoo/tests/blackbox-test/bb*-test/result_is/

@@ -1,0 +1,14 @@
+Name: Seife und kaltes Wasser
+Type: requirement
+Invented on: 1994-04-04
+Invented by: Wulf
+Owner: executive
+Description: Vincent und Jules \textbf{müssen} sich mit Seife und
+ kaltem Wasser vom Blut reinigen.
+Rationale: Sie sind blutig.
+Depends on: CleanUpVicentAndJules TakeOff
+Status: not done
+Priority: executive:10
+Effort estimation: 2
+Topic: PulpFiction
+Class: implementable

@@ -1,8 +1,9 @@
-
+import os
 
 class Config:
 
     basedir = "tests/blackbox-test/bb001-test/"
+    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -29,26 +30,26 @@ class Config:
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", basedir + "result_is/reqsprios.tex"]],
+           ["ts_common", result_is + "/reqsprios.tex"]],
 
           ["graph",
-           ["ts_common", basedir + "result_is/req-graph1.dot"]],
+           ["ts_common", result_is + "/req-graph1.dot"]],
 
           ["graph2",
-           ["ts_common", basedir + "result_is/req-graph2.dot"]],
+           ["ts_common", result_is + "/req-graph2.dot"]],
 
           ["stats_reqs_cnt", 
-           ["ts_common", basedir + "result_is/stats_reqs_cnt.csv"]],
+           ["ts_common", result_is + "/stats_reqs_cnt.csv"]],
 
           ["latex2", 
-           ["ts_common", basedir + "result_is/reqtopics.tex"]],
+           ["ts_common", result_is + "/reqtopics.tex"]],
 
           ["html", 
            ["ts_common", 
-            basedir + "result_is/html", basedir + "input/header.html",
+            result_is + "/html", basedir + "input/header.html",
             basedir + "input/footer.html"]],
 
           ["xml_ganttproject_1",
-           ["ts_common", basedir + "result_is/gantt.xml", 1]],
+           ["ts_common", result_is + "/gantt.xml", 1]],
 
         ]
