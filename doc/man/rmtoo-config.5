@@ -70,6 +70,12 @@ class Config:
           "customer_topic": ["doc/cust_topics", "Customer"],
         }
 
+    analytics_specs = \
+        { 
+           "stop_on_errors": False,
+           "topics": "all_topics",
+        }
+
     output_specs = \
         [ 
           ["prios", 
@@ -144,6 +150,10 @@ name with which the entry can be referenced.  The value is a list
 containing two elements.  The first is the directory where all the
 topics for this topic set can be found.  The second is the initial
 (first) topic.
+.SS analytics_specs
+The configuration parameter \fIanalytics_specs\fR is a map.  See
+\fBrmtoo-analytics(7)\fI for a detailed description of the
+parameters. 
 .SS output_specs
 The variable \fIoutput_specs\fR must be a list which contains pairs.
 Each pair itself is a list containing two elements: the first is the
