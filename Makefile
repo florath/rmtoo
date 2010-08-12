@@ -49,7 +49,8 @@ clean:
 		req-graph1.dot req-graph2.dot \
 		doc/latex2/requirements.aux doc/latex2/requirements.dvi \
 		doc/latex2/requirements.log doc/latex2/requirements.out \
-		doc/latex2/requirements.pdf doc/latex2/requirements.toc 
+		doc/latex2/requirements.pdf doc/latex2/requirements.toc \
+		add_data.py*
 	rm -fr debian/rmtoo build
 
 PYSETUP = python setup.py
