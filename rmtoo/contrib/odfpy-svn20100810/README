@@ -1,0 +1,17 @@
+
+This directory holds the library part of the ODFPY project
+(http://odfpy.forge.osor.eu).
+
+Changes:
+o The 1.2 grammar file is used (instead of the original 1.1).
+  This is needed because some attributes which are needed for
+  listboxes (about data sources) are not available in 1.1.
+o namespaces.py: the missing namespaces were added.
+o element.py was changed in the way, that all known namespaces are
+  added.  There is currently a problem with OpenOffice: it aborts if
+  only the used namespaces are defined, looks that more / all has to
+  be.
+
+Andreas Florath
+2010-08-12
+
