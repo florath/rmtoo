@@ -35,5 +35,5 @@ class Config:
     output_specs = \
         [
           ["oopricing1", 
-           ["ts_common", "reqspricing.ods"]],
+           ["ts_common", "reqspricing"]],
         ]
