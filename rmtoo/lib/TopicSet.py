@@ -37,6 +37,7 @@ class TopicSet(Digraph):
         # self.all_reqs is set by the function 'depict' and contains
         # all requirements which are referenced by one of the topics
         # in this topic set.
+        self.all_reqs = None
 
     def create_makefile_name(self, topicn):
         return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
@@ -88,3 +89,9 @@ class TopicSet(Digraph):
                 else:
                     self.named_nodes[ref_topic].add_req(req)
                     self.all_reqs.add(req)
+
+    # Accessor: returns a set holding all requirements which are
+    # directly or indirectly accessed by the current topic.
+    def get_all_reqs(self):
+        assert(self.all_reqs!=None)
+        return self.all_reqs

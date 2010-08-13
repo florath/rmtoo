@@ -29,15 +29,24 @@ class oopricing1:
         
         self.setup_coord_lookup()
 
+    # Because at some points a requirement will be rendered in a row
+    # and at some other points as a column, there is the need to
+    # access the used cell addresses from integers.
+    # This function creates a map to easily acces the column name by
+    # the column index: 0->A, 1->B, ..., 26->Z, 27->AA, ...
+    # Note: This currently limits the number of requirements which can
+    # be handled with this output module to about 700. If there is a
+    # need for more requirements, this can be easily extended.
     def setup_coord_lookup(self):
         alpha = 'abcdefghijklmnopqrstuvwxyz'.upper()
         pairs = [''.join((x,y)) for x in alpha for y in [''] + [z for z in alpha]]
-        self.sscoords=sorted(pairs, key=len)
+        self.sscoords = sorted(pairs, key=len)
 
+    # Standard output module function
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
   
-    # Create MAkefile Dependencies
+    # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         #  XXX ToDo
         assert(False)
@@ -49,23 +58,44 @@ class oopricing1:
         self.output_reqset(reqscont.continnum_latest())
 
     def output_reqset(self, reqset):
-        # Everything here needs a stable order - also a topological
-        # order makes sense.
-        sreqs = topological_sort(reqset)
+
+        # This module uses also topic based output.
+        # To get only those requirements into the sorted list, call
+        # the following function.
+        def eleminate_unused_reqs(reqset, topic_all_reqs):
+            # The result is stored here.
+            sreqs = []
+            # Everything here needs a stable order - also a topological
+            # order makes sense.
+            # (Only the full requirements set can be sorted
+            # topologicaly.) 
+            tsreqs = topological_sort(reqset)
+            # Eliminating nodes from the topoligical sort leaves the
+            # order in place.
+            for req in tsreqs:
+                if req in topic_all_reqs:
+                    sreqs.append(req)
+            return sreqs
 
         # Because of a problem with the current OpenOffice versions,
         # there is the need to sometimes arrange requirements as rows
         # and sometimes as columns.
         # The order dictionary holds the number - which can be
         # computed in a row or column.
-        # XXX NEEDED????
-        ##order = {}
+        def create_reqs_index(srqes):
+            sreqs_index = {}
+            cnt = 0
+            for req in sreqs:
+                sreqs_index[req] = cnt
+                cnt += 1
+            return sreqs_index
 
-        ##cnt = 0
-        ##for req in sreqs:
-        ##    order[req] = cnt
-        ##    cnt += 1
+        # Get the used requirements
+        sreqs = eleminate_unused_reqs(reqset, self.topic_set.get_all_reqs())
+        # Create the row / column index of each requirement
+        self.sreqs_index = create_reqs_index(sreqs)
 
+        # Create and save the document
         calcdoc = OpenDocumentSpreadsheet()
         self.create_styles(calcdoc)
         self.create_costs_sheet(calcdoc, sreqs)
