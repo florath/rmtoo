@@ -20,6 +20,8 @@ import odf.form
 import odf.draw
 import odf.number
 
+DEPS_HEADER_LEN = 6
+
 class oopricing1:
 
     def __init__(self, param):
@@ -39,7 +41,8 @@ class oopricing1:
     # need for more requirements, this can be easily extended.
     def setup_coord_lookup(self):
         alpha = 'abcdefghijklmnopqrstuvwxyz'.upper()
-        pairs = [''.join((x,y)) for x in alpha for y in [''] + [z for z in alpha]]
+        pairs = [''.join((x,y)) for x in alpha \
+                     for y in [''] + [z for z in alpha]]
         self.sscoords = sorted(pairs, key=len)
 
     # Standard output module function
@@ -199,6 +202,14 @@ class oopricing1:
         calcdoc.automaticstyles.addElement(tcs)
         self.doc_styles["col-euro"] = tcs
 
+        # Same with read-write
+        tcs = odf.style.Style(name="col-euro-rw", family="table-cell",
+                              datastylename="cs-euro")
+        tcs.addElement(odf.style.TableCellProperties(cellprotect="none",
+                                                     printcontent="true"))
+        calcdoc.automaticstyles.addElement(tcs)
+        self.doc_styles["col-euro-rw"] = tcs
+
         # Number as used for days count
         tsc = odf.number.NumberStyle(name="ns-int")
         tsc.addElement(odf.number.Number(
@@ -210,8 +221,16 @@ class oopricing1:
         calcdoc.automaticstyles.addElement(tcs)
         self.doc_styles["col-int"] = tcs
 
+        # Same for rw
+        tcs = odf.style.Style(name="col-int-rw", family="table-cell",
+                              datastylename="ns-int")
+        tcs.addElement(odf.style.TableCellProperties(cellprotect="none",
+                                                     printcontent="true"))
+        calcdoc.automaticstyles.addElement(tcs)
+        self.doc_styles["col-int-rw"] = tcs
+
     def create_costs_sheet(self, calcdoc, sreqs):
-        sheet = odf.table.Table(name="Costs")
+        sheet = odf.table.Table(name="Costs", protected="true")
         self.create_form(sheet, sreqs)
         self.create_costs_column_styles(sheet)
         self.create_costs_header(sheet, sreqs[0])
@@ -219,7 +238,7 @@ class oopricing1:
         calcdoc.spreadsheet.addElement(sheet)
 
     def create_deps_sheet(self, calcdoc, sreqs):
-        sheet = odf.table.Table(name="Deps")
+        sheet = odf.table.Table(name="Deps") #, protected="true")
         self.create_deps_names(sheet, sreqs)
         # The second row is where all the results will be inserted.
         # Therefore put in each one a none.
@@ -235,7 +254,6 @@ class oopricing1:
             tc = odf.table.TableCell()
             ###p = odf.text.P(text="1")
             if len(req.outgoing)>0:
-                #print("req.outgoing[0].id %s" % req.outgoing[0].id)
                 p = odf.text.P(text=req.outgoing[0].id)
                 tc.addElement(p)
             tr.addElement(tc)
@@ -247,15 +265,75 @@ class oopricing1:
         calcdoc.spreadsheet.addElement(sheet)
 
     def create_sums_sheet(self, calcdoc, sreqs):
-        sheet = odf.table.Table(name="SumRate")
+        sheet = odf.table.Table(name="SumRate", protected="true")
         self.create_deps_names(sheet, sreqs)
+
+        # 
+        i=0
+        while True:
+            tr = odf.table.TableRow()
+            index_used=False
+            for req in sreqs:
+                if len(req.incoming)>i:
+                    # '[Costs.D%d]*[Costs.E%d];0)' %
+                    tc = odf.table.TableCell(
+                        valuetype="currency", currency="EUR",
+                        formula='oooc:=IF([Deps.%s3]="%s";'
+                        '[Costs.L%d];0)' %
+                        (self.sscoords[self.sreqs_index[req.incoming[i]]],
+                         req.name,
+                         self.sreqs_index[req.incoming[i]]+DEPS_HEADER_LEN
+                         ))
+                    #p = odf.text.P(text=req.incoming[i].name)
+                    #tc.addElement(p)
+                    tr.addElement(tc)
+                    index_used=True
+                else:
+                    tc = odf.table.TableCell()
+                    tr.addElement(tc)
+            sheet.addElement(tr)
+            if not index_used:
+                break
+            i+=1
+
         calcdoc.spreadsheet.addElement(sheet)
-        sheet = odf.table.Table(name="SumMat")
+
+        sheet = odf.table.Table(name="SumMat", protected="true")
         self.create_deps_names(sheet, sreqs)
+
+        # 
+        i=0
+        while True:
+            tr = odf.table.TableRow()
+            index_used=False
+            for req in sreqs:
+                if len(req.incoming)>i:
+                    tc = odf.table.TableCell(
+                        valuetype="currency", currency="EUR",
+                        formula='oooc:=IF([Deps.%s3]="%s";'
+                        '[Costs.M%d];0)' %
+                        (self.sscoords[self.sreqs_index[req.incoming[i]]],
+                         req.name,
+                         self.sreqs_index[req.incoming[i]]+DEPS_HEADER_LEN
+                         ))
+                    #p = odf.text.P(text=req.incoming[i].name)
+                    #tc.addElement(p)
+                    tr.addElement(tc)
+                    index_used=True
+                else:
+                    tc = odf.table.TableCell()
+                    tr.addElement(tc)
+            sheet.addElement(tr)
+            if not index_used:
+                break
+            i+=1
+
+        calcdoc.spreadsheet.addElement(sheet)
+
         calcdoc.spreadsheet.addElement(sheet)
 
     def create_constants_sheet(self, calcdoc):
-        sheet = odf.table.Table(name="Constants")
+        sheet = odf.table.Table(name="Constants", protected="true")
         # This is the list where the requirement compliance gets it
         # values from. 
         for r in ["none", "partial", "fully"]:
@@ -284,6 +362,14 @@ class oopricing1:
     def create_empty_currency_cell(row):
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
+            stylename="col-euro-rw")
+        tc.addElement(odf.text.P())
+        row.addElement(tc)
+
+    @staticmethod
+    def create_empty_currency_cell_ro(row):
+        tc = odf.table.TableCell(
+            valuetype="currency", currency="EUR",
             stylename="col-euro")
         tc.addElement(odf.text.P())
         row.addElement(tc)
@@ -292,7 +378,7 @@ class oopricing1:
     def create_empty_int_cell(row):
         tc = odf.table.TableCell(
             valuetype="float", value="0",
-            stylename="col-int")
+            stylename="col-int-rw")
         tc.addElement(odf.text.P())
         row.addElement(tc)
     
@@ -411,7 +497,7 @@ class oopricing1:
         sheet.addElement(tr)
 
     def create_costs_content(self, sheet, sreqs):
-        i=6
+        i=0
         for req in sreqs:
             tr = odf.table.TableRow()
             self.create_costs_content_req(tr, req, i)
@@ -419,6 +505,7 @@ class oopricing1:
             i+=1
 
     def create_costs_content_req(self, tr, req, i):
+        choi = i + DEPS_HEADER_LEN
         # First cell is the id
         self.create_text_cell(tr, req.name)
         # Second cell is the name
@@ -429,7 +516,7 @@ class oopricing1:
                               zindex="0",
                               x="0.0in",
                               y="0.0in",
-                              endcelladdress="Costs.C%d" % (i+1),
+                              endcelladdress="Costs.C%d" % (choi+1),
                               endx="0.75in",
                               endy="0.0in")
         tc.addElement(dc)
@@ -441,7 +528,7 @@ class oopricing1:
         # Sum / factor of before ones
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
-            formula="oooc:=[.D%d]*[.E%d]+[.F%d]" % (i, i, i))
+            formula="oooc:=[.D%d]*[.E%d]+[.F%d]" % (choi, choi, choi))
         tr.addElement(tc)
         # Dependent on Chooser
         tc = odf.table.TableCell()
@@ -451,35 +538,56 @@ class oopricing1:
                                   zindex="0",
                                   x="0.0in",
                                   y="0.0in",
-                                  endcelladdress="Costs.H%d" % (i+1),
+                                  endcelladdress="Costs.H%d" % (choi+1),
                                   endx="1.2in",
                                   endy="0.0in")
             tc.addElement(dc)
         tr.addElement(tc)
 
         # dependet rate and material
-        self.create_empty_currency_cell(tr)
-        self.create_empty_currency_cell(tr)
+        # Do not do this for first cell.
+        if len(req.incoming)>0:
+            tc = odf.table.TableCell(
+            valuetype="currency", currency="EUR",
+            formula="oooc:=SUM([SumRate.%s2:SumRate.%s%d])" \
+                % (self.sscoords[i], self.sscoords[i],
+                   (1+len(req.incoming))))
+            tr.addElement(tc)
+        else:
+            self.create_empty_currency_cell_ro(tr)
+
+        # XXX Copy
+        if len(req.incoming)>0:
+            tc = odf.table.TableCell(
+            valuetype="currency", currency="EUR",
+            formula="oooc:=SUM([SumMat.%s2:SumMat.%s%d])" \
+                % (self.sscoords[i], self.sscoords[i],
+                   (1+len(req.incoming))))
+            tr.addElement(tc)
+        else:
+            self.create_empty_currency_cell_ro(tr)
+
         # sum of dependent
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
-            formula="oooc:=[.I%d]+[.J%d]" % (i, i))
+            formula="oooc:=[.I%d]+[.J%d]" 
+            % (i+DEPS_HEADER_LEN, i+DEPS_HEADER_LEN))
         tr.addElement(tc)
 
         # Overall rate
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
-            formula="oooc:=[.D%d]*[.E%d]+[.I%d]" % (i, i, i))
+            formula="oooc:=[.D%d]*[.E%d]+[.I%d]" % (i+DEPS_HEADER_LEN, i+DEPS_HEADER_LEN, i+DEPS_HEADER_LEN))
         tr.addElement(tc)
         # Overall material
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
-            formula="oooc:=[.F%d]+[.J%d]" % (i, i))
+            formula="oooc:=[.F%d]+[.J%d]" % (i+DEPS_HEADER_LEN, i+DEPS_HEADER_LEN))
         tr.addElement(tc)
         # Overall sum
         tc = odf.table.TableCell(
             valuetype="currency", currency="EUR",
-            formula="oooc:=[.L%d]+[.M%d]" % (i, i))
+            formula="oooc:=[.L%d]+[.M%d]" % (i+DEPS_HEADER_LEN, i+DEPS_HEADER_LEN))
         tr.addElement(tc)
 
 
@@ -581,51 +689,3 @@ class oopricing1:
 
         forms.addElement(form)
         calcdoc.addElement(forms)
-
-
-####### OLD #######
-
-    def formdef(self, sreqs):
-        i=0
-        for req in sreqs:
-            print("""<form:listbox form:bound-column="1" 
-form:control-implementation="ooo:com.sun.star.form.component.ListBox"
-form:dropdown="true" form:id="control%d" form:linked-cell="Deps.E%d"
-form:list-linkage-type="selection" form:name="ListBox"
-form:size="3" form:source-cell-range="Constants.A1:Constants.A3">
-<form:properties>
-  <form:property form:property-name="DefaultControl"
-     office:string-value="com.sun.star.form.control.ListBox"
-     office:value-type="string"/>
-    <form:list-property form:property-name="DefaultSelection"
-        office:value-type="float">
-      <form:list-value office:value="2"/>
-    </form:list-property>
-  </form:properties>
-</form:listbox>""" % (i, i))
-            i+=1
-
-
-    def sheet1(self, sreqs):
-        i=0
-        for req in sreqs:
-            # Each req is a separate row
-            print('<table:table-row table:style-name="ro1">')
-            # Print out id and name
-            # (Note that this is no reference but a copy
-            print('<table:table-cell office:value-type="string">\n'
-                  '<text:p>%s</text:p>\n'
-                  '</table:table-cell>' % req.name)
-            print('<table:table-cell office:value-type="string">\n'
-                  '<text:p>%s</text:p>\n'
-                  '</table:table-cell>' % req.tags["Name"])
-            # Listbox
-            print('<table:table-cell>'
-                  '<draw:control draw:control="control%d"'
-                  'draw:text-style-name="P1" draw:z-index="1"'
-                  'svg:height="0.2083in" svg:width="1.235in" svg:x="0.052in"'
-                  'svg:y="0.0016in" table:end-cell-address="Costs.H%d"'
-                  'table:end-x="1.287in" table:end-y="0.0244in"/>'
-                  '</table:table-cell>' % (i, i))
-            print('</table:table-row>')
-            i+=1
