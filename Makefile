@@ -28,7 +28,7 @@ all_html: ${OUTPUT_HTML}
 		--create-makefile-dependencies=.rmtoo_dependencies
 
 req-graph1.png: req-graph1.dot
-	dot -Tpng -o req-graph1.png req-graph1.dot
+	unflatten -l 23 req-graph1.dot | dot -Tpng -o req-graph1.png
 
 req-graph2.png: req-graph2.dot
 	dot -Tpng -o req-graph2.png req-graph2.dot
