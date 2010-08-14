@@ -23,6 +23,12 @@ v12
 ===
 o Add output for openoffice calc that makes it possible to price each
   requirement. 
+o Write requirements for these features.
+o Add documentation for this (man-page, Presentation)
+o Add test cases for this feature.
+
+v13
+===
 o Add additional graph output which takes the stored csv list from the
   openoffice calc and renders prices and dependencies in the
   requirements dependency graph.
@@ -30,7 +36,7 @@ o Write requirements for these features.
 o Add documentation for this (man-page, Presentation)
 o Add test cases for this feature.
 
-v13
+v14
 ===
 o finish / write all lost man-pages
 o Update presentation:
@@ -45,17 +51,17 @@ o Update presentation:
     + word-checking
   - Pricing feature
 
-v14
+v15
 ===
 o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
 
-v15
+v16
 ===
 o Increase test case coverage to minimum 90%
 
-v16
+v17
 ===
 o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'

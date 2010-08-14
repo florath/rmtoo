@@ -1,5 +1,7 @@
 User visible changes
 --------------------
 
+Add oopricing1 output for commercial offers.
+
 Internal Changes
 ----------------
