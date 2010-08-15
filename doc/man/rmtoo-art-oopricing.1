@@ -1,0 +1,100 @@
+.\" 
+.\" Man page for rmtoo oopricing output module
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-oopricing 1 2010-08-14 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-oopricing \- requirements management tool: pricing table in
+ODF format 
+.SH DESCRIPTION
+The
+.B rmtoo
+requirement management tool has the ability to output all requirements
+which directly or indirectly depend on topic as a commercial used
+pricing / bid spreadsheet.  The spreadsheet is outputted in ODF -
+which can be read by e.g. OpenOffice.
+.SH DETAILS
+.B rmtoo
+output pricing module is designed for the following procedure of
+commercial bidding:
+.SS Requirement Specification
+The first step is to write down the requirements.   During
+writing and organizing requirements remember to put requirements in
+topics that one topic including subtopics form understandable and
+complete set of requirements.
+.SS Create spreadsheet
+Based on one topic (and of course all it's depended child-topics) run
+.B rmtoo
+which outputs the spreadsheet in ODF format.
+.SS Send out spreadsheet
+Send out the spreadsheet to all possible vendors.  They can fill the
+following things for each requirement: compliance (fully, partial and
+non-compliant), price (broken down to dayrate, number of days and
+material) and the chosen (commercial) link to the dependent
+requirement.
+.P
+Example: The \fIDocumentation for Training\fR depends on training and
+documentation.  At vendor A the (whole) documentation is done inside
+the documentation department while at vendor B the training
+documentation will be done by the training department.  Therefore
+there is the need to reflect the different dependencies a vendor might
+implement a requirement.  In case of vendor A the documentation for
+training is included in the documentation budget while for vendor
+B the training documentation is included in the documentation budget. 
+.SS Collect spreadsheets
+After a while, collect the filled in spreadsheets from the vendors.
+It is now easy to compare the prices and dependencies.  There are
+additional modules for supporting the evaluation.  Please consult
+\fBrmtoo.7\fR for a full list of available and planned modules.
+.SH CONFIGURATION
+The configuration for this output module goes (as all other output
+module's configuration) in the \fBoutput_specs\fR section of the
+Config file. 
+.P
+The first element (the key) must be \fIoopricing1\fR.  This must be
+followed by a pair (list of two elements).  The first element is the
+name of the to be used topic set, the second the basename of the
+output file (without the suffix).
+.P
+Example
+.sp
+.RS
+.nf
+    output_specs = \
+        [
+          ["oopricing1", 
+           ["ts_common", "reqspricing"]],
+        ]
+
+.SH LIMITATIONS
+Currently the output module can handle at maximum 702 requirements
+which covers spreadsheet columns A up to ZZ.
+.P
+Some old OpenOffice versions (e.g. 2.X) limit the number of rows
+(which is also the number of requirements) to 256.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

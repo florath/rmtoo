@@ -95,16 +95,17 @@ class Config:
             "doc/html/reqs", "doc/html/header.html",
             "doc/html/footer.html"]],
 
-
           ["graph",
            ["marketing_topic", "marketing_reqtree.dot"]],
 
           ["latex2",
            ["marketing_topic", "doc/latex2/marketing.tex"]],
 
-
           ["latex2",
            ["customer_topic", "doc/latex2/customer.tex"]],
+
+          ["oopricing1", 
+           ["ts_common", "reqspricing"]],
 
         ]
 
@@ -194,7 +195,11 @@ for details.
 .SS xml_ganttproject_1
 This output module makes it possible to export the requirements as a
 projct plan for ganttproject. See \fBrmtoo-art-xml-ganttproject1(1)\fR
-for more details. 
+for more details.
+.SS oopricing1
+This is a pricing module with ODF output.  It can be used for
+commercial bidding. See \fBrmtoo-art-oopricing1\fR for further
+details. 
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
