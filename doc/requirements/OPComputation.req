@@ -1,0 +1,14 @@
+Name: Output of Pricing Table: Computation
+Type: requirement
+Invented on: 2010-08-15
+Invented by: flonatel
+Owner: development
+Description: The generated document \textbf{must} support automatic
+ computation of the results needed to compare different biddings.
+Rationale: These are the fields which the document must automatically
+ compute.
+Depends on: OutputPricing
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: Output

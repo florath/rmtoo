@@ -1,0 +1,14 @@
+Name: Output of Pricing Table: Computation of Dependent Costs
+Type: requirement
+Invented on: 2010-08-15
+Invented by: flonatel
+Owner: development
+Description: The document \textbf{must} compute the costs of all the
+ dependent requirements.
+Rationale: This must be based on the customer's input of dependent
+ requirements.
+Depends on: OPComputation
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: Output

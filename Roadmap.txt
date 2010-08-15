@@ -21,11 +21,12 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v12
 ===
-o Add output for openoffice calc that makes it possible to price each
++ Add output for openoffice calc that makes it possible to price each
   requirement. 
 o Write requirements for these features.
 o Add documentation for this (man-page, Presentation)
 o Add test cases for this feature.
+  Especially compare .ods files.
 
 v13
 ===

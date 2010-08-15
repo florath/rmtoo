@@ -10,6 +10,6 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
  decribes the requirements (features) of the product.
 Depends on: Processing
 Status: finished
-Priority: development:2
-Effort estimation: 8
+Priority: development:10
+Effort estimation: 21
 Topic: Output

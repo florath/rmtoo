@@ -1,0 +1,12 @@
+Name: Output of Pricing Table: Input Cell Comment
+Type: requirement
+Invented on: 2010-08-15
+Invented by: flonatel
+Owner: development
+Description: It \textbf{must} be possible that the vendor can comment
+ each requirement.
+Depends on: OPInput
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: Output

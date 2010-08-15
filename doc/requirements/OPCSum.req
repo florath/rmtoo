@@ -1,0 +1,13 @@
+Name: Output of Pricing Table: Computation of Sum
+Type: requirement
+Invented on: 2010-08-15
+Invented by: flonatel
+Owner: development
+Description: The document \textbf{must} compute the sum of costs of
+ all the dependent requirements plus local requirement costs.
+Rationale: This must be based on the customer's input.
+Depends on: OPComputation
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: Output
