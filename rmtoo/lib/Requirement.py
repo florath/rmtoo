@@ -43,9 +43,8 @@ class Requirement(Digraph.Node):
     er_fine = 0
     er_error = 1
 
-    def __init__(self, fd, rid, mls, mods, opts, config):
+    def internal_init(self, rid, mls, mods, opts, config):
         Digraph.Node.__init__(self, rid)
-
         self.tags = {}
         self.id = rid
         self.mls = mls
@@ -57,7 +56,11 @@ class Requirement(Digraph.Node):
         self.analytics = {}
 
         self.state = self.er_fine
-        self.input(fd)
+
+    def __init__(self, fd, rid, mls, mods, opts, config):
+        self.internal_init(rid, mls, mods, opts, config)
+        if fd!=None:
+            self.input(fd)
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
@@ -132,3 +135,21 @@ class Requirement(Digraph.Node):
                     mstderr.write("+++ Error:Analytics:%s:%s:%s\n" % 
                                   (k, self.id, l))
 
+    # Create a deep copy without all requirements (incoming and
+    # outgoing) which are not part of one of the given topics.
+    def copy(self, reqs_included):
+        r = Requirement(None, self.id, self.mls, self.mods,
+                        self.opts, self.config)
+        r.tags = self.tags
+
+        # The only things to copy over are the incoming and the
+        # outgoing lists.
+        # These are pointers to the old ones!!!
+        for req in self.incoming:
+            if req in reqs_included:
+                r.incoming.append(req)
+        for req in self.outgoing:
+            if req in reqs_included:
+                r.outgoing.append(req)
+
+        return r

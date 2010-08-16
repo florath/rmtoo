@@ -21,6 +21,8 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v13
 ===
+o Add version output
+  - Write Man page (single + config)
 o Add additional graph output which takes the stored csv list from the
   openoffice calc and renders prices and dependencies in the
   requirements dependency graph.
@@ -42,6 +44,7 @@ o Update presentation:
     + topic count
     + word-checking
   - Pricing feature
+  - version feature
 
 v15
 ===
