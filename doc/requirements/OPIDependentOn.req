@@ -8,7 +8,8 @@ Description: It \textbf{must} be possible to define the dependent on
 Rationale: Different vendors might want to split up the costs to
  different departments.
 Depends on: OPInput
-Status: not done
+Status: finished
+Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Output

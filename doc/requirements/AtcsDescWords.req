@@ -8,7 +8,8 @@ Rationale: This is a easy and fast way to get some hint of the quality
  of the description itself.
 Owner: development
 Depends on: Analytics
-Status: not done
+Status: finished
+Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Analytics

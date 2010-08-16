@@ -8,7 +8,8 @@ Description: It \textbf{must} be possible to define the number of days
 Rationale: Different requirements might need different amount of
  effort.
 Depends on: OPInput
-Status: not done
+Status: finished
+Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Output

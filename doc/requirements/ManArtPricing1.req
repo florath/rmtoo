@@ -1,0 +1,16 @@
+Name: Man Page Artifact Requirement Pricing
+Type: design decision
+Invented on: 2010-08-16
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a man page which
+ describes the output of the pricing module.
+Rationale: This documentation must describe the different input and
+ output fields.  It must also contain an overview over the process
+ behind the pricing.
+Depends on: ManSecArtifacts
+Status: finished
+Priority: development:3 customers:10
+Class: implementable
+Effort estimation: 3
+Topic: Documentation

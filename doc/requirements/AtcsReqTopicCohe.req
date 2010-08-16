@@ -9,7 +9,8 @@ Rationale: If there are too many links to the outside, the requirement
  might be in the wrong topic.
 Owner: development
 Depends on: Analytics
-Status: not done
+Status: finished
+Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Analytics

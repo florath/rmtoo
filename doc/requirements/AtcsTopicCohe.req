@@ -10,7 +10,8 @@ Note: This means that all the links inside a topic are counted and
  compared to the ones which point to the outside.
 Owner: development
 Depends on: Analytics
-Status: not done
+Status: finished
+Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Analytics
