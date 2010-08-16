@@ -35,8 +35,12 @@ class TopicCohe:
     def count(tcnt, topic_set, topic_name, li):
         topic = topic_set.get_named_node(topic_name)
         for l in li:
-            TopicCohe.add_releation(tcnt, topic,
-                                    topic_set.get_named_node(l.tags["Topic"]))
+            # Count only, if the requirement is in the current chosen
+            # topic set.
+            ltopic = l.tags["Topic"]
+            if topic_set.get_named_node_no_throw(ltopic)!=None:
+                TopicCohe.add_releation(tcnt, topic,
+                                        topic_set.get_named_node(ltopic))
 
     # Return the correct topic set to analyze
     @staticmethod
@@ -52,8 +56,9 @@ class TopicCohe:
 
         tcnt = {}
         # There is only the need to count either the incoming or
-        # outgoing
-        for _, req in reqs.reqs.iteritems():
+        # outgoing.
+        # Use the requirements from the topic here.
+        for req in topics.get(config.analytics_specs["topics"]).get_all_reqs():
              TopicCohe.count(tcnt, topic_set, req.tags["Topic"], req.incoming)
 
         for k, t in tcnt.iteritems():
