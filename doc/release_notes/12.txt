@@ -2,7 +2,7 @@ User visible changes
 --------------------
 
 Add oopricing1 output for commercial offers.  Add man page and
-documentation.
+documentation.  Add blackbox tests.
 
 Internal Changes
 ----------------

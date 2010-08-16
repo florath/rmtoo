@@ -10,6 +10,7 @@ import os
 import shutil
 import difflib
 import tempfile
+import zipfile
 
 def find(mdir):
     r = set()
@@ -85,3 +86,47 @@ def prepare_result_is_dir():
     os.environ["rmtoo_test_dir"] = td
     mout, merr = create_std_log(td)
     return mout, merr
+
+def makedirs2(d):
+    try:
+        os.makedirs(d)
+    except OSError, ose:
+        # If it already exists - it is no error.
+        pass
+
+# For some testcases there is the need to compare tarred, zipped
+# etc. containers.  Because the container store also some meta-data it
+# ist mostly impossible to compare them directly.  This functions
+# extracts all given containers and removes the original files, so
+# that the above implemented unified diff can be used to compate also
+# these files.
+def extract_container_files(lof):
+
+    def extract_one_container_file_zip(fn):
+        zip_filename = os.path.join(os.environ["rmtoo_test_dir"], fn)
+        zf = zipfile.ZipFile(zip_filename, "r")
+        # The python 2.6 extractall is not available....
+        #zf.extractall(os.path.join(os.environ["rmtoo_test_dir"],
+        #     fn, "-extracted"))
+        bdir = os.path.join(os.environ["rmtoo_test_dir"], fn + "-extracted")
+        fl = zf.infolist()
+        for f in fl:
+            full_name = os.path.join(bdir, f.filename)
+            directory = os.path.dirname(full_name)
+            makedirs2(directory)
+            ofile = file(full_name, "w")
+            ofile.write(zf.read(f.filename))
+            ofile.close()
+        zf.close()
+        # Remove the original
+        os.unlink(zip_filename)
+
+    def extract_one_container_file(fn):
+        if fn.endswith(".ods"):
+            extract_one_container_file_zip(fn)
+        else:
+            # Unknown extension
+            assert(False)
+
+    for f in lof:
+        extract_one_container_file(f)

@@ -55,4 +55,7 @@ class Config:
 
           ["xml_ganttproject_1",
            ["ts_common", result_is + "/gantt.xml", 1]],
+
+          ["oopricing1", 
+           ["ts_common", result_is + "/reqspricing"]],
         ]
