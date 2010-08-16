@@ -145,13 +145,19 @@ class Digraph:
 
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
-    def get_named_node(self, name):
+    def get_named_node_no_throw(self, name):
         if not hasattr(self, "named_nodes") or self.named_nodes==None:
             raise RMTException(22, "no named_nodes dictionary available "
                                "- maybe call 'build_named_nodes()' first")
         if name not in self.named_nodes:
-            raise RMTException(23, "node with name '%s' not available"
-                               % name)
+            return None
         # When all checks succeed: return the value
         return self.named_nodes[name]
-  
+
+    # Mostly the same as before, but throws if the node can not be found. 
+    def get_named_node(self, name):
+        r = self.get_named_node_no_throw(name)
+        if r==None:
+            raise RMTException(23, "node with name '%s' not available"
+                               % name)
+        return r
