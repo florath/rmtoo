@@ -45,6 +45,10 @@ class ReqsContinuum:
     def continnum_latest(self):
         return self.continuum[self.continuum_order[0]]
 
+    # The version control system id of the latest
+    def continnum_latest_id(self):
+        return self.continuum_order[0]
+
     def repo_access_needed(self):
         # Only if FILES:FILES is specified, there is no need to access
         # the repo.
@@ -117,5 +121,3 @@ class ReqsContinuum:
             ofile.write("%s.req " % os.path.join(
                     self.config.reqs_spec["directory"], r))
         ofile.write("\n")
-
-
