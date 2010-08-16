@@ -5,7 +5,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '11'
+version = '12'
 
 def adjust(input, output):
     if os.path.exists(output):
@@ -63,7 +63,8 @@ setup(name=package, version=version,
                 'rmtoo/contrib/git/repo',
                 'rmtoo/contrib/git/index',
                 'rmtoo/contrib/git/objects',
-
+                # odf
+                'rmtoo/contrib/odf',
                 ],
       data_files=add_data,
 
