@@ -23,9 +23,9 @@ class graph:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest())
+        self.output_reqset(reqscont.continnum_latest(), reqscont)
 
-    def output_reqset(self, reqset):
+    def output_reqset(self, reqset, reqscont):
         # Initialize the graph output
         g = file(self.output_filename, "w")
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
@@ -33,6 +33,11 @@ class graph:
         # Only output the nodes which are connected to the chosen topic. 
         for r in sorted(self.topic_set.all_reqs, key = lambda r: r.id):
             self.output_req(r, g)
+            
+        # Print out a node with the version number:
+        g.write('ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'
+                % (reqscont.continnum_latest_id()))
+            
         g.write("}")
         g.close()
 
