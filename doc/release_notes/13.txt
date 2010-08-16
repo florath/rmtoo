@@ -1,0 +1,8 @@
+User visible changes
+--------------------
+
+Add version1 output module: writes out the version number of the used
+requirement set to a file.
+
+Internal Changes
+----------------
