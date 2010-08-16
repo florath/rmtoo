@@ -9,6 +9,7 @@
 #
 
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.RequirementSetHelper import reqs_limit_topics
 
 # imports from python-odf
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -19,6 +20,7 @@ import odf.office
 import odf.form
 import odf.draw
 import odf.number
+import odf.dc
 
 DEPS_HEADER_LEN = 6
 
@@ -59,27 +61,9 @@ class oopricing1:
     # requirements. 
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest())
+        self.output_reqset(reqscont.continnum_latest(), reqscont)
 
-    def output_reqset(self, reqset):
-
-        # This module uses also topic based output.
-        # To get only those requirements into the sorted list, call
-        # the following function.
-        def eleminate_unused_reqs(reqset, topic_all_reqs):
-            # The result is stored here.
-            sreqs = []
-            # Everything here needs a stable order - also a topological
-            # order makes sense.
-            # (Only the full requirements set can be sorted
-            # topologicaly.) 
-            tsreqs = topological_sort(reqset)
-            # Eliminating nodes from the topoligical sort leaves the
-            # order in place.
-            for req in tsreqs:
-                if req in topic_all_reqs:
-                    sreqs.append(req)
-            return sreqs
+    def output_reqset(self, reqset, reqscont):
 
         # Because of a problem with the current OpenOffice versions,
         # there is the need to sometimes arrange requirements as rows
@@ -96,19 +80,37 @@ class oopricing1:
                 cnt += 1
             return sreqs_index
 
-        # Get the used requirements
-        sreqs = eleminate_unused_reqs(reqset, self.topic_set.get_all_reqs())
+        # Create the requirement set limited to the current topic.
+        treqs = reqs_limit_topics(reqset, self.topic_set)
+        # The topological sort is needed.
+        sreqs = topological_sort(treqs)
+
         # Create the row / column index of each requirement
         self.sreqs_index = create_reqs_index(sreqs)
 
         # Create and save the document
         calcdoc = OpenDocumentSpreadsheet()
+        self.create_meta(calcdoc, reqscont)
         self.create_styles(calcdoc)
         self.create_costs_sheet(calcdoc, sreqs)
         self.create_deps_sheet(calcdoc, sreqs)
         self.create_sums_sheet(calcdoc, sreqs)
         self.create_constants_sheet(calcdoc)
+        self.create_result_sheet(calcdoc, sreqs)
         calcdoc.save(self.output_filename, True)
+
+    # Create the meta-information for the document
+    def create_meta(self, calcdoc, reqscont):
+        m = odf.meta.Generator(text="rmtoo")
+        calcdoc.meta.addElement(m)
+        m = odf.dc.Title(text="Requirements Pricing")
+        calcdoc.meta.addElement(m)
+        m = odf.meta.UserDefined(name="Version",
+                                 text=reqscont.continnum_latest_id())
+        calcdoc.meta.addElement(m)
+        m = odf.meta.UserDefined(name="Generator",
+                                 text="rmtoo V12")
+        calcdoc.meta.addElement(m)
 
     # There is the need to apply some styles
     def create_styles(self, calcdoc):
@@ -169,6 +171,17 @@ class oopricing1:
             sheet.addElement(tr)
         calcdoc.spreadsheet.addElement(sheet)
 
+    # This is added to get all the results in one point (sheet)
+    # which makes it easier to handle the output.
+    def create_result_sheet(self, calcdoc, sreqs):
+        sheet = odf.table.Table(name="Results", protected="true")
+        i=0
+        for req in sreqs:
+            tr = odf.table.TableRow()
+            self.create_result_one_req(tr, req, i)
+            sheet.addElement(tr)
+            i+=1
+        calcdoc.spreadsheet.addElement(sheet)
 
     #################################################################
     ### 2nd level functions
@@ -256,9 +269,19 @@ class oopricing1:
         calcdoc.automaticstyles.addElement(s)
         self.doc_styles["tc-bold-blue"] = s
 
+        # Shrink-to-fit
+        s = odf.style.Style(name="tc-shrink-to-fit", family="table-cell")
+        s.addElement(
+            odf.style.TableCellProperties(shrinktofit="true"))
+        s.addElement(odf.style.TableCellProperties(cellprotect="none",
+                                                   printcontent="true"))
+        calcdoc.automaticstyles.addElement(s)
+        self.doc_styles["tc-shrink-to-fit"] = s
+
     def create_styles_table_column(self, calcdoc):
         # The different column style differ only in the columnwidth
         colstyles = {
+            "col-comment": "10in",
             "col-days": "0.5in",
             "col-dayrate": "0.65in",
             "col-compliant": "0.75in",
@@ -266,6 +289,7 @@ class oopricing1:
             "col-sum": "0.9in",
             "col-ids": "1.2in",
             "col-name": "2.25in",
+            "col-supplier": "0.75in",
             }
 
         for name, size in colstyles.iteritems():
@@ -377,6 +401,12 @@ class oopricing1:
                 stylename=self.doc_styles["col-sum"],
                 defaultcellstylename=self.doc_styles["col-euro"])
             sheet.addElement(tc)
+        # 15 Supplier
+        tc = odf.table.TableColumn(stylename=self.doc_styles["col-supplier"])
+        sheet.addElement(tc)
+        # 16 Comment
+        tc = odf.table.TableColumn(stylename=self.doc_styles["col-comment"])
+        sheet.addElement(tc)
 
     def create_costs_header(self, sheet, req):
         # First is empty
@@ -393,7 +423,7 @@ class oopricing1:
         for h in ["Id", "Name", "Compliant", "Costs for requirement",
                   None, None, None, "Dependent from", 
                   "Costs of dependent", None, None,
-                  "Overall sum", None, None, "Comment"]:
+                  "Overall sum", None, None, "Supplier", "Comment"]:
             self.create_text_cell(tr, h, self.doc_styles["tc-bold-blue"])
         sheet.addElement(tr)
         # Table header line 2
@@ -401,7 +431,7 @@ class oopricing1:
         for h in [None, None, None, "dayrate",
                   "#days", "material", "sum", None, 
                   "rate", "material", "sum",
-                  "rate", "material", "sum", None]:
+                  "rate", "material", "sum", None, None]:
             self.create_text_cell(tr, h, self.doc_styles["tc-bold-blue"])
         sheet.addElement(tr)
 
@@ -487,7 +517,14 @@ class oopricing1:
             valuetype="currency", currency="EUR",
             formula="oooc:=[.L%d]+[.M%d]" % (choi, choi))
         tr.addElement(tc)
-
+        # Supplier
+        tc = odf.table.TableCell(
+            valuetype="string", stylename=self.doc_styles["tc-shrink-to-fit"])
+        tr.addElement(tc)
+        # Comment
+        tc = odf.table.TableCell(
+            valuetype="string", stylename=self.doc_styles["tc-shrink-to-fit"])
+        tr.addElement(tc)
 
     ### Functions handling deps
 
@@ -654,3 +691,35 @@ class oopricing1:
 
         forms.addElement(form)
         calcdoc.addElement(forms)
+
+    ### Functions handling result sheet
+    def create_result_one_req(self, tr, req, i):
+        # 1 Id
+        self.create_text_cell(tr, req.name)
+        # 2 Compliance
+        tc = odf.table.TableCell(
+            valuetype="string", 
+            formula="oooc:=[Deps.%s2]" % self.sscoords[i])
+        tr.addElement(tc)
+        # Prices
+        for r in ["D", "E", "F"]:
+            tc = odf.table.TableCell(
+                valuetype="string", 
+                formula="oooc:=[Costs.%s%d]" % (r, i+DEPS_HEADER_LEN))
+            tr.addElement(tc)
+        # Dependent from
+        tc = odf.table.TableCell(
+            valuetype="string", 
+            formula="oooc:=[Deps.%s3]" % self.sscoords[i])
+        tr.addElement(tc)
+        # Supplier
+        tc = odf.table.TableCell(
+            valuetype="string", 
+            formula="oooc:=[Costs.O%d]" % (i+DEPS_HEADER_LEN))
+        tr.addElement(tc)
+        # Comment
+        tc = odf.table.TableCell(
+            valuetype="string", 
+            formula="oooc:=[Costs.P%d]" % (i+DEPS_HEADER_LEN))
+        tr.addElement(tc)
+
