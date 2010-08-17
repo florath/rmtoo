@@ -21,6 +21,7 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v13
 ===
+o Check regression tests
 o Add version output
   - Write Man page (single + config)
 o Add additional graph output which takes the stored csv list from the
@@ -31,6 +32,10 @@ o Add documentation for this (man-page, Presentation)
 o Add test cases for this feature.
 
 v14
+===
+o gantt2 output: order based on topics
+
+v15
 ===
 o finish / write all lost man-pages
 o Update presentation:
@@ -46,17 +51,17 @@ o Update presentation:
   - Pricing feature
   - version feature
 
-v15
+v16
 ===
 o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
 
-v16
+v17
 ===
 o Increase test case coverage to minimum 90%
 
-v17
+v18
 ===
 o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'
