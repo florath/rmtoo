@@ -16,7 +16,7 @@ class TestParse:
     def test_positive_01(self):
         "TopicSet - constructor with only one element"
         try:
-            topicset = TopicSet("bkdkd", ["ahah"])
+            topicset = TopicSet(None, "bkdkd", ["ahah"])
             assert(False)
         except AssertionError, ae:
             pass
@@ -24,20 +24,24 @@ class TestParse:
     def test_positive_02(self):
         "TopicSet - valid"
         topicset = TopicSet(
-            "test-name01",
+            None, "test-name01",
             ["tests/unit-test/topic-tests/testdata/topicset01",
              "t01"])
 
     def test_positive_03(self):
         "TopicSet - valid with empty requirement set"
-        topicset = TopicSet(
-            "test-name02",
-            ["tests/unit-test/topic-tests/testdata/topicset01",
-             "t01"])
 
         class ReqSet(Digraph):
-            pass
+
+            def __init__(self):
+                self.mods = None
+                self.opts = None
+                self.config = None
+                self.reqs = {}
 
         rs = ReqSet()
-        topicset.depict(rs)
 
+        topicset = TopicSet(
+            rs, "test-name02",
+            ["tests/unit-test/topic-tests/testdata/topicset01",
+             "t01"])
