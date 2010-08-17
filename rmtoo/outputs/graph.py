@@ -7,10 +7,14 @@
 #
 
 class graph:
+    default_config = { "node_attributes": ["Type", "Status", "Class", "Topic"] }
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_filename = param[1]
+    def __init__(self, params):
+        self.topic_name = params[0]
+        self.output_filename = params[1]
+        self.config = graph.default_config
+        if len(params)>2:
+            self.config = params[2]
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
@@ -31,7 +35,7 @@ class graph:
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
         # Only output the nodes which are connected to the chosen topic. 
-        for r in sorted(self.topic_set.all_reqs, key = lambda r: r.id):
+        for r in sorted(self.topic_set.reqset.nodes, key = lambda r: r.id):
             self.output_req(r, g)
             
         # Print out a node with the version number:
@@ -42,23 +46,33 @@ class graph:
         g.close()
 
     @staticmethod
-    def node_attributes(req):
+    def node_attributes(req, config = default_config):
+
+        def get_conf_attr(attr):
+            return "node_attributes" in config \
+                and attr in config["node_attributes"]
+
         # Colorize the current requirement depending on type
         nodeparam = []
-        if req.tags["Type"] == req.rt_initial_requirement:
+        if get_conf_attr("Type") \
+                and req.tags["Type"] == req.rt_initial_requirement:
             nodeparam.append("color=orange")
-        if req.tags["Type"] == req.rt_design_decision:
+        if get_conf_attr("Type") \
+                and req.tags["Type"] == req.rt_design_decision:
             nodeparam.append("color=green")
 
-        if req.tags["Status"] == req.st_not_done:
+        if get_conf_attr("Status") \
+                and req.tags["Status"] == req.st_not_done:
             nodeparam.append("fontcolor=red")
             nodeparam.append('label="%s\\n[%4.2f]"' %
                              (req.id, req.tags["Priority"]*10))
 
-        if req.tags["Class"] == req.ct_implementable:
+        if get_conf_attr("Class") \
+                and req.tags["Class"] == req.ct_implementable:
             nodeparam.append("shape=octagon")
 
-        if req.tags["Topic"] == "internal":
+        if get_conf_attr("Topic") \
+                and req.tags["Topic"] == "internal":
             nodeparam.append("fillcolor=lightblue")
             nodeparam.append("style=filled")
 
@@ -66,7 +80,7 @@ class graph:
 
     def output_req(self, req, dotfile):
         dotfile.write("%s [%s];\n" %
-                      (req.id, self.node_attributes(req)))
+                      (req.id, self.node_attributes(req, self.config)))
 
         for d in req.outgoing:
             dotfile.write("%s -> %s;\n" % (req.id, d.id))
