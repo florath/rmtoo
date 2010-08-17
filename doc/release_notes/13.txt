@@ -4,5 +4,28 @@ User visible changes
 Add version1 output module: writes out the version number of the used
 requirement set to a file.
 
+Output module latex2 is configurable in the way, that it is possible
+to give a list of attributes which are printed in the small table
+beneath the requirement itself.
+
+Output module graph is configurable: it is possible to specify which
+requirement attributes are transposed into node properties.
+
+latex2 output enhancement: comma seperates two requirements - not ends
+them.  There is no additional comma at the end of the list anymore.
+
+oopricing1 enhancements: added supplier column, added result sheet,
+added version information to file properties.
+
+graph enhancements: version information was added to the output
+graph. 
+
+Utility added which reads in the csv output of the oopricing1 and
+converts it into a dependency graph.  Nodes include information about
+requirement pricing and dependent pricing.  Also the nodes are colored
+after the compliance: green=fully, orange=partial and red=none
+compliant. 
+
+
 Internal Changes
 ----------------

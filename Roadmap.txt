@@ -21,12 +21,16 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v13
 ===
+o Man pages for configuration of output modules
+  - graph
+  - latex2
 o Check regression tests
 o Add version output
   - Write Man page (single + config)
 o Add additional graph output which takes the stored csv list from the
   openoffice calc and renders prices and dependencies in the
   requirements dependency graph.
+  - Add man page for bin/rmtoo-pricing-graph
 o Write requirements for these features.
 o Add documentation for this (man-page, Presentation)
 o Add test cases for this feature.
