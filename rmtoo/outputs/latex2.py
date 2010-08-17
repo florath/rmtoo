@@ -13,6 +13,8 @@ from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.RMTException import RMTException
 
 class latex2:
+    default_config = { "req_attributes": ["Id", "Priority", "Owner", "Invented on",
+                                          "Invented by", "Status", "Class"] }
 
     level_names = [
         "chapter",
@@ -20,9 +22,12 @@ class latex2:
         "subsection",
         "subsubsection" ]
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.filename = param[1]
+    def __init__(self, params):
+        self.topic_name = params[0]
+        self.filename = params[1]
+        self.config = latex2.default_config
+        if len(params)>2:
+            self.config = params[2]
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
@@ -96,25 +101,26 @@ class latex2:
                  % (self.level_names[level], req.tags["Name"],
                     req.id, req.tags["Description"]))
 
-        if "Rationale" in req.tags:
+        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
             fd.write("\n\\textbf{Rationale:} %s\n" % req.tags["Rationale"])
 
-        if "Note" in req.tags:
+        if "Note" in req.tags and req.tags["Note"]!=None:
             fd.write("\n\\textbf{Note:} %s\n" % req.tags["Note"])
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:
             # Create links to the corresponding labels.
             fd.write("\n\\textbf{Depends on:} ")
-            for d in req.outgoing:
-                fd.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
+                                for d in req.outgoing]))
             fd.write("\n")
 
         if len(req.incoming)>0:
             # Create links to the corresponding dependency nodes.
             fd.write("\n\\textbf{Dependent:} ")
-            for d in req.incoming:
-                fd.write("\\ref{%s} \\nameref{%s}, " % (d.id, d.id))
+            # No comma at the end.
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
+                                for d in req.incoming]))
             fd.write("\n")
 
         if req.tags["Status"]==req.st_finished:
@@ -127,16 +133,37 @@ class latex2:
         else:
             clstr="detailable"
 
-        fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n"
-                 "\\textbf{Id:} & %s & "
-                 "\\textbf{Priority:} & %4.2f & "
-                 "\\textbf{Owner:} & %s \\\ \n"
-                 "\\textbf{Invented on:} & %s & "
-                 "\\textbf{Invented by:} & %s & "
-                 "\\textbf{Status:} & %s \\\ \n"
-                 "\\textbf{Class:} & %s & & & & \\\ \n"
-                 "\end{tabular}\end{center} }"
-                 % (req.id, req.tags["Priority"]*10, req.tags["Owner"],
-                    time.strftime("%Y-%m-%d", req.tags["Invented on"]),
-                    req.tags["Invented by"], status, clstr))
+        fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n")
 
+        # Put mostly three things in a line.
+        i=0
+        for rattr in self.config["req_attributes"]:
+            if rattr=="Id":
+                fd.write("\\textbf{Id:} & %s " % req.id)
+            elif rattr=="Priority":
+                fd.write("\\textbf{Priority:} & %4.2f " % (req.tags["Priority"]*10))
+            elif rattr=="Owner":
+                fd.write("\\textbf{Owner:} & %s" % req.tags["Owner"])
+            elif rattr=="Invented on":
+                fd.write("\\textbf{Invented on:} & %s " 
+                         % time.strftime("%Y-%m-%d", req.tags["Invented on"]))
+            elif rattr=="Invented by":
+                fd.write("\\textbf{Invented by:} & %s " % req.tags["Invented by"])
+            elif rattr=="Status":
+                fd.write("\\textbf{Status:} & %s " % status)
+            elif rattr=="Class":
+                fd.write("\\textbf{Class:} & %s " % clstr)
+            else:
+                # This can never happen
+                assert(False)
+            i+=1
+            if i==3:
+                i=0
+                fd.write("\\\ \n")
+            else:
+                fd.write(" & ")
+        while i<2:
+            fd.write("& & ")
+            i+=1
+
+        fd.write("\end{tabular}\end{center} }\n")
