@@ -108,8 +108,7 @@ class oopricing1:
         m = odf.meta.UserDefined(name="Version",
                                  text=reqscont.continnum_latest_id())
         calcdoc.meta.addElement(m)
-        m = odf.meta.UserDefined(name="Generator",
-                                 text="rmtoo V12")
+        m = odf.meta.UserDefined(name="Generator", text="rmtoo")
         calcdoc.meta.addElement(m)
 
     # There is the need to apply some styles
