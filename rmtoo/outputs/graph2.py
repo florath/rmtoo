@@ -38,7 +38,7 @@ class graph2:
         # Subgraphs
         self.output_topic(g, self.topic_set.get_master())
         # Edges
-        for r in sorted(self.topic_set.all_reqs, key = lambda r: r.id):
+        for r in sorted(self.topic_set.reqset.nodes, key = lambda r: r.id):
             self.output_req(r, g)
         g.write("}")
         g.close()
@@ -54,7 +54,6 @@ class graph2:
         # Write out the sub-sub-graphs
         for t in sorted(topic.outgoing, key = lambda t: t.name):
             self.output_topic(dotfile, t)
-
         for req in sorted(topic.reqs, key = lambda r: r.id):
             dotfile.write('%s%s [%s];\n'
                           % (ident, req.name, graph.node_attributes(req)))

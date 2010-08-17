@@ -58,7 +58,7 @@ class TopicCohe:
         # There is only the need to count either the incoming or
         # outgoing.
         # Use the requirements from the topic here.
-        for req in topics.get(config.analytics_specs["topics"]).get_all_reqs():
+        for req in topics.get(config.analytics_specs["topics"]).reqset.nodes:
              TopicCohe.count(tcnt, topic_set, req.tags["Topic"], req.incoming)
 
         for k, t in tcnt.iteritems():

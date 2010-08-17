@@ -9,7 +9,6 @@
 #
 
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
-from rmtoo.lib.RequirementSetHelper import reqs_limit_topics
 
 # imports from python-odf
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -80,10 +79,8 @@ class oopricing1:
                 cnt += 1
             return sreqs_index
 
-        # Create the requirement set limited to the current topic.
-        treqs = reqs_limit_topics(reqset, self.topic_set)
         # The topological sort is needed.
-        sreqs = topological_sort(treqs)
+        sreqs = topological_sort(self.topic_set.reqset)
 
         # Create the row / column index of each requirement
         self.sreqs_index = create_reqs_index(sreqs)

@@ -15,17 +15,23 @@ import os
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.digraph.ConnectedComponents import connected_components
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
 import traceback
+
+# The TopicSet does contain the RequirementSet which is limited to the
+# topic and all subtopics.
 
 class TopicSet(Digraph):
     
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
-    def __init__(self, name, tparam):
+    def __init__(self, all_reqs, name, tparam):
         Digraph.__init__(self)
         assert(len(tparam)==2)
         self.name = name
@@ -34,10 +40,9 @@ class TopicSet(Digraph):
         # Was the cmad() method already called?
         self.cmad_already_called = False
         self.read_topics(self.topic_dir, self.master_topic)
-        # self.all_reqs is set by the function 'depict' and contains
-        # all requirements which are referenced by one of the topics
-        # in this topic set.
-        self.all_reqs = None
+
+        if all_reqs!=None:
+            self.reqset = self.reqs_limit(all_reqs)
 
     def create_makefile_name(self, topicn):
         return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
@@ -69,7 +74,7 @@ class TopicSet(Digraph):
 
     # Resolve the 'Topic' tag of the requirement to the correct
     # topic. 
-    def depict(self, reqset):
+    def YYYY_depict(self, reqset):
         self.all_reqs = set()
         # The named_node dictionary must exists before it is possible
         # to access it. 
@@ -92,6 +97,80 @@ class TopicSet(Digraph):
 
     # Accessor: returns a set holding all requirements which are
     # directly or indirectly accessed by the current topic.
-    def get_all_reqs(self):
+    def YYYY_get_all_reqs(self):
         assert(self.all_reqs!=None)
         return self.all_reqs
+
+    # Resolve the 'Topic' tag of the requirement to the correct
+    # topic. 
+    def internal_depict(self, reqset):
+        # The named_node dictionary must exists before it is possible
+        # to access it. 
+        self.build_named_nodes()
+        for req in reqset.nodes:
+            if "Topic" in req.tags \
+                    and req.tags["Topic"]!=None:
+                # A referenced topic must exists!
+                ref_topic = req.tags["Topic"]
+                if not ref_topic in self.named_nodes:
+                    print("+++ WARNING: Topic '%s' referenced "
+                          "by '%s' - but topic does not exists"
+                          % (ref_topic, req.id))
+                    print("+++ This might occur if only a subset of "
+                          "requirements are envolved in the current "
+                          "chosen topic")
+                else:
+                    self.named_nodes[ref_topic].add_req(req)
+
+    def reqs_limit(self, reqset):
+        # Get a list of all topic names.
+        self.build_named_nodes()
+        topic_name_list = self.named_nodes.keys()
+
+        # Create the new RequirementSet
+        r = RequirementSet(reqset.mods, reqset.opts, reqset.config)
+
+        # Copy over the requirements themselves:
+        # Here the incoming and outgoing requirements are the still the
+        # old ones.
+        # During the loop, build up the mapping from old to new.
+        def copy_only_reqs(lreqset, ltopic_name_list):
+            old2new = {}
+            for _, req in lreqset.reqs.iteritems():
+                if not req.tags["Topic"] in ltopic_name_list:
+                    print("+++ Info:%s: Skipping requirement because "
+                          "not in topic" % req.id)
+                    continue
+                req_copy = req.internal_copy_phase1(ltopic_name_list)
+                r.add_req(req_copy)
+                old2new[req] = req_copy
+            return old2new
+
+        old2new = copy_only_reqs(reqset, topic_name_list)
+
+        # Replace all the incoming and outgoing from old to new:
+        for _, req in r.reqs.iteritems():
+            req.internal_copy_phase2(old2new)
+
+        # Now there is a fully limited version of the requirement set
+        # to the topic set.  Assign the requirements to the given
+        # topics.
+        self.internal_depict(r)
+
+        # There is the need for some tests (e.g. is the remaining graph
+        # connected) - but the handle_modules_reqdeps() does much more -
+        # which is not needed at this point.
+        # Therefore the algorithms is called directly from here.
+        components = connected_components(r)
+        if components.len()>1:
+            print("+++ Info: The resulting graph is not connected.")
+            print("+++       Found components: '%s'" % components.as_string())
+
+        # Run through all the requirements and check, if there are
+        # requirements which has no incoming.
+        for _, req in r.reqs.iteritems():
+            if len(req.outgoing)==0 and \
+                    req.tags["Type"]!=Requirement.rt_master_requirement:
+                print("+++ Info:%s: no outgoing edges" % req.name)
+
+        return r

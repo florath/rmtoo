@@ -32,7 +32,7 @@ class prios:
         prios_impl = []
         prios_detail = []
 
-        for tr in self.topic_set.all_reqs:
+        for tr in self.topic_set.reqset.nodes:
             try:
                 # Only open requirementes are interesting
                 if tr.is_open():

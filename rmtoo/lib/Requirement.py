@@ -146,7 +146,8 @@ class Requirement(Digraph.Node):
     # outgoing) which are not part of one of the given topics.
     # The reqs_included set is a set of pointers to the old
     # requirements. 
-    def internal_copy_phase1(self, reqs_included):
+    def internal_copy_phase1(self, topic_name_list):
+        # Create the new Requirement itself.
         r = Requirement(None, self.id, self.mls, self.mods,
                         self.opts, self.config)
         r.tags = self.tags
@@ -155,10 +156,10 @@ class Requirement(Digraph.Node):
         # outgoing lists.
         # These are pointers to the old ones!!!
         for req in self.incoming:
-            if req in reqs_included:
+            if req.tags["Topic"] in topic_name_list:
                 r.incoming.append(req)
         for req in self.outgoing:
-            if req in reqs_included:
+            if req.tags["Topic"] in topic_name_list:
                 r.outgoing.append(req)
 
         return r

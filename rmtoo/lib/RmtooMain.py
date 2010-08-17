@@ -64,8 +64,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
     # For the topic based output also all the Topics are needed -
     # before the OutputHandler itself - because different output
     # handler may reference the same Topic.
-    topics = TopicHandler(config)
-    topics.depict(reqs)
+    topics = TopicHandler(config, reqs)
     ohandler = OutputHandler(config, topics)
 
     # When only the dependencies are needed, output them to the given
