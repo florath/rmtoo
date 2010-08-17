@@ -135,9 +135,18 @@ class Requirement(Digraph.Node):
                     mstderr.write("+++ Error:Analytics:%s:%s:%s\n" % 
                                   (k, self.id, l))
 
+    # The following functions are declared internal because they are
+    # for internal use only.
+    # To copy a requirement (functionally deep copy) two phases are
+    # needed: First copy the requirements themselfs then adapt the
+    # incoming and outgoing lists to the new requirements.
+
+    # internal copy phase 1
     # Create a deep copy without all requirements (incoming and
     # outgoing) which are not part of one of the given topics.
-    def copy(self, reqs_included):
+    # The reqs_included set is a set of pointers to the old
+    # requirements. 
+    def internal_copy_phase1(self, reqs_included):
         r = Requirement(None, self.id, self.mls, self.mods,
                         self.opts, self.config)
         r.tags = self.tags
@@ -153,3 +162,17 @@ class Requirement(Digraph.Node):
                 r.outgoing.append(req)
 
         return r
+
+    # Adapt the incoming and outgoing list: given a dictionary to map
+    # from old to new.
+    def internal_copy_phase2(self, old2new):
+        outgoing = []
+        for o in self.outgoing:
+            outgoing.append(old2new[o])
+        self.outgoing = outgoing
+
+        incoming = []
+        for o in self.incoming:
+            incoming.append(old2new[o])
+        self.incoming = incoming
+        
