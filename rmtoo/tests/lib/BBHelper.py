@@ -11,6 +11,7 @@ import shutil
 import difflib
 import tempfile
 import zipfile
+import xml.dom.minidom
 
 def find(mdir):
     r = set()
@@ -39,6 +40,29 @@ def unified_diff(mdir, fname):
         return None
     return r
 
+def xml_is_equal_element(a, b):
+    if a.tagName!=b.tagName:
+        return False
+    if sorted(a.attributes.items())!=sorted(b.attributes.items()):
+        return False
+    if len(a.childNodes)!=len(b.childNodes):
+        return False
+    for ac, bc in zip(a.childNodes, b.childNodes):
+        if ac.nodeType!=bc.nodeType:
+            return False
+        if ac.nodeType==ac.TEXT_NODE and ac.data!=bc.data:
+            return False
+        if ac.nodeType==ac.ELEMENT_NODE and not xml_is_equal_element(ac, bc):
+            return False
+    return True
+
+def compare_xml(mdir, fname):
+    da = xml.dom.minidom.parse(os.path.join(
+            os.environ["rmtoo_test_dir"], fname))
+    db = xml.dom.minidom.parse(os.path.join(
+            mdir, "result_should", fname))
+    return xml_is_equal_element(da.documentElement, db.documentElement)
+
 # This returns a trippel:
 #  missing files in result_is
 #  additional files in result_is
@@ -56,9 +80,16 @@ def compare_results(mdir):
 
     r = {}
     for df in files_to_compare:
-        ud = unified_diff(mdir, df)
-        if ud!=None:
-            r[df] = ud
+        # XML files must be handled differently: they might be
+        # different when compared with diff but might have the same
+        # semantic.
+        if df.endswith(".xml"):
+            if not compare_xml(mdir, df):
+                r[df] = "XML files differ"
+        else:
+            ud = unified_diff(mdir, df)
+            if ud!=None:
+                r[df] = ud
 
     return missing_files, additional_files, r
 
