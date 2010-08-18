@@ -626,7 +626,7 @@ class oopricing1:
             lstprop = odf.form.ListProperty(
                 propertyname="DefaultSelection",
                 valuetype="float")
-            defaultval = odf.form.ListValue(stringvalue='value="0"')
+            defaultval = odf.form.ListValue(stringvalue='0')
             lstprop.addElement(defaultval)
             lbproperties.addElement(lstprop)
 
@@ -666,7 +666,7 @@ class oopricing1:
             lstprop = odf.form.ListProperty(
                 propertyname="DefaultSelection",
                 valuetype="float")
-            defaultval = odf.form.ListValue(stringvalue='value="0"')
+            defaultval = odf.form.ListValue(stringvalue='0')
             lstprop.addElement(defaultval)
             lbproperties.addElement(lstprop)
             # Read only
