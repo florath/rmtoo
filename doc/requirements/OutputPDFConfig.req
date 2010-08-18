@@ -1,0 +1,15 @@
+Name: Output of PDF Configuration
+Type: design decision
+Invented on: 2010-08-18
+Invented by: flonatel
+Owner: development
+Description: The output PDF module \textbf{must} support configuration
+ options in the way that different attributes can separately switched
+ on.
+Rationale: Often there is the need that different information should
+ be written in different documents,
+Depends on: OutputPDF
+Status: finished
+Effort estimation: 13
+Priority: management:8
+Topic: Output

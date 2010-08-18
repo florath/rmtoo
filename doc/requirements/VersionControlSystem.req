@@ -1,0 +1,15 @@
+Name: Version Control System
+Type: requirement
+Invented on: 2010-08-18
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} use a Version Control System
+ for history handling like baselining.
+Rationale: A major use case is working with different sets of
+ requirements: e.g. develop version 2 while adding features to version
+ 1. 
+Owner: development
+Depends on: Requirements
+Status: finished
+Priority: development:10
+Effort estimation: 13
+Topic: Basics

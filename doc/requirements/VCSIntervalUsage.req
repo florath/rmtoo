@@ -1,0 +1,12 @@
+Name: Version Control System: History Interval Usage
+Type: requirement
+Invented on: 2010-08-18
+Invented by: flonatel
+Description: The specified history interval \textbf{must} be used for
+ statistics.
+Owner: development
+Depends on: VCSInterval
+Status: finished
+Priority: development:10
+Effort estimation: 3
+Topic: Basics

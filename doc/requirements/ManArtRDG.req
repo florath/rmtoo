@@ -7,6 +7,7 @@ Description: \textsl{rmtoo} \textbf{must} come with a man page which
  describes the output requirement dependency graph.
 Rationale: This documentation must describe the different colors
  (circle, font), lines, ...\par
+ Also this must include the configuration options.
 Depends on: ManSecArtifacts
 Status: not done
 Priority: development:3 customers:7

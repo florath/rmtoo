@@ -1,0 +1,11 @@
+Name: Output of Dependency Graph: Topics based
+Type: design decision
+Invented on: 2010-08-18
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ a requirements dependency graph which is topic based.
+Rationale: A graph says more than thousand words.
+Depends on: Output
+Status: finished
+Topic: Output

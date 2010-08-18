@@ -1,0 +1,14 @@
+Name: Output: Include Version Identifier of Requirements
+Type: requirement
+Invented on: 2010-08-18
+Invented by: flonatel
+Owner: development
+Description: All \textsl{rmtoo} output modules \textbf{must} include
+ the Version Control System identifier of the used requirements.
+Rationale: This can be one identifier for e.g. documents or an
+ interval for statistic output.
+Depends on: OutputGeneric
+Status: not done
+Priority: development:10
+Effort estimation: 3
+Topic: Output

@@ -1,0 +1,12 @@
+Name: Output of Dependency Graph Configuration
+Type: design decision
+Invented on: 2010-08-18
+Invented by: flonatel
+Owner: development
+Description: The graph output module \textbf{must} be configurable in
+ the way that different node attributes can separately switched on.
+Rationale: For internal use the more information the better. For
+ external use only some information is typically needed.
+Depends on: OutputGraph
+Status: finished
+Topic: Output

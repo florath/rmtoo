@@ -1,0 +1,17 @@
+Name: Output of Version Number
+Type: design decision
+Invented on: 2010-08-18
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ a file which contains the Version Control System unique identifier
+ for the used set of requirements.
+Rationale: This is typically a version number; for git this is the hex
+ hash string.\par
+ This is very important to automatically include the version number in
+ different output documents.
+Depends on: OutputDocument
+Status: finished
+Effort estimation: 5
+Priority: management:8
+Topic: Output

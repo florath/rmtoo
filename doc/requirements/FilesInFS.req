@@ -1,0 +1,15 @@
+Name: Files in File System
+Type: requirement
+Invented on: 2010-08-18
+Invented by: flonatel
+Description: \textsl{rmtoo} \textbf{must} use files located in the
+ file system as input.
+Rationale: This can e.g. the checked out working copy of the
+ requirements from the Version Control System.  But the files can also
+ be completely independent from any Version Control System.
+Owner: development
+Depends on: Requirements
+Status: finished
+Priority: development:10
+Effort estimation: 13
+Topic: Basics

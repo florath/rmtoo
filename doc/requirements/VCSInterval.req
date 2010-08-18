@@ -1,0 +1,19 @@
+Name: Version Control System: History Interval
+Type: requirement
+Invented on: 2010-08-18
+Invented by: flonatel
+Description: It \textbf{must} be possible to define a version interval
+ for \textsl{rmtoo} operations.
+Rationale: This gives the user the possibility to exactly reference
+ one specific version and re-create the documents for a historic
+ version.
+Note: The specification of the version identification is Version
+ Control System dependent.  It should be possible to use symbolic
+ constants like tag names or constants for specifying the latest
+ version (e.g. 'HEAD').
+Owner: development
+Depends on: VersionControlSystem
+Status: finished
+Priority: development:10
+Effort estimation: 5
+Topic: Basics

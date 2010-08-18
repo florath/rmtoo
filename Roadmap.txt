@@ -19,12 +19,19 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
+IMPORTANT
+=========
+o Add requirements from Roadmap.
+o Reject a requirement which depends on themselfs - also for topic
+  based output. 
+o Rethink about the modules: they should also run (at least partially)
+  for the topic based output.  Is there a way to unify this?
+
 v13
 ===
 o Man pages for configuration of output modules
   - graph
   - latex2
-o Check regression tests
 o Add version output
   - Write Man page (single + config)
 o Add additional graph output which takes the stored csv list from the

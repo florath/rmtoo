@@ -3,7 +3,7 @@ Type: requirement
 Invented on: 2010-02-12
 Invented by: flonatel
 Owner: development
-Description: \textsl{rmtoo} \textbf{must} support genration of
+Description: \textsl{rmtoo} \textbf{must} support generation of
  different outputs. 
 Rationale: It's not very easy to e.g. visualize the dependency graph.
  Also typically for the testing department a document is needed that
