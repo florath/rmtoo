@@ -7,82 +7,70 @@ There was an accitental killing of a man. The man was shot in the head - so the 
 
 \textbf{Rationale:} Aktuell ist das Auto voller Blut.
 
-\textbf{Note:} None
+\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}
 
-\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}, 
-
-\textbf{Dependent:} \ref{CleanUpSeats} \nameref{CleanUpSeats}, \ref{DetergentForCar} \nameref{DetergentForCar}, 
+\textbf{Dependent:} \ref{CleanUpSeats} \nameref{CleanUpSeats}, \ref{DetergentForCar} \nameref{DetergentForCar}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CleanUpCar & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & VincentAndJules & \textbf{Status:} & open \\ 
-\textbf{Class:} & detailable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'CleanUpSeats'
+\textbf{Id:} & CleanUpCar  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & VincentAndJules  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+% REQ 'CleanUpSeats'
 \section{Autositzte reinigen}\label{CleanUpSeats}
 \textbf{Description:} Die Autositzte \textbf{müssen} gereinigt werden.
 
-\textbf{Rationale:} None
+\textbf{Depends on:} \ref{CleanUpCar} \nameref{CleanUpCar}
 
-\textbf{Note:} None
-
-\textbf{Depends on:} \ref{CleanUpCar} \nameref{CleanUpCar}, 
-
-\textbf{Dependent:} \ref{RoughlyCleanUpSeats} \nameref{RoughlyCleanUpSeats}, \ref{CoverWithBlankets} \nameref{CoverWithBlankets}, 
+\textbf{Dependent:} \ref{RoughlyCleanUpSeats} \nameref{RoughlyCleanUpSeats}, \ref{CoverWithBlankets} \nameref{CoverWithBlankets}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CleanUpSeats & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & detailable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'CleanUpVicentAndJules'
+\textbf{Id:} & CleanUpSeats  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+% REQ 'CleanUpVicentAndJules'
 \section{Vincent und Jules reinigen}\label{CleanUpVicentAndJules}
 \textbf{Description:} Vincent und Jules \textbf{müssen} gereinigt werden.
 
 \textbf{Rationale:} Beide sind über und über mit Blut bedeckt.
 
-\textbf{Note:} None
+\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}
 
-\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}, 
-
-\textbf{Dependent:} \ref{SoapAndColdWater} \nameref{SoapAndColdWater}, \ref{TakeOff} \nameref{TakeOff}, \ref{TakeCareOfClothing} \nameref{TakeCareOfClothing}, 
+\textbf{Dependent:} \ref{SoapAndColdWater} \nameref{SoapAndColdWater}, \ref{TakeOff} \nameref{TakeOff}, \ref{TakeCareOfClothing} \nameref{TakeCareOfClothing}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CleanUpVicentAndJules & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & VincentAndJules & \textbf{Status:} & open \\ 
-\textbf{Class:} & detailable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'CorpseInTrunk'
+\textbf{Id:} & CleanUpVicentAndJules  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & VincentAndJules  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+% REQ 'CorpseInTrunk'
 \section{Leiche in den Kofferraum}\label{CorpseInTrunk}
 \textbf{Description:} Die Leiche \textbf{muss} in den Kofferraum.
 
 \textbf{Rationale:} Das fahrende Auto darf kein Aufsehen erregen - so kann der Tote transportiert werden.
 
-\textbf{Note:} None
-
-\textbf{Depends on:} \ref{DeadManDisapper} \nameref{DeadManDisapper}, 
+\textbf{Depends on:} \ref{DeadManDisapper} \nameref{DeadManDisapper}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CorpseInTrunk & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'CoverWithBlankets'
+\textbf{Id:} & CorpseInTrunk  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'CoverWithBlankets'
 \section{Mit Decken zudecken}\label{CoverWithBlankets}
 \textbf{Description:} Die Autositze \textbf{müssen} mit Decken abgedeckt werden.
 
 \textbf{Rationale:} Es ist nicht möglich, die Sitze vollständig zu reinigen. 
 
-\textbf{Note:} None
-
-\textbf{Depends on:} \ref{CleanUpSeats} \nameref{CleanUpSeats}, \ref{RoughlyCleanUpSeats} \nameref{RoughlyCleanUpSeats}, 
+\textbf{Depends on:} \ref{CleanUpSeats} \nameref{CleanUpSeats}, \ref{RoughlyCleanUpSeats} \nameref{RoughlyCleanUpSeats}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CoverWithBlankets & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'CreateOrder'
+\textbf{Id:} & CoverWithBlankets  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'CreateOrder'
 \section{Ordnung widerherstellen}\label{CreateOrder}
 \textbf{Description:} The unglückliche Unfall, der einen Mann getötet hat, \textbf{muss} versteckt werden.
 
@@ -90,31 +78,29 @@ There was an accitental killing of a man. The man was shot in the head - so the 
 
 \textbf{Note:} Sie haben nur 40 Minuten für alles.
 
-\textbf{Dependent:} \ref{DeadManDisapper} \nameref{DeadManDisapper}, \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{CleanUpCar} \nameref{CleanUpCar}, 
+\textbf{Dependent:} \ref{DeadManDisapper} \nameref{DeadManDisapper}, \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{CleanUpCar} \nameref{CleanUpCar}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & CreateOrder & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & VincentAndJules & \textbf{Status:} & open \\ 
-\textbf{Class:} & detailable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'DeadManDisapper'
+\textbf{Id:} & CreateOrder  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & VincentAndJules  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+% REQ 'DeadManDisapper'
 \section{Toter Mann muss verschwinden}\label{DeadManDisapper}
 \textbf{Description:} Der tote Mann \textbf{muss} verschwinden.
 
 \textbf{Rationale:} Der bei einem Unfall zu Tode gekommene muss verschwinden.
 
-\textbf{Note:} None
+\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}
 
-\textbf{Depends on:} \ref{CreateOrder} \nameref{CreateOrder}, 
-
-\textbf{Dependent:} \ref{CorpseInTrunk} \nameref{CorpseInTrunk}, 
+\textbf{Dependent:} \ref{CorpseInTrunk} \nameref{CorpseInTrunk}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & DeadManDisapper & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & VincentAndJules & \textbf{Status:} & open \\ 
-\textbf{Class:} & detailable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'DetergentForCar'
+\textbf{Id:} & DeadManDisapper  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & VincentAndJules  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+% REQ 'DetergentForCar'
 \section{Putzmittel für das Auto}\label{DetergentForCar}
 \textbf{Description:} Das Auto \textbf{muss} mit Putzmitteln gereinigt werden. 
 
@@ -122,61 +108,55 @@ There was an accitental killing of a man. The man was shot in the head - so the 
 
 \textbf{Note:} Die Putzmittel stehen in der Küche unter der Spüle.
 
-\textbf{Depends on:} \ref{CleanUpCar} \nameref{CleanUpCar}, 
+\textbf{Depends on:} \ref{CleanUpCar} \nameref{CleanUpCar}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & DetergentForCar & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'RoughlyCleanUpSeats'
+\textbf{Id:} & DetergentForCar  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'RoughlyCleanUpSeats'
 \section{Sitze grob reinigen}\label{RoughlyCleanUpSeats}
 \textbf{Description:} Die Autositzte \textbf{müssen} grob gereinigt werden.
 
 \textbf{Rationale:} Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinübergelegt.
 
-\textbf{Note:} None
+\textbf{Depends on:} \ref{CleanUpSeats} \nameref{CleanUpSeats}
 
-\textbf{Depends on:} \ref{CleanUpSeats} \nameref{CleanUpSeats}, 
-
-\textbf{Dependent:} \ref{CoverWithBlankets} \nameref{CoverWithBlankets}, 
+\textbf{Dependent:} \ref{CoverWithBlankets} \nameref{CoverWithBlankets}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & RoughlyCleanUpSeats & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'SoapAndColdWater'
+\textbf{Id:} & RoughlyCleanUpSeats  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'SoapAndColdWater'
 \section{Seife und kaltes Wasser}\label{SoapAndColdWater}
 \textbf{Description:} Vincent und Jules \textbf{müssen} sich mit Seife und kaltem Wasser vom Blut reinigen.
 
 \textbf{Rationale:} Sie sind blutig.
 
-\textbf{Note:} None
-
-\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{TakeOff} \nameref{TakeOff}, 
+\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{TakeOff} \nameref{TakeOff}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & SoapAndColdWater & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'TakeCareOfClothing'
+\textbf{Id:} & SoapAndColdWater  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'TakeCareOfClothing'
 \section{Auf Kleidung achten}\label{TakeCareOfClothing}
 \textbf{Description:} Auf Vincent und Jules' Kleidung \textbf{muss} geachtet werden. 
 
 \textbf{Rationale:} Die Kleidung ist blutig - Otto der Müllmann wird sich weigern dies einzusammeln.
 
-\textbf{Note:} None
-
-\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{TakeOff} \nameref{TakeOff}, 
+\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, \ref{TakeOff} \nameref{TakeOff}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & TakeCareOfClothing & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }% REQ 'TakeOff'
+\textbf{Id:} & TakeCareOfClothing  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+% REQ 'TakeOff'
 \section{Ausziehen}\label{TakeOff}
 \textbf{Description:} Vincent und Jules \textbf{müssen} ihre Kleider ausziehen. 
 
@@ -184,13 +164,12 @@ There was an accitental killing of a man. The man was shot in the head - so the 
 
 \textbf{Note:} Wulf: 'Bis auf den nackten Arsch'.
 
-\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}, 
+\textbf{Depends on:} \ref{CleanUpVicentAndJules} \nameref{CleanUpVicentAndJules}
 
-\textbf{Dependent:} \ref{SoapAndColdWater} \nameref{SoapAndColdWater}, \ref{TakeCareOfClothing} \nameref{TakeCareOfClothing}, 
+\textbf{Dependent:} \ref{SoapAndColdWater} \nameref{SoapAndColdWater}, \ref{TakeCareOfClothing} \nameref{TakeCareOfClothing}
 
 \par
 {\small \begin{center}\begin{tabular}{rlrlrl}
-\textbf{Id:} & TakeOff & \textbf{Priority:} & 10.00 & \textbf{Owner:} & executive \\ 
-\textbf{Invented on:} & 1994-04-04 & \textbf{Invented by:} & Wulf & \textbf{Status:} & open \\ 
-\textbf{Class:} & implementable & & & & \\ 
-\end{tabular}\end{center} }
+\textbf{Id:} & TakeOff  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & executive\\ 
+\textbf{Invented on:} & 1994-04-04  & \textbf{Invented by:} & Wulf  & \textbf{Status:} & open \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }

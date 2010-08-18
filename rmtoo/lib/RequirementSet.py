@@ -148,7 +148,8 @@ class RequirementSet(Digraph, MemLogStore):
         self.version_id = vid
 
     def own_write_analytics_result(self, mstderr):
-        for k, v in self.analytics.iteritems():
+        for k, v in sorted(self.analytics.items(),
+                           key=operator.itemgetter(0)):
             if v[0]<0:
                 mstderr.write("+++ Error:Analytics:%s:result is '%+3d'\n"
                               % (k, v[0]))
@@ -158,5 +159,5 @@ class RequirementSet(Digraph, MemLogStore):
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):
         self.own_write_analytics_result(mstderr)
-        for _, req in self.reqs.iteritems():
+        for req in sorted(self.reqs.values(), key=lambda r: r.id):
             req.write_analytics_result(mstderr)

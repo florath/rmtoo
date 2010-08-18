@@ -81,8 +81,11 @@ class DescWords:
         if lwords==None:
             return True
 
+#for t in sorted(topic.outgoing, key = lambda t: t.name):
+#sorted(prios_impl, key=operator.itemgetter(0, 1)
+
         ok = True
-        for _, req in reqs.reqs.iteritems():
+        for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
             # Must be at least some positive things to get this
             # positive. (An empty description is a bad one.)
             level = -10

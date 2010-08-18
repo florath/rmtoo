@@ -8,6 +8,7 @@
 
 import os
 import time
+import operator
 
 from rmtoo.lib.Parser import Parser
 from rmtoo.lib.digraph.Digraph import Digraph
@@ -127,7 +128,8 @@ class Requirement(Digraph.Node):
 
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):
-        for k, v in self.analytics.iteritems():
+        for k, v in sorted(self.analytics.items(),
+                           key=operator.itemgetter(0)):
             if v[0]<0:
                 mstderr.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
                               % (k, self.id, v[0]))
