@@ -27,18 +27,9 @@ from rmtoo.lib.RMTException import RMTException
 # Digraph.nodes list.
 #
 class Modules(Digraph):
-    # Read in the modules directory
-    def __init__(self, directory, opts, config,
-                 add_dir_components = ["rmtoo", "modules"],
-                 mod_components = ["rmtoo", "modules"]):
-        Digraph.__init__(self)
-        self.opts = opts
-        self.config = config
 
-        # The different types of tags
-        self.reqtag = {}
-        self.reqdeps = {}
-
+    @staticmethod
+    def split_directory(directory):
         # Work with directory components: this is used for directory
         # access as well as for module name handling.
         # The local directory must be handled in a special way
@@ -52,6 +43,22 @@ class Modules(Digraph):
             # one. 
             if len(dir_components)>0 and dir_components[0]=="":
                 dir_components[0] = "/"
+        return dir_components
+
+    # Read in the modules directory
+    def __init__(self, directory, opts, config,
+                 add_dir_components = ["rmtoo", "modules"],
+                 mod_components = ["rmtoo", "modules"]):
+        Digraph.__init__(self)
+        self.opts = opts
+        self.config = config
+
+        # The different types of tags
+        self.reqtag = {}
+        self.reqdeps = {}
+
+        # Split it up into components
+        dir_components = self.split_directory(directory)
         dir_components.extend(add_dir_components)
 
         self.load(dir_components, mod_components)
