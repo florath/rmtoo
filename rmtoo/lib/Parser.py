@@ -11,7 +11,13 @@
 # For licencing details see COPYING
 #
 
-class Parser:
+from rmtoo.lib.RMTException import RMTException
+
+# Implementation Note / Detail:
+# This is split up in a ParserHelper and Parser class to be able to
+# specify the ParserHelper.parse_line method from the Parser itself.
+
+class ParserHelper:
     # Line Type
     # The parse() function returns one of those
     lt_empty = 1
@@ -45,41 +51,43 @@ class Parser:
     #    characters for the tag.
     @staticmethod
     def parse_line(rid, line, lineno):
-        line = Parser.erase_tailing_newline(line)
+        line = ParserHelper.erase_tailing_newline(line)
         # Empty line
         if len(line)==0:
-            return Parser.lt_empty, None, None
+            return ParserHelper.lt_empty, None, None
         # Comment line
         if line[0]=='#':
-            return Parser.lt_comment, None, None
+            return ParserHelper.lt_comment, None, None
         # Continue line
         if line[0]==' ':
-            return Parser.lt_continue, None, line
+            return ParserHelper.lt_continue, None, line
         # Is the line toooo long?
         if len(line)>80:
             print("+++ ERROR %s:%d: line too long (%d chars) '%s'"
                   % (rid, lineno, len(line), line))
-            return Parser.lt_error, None, None
+            return ParserHelper.lt_error, None, None
         # 'Normal' line
         ls = line.split(":", 1)
         if len(ls)==1:
             # No ':' found
             print("+++ ERROR %s:%d: no ':' in line '%s'" %
                   (rid, lineno, line))
-            return Parser.lt_error, None, None
+            return ParserHelper.lt_error, None, None
         if len(ls[0])==0:
             # ':' is first char in line
             print("+++ ERROR %s:%d: no char before ':'" %
                   (rid, lineno))
-            return Parser.lt_error, None, None
+            return ParserHelper.lt_error, None, None
         # Normal 'initial' case
-        return Parser.lt_initial, ls[0], \
-            Parser.erase_leading_ws(ls[1])
+        return ParserHelper.lt_initial, ls[0], \
+            ParserHelper.erase_leading_ws(ls[1])
 
+class Parser:
     # This implements a finite state automate with a small number
     # of states and transitions.
     @staticmethod
-    def read_as_container(rid, fd, cntr):
+    def read_as_container(rid, fd, cntr,
+                          parserfunc = ParserHelper.parse_line):
         # The linenumber is only used for log messages.
         lineno = 0
         fine = True
@@ -90,22 +98,22 @@ class Parser:
         lines = fd.read().split("\n")
         for line in lines:
             lineno += 1
-            line_type, key, content = Parser.parse_line(rid, line, lineno)
+            line_type, key, content = parserfunc(rid, line, lineno)
 
             # Skip empty lines
-            if line_type==Parser.lt_empty:
+            if line_type==ParserHelper.lt_empty:
                 continue
             # Skip comments
-            if line_type==Parser.lt_comment:
+            if line_type==ParserHelper.lt_comment:
                 continue
             # Handle low-level parse errors
-            if line_type==Parser.lt_error:
+            if line_type==ParserHelper.lt_error:
                 fine = False
                 print("+++ ERROR: cannot parse line")
                 continue
             # It's a continue line from a previous already introduced
             # tag. 
-            if line_type==Parser.lt_continue:
+            if line_type==ParserHelper.lt_continue:
                 if last_key==None:
                     print("+++ ERROR %s:%d: continue line without "
                           "initial line" % (rid, lineno))
@@ -114,7 +122,7 @@ class Parser:
                 cntr.append_to_last(last_key, content)
                 continue
             # New line with initial tag.
-            if line_type==Parser.lt_initial:
+            if line_type==ParserHelper.lt_initial:
                 if not cntr.insert(rid, lineno, key, content):
                     fine = False
                     continue
@@ -122,10 +130,8 @@ class Parser:
                 continue
             # Uups: nothing of them all: must be something strange.
             # Results in an error.
-            print("+++ ERROR %s:%d: Invalid line_type '%d'" %
-                  (rid, lineno, line_type))
-            print("+++ please report this to sf@flonatel.org")
-            assert(False)
+            raise RMTException(53, "%s:%d: Invalid line_type '%d'" %
+                               (rid, lineno, line_type))
 
         return fine
 
