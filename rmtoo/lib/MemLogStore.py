@@ -17,6 +17,7 @@
 #
 
 import time
+from rmtoo.lib.RMTException import RMTException
 
 # This represents one memory log message.
 # It contains some deep information about the file and line number. 
@@ -40,7 +41,7 @@ class MemLog:
         if self.level==self.error:
             fd.write("+++ Error:")
         else:
-            assert(False)
+            raise RMTException(52, "Invalid level in log message")
 
         fd.write("%3d:" % self.lid)
 
