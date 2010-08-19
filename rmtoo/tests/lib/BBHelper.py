@@ -161,3 +161,23 @@ def extract_container_files(lof):
 
     for f in lof:
         extract_one_container_file(f)
+
+# Some output files do contain the temporary output dir (e.g. the
+# makefile dependencies).  To compare them with old versions, this
+# function rewrites the file unifying the output dir.
+# (This function does a replace string on the output dir with a
+# defined fixed string.)
+def unify_output_dir(filename):
+    fullpathname = os.path.join(os.environ["rmtoo_test_dir"], filename)
+    # Read it in
+    fd = file(fullpathname, "r")
+    c = fd.read()
+    fd.close()
+    # Replace
+    d = c.replace(os.environ["rmtoo_test_dir"],
+                  "===SYMBOLIC-OUTPUT-DIR===")
+    # Write out
+    fd = file(fullpathname, "w")
+    fd.write(d)
+    fd.close()
+    
