@@ -105,8 +105,8 @@ class RequirementSet(Digraph, MemLogStore):
         return everythings_fine
 
     # This is mostly the same functionallaty of similar method of the
-    # class Requirement.
-    # ToDo: Unify this!
+    # class Requirement - but with one major difference: for this
+    # implementation stop if an error occured.
     def handle_modules_reqdeps(self):
         for module in self.mods.reqdeps_sorted:
             state = module.rewrite(self)

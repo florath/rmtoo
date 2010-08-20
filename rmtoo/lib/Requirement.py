@@ -109,13 +109,15 @@ class Requirement(Digraph.Node):
     def ok(self):
         return self.state==self.er_fine
 
+### Looks that these functions are not used at all
+
     # Error is an error (no distinct syntax error)
-    def mark_syntax_error(self):
-        self.state = self.er_error
+#    def mark_syntax_error(self):
+#        self.state = self.er_error
 
     # Error is an error (no distinct sematic error)
-    def mark_sematic_error(self):
-        self.state = self.er_error
+#    def mark_sematic_error(self):
+#        self.state = self.er_error
 
     def get_prio(self):
         return self.tags["Priority"]
