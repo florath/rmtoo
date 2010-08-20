@@ -82,3 +82,20 @@ class TestModules:
         assert(req.state==Requirement.er_error)
         assert(sout.getvalue()==
                "+++ Error: 54:77:tag 'SameTag' already defined\n")
+
+    def test_simple_06(self):
+        "Module test with exception thrown"
+        
+        mods = Modules(os.path.join(mod_base_dir, "modules06"),
+                       {}, {}, [], mods_list("modules06"))
+        sio = StringIO.StringIO("Name: t\n")
+        mls = MemLogStore()
+        req = Requirement(sio, 77, mls, mods, None, None)
+
+        sout = StringIO.StringIO()
+        mls.write_log(sout)
+        assert(req.state==Requirement.er_error)
+        assert(sout.getvalue()==
+               "+++ Error: 55:TCExcept\n"
+               "+++ Error: 41:77:semantic error occured in module 'Module01'\n")
+
