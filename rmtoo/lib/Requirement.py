@@ -89,9 +89,9 @@ class Requirement(Digraph.Node):
                 # Check if there is already a key with the current key
                 # in the map.
                 if key in self.tags:
-                    print("+++ ERROR %s: tag '%s' already defined" %
-                          (self.id, key))
-                    self.state = er_error
+                    self.mls.error(54, "tag '%s' already defined" %
+                          (key), self.id)
+                    self.state = self.er_error
                     # Also continue to get possible further error
                     # messages.
                 self.tags[key] = value
