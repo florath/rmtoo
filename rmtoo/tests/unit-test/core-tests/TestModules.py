@@ -11,6 +11,7 @@ import StringIO
 from rmtoo.lib.Modules import Modules
 from rmtoo.lib.MemLogStore import MemLogStore
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
@@ -84,7 +85,7 @@ class TestModules:
                "+++ Error: 54:77:tag 'SameTag' already defined\n")
 
     def test_simple_06(self):
-        "Module test with exception thrown"
+        "Requirement: Module test with exception thrown"
         
         mods = Modules(os.path.join(mod_base_dir, "modules06"),
                        {}, {}, [], mods_list("modules06"))
@@ -99,3 +100,15 @@ class TestModules:
                "+++ Error: 55:TCExcept\n"
                "+++ Error: 41:77:semantic error occured in module 'Module01'\n")
 
+    def test_simple_07(self):
+        "RequirementSet: Module which renders set as errornous"
+        
+        mods = Modules(os.path.join(mod_base_dir, "modules07"),
+                       {}, {}, [], mods_list("modules07"))
+        reqs = RequirementSet(mods, None, None)
+        reqs.handle_modules()
+        assert(reqs.state==RequirementSet.er_error)
+
+        sout = StringIO.StringIO()
+        reqs.write_log(sout)
+        assert(sout.getvalue()=="+++ Error: 43:there was a problem handling the requirement set modules\n")
