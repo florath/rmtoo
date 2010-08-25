@@ -54,8 +54,8 @@ class RequirementSet(Digraph, MemLogStore):
 
         # The must no be left
         if not self.check_left_tags():
-            print("+++ ERROR there were errors encountered during parsing "
-                  "and checking - can't continue")
+            self.error(56, "There were errors encountered during parsing "
+                       "and checking - can't continue")
             return False
 
         return True
@@ -122,8 +122,8 @@ class RequirementSet(Digraph, MemLogStore):
         for r in self.reqs:
             rr = self.reqs[r]
             if len(rr.req)>0:
-                print("+++ ERROR %s: req not empty. Missing tag handers "
-                      "for '%s'" % (rr.id, rr.req)) 
+                self.error(57, "req not empty. Missing tag handers "
+                           "for '%s'" % (rr.req), rr.id)
                 alls_fine = False
         return alls_fine
 

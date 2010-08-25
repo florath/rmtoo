@@ -120,3 +120,6 @@ class MemLogStore:
     # must be defined.
     def __eq__(self, other):
         return self.logs==other.logs
+
+    def mls(self):
+        return self

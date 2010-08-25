@@ -14,16 +14,9 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
+from rmtoo.tests.lib.ModuleHelper import mods_list
 
 mod_base_dir = "tests/unit-test/core-tests/testdata"
-mods_name = mod_base_dir.split("/")
-
-def mods_list(lm):
-    #print("MODSNAME '%s'" % mods_name)
-    ml=["rmtoo"]
-    ml.extend(mods_name)
-    ml.append(lm)
-    return ml
 
 class TestModules:
 
@@ -43,12 +36,12 @@ class TestModules:
     def test_simple_01(self):
         "Simple module test"
         mods = Modules(os.path.join(mod_base_dir, "modules01"),
-                       {}, {}, [], mods_list("modules01"))
+                       {}, {}, [], mods_list("modules01", mod_base_dir))
 
     def test_simple_02(self):
         "Module test with dependend modules"
         mods = Modules(os.path.join(mod_base_dir, "modules02"),
-                       {}, {}, [], mods_list("modules02"))
+                       {}, {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.reqdeps_sorted)
         assert(mods_name==['Module01', 'Module02'])
         
@@ -56,7 +49,7 @@ class TestModules:
         "Module test with invalid dependency "
         try:
             mods = Modules(os.path.join(mod_base_dir, "modules03"),
-                           {}, {}, [], mods_list("modules03"))
+                           {}, {}, [], mods_list("modules03", mod_base_dir))
             assert(False)
         except RMTException, rmte:
             assert(rmte.id()==27)
@@ -65,7 +58,7 @@ class TestModules:
         "Module test with cyclic dependency "
         try:
             mods = Modules(os.path.join(mod_base_dir, "modules04"),
-                           {}, {}, [], mods_list("modules04"))
+                           {}, {}, [], mods_list("modules04", mod_base_dir))
             assert(False)
         except RMTException, rmte:
             assert(rmte.id()==26)
@@ -73,7 +66,7 @@ class TestModules:
     def test_simple_05(self):
         "Module test with dependend modules"
         mods = Modules(os.path.join(mod_base_dir, "modules05"),
-                       {}, {}, [], mods_list("modules05"))
+                       {}, {}, [], mods_list("modules05", mod_base_dir))
         sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
         req = Requirement(sio, 77, mls, mods, None, None)
@@ -88,7 +81,7 @@ class TestModules:
         "Requirement: Module test with exception thrown"
         
         mods = Modules(os.path.join(mod_base_dir, "modules06"),
-                       {}, {}, [], mods_list("modules06"))
+                       {}, {}, [], mods_list("modules06", mod_base_dir))
         sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
         req = Requirement(sio, 77, mls, mods, None, None)
@@ -104,7 +97,7 @@ class TestModules:
         "RequirementSet: Module which renders set as errornous"
         
         mods = Modules(os.path.join(mod_base_dir, "modules07"),
-                       {}, {}, [], mods_list("modules07"))
+                       {}, {}, [], mods_list("modules07", mod_base_dir))
         reqs = RequirementSet(mods, None, None)
         reqs.handle_modules()
         assert(reqs.state==RequirementSet.er_error)
