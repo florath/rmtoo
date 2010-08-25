@@ -49,13 +49,43 @@ class TestMemLogStore:
         mls.write_log(sio)
         assert(sio.getvalue()=="+++ Error: 77:EFile:ELine:ErrMsg\n")
 
+    def test_positive_05(self):
+        "MemLogStore: Check error msg - only message - easy cmp"
+
+        mls = MemLogStore()
+        mls.error(77, "ErrMsg")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.error, "ErrMsg"] ]))
+
+    def test_positive_06(self):
+        "MemLogStore: Check error msg - file - easy cmp"
+
+        mls = MemLogStore()
+        mls.error(77, "ErrMsg", "EFile")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.error, "ErrMsg", "EFile"] ]))
+
+    def test_positive_07(self):
+        "MemLogStore: Check error msg - line - easy cmp"
+
+        mls = MemLogStore()
+        mls.error(77, "ErrMsg", None, "ELine")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.error, "ErrMsg", None, "ELine"] ]))
+
+    def test_positive_04(self):
+        "MemLogStore: Check error msg - file and line"
+
+        mls = MemLogStore()
+        mls.error(77, "ErrMsg", "EFile", "ELine")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.error, "ErrMsg", "EFile", "ELine"] ]))
+
     def test_negative_01(self):
         "Check if the exception for invalid log level works"
 
         try:
             ml = MemLog(77, 77771, "ErrMsg")
-            sio = StringIO.StringIO()
-            ml.write_log(sio)
             assert(False)
         except RMTException, rmte:
             assert(rmte.id()==52)

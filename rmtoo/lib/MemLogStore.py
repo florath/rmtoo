@@ -28,20 +28,47 @@ class MemLog:
 
     error = 50
 
+    levels = set([error])
+
+    # Checks the level: only the defined levels are allowed.
+    def check_level(self):
+        if self.level not in self.levels:
+            raise RMTException(52, "Invalid level in log message")
+
     # The log message is constant.
     def __init__(self, lid, level, msg, efile=None, eline=None):
         self.timestamp = time.time()
         self.lid = lid
         self.level = level
+        self.check_level()
         self.efile = efile
         self.eline = eline
         self.msg = msg
 
+    # This is mostly a second constructor for a message which can be
+    # called with a list
+    @staticmethod
+    def create_ml(l):
+        llen=len(l)
+        assert(llen>=3)
+        assert(llen<=5)
+
+        ml = MemLog(l[0], l[1], l[2])
+
+        if llen>3:
+            ml.efile = l[3]
+        else:
+            ml.efile = None
+
+        if llen>4:
+            ml.eline = l[4]
+        else:
+            ml.eline = None
+        return ml
+
     def write_log(self, fd):
         if self.level==self.error:
             fd.write("+++ Error:")
-        else:
-            raise RMTException(52, "Invalid level in log message")
 
         fd.write("%3d:" % self.lid)
 
@@ -52,6 +79,13 @@ class MemLog:
         
         fd.write("%s" % self.msg)
         fd.write("\n")
+
+    def __eq__(self, other):
+        return self.lid==other.lid \
+            and self.level==other.level \
+            and self.efile==other.efile \
+            and self.eline==other.eline \
+            and self.msg==other.msg
 
 # This is an in memory log message storage.
 # It is mainly used when reading in old / historic requirments. When
@@ -73,3 +107,16 @@ class MemLogStore:
     def error(self, lid, msg, efile=None, eline=None):
         self.logs.append(MemLog(lid, MemLog.error, msg, efile, eline))
 
+    # Method for creating a fully new blown set of log messages:
+    # usable for e.g. test cases.
+    @staticmethod
+    def create_mls(ll):
+        mls = MemLogStore()
+        for l in ll:
+            mls.logs.append(MemLog.create_ml(l))
+        return mls
+
+    # For comparison (also mostly used in test-cases) the eq operator
+    # must be defined.
+    def __eq__(self, other):
+        return self.logs==other.logs
