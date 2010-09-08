@@ -89,5 +89,3 @@ class TestMemLogStore:
             assert(False)
         except RMTException, rmte:
             assert(rmte.id()==52)
-
-

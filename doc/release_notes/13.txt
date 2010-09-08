@@ -25,7 +25,12 @@ Utility added which reads in the csv output of the oopricing1 and
 converts it into a dependency graph.  Nodes include information about
 requirement pricing and dependent pricing.  Also the nodes are colored
 after the compliance: green=fully, orange=partial and red=none
-compliant. 
+compliant.
+
+Fix 3052358: a specific error is logged if a topic does not exists at
+all. (This is another case when the requirement is not used because
+the topic is not included - in the later case a debug message is
+logged, because this is seen as a normal use case.)
 
 
 Internal Changes

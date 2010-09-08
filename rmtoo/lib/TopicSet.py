@@ -69,37 +69,20 @@ class TopicSet(Digraph):
             t.cmad(reqscont, ofile, self.name)
             ofile.write("\n")
 
+    # Read in all the topics to decide whether the topic exists or not
+    # - to differentiate between the non-existance of a topic vs a
+    # topic which is not a children of the currently chosen topic.
+    def read_all_topic_names(self, tdir):
+        self.all_topic_names = set()
+        for f in os.listdir(tdir):
+            if not f.endswith(".tic"):
+                print("+++ WARNING: Topic '%s' ends not in .tic")
+                continue
+            self.all_topic_names.add(f[:-4])
+
     def read_topics(self, tdir, initial_topic):
         Topic(tdir, initial_topic, self)
-
-    # Resolve the 'Topic' tag of the requirement to the correct
-    # topic. 
-    def YYYY_depict(self, reqset):
-        self.all_reqs = set()
-        # The named_node dictionary must exists before it is possible
-        # to access it. 
-        self.build_named_nodes()
-        for req in reqset.nodes:
-            if "Topic" in req.tags \
-                    and req.tags["Topic"]!=None:
-                # A referenced topic must exists!
-                ref_topic = req.tags["Topic"]
-                if not ref_topic in self.named_nodes:
-                    print("+++ WARNING: Topic '%s' referenced "
-                          "by '%s' - but topic does not exists"
-                          % (ref_topic, req.id))
-                    print("+++ This might occur if only a subset of "
-                          "requirements are envolved in the current "
-                          "chosen topic")
-                else:
-                    self.named_nodes[ref_topic].add_req(req)
-                    self.all_reqs.add(req)
-
-    # Accessor: returns a set holding all requirements which are
-    # directly or indirectly accessed by the current topic.
-    def YYYY_get_all_reqs(self):
-        assert(self.all_reqs!=None)
-        return self.all_reqs
+        self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct
     # topic. 
@@ -112,15 +95,8 @@ class TopicSet(Digraph):
                     and req.tags["Topic"]!=None:
                 # A referenced topic must exists!
                 ref_topic = req.tags["Topic"]
-                if not ref_topic in self.named_nodes:
-                    print("+++ WARNING: Topic '%s' referenced "
-                          "by '%s' - but topic does not exists"
-                          % (ref_topic, req.id))
-                    print("+++ This might occur if only a subset of "
-                          "requirements are envolved in the current "
-                          "chosen topic")
-                else:
-                    self.named_nodes[ref_topic].add_req(req)
+                assert(ref_topic in self.named_nodes)
+                self.named_nodes[ref_topic].add_req(req)
 
     def reqs_limit(self, reqset):
         # Get a list of all topic names.
@@ -134,11 +110,19 @@ class TopicSet(Digraph):
         # Here the incoming and outgoing requirements are the still the
         # old ones.
         # During the loop, build up the mapping from old to new.
-        def copy_only_reqs(lreqset, ltopic_name_list):
+        def copy_only_reqs(lreqset, ltopic_name_list, lall_topic_names):
             old2new = {}
             for _, req in lreqset.reqs.iteritems():
+                topic = req.tags["Topic"]
+                # If the referenced topic does not exists at all, emit
+                # an error.
+                if topic not in lall_topic_names:
+                    lreqset.error(58, "Topic does not exist. Typo "
+                                  "in topic name?", req.id)
+                    lreqset.not_usable()
+                    continue
                 if not req.tags["Topic"] in ltopic_name_list:
-                    print("+++ Info:%s: Skipping requirement because "
+                    print("+++ Debug:%s: Skipping requirement because "
                           "not in topic" % req.id)
                     continue
                 req_copy = req.internal_copy_phase1(ltopic_name_list)
@@ -146,7 +130,8 @@ class TopicSet(Digraph):
                 old2new[req] = req_copy
             return old2new
 
-        old2new = copy_only_reqs(reqset, topic_name_list)
+        old2new = copy_only_reqs(reqset, topic_name_list,
+                                 self.all_topic_names)
 
         # Replace all the incoming and outgoing from old to new:
         for _, req in r.reqs.iteritems():
