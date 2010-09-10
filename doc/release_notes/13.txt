@@ -32,6 +32,10 @@ all. (This is another case when the requirement is not used because
 the topic is not included - in the later case a debug message is
 logged, because this is seen as a normal use case.)
 
+Add man page for version1 output.
+
+Add man page for rmtoo-pricing-graph.
+
 
 Internal Changes
 ----------------

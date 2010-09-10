@@ -22,25 +22,14 @@ o Get rmtoo added to at least one Linux distribution (preferred
 IMPORTANT
 =========
 o Add requirements from Roadmap.
-o Reject a requirement which depends on themselfs - also for topic
-  based output. 
 o Rethink about the modules: they should also run (at least partially)
   for the topic based output.  Is there a way to unify this?
 
+
 v13
 ===
-o Man pages for configuration of output modules
-  - graph
-  - latex2
-o Add version output
-  - Write Man page (single + config)
-o Add additional graph output which takes the stored csv list from the
-  openoffice calc and renders prices and dependencies in the
-  requirements dependency graph.
-  - Add man page for bin/rmtoo-pricing-graph
-o Write requirements for these features.
-o Add documentation for this (man-page, Presentation)
-o Add test cases for this feature.
+o Reject a requirement which depends on themselfs - also for topic
+  based output. 
 
 v14
 ===
@@ -48,7 +37,9 @@ o gantt2 output: order based on topics
 
 v15
 ===
-o finish / write all lost man-pages
+o finish / write all lost man-pages, e.g.:
+  - Man pages for configuration of output modules
+    + graph
 o Update presentation:
   - Add section about topics
     (Adapt latex output)
@@ -59,7 +50,7 @@ o Update presentation:
     + count in / out
     + topic count
     + word-checking
-  - Pricing feature
+  - Pricing feature (including creating a graph from the cvs file)
   - version feature
 
 v16
@@ -71,6 +62,7 @@ o Add glossary to presentation
 v17
 ===
 o Increase test case coverage to minimum 90%
+o Add test cases for rmtoo-pricing-graph
 
 v18
 ===
@@ -100,3 +92,5 @@ o Topic includereqs: There is the need to at least specify ONE
   requirement which is located before all others.
 o Add version number to rmtoo -v or something
 o Add roadmap feature
+o History in document: specify two versions and create automatically a
+  list of all changed requirements.
