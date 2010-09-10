@@ -1,0 +1,12 @@
+Name: Evaluate Pricing Information
+Type: requirement
+Invented on: 2010-09-09
+Invented by: flonatel
+Owner: development
+Description: There \textbf{must} be the possibility to evaluate the
+ pricing information.
+Depends on: OutputPricing
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Topic: Output
