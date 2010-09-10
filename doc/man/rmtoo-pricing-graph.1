@@ -1,0 +1,57 @@
+.\" 
+.\" Man page for rmtoo-pricing-graph
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-pricing-graph 1 2010-09-09 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-pricing-graph \- requirements management tool: draw pricing graph
+.SH SYNOPSIS
+.B rmtoo-pricing-graph \fIcsvfile\fR \fIdotfile\fR
+.SH DESCRIPTION
+The
+.B rmtoo-pricing-graph
+is a part of the
+.B rmtoo
+requirment management tool.  It reads in a csv file and creates a
+graph (dot) file.
+.SH OPTIONS
+.TP
+\fIcsvfile\fR
+The input file for this tool.  Please see section
+.B FILES 
+for further information.
+.TP
+\fIdotfile\fR
+The graph output file int dot format.
+.SH FILES
+The input cvs file must be comma seperated file.  This file is the
+results sheet of the oopricing1 output module saved as a cvs file.
+.SH ENVIRONMENT
+This tool does not need any other input than the cvs file.  This also
+means, that there is no check done against existing requirements.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH LIMITATIONS
+No checks against existing (original) requirements are made.
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

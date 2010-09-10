@@ -1,0 +1,52 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-version1 1 2010-09-09 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-version1 \- requirements management tool: version1 artifact
+.SH DESCRIPTION
+The
+.B rmtoo
+requirment management tool is able to output a file with the actual
+used version id.  This version id can be used in different
+output documents to get a unique reference to the used requirement set
+version.
+.P
+The version id itself is taken from the underlaying version control
+system.  Different version control system have different version ids.
+.SH CONFIGURATION
+The first field (i.e. the name must be set to \fIversion1\fR.  A list
+of two parameters must follow.
+.P
+The first parameter is the name of the topic set which is used to get
+the version information.
+.P
+The second parameter is the name of the file where the version
+information will be stored.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+
