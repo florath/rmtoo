@@ -8,7 +8,7 @@ Description: \textsl{rmtoo} \textbf{must} come with a man page which
 Rationale: This documentation must describe the different colors
  (circle, font), lines, ...\par
  Also this must include the configuration options.
-Depends on: ManSecArtifacts
+Depends on: ManSecArtDocuments
 Status: not done
 Priority: development:3 customers:7
 Class: implementable

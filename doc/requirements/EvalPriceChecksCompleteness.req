@@ -1,0 +1,17 @@
+Name: Evaluate Pricing Information: Completeness Checks
+Type: requirement
+Invented on: 2010-09-11
+Invented by: flonatel
+Owner: development
+Description: Pricing information \textbf{must} be checked if they are
+ complete. 
+Rationale: For each requirement of the used requirement set there must
+ be exactly one set of parameters.  Therefore there is the need to
+ check if all requirements are available and if all parameters are
+ complete and correct.
+Depends on: EvalPriceChecks
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Topic: Output
+Class: implementable

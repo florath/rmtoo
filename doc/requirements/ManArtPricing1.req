@@ -8,7 +8,7 @@ Description: \textsl{rmtoo} \textbf{must} come with a man page which
 Rationale: This documentation must describe the different input and
  output fields.  It must also contain an overview over the process
  behind the pricing.
-Depends on: ManSecArtifacts
+Depends on: ManSecArtDocuments
 Status: finished
 Priority: development:3 customers:10
 Class: implementable

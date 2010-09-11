@@ -7,7 +7,7 @@ Description: \textsl{rmtoo} \textbf{must} come with a man page which
  describes the LaTeX output.
 Rationale: The man page should also give some hints how to use the
  LaTeX file and the configuration options for this modules.
-Depends on: ManSecArtifacts
+Depends on: ManSecArtDocuments
 Status: not done
 Priority: development:3 customers:7
 Class: implementable

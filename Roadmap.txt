@@ -25,6 +25,12 @@ o Add requirements from Roadmap.
 o Rethink about the modules: they should also run (at least partially)
   for the topic based output.  Is there a way to unify this?
 
+v13
+===
+o Add version information into LaTeX document (front page and
+  footer). 
+o Enable full statistics for output PDF document.
+
 v14
 ===
 o gantt2 output: order based on topics
@@ -84,7 +90,13 @@ o Topic includereqs: There is the need to at least specify ONE
   requirement which is located before all others.
 o Add version number to rmtoo -v or something
 o Add roadmap feature
+o Add ToDo list feature
 o History in document: specify two versions and create automatically a
   list of all changed requirements.
 o Clean up code (XXX, ToDo, ...)
 o Use MemLog instead of print.
+o 'The only requirement management tool which comes with the
+  requirements for the tool'. 
+o A requirement cannot be 'finished' if on of the dependent is not
+  finished. 
+

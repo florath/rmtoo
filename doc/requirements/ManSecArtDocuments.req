@@ -1,0 +1,13 @@
+Name: Documentation Man Page for Artifacts Documents
+Type: requirement
+Invented on: 2010-09-10
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with (*nix) man pages
+ describing the generated output documents.
+Depends on: ManSecArtifacts
+Status: not done
+Priority: development:10 customers:5
+Class: detailable
+Effort estimation: 5
+Topic: Documentation

@@ -1,0 +1,16 @@
+Name: Output of Elements
+Type: requirement
+Invented on: 2010-09-11
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support genration of
+ different elements.
+Rationale: Elements are only one small aspect of the whole set of
+ information which are typically used in other output documents
+ because only these elements make no sense at all. Example: file with
+ version number of used requirements set.
+Depends on: Output
+Status: finished
+Priority: customers:8
+Effort estimation: 8
+Topic: Output

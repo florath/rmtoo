@@ -1,20 +1,20 @@
-Name: Output XML for GanttProject
+Name: Output XML for GanttProject Second Generation
 Type: requirement
-Invented on: 2010-04-26
+Invented on: 2010-09-11
 Invented by: flonatel
 Owner: customers
 Description: \textsl{rmtoo} \textbf{must} support generation of
- XML output which can be read in by the GanttProject.
+ topic based XML output which can be read in by the GanttProject.
 Rationale: For experimentation there should be a output module
  implementation which supports output of the GanttProject XML
  file.
 Note: This was suggested by a customer - but currently some details
  are unknown.  So the first version will be a implementation to get
  the requirements sorted.\par
- There are no more requirements for this feature.  So it is seen as
- finished.
+ This is similar to the GantProject output (without a number) - but is
+ now based on the topics.
 Depends on: OutputXML
-Status: finished
-Priority: development:2 customers:2
-Effort estimation: 8
+Status: not done
+Priority: management:10 development:10 customers:10
+Effort estimation: 13
 Topic: Output

@@ -1,12 +1,13 @@
-Name: Output of Text Document
+Name: Document Output
 Type: requirement
-Invented on: 2010-03-12
+Invented on: 2010-09-11
 Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} support genration of
- different types text documents.
-Rationale: Different types mean, that it must be possible to convert
- one document to a LaTeX / PDF document or e.g. to a HTML document.
+ different types output documents.
+Rationale: Different output documents might display different aspects
+ of the requirements, Some might e.g. include the text, others the
+ dependency graph.
 Depends on: Output
 Status: finished
 Priority: customers:8

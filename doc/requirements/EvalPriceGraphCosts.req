@@ -6,7 +6,8 @@ Owner: development
 Description: The pricing evaluation graph \textbf{must} include the
  dependent pricing as well as the local requirement pricing.
 Depends on: EvalPriceGraph
-Status: not done
+Status: finished
 Priority: development:10
 Effort estimation: 8
+Class: implementable
 Topic: Output

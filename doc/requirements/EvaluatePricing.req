@@ -7,6 +7,6 @@ Description: There \textbf{must} be the possibility to evaluate the
  pricing information.
 Depends on: OutputPricing
 Status: not done
-Priority: development:10
+Priority: development:7
 Effort estimation: 8
 Topic: Output

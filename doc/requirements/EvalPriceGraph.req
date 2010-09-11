@@ -6,7 +6,7 @@ Owner: development
 Description: There \textbf{must} be the possibility to evaluate the
  pricing information by using the pricing sheet to generate a graph.
 Depends on: EvaluatePricing
-Status: not done
+Status: finished
 Priority: development:10
 Effort estimation: 8
 Topic: Output

@@ -4,7 +4,8 @@ Invented on: 2010-03-10
 Invented by: flonatel
 Description: Test \textbf{must} be started with \textsl{nosetests}.
 Rationale: \textsl{nosetests} is a common used test tool which
- integrates fine in the \textsl{rmtoo} development environment.
+ integrates fine in the \textsl{rmtoo} development environment.\par
+ It also can check the test coverage.
 Owner: development
 Depends on: TestIntegration TestUnit UsePython
 Status: not done

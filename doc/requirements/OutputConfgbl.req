@@ -7,7 +7,7 @@ Description: The output of the created document \textbf{must} be
  configurable. 
 Note: This can be done e.g. by supporting LaTeX macros or HTML CSS
  tags. 
-Depends on: Output
+Depends on: OutputTextDocument
 Status: finished
 Priority: customers:8
 Effort estimation: 8

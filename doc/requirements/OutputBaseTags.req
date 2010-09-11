@@ -6,7 +6,7 @@ Owner: development
 Description: The text base description for the different output
  formats \textbf{must} be organized in a way that it is possible to
  specify for each output document the tags which will be outputted.
-Depends on: OutputDocument
+Depends on: OutputTextDocument
 Status: finished
 Priority: customers:8
 Effort estimation: 13

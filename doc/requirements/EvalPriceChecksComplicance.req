@@ -1,0 +1,17 @@
+Name: Evaluate Pricing Information: Compliance Checks
+Type: requirement
+Invented on: 2010-09-11
+Invented by: flonatel
+Owner: development
+Description: Compliance information \textbf{must} be checked.
+Rationale: There are some cases to check if the given compliance
+ statements make sense.  It is e.g. not possible to have a 'fully
+ compliant' statement if one of the dependent requirements is not or
+ partially compliant.
+Note: It might be possible to put these information into the graph.
+Depends on: EvalPriceChecks
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Topic: Output
+Class: implementable

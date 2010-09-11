@@ -9,7 +9,7 @@ Rationale: XML is used in many projects to import data or exchange
  data. This should be an implementation which supports output of one
  set of requirements.
 Depends on: Output
-Status: finished
-Priority: development:2 customers:2
+Status: not done
+Priority: management:10 development:10 customers:10
 Effort estimation: 8
 Topic: Output
