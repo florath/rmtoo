@@ -36,6 +36,9 @@ Add man page for version1 output.
 
 Add man page for rmtoo-pricing-graph.
 
+Fixed bug which made it possible that a requirement references
+itself: self-dependency is excluded now.
+
 
 Internal Changes
 ----------------

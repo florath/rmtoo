@@ -5,7 +5,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '12'
+version = '13'
 
 def adjust(input, output):
     if os.path.exists(output):
@@ -38,17 +38,17 @@ setup(name=package, version=version,
                 'rmtoo/tests/unit-test/core-tests/testdata/modules02',
                 'rmtoo/tests/unit-test/core-tests/testdata/modules03',
                 'rmtoo/tests/unit-test/core-tests/testdata/modules04',
+                'rmtoo/tests/unit-test/core-tests/testdata/modules05',
+                'rmtoo/tests/unit-test/core-tests/testdata/modules06',
+                'rmtoo/tests/unit-test/core-tests/testdata/modules07',
+                'rmtoo/tests/unit-test/core-tests/testdata/modules08',
                 'rmtoo/tests/unit-test/topic-tests',
                 'rmtoo/tests/unit-test/topic-tests/testdata',
                 'rmtoo/tests/unit-test/topic-tests/testdata/topicset01',
                 'rmtoo/tests/output-test',
 
                 # Blackbox Tests
-                #'rmtoo/tests/blackbox-test',
-                #'rmtoo/tests/blackbox-test/bb001-test',
-                #'rmtoo/tests/blackbox-test/bb002-test',
-                #'rmtoo/tests/blackbox-test/bb003-test',
-                #'rmtoo/tests/blackbox-test/bb004-test',
+                # are included with the 'add_data' statement.
 
                 ## contrib
                 'rmtoo/contrib',

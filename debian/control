@@ -9,7 +9,7 @@ XS-Python-Version: >= 2.4
 
 Package: rmtoo
 Architecture: all
-Depends: python (<< 2.6), python (>= 2.4), python-git (>=0.1.6)
+Depends: python (<< 2.7), python (>= 2.4), python-git (>=0.1.6)
 XB-Python-Version: ${python:Versions}
 Recommends: graphviz (>=2.20), texlive-latex-base (>=2007.dfsg.2), texlive-latex-extra (>=2007.dfsg.17), texlive-latex-recommended (>=2007.dfsg.2)
 Description: requirements management tool

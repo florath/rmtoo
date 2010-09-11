@@ -8,18 +8,21 @@ The documentation includes the requirements dependency graph and the
 requirements.pdf document from rmtoo itself.
 
 The package also includes the regression and unit tests.
-It is possible to run them with:
+It is possible to run most of them with:
 $ cd /usr/share/pyshared/rmtoo
 $ nosetests --verbosity=3 --with-coverage --cover-package=rmtoo
+(It is not possible to run all, because the version control system
+history is missing.)
 
 (nosetest might complain about a '[Errno 13] Permission denied',
 because the file '.coverage' cannot be written - this can be ignored.) 
 
-Currently about 74% test coverage is reached with the included tests. 
+Currently about 93% test coverage is reached with the included tests. 
 
 Happy requirements writing!
 
 Andreas Florath
 sf@flonatel.org
-2010-04-06
+2010-09-10
+
 
