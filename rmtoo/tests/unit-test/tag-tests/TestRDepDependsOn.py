@@ -152,3 +152,18 @@ class TestRDepDependsOn:
 
         assert(status==False)
 
+    def test_negative_07(self):
+        "'Depends on' points to same requirement"
+        opts, config, reqset = create_parameters()
+        reqset.reqs = {
+            "A": TestReq("A",
+                         {"Type": Requirement.rt_master_requirement},
+                         {}),
+            "B": TestReq("B",
+                         {"Type": Requirement.rt_requirement},
+                         {"Depends on": "B"})}
+
+        rdep = RDepDependsOn(opts, config)
+        status = rdep.rewrite(reqset)
+
+        assert(status==False)

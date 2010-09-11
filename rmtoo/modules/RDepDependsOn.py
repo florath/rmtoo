@@ -74,6 +74,12 @@ class RDepDependsOn(Digraph.Node):
                 reqset.error(47, "'Depends on' points to a "
                              "non-existing requirement '%s'" % ts, rr.id)
                 return False
+            # It is not allowed to have self-references: it does not
+            # make any sense, that a requirement references itself.
+            if ts==rr.id:
+                reqset.error(59, "'Depends on' points to the "
+                             "requirement itself", rr.id)
+                return False
 
             # Mark down the depends on...
             dependend = reqset.reqs[ts]
