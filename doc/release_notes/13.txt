@@ -50,5 +50,11 @@ instead of one seriallized representation.
 
 Changed xml comparison from simple do-it-yourself to xmldiff: the
 later one really works in all cases.  The first one had problems when
-the nodes are sorted in a different order.
+the nodes are sorted in a different order.  This does not solve the
+problem completely: differences are still found where no differences
+should be.
+What DOES fix this (i.e. getting always the same XML document) is
+sorting the styles (which are read from a dictionary) before
+outputting them.
+
 

@@ -288,7 +288,9 @@ class oopricing1:
             "col-supplier": "0.75in",
             }
 
-        for name, size in colstyles.iteritems():
+        # The sorted() is done to get always the same XML document -
+        # which is important for comparison in tests.
+        for name, size in sorted(colstyles.iteritems()):
             s = odf.style.Style(name=name, family="table-column")
             s.addElement(
                 odf.style.TableColumnProperties(columnwidth=size))
