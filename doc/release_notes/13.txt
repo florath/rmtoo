@@ -47,3 +47,8 @@ Blackbox tests comparison enhancement: on different systems /
 different times the XML files were stored in different orders.
 Therefore all XML files are now parsed and the content is compared -
 instead of one seriallized representation.
+
+Changed xml comparison from simple do-it-yourself to xmldiff: the
+later one really works in all cases.  The first one had problems when
+the nodes are sorted in a different order.
+

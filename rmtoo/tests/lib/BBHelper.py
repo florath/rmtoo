@@ -40,28 +40,17 @@ def unified_diff(mdir, fname):
         return None
     return r
 
-def xml_is_equal_element(a, b):
-    if a.tagName!=b.tagName:
-        return False
-    if sorted(a.attributes.items())!=sorted(b.attributes.items()):
-        return False
-    if len(a.childNodes)!=len(b.childNodes):
-        return False
-    for ac, bc in zip(a.childNodes, b.childNodes):
-        if ac.nodeType!=bc.nodeType:
-            return False
-        if ac.nodeType==ac.TEXT_NODE and ac.data!=bc.data:
-            return False
-        if ac.nodeType==ac.ELEMENT_NODE and not xml_is_equal_element(ac, bc):
-            return False
-    return True
-
+# This implements the compare_xml with the help of the xmldiff
+# package.
 def compare_xml(mdir, fname):
-    da = xml.dom.minidom.parse(os.path.join(
-            os.environ["rmtoo_test_dir"], fname))
-    db = xml.dom.minidom.parse(os.path.join(
-            mdir, "result_should", fname))
-    return xml_is_equal_element(da.documentElement, db.documentElement)
+    file1 = os.path.join(os.environ["rmtoo_test_dir"], fname)
+    file2 = os.path.join(mdir, "result_should", fname)
+
+    from xmldiff.main import process_files
+
+    res = process_files(file1, file2, False, False, False, False,
+                        False, False, False, "UTF-8", False)
+    return not res
 
 # This returns a trippel:
 #  missing files in result_is
