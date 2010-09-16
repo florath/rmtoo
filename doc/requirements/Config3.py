@@ -12,11 +12,11 @@ class Config:
     reqs_spec = \
         {
            "directory": "doc/requirements",
-           #"commit_interval": 
-           #  ["138be32f1985aec694934263f02e47292deaac91", "FILES"],
-           #"commit_interval": 
-           #["v5", "FILES"]
-           "commit_interval": ["FILES", "FILES"],
+           "commit_interval": 
+           # This is used for all-day work:
+           # ["FILES", "FILES"],
+           # This is used for releases (epoch -> HEAD)
+             ["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
            "default_language": "en_GB",
         }
 

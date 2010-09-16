@@ -48,6 +48,7 @@ o Update presentation:
     + word-checking
   - Pricing feature (including creating a graph from the cvs file)
   - version feature
+  - Introduction of latex document in the presentation
 
 v16
 ===
