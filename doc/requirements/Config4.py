@@ -34,6 +34,6 @@ class Config:
 
     output_specs = \
         [
-          ["oopricing1", 
-           ["ts_common", "reqspricing"]],
+          ["xml_ganttproject_2", 
+           ["ts_common", "rmtoo.gan", 1.0]],
         ]

@@ -1,15 +1,15 @@
 #
-# xml ganttproject output class
+# xml ganttproject2 output class
 #
-# This is a first version of xml output.
+# This is a second version of xml ganttproject output.
 # This must be seen as alpha software, because there are some base
 # problems which might make the use of this output module sensless:
 # * How to sort things? ganttproject has a fixed order of tasks. The
 #   requirements for rmtoo are unsorted.
 # * Where to get the start date from?
-# * It is impossible to have sub-tasks: in rmtoo one requirement can
-#   depend from many other requirements in ganttproject one task can
-#   only be a subtask of another task.
+# * Sub-tasks are done in the way, that each (sub-)topic opens up a
+#   new level.  The last (innermost) level are the requirements of the
+#   appropriate (sub)-topic.
 #
 # (c) 2010 by flonatel
 #
@@ -19,13 +19,9 @@
 from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
 
-class xml_ganttproject_1:
+class xml_ganttproject_2:
 
     def __init__(self, param):
-        print("+++ Warning: The output module 'xml_ganttproject_1' "
-              "is depricated")
-        print("+++ Warning: Limited support will end 2011-03-15")
-
         self.topic_name = param[0]
         self.output_filename = param[1]
         self.effot_factor = param[2]
@@ -70,7 +66,7 @@ class xml_ganttproject_1:
             xml_task.setAttribute("complete", v)
             
         # Dependencies
-        for node in req.incoming:
+        for node in req.outgoing:
             xml_depend = doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.id)))
             # There are some default attrs
@@ -81,9 +77,29 @@ class xml_ganttproject_1:
 
         sobj.appendChild(xml_task)
 
+    # Run through all the topics
+    # (Deep first search / output)
     def output_reqset(self, reqset, doc, sobj):
-        for v in sorted(self.topic_set.reqset.nodes, key = lambda r: r.id):
-            self.output_req(v, reqset, doc, sobj)
+        self.output_topic(self.topic_set.get_master(), reqset, doc, sobj)
+
+    # First output all the requirements in this topic - then all the
+    # subtopics. 
+    def output_topic(self, topic, reqset, doc, sobj):
+        # Add a new level (task)
+        xml_task = doc.createElement("task")
+        xml_task.setAttribute("name", topic.name)
+        xml_task.setAttribute("id", str(self.get_req_id(
+                    "TOPIC-" + topic.name)))
+
+        # Run through all the requirements and output them
+        for req in topic.reqs:
+            self.output_req(req, reqset, doc, xml_task)
+        # After this have a look at the (sub-)topics
+        for st in topic.outgoing:
+            self.output_topic(st, reqset, doc, xml_task)
+
+        # Add the xml_task to the current document
+        sobj.appendChild(xml_task)
 
     def output(self, reqscont):
         # Create the minidom document

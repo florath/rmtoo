@@ -25,15 +25,11 @@ o Add requirements from Roadmap.
 o Rethink about the modules: they should also run (at least partially)
   for the topic based output.  Is there a way to unify this?
 
-v13
-===
-o Add version information into LaTeX document (front page and
-  footer). 
-o Enable full statistics for output PDF document.
-
 v14
 ===
 o gantt2 output: order based on topics
+o Add version information into LaTeX document (front page and
+  footer). 
 
 v15
 ===
@@ -69,6 +65,7 @@ v18
 o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'
 o Add '10 Gründe rmtoo nicht zu nutzen'
+o Add '10 Ausreden wieso Ihr Projekt kein Req Mgmt verwendet'
 o Include sub-graphs in the PDF and HTML documentation
   - Topic based (all reqs of a topic)
   - req based (all reqs dependend and depend on one req)
