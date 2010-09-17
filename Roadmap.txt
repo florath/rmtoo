@@ -80,6 +80,7 @@ o Adapt presentation
 
 OTHER / LATER
 =============
+o Emacs mode for editing topic (tic) files.
 o output level in 'prios.py' must be configurable
 o traceability of changes
 o Translations / Intenationalization
