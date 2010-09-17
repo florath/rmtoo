@@ -18,6 +18,7 @@
 
 from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 
 class xml_ganttproject_2:
 
@@ -64,6 +65,25 @@ class xml_ganttproject_2:
             if req.tags["Status"]==Requirement.st_finished:
                 v = "100"
             xml_task.setAttribute("complete", v)
+
+        # Notes
+        # Add the description and if available also the rationale and
+        # note.
+        notes = "== Description ==\n"
+        notes += LaTeXMarkup.replace_txt(req.tags["Description"])
+        
+        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
+            notes += "\n\n== Rationale ==\n"
+            notes += LaTeXMarkup.replace_txt(req.tags["Rationale"])
+
+        if "Note" in req.tags and req.tags["Note"]!=None:
+            notes += "\n\n== Note ==\n"
+            notes += LaTeXMarkup.replace_txt(req.tags["Note"])
+
+        xml_note = doc.createElement("notes")
+        xml_text = doc.createCDATASection(notes)
+        xml_note.appendChild(xml_text)
+        xml_task.appendChild(xml_note)
             
         # Dependencies
         for node in req.outgoing:
