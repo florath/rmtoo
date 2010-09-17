@@ -1,0 +1,68 @@
+.\" 
+.\" Man page for rmtoo requirement dependency graph output module
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-req-dep-graph 1 2010-09-16 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-req-dep-graph \- requirements management tool: requirement dependency graph
+.SH DESCRIPTION
+The
+.B rmtoo
+requirement management tool organizes all the requirements in a
+dependency tree.  This means, that each requirement is dependent from
+another requirement (except the master requirement).
+.P
+This output module creates the dependency graph in a format which can
+be read in by graphviz tools like \fIdot\fR.
+.SH CONFIGURATION
+The configuration for this output module goes (as all other output
+module's configuration) in the \fBoutput_specs\fR section of the
+Config file. 
+.P
+The first element (the key) must be \fIgraph\fR.  This must be
+followed by a pair (list of two elements).  The first element is the
+name of the to be used topic set, the second the filename where the
+output is written to.
+.P
+Example
+.sp
+.RS
+.nf
+    output_specs = \
+        [
+          ["graph", 
+           ["ts_common", "req-graph1.dot"]],
+        ]
+.SH POSTPROCESSING
+The resulting dot file can be converted with the following command to
+a png: \fIdot -Tpng -o req-graph1.png\fR.  Please consult the manual
+page for dot for more options and explanations.
+.P
+Typically the graphs are very flat in the sense, that they are much
+wider than high.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

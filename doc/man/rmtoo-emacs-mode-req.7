@@ -1,0 +1,54 @@
+.\" 
+.\" Man page for rmtoo-emacs-mode-req
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-emacs-mode-req 7 2010-09-16 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-emacs-mode-req \- requirements management tool: Emacs Mode for
+writing requirements.
+.SH DESCRIPTION
+The
+.B rmtoo
+requirements management tool provides an Emacs mode for editing
+requirements.  Emacs automatically detects requirements based on their
+suffix '.req'.
+.P
+The Emacs mode supports tag highlighting and automatic indentation of
+tag and continue lines.
+.SH CONFIGURATION
+When using the package system (e.g. the deb package) the Emacs mode is
+automatically configured.  So when loading a requirements file the
+mode is automatically activated.
+.P
+When using 
+.B rmtoo
+the tar file, the ~/.emacs file need to be adapted. Add the
+following line and restart Emacs:
+.sp
+.RS
+.nf
+   (load-file "<path_to_rmtoo>/rmtoo/contrib/req-mode.el")
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
