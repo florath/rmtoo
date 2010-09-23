@@ -29,7 +29,7 @@ v14
 ===
 o gantt2 output: order based on topics
 o Add version information into LaTeX document (front page and
-  footer). 
+  footer).
 
 v15
 ===
@@ -80,6 +80,15 @@ o Adapt presentation
 
 OTHER / LATER
 =============
+o Long Term Evolution: It's all about data storage and who (which
+  program) can access (read, write, change, ...) which data.
+  - Write requirements
+  - Discuss with other projects (ganttproject, freemind, ...)
+  - Storage vs. Bus-System
+  - Verfügbarkeit
+  - Ausfallsicherheit
+  - Colaboration
+  - Concurrency
 o Emacs mode for editing topic (tic) files.
 o output level in 'prios.py' must be configurable
 o traceability of changes

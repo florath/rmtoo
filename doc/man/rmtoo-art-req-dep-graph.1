@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-req-dep-graph 1 2010-09-16 "User Commands" "Requirements Management"
+.TH rmtoo-art-req-dep-graph 1 2010-09-23 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-req-dep-graph \- requirements management tool: requirement dependency graph
 .SH DESCRIPTION
@@ -28,7 +28,8 @@ requirement management tool organizes all the requirements in a
 dependency tree.  This means, that each requirement is dependent from
 another requirement (except the master requirement).
 .P
-This output module creates the dependency graph in a format which can
+The \fIrmtoo-art-req-dep-graph\fR output module creates the dependency
+graph in a format which can 
 be read in by graphviz tools like \fIdot\fR.
 .SH CONFIGURATION
 The configuration for this output module goes (as all other output
@@ -51,11 +52,15 @@ Example
         ]
 .SH POSTPROCESSING
 The resulting dot file can be converted with the following command to
-a png: \fIdot -Tpng -o req-graph1.png\fR.  Please consult the manual
-page for dot for more options and explanations.
+a png: \fIdot -Tpng -o req-graph1.png req-graph1.dot\fR.  Please
+consult the manual page for dot for more options and explanations. 
 .P
 Typically the graphs are very flat in the sense, that they are much
-wider than high.
+wider than high.  In this case it is mostly possible to
+\fIunflatten\fR a graph with the help of the \fIunflatten(1)\fR tool
+from the graphviz package.  Please consult the graphviz documentation
+for detailed explanation.  An example is provided in the Makefile
+which is provided in the tar ball.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
