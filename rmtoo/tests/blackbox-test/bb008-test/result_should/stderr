@@ -1,0 +1,6 @@
++++ Error:  2:A1:Does not contain the tag 'Description'
++++ Error: 41:A1:semantic error occured in module 'ReqDescription'
++++ Error: 37:A1:Does not contain the tag 'Name'
++++ Error: 41:A1:semantic error occured in module 'ReqName'
++++ Error: 45:A1:could not be parsed
++++ Error: 44:There were errors in the requirment set
