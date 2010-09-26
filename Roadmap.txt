@@ -108,3 +108,24 @@ o 'The only requirement management tool which comes with the
 o A requirement cannot be 'finished' if on of the dependent is not
   finished. 
 
+Long Term Evolution
+===================
+
+Interaction with other programs
+-------------------------------
+The *nix base idea is: let one thing do one thing (but this very
+well). Examples: see mostly all commands in /bin and /usr/bin.  They
+all work on plain text files and every program has exactly one
+functionality. 
+When looking to mostly all other areas of data processing, the
+interaction of different programs is very, very limited - which
+depends on the file format.  Complex programs (like office word
+processor) work on complex data.  Mostly each program has it's own
+file format.  The file format is mostly not interchangeable with other
+programs - and if so, it's mostly hard and often some aspects are lost
+during conversion.
+Another aspect is, that mostly all programs work on the input data in
+a way that they think they 'own' the data. When programs cannot deal
+with data, they tend to either complain about corrupted input files or
+they ignore the unknown parts in the way that when saving the read-in
+data in a program those unknown parts are not contained any more.

@@ -30,25 +30,30 @@ and the Requirements Elaboration List.
 One list is the so called \fIBacklog\fR.  A term which is usually used
 in SCRUM.  The \fIBacklog\fR is the list of implementable requirements
 sorted by the importance: the most important are at the beginning.
-
-XXXX Weiter gehts hier!
-
-is able to output a file with the actual
-used version id.  This version id can be used in different
-output documents to get a unique reference to the used requirement set
-version.
+.SH REQUIREMENTS ELABORATION LIST
+The requirements elaboration list is mostly the same as the backlog
+but for the requirements writer(s).  This list contains all the
+requirements which are not (yet) implementable, i.e. the requirements
+which reflect some idea which must be detailed.
+.SH PRIORITY LISTS
+Those two lists are more or less the ToDo lists for the developers
+(backlog) and the requirements writes (requirements elaboration
+list).  They can (and should) start at the top of the list where the
+most important and necessary things are listed.
 .P
-The version id itself is taken from the underlaying version control
-system.  Different version control system have different version ids.
+Both lists contain also the sum of all entries up to a certain point.
+Therefore it is very easy to get information like: it will take N
+effort points to finish work on all most important things (level 10
+requirements). 
 .SH CONFIGURATION
-The first field (i.e. the name must be set to \fIversion1\fR.  A list
+The first field (i.e. the name) must be set to \fIprios\fR.  A list
 of two parameters must follow.
 .P
 The first parameter is the name of the topic set which is used to get
-the version information.
+the information.
 .P
-The second parameter is the name of the file where the version
-information will be stored.
+The second parameter is the name of the file where the priority lists
+will be stored.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
