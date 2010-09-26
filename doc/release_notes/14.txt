@@ -1,6 +1,13 @@
 User visible changes
 --------------------
 
+Completely rewritten output module for ganttproject: It is now topics
+based and the dependent requirements comes first.
+
+Added man pages for priority lists and dependency graph generation. 
+
 Internal Changes
 ----------------
+
+Old ganttproject is set to deprecated.
 

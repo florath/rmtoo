@@ -52,16 +52,10 @@ o Update presentation:
 
 v16
 ===
-o Add glossary
-o Add man page for glossary
-o Add glossary to presentation
-
-v17
-===
 o Increase test case coverage to minimum 90%
 o Add test cases for rmtoo-pricing-graph
 
-v18
+v17
 ===
 o Add new paragraphs from rmtoo.7 to the presentation.
 o Add '10 Gründe rmtoo zu nutzen'
@@ -107,6 +101,9 @@ o 'The only requirement management tool which comes with the
   requirements for the tool'. 
 o A requirement cannot be 'finished' if on of the dependent is not
   finished. 
+o Add glossary
+o Add man page for glossary
+o Add glossary to presentation
 
 Long Term Evolution
 ===================
