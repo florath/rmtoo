@@ -56,7 +56,8 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         rc = ReqsContinuum(mods, opts, config)
         reqs = rc.continnum_latest()
     except RMTException, rmte:
-        print("+++ ERROR: Problem reading in the continuum: '%s'" % rmte)
+        mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
+                      % rmte)
         return False
 
     # Setup the OutputHandler
