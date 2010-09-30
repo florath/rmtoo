@@ -3,9 +3,8 @@ Type: master requirement
 Invented on: 2010-07-27
 Invented by: flonatel
 Owner: development
-Description: A1 possible may exists.
+Description: A1 \textbf{must] exists.
 Status: not done
 Priority: development:10
 Effort estimation: 5
-Topic: B1
-
+Topic: A1

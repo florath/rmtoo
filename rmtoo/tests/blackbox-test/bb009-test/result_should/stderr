@@ -1,1 +1,4 @@
-+++ Error: 58:A1:Topic does not exist. Typo in topic name?
++++ Error:Analytics:TopicCohe:result is '-10'
++++ Error:Analytics:TopicCohe:B1: Topic coherence inadequate: inner 0 / outer 0
++++ Error:Analytics:DescWords:A1:result is '-10'
++++ Error:Analytics:DescWords:B1:result is '-10'

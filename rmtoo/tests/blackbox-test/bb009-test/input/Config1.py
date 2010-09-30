@@ -22,7 +22,7 @@ class Config:
 
     topic_specs = \
         {
-          "ts_common": [basedir + "input/topics", "ReqsDocument"],
+          "ts_common": [basedir + "input/topics", "A1"],
         }
 
     analytics_specs = \
