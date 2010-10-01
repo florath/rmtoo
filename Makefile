@@ -79,4 +79,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/blackbox-test/bb009-test/test-bb009.py
+		tests/unit-test/core-tests/TestCmdLineParams.py

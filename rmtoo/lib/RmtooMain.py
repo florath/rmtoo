@@ -40,12 +40,10 @@ def parse_cmd_line_opts(args):
         options.modules_directory = "/usr/share/pyshared"
 
     if options.config_file==None:
-        print("+++ ERROR: no config_file option is specified")
-        sys.exit(1)
+        raise RMTException(60, "no config_file option is specified")
 
     if len(args)>0:
-        print("+++ ERROR: too many args")
-        sys.exit(1)
+        raise RMTException(61, "too many args")
 
     return options
 
