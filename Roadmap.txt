@@ -30,6 +30,8 @@ v14
 o gantt2 output: order based on topics
 o Add version information into LaTeX document (front page and
   footer).
+o Emacs mode for editing topic (tic) files.
+  (This is needed for colorful presentation)
 
 v15
 ===
@@ -85,7 +87,6 @@ o Long Term Evolution: It's all about data storage and who (which
   - Concurrency
 o Add makefile dependencies: .rmtoo_dependencies depends
   on the ConfigX.py file.
-o Emacs mode for editing topic (tic) files.
 o output level in 'prios.py' must be configurable
 o traceability of changes
   - Dependent on changes: list all depended requirements which must

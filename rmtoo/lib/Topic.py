@@ -10,6 +10,7 @@
 
 from rmtoo.lib.Parser import Parser
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.RMTException import RMTException
 import os
 
 # Each topic has a level - which indicates the identation of the text
@@ -33,8 +34,29 @@ class Topic(Digraph.Node):
         self.super = tsuper
         # This is a list of requirements which contain to this topic.
         self.reqs = []
+        # The name of the Topic is mandatory (and also position
+        # independent)
+        # Note: there is also a .name field inherited from the
+        # Digraph.Node (which hold in this case the topic's id).
+        self.topic_name = None
 
-        self.read()
+        # This must only be done if there is a directory given
+        if self.dir!=None:
+            self.read()
+            self.extract_name()
+        else:
+            # In this case the tag list is (initally) empty
+            self.t = []
+
+    # Extract the name from the list (it's mandatory!)
+    def extract_name(self):
+        for nt in self.t:
+            if nt[0] == "Name":
+                self.topic_name = nt[1]
+                del(nt)
+                return 
+        raise RMTException(62, "Mandatory tag 'Name' not given in topic",
+                           self.name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile, tname):
@@ -67,7 +89,4 @@ class Topic(Digraph.Node):
 
     # Returns the name of the game
     def get_name(self):
-        for nt in self.t:
-            if nt[0] == "Name":
-                return nt[1]
-        return None
+        return self.topic_name

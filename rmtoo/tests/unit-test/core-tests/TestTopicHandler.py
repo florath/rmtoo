@@ -1,7 +1,7 @@
 #
 # Requirement Management Toolset
 #
-#  Unit test for RequirementSet
+#  Unit test for TopicHandler
 #
 # (c) 2010 on flonatel
 #

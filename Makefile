@@ -79,4 +79,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/core-tests/TestReqsCont.py
+		tests/unit-test/core-tests/TestTopic.py
