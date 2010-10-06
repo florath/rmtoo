@@ -14,9 +14,9 @@ class Config:
            "directory": "doc/requirements",
            "commit_interval": 
            # This is used for all-day work:
-           # ["FILES", "FILES"],
+            ["FILES", "FILES"],
            # This is used for releases (epoch -> HEAD)
-             ["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
+           #  ["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
            "default_language": "en_GB",
         }
 
@@ -52,4 +52,7 @@ class Config:
            ["ts_common", 
             "doc/html/reqs", "doc/html/header.html",
             "doc/html/footer.html"]],
+
+          ["version1",
+           ["ts_common", "reqs-version.txt"]],
         ]

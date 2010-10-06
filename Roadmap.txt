@@ -83,9 +83,22 @@ o Long Term Evolution: It's all about data storage and who (which
   - Ausfallsicherheit
   - Colaboration
   - Concurrency
+o Add makefile dependencies: .rmtoo_dependencies depends
+  on the ConfigX.py file.
 o Emacs mode for editing topic (tic) files.
 o output level in 'prios.py' must be configurable
 o traceability of changes
+  - Dependent on changes: list all depended requirements which must
+    be checked.
+o Add change marks for at last latex output:
+  - specify one additional version number from which the difference is
+    made
+  - Mark
+    + Additions
+    + Changes
+    + Deletions
+    (Should be not that hard when creating the difference based on the
+    requirements - but also the topics must be included)
 o Translations / Intenationalization
   - Input: possible define a new set of tags - one for each language.
 o Topic includereqs: There is the need to at least specify ONE
@@ -108,10 +121,10 @@ o Add glossary to presentation
 Long Term Evolution
 ===================
 
-Interaction with other programs
--------------------------------
+Interaction between programs
+----------------------------
 The *nix base idea is: let one thing do one thing (but this very
-well). Examples: see mostly all commands in /bin and /usr/bin.  They
+well).  Examples: mostly all commands in /bin and /usr/bin.  They
 all work on plain text files and every program has exactly one
 functionality. 
 When looking to mostly all other areas of data processing, the
@@ -119,10 +132,14 @@ interaction of different programs is very, very limited - which
 depends on the file format.  Complex programs (like office word
 processor) work on complex data.  Mostly each program has it's own
 file format.  The file format is mostly not interchangeable with other
-programs - and if so, it's mostly hard and often some aspects are lost
-during conversion.
+programs - and if so, it's mostly hard to convert and often some
+aspects are lost during conversion.
 Another aspect is, that mostly all programs work on the input data in
 a way that they think they 'own' the data. When programs cannot deal
 with data, they tend to either complain about corrupted input files or
 they ignore the unknown parts in the way that when saving the read-in
 data in a program those unknown parts are not contained any more.
+Others just rename internally used labels and attributes in a way that
+it is impossible to find the original elements after one of those
+programs worked on them. Example: OpenOffice Calc.
+
