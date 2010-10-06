@@ -27,9 +27,6 @@ o Rethink about the modules: they should also run (at least partially)
 
 v14
 ===
-o gantt2 output: order based on topics
-o Add version information into LaTeX document (front page and
-  footer).
 o Emacs mode for editing topic (tic) files.
   (This is needed for colorful presentation)
 

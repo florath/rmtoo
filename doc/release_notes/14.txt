@@ -11,3 +11,7 @@ Internal Changes
 
 Old ganttproject is set to deprecated.
 
+Added many more test cases.  Test coverage is now at 94%.
+
+The requirements document includes now a version number of the used
+requirements. 
