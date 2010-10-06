@@ -19,8 +19,12 @@ class TestBB001:
     def test_pos_002(self):
         "BB Basic with one requirement - reqs only from FILES"
 
+        def myexit(n):
+            pass
+
         mout, merr = prepare_result_is_dir()
-        main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr)
+        main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr,
+             exitfun=myexit)
         cleanup_std_log(mout, merr)
         extract_container_files(["reqspricing.ods",])
         missing_files, additional_files, diffs = compare_results(mdir)

@@ -116,11 +116,9 @@ def main_impl(args, mstdout, mstderr):
     mods = Modules(opts.modules_directory, opts, config)
     return execute_cmds(opts, config, mods, mstdout, mstderr)
 
-def main(args, mstdout, mstderr):
+def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
     try:
-        if not main_impl(args, mstdout, mstderr):
-            sys.exit(1)
+        exitfun(not main_impl(args, mstdout, mstderr))
     except RMTException, rmte:
-        print("+++ ERROR: Exception occured: %s" % rmte)
-        sys.exit(1)
-
+        mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
+        exitfun(1)
