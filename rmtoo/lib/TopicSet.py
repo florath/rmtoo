@@ -37,8 +37,6 @@ class TopicSet(Digraph):
         self.name = name
         self.topic_dir = tparam[0]
         self.master_topic = tparam[1]
-        # Was the cmad() method already called?
-        self.cmad_already_called = False
         self.read_topics(self.topic_dir, self.master_topic)
 
         if all_reqs!=None:
@@ -52,11 +50,6 @@ class TopicSet(Digraph):
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
-        # This must not be called more than once
-        if self.cmad_already_called:
-            return
-        self.cmad_already_called = True
-
         # Because the variables must be defined before they can be
         # accessed, the topological sort is needed here.
         tsort = topological_sort(self)
