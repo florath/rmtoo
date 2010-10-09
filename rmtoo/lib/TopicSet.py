@@ -76,7 +76,8 @@ class TopicSet(Digraph):
         self.all_topic_names = set()
         for f in os.listdir(tdir):
             if not f.endswith(".tic"):
-                print("+++ WARNING: Topic '%s' ends not in .tic")
+                print("+++ WARNING: Topic '%s' ends not in .tic - ignoring" 
+                      % f)
                 continue
             self.all_topic_names.add(f[:-4])
 

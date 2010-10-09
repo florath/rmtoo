@@ -27,6 +27,7 @@ o Rethink about the modules: they should also run (at least partially)
 
 v13
 ===
+o Add sense-full error message in case of an unavailable topic.
 o Add version information into LaTeX document (front page and
   footer). 
 o Enable full statistics for output PDF document.
