@@ -16,7 +16,7 @@ from rmtoo.lib.RMTException import RMTException
 
 class ReqEffortEst(ReqTagGeneric):
     tag = "Effort estimation"
-    valid_values = [0, 1, 2, 3, 5, 8, 13, 21]
+    valid_values = [0, 1, 2, 3, 5, 8, 13, 21, 34]
 
     def __init__(self, opts, config):
         ReqTagGeneric.__init__(self, opts, config)
