@@ -4,7 +4,11 @@ User visible changes
 Completely rewritten output module for ganttproject: It is now topics
 based and the dependent requirements comes first.
 
+Add template project for starting requirements management with rmtoo 
+in ten minutes.
+
 Added man pages for priority lists and dependency graph generation. 
+
 
 Internal Changes
 ----------------

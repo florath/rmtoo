@@ -29,12 +29,15 @@ v14
 ===
 o Emacs mode for editing topic (tic) files.
   (This is needed for colorful presentation)
+o Create an example project which can
+  be used for fast first results
 
 v15
 ===
 o finish / write all lost man-pages, e.g.:
   - Man pages for configuration of output modules
     + graph
+  - Man page for template project
 o Update presentation:
   - Add section about topics
     (Adapt latex output)
@@ -48,6 +51,7 @@ o Update presentation:
   - Pricing feature (including creating a graph from the cvs file)
   - version feature
   - Introduction of latex document in the presentation
+  - template project
 
 v16
 ===
