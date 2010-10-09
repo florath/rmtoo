@@ -94,3 +94,13 @@ Frequently Asked Questions
    renamed. In this case the automatically generated dependency file
    must be deleted (typically with 'rm .rmtoo_dependencies') or a
    'make force' will do this for you.
+
+** I cannot compile rmtoo.  What should I do?
+   There is no need to compile rmtoo.  It comes as a set of modules.
+   You can unpack and just use it.
+
+** I got the error 'ImportError: No module named rmtoo.lib.RmtooMain'
+   What to do?
+   This is a hint, that the PYTHONPATH is not set correctly when using
+   the tar packaged version of rmtoo.
+
