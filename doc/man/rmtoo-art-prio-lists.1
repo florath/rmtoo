@@ -1,0 +1,66 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-prio-lists 1 2010-09-23 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-prio-lists \- requirements management tool: priority lists.
+.SH DESCRIPTION
+The
+.B rmtoo
+requirment management tool is able to manage two lists: the Backlog
+and the Requirements Elaboration List.
+.SH BACKLOG
+One list is the so called \fIBacklog\fR.  A term which is usually used
+in SCRUM.  The \fIBacklog\fR is the list of implementable requirements
+sorted by the importance: the most important are at the beginning.
+.SH REQUIREMENTS ELABORATION LIST
+The requirements elaboration list is mostly the same as the backlog
+but for the requirements writer(s).  This list contains all the
+requirements which are not (yet) implementable, i.e. the requirements
+which reflect some idea which must be detailed.
+.SH PRIORITY LISTS
+Those two lists are more or less the ToDo lists for the developers
+(backlog) and the requirements writes (requirements elaboration
+list).  They can (and should) start at the top of the list where the
+most important and necessary things are listed.
+.P
+Both lists contain also the sum of all entries up to a certain point.
+Therefore it is very easy to get information like: it will take N
+effort points to finish work on all most important things (level 10
+requirements). 
+.SH CONFIGURATION
+The first field (i.e. the name) must be set to \fIprios\fR.  A list
+of two parameters must follow.
+.P
+The first parameter is the name of the topic set which is used to get
+the information.
+.P
+The second parameter is the name of the file where the priority lists
+will be stored.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

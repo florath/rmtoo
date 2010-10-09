@@ -1,0 +1,72 @@
+.\" 
+.\" Man page for rmtoo requirement history count graph
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-reqs-history-cnt 1 2010-10-06 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-reqs-history-cnt \- requirements management tool: requirement 
+history count
+.SH DESCRIPTION
+The
+.B rmtoo
+requirement management tool is able to store the requirements in a
+version control system.  Therefore it is possible to access the whole
+history of requirements evolution.
+.P
+One simple application of this is to extract the number of
+requirements during complete history of the project.
+.P
+With the help of the requirements history count module it is possible
+to visualize the evolution of the requirements count.
+.SH CONFIGURATION
+The configuration for this output module goes (as all other output
+module's configuration) in the \fBoutput_specs\fR section of the
+Config file. 
+.P
+The first element (the key) must be \fIstats_reqs_cnt\fR.  This must be
+followed by a pair (list of two elements).  The first element is the
+name of the to be used topic set, the second the filename where the
+output is written to.
+.P
+Example
+.sp
+.RS
+.nf
+    output_specs = \
+        [
+          ["stats_reqs_cnt", 
+           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+        ]
+.SH POSTPROCESSING
+The resulting file is a tabulator separated file. The first entry is
+the point of time, the second the number of requirements.
+Example line: 2010-10-06_08:29:14 158
+.P
+The contrib directory contains an example file how to use the output
+and how to use gnuplot to convert the input file to a graph.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

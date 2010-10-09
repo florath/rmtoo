@@ -40,12 +40,10 @@ def parse_cmd_line_opts(args):
         options.modules_directory = "/usr/share/pyshared"
 
     if options.config_file==None:
-        print("+++ ERROR: no config_file option is specified")
-        sys.exit(1)
+        raise RMTException(60, "no config_file option is specified")
 
     if len(args)>0:
-        print("+++ ERROR: too many args")
-        sys.exit(1)
+        raise RMTException(61, "too many args")
 
     return options
 
@@ -56,7 +54,8 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         rc = ReqsContinuum(mods, opts, config)
         reqs = rc.continnum_latest()
     except RMTException, rmte:
-        print("+++ ERROR: Problem reading in the continuum: '%s'" % rmte)
+        mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
+                      % rmte)
         return False
 
     # Setup the OutputHandler
@@ -117,11 +116,9 @@ def main_impl(args, mstdout, mstderr):
     mods = Modules(opts.modules_directory, opts, config)
     return execute_cmds(opts, config, mods, mstdout, mstderr)
 
-def main(args, mstdout, mstderr):
+def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
     try:
-        if not main_impl(args, mstdout, mstderr):
-            sys.exit(1)
+        exitfun(not main_impl(args, mstdout, mstderr))
     except RMTException, rmte:
-        print("+++ ERROR: Exception occured: %s" % rmte)
-        sys.exit(1)
-
+        mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
+        exitfun(1)

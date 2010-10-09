@@ -52,4 +52,7 @@ class Config:
            ["ts_common", 
             "doc/html/reqs", "doc/html/header.html",
             "doc/html/footer.html"]],
+
+          ["version1",
+           ["ts_common", "reqs-version.txt"]],
         ]

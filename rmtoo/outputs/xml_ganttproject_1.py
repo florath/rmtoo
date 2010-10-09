@@ -22,6 +22,10 @@ from rmtoo.lib.Requirement import Requirement
 class xml_ganttproject_1:
 
     def __init__(self, param):
+        print("+++ Warning: The output module 'xml_ganttproject_1' "
+              "is depricated")
+        print("+++ Warning: Limited support will end 2011-03-15")
+
         self.topic_name = param[0]
         self.output_filename = param[1]
         self.effot_factor = param[2]

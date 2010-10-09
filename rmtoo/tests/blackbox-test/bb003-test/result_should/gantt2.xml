@@ -1,0 +1,126 @@
+<?xml version="1.0" ?>
+<project>
+	<taskdisplaycolumns>
+		<displaycolumn property-id="tpd3" width="125"/>
+		<displaycolumn property-id="tpd4" width="25"/>
+		<displaycolumn property-id="tpd5" width="25"/>
+	</taskdisplaycolumns>
+	<task id="1" name="PulpFiction">
+		<task complete="0" duration="3" id="2" name="CleanUpSeats">
+			<notes>
+<![CDATA[== Description ==
+The seats must be cleaned.
+
+== Rationale ==
+It is not possible to completely clean the seats - therefore they will additionally be covered.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="3" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="4" name="RoughlyCleanUpSeats">
+			<notes>
+<![CDATA[== Description ==
+The seats must be roughly cleaned.
+
+== Rationale ==
+It is not possible to completely clean the back seat. ]]>			</notes>
+			<depend difference="0" hardness="Strong" id="2" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="5" name="CorpseInTrunk">
+			<notes>
+<![CDATA[== Description ==
+The corpse must be put into the trunk.
+
+== Rationale ==
+The corpse can be transported in this way without any notice of anybody else.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="6" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="6" name="DeadManDisapper">
+			<notes>
+<![CDATA[== Description ==
+The dead man must disappear.
+
+== Rationale ==
+The accidental killed man must vanish.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="7" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="8" name="CleanUpVicentAndJules">
+			<notes>
+<![CDATA[== Description ==
+Vincent and Jules must be cleaned.
+
+== Rationale ==
+Both are splattered with blood.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="7" type="2"/>
+		</task>
+		<task complete="0" duration="4" id="9" name="DetergentForCar">
+			<notes>
+<![CDATA[== Description ==
+The car must be cleaned with detergents.
+
+== Rationale ==
+The car is over and over bloody - so detergents are needed. 
+
+== Note ==
+The detergents are place in the kitchen under the sink.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="3" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="3" name="CleanUpCar">
+			<notes>
+<![CDATA[== Description ==
+At a glance the car must look normally.
+
+== Rationale ==
+The car is over and over bloody.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="7" type="2"/>
+		</task>
+		<task complete="0" duration="14" id="7" name="CreateOrder">
+			<notes>
+<![CDATA[== Description ==
+The accidental death of a man must be disguised. 
+
+== Rationale ==
+There are some different things which must be cleaned and others which must vanish.
+
+== Note ==
+There is only 40 minutes time to do the whole job.]]>			</notes>
+		</task>
+		<task complete="0" duration="3" id="10" name="SoapAndColdWater">
+			<notes>
+<![CDATA[== Description ==
+Vincent and Jules must clean themselves with soap and cold water.
+
+== Rationale ==
+They are bloody.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="8" type="2"/>
+			<depend difference="0" hardness="Strong" id="11" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="11" name="TakeOff">
+			<notes>
+<![CDATA[== Description ==
+Vincent and Jules must take off their whole clothing. 
+
+== Rationale ==
+It's bloody.
+
+== Note ==
+Wulf: 'Down to the bare ass'.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="8" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="12" name="TakeCareOfClothing">
+			<notes>
+<![CDATA[== Description ==
+Vincent and Jules' clothing must be taken care off.
+
+== Rationale ==
+It's bloody - Otto the refuse collector should not see this.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="8" type="2"/>
+			<depend difference="0" hardness="Strong" id="11" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="13" name="CoverWithBlankets">
+			<notes>
+<![CDATA[== Description ==
+The seats must be covered with blankets after they are roughly cleaned.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="2" type="2"/>
+			<depend difference="0" hardness="Strong" id="4" type="2"/>
+		</task>
+	</task>
+</project>

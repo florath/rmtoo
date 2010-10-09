@@ -20,10 +20,13 @@ class TestBB006:
     def test_pos_001(self):
         "BB Basic with one requirement - check makefile dependencies"
 
+        def myexit(n):
+            pass
+
         mout, merr = prepare_result_is_dir()
         main(["-f", mdir + "/input/Config1.py", "-m", "..", "-c",
               os.path.join(os.environ["rmtoo_test_dir"], "makefile_deps")], 
-             mout, merr)
+             mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")
         missing_files, additional_files, diffs = compare_results(mdir)

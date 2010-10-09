@@ -15,6 +15,19 @@ pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \usepackage[a4paper]{geometry}
 
+\usepackage[titles]{tocloft}
+\usepackage{fancyhdr}
+
+\setlength{\cftsubsecnumwidth}{4em}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[L]{\rightmark}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Version \input{../../reqs-version.txt}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
 \parindent0em
 
 \begin{document}
@@ -32,7 +45,11 @@ pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \vfill
 
-13. September 2010
+06. October 2010
+
+\vfill
+
+Requirements Version: \input{../../reqs-version.txt}
 
 \vfill
 
