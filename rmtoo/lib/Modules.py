@@ -64,7 +64,7 @@ class Modules(Digraph):
         self.load(dir_components, mod_components)
 
     def load(self, dir_components, mod_components):
-        for filename in os.listdir(os.path.join(*dir_components)):
+        for filename in sorted(os.listdir(os.path.join(*dir_components))):
             if not filename.endswith(".py"):
                 continue
             modulename = filename[:-3]
