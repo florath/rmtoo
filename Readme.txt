@@ -50,6 +50,14 @@ requirments and topics which comes with rmtoo (which document the
 requirments of the rmtoo itself).  In the FAQ document does exist a
 'Getting Started' section (see doc/other/FAQ.txt).
 
+There is also a template project provided.  When using the tar, it is
+located under contrib/template_project.  When using the Debian package
+it is located under /usr/share/doc/rmtoo/template_project.  This is a
+complete set up and ready to use project.  Just copy it in some
+working directory and start managing requirements.
+The template project comes with complete makefile support setup, with
+two requirements and two topics.
+
 
 --- Check and create them all ---
 

@@ -1,0 +1,12 @@
+Document: rmtoo
+Title: rmtoo requirements
+Author: Andreas Florath
+Abstract: The requirements for rmtoo itself
+Section: Project Management
+
+Format: HTML
+Index: /usr/share/doc/rmtoo/html/ReqsDocument.html
+Files: /usr/share/doc/rmtoo/html/*.html
+
+Format: PDF
+Files: /usr/share/doc/rmtoo/requirements.pdf.gz

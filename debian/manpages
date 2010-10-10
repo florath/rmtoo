@@ -7,9 +7,13 @@ doc/man/rmtoo-analytics-topic-coherence.7
 doc/man/rmtoo-art-html.1
 doc/man/rmtoo-art-latex2.1
 doc/man/rmtoo-art-oopricing.1
+doc/man/rmtoo-art-prio-lists.1
+doc/man/rmtoo-art-req-dep-graph.1
 doc/man/rmtoo-art-req-dep-graph2.1
+doc/man/rmtoo-art-reqs-history-cnt.1
 doc/man/rmtoo-art-version1.1
 doc/man/rmtoo-config.5
+doc/man/rmtoo-emacs-mode-req.7
 doc/man/rmtoo-invoking.1
 doc/man/rmtoo-pricing-graph.1
 doc/man/rmtoo-req-format.5

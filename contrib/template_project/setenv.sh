@@ -19,7 +19,7 @@ if test ${RMTOO_DIR} = 'DEB';
 then
     # The path to the Debian package should not be given
     RMTOO_CALL="rmtoo"
-    RMTOO_CONTRIB_DIR=/usr/share/rmtoo
+    RMTOO_CONTRIB_DIR=/usr/share/doc/rmtoo
 else
     RMTOO_CALL="${RMTOO_DIR}/bin/rmtoo -m${RMTOO_DIR}"
     PYTHONPATH=${RMTOO_DIR}

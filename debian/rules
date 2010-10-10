@@ -23,7 +23,7 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	. setenv.sh && $(MAKE)
+	. ./setenv.sh && $(MAKE)
 	#docbook-to-man debian/rmtoo.sgml > rmtoo.1
 
 	touch $@
@@ -58,6 +58,12 @@ binary-indep: build install
 	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/requirements
 	install doc/requirements/*.req debian/rmtoo/usr/share/doc/rmtoo/requirements
 
+	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/html
+	install doc/html/reqs/*.html debian/rmtoo/usr/share/doc/rmtoo/html
+
+	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/contrib
+	install --mode=644 contrib/gnuplot_stats_reqs_cnt.inc debian/rmtoo/usr/share/doc/rmtoo/contrib
+
 	dh_installexamples
 #	dh_install
 #	dh_installmenu
@@ -66,7 +72,7 @@ binary-indep: build install
 	dh_installemacsen
 
 	mkdir -p debian/rmtoo/usr/share/emacs/site-lisp/rmtoo
-	install contrib/req-mode.el debian/rmtoo/usr/share/emacs/site-lisp/rmtoo
+	install --mode=644 contrib/req-mode.el debian/rmtoo/usr/share/emacs/site-lisp/rmtoo
 
 #	dh_installpam
 #	dh_installmime

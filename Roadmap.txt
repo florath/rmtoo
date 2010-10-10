@@ -14,7 +14,7 @@ that from time to time there is a bug-fix release of rmtoo.
 The history of this file, i. e. the already implemented features can
 be found the appropriate release notes.
 
-There are some major aim to go for:
+There are some major aims to go for:
 o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
@@ -25,15 +25,11 @@ o Add requirements from Roadmap.
 o Rethink about the modules: they should also run (at least partially)
   for the topic based output.  Is there a way to unify this?
 
-v14
-===
-o Emacs mode for editing topic (tic) files.
-  (This is needed for colorful presentation)
-o Create an example project which can
-  be used for fast first results
-
 v15
 ===
+o Move all created files to the artifact directory
+o Emacs mode for editing topic (tic) files.
+  (This is needed for colorful presentation)
 o finish / write all lost man-pages, e.g.:
   - Man pages for configuration of output modules
     + graph
