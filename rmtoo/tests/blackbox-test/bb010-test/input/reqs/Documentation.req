@@ -1,0 +1,11 @@
+Name: Documentation
+Type: requirement
+Invented on: 2010-02-12
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} be documented.
+Depends on: rmtoo
+Status: not done
+Priority: development:6 customers:5
+Effort estimation: 3
+Topic: ReqsDocument

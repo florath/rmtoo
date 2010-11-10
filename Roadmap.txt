@@ -36,6 +36,7 @@ o finish / write all lost man-pages, e.g.:
     + graph
   - Man page for template project
 o Update presentation:
+  - Add section: intendet audience
   - Add section about topics
     (Adapt latex output)
   - Add HTML-Output

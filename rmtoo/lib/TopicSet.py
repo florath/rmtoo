@@ -68,6 +68,9 @@ class TopicSet(Digraph):
     def read_all_topic_names(self, tdir):
         self.all_topic_names = set()
         for f in os.listdir(tdir):
+            # Ignore Emacs Backup Files
+            if f.endswith(".tic~"):
+                continue
             if not f.endswith(".tic"):
                 print("+++ WARNING: Topic '%s' ends not in .tic - ignoring" 
                       % f)

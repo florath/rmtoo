@@ -1,0 +1,14 @@
+Name: Simplicity
+Type: requirement
+Invented on: 2010-02-08
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} be simple.
+Rationale: To get started, concentrate on the major things, which are
+ really needed.\par
+ Use techniques which are available.
+Depends on: rmtoo
+Status: not done
+Priority: development:9
+Effort estimation: 21
+Topic: ReqsDocument

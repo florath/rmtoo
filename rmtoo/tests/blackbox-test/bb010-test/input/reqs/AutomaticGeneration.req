@@ -1,0 +1,17 @@
+Name: Automatic Generation of Results
+Type: requirement
+Invented on: 2010-02-12
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support the automatic
+ genration of outputs.
+Rationale: Because rmtoo is aimed to be used in productive development
+ environments, there is the need that all the different outputs
+ (e.g. PDFs, graphs, ...) must be generated automatically (without
+ user interaction).
+Depends on: Processing
+Status: not done
+Priority: development:3
+Effort estimation: 3
+Topic: ReqsDocument
+

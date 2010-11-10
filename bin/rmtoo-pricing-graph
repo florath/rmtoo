@@ -15,10 +15,10 @@ import csv
 # Minimalistic (but working) way to parse the command line parameters
 # and to be sure that two parameters are supplied.
 def parse_argv():
-   if len(argv)!=3:
+   if len(sys.argv)!=3:
       print("Usage: %s csvfile dotfile")
       sys.exit(1)
-   return argv[1], argv[2]
+   return sys.argv[1], sys.argv[2]
 
 def main():
    csvfilename, graphfilename = parse_argv()
@@ -58,9 +58,10 @@ def main():
          nodeparams.append("color=green")
 
       # Compute local costs (lcosts)
-      dayrate = float(unicode(row[2], 'utf-8')[:-2])
+      # Sometimes a ',' is used to seperate 1000
+      dayrate = float(unicode(row[2], 'utf-8')[:-2].replace(",", ""))
       days    = float(row[3])
-      material= float(unicode(row[4], 'utf-8')[:-2])
+      material= float(unicode(row[4], 'utf-8')[:-2].replace(",", ""))
       lcosts = dayrate * days + material
 
       # Check if there are dependent costs (dcosts)

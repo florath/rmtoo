@@ -13,8 +13,8 @@
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-rmtoo checks the given set of requirments and optionally outputs LaTeX
-source and a requirments dependency graph.
+rmtoo reads in and checks the given set of requirments and optionally
+outputs a wide range of different artifacts.
 
 To run rmtoo, first set the PYTHONPATH to the directoy where
 everything was unpacked. (Sourcing the 'setenv.sh' from the current

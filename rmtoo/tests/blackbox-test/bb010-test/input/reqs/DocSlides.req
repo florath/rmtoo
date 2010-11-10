@@ -1,0 +1,17 @@
+Name: Documentation Slides
+Type: design decision
+Invented on: 2010-02-14
+Invented by: flonatel
+Owner: development
+Description: For documentation purposes there \textbf{must} exists a
+ slide show introducing the major features.
+Rationale: Software not only needs to be good --- also the 'marketing'
+ aspect should be considered: the more people / companies
+ \textsl{rmtoo} using, the more bug reports and comments there will
+ be, the better \textsl{rmtoo} will be.
+Depends on: Documentation
+Status: finished
+Priority: development:10 customers:7
+Class: implementable
+Topic: ReqsDocument
+
