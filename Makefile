@@ -78,5 +78,5 @@ deb:
 
 .PHONY: last_test
 last_test:
-	nosetests --verbosity=255 -w rmtoo -s \
+	nosetests -w rmtoo -v -s \
 		tests/blackbox-test/bb010-test/test-bb010.py

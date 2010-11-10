@@ -14,10 +14,10 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/blackbox-test/bb010-test"
 
-class TestBB001:
+class TestBB010:
 
     def test_pos_001(self):
-        "BB Basic with one requirement - reqs only from git"
+        "BB Basic with some requirements - used for the slides"
 
         def myexit(n):
             pass

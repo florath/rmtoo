@@ -1,0 +1,13 @@
+"rmtoo","none",860 €,3,0 €,0,0,0
+"Simplicity","fully",0 €,0,0 €,"rmtoo",0,0
+"Testing","fully",750 €,7,"1,650 €","rmtoo",0,0
+"Processing","partial",860 €,11,0 €,"rmtoo",0,0
+"AutomaticGeneration","partial",860 €,17,0 €,"Processing",0,0
+"Documentation","fully",540 €,12,"3,540 €","rmtoo",0,0
+"DocSlides","none",0 €,0,0 €,"Documentation","unclear",0
+"Analytics","fully",860 €,22,460 €,"Processing",0,0
+"Output","partial",860 €,9,460 €,"Processing",0,0
+"TestUnit","partial",750 €,17,"7,880 €","Testing",0,0
+"Input","fully",860 €,6,0 €,"Processing",0,0
+"DocManPage","fully",540 €,8,"4,300 €","Documentation",0,0
+"TestIntegration","fully",750 €,16,"7,880 €","Testing",0,0

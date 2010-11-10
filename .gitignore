@@ -32,3 +32,5 @@ doc/html/reqs
 add_data.py
 reqspricing.ods
 reqs-version.txt
+doc/presentations/reqspricing.dot
+doc/presentations/reqspricing.png
