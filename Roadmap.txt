@@ -36,25 +36,11 @@ o finish / write all lost man-pages, e.g.:
     + graph
   - Man page for template project
 o Update presentation:
-  - Add section: intendet audience
-  - Add section about topics
-    (Adapt latex output)
-  - Add HTML-Output
-  - Rewrite graph output
-  - Add graph2 output
-  - Add code analyze 
-    + count in / out
-    + topic count
-    + word-checking
-  - Pricing feature (including creating a graph from the cvs file)
-  - version feature
-  - Introduction of latex document in the presentation
   - template project
 
 v16
 ===
 o Increase test case coverage to minimum 90%
-o Add test cases for rmtoo-pricing-graph
 
 v17
 ===

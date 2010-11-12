@@ -27,56 +27,58 @@ where everything is unpacked in a local directory)
 rmtoo is written in python.  At least version 2.5 of python is
 needed. 
 
-Starting with version 11, git-python is shipped with rmtoo.  The API
-of git-python is changing rapidly - there are currently three
+When you want to create LaTeX or PDF documentation, LaTeX is needed. 
+
+For the requirements dependency graph, graphviz is used.
+
+For statistics plot gnuplot is used.
+
+Typically the packages from your distribution will work.
+
+Starting with rmtoo version 11, git-python is shipped with rmtoo.  The
+API of git-python is changing rapidly - there are currently three
 different APIs out there.  As soon as the change rate settles, the
 git-python will be removed from the package and the OS / distribution
 version should be used. git-python home page is at
 http://gitorious.org/git-python.
 
-When you want to create the document, LaTeX is needed.
-
-For the requirements dependency graph, graphviz is used.
-
-For statistics plot gnuplot can be used.
-
-Typically the packages from your distribution will work.
-
 
 --- Introduction ---
 
-The simplest way of getting in, is have a closer look at the
-requirments and topics which comes with rmtoo (which document the
-requirments of the rmtoo itself).  In the FAQ document does exist a
-'Getting Started' section (see doc/other/FAQ.txt).
+The recommended way of starting is to copy the provided template
+project.
 
-There is also a template project provided.  When using the tar, it is
-located under contrib/template_project.  When using the Debian package
-it is located under /usr/share/doc/rmtoo/template_project.  This is a
-complete set up and ready to use project.  Just copy it in some
-working directory and start managing requirements.
+The unpacked rmtoo package can directly by used. Nevertheless it is
+possible to create the documents for rmtoo itself.  Please consult the
+file Install.txt.
+
+
+--- First project ---
+
+This is a short introduction how to start a new project with rmtoo.
+
+First copy over the template project to some location where you want
+to use it.  When using the tar, it is located under
+contrib/template_project.  When using the Debian package it is located
+under /usr/share/doc/rmtoo/template_project. (In the following example
+it is assumed, that the tar was unpacked in your home directory and
+that the new project is called MyNewProject and will also go into the
+home directory. You have to adapt the path names to adapt this to your
+local setup. YY is the version of the rmtoo.)
+
+      $ cp -r ~/rmtoo-YY/contrib/template_project ~/MyNewProject
+
 The template project comes with complete makefile support setup, with
 two requirements and two topics.
 
+      $ cd ~/MyNewProject
+      $ ./setup.sh ~/rmtoo-YY
+      $ make
 
---- Check and create them all ---
-
-When using the tar ball, you can try a 
-$ make 
-$ make tests
-The configuration file where the output artifacts are configured are
-doc/requirements/ConfigX.py.
-
-When using the Debian package, it is possibe to run all the tests.
-$ cd /usr/share/pyshared/rmtoo
-$ nosetests -v -s
-(Note that some test cases will fail, because they assume that
-there is a git-history available - which is not.)
-The documents can be found under '/usr/share/doc/rmtoo'.
 
 --- Documentation ---
 
-There is a growing number of man pages. They are placed in the
+There is a large number of man pages. They are placed in the
 'doc/man' folder.  If you use the tar file or the sources, try using
 $ man -l doc/man/rmtoo.7
 When you use the package, just try
@@ -120,5 +122,5 @@ or write a mail.
 
 Andreas Florath
 sf@flonatel.org
-2010-08-08
+2010-11-12
 

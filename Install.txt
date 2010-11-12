@@ -1,0 +1,37 @@
+
+Installation Manual
+===================
+
+There is no need to compile rmtoo.
+
+After unpacking the package (either the tar ball or the debian
+package) rmtoo can directly be used.
+
+
+--- Using rmtoo as example ---
+
+Because rmtoo uses rmtoo for requirements management  it is possible
+to use rmtoo as an example for rmtoo's features.
+
+
+--- Check and create them all ---
+When you want to create all the documentation for rmtoo itself, you
+can execute the steps described in this section.  Please note that
+this is not needed to use rmtoo in your project.  Also the
+requirements documentation created, can be downloaded from the
+project's download page.  For the link to the download page please
+consult the Readme.txt file.
+
+When using the tar ball, you can try a 
+$ . setenv.sh
+$ make 
+$ make tests
+The configuration file where the output artifacts are configured are
+doc/requirements/ConfigX.py.
+
+When using the Debian package, it is possibe to run all the tests.
+$ cd /usr/share/pyshared/rmtoo
+$ nosetests -v -s
+(Note that some test cases will fail, because they assume that
+there is a git-history available - which is not.)
+The documents can be found under '/usr/share/doc/rmtoo'.
