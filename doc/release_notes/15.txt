@@ -1,5 +1,12 @@
 User visible changes
 --------------------
 
+The presentation was splitted in two parts and completely
+restructured. 
+
+
 Internal Changes
 ----------------
+
+Moved the status chapter of the requirements document for rmtoo to the
+end of the document.
