@@ -26,9 +26,10 @@ class MemLog:
 
     # Log-levels
 
+    warning = 40
     error = 50
 
-    levels = set([error])
+    levels = set([warning, error])
 
     # Checks the level: only the defined levels are allowed.
     def check_level(self):
@@ -69,6 +70,8 @@ class MemLog:
     def write_log(self, fd):
         if self.level==self.error:
             fd.write("+++ Error:")
+        elif self.level==self.warning:
+            fd.write("+++ Warning:")
 
         fd.write("%3d:" % self.lid)
 
@@ -106,6 +109,9 @@ class MemLogStore:
     # Convinience functions
     def error(self, lid, msg, efile=None, eline=None):
         self.logs.append(MemLog(lid, MemLog.error, msg, efile, eline))
+
+    def warning(self, lid, msg, efile=None, eline=None):
+        self.logs.append(MemLog(lid, MemLog.warning, msg, efile, eline))
 
     # Method for creating a fully new blown set of log messages:
     # usable for e.g. test cases.

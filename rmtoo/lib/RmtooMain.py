@@ -77,11 +77,13 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
         ofile.close()
         return True
 
+    # Print out all logs (from all kinds of objects)
+    reqs.write_log(mstderr)
+    topics.write_log(mstderr)
     # If there is a problem with the last requirement set included in
-    # the requirements continuum, print out the errors here and stop
-    # processing.
+    # the requirements continuum and stop processing. (Note the logs
+    # were already written out).
     if not reqs.is_usable():
-        reqs.write_log(mstderr)
         return False
 
     # The requirments are syntatically correct now: therefore it is

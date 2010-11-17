@@ -27,9 +27,6 @@ o Rethink about the modules: they should also run (at least partially)
 
 v15
 ===
-o Move all created files to the artifact directory
-o Emacs mode for editing topic (tic) files.
-  (This is needed for colorful presentation)
 o finish / write all lost man-pages, e.g.:
   - Man pages for configuration of output modules
     + graph
@@ -102,6 +99,8 @@ o A requirement cannot be 'finished' if on of the dependent is not
 o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
+o Emacs mode for editing topic (tic) files.
+
 
 Long Term Evolution
 ===================

@@ -20,19 +20,21 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.ConnectedComponents import connected_components
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
+from rmtoo.lib.MemLogStore import MemLogStore
 
 import traceback
 
 # The TopicSet does contain the RequirementSet which is limited to the
 # topic and all subtopics.
 
-class TopicSet(Digraph):
+class TopicSet(Digraph, MemLogStore):
     
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
     def __init__(self, all_reqs, name, tparam):
         Digraph.__init__(self)
+        MemLogStore.__init__(self)
         assert(len(tparam)==2)
         self.name = name
         self.topic_dir = tparam[0]
@@ -72,8 +74,7 @@ class TopicSet(Digraph):
             if f.endswith(".tic~"):
                 continue
             if not f.endswith(".tic"):
-                print("+++ WARNING: Topic '%s' ends not in .tic - ignoring" 
-                      % f)
+                self.warning(64, "Topic '%s' ends not in .tic - ignoring" % f)
                 continue
             self.all_topic_names.add(f[:-4])
 

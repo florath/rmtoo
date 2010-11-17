@@ -24,3 +24,8 @@ class TopicHandler:
 
     def get(self, k):
         return self.topics[k]
+
+    # Write out all logs for all existing Topic Sets.
+    def write_log(self, mstderr):
+        for k, v in self.topics.iteritems():
+            v.write_log(mstderr)
