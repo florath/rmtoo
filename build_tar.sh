@@ -18,8 +18,8 @@ make all
 # remove them - but we need it.
 rm -fr ttt
 mkdir ttt
-mv doc/latex2/requirements.pdf ttt
-mv req-graph1.png req-graph2.png ttt
+mv artifacts/requirements.pdf ttt
+mv artifacts/req-graph1.png artifacts/req-graph2.png ttt
 
 # Clean up everything before copying into the tar ball directory.
 make clean
@@ -48,5 +48,4 @@ gzip -9 ${PACKAGE_NAME}.tar
 mv package/${PACKAGE_NAME}.tar.gz .
 
 # Clean up
-rm -fr package
-# ttt
+rm -fr package ttt
