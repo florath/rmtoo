@@ -34,27 +34,27 @@ class Config:
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", "doc/latex2/reqsprios.tex"]],
+           ["ts_common", "artifacts/reqsprios.tex"]],
 
           ["graph",
-           ["ts_common", "req-graph1.dot"]],
+           ["ts_common", "artifacts/req-graph1.dot"]],
 
           ["graph2",
-           ["ts_common", "req-graph2.dot"]],
+           ["ts_common", "artifacts/req-graph2.dot"]],
 
           ["stats_reqs_cnt", 
-           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+           ["ts_common", "artifacts/stats_reqs_cnt.csv"]],
 
           ["latex2", 
-           ["ts_common", "doc/latex2/reqtopics.tex"]],
+           ["ts_common", "artifacts//reqtopics.tex"]],
 
           ["html", 
            ["ts_common", 
-            "doc/html/reqs", "doc/html/header.html",
+            "artifacts/html", "doc/html/header.html",
             "doc/html/footer.html"]],
 
           ["version1",
-           ["ts_common", "reqs-version.txt"]],
+           ["ts_common", "artifacts/reqs-version.txt"]],
 
           ["oopricing1",
            ["ts_common", "artifacts/reqspricing"]],
