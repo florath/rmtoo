@@ -27,7 +27,6 @@ o Rethink about the modules: they should also run (at least partially)
 
 v15
 ===
-o Move Status chapter in PDF document from beginning to end.
 o Move all created files to the artifact directory
 o Emacs mode for editing topic (tic) files.
   (This is needed for colorful presentation)
