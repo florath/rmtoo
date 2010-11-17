@@ -10,3 +10,5 @@ Internal Changes
 
 Moved the status chapter of the requirements document for rmtoo to the
 end of the document.
+
+Moved all created documents to the artifacts directory.

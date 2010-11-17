@@ -7,6 +7,9 @@ There is no need to compile rmtoo.
 After unpacking the package (either the tar ball or the debian
 package) rmtoo can directly be used.
 
+*** THE FOLLOWING PROCEDURE IS OPTIONAL AND NOT
+*** NEEDED FOR USING RMTOO.
+
 
 --- Using rmtoo as example ---
 
@@ -28,6 +31,7 @@ $ make
 $ make tests
 The configuration file where the output artifacts are configured are
 doc/requirements/ConfigX.py.
+All created documents are stored in the artifacts directory.
 
 When using the Debian package, it is possibe to run all the tests.
 $ cd /usr/share/pyshared/rmtoo
