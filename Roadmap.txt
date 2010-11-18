@@ -27,6 +27,8 @@ o Rethink about the modules: they should also run (at least partially)
 
 v15
 ===
+o Is everything read in twice when using FILES:FILES?
+o Check bb test Config pointing to correct reqs
 o finish / write all lost man-pages, e.g.:
   - Man pages for configuration of output modules
     + graph

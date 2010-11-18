@@ -146,8 +146,8 @@ class TopicSet(Digraph, MemLogStore):
         # Therefore the algorithms is called directly from here.
         components = connected_components(r)
         if components.len()>1:
-            print("+++ Info: The resulting graph is not connected.")
-            print("+++       Found components: '%s'" % components.as_string())
+            reqset.info(67, "The resulting graph is not connected. "
+                        "Found components: [%s]" % components.as_string())
 
         # Run through all the requirements and check, if there are
         # requirements which has no incoming.

@@ -1,0 +1,9 @@
+ 65:B1:Skipping requirement because not in topic
+ 67:The resulting graph is not connected. Found components: [[set(['A1']), set(['C1'])]]
+ 65:B1:Skipping requirement because not in topic
+ 67:The resulting graph is not connected. Found components: [[set(['A1']), set(['C1'])]]
++++ Error:Analytics:DescWords:A1:result is '-10'
++++ Error:Analytics:DescWords:B1:result is '-10'
++++ Error:Analytics:ReqTopicCohe:B1:result is '-10'
++++ Error:Analytics:ReqTopicCohe:B1:Requirement topic coherence inadequate: incoming 0/1, outgoing 0/1
++++ Error:Analytics:DescWords:C1:result is '-10'
