@@ -120,8 +120,8 @@ class TopicSet(Digraph, MemLogStore):
                     lreqset.not_usable()
                     continue
                 if not req.tags["Topic"] in ltopic_name_list:
-                    print("+++ Debug:%s: Skipping requirement because "
-                          "not in topic" % req.id)
+                    lreqset.debug(65, "Skipping requirement because "
+                          "not in topic", req.id)
                     continue
                 req_copy = req.internal_copy_phase1(ltopic_name_list)
                 r.add_req(req_copy)

@@ -73,13 +73,29 @@ class TestMemLogStore:
         assert(mls==MemLogStore.create_mls(
                 [ [77, MemLog.error, "ErrMsg", None, "ELine"] ]))
 
-    def test_positive_04(self):
+    def test_positive_08(self):
         "MemLogStore: Check error msg - file and line"
 
         mls = MemLogStore()
         mls.error(77, "ErrMsg", "EFile", "ELine")
         assert(mls==MemLogStore.create_mls(
                 [ [77, MemLog.error, "ErrMsg", "EFile", "ELine"] ]))
+
+    def test_positive_09(self):
+        "MemLogStore: Check debug msg"
+
+        mls = MemLogStore()
+        mls.debug(77, "DebugMsg", "EFile", "ELine")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.debug, "DebugMsg", "EFile", "ELine"] ]))
+
+    def test_positive_10(self):
+        "MemLogStore: Check info msg"
+
+        mls = MemLogStore()
+        mls.info(77, "InfoMsg", "EFile", "ELine")
+        assert(mls==MemLogStore.create_mls(
+                [ [77, MemLog.info, "InfoMsg", "EFile", "ELine"] ]))
 
     def test_negative_01(self):
         "Check if the exception for invalid log level works"
