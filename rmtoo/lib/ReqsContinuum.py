@@ -32,7 +32,7 @@ class ReqsContinuum:
         # This is the list of all requirements sets - ordered by time.
         # (The newest versions are on top - sorted backwards.)
         self.continuum_order = []
-        # The continnum itself - accessable by the version.
+        # The continuum itself - accessable by the version.
         self.continuum = {}
 
         self.init_continuum()
@@ -42,11 +42,11 @@ class ReqsContinuum:
         self.continuum[cid] = req_set
 
     # The last is the first (backward order)
-    def continnum_latest(self):
+    def continuum_latest(self):
         return self.continuum[self.continuum_order[0]]
 
     # The version control system id of the latest
-    def continnum_latest_id(self):
+    def continuum_latest_id(self):
         return self.continuum_order[0]
 
     def repo_access_needed(self):
@@ -117,7 +117,7 @@ class ReqsContinuum:
     def cmad_write_reqs_list(self, ofile):
         # Write out the list
         ofile.write("REQS=")
-        for r in self.continnum_latest().reqs:
+        for r in self.continuum_latest().reqs:
             ofile.write("%s.req " % os.path.join(
                     self.config.reqs_spec["directory"], r))
         ofile.write("\n")

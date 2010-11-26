@@ -27,7 +27,7 @@ class graph:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest(), reqscont)
+        self.output_reqset(reqscont.continuum_latest(), reqscont)
 
     def output_reqset(self, reqset, reqscont):
         # Initialize the graph output
@@ -40,7 +40,7 @@ class graph:
             
         # Print out a node with the version number:
         g.write('ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'
-                % (reqscont.continnum_latest_id()))
+                % (reqscont.continuum_latest_id()))
             
         g.write("}")
         g.close()

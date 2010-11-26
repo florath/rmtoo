@@ -139,7 +139,7 @@ class xml_ganttproject_2:
             xml_taskdisplaycolumns.appendChild(xml_tpd)
         
         # Output all the 'tasks' (i.e. requirements)
-        self.output_reqset(reqscont.continnum_latest(), doc, xml_project)
+        self.output_reqset(reqscont.continuum_latest(), doc, xml_project)
 
         fd = file(self.output_filename, "w")
         fd.write(doc.toprettyxml())

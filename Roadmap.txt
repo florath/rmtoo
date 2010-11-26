@@ -102,9 +102,13 @@ o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
 o Emacs mode for editing topic (tic) files.
+o Better list of preconditions
+  (When is what needed? Version?)
 
 
-Long Term Evolution
+
+Long Term Evolution or:
+This will be another project
 ===================
 
 Interaction between programs
