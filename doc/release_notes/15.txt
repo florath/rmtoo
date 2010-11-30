@@ -12,3 +12,14 @@ Moved the status chapter of the requirements document for rmtoo to the
 end of the document.
 
 Moved all created documents to the artifacts directory.
+
+Fixed error in blackbox test 11 which referenced data of blackbox test
+9. 
+
+
+Rejected Changes
+----------------
+
+At one point it looked that the create continuum from file was called
+twice.  It was now verified that this is not true: it is always called
+no more than once.
