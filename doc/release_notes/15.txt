@@ -4,6 +4,9 @@ User visible changes
 The presentation was splitted in two parts and completely
 restructured. 
 
+Added man pages for rmtoo-art-xml-ganttproject1,
+rmtoo-art-xml-ganttproject2. 
+
 
 Internal Changes
 ----------------
