@@ -29,4 +29,3 @@ At one point it looked that the create continuum from file was called
 twice.  It was now verified that this is not true: it is always called
 no more than once.
 
-
