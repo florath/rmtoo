@@ -52,7 +52,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
     # are correct.
     try:
         rc = ReqsContinuum(mods, opts, config)
-        reqs = rc.continnum_latest()
+        reqs = rc.continuum_latest()
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
                       % rmte)

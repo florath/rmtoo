@@ -25,7 +25,7 @@ class version1:
     # (The requirements are not needed at all, only the version number.)
     def output(self, reqscont):
         f = file(self.filename, "w")
-        f.write("%s\n" % reqscont.continnum_latest_id())
+        f.write("%s\n" % reqscont.continuum_latest_id())
         f.close()
 
 

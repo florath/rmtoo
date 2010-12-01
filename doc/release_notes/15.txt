@@ -20,6 +20,7 @@ Moved all created documents to the artifacts directory.
 Fixed error in blackbox test 11 which referenced data of blackbox test
 9. 
 
+Fixed typo in method name: continnum -> continuum.
 
 Rejected Changes
 ----------------
@@ -27,3 +28,5 @@ Rejected Changes
 At one point it looked that the create continuum from file was called
 twice.  It was now verified that this is not true: it is always called
 no more than once.
+
+

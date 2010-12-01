@@ -17,9 +17,9 @@ rmtoo reads in and checks the given set of requirments and optionally
 outputs a wide range of different artifacts.
 
 To run rmtoo, first set the PYTHONPATH to the directoy where
-everything was unpacked. (Sourcing the 'setenv.sh' from the current
-directory exactly does this.) (Note: rmtoo may come as a tar ball
-where everything is unpacked in a local directory)
+everything was unpacked. (See the 'setenv.sh' shell script which
+exactly does this.) (Note: rmtoo may come as a tar ball where
+everything is unpacked in a local directory)
 
 
 --- Preconditions ---

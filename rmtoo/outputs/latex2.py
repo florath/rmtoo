@@ -35,7 +35,7 @@ class latex2:
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("REQS_LATEX2=%s\n" % self.filename)
-        reqset = reqscont.continnum_latest()
+        reqset = reqscont.continuum_latest()
         # For each requirement get the dependency correct
         ofile.write("%s: " % self.filename)
         for r in reqset.reqs:
@@ -49,7 +49,7 @@ class latex2:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest())
+        self.output_reqset(reqscont.continuum_latest())
 
     def output_reqset(self, reqset):
         # Call the topic to write out everything

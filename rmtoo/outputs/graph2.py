@@ -28,7 +28,7 @@ class graph2:
     # based output.
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest())
+        self.output_reqset(reqscont.continuum_latest())
 
     def output_reqset(self, reqset):
         # Initialize the graph output

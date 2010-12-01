@@ -60,7 +60,7 @@ class oopricing1:
     # requirements. 
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest(), reqscont)
+        self.output_reqset(reqscont.continuum_latest(), reqscont)
 
     def output_reqset(self, reqset, reqscont):
 
@@ -103,7 +103,7 @@ class oopricing1:
         m = odf.dc.Title(text="Requirements Pricing")
         calcdoc.meta.addElement(m)
         m = odf.meta.UserDefined(name="Version",
-                                 text=reqscont.continnum_latest_id())
+                                 text=reqscont.continuum_latest_id())
         calcdoc.meta.addElement(m)
         m = odf.meta.UserDefined(name="Generator", text="rmtoo")
         calcdoc.meta.addElement(m)

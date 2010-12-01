@@ -24,7 +24,7 @@ class prios:
 
     def output(self, reqscont):
         # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continnum_latest())
+        self.output_reqset(reqscont.continuum_latest())
 
     def get_reqs_impl_detail(self):
         # This is mostly done at this level - because they must be
