@@ -8,6 +8,7 @@ Added man pages for rmtoo-art-xml-ganttproject1,
 rmtoo-art-xml-ganttproject2, rmtoo-art-xml1 and
 rmtoo-template-project.
 
+Fixed analytics heuristics: words were only counted once.
 
 Internal Changes
 ----------------
