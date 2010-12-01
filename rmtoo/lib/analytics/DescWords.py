@@ -98,9 +98,9 @@ class DescWords:
 
         ok = True
         for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
-            req.analytics["DescWords"] \
-                = self.analyse(lwords, req.tags["Description"])
-            if level<0:
+            ares = DescWords.analyse(lwords, req.tags["Description"])
+            req.analytics["DescWords"] = ares
+            if ares[0]<0:
                 ok = False
             
         return ok
