@@ -32,20 +32,27 @@ o Update presentation:
 
 v16
 ===
-o Increase test case coverage to minimum 90%
+o Increase test case coverage to minimum 95%
 
 v17
 ===
-o Add new paragraphs from rmtoo.7 to the presentation.
-o Add '10 Gründe rmtoo zu nutzen'
-o Add '10 Gründe rmtoo nicht zu nutzen'
-o Add '10 Ausreden wieso Ihr Projekt kein Req Mgmt verwendet'
 o Include sub-graphs in the PDF and HTML documentation
   - Topic based (all reqs of a topic)
   - req based (all reqs dependend and depend on one req)
+  - Try to implement this is a generic way that makes it
+    possible to include dot files from within a requirement.
+    (If this is not possible, add this to the OTHER / LATER
+    features.)
 o Adapt man pages
 o Adapt presentation
 
+v18
+===
+o Depends on: -> Solved by:
+  This is VERY important!
+  - Make it configurable which method to use
+  - Create a small script to convert from 'Depend On:'
+    to 'Solved by:'
 
 ==> This will be the point of time to get rmtoo into one Linux
     distribution and send out the form to INCOSE.
