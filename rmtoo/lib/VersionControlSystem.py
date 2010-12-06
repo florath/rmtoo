@@ -99,7 +99,7 @@ class VCSGit:
 
     def rh_one_rs(self, cs, rs, files):
         for f in files:
-            # Only files which end in .req are taken
+            # Only files which end in .req are used
             m = re.match("^.*\.req$", f.name)
             if m==None:
                 continue

@@ -1,0 +1,51 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-xml-ganttproject2 1 2010-11-30 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-xml-ganttproject2 \- requirements management tool: ganttproject
+.SH DESCRIPTION
+The
+.B rmtoo
+requirement manangement tool is able to output XML files which can be
+read in by GanttProject.
+.P
+The requirements are structured by topics. The topic structure is used
+to build up to build up the project plan.  Each requirement is
+a separate own task.  Requirement dependencies are used to create the
+dependencies between tasks.
+.SH CONFIGURATION
+The first field (i.e. the name) must be set to \fIganttproject2\fR.  A
+list of two parameters must follow.
+.P
+The first parameter is the name of the topic set which is used to get
+the information.
+.P
+The second parameter is the name of the file where the ganttproject
+file will be stored.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+

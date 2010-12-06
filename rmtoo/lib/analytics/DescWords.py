@@ -27,38 +27,38 @@ class DescWords:
     # Do not add the single word 'not': only do this in pairs,
     # e.g. 'must not'.
     words_en_GB = [
-        [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
-        [ re.compile("^.* about .*$"), -15, "Usage of the word 'about'"],
-        [ re.compile("^.* and .*$"), -10, "Usage of the word 'and'"],
-        [ re.compile("^.* approximately .*$"), -100, "Usage of the word 'approximately'"],
-        [ re.compile("^.* etc\.? .*$"), -40, "Usage of the word 'etc'"],
-        [ re.compile("^.* e\.g\. .*$"), -40, "Usage of the word 'e.g.'"],
-        [ re.compile("^.* has to .*$"), 20, "Usage of the word 'has to'"],
-        [ re.compile("^.* have to .*$"), 20, "Usage of the word 'have to'"],
-        [ re.compile("^.* i\.e\. .*$"), -40, "Usage of the word 'i.e.'"],
-        [ re.compile("^.* many .*$"), -20, "Usage of the word 'many'"],
-        [ re.compile("^.* may .*$"), 10, "Usage of the word 'may'"],
-        [ re.compile("^.* maybe .*$"), -50, "Usage of the word 'maybe'"],
-        [ re.compile("^.* might .*$"), 10, "Usage of the word 'might'"],
-        [ re.compile("^.* must .*$"),  25, "Usage of the word 'must'"],
-        [ re.compile("^.* or .*$"), -15, "Usage of the word 'or'"],
-        [ re.compile("^.* perhaps .*$"), -100, "Usage of the word 'perhaps'"],
-        [ re.compile("^.* should .*$"), 15, "Usage of the word 'should'"],
-        [ re.compile("^.* shall .*$"), 15, "Usage of the word 'shall'"],
-        [ re.compile("^.* some .*$"), -25, "Usage of the word 'some'"],
-        [ re.compile("^.* vaguely .*$"), -25, "Usage of the word 'vaguely'"],
+        [ re.compile("\. "), -15, "Additional fullstop (not only at the end of the desctiption)"],
+        [ re.compile(" about "), -15, "Usage of the word 'about'"],
+        [ re.compile(" and "), -10, "Usage of the word 'and'"],
+        [ re.compile(" approximately "), -100, "Usage of the word 'approximately'"],
+        [ re.compile(" etc\.? "), -40, "Usage of the word 'etc'"],
+        [ re.compile(" e\.g\. "), -40, "Usage of the word 'e.g.'"],
+        [ re.compile(" has to "), 20, "Usage of the word 'has to'"],
+        [ re.compile(" have to "), 20, "Usage of the word 'have to'"],
+        [ re.compile(" i\.e\. "), -40, "Usage of the word 'i.e.'"],
+        [ re.compile(" many "), -20, "Usage of the word 'many'"],
+        [ re.compile(" may "), 10, "Usage of the word 'may'"],
+        [ re.compile(" maybe "), -50, "Usage of the word 'maybe'"],
+        [ re.compile(" might "), 10, "Usage of the word 'might'"],
+        [ re.compile(" must "),  25, "Usage of the word 'must'"],
+        [ re.compile(" or "), -15, "Usage of the word 'or'"],
+        [ re.compile(" perhaps "), -100, "Usage of the word 'perhaps'"],
+        [ re.compile(" should "), 15, "Usage of the word 'should'"],
+        [ re.compile(" shall "), 15, "Usage of the word 'shall'"],
+        [ re.compile(" some "), -25, "Usage of the word 'some'"],
+        [ re.compile(" vaguely "), -25, "Usage of the word 'vaguely'"],
     ]
 
     words_de_DE = [
-        [ re.compile("^.*\. .+$"), -15, "Additional fullstop (not only at the end of the desctiption)"],
-        [ re.compile("^.* ca\. .*$"), -75, "Usage of the word 'ca.'"],
-        [ re.compile("^.* möglicherweise .*$"), -100, "Usage of the word 'möglicherweise'"],
-        [ re.compile("^.* muss .*$"), 25, "Usage of the word 'muss'"],
-        [ re.compile("^.* oder .*$"), -15, "Usage of the word 'oder'"],
-        [ re.compile("^.* und .*$"), -10, "Usage of the word 'und'"],
-        [ re.compile("^.* usw..*$"), -40, "Usage of the word 'usw'"],
-        [ re.compile("^.* vielleicht .*$"), -25, "Usage of the word 'vielleicht'"],
-        [ re.compile("^.* z\.B\. .*$"), -40, "Usage of the word 'z.B.'"],
+        [ re.compile("\. "), -15, "Additional fullstop (not only at the end of the desctiption)"],
+        [ re.compile(" ca\. "), -75, "Usage of the word 'ca.'"],
+        [ re.compile(" möglicherweise "), -100, "Usage of the word 'möglicherweise'"],
+        [ re.compile(" muss "), 25, "Usage of the word 'muss'"],
+        [ re.compile(" oder "), -15, "Usage of the word 'oder'"],
+        [ re.compile(" und "), -10, "Usage of the word 'und'"],
+        [ re.compile(" usw."), -40, "Usage of the word 'usw'"],
+        [ re.compile(" vielleicht "), -25, "Usage of the word 'vielleicht'"],
+        [ re.compile(" z\.B\. "), -40, "Usage of the word 'z.B.'"],
     ]
 
     words = { "en_GB": words_en_GB,
@@ -74,6 +74,21 @@ class DescWords:
         return DescWords.words["en_GB"]
 
     @staticmethod
+    def analyse(lwords, text):
+        # Must be at least some positive things to get this
+        # positive. (An empty description is a bad one.)
+        level = -10
+        log = []
+        for wre, wlvl, wdsc in lwords:
+            plain_txt = LaTeXMarkup.replace_txt(text).strip()
+            fal = len(wre.findall(plain_txt))
+            if fal>0:
+                level += fal*wlvl
+                log.append("%+4d:%d*%d: %s" % (fal*wlvl, fal, wlvl, wdsc))
+                # Note the result of this test in the requirement itself.
+        return [level, log]
+
+    @staticmethod
     def run(config, reqs, topics):
         # Try to get the correct language
         lwords = DescWords.get_lang(config)
@@ -81,24 +96,11 @@ class DescWords:
         if lwords==None:
             return True
 
-#for t in sorted(topic.outgoing, key = lambda t: t.name):
-#sorted(prios_impl, key=operator.itemgetter(0, 1)
-
         ok = True
         for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
-            # Must be at least some positive things to get this
-            # positive. (An empty description is a bad one.)
-            level = -10
-            log = []
-            for wre, wlvl, wdsc in lwords:
-                plain_txt = LaTeXMarkup.replace_txt(
-                    req.tags["Description"]).strip()
-                if wre.match(plain_txt):
-                    level += wlvl
-                    log.append("%+4d: %s" % (wlvl, wdsc))
-            # Note the result of this test in the requirement itself.
-            req.analytics["DescWords"] = [level, log]
-            if level<0:
+            ares = DescWords.analyse(lwords, req.tags["Description"])
+            req.analytics["DescWords"] = ares
+            if ares[0]<0:
                 ok = False
             
         return ok

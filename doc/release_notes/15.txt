@@ -4,6 +4,11 @@ User visible changes
 The presentation was splitted in two parts and completely
 restructured. 
 
+Added man pages for rmtoo-art-xml-ganttproject1,
+rmtoo-art-xml-ganttproject2, rmtoo-art-xml1 and
+rmtoo-template-project.
+
+Fixed analytics heuristics: words were only counted once.
 
 Internal Changes
 ----------------
@@ -13,5 +18,15 @@ end of the document.
 
 Moved all created documents to the artifacts directory.
 
+Fixed error in blackbox test 11 which referenced data of blackbox test
+9. 
+
 Fixed typo in method name: continnum -> continuum.
+
+Rejected Changes
+----------------
+
+At one point it looked that the create continuum from file was called
+twice.  It was now verified that this is not true: it is always called
+no more than once.
 
