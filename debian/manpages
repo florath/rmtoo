@@ -12,9 +12,13 @@ doc/man/rmtoo-art-req-dep-graph.1
 doc/man/rmtoo-art-req-dep-graph2.1
 doc/man/rmtoo-art-reqs-history-cnt.1
 doc/man/rmtoo-art-version1.1
+doc/man/rmtoo-art-xml1.1
+doc/man/rmtoo-art-xml-ganttproject1.1
+doc/man/rmtoo-art-xml-ganttproject2.1
 doc/man/rmtoo-config.5
 doc/man/rmtoo-emacs-mode-req.7
 doc/man/rmtoo-invoking.1
 doc/man/rmtoo-pricing-graph.1
 doc/man/rmtoo-req-format.5
+doc/man/rmtoo-template-project.1
 doc/man/rmtoo-topic-format.5

@@ -10,7 +10,7 @@ then
     echo "+++ Usage: . setenv.sh [DEB|path to rmtoo]"
     echo "    use DEB when using the installed DEB package"
     echo "    specify the (absolut) path to the unpackaged rmtoo package"
-    return 
+    exit 1
 fi
 
 RMTOO_DIR=$1
