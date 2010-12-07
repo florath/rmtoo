@@ -33,6 +33,8 @@ o Update presentation:
 v16
 ===
 o Increase test case coverage to minimum 95%
+o Archive old versions from slashdot to flonatel.de
+  (leave only last three versions on slashdot)
 
 v17
 ===
