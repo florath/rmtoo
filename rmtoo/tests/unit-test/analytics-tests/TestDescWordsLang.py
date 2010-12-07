@@ -10,19 +10,29 @@
 
 from rmtoo.lib.analytics.DescWords import DescWords
 
-class TestConfig:
+class TestConfig1:
 
-    reqs_spec = []
+    reqs_spec = {}
+
+class TestConfig2:
+
+    reqs_spec = { "default_language": "kl_EL"}
 
 class TestDescWords:
 
     def test_pos_01(self):
         "DescWords: check language handling"
 
-        tc = TestConfig()
+        tc = TestConfig1()
         lwords = DescWords.get_lang(tc)
         level, log = DescWords.analyse(lwords, "Me and You, You and Me")
         assert(level==-30)
         assert(log==[" -20:2*-10: Usage of the word 'and'"])
 
 
+    def test_neg_01(self):
+        "DescWords: get non existing language spec"
+
+        tc = TestConfig2()
+        lwords = DescWords.get_lang(tc)
+        assert(lwords==None)
