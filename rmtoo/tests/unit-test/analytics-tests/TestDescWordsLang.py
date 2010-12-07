@@ -36,3 +36,10 @@ class TestDescWords:
         tc = TestConfig2()
         lwords = DescWords.get_lang(tc)
         assert(lwords==None)
+
+    def test_neg_02(self):
+        "DescWords: get non existing language spec using run function"
+
+        tc = TestConfig2()
+        r = DescWords.run(tc, None, None)
+        assert(r==True)
