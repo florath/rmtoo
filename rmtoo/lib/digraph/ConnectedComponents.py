@@ -7,6 +7,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
 class CC_Components:
     
     def __init__(self):
@@ -38,7 +40,7 @@ class CC_Components:
                 return c, i
             c += 1
         # Node not found
-        assert(False)
+        raise RMTException(68, "Node [%s] not found" % n)
 
     def contract(self, n, v):
         gi, g = self.find(n)
