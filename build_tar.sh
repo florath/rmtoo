@@ -39,6 +39,8 @@ find package/${PACKAGE_NAME} -name "*~" | xargs rm -f
 find package/${PACKAGE_NAME} -name "*.pyc" | xargs rm -f
 # Also remove the presentation (will be delivered seperatly)
 rm -fr package/${PACKAGE_NAME}/doc/presentations
+# Create the artifacts directory (used when rmtoo itself if build)
+mkdir -p package/${PACKAGE_NAME}/artifacts
 
 # Create tag ball
 (cd package

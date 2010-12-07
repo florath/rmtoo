@@ -29,59 +29,60 @@ from them.
 .SH IDEA
 .B rmtoo
 uses a different approach than most other requirements management
-tools: it comes as a command line tool optimized for handling of 
+tools: it comes as a command line tool optimized for handling 
 requirements.  The power of
 .B rmtoo
-is that a typical development environment can perfectly handle the
-input files as they are plain text files.  
+is that a typical development environment can handle the input files
+with ease, as they are plain text.
 .P
 .B rmtoo
-input files can ba handled by mostly all standard *nix standard
-commands like grep(1), awk(1) or sed(1).  For replacing text commands
-like streplace(1) can be used.
+input files can be handled by mostly all standard *nix
+commands like grep(1), awk(1) or sed(1).  When replacing text,
+commands like streplace(1) can be used.
 .P
 .B rmtoo
 is a tool. It helps everybody who understands Requirements Management.  It
-does not render anybody directly into an Requirements Management
-expert.  You have to know what you are doing!
+does not turn people into Requirements Management experts.  You have to
+know what you are doing! 
 .P
 .B rmtoo
 gives everybody the unique chance to adapt the tools to their needs
-and their processes: it's open source.  Sometimes some other tools
-force the user to change you habit or processes.  With
+and their processes because it's open source.  Often other tools
+force the user to change their habits or processes.  With
 .B rmtoo
 the user has the control.
 .P
-The output of requirements is handled based on groups of
-requirements - so called Topics.  Each requirement belongs to
-exactly one topic.  Typically a Topic corresponds to one section; a 
-Topic can have sub-Topic (sub-sections).  For further information
+The output of requirements is handled in groups of
+requirements - so called topics.  Each requirement belongs to
+exactly one topic.  Typically a topic corresponds to one section; a 
+topic can have sub-topic (sub-sections).  For further information
 please consult the section
 .B TOPIC
 .P
 For handling history and baselines an arbitrary revision control
-system can be used (like git, mercurial, subversion, ...).
+system can be used (such as git, mercurial, subversion ...).
 Nevertheless currently
 .B rmtoo
-supports \fIgit\fR natively for version access and statistics.
+supports \fIgit\fR as default for version access and statistics.
 .P
 .B Let one thing do one thing.
 .P
 .B rmtoo
 is
 .B no
-integrated 'do-everything' tool as it comes with no GUI at all.
+integrated, 'do-everything' tool as it comes with no GUI at all.
 .SH OVERVIEW
 The
 .B rmtoo
-requirement management tool works on a set of requirements.  It reads
-them in, parses them, preprocesses them, checks for syntactic and
-semantic problems.  If there is no error found, all artifacts which
-are specified are outputted. 
+requirements management tool works on a set of requirements.  It reads
+them in, parses them, preprocesses them and checks them for syntactic
+and semantic problems.  If no errors are found, all artifacts
+which are specified are generated. 
 .P
-This page is an overview page.  It gives a short overview over the
-.B rmtoo 
-usage.  Also it points to other man pages where information about
+This page is an overview page.  It gives a short overview of the uses
+of 
+.B rmtoo. 
+Also it points to other man pages where information about
 input and output files can be found.
 .SH INTRODUCTION
 The
@@ -92,52 +93,54 @@ These files are plain text files stored in the file system.
 .B rmtoo
 parses these files and runs some checks on them.  These
 checks include syntax checks, semantic checks and some heuristics to
-get hints for increasing the quality of the requirements.
+provide ideas for improving the quality of the requirements.
 .P
 After passing these checks,
 .B rmtoo
 outputs all configured artifacts, like PDF or HTML documents,
-dependency graph or statistics.
+dependency graphs or statistics.
 .SH TOPIC
 .B rmtoo
-uses a unique way of describing and handling output: so called
+uses a unique method for describing and handling output: so called
 .B topics.
 A topic is a description of one set of related requirements.  It has a
 name and contains text, requirements and other topics.  With topics it
-is possible to build hierarchy output document structures.  In a PDF
-file a topic may be one chapter which includes other topics which are
-handled as e.g. sections.  Using HTML output, each topic corresponds
-to one HTML page, while a subtopic is a link to the appropriate
-(sub-)topics HTML page representation.  When using graph output the
-requirements of a topic are clustered.
+is possible to build hierarchies of document output structures.  In a
+PDF file a topic may be one chapter which includes other topics which
+are handled as sections, for example.  Using HTML output, each topic
+corresponds to one HTML page, while a subtopic is a link to the
+appropriate (sub-)topic HTML page it represents.  When using graph
+output the requirements of a topic are clustered.
 .P
 This makes it possible to define the output structure once (in so
 called topic files) and use this structure over and over for all
 different output artifacts.
 .P
 It is possible (by adding one additional line in the configuration
-file) to create an independent and a self-contained (set of)
-document(s) from an arbitrary sub-topic.  This makes it possible
-e.g. to create a own document for the marketing department which is
-not interested in technical decisions and security requirements.
+file) to create an independent and self-contained (set of)
+document(s) from an arbitrary sub-topic.  This makes it possible,
+for example, to create a separate document for the marketing
+department which bears no relation to technical decisions and security
+requirements. 
 .P
-Of course it is also possible to map one set of requirements to some
-completely different sets of topics.  This makes it possible to have
-one set of requirements for the internal used project documentation
-and for an external company which delivers only one small part of the
-whole project.
+Of course it is also possible to map one set of requirements to a
+completely different set of topics.  This makes it possible to have
+one set of requirements for internally used project documentation
+and another for an external company which delivers only one small part
+of the whole project.
 .SH "SEE ALSO"
 .B rmtoo-invoking(1)
-- overview over command line parameters executable for requirement mangement
+- overview of command line parameters executable for requirements
+  management
 .P
 .B rmtoo-template-project.1
 - template project
 .P
 .B rmtoo-req-format(5)
-- format description for the requirement files
+- format description for requirement files
 .P
 .B rmtoo-topic-format(5)
-- format description for the topic files
+- format description for topic files
 .P
 .B rmtoo-config(5)
 - description of the \fIConfig.py\fR file which is needed for 
@@ -145,7 +148,7 @@ whole project.
 environment definition and output specification.
 .P
 .B rmtoo-analytics(7)
-- general concept of handling analytics on requirements
+- general concept for handling analytics on requirements
 .P
 .B rmtoo-analytics-descwords(7)
 - heuristic for word evaluation in the requirement description
@@ -160,10 +163,10 @@ environment definition and output specification.
 - check topic of a requirement for in-link against out-link numbers
 .P
 .B rmtoo-art-req-dep-graph(1)
-- output description of the requirement dependency graph
+- output description of the requirements dependency graph
 .P
 .B rmtoo-art-req-dep-graph2(1)
-- output description of the requirement dependency graph - version 2
+- output description of the requirements dependency graph - version 2
 .P
 .B rmtoo-art-html(1)
 - html artifact output

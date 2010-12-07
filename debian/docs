@@ -1,9 +1,10 @@
 gpl-3.0.txt
 Readme.txt
+Install.txt
 Roadmap.txt
 COPYING
-req-graph1.png
-req-graph2.png
-doc/latex2/requirements.pdf
+artifacts/req-graph1.png
+artifacts/req-graph2.png
+artifacts/requirements.pdf
 doc/other/FAQ.txt
 rmtoo/contrib/COPYING.contrib

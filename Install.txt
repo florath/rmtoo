@@ -39,3 +39,25 @@ $ nosetests -v -s
 (Note that some test cases will fail, because they assume that
 there is a git-history available - which is not.)
 The documents can be found under '/usr/share/doc/rmtoo'.
+
+Please note that rmtoo is by default delivered to create the comlete
+history of rmtoo requirements itself.  When using the tar ball or the
+debian package the history is not available.  You might get an error
+like:
+Traceback (most recent call last):
+  File "./bin/rmtoo", line 14, in <module>
+    main(sys.argv[1:], sys.stdout, sys.stderr)
+  File "/home/florath/devel/rmtoo/rmtoo-15/rmtoo/lib/RmtooMain.py", line 123, in main
+    exitfun(not main_impl(args, mstdout, mstderr))
+  File "/home/florath/devel/rmtoo/rmtoo-15/rmtoo/lib/RmtooMain.py", line 119, in main_impl
+    return execute_cmds(opts, config, mods, mstdout, mstderr)
+  File "/home/florath/devel/rmtoo/rmtoo-15/rmtoo/lib/RmtooMain.py", line 55, in execute_cmds
+    reqs = rc.continuum_latest()
+  File "/home/florath/devel/rmtoo/rmtoo-15/rmtoo/lib/ReqsContinuum.py", line 46, in continuum_latest
+    return self.continuum[self.continuum_order[0]]
+IndexError: list index out of range
+make: *** [artifacts/.rmtoo_dependencies] Error 1
+
+If this happens, please change the interval to ["FILES", "FILES"].
+
+

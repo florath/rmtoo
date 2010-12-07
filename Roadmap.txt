@@ -25,16 +25,13 @@ o Add requirements from Roadmap.
 o Rethink about the modules: they should also run (at least partially)
   for the topic based output.  Is there a way to unify this?
 
-v15
-===
-o Update presentation:
-  - template project
-
 v16
 ===
 o Increase test case coverage to minimum 95%
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
+o Move all created artifacs of the template project to the artifact
+  directory. 
 
 v17
 ===
