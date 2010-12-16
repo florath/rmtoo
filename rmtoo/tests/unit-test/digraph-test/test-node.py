@@ -18,3 +18,10 @@ class TestNode:
         n = Digraph.Node()
         r = n.find_outgoing("nixdamit")
         assert(r==None)
+
+    def test_neg_02(self):
+        "Node test: check if is_self_of_ancient is correct when the other is not an ancient"
+
+        n = Digraph.Node()
+        r = n.is_self_of_ancient(None)
+        assert(r==False)
