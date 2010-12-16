@@ -142,3 +142,15 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==22)
 
+    def test_add_node_01(self):
+        "Digraph add node with two times same name"
+        dg = Digraph()
+        n1 = Digraph.Node("myname")
+        n2 = Digraph.Node("myname")
+        dg.add_node(n1)
+        try:
+            dg.add_node(n2)
+            assert(False)
+        except RMTException, rmte:
+            assert(rmte.id()==39)
+
