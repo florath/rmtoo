@@ -82,5 +82,5 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/digraph-test/test-digraph.py
+		tests/unit-test/core-tests/TestVersionControlSystem.py
 
