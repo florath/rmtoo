@@ -111,7 +111,9 @@ class VCSGit:
                 rs.add_req(req)
             else:
                 rs.not_usable()
-        rs.handle_modules()
+        # Modules must only be handled when there are some requirements.
+        if len(rs.reqs)>0:
+            rs.handle_modules()
         # XXX IS here some return value needed?
                    
 class VersionControlSystem:

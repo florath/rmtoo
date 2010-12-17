@@ -34,3 +34,28 @@ class TestVersionControlSystem:
             assert(rmte.id()==28)
 
                                            
+    def test_pos_02(self):
+        "VCSGit: Check error handling of rh_one_rs"
+        
+        # The problem is here to create an object without having 
+        # a git repo available.
+        class InHerVCS(VCSGit):
+
+            def __init__(self, directory):
+                self.repo = Dummy()
+                self.repo.git_dir = directory
+
+        vcs = InHerVCS("/hahaha")
+
+        class Files:
+            name = "/tmp/huhu.noreq"
+
+        files = [Files()]
+
+        class RS:
+            reqs = []
+
+        rs = RS()
+
+        vcs.rh_one_rs(None, rs, files)
+
