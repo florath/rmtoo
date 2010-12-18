@@ -1,0 +1,11 @@
+Name: A2
+Type: initial requirement
+Invented on: 2010-12-18
+Invented by: flonatel
+Owner: development
+Description: A2 \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Depends on: A1
+Topic: B1

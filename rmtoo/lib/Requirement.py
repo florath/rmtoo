@@ -22,6 +22,7 @@ class Requirement(Digraph.Node):
     # The class ReqType sets this from the contents of the file.
     # Note: There can only be one (master requirement)
     rt_master_requirement = 1
+    # Initial requirement is deprecated
     rt_initial_requirement = 2
     rt_design_decision = 3
     rt_requirement = 4

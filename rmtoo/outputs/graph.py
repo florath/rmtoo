@@ -71,11 +71,6 @@ class graph:
                 and req.tags["Class"] == req.ct_implementable:
             nodeparam.append("shape=octagon")
 
-        if get_conf_attr("Topic") \
-                and req.tags["Topic"] == "internal":
-            nodeparam.append("fillcolor=lightblue")
-            nodeparam.append("style=filled")
-
         return ",".join(nodeparam)
 
     def output_req(self, req, dotfile):
