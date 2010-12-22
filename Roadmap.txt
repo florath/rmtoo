@@ -4,8 +4,8 @@ implemented features.
 
 There is no exact time line because the amount of time spend for this
 tools changes from time to time (depending on many factors).  From
-history it may be assumed that it takes about 6 to 8 weeks from one
-version to the next.
+history it may be assumed that it takes about 6 to 8 weeks for one
+release.
 
 Also the version number shown here might change: if there are other
 requests from customers this will be done first.  Also it might be
@@ -19,12 +19,6 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
-IMPORTANT
-=========
-o Add requirements from Roadmap.
-o Rethink about the modules: they should also run (at least partially)
-  for the topic based output.  Is there a way to unify this?
-
 v16
 ===
 o Increase test case coverage to minimum 95%
@@ -32,6 +26,11 @@ o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
 o Move all created artifacs of the template project to the artifact
   directory. 
+o Depends on: -> Solved by:
+  This is VERY important!
+  - Make it configurable which method to use
+  - Create a small script to convert from 'Depend On:'
+    to 'Solved by:'
 
 v17
 ===
@@ -45,17 +44,16 @@ o Include sub-graphs in the PDF and HTML documentation
 o Adapt man pages
 o Adapt presentation
 
-v18
-===
-o Depends on: -> Solved by:
-  This is VERY important!
-  - Make it configurable which method to use
-  - Create a small script to convert from 'Depend On:'
-    to 'Solved by:'
 
 ==> This will be the point of time to get rmtoo into one Linux
     distribution and send out the form to INCOSE.
 
+
+IMPORTANT
+=========
+o Add requirements from Roadmap.
+o Rethink about the modules: they should also run (at least partially)
+  for the topic based output.  Is there a way to unify this?
 
 OTHER / LATER
 =============

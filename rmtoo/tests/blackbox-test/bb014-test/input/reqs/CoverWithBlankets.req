@@ -1,0 +1,12 @@
+Name: Cover with Blankets
+Type: requirement
+Invented on: 1994-04-04
+Invented by: Wulf
+Owner: executive
+Description: The seats \textbf{must} be covered with blankets after
+ they are roughly cleaned.
+Status: not done
+Priority: executive:10
+Effort estimation: 2
+Topic: PulpFiction
+Class: implementable
