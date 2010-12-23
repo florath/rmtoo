@@ -62,7 +62,8 @@ class ParserHelper:
         if line[0]==' ':
             return ParserHelper.lt_continue, None, line
         # Is the line toooo long?
-        if len(line)>pconfig["max_line_length"]:
+        mllen = pconfig["max_line_length"]
+        if mllen>0 and len(line)>mllen:
             print("+++ ERROR %s:%d: line too long (len [%d], max [%d]) '%s'"
                   % (rid, lineno, len(line), pconfig["max_line_length"], line))
             return ParserHelper.lt_error, None, None
