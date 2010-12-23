@@ -21,8 +21,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v16
 ===
-o Again: check the created XML files (seem similar/equal but test
-  fails).
 o Adapt Readme.txt (Remove beta, ...)
 o Increase test case coverage to minimum 95%
 o Archive old versions from slashdot to flonatel.de
@@ -34,6 +32,8 @@ o Depends on: -> Solved by:
   - Make it configurable which method to use
   - Create a small script to convert from 'Depend On:'
     to 'Solved by:'
+  - Man pages / documentation / presentations
+o Add description of 1:N and N:1 to man page / documentation.
 
 v17
 ===

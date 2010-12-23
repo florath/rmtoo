@@ -1,6 +1,16 @@
 User visible changes
 --------------------
 
+Fixed a bug which results in a stack trace when the line length was
+too big in a topic. (Thanks to radar8)
+
+Maximum line length is now configurable - separately for requirements
+and topics.
+
+The 'Solved by' N:1 digraph relation description was added - which can
+be used instead of using 'Depends on'.  Even a mix is possible.
+
+
 Internal Changes
 ----------------
 
