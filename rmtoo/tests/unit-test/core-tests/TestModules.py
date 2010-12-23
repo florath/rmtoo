@@ -15,6 +15,7 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 mod_base_dir = "tests/unit-test/core-tests/testdata"
 
@@ -69,7 +70,7 @@ class TestModules:
                        {}, {}, [], mods_list("modules05", mod_base_dir))
         sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
-        req = Requirement(sio, 77, mls, mods, None, None)
+        req = Requirement(sio, 77, mls, mods, None, TestConfig())
 
         sout = StringIO.StringIO()
         mls.write_log(sout)
@@ -84,7 +85,7 @@ class TestModules:
                        {}, {}, [], mods_list("modules06", mod_base_dir))
         sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
-        req = Requirement(sio, 77, mls, mods, None, None)
+        req = Requirement(sio, 77, mls, mods, None, TestConfig())
 
         sout = StringIO.StringIO()
         mls.write_log(sout)

@@ -11,6 +11,7 @@ import StringIO
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestRequirement:
 
@@ -19,5 +20,5 @@ class TestRequirement:
 
         sio = StringIO.StringIO("DTag: content1\n"
                                 "DTag: content2\n")
-        req = Requirement(sio, 1, MemLogStore(), None, None, None)
+        req = Requirement(sio, 1, MemLogStore(), None, None, TestConfig())
         assert(req.state==Requirement.er_error)

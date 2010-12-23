@@ -16,6 +16,7 @@ from rmtoo.lib.Modules import Modules
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.MemLogStore import MemLogStore, MemLog
 from rmtoo.tests.lib.ModuleHelper import mods_list
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 mod_base_dir = "tests/unit-test/core-tests/testdata"
 
@@ -28,7 +29,7 @@ class TestReqSet:
                        {}, {}, [], mods_list("modules08", mod_base_dir))
 
         sio = StringIO.StringIO("Hubbel: bubbel")
-        req = Requirement(sio, "hubbel", None, mods, None, None)
+        req = Requirement(sio, "hubbel", None, mods, None, TestConfig())
 
         reqs = RequirementSet(mods, None, None)
         reqs.add_req(req)

@@ -10,10 +10,10 @@ import StringIO
 
 from rmtoo.lib.Parser import Parser, ParserHelper
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.tests.lib.TestConfig import TestConfig
 
-def tparsefunc_invalid(rid, line, lineno):
+def tparsefunc_invalid(rid, line, lineno, pconfig):
     return 77, None, None
-
 
 class tst_container:
     pass
@@ -51,7 +51,7 @@ class TestParser:
         try:
             sio = StringIO.StringIO("Hi\n")
             tstcntr = tst_container()
-            a, b, c = Parser.read_as_container(1, sio, tstcntr, 
+            a, b, c = Parser.read_as_container(1, sio, tstcntr, TestConfig(),
                                                tparsefunc_invalid)
             assert(False)
         except RMTException, rmte:

@@ -83,7 +83,7 @@ class Topic(Digraph.Node):
             # If the topic has subtopics, read them also in.
             if tag[0]=="SubTopic":
                 ntopic = Topic(self.dir, tag[1], self.digraph,
-                               self.level+1, self)
+                               self.parser_config, self.level+1, self)
                 #self.outgoing.append(ntopic)
                 Digraph.create_edge(self, ntopic)
                 #self.outgoing.append(ntopic)

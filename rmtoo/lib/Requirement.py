@@ -66,7 +66,8 @@ class Requirement(Digraph.Node):
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
-        req = Parser.read_as_map(self.id, fd)
+        req = Parser.read_as_map(self.id, fd,
+                                 self.config.parser["requirements"])
         if req == None:
             self.state = self.er_error
             self.mls.error(42, "parser returned error", self.id)

@@ -12,12 +12,7 @@ class Config:
     reqs_spec = \
         {
            "directory": basedir + "input/reqs",
-           "commit_interval": 
-           # ["v10", 
-           #                    "c35f8e918ab1d05ab3e2ba0be52a3f4092035663"],
-           #["138be32f1985aec694934263f02e47292deaac91", "FILES"]
-           #["v8", "FILES"]
-           ["FILES", "FILES"],
+           "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
         }
 

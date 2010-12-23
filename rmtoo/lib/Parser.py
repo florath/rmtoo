@@ -136,8 +136,8 @@ class Parser:
         return fine
 
     @staticmethod
-    def read_common(rid, fd, cntr):
-        if not Parser.read_as_container(rid, fd, cntr):
+    def read_common(rid, fd, cntr, pconfig):
+        if not Parser.read_as_container(rid, fd, cntr, pconfig):
             return None
         return cntr.r
 
@@ -172,7 +172,7 @@ class Parser:
     #   rid: the requirement id for logging
     #   fd: the file to read from
     @staticmethod
-    def read_as_map(rid, fd):
+    def read_as_map(rid, fd, pconfig):
 
         # Result containter for dictionary
         class dict_container:
@@ -191,4 +191,4 @@ class Parser:
                 self.r[key] = content
                 return True
 
-        return Parser.read_common(rid, fd, dict_container())
+        return Parser.read_common(rid, fd, dict_container(), pconfig)

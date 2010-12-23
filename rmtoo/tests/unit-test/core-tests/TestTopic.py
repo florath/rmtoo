@@ -11,6 +11,7 @@
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestTopic:
 
@@ -18,7 +19,7 @@ class TestTopic:
         "Topic: (internal) check if Name tag exists"
         dg = Digraph()
 
-        topic = Topic(None, None, dg)
+        topic = Topic(None, None, dg, TestConfig())
         try:
             topic.extract_name()
             assert(False)
