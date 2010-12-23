@@ -21,6 +21,9 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v16
 ===
+o Again: check the created XML files (seem similar/equal but test
+  fails).
+o Adapt Readme.txt (Remove beta, ...)
 o Increase test case coverage to minimum 95%
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)

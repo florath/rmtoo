@@ -14,7 +14,7 @@ from rmtoo.lib.digraph.Helper import remove_single_element_lists_name_rest
 from rmtoo.lib.digraph.Digraph import Digraph
 
 class RDepNoDirectedCircles(Digraph.Node):
-    depends_on = ["RDepDependsOn"]
+    depends_on = ["RDepDependsOn", "RDepSolvedBy"]
     
     def __init__(self, opts, config):
         Digraph.Node.__init__(self, "RDepNoDirectedCircles")

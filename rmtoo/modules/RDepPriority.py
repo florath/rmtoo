@@ -16,7 +16,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 #
 class RDepPriority(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
-                  "RDepOneComponent"]
+                  "RDepOneComponent", "RDepSolvedBy"]
 
     def __init__(self, opts, config):
         Digraph.Node.__init__(self, "RDepPriority")
