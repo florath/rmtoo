@@ -1,0 +1,16 @@
+Name: Configuration Check
+Type: requirement
+Invented on: 2010-12-23
+Invented by: flonatel
+Description: The configuration \textbf{must} be checked.
+Rationale: There might be typos in the configuration.  Everything what
+ is possible to check should be checked.  Especially types and ranges.
+Note: There are some major reasons to do this at one point and not to
+ spread it over the different classes - especially those things which
+ are used in multiple classes.
+Owner: development
+Depends on: Configuration
+Status: not done
+Priority: development:10
+Effort estimation: 13
+Topic: Basics
