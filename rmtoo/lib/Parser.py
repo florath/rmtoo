@@ -50,7 +50,7 @@ class ParserHelper:
     # 3) If line_type is initial: the tag and the beginning of the
     #    characters for the tag.
     @staticmethod
-    def parse_line(rid, line, lineno):
+    def parse_line(rid, line, lineno, pconfig):
         line = ParserHelper.erase_tailing_newline(line)
         # Empty line
         if len(line)==0:
@@ -62,9 +62,9 @@ class ParserHelper:
         if line[0]==' ':
             return ParserHelper.lt_continue, None, line
         # Is the line toooo long?
-        if len(line)>80:
-            print("+++ ERROR %s:%d: line too long (%d chars) '%s'"
-                  % (rid, lineno, len(line), line))
+        if len(line)>pconfig["max_line_length"]:
+            print("+++ ERROR %s:%d: line too long (len [%d], max [%d]) '%s'"
+                  % (rid, lineno, len(line), pconfig["max_line_length"], line))
             return ParserHelper.lt_error, None, None
         # 'Normal' line
         ls = line.split(":", 1)
@@ -86,7 +86,7 @@ class Parser:
     # This implements a finite state automate with a small number
     # of states and transitions.
     @staticmethod
-    def read_as_container(rid, fd, cntr,
+    def read_as_container(rid, fd, cntr, pconfig,
                           parserfunc = ParserHelper.parse_line):
         # The linenumber is only used for log messages.
         lineno = 0
@@ -98,7 +98,7 @@ class Parser:
         lines = fd.read().split("\n")
         for line in lines:
             lineno += 1
-            line_type, key, content = parserfunc(rid, line, lineno)
+            line_type, key, content = parserfunc(rid, line, lineno, pconfig)
 
             # Skip empty lines
             if line_type==ParserHelper.lt_empty:
@@ -148,7 +148,7 @@ class Parser:
     #   rid: the requirement id for logging
     #   fd: the file to read from
     @staticmethod
-    def read_as_list(rid, fd):
+    def read_as_list(rid, fd, pconfig):
         
         # Result containter for list
         class list_container:
@@ -164,7 +164,7 @@ class Parser:
                 self.r.append([key, content])
                 return True
 
-        return Parser.read_common(rid, fd, list_container())
+        return Parser.read_common(rid, fd, list_container(), pconfig)
 
     # This method returns a dictionary.  The key-value pairs can
     # directly be found inside the dict.

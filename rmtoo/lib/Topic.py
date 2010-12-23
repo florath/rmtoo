@@ -22,13 +22,14 @@ import os
 
 class Topic(Digraph.Node):
 
-    def __init__(self, tdir, tname, dg, tlevel=0, 
+    def __init__(self, tdir, tname, dg, pconfig, tlevel=0, 
                  tsuper=None):
         Digraph.Node.__init__(self, tname)
         self.dir = tdir
         # Master map is needed for deciping requirements into the
         # appropriate topic.
         self.digraph = dg
+        self.parser_config = pconfig
         # Identiation level of this topic
         self.level = tlevel
         self.super = tsuper
@@ -73,7 +74,11 @@ class Topic(Digraph.Node):
     def read(self):
         self.digraph.add_node(self)
         fd = file(os.path.join(self.dir, self.name + ".tic"))
-        self.t = Parser.read_as_list(self.name, fd)
+        self.t = Parser.read_as_list(self.name, fd, self.parser_config)
+        if self.t==None:
+            # Something during the parsing process went wrong
+            raise RMTException(73, "Parsing of topic [%s] failed"
+                               % self.name)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
             if tag[0]=="SubTopic":

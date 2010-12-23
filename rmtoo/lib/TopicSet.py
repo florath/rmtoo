@@ -32,13 +32,14 @@ class TopicSet(Digraph, MemLogStore):
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
-    def __init__(self, all_reqs, name, tparam):
+    def __init__(self, all_reqs, name, tparam, config):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         assert(len(tparam)==2)
         self.name = name
         self.topic_dir = tparam[0]
         self.master_topic = tparam[1]
+        self.config = config
         self.read_topics(self.topic_dir, self.master_topic)
 
         if all_reqs!=None:
@@ -79,7 +80,7 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
-        Topic(tdir, initial_topic, self)
+        Topic(tdir, initial_topic, self, self.config.parser["topics"])
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct

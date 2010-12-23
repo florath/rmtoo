@@ -22,7 +22,9 @@ class TestConfig:
 
 # Create a set of parameters for the test-cases
 def create_parameters(d=None):
-    return {}, TestConfig(), ReqSet(d)
+    tconfig = TestConfig()
+    ConfigUtils.set_defaults(tconfig)
+    return {}, tconfig, ReqSet(d)
 
 # This is a test (minimalistic) requirement
 class TestReq(Digraph.Node):

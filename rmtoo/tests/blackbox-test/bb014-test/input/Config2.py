@@ -14,6 +14,7 @@ class Config:
            "directory": basedir + "input/reqs",
            "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
+           "dependency_notation": set("Solved by", ),
         }
 
     topic_specs = \

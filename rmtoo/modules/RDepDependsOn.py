@@ -94,6 +94,9 @@ class RDepDependsOn(Digraph.Node):
         return True
 
     def rewrite(self, reqset):
+        if "Depends on" not in self.config.reqs_spec["dependency_notation"]:
+            return True
+
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)
         everythings_fine = True

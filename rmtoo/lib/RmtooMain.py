@@ -22,6 +22,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicHandler import TopicHandler
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
+from rmtoo.lib.ConfigUtils import ConfigUtils
 
 def parse_cmd_line_opts(args):
     parser = OptionParser()
@@ -109,6 +110,8 @@ def load_config(opts):
     conf_file = f.read()
     exec(conf_file)
     config = Config()
+    ConfigUtils.set_defaults(config)
+    ConfigUtils.check(config)
     f.close()
     return config
 
