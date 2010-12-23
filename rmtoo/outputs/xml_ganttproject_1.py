@@ -70,7 +70,7 @@ class xml_ganttproject_1:
             xml_task.setAttribute("complete", v)
             
         # Dependencies
-        for node in req.incoming:
+        for node in sorted(req.incoming, key=lambda r: r.id):
             xml_depend = doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.id)))
             # There are some default attrs

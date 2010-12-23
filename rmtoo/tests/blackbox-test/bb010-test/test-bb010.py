@@ -32,3 +32,8 @@ class TestBB010:
         assert(len(additional_files)==0)
         assert(len(diffs)==0)
         delete_result_is_dir()
+
+
+if __name__=="__main__":
+    t = TestBB010()
+    t.test_pos_001()
