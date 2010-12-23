@@ -120,7 +120,8 @@ class latex2:
             fd.write("\n\\textbf{Dependent:} ")
             # No comma at the end.
             fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
-                                for d in req.incoming]))
+                                for d in sorted(req.incoming,
+                                                key=lambda r: r.id)]))
             fd.write("\n")
 
         if req.tags["Status"]==req.st_finished:
