@@ -1,0 +1,12 @@
+Name: Txt Empty Lines
+Type: requirement
+Invented on: 2010-12-27
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support empty lines in the
+ text input files.
+Rationale: This makes it easier to read requirements.
+Depends on: TxtCommentSemantics
+Status: not done
+Priority: development:10
+Topic: Basics

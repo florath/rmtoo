@@ -1,0 +1,13 @@
+Name: Txt Comment Semantics
+Type: requirement
+Invented on: 2010-12-27
+Invented by: flonatel
+Owner: development
+Description: Comments (resp. empty lines) \textbf{must} be treated as
+ comments which describe the next tag.
+Rationale: This definition is needed to have the possibility to
+ re-arrange or extend existing requirements.
+Depends on: UseTxt
+Status: not done
+Priority: development:10
+Topic: Basics

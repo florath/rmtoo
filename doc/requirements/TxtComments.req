@@ -1,0 +1,12 @@
+Name: Txt Comments
+Type: requirement
+Invented on: 2010-12-27
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support comments in the text
+ input files.
+Rationale: Sometimes there is the need to comment tags.
+Depends on: TxtCommentSemantics
+Status: not done
+Priority: development:10
+Topic: Basics
