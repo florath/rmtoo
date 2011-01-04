@@ -61,9 +61,9 @@ class ConfigUtils:
 
     @staticmethod
     def check_reqs_spec(config):
-        allowed = ["Depends on", "Solved by"]
+        allowed = set(["Depends on", "Solved by"])
         set_diff = config.reqs_spec["dependency_notation"].difference(
-            set(allowed))
+            allowed)
         if len(set_diff)>0:
             raise RMTException(70, "Invalid value in "
                                "'dependency_notation': "
@@ -74,9 +74,9 @@ class ConfigUtils:
     def check_parser_name(config, name):
         v = config.parser[name]["max_line_length"]
         if not isinstance(v, int):
-            raise RMTException(71, "Config.parser['max_line_length'] is "
+            raise RMTException(71, "Config.parser['%s']['max_line_length'] is "
                                "not an integer - wich should be; type is [%s]"
-                               % type(v).__name__)
+                               % (name, type(v).__name__))
         if v<0:
             raise RMTException(72, "Config.parser['max_line_length'] is "
                                "negative [%s]" % v)

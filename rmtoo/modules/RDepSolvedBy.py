@@ -1,10 +1,10 @@
 #
 # rmtoo
-#   Requirements Management Tool
+#   Free and Open Source Requirements Management Tool
 #
 # The straight forward way to define dependencies.
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -35,22 +35,21 @@ class RDepSolvedBy(Digraph.Node):
             # This is the master!
             # Check if there is already another master:
             if reqset.graph_master_node!=None:
-                print("+++ ERROR %s: Another master is already there. "
-                      "There can only be one." % (rr.id))
+                reqset.error(76, "Another master is already there. "
+                             "There can only be one.", rr.id)
                 return False
             # Write a link to the master node to the RequirmentSet.
             reqset.graph_master_node = rr
             # return True
 
-        # It is a 'normal ' case when there is no 'Solved by' (until now).
+        # It is a 'normal' case when there is no 'Solved by' (until now).
         if self.tag not in rr.req:
             return True
 
         t = rr.req[self.tag]
         # If available, it must not empty
         if len(t)==0:
-            print("+++ ERROR %s: 'Solved by' field has len 0" %
-                  (rr.id))
+            reqset.error(77, "'Solved by' field has len 0", rr.id)
             return False
 
         # Step through the list
@@ -93,6 +92,6 @@ class RDepSolvedBy(Digraph.Node):
                 everythings_fine = False
         # Double check if one was found
         if reqset.graph_master_node==None:
-            reqset.error(48, "no master requirement found")
+            reqset.error(78, "no master requirement found")
             return False
         return everythings_fine

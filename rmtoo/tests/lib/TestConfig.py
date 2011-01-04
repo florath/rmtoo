@@ -14,3 +14,6 @@ class TestConfig:
 
     def __init__(self):
         ConfigUtils.set_defaults(self)
+
+    def set_solved_by(self):
+        self.reqs_spec["dependency_notation"] = "Solved by"

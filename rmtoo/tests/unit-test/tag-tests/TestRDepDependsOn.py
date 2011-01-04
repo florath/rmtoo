@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for RDepDependsOn
 #
-# (c) 2010 on flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -105,7 +106,7 @@ class TestRDepDependsOn:
         assert(status==False)
 
     def test_negative_04(self):
-        "Normal requirement has no 'Depends on'"
+        "Normal requirement has empty 'Depends on'"
         opts, config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",

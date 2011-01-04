@@ -69,6 +69,17 @@ class MemLog:
             ml.eline = None
         return ml
 
+    def display_ml(self):
+        print('[%d, MemLog.%s, "%s"' % (self.lid, self.level, self.msg))
+        if self.efile!=None:
+            print(', "%s"' % self.efile)
+            if self.eline!=None:
+                print(', "%s"' % self.eline)
+        else:
+            if self.eline!=None:
+                print(', None, "%s"' % self,eline)
+        print("], \n")
+
     def write_log(self, fd):
         if self.level==self.error:
             fd.write("+++ Error:")
@@ -129,6 +140,14 @@ class MemLogStore:
         for l in ll:
             mls.logs.append(MemLog.create_ml(l))
         return mls
+
+    # For writing test cases it is very helpful to get the internal
+    # representation of the object.
+    def display_ml(self):
+        print("[")
+        for m in self.logs:
+            m.display_ml()
+        print("]")
 
     # For comparison (also mostly used in test-cases) the eq operator
     # must be defined.
