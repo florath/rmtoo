@@ -19,6 +19,8 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
+==> Send things out to INCOSE.
+
 v16
 ===
 o Adapt Readme.txt (Remove beta, ...)
@@ -34,8 +36,19 @@ o Depends on: -> Solved by:
     to 'Solved by:'
   - Man pages / documentation / presentations
 o Add description of 1:N and N:1 to man page / documentation.
+o 80 chars max line -> config documentation
 
 v17
+===
+o New Parser (which is able to also output txt files)
+o rewite tool: automatically change dependeny noting
+
+
+==> This will be the point of time to get rmtoo into one Linux
+    distribution.
+
+
+v18
 ===
 o Include sub-graphs in the PDF and HTML documentation
   - Topic based (all reqs of a topic)
@@ -47,9 +60,6 @@ o Include sub-graphs in the PDF and HTML documentation
 o Adapt man pages
 o Adapt presentation
 
-
-==> This will be the point of time to get rmtoo into one Linux
-    distribution and send out the form to INCOSE.
 
 
 IMPORTANT
