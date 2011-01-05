@@ -16,7 +16,7 @@ Frequently Asked Questions
 ** What tags are supported?
    Currently the following tags are supported:
      Class
-     Depends on 
+     Solved by
      Description
      Effort estimation
      Invented by
@@ -44,14 +44,17 @@ Frequently Asked Questions
    It's typically easier to handle the requirements when the 'Id'
    gives a hint about the content.
 
-** How do I specify Depends?
-   Give only one 'Depends on' field per requirement.
-   The value should be the 'Id' of the requirement you are depending on.
-   You must specify a 'Depends on' - except of the master requirement.
+** How do I specify dependencies?
+   Give only one 'Solved by' field per requirement.
+   The value should be the 'Id's of the requirement which solves you 
+   current requirement.
+   You must specify a 'Solved by' - except for all leaves (requirements
+   which cannot / should not detailed any more).
 
 ** How do I put paragraphs in the Rationale?
    To start a new paragraph, write \par at end of the current
-   paragraph. This is a \latex\ command.
+   paragraph. (This will automatically converted to the appropriate 
+   output format.)
 
 ** Are there any guidlines for the use of Effort estimation?
    The effort estimation is meant to be a symbolic effort point number
@@ -81,7 +84,7 @@ Frequently Asked Questions
 
 ** How should I remove a requirement?
    Remove it from the file system (with rm), then remove it from the
-   tip (with 'git rm') then to a checkin.
+   vcs (with 'git rm') then do a checkin.
 
 * Every day usage
 
@@ -104,3 +107,8 @@ Frequently Asked Questions
    This is a hint, that the PYTHONPATH is not set correctly when using
    the tar packaged version of rmtoo.
 
+** 'make test' displays a low test coverage
+   The reason for this is currently unknown.
+   After removing all (old) .pyc files
+        find . -name "*.pyc" | xargs rm
+   the coverage is correctly computed.   
