@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Unit Test cases for MemLogStore
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -96,6 +99,38 @@ class TestMemLogStore:
         mls.info(77, "InfoMsg", "EFile", "ELine")
         assert(mls==MemLogStore.create_mls(
                 [ [77, MemLog.info, "InfoMsg", "EFile", "ELine"] ]))
+
+    def test_positive_11(self):
+        "MemLogStore: Check to_list - without file and line"
+
+        mls = MemLogStore()
+        mls.info(77, "InfoMsg")
+        l = mls.to_list()
+        assert(mls==MemLogStore.create_mls(l))
+
+    def test_positive_12(self):
+        "MemLogStore: Check to_list - without line"
+
+        mls = MemLogStore()
+        mls.info(77, "InfoMsg", "EFile")
+        l = mls.to_list()
+        assert(mls==MemLogStore.create_mls(l))
+
+    def test_positive_13(self):
+        "MemLogStore: Check to_list - without file"
+
+        mls = MemLogStore()
+        mls.info(77, "InfoMsg", None, "ELine")
+        l = mls.to_list()
+        assert(mls==MemLogStore.create_mls(l))
+
+    def test_positive_14(self):
+        "MemLogStore: Check to_list - with file and line"
+
+        mls = MemLogStore()
+        mls.info(77, "InfoMsg", "EFile", "ELine")
+        l = mls.to_list()
+        assert(mls==MemLogStore.create_mls(l))
 
     def test_negative_01(self):
         "Check if the exception for invalid log level works"

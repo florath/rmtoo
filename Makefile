@@ -82,6 +82,6 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/tag-tests/TestRDepSolvedBy.py
+		tests/unit-test/core-tests/TestMemLogStore.py
 
 

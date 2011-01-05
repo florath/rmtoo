@@ -1,17 +1,19 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-#   Memory Logging Store
+# Memory Logging Store
 #
 #   There is the need (e.g. for the RequirementSet) to store logs in
 #   memory - including a unique log-number, file name, line number and
 #   so on.
 #   This is needed because historic RequirementSets might have some
-#   problems parsing them.
+#   problems when parsing them - and a throw (which includes an abort)
+#   is not what is wanted.
 #   Also this makes is easier to write test cases handling error
 #   messages. 
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -32,6 +34,9 @@ class MemLog:
     error = 50
 
     levels = set([debug, info, warning, error])
+
+    level_names = { debug: "debug", info: "info", warning: "warning",
+                    error: "error" }
 
     # Checks the level: only the defined levels are allowed.
     def check_level(self):
@@ -69,16 +74,23 @@ class MemLog:
             ml.eline = None
         return ml
 
-    def display_ml(self):
-        print('[%d, MemLog.%s, "%s"' % (self.lid, self.level, self.msg))
+    def to_list(self):
+        r = []
+        r.append(self.lid)
+        # XXX This is not that perfect yet: it would be better 
+        # to have here the symbolic output instead of the number.
+        # This implies IMHO to move the levels to a sperate class.
+        r.append(self.level)
+        r.append(self.msg)
         if self.efile!=None:
-            print(', "%s"' % self.efile)
+            r.append(self.efile)
             if self.eline!=None:
-                print(', "%s"' % self.eline)
+                r.append(self.eline)
         else:
             if self.eline!=None:
-                print(', None, "%s"' % self,eline)
-        print("], \n")
+                r.append(None)
+                r.append(self.eline)
+        return r
 
     def write_log(self, fd):
         if self.level==self.error:
@@ -143,11 +155,11 @@ class MemLogStore:
 
     # For writing test cases it is very helpful to get the internal
     # representation of the object.
-    def display_ml(self):
-        print("[")
+    def to_list(self):
+        r = []
         for m in self.logs:
-            m.display_ml()
-        print("]")
+            r.append(m.to_list())
+        return r
 
     # For comparison (also mostly used in test-cases) the eq operator
     # must be defined.
