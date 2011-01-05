@@ -1,16 +1,19 @@
 ;;
-;; Requirement Management Toolset
 ;;
-;;   Emacs Mode for editing requirments
+;; rmtoo
+;;   Free and Open Source Requirements Management Tool
 ;;
-;; (c) 2010 by flonatel
+;; Emacs Mode for editing requirments
+;;
+;; (c) 2010-2011 by flonatel
 ;;
 ;; For licencing details see COPYING
 ;;
 
 (defconst req-tags-plain
   '("Name" "Type" "Invented on" "Invented by"
-    "Depends on" "History" "Owner" "Description" "Status"
+    "Depends on"
+    "Solved by" "History" "Owner" "Description" "Status"
     "Rationale" "Class" "Priority" "Note" "Effort estimation"
     "Topic")
   "List of strings with known REQ types.")

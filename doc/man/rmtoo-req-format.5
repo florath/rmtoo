@@ -64,9 +64,10 @@ tested.
 .SH KEY 'Rationale'
 This is optional.  This gives a hint and some more details about the
 requirement.  Typically some background information is given here. 
-.SH KEY 'Depends on'
-Each requirement (except the master requirement) must have one or
-more parents where this requirements depends on.
+.SH KEY 'Solved by'
+Each requirement which is 'solved' by other requirements must have one
+or more children.  The 'Solved by' tag contains a list of these
+children. 
 .SH KEY 'Status'
 The status can be one of 'not done' or 'finished'.
 .SH KEY 'Topic'
@@ -134,13 +135,22 @@ Description: The example application must use TCP/IP for
 Rationale: Here are some reasons why this must be
  implemented in this way.
 Owner: security
-Depends on: OtherRequirement
+Solved by: DetailedRequirement
 Status: not done
 
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview over rmtoo requirements management tool.  All references
 can be found there.
+.SH HISTORY
+There is also a tag named 'Depends on' which is the opposite of
+the 'Solved by' tag: Instead of specifying the requirement's children
+the parents were specified. The 'Depends on' must be seen as
+deprecated.
+.P
+The 'Depends on' tag is the older and is still (for
+compatibility reasons) the default. Nevertheless the 'Solved by' tag
+is the one which should be used in new projects.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT

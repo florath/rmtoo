@@ -6,6 +6,12 @@ artifacts
 build
 build-stamp
 configure-stamp
+contrib/template_project/.rmtoo_dependencies
+contrib/template_project/latex/requirements.aux
+contrib/template_project/latex/requirements.log
+contrib/template_project/latex/requirements.out
+contrib/template_project/latex/requirements.pdf
+contrib/template_project/latex/requirements.toc
 debian/files
 debian/rmtoo
 debian/rmtoo.debhelper.log

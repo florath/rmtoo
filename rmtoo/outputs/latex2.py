@@ -117,7 +117,7 @@ class latex2:
 
         if len(req.incoming)>0:
             # Create links to the corresponding dependency nodes.
-            fd.write("\n\\textbf{Dependent:} ")
+            fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
                                 for d in sorted(req.incoming,

@@ -10,6 +10,8 @@ and topics.
 The 'Solved by' N:1 digraph relation description was added - which can
 be used instead of using 'Depends on'.  Even a mix is possible.
 
+LaTeX2 output: changed 'Dependent' to 'Solved by'.
+
 
 Internal Changes
 ----------------

@@ -1,8 +1,8 @@
 #
 # rmtoo 
-#  Text Parser class
+#   Free and Open Source Requirements Management Tool
 #
-# This is the parser for the standard text file format.
+#  Text Parser
 #
 # (c) 2010-2011 by flonatel
 #
@@ -11,24 +11,25 @@
 
 class TxtParser:
 
-    @classmethod
-    def from_string(cls, s):
-        obj = cls()
-        obj.parse(s)
-        return obj
+    # Checks if the given line is empty or a comment.
+    @staticmethod
+    def is_comment_or_empty(line):
+        if len(line)==0:
+            return True
+        if len(line)==1 and line[0]=='\n':
+            return True
+        if line[0]=='#':
+            return True
+        return False
 
-    @classmethod
-    def from_fd(cls, fd):
-        obj = cls()
-        # Because there is only a very limited interface for some VCS
-        # the whole file in read at once.
-        obj.parse(fd.read())
-        return obj
-
-    # Parse everything from a string
-    def parse(self, s):
-        # fill in self.content
-        pass
-
-    def get_list(self):
-        return self.content
+    # This takes a record as input and splits it up into two:
+    # o the initial comment
+    # o the rest
+    @staticmethod
+    def extract_record_comment(sl):
+        comment = []
+        for i in xrange(0, len(sl)-1):
+            if not TxtParser.is_comment_or_empty(sl[i]):
+                del(sl[0:i])
+                return comment
+            comment.append(sl[i])
