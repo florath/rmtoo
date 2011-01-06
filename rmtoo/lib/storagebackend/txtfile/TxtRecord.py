@@ -40,6 +40,6 @@ class TxtRecord(Record):
         print("COMMENT: '%s'" % self.comment)
         print("REST: '%s'" % sl)
 
-        rp = self.split_entries(sl)
+        rp = TxtParser.split_entries(sl)
         for i in rp:
             self.append(TxtRecordEntry(i))

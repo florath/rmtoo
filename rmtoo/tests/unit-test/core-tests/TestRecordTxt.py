@@ -22,7 +22,9 @@ class TestRecordTxt:
 # ... with empty lines.
 Name: meiner
 # Comment for Name
-Rationale: Its because.
+Rationale: It's because.
+ And another reason.
+ And maybe a third one.
 # Comment for Rationale 1
 # Comment for Rationale 2
 Note: This is my Note.
