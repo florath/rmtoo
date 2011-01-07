@@ -19,12 +19,17 @@
 
 class RecordEntry:
 
+    def __init__(self, tag, content, comment=None):
+        self.tag = tag
+        self.content = content
+        self.comment = comment
+
     def get_tag(self):
-        pass
+        return self.tag
 
     def get_content(self):
-        pass
+        return self.content
 
     def get_comment(self):
-        pass
+        return self.comment
 

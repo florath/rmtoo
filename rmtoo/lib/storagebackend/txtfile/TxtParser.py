@@ -20,8 +20,6 @@ class TxtParser:
     def is_comment_or_empty(line):
         if len(line)==0:
             return True
-        if len(line)==1 and line[0]=='\n':
-            return True
         if line[0]=='#':
             return True
         return False
@@ -67,9 +65,48 @@ class TxtParser:
     # represent a entry record each.
     @staticmethod
     def split_entries(sl):
-        print("INPUT %s" % sl)
         doc = []
         while len(sl)>0:
             doc.append(TxtParser.split_next_record(sl))
-            print("DOC %s" % doc)
         return doc
+
+    # Takes a raw comment as input and converts it to a user readable
+    # string.
+    @staticmethod
+    def extract_comment(cl):
+        s = ""
+        for l in cl:
+            # Empty lines -> \n
+            if len(l)==0:
+                s += "\n"
+                continue
+            # All other lines: cut of the leading '#'
+            s += l[1:] + "\n"
+        return s
+
+    # Splits up a tag line into tag and rest
+    @staticmethod
+    def split_tag_line(line):
+        # Line must not be empty
+        assert(len(line)>0)
+        colon_pos = line.find(':')
+        # There must be a colon
+        assert(colon_pos>=0)
+        rest = line[colon_pos+1:]
+        # Special case: when the rest starts with a white space, delete
+        # those.
+        rest = rest.lstrip()
+        return line[0:colon_pos], rest
+
+    # Extract the contents of the contination lines
+    @staticmethod
+    def extract_continuation_lines(lines):
+        return "".join(lines)
+
+    # Add the 'lost' newlines to the raw string - return string
+    @staticmethod
+    def add_newlines(sl):
+        if len(sl)==0:
+            return ""
+        return '\n'.join(sl) + '\n'
+

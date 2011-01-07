@@ -22,29 +22,38 @@
 # o tags need not be unique but order does matter.
 # The first can easily be represented by a dictionary, the second by a
 # list.
-class Record(list):
+class Record:
 
     def __init__(self):
+        self.llist = []
         self.ldict = None
-        # XXX not complete....
 
     # The complete record can have a comment
     def get_comment(self):
-        pass
+        return self.comment
+
+    def set_comment(self, comment):
+        self.comment = comment
     
     def convert_to_dict(self):
         self.ldict = {}
-        for i in self:
+        for i in self.llist:
             self.ldict[i.get_tag()] = i
 
+    # The dict which is returned here must be seen as read only.
+    # The data is only valid until the underlaying list is changed.
     def get_dict(self):
         if self.ldict==None:
             self.convert_to_dict()
         return self.ldict
 
-    # XXX When adding / removing something, this must also be
-    # reflected to the underlaying parser.
+    # Insert a new RecordEntry.
+    def insert(self, index, o):
+        self.ldict = None
+        self.llist.insert(index, o)
 
-    # XXX Methods which change something might invalidate (remove) the
-    # ldict. 
+    # Delete an item
+    def __delitem__(self, index):
+        self.ldict = None
+        self.llist.__delitem__(index)
 
