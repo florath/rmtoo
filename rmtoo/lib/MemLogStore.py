@@ -119,9 +119,10 @@ class MemLog:
 # It is mainly used when reading in old / historic requirments. When
 # there are problems reading them, these problems are logged into the
 # MemLog storage.
-class MemLogStore:
+class MemLogStore(object):
 
     def __init__(self):
+        super(MemLogStore, self).__init__()
         self.logs = []
 
     def log(self, lid, level, msg, efile=None, eline=None):

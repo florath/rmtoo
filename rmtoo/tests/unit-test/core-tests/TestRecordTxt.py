@@ -41,6 +41,7 @@ dpA = """Hinzu: This is quite new.
 doc1 = dp1 + dp2 + dp3 + dp4
 doc2 = dp1 + dp2 + dp3 + dpA + dp4
 doc3 = dp1 + dp2 + dp3
+doc4 = dp1 + dp2 + dp3 + dp4 + dpA
 
 dpC1 = """ Comment for whole record
 
@@ -73,7 +74,7 @@ class TestRecordTxt:
         assert(txt_doc.to_string()==doc1)
 
     def test_pos_03(self):
-        "Check top level Record: add entry"
+        "Check top level Record: insert entry"
 
         txt_doc = TxtRecord.from_string(doc1)
         txt_doc.insert(2, RecordEntry("Hinzu", "This is quite new."))
@@ -85,6 +86,18 @@ class TestRecordTxt:
         assert(txt_doc.to_string()==doc2)
 
     def test_pos_04(self):
+        "Check top level Record: append entry"
+
+        txt_doc = TxtRecord.from_string(doc1)
+        txt_doc.append(RecordEntry("Hinzu", "This is quite new."))
+        txt_doc_dict = txt_doc.get_dict()
+
+        assert(txt_doc.get_comment() == dpC1)
+        assert(txt_doc_dict["Name"].get_content() == "meiner")
+        assert(txt_doc_dict["Note"].get_content() == "This is my Note.")
+        assert(txt_doc.to_string()==doc4)
+
+    def test_pos_05(self):
         "Check top level Record: remove entry"
 
         txt_doc = TxtRecord.from_string(doc1)

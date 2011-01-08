@@ -22,9 +22,13 @@
 # o tags need not be unique but order does matter.
 # The first can easily be represented by a dictionary, the second by a
 # list.
-class Record:
+
+from rmtoo.lib.MemLogStore import MemLogStore
+
+class Record(MemLogStore):
 
     def __init__(self):
+        super(Record, self).__init__()
         self.llist = []
         self.ldict = None
 
@@ -52,8 +56,19 @@ class Record:
         self.ldict = None
         self.llist.insert(index, o)
 
+    # Append new RecordEntry
+    def append(self, o):
+        # This can be added seamlessly to a maybe already existsing ldict
+        if self.ldict != None:
+            self.ldict[o.get_tag()] = o
+        self.llist.append(o)
+    
     # Delete an item
     def __delitem__(self, index):
         self.ldict = None
         self.llist.__delitem__(index)
+
+    # Return the length of the underlaying list
+    def __len__(self):
+        return self.llist.__len__()
 

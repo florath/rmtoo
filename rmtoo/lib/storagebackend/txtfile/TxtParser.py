@@ -9,11 +9,13 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
 import re
 
 class TxtParser:
 
-    re_tag_line = re.compile("^[a-zA-Z0-9_ ]*:.*$")
+    re_tag_line = re.compile("^[a-zA-Z0-9_ ]+:.*$")
 
     # Checks if the given line is empty or a comment.
     @staticmethod
@@ -35,17 +37,19 @@ class TxtParser:
                 del(sl[0:i])
                 return comment
             comment.append(sl[i])
+        return comment
 
     # Splits off the first record from the given string list.
     # The record is returned and the string list is shortened.
     # Precondition: it can be assumed that len(sl)>0
     @staticmethod
-    def split_next_record(sl):
+    def split_next_record(sl, rid, lineno):
         i = 0
         sl_len = len(sl)
         # The first line must contain the tag.
         if not TxtParser.re_tag_line.match(sl[i]):
-            raise SomethingsWrong()
+            raise RMTException(79, "%s:%d: Expected tag line not found"
+                               % (rid, lineno))
         i+=1
         # This can be followed by optional lines starting with a
         # space.
@@ -64,11 +68,25 @@ class TxtParser:
     # This method splits up the given string in seperate entries which
     # represent a entry record each.
     @staticmethod
-    def split_entries(sl):
+    def split_entries(sl, rid):
+        mls = MemLogStore()
         doc = []
+        lineno = 0
+        success = True
         while len(sl)>0:
-            doc.append(TxtParser.split_next_record(sl))
-        return doc
+            try:
+                nr = TxtParser.split_next_record(sl, rid, lineno)
+                doc.append(nr)
+                lineno += len(nr)
+            except RMTException, rmte:
+                # This is a hint that the tag line could not correctly be
+                # parsed.
+                mls.error(rmte.lid, rmte.msg, rmte.efile)
+                # Remove the errornous line
+                del(sl[0])
+                lineno += 1
+                success = False
+        return success, doc, mls
 
     # Takes a raw comment as input and converts it to a user readable
     # string.
