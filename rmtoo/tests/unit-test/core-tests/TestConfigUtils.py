@@ -15,6 +15,18 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestConfigUtils:
 
+    def test_pos_01(self):
+        "config.parser is available, but no other value"
+
+        tc = TestConfig()
+        tc.parser = {}
+
+        ConfigUtils.set_defaults_parser(tc)
+        ConfigUtils.check(tc)
+
+        assert(tc.txtio["requirements"].get_max_line_length()==80)
+        assert(tc.txtio["topics"].get_max_line_length()==80)
+
     def test_neg_01(self):
         "Wrong value in dependency_notation"
 
@@ -54,3 +66,4 @@ class TestConfigUtils:
             assert(False)
         except RMTException, rmte:
             assert(rmte.id()==72)
+
