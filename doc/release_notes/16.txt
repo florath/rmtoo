@@ -1,14 +1,21 @@
 User visible changes
 --------------------
 
-Fixed a bug which results in a stack trace when the line length was
-too long. (Thanks to radar8)
+For specifying dependencies between requirements, the 'Solved by' tag
+should be used starting from this release.  This is the more 'natural'
+way of specifying dependencies and has some other advantages (please
+consult the document doc/other/HowToDigraph.txt for more details).
+The old 'Depends on' is still supported - but new projects should use
+the new way.
+
+The 'Solved by' N:1 digraph relation description was added - which can
+be used instead of using 'Depends on'.
 
 Maximum line length is now configurable - separately for requirements
 and topics.
 
-The 'Solved by' N:1 digraph relation description was added - which can
-be used instead of using 'Depends on'.  Even a mix is possible.
+Fixed a bug which results in a stack trace when the line length was
+too long. (Thanks to radar8)
 
 LaTeX2 output: changed 'Dependent' to 'Solved by'.
 
