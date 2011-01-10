@@ -1,22 +1,43 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Common Exception
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
 
 class RMTException(Exception):
 
-    def __init__(self, lid, msg, efile=None):
+    def __init__(self, lid, msg, efile=None, eline=None):
         self.lid = lid
-        self.msg = msg
-        self.efile = efile
+        self.lmsg = msg
+        self.lefile = efile
+        self.leline = eline
 
     def __str__(self):
-        return "%3d: %s" % (self.lid, self.msg)
+        r = "[%3d]:" % self.lid
+        if self.lefile!=None:
+            r += "%s:" % self.lefile
+        if self.leline!=None:
+            r += "%d:" % self.leline
+        r += " %s" % self.lmsg
 
+    # Deprecated: use get_id()
     def id(self):
         return self.lid
+
+    def get_id(self):
+        return self.lid
+
+    def get_msg(self):
+        return self.lmsg
+
+    def get_efile(self):
+        return self.lefile
+    
+    def get_eline(self):
+        return self.leline
+

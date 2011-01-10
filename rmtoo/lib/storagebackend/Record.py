@@ -31,6 +31,7 @@ class Record(MemLogStore):
         super(Record, self).__init__()
         self.llist = []
         self.ldict = None
+        self.lis_usable = True
 
     # The complete record can have a comment
     def get_comment(self):
@@ -39,6 +40,12 @@ class Record(MemLogStore):
     def set_comment(self, comment):
         self.comment = comment
     
+    def is_usable(self):
+        return self.lis_usable
+
+    def set_unusable(self):
+        self.lis_usable = False
+
     def convert_to_dict(self):
         self.ldict = {}
         for i in self.llist:

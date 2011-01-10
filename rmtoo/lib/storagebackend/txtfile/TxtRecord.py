@@ -19,12 +19,15 @@ from rmtoo.lib.MemLogStore import MemLogStore
 
 class TxtRecord(Record):
 
-    # PROVATE constrcutor!
+    # PRIVATE constrcutor!
     # Please use the from_xxx methods for creating objects of
     # TxtRecord from client code
     def __init__(self, tioconfig):
         super(TxtRecord, self).__init__()
         self.tioconfig = tioconfig
+
+    # There is the need to have something like 
+    # is_usable
 
     # Construct a TxtRecord from a given string
     # rid is the Requirement ID
@@ -60,9 +63,10 @@ class TxtRecord(Record):
         for l in sl:
             lineno += 1
             if len(l)>max_line_length:
-                self.warning(rid, "line too long: is [%d], "
-                             "max allowed [%d]" % (len(l), max_line_length),
-                             None, lineno)
+                self.error(80, "line too long: is [%d], "
+                           "max allowed [%d]" % (len(l), max_line_length),
+                           rid, lineno)
+                self.set_unusable()
 
     # Parse everything from a string
     def parse(self, s, rid):
@@ -73,7 +77,12 @@ class TxtRecord(Record):
         self.comment_raw = TxtParser.extract_record_comment(sl)
         self.set_comment(TxtParser.extract_comment(self.comment_raw))
 
-        success, rp, mls = TxtParser.split_entries(sl, rid)
+        success, rp = TxtParser.split_entries(sl, rid, self)
+        # If there was an error during the split already - stop
+        # processing here
+        if not success:
+            self.set_unusable()
+            return
         for i in rp:
             self.llist.append(TxtRecordEntry(i))
         return 
@@ -83,7 +92,7 @@ class TxtRecord(Record):
         s = TxtParser.add_newlines(self.comment_raw)
         for l in self.llist:
             # There is the need to check for the type: only the
-            # TxtRecordEntry provide a (for this method) usable
+            # TxtRecordEntry provides a (for this method) usable
             # output.
             if isinstance(l, TxtRecordEntry):
                 s += l.to_string()

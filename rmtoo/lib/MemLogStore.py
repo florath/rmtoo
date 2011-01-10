@@ -145,6 +145,12 @@ class MemLogStore(object):
     def error(self, lid, msg, efile=None, eline=None):
         self.logs.append(MemLog(lid, MemLog.error, msg, efile, eline))
 
+    # Construct log message from exception
+    def error_from_rmte(self, rmte):
+        self.logs.append(MemLog(rmte.get_id(), MemLog.error, 
+                                rmte.get_msg(), rmte.get_efile(), 
+                                rmte.get_eline()))
+
     # Method for creating a fully new blown set of log messages:
     # usable for e.g. test cases.
     @staticmethod

@@ -48,8 +48,8 @@ class TxtParser:
         sl_len = len(sl)
         # The first line must contain the tag.
         if not TxtParser.re_tag_line.match(sl[i]):
-            raise RMTException(79, "%s:%d: Expected tag line not found"
-                               % (rid, lineno))
+            raise RMTException(79, "Expected tag line not found",
+                               rid, lineno)
         i+=1
         # This can be followed by optional lines starting with a
         # space.
@@ -68,10 +68,9 @@ class TxtParser:
     # This method splits up the given string in seperate entries which
     # represent a entry record each.
     @staticmethod
-    def split_entries(sl, rid):
-        mls = MemLogStore()
+    def split_entries(sl, rid, mls):
         doc = []
-        lineno = 0
+        lineno = 1
         success = True
         while len(sl)>0:
             try:
@@ -79,14 +78,14 @@ class TxtParser:
                 doc.append(nr)
                 lineno += len(nr)
             except RMTException, rmte:
-                # This is a hint that the tag line could not correctly be
+                # This is a hint that the tag line could not correctly
                 # parsed.
-                mls.error(rmte.lid, rmte.msg, rmte.efile)
+                mls.error_from_rmte(rmte)
                 # Remove the errornous line
                 del(sl[0])
                 lineno += 1
                 success = False
-        return success, doc, mls
+        return success, doc
 
     # Takes a raw comment as input and converts it to a user readable
     # string.

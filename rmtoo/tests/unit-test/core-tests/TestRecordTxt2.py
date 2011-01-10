@@ -25,6 +25,33 @@ class TestRecordTxt2:
         assert(len(txt_doc)==0)
         assert(txt_doc.get_comment()=="")
 
+    def test_neg_01(self):
+        "TestRecordTxt2: rubbish in input"
+
+        txt_doc = TxtRecord.from_string("rubbish", "Rubbish", 
+                                        TxtIOConfig())
+
+        assert(txt_doc.is_usable()==False)
+        assert(txt_doc.to_list()==
+               [[79, 50, 'Expected tag line not found', 'Rubbish', 1]])
+
+    def test_neg_02(self):
+        "TestRecordTxt2: only ':'"
+
+        txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
+        assert(txt_doc.is_usable()==False)
+        assert(txt_doc.to_list()==
+               [[79, 50, 'Expected tag line not found', 'Rubbish', 1]])
+
+    def test_neg_03(self):
+        "TestRecordTxt2: no chars before ':'"
+
+        txt_doc = TxtRecord.from_string(": something", "Rubbish", 
+                                        TxtIOConfig())
+        assert(txt_doc.is_usable()==False)
+        assert(txt_doc.to_list()==
+               [[79, 50, 'Expected tag line not found', 'Rubbish', 1]])
+
     def test_neg_04(self):
         "TestRecordTxt2: long long line"
 
@@ -32,35 +59,64 @@ class TestRecordTxt2:
         tioconfig.set_max_line_length(7)
         txt_doc = TxtRecord.from_string("good: but too long", 
                                         "TooLong", tioconfig)
-        assert([['TooLong', 40, 'line too long: is [18], max allowed [7]',
-                  None, 1]] == txt_doc.to_list())
 
-    def test_neg_01(self):
-        "TestRecordTxt2: rubbish in input"
+        assert(txt_doc.is_usable()==False)
+        assert(txt_doc.to_list() ==
+               [[80, 50, 'line too long: is [18], max allowed [7]', 
+                 'TooLong', 1]])
 
-        try:
-            txt_doc = TxtRecord.from_string("rubbish", "Rubbish", 
-                                            TxtIOConfig())
-            assert(False)
-        except RMTException, rmte:
-            assert(rmte.id()==79)
+    def test_neg_05(self):
+        "TestRecordTxt2: long long line - check for lineno"
 
-    def test_neg_02(self):
-        "TestRecordTxt2: only ':'"
+        tioconfig = TxtIOConfig()
+        tioconfig.set_max_line_length(7)
+        txt_doc = TxtRecord.from_string("""# com
+ok: yes
+ no
+# cs
+# dds
+good: but too long
+# dds
 
-        try:
-            txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
-            assert(False)
-        except RMTException, rmte:
-            assert(rmte.id()==79)
+""", 
+                                        "TooLong", tioconfig)
 
-    def test_neg_03(self):
-        "TestRecordTxt2: no chars before ':'"
+        assert(txt_doc.is_usable()==False)
+        assert([[80, 50, 'line too long: is [18], max allowed [7]',
+                  'TooLong', 6]] == txt_doc.to_list())
 
-        try:
-            txt_doc = TxtRecord.from_string(": something", "Rubbish", 
-                                            TxtIOConfig())
-            assert(False)
-        except RMTException, rmte:
-            assert(rmte.id()==79)
+    def test_neg_06(self):
+        "TestRecordTxt2: long long line - check for multiple errors"
+
+        tioconfig = TxtIOConfig()
+        tioconfig.set_max_line_length(7)
+        txt_doc = TxtRecord.from_string("""#1 com
+ok: yes
+ no
+#4 cs
+#5 dds
+good: but too long
+#7 dds
+#8 hi
+also good: but too long
+#10 gsst
+ dhd
+#12 dhdh 
+d:
+#14
+""", 
+                                        "TooLong", tioconfig)
+
+        assert(txt_doc.is_usable()==False)
+        assert(txt_doc.to_list() ==
+               [[80, 50, 'line too long: is [18], max allowed [7]', 
+                 'TooLong', 6], 
+                [80, 50, 'line too long: is [23], max allowed [7]', 
+                 'TooLong', 9], 
+                [80, 50, 'line too long: is [8], max allowed [7]', 
+                 'TooLong', 10], 
+                [80, 50, 'line too long: is [9], max allowed [7]', 
+                 'TooLong', 12], 
+                [79, 50, 'Expected tag line not found', 'TooLong', 10], 
+                [79, 50, 'Expected tag line not found', 'TooLong', 11]])
 
