@@ -1,6 +1,6 @@
 .PHONY: all
 .PHONY: all_html
-all: latex/requirements.pdf artifacts/req-graph1.png \
+all: artifacts/requirements.pdf artifacts/req-graph1.png \
 	artifacts/req-graph2.png all_html
 
 
@@ -39,20 +39,17 @@ artifacts/req-graph2.png: artifacts/req-graph2.dot
 
 # Two calls are needed: one for the requirments converting and one for
 # backlog creation.
-latex/requirements.pdf: ${REQS_LATEX2} latex/requirements.tex
+artifacts/requirements.pdf: ${REQS_LATEX2} latex/requirements.tex
 	(cd artifacts && \
 	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_reqs_cnt.inc && \
 	   epstopdf stats_reqs_cnt.eps)
-	(cd latex && pdflatex requirements.tex; \
-		pdflatex requirements.tex; \
-		pdflatex requirements.tex)
+	(cd artifacts && pdflatex ../latex/requirements.tex; \
+		pdflatex ../latex/requirements.tex; \
+		pdflatex ../latex/requirements.tex)
 
 .PHONY: clean
 clean:
 	rm -fr artifacts/html
 	rm -f artifacts/* \
-		latex/requirements.aux latex/requirements.dvi \
-		latex/requirements.log latex/requirements.out \
-		latex/requirements.pdf latex/requirements.toc \
 		add_data.py*
 	rm -fr debian/rmtoo build
