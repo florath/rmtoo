@@ -3,9 +3,9 @@ Text: The \textsl{rmtoo} requirements management tool is a tool to
  help, support and fasten up the development of software.\par
  Therefore \textsl{rmtoo} comes with the whole set of requirements for
  \textsl{rmtoo} itself.  This is (as far as we know) unique in the area
- of requirement management systems.  Maybe it is a good idea to ask a
- vendor to get the requirements of the requirement management system as
- an example.\par
+ of requirements management systems.  Ask other vendors vendors for
+ the requirements of their requirements management system.  Be
+ surprised about their answers.\par 
  This requirement description can be seen on two levels.  First these
  are the requirements for \textsl{rmtoo}.  So after reading them, you
  should be aware what \textsl{rmtoo} was designed for.\par
