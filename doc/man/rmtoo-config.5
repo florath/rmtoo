@@ -112,6 +112,12 @@ class Config:
 
         ]
 
+    parser = \
+	{
+	   "requirements": { "max_line_length": 80 },
+	   "topics": { "max_line_length": 990 },
+	}
+
 .SH DETAILS
 The class \fBConfig\fR must contain some class level variables.
 .SS stakeholders
@@ -164,6 +170,13 @@ Each pair itself is a list containing two elements: the first is the
 name of the output module, the second is the list of parameters for
 the given output module.  For details about the different output
 modules, see section \fBOUTPUT\fR for further details.
+.SS parser
+The parser is a map which contains two entries: \fIrequirements\fR
+and \fItopics\fR to specify the appropriate parser.  Each entry is also a
+map.  Currently the only parameter which can used here in this inner
+map is the parameter \fImax_line_length\fR to specify the maximum line
+length of the input files. If this is not specified, the default is 80
+characters. 
 .SH OUTPUT
 The output which 
 .B rmtoo
