@@ -18,7 +18,7 @@ class TestParse:
         "TopicSet - constructor with only one element"
         try:
             topicset = TopicSet(None, "bkdkd", ["ahah"],
-                                TestConfig().parser["topics"])
+                                TestConfig().txtio["topics"])
             assert(False)
         except AssertionError, ae:
             pass

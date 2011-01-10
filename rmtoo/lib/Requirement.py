@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Requirement class itself
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -67,7 +70,7 @@ class Requirement(Digraph.Node):
     def input(self, fd):
         # Read it in from the file (Syntactic input)
         req = Parser.read_as_map(self.id, fd,
-                                 self.config.parser["requirements"])
+                                 self.config.txtio["requirements"])
         if req == None:
             self.state = self.er_error
             self.mls.error(42, "parser returned error", self.id)
@@ -100,7 +103,7 @@ class Requirement(Digraph.Node):
             except RMTException, rmte:
                 # Some sematic error occured: do not interpret key or
                 # value.
-                self.mls.error(rmte.lid, rmte.msg, rmte.efile)
+                self.mls.error_from_rmte(rmte)
                 self.mls.error(41, "semantic error occured in "
                                "module '%s'" % modkey, self.id)
                 #print("+++ root cause is: '%s'" % rmte)

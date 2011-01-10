@@ -8,7 +8,7 @@ history it may be assumed that it takes about 6 to 8 weeks for one
 release.
 
 Also the version number shown here might change: if there are other
-requests from customers this will be done first.  Also it might be
+requests from customers those will be done first.  Also it might be
 that from time to time there is a bug-fix release of rmtoo.
 
 The history of this file, i. e. the already implemented features can
@@ -21,32 +21,24 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 ==> Send things out to INCOSE.
 
-v16
-===
-o Adapt Readme.txt (Remove beta, ...)
-o Increase test case coverage to minimum 95%
-o Archive old versions from slashdot to flonatel.de
-  (leave only last three versions on slashdot)
-o Move all created artifacs of the template project to the artifact
-  directory. 
-o Depends on: -> Solved by:
-  This is VERY important!
-  - Make it configurable which method to use
-  - Create a small script to convert from 'Depend On:'
-    to 'Solved by:'
-  - Man pages / documentation / presentations
-o Add description of 1:N and N:1 to man page / documentation.
-o 80 chars max line -> config documentation
-
 v17
 ===
+o Archive old versions from slashdot to flonatel.de
+  (leave only last three versions on slashdot)
+o Increase test case coverage to minimum 96%
 o New Parser (which is able to also output txt files)
-o rewite tool: automatically change dependeny noting
-
+o convert tool: automatically change dependency noting
+  It is currently unknown who uses these type of comments - and if a
+  tool is needed which converts the old problematic files to files
+  with the new semantic. But: this tool needs the new parser. Maybe it
+  is a good idea to have one tool for converting things: 
+   rmtoo-convert --to-solved-by reqsdir
+  or
+   rmtoo-convert --clean-up-comments reqsdir.
+ 
 
 ==> This will be the point of time to get rmtoo into one Linux
     distribution.
-
 
 v18
 ===
@@ -59,7 +51,6 @@ o Include sub-graphs in the PDF and HTML documentation
     features.)
 o Adapt man pages
 o Adapt presentation
-
 
 
 IMPORTANT
@@ -120,7 +111,7 @@ o Better list of preconditions
 
 Long Term Evolution or:
 This will be another project
-===================
+============================
 
 Interaction between programs
 ----------------------------

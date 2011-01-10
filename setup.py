@@ -5,7 +5,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '15'
+version = '16'
 
 def adjust(input, output):
     if os.path.exists(output):

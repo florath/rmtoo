@@ -18,12 +18,13 @@ class RMTException(Exception):
         self.leline = eline
 
     def __str__(self):
-        r = "[%3d]:" % self.lid
+        r = "[%4d]:" % self.lid
         if self.lefile!=None:
             r += "%s:" % self.lefile
         if self.leline!=None:
             r += "%d:" % self.leline
         r += " %s" % self.lmsg
+        return r
 
     # Deprecated: use get_id()
     def id(self):

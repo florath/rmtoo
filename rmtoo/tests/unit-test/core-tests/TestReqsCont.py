@@ -49,5 +49,5 @@ class TestReqsCont:
 
         assert(rval==False)
         assert(mstderr.getvalue()=="+++ ERROR: Problem reading in "
-               "the continuum: ' 40: Based on the config '['v1', 'v7']' "
+               "the continuum: '[  40]: Based on the config '['v1', 'v7']' "
                "a repository is needed - but there is none'")

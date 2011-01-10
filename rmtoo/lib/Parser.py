@@ -1,4 +1,7 @@
 #
+# rmtoo 
+#   Free and Open Source Requirements Management Tool
+#
 # Parser for rmtoo input files
 #
 #  There are a lot of different input files for the rmtoo but they all
@@ -6,7 +9,7 @@
 #  Note that some functions rely on the order in which tags/values are 
 #  given in the input file.
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -62,10 +65,10 @@ class ParserHelper:
         if line[0]==' ':
             return ParserHelper.lt_continue, None, line
         # Is the line toooo long?
-        mllen = pconfig["max_line_length"]
+        mllen = pconfig.get_max_line_length()
         if mllen>0 and len(line)>mllen:
             print("+++ ERROR %s:%d: line too long (len [%d], max [%d]) '%s'"
-                  % (rid, lineno, len(line), pconfig["max_line_length"], line))
+                  % (rid, lineno, len(line), mllen, line))
             return ParserHelper.lt_error, None, None
         # 'Normal' line
         ls = line.split(":", 1)

@@ -30,9 +30,12 @@ class TestConfigUtils:
         "Wrong type in requirements max_line_length"
 
         tc = TestConfig()
+        tc.parser = {}
+        tc.parser["requirements"] = {}
         tc.parser["requirements"]["max_line_length"] = \
             set(["Das gibbt es nich",])
         try:
+            ConfigUtils.set_defaults_parser(tc)
             ConfigUtils.check(tc)
             assert(False)
         except RMTException, rmte:
@@ -42,8 +45,11 @@ class TestConfigUtils:
         "Wrong value in requirements max_line_length"
 
         tc = TestConfig()
+        tc.parser = {}
+        tc.parser["requirements"] = {}
         tc.parser["requirements"]["max_line_length"] = -112
         try:
+            ConfigUtils.set_defaults_parser(tc)
             ConfigUtils.check(tc)
             assert(False)
         except RMTException, rmte:

@@ -18,6 +18,7 @@
 #
 
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 class ConfigUtils:
 
@@ -32,12 +33,6 @@ class ConfigUtils:
             config.reqs_spec["dependency_notation"] = set(["Depends on",] )
 
     @staticmethod
-    def set_defaults_parser_generic(config):
-        # When there is no parser entry add one
-        if not hasattr(config, "parser"):
-            config.parser = {}
-
-    @staticmethod
     def set_defaults_parser_name(config, name):
         if name not in config.parser:
             config.parser[name] = {}
@@ -46,10 +41,23 @@ class ConfigUtils:
             config.parser[name]["max_line_length"] = 80
 
     @staticmethod
+    def use_or_empty(c, n):
+        if not hasattr(c, "parser"):
+            return {}
+        if n in c.parser:
+            return c.parser[n]
+        return {}
+
+    @staticmethod
     def set_defaults_parser(config):
-        ConfigUtils.set_defaults_parser_generic(config)
-        ConfigUtils.set_defaults_parser_name(config, "requirements")
-        ConfigUtils.set_defaults_parser_name(config, "topics")
+        config.txtio = {
+            "requirements": TxtIOConfig(
+                ConfigUtils.use_or_empty(config, "requirements")),
+            "topics": TxtIOConfig(
+                ConfigUtils.use_or_empty(config, "topics")), }
+        # Remove the used things (to be sure that all use the same config)
+        if hasattr(config, "parser"):
+            del(config.parser)
 
     @staticmethod
     def set_defaults(config):
@@ -71,22 +79,6 @@ class ConfigUtils:
                                % (allowed, set_diff))
 
     @staticmethod
-    def check_parser_name(config, name):
-        v = config.parser[name]["max_line_length"]
-        if not isinstance(v, int):
-            raise RMTException(71, "Config.parser['%s']['max_line_length'] is "
-                               "not an integer - wich should be; type is [%s]"
-                               % (name, type(v).__name__))
-        if v<0:
-            raise RMTException(72, "Config.parser['max_line_length'] is "
-                               "negative [%s]" % v)
-
-    @staticmethod
-    def check_parser(config):
-        ConfigUtils.check_parser_name(config, "requirements")
-        ConfigUtils.check_parser_name(config, "topics")
-
-    @staticmethod
     def check(config):
         ConfigUtils.check_reqs_spec(config)
-        ConfigUtils.check_parser(config)
+        # Parser check is done while initialization

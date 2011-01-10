@@ -80,7 +80,7 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
-        Topic(tdir, initial_topic, self, self.config.parser["topics"])
+        Topic(tdir, initial_topic, self, self.config.txtio["topics"])
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct

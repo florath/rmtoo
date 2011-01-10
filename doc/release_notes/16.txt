@@ -2,7 +2,7 @@ User visible changes
 --------------------
 
 Fixed a bug which results in a stack trace when the line length was
-too big in a topic. (Thanks to radar8)
+too long. (Thanks to radar8)
 
 Maximum line length is now configurable - separately for requirements
 and topics.
@@ -17,4 +17,10 @@ Internal Changes
 ----------------
 
 Added more test cases.
+
+New TXT file parser was added - but not yet activated, because
+currently there is one incompatibility to the old version. Because the
+new parser does not allow comments in a value, i.e. comments between
+the tag line and a continuation line and between two continuation
+lines, this was not activated.
 

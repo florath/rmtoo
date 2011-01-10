@@ -1,6 +1,6 @@
 
 Starting with version 6 rmtoo is also distributed as a Debian
-package. 
+package. Currently the package is for SQEEZE only.
 
 Documentation is placed under /usr/share/doc/rmtoo
 
@@ -24,5 +24,3 @@ Happy requirements writing!
 Andreas Florath
 sf@flonatel.org
 2010-09-10
-
-

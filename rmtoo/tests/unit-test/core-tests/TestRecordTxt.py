@@ -10,6 +10,7 @@
 #
 import StringIO
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.tests.lib.TestConfig import TestConfig
 
@@ -53,7 +54,7 @@ class TestRecordTxt:
     def test_pos_01(self):
         "Check top level RecordAsDict (string)"
 
-        txt_doc = TxtRecord.from_string(doc1)
+        txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
         txt_doc_dict = txt_doc.get_dict()
 
         assert(txt_doc.get_comment() == dpC1)
@@ -65,7 +66,7 @@ class TestRecordTxt:
         "Check top level RecordAsDict (fd)"
 
         fd = StringIO.StringIO(doc1)
-        txt_doc = TxtRecord.from_fd(fd)
+        txt_doc = TxtRecord.from_fd(fd, "Nothing", TxtIOConfig())
         txt_doc_dict = txt_doc.get_dict()
 
         assert(txt_doc.get_comment() == dpC1)
@@ -76,7 +77,7 @@ class TestRecordTxt:
     def test_pos_03(self):
         "Check top level Record: insert entry"
 
-        txt_doc = TxtRecord.from_string(doc1)
+        txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
         txt_doc.insert(2, RecordEntry("Hinzu", "This is quite new."))
         txt_doc_dict = txt_doc.get_dict()
 
@@ -88,7 +89,7 @@ class TestRecordTxt:
     def test_pos_04(self):
         "Check top level Record: append entry"
 
-        txt_doc = TxtRecord.from_string(doc1)
+        txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
         txt_doc.append(RecordEntry("Hinzu", "This is quite new."))
         txt_doc_dict = txt_doc.get_dict()
 
@@ -100,7 +101,7 @@ class TestRecordTxt:
     def test_pos_05(self):
         "Check top level Record: remove entry"
 
-        txt_doc = TxtRecord.from_string(doc1)
+        txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
         del(txt_doc[2])
         txt_doc_dict = txt_doc.get_dict()
 
