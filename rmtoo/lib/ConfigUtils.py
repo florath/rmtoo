@@ -12,7 +12,7 @@
 # o Simpler and shorter program code: the parameters are 'just'
 #   there. 
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -32,13 +32,6 @@ class ConfigUtils:
         if "dependency_notation" not in config.reqs_spec:
             config.reqs_spec["dependency_notation"] = set(["Depends on",] )
 
-    @staticmethod
-    def set_defaults_parser_name(config, name):
-        if name not in config.parser:
-            config.parser[name] = {}
-        # The max line length must be configurable
-        if "max_line_length" not in config.parser[name]:
-            config.parser[name]["max_line_length"] = 80
 
     @staticmethod
     def use_or_empty(c, n):
