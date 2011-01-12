@@ -32,18 +32,23 @@ class TxtParser:
     @staticmethod
     def extract_record_comment(sl):
         comment = []
-        for i in xrange(0, len(sl)-1):
+        for i in xrange(0, len(sl)):
             if not TxtParser.is_comment_or_empty(sl[i]):
                 del(sl[0:i])
                 return comment
             comment.append(sl[i])
+        del(sl[:])
         return comment
+
+    comment_in_req = "Compatibility info: Comments will be reordered " \
+        "when they are re-written with rmtoo-tools. Please consult " \
+        "rmtoo-req-format(5) or rmtoo-topic-format(5)"
 
     # Splits off the first record from the given string list.
     # The record is returned and the string list is shortened.
     # Precondition: it can be assumed that len(sl)>0
     @staticmethod
-    def split_next_record(sl, rid, lineno):
+    def split_next_record(sl, rid, lineno, mls):
         i = 0
         sl_len = len(sl)
         # The first line must contain the tag.
@@ -51,32 +56,64 @@ class TxtParser:
             raise RMTException(79, "Expected tag line not found",
                                rid, lineno)
         i+=1
-        # This can be followed by optional lines starting with a
-        # space.
-        while i<sl_len and len(sl[i])>0 and sl[i][0]==" ":
+##      This is what is needed - to be compatible with the old
+##      specification. 
+        content = []
+        comment = []
+        while i<sl_len:
+            if TxtParser.re_tag_line.match(sl[i]):
+                break
+            elif len(sl[i])>0 and sl[i][0]==" ":
+                content.append(sl[i])
+                if len(comment)>0:
+                    # This is the possible problematic case where
+                    # continuation lines are intermixed with comments.
+                    mls.info(80, TxtParser.comment_in_req,
+                             rid, lineno+i)
+                    print("SL 0 '%s'/'%s'" % (rid, lineno+1))
+                    print("SL 1 '%s'" % sl[i])
+                    print("SL 2 '%s'" % content)
+                    print("SL 3 '%s'" % comment)
+            elif TxtParser.is_comment_or_empty(sl[i]):
+                comment.append(sl[i])
             i+=1
-        i_end_of_continue = i
-        # Optional comments and empty lines can follow
-        while i<sl_len and TxtParser.is_comment_or_empty(sl[i]):
-            i+=1
-        # At the end of the record now - move all lines from the sl
-        # to the rec
-        rec = [sl[0], sl[1:i_end_of_continue], sl[i_end_of_continue:i]]
+        rec = [sl[0], content, comment]
         del(sl[0:i])
+
+        print("PPPPPPPPPPPPPPP '%s'"  % rec)
+
         return rec
+
+## This is, what I really want - but what is not needed
+##
+##        # This can be followed by optional lines starting with a
+##        # space.
+##        while i<sl_len and len(sl[i])>0 and sl[i][0]==" ":
+##            i+=1
+##        i_end_of_continue = i
+##        # Optional comments and empty lines can follow
+##        while i<sl_len and TxtParser.is_comment_or_empty(sl[i]):
+##            i+=1
+##        # At the end of the record now - move all lines from the sl
+##        # to the rec
+##        rec = [sl[0], sl[1:i_end_of_continue], sl[i_end_of_continue:i]]
+##        del(sl[0:i])
+##        return rec
 
     # This method splits up the given string in seperate entries which
     # represent a entry record each.
+    # The lineno offset is the line number of the first line given in 
+    # the sl array.
     @staticmethod
-    def split_entries(sl, rid, mls):
+    def split_entries(sl, rid, mls, lineno_offset):
         doc = []
-        lineno = 1
+        lineno = lineno_offset
         success = True
         while len(sl)>0:
             try:
-                nr = TxtParser.split_next_record(sl, rid, lineno)
+                nr = TxtParser.split_next_record(sl, rid, lineno, mls)
                 doc.append(nr)
-                lineno += len(nr)
+                lineno += 1 + len(nr[1]) + len(nr[2])
             except RMTException, rmte:
                 # This is a hint that the tag line could not correctly
                 # parsed.
@@ -85,6 +122,8 @@ class TxtParser:
                 del(sl[0])
                 lineno += 1
                 success = False
+        print("UUUUUUUUUUUPPPPPPPPPPPPPPPPP '%s'" % success)
+        print("UUUUUUUUUUUPPPPPPPPPPPPPPPPP '%s'" % doc)
         return success, doc
 
     # Takes a raw comment as input and converts it to a user readable

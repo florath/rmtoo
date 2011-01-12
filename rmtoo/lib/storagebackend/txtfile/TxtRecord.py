@@ -77,7 +77,8 @@ class TxtRecord(Record):
         self.comment_raw = TxtParser.extract_record_comment(sl)
         self.set_comment(TxtParser.extract_comment(self.comment_raw))
 
-        success, rp = TxtParser.split_entries(sl, rid, self)
+        success, rp = TxtParser.split_entries(
+            sl, rid, self, len(self.comment_raw) + 1)
         # If there was an error during the split already - stop
         # processing here
         if not success:
