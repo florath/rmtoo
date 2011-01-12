@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-#  Unit test for RequirementSet
+# Unit test for RequirementSet
 #
-# (c) 2010 on flonatel
+# (c) 2010-2011 on flonatel
 #
 # For licencing details see COPYING
 #
@@ -36,7 +37,31 @@ class TestReqSet:
         reqs.handle_modules()
 
         assert(reqs.mls()==MemLogStore.create_mls(
-                [ [57, MemLog.error, "req not empty. Missing tag handers "
-                   "for '{'Hubbel': 'bubbel'}'", "hubbel"],
-                  [56, MemLog.error, "There were errors encountered during "
-                   "parsing and checking - can't continue"] ] ))
+                [[57, MemLog.error, "No tag handler found for tag(s) "
+                  "'['Hubbel']' - Hint: typo in tag(s)?", 'hubbel'],
+                 [56, MemLog.error, "There were errors encountered during "
+                  "parsing and checking - can't continue"] ] ))
+
+    def test_positive_02(self):
+        "Requirement contains a tag where no handler exists - multiple tags"
+
+        mods = Modules(os.path.join(mod_base_dir, "modules08"),
+                       {}, {}, [], mods_list("modules08", mod_base_dir))
+
+        sio = StringIO.StringIO("Hubbel: bubbel\nSiebel: do")
+        req = Requirement(sio, "InvalidTagReq", None, mods, None, TestConfig())
+
+        reqs = RequirementSet(mods, None, None)
+        reqs.add_req(req)
+        reqs.handle_modules()
+
+        #o = StringIO.StringIO()
+        #reqs.write_log(o)
+        #print("HHHHHHHHHHH %s" % o.getvalue())
+
+        assert(reqs.mls()==MemLogStore.create_mls(
+                [[57, MemLog.error, "No tag handler found for tag(s) "
+                  "'['Siebel', 'Hubbel']' - Hint: typo in tag(s)?", 
+                  'InvalidTagReq'], 
+                 [56, MemLog.error, "There were errors encountered during "
+                  "parsing and checking - can't continue"]] ))
