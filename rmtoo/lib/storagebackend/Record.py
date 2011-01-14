@@ -24,6 +24,7 @@
 # list.
 
 from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.RMTException import RMTException
 
 class Record(MemLogStore, list):
 
@@ -49,6 +50,9 @@ class Record(MemLogStore, list):
     def convert_to_dict(self):
         self.ldict = {}
         for i in self:
+            tag = i.get_tag()
+            if tag in self.ldict:
+                raise RMTException(81, "Tag '%s' multiple defined" % tag)
             self.ldict[i.get_tag()] = i
 
     # The dict which is returned here must be seen as read only.
@@ -61,7 +65,7 @@ class Record(MemLogStore, list):
     # Insert a new RecordEntry.
     def insert(self, index, o):
         self.ldict = None
-        self.llist.insert(index, o)
+        list.insert(self, index, o)
 
     # Append new RecordEntry
     def append(self, o):
@@ -73,5 +77,5 @@ class Record(MemLogStore, list):
     # Delete an item
     def __delitem__(self, index):
         self.ldict = None
-        self.llist.__delitem__(index)
+        list.__delitem__(self, index)
 

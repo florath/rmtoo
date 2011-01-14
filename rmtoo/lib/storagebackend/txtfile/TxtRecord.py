@@ -91,7 +91,7 @@ class TxtRecord(Record):
     # Convert to string
     def to_string(self):
         s = TxtParser.add_newlines(self.comment_raw)
-        for l in self.llist:
+        for l in self:
             # There is the need to check for the type: only the
             # TxtRecordEntry provides a (for this method) usable
             # output.

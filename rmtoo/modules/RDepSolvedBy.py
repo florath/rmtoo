@@ -46,7 +46,7 @@ class RDepSolvedBy(Digraph.Node):
         if self.tag not in rr.req:
             return True
 
-        t = rr.req[self.tag]
+        t = rr.req[self.tag].get_content()
         # If available, it must not empty
         if len(t)==0:
             reqset.error(77, "'Solved by' field has len 0", rr.id)

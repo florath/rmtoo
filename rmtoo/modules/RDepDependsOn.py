@@ -61,6 +61,7 @@ class RDepDependsOn(Digraph.Node):
             return False
 
         t = rr.req[self.tag].get_content()
+
         # If available, it must not empty
         if len(t)==0:
             print("+++ ERROR %s: 'Depends on' field has len 0" %
