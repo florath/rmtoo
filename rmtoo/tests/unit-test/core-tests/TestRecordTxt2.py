@@ -156,13 +156,15 @@ t4: uuuu
 
         assert(txt_doc.is_usable()==True)
 
-        print("LLLLLLLLLLLLLLLLLLLLLL '%s'" % txt_doc.to_list())
-
         assert(txt_doc.to_list()==
                [[80, MemLog.info, TxtParser.comment_in_req, 
                  'CommentsEverywhere', 5], 
                 [80, MemLog.info, TxtParser.comment_in_req, 
-                 'CommentsEverywhere', 9], [80, 30, 'Compatibility info: Comments will be reordered when they are re-written with rmtoo-tools. Please consult rmtoo-req-format(5) or rmtoo-topic-format(5)', 'CommentsEverywhere', 13], [80, 30, 'Compatibility info: Comments will be reordered when they are re-written with rmtoo-tools. Please consult rmtoo-req-format(5) or rmtoo-topic-format(5)', 'CommentsEverywhere', 19]])
+                 'CommentsEverywhere', 9], 
+                [80, MemLog.info, TxtParser.comment_in_req, 
+                 'CommentsEverywhere', 13],
+                [80, MemLog.info, TxtParser.comment_in_req, 
+                 'CommentsEverywhere', 19]])
 
     def xtest_neg_08(self):
         "TestRecordTxt2: only intro content line"

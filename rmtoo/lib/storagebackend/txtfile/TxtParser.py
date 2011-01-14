@@ -70,18 +70,11 @@ class TxtParser:
                     # continuation lines are intermixed with comments.
                     mls.info(80, TxtParser.comment_in_req,
                              rid, lineno+i)
-                    print("SL 0 '%s'/'%s'" % (rid, lineno+1))
-                    print("SL 1 '%s'" % sl[i])
-                    print("SL 2 '%s'" % content)
-                    print("SL 3 '%s'" % comment)
             elif TxtParser.is_comment_or_empty(sl[i]):
                 comment.append(sl[i])
             i+=1
         rec = [sl[0], content, comment]
         del(sl[0:i])
-
-        print("PPPPPPPPPPPPPPP '%s'"  % rec)
-
         return rec
 
 ## This is, what I really want - but what is not needed
@@ -122,8 +115,6 @@ class TxtParser:
                 del(sl[0])
                 lineno += 1
                 success = False
-        print("UUUUUUUUUUUPPPPPPPPPPPPPPPPP '%s'" % success)
-        print("UUUUUUUUUUUPPPPPPPPPPPPPPPPP '%s'" % doc)
         return success, doc
 
     # Takes a raw comment as input and converts it to a user readable
