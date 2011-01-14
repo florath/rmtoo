@@ -18,7 +18,7 @@ from rmtoo.lib.MemLogStore import MemLogStore, MemLog
 
 class TestRecordTxt2:
 
-    def xtest_pos_01(self):
+    def test_pos_01(self):
         "TestRecordTxt2: empty input"
 
         txt_doc = TxtRecord.from_string("", "Nothing", TxtIOConfig())
@@ -26,7 +26,7 @@ class TestRecordTxt2:
         assert(len(txt_doc)==0)
         assert(txt_doc.get_comment()=="")
 
-    def xtest_neg_01(self):
+    def test_neg_01(self):
         "TestRecordTxt2: rubbish in input"
 
         txt_doc = TxtRecord.from_string("rubbish", "Rubbish", 
@@ -37,7 +37,7 @@ class TestRecordTxt2:
                [[79, MemLog.error, 
                  'Expected tag line not found', 'Rubbish', 1]])
 
-    def xtest_neg_02(self):
+    def test_neg_02(self):
         "TestRecordTxt2: only ':'"
 
         txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
@@ -46,7 +46,7 @@ class TestRecordTxt2:
                [[79, MemLog.error, 
                  'Expected tag line not found', 'Rubbish', 1]])
 
-    def xtest_neg_03(self):
+    def test_neg_03(self):
         "TestRecordTxt2: no chars before ':'"
 
         txt_doc = TxtRecord.from_string(": something", "Rubbish", 
@@ -56,7 +56,7 @@ class TestRecordTxt2:
                [[79, MemLog.error, 
                  'Expected tag line not found', 'Rubbish', 1]])
 
-    def xtest_neg_04(self):
+    def test_neg_04(self):
         "TestRecordTxt2: long long line"
 
         tioconfig = TxtIOConfig()
@@ -69,7 +69,7 @@ class TestRecordTxt2:
                [[80, MemLog.error, 'line too long: is [18], max allowed [7]', 
                  'TooLong', 1]])
 
-    def xtest_neg_05(self):
+    def test_neg_05(self):
         "TestRecordTxt2: long long line - check for lineno"
 
         tioconfig = TxtIOConfig()
@@ -89,7 +89,7 @@ good: but too long
         assert([[80, MemLog.error, 'line too long: is [18], max allowed [7]',
                   'TooLong', 6]] == txt_doc.to_list())
 
-    def xtest_neg_06(self):
+    def test_neg_06(self):
         "TestRecordTxt2: long long line - check for multiple errors"
 
         tioconfig = TxtIOConfig()
@@ -116,15 +116,12 @@ d:
                [[80, MemLog.error, 'line too long: is [18], max allowed [7]', 
                  'TooLong', 6], 
                 [80, MemLog.error, 'line too long: is [23], max allowed [7]', 
-                 'TooLong', 9], 
-                [80, MemLog.error, 'line too long: is [8], max allowed [7]', 
-                 'TooLong', 10], 
+                 'TooLong', 9],
+                [80, MemLog.error, 'line too long: is [8], max allowed [7]',
+                 'TooLong', 10],
                 [80, MemLog.error, 'line too long: is [9], max allowed [7]', 
                  'TooLong', 12], 
-                [79, MemLog.error, 
-                 'Expected tag line not found', 'TooLong', 10], 
-                [79, MemLog.error, 
-                 'Expected tag line not found', 'TooLong', 11]])
+                [80, MemLog.info, TxtParser.comment_in_req, 'TooLong', 11]])
 
 
     def test_neg_07(self):
@@ -166,7 +163,7 @@ t4: uuuu
                 [80, MemLog.info, TxtParser.comment_in_req, 
                  'CommentsEverywhere', 19]])
 
-    def xtest_neg_08(self):
+    def test_neg_08(self):
         "TestRecordTxt2: only intro content line"
 
         tioconfig = TxtIOConfig()
