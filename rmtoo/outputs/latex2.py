@@ -64,10 +64,9 @@ class latex2:
     def output_latex_topic(self, fd, topic):
         fd.write("%% Output topic '%s'\n" % topic.name)
         for t in topic.t:
-            assert(len(t)>=2)
 
-            tag = t[0]
-            val = t[1]
+            tag = t.get_tag()
+            val = t.get_content()
 
             if tag == "Name":
                 # The name itself is dependent on the level
@@ -98,8 +97,8 @@ class latex2:
         fd.write("%% REQ '%s'\n" % req.id)
 
         fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n" 
-                 % (self.level_names[level], req.tags["Name"],
-                    req.id, req.tags["Description"]))
+                 % (self.level_names[level], req.tags["Name"].get_content(),
+                    req.id, req.tags["Description"].get_content()))
 
         if "Rationale" in req.tags and req.tags["Rationale"]!=None:
             fd.write("\n\\textbf{Rationale:} %s\n" % req.tags["Rationale"])

@@ -19,7 +19,7 @@ class ReqInventedBy(ReqTagGeneric):
         # This tag (Invented by) is mandatory
         self.check_mandatory_tag(rid, req, 5)
 
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         # This must be one of the inventors
         if t not in self.config.inventors:
             raise RMTException(6, "Invalid invented by '%s'. Must be one "

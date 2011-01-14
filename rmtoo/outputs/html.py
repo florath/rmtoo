@@ -83,10 +83,8 @@ class html:
         # Subtopics go in a ul
         ul_open = False
         for t in topic.t:
-            assert(len(t)>=2)
-
-            tag = t[0]
-            val = t[1]
+            tag = t.get_tag()
+            val = t.get_content()
 
             if tag != "SubTopic" and ul_open:
                 fd.write("</ul></span>")
@@ -133,22 +131,24 @@ class html:
     def output_requirement(self, fd, req, level):
         fd.write("\n<!- REQ '%s' -->\n" % req.id)
         fd.write('<h%d><a name="%s">%s</a></h%d>\n' % 
-                 (level+1, req.id, req.tags["Name"], level+1))
+                 (level+1, req.id, req.tags["Name"].get_content(), level+1))
         fd.write("<dl>")
 
         fd.write('<dt><span class="dlt_description">Description</span>'
                  '</dt><dd><span class="dlv_description">%s</span></dd>' % 
-                  LaTeXMarkup.replace_html(req.tags["Description"]))
+                  LaTeXMarkup.replace_html(req.tags["Description"]
+                                           .get_content()))
 
         if "Rationale" in req.tags and req.tags["Rationale"]!=None:
             fd.write('<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.tags["Rationale"]))
+                     LaTeXMarkup.replace_html_par(req.tags["Rationale"].
+                                                  get_content()))
 
         if "Note" in req.tags and req.tags["Note"]!=None:
             fd.write('<dt><span class="dlt_note">Note</span></dt>'
                      '<dd><span class="dlv_note">%s</span></dd>' 
-                     % req.tags["Note"])
+                     % req.tags["Note"].get_content())
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:

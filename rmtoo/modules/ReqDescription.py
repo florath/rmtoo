@@ -26,10 +26,10 @@ class ReqDescription(ReqTagGeneric):
         # in requirements (like 'or' or 'and')
         # ToDo: Check for words which must appear in a requirement,
         # like 'have to' or 'must'.
-        if len(t)>1024:
+        if len(t.get_content())>1024:
             raise RMTException(3, "%s: Description is much too long: "
                                "%d characters" % (rid, len(t)))
-        if len(t)>255:
+        if len(t.get_content())>255:
             print("+++ WARNING %s: Description is too long: %d characters"
                   % (rid, len(t)))
             print("+++          Please consider split up this requirement")

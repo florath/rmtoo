@@ -20,6 +20,6 @@ class ReqTopic(ReqTagGeneric):
         # This tag (Name) is mandatory
         self.check_mandatory_tag(rid, req, 9)
 
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         del req[self.tag]
         return self.tag, t

@@ -15,7 +15,7 @@ import re
 
 class TxtParser:
 
-    re_tag_line = re.compile("^[a-zA-Z0-9_ ]+:.*$")
+    re_tag_line = re.compile("^[a-zA-Z][a-zA-Z0-9_ ]*:.*$")
 
     # Checks if the given line is empty or a comment.
     @staticmethod

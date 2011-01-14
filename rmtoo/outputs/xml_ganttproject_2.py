@@ -70,15 +70,20 @@ class xml_ganttproject_2:
         # Add the description and if available also the rationale and
         # note.
         notes = "== Description ==\n"
-        notes += LaTeXMarkup.replace_txt(req.tags["Description"])
+        notes += LaTeXMarkup.replace_txt(req.tags["Description"].get_content())
         
         if "Rationale" in req.tags and req.tags["Rationale"]!=None:
             notes += "\n\n== Rationale ==\n"
-            notes += LaTeXMarkup.replace_txt(req.tags["Rationale"])
+
+            print("RATIONALE '%s'" % req.tags["Rationale"].get_content())
+            asdfasdf
+
+            notes += LaTeXMarkup.replace_txt(
+                req.tags["Rationale"].get_content())
 
         if "Note" in req.tags and req.tags["Note"]!=None:
             notes += "\n\n== Note ==\n"
-            notes += LaTeXMarkup.replace_txt(req.tags["Note"])
+            notes += LaTeXMarkup.replace_txt(req.tags["Note"].get_content())
 
         xml_note = doc.createElement("notes")
         xml_text = doc.createCDATASection(notes)

@@ -20,7 +20,7 @@ class ReqStatus(ReqTagGeneric):
         self.check_mandatory_tag(rid, req, 16)
 
         # Handle Status semantics
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         if t=="not done":
             v = Requirement.st_not_done
         elif t=="finished":

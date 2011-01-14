@@ -85,8 +85,8 @@ class TxtRecord(Record):
             self.set_unusable()
             return
         for i in rp:
-            self.llist.append(TxtRecordEntry(i))
-        return 
+            self.append(TxtRecordEntry(i))
+        return
 
     # Convert to string
     def to_string(self):

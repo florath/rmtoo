@@ -13,7 +13,7 @@ import os
 import time
 import operator
 
-from rmtoo.lib.Parser import Parser
+from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.MemLogStore import MemLogStore
@@ -69,8 +69,9 @@ class Requirement(Digraph.Node):
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
-        req = Parser.read_as_map(self.id, fd,
+        req_record = TxtRecord.from_fd(fd, self.id,
                                  self.config.txtio["requirements"])
+        req = req_record.get_dict()
         if req == None:
             self.state = self.er_error
             self.mls.error(42, "parser returned error", self.id)

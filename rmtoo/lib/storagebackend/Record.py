@@ -25,11 +25,11 @@
 
 from rmtoo.lib.MemLogStore import MemLogStore
 
-class Record(MemLogStore):
+class Record(MemLogStore, list):
 
     def __init__(self):
-        super(Record, self).__init__()
-        self.llist = []
+        MemLogStore.__init__(self)
+        list.__init__(self)
         self.ldict = None
         self.lis_usable = True
 
@@ -48,7 +48,7 @@ class Record(MemLogStore):
 
     def convert_to_dict(self):
         self.ldict = {}
-        for i in self.llist:
+        for i in self:
             self.ldict[i.get_tag()] = i
 
     # The dict which is returned here must be seen as read only.
@@ -68,14 +68,10 @@ class Record(MemLogStore):
         # This can be added seamlessly to a maybe already existsing ldict
         if self.ldict != None:
             self.ldict[o.get_tag()] = o
-        self.llist.append(o)
+        list.append(self, o)
     
     # Delete an item
     def __delitem__(self, index):
         self.ldict = None
         self.llist.__delitem__(index)
-
-    # Return the length of the underlaying list
-    def __len__(self):
-        return self.llist.__len__()
 

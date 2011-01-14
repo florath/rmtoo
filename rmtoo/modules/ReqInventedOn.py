@@ -23,7 +23,8 @@ class ReqInventedOn(ReqTagGeneric):
         t = req[self.tag]
         try:
             # It's better to check, if the date is ok
-            pt = time.strptime(t, "%Y-%m-%d")
+
+            pt = time.strptime(t.get_content(), "%Y-%m-%d")
             del req[self.tag]
             return self.tag, pt
         except ValueError, ve:
