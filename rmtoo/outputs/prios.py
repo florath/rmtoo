@@ -67,8 +67,8 @@ class prios:
                     "\\textbf{Sum} \\\ \hline\endhead\n")
             s=0
             for p in l:
-                if reqset.reqs[p[1]].tags["Effort estimation"]!=None:
-                    efest=reqset.reqs[p[1]].tags["Effort estimation"]
+                if reqset.reqs[p[1]].get_value("Effort estimation")!=None:
+                    efest=reqset.reqs[p[1]].get_value("Effort estimation")
                     s+=efest
                     efest_str=str(efest)
                 else:

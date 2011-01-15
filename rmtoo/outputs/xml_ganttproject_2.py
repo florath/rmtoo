@@ -49,20 +49,20 @@ class xml_ganttproject_2:
         xml_task = doc.createElement("task")
         xml_task.setAttribute("name", req.id)
         xml_task.setAttribute("id", str(self.get_req_id(req.id)))
-        if "Effort estimation" in req.tags \
-                and req.tags["Effort estimation"]!=None:
+        if req.is_val_av_and_not_null("Effort estimation"):
             # The Effort Estimation is only rounded: ganntproject can
             # only handle integers as duration
             xml_task.setAttribute(
                 "duration", 
-                str(int(req.tags["Effort estimation"]*self.effot_factor+1)))
+                str(int(req.get_value("Effort estimation")
+                        *self.effot_factor+1)))
 
         # The Status (a la complete) must be given in percent.
         # Currently rmtoo supports only two states: not done (~0) or
         # finished (~100)
-        if "Status" in req.tags and req.tags["Status"]!=None:
+        if req.is_val_av_and_not_null("Status"):
             v = "0"
-            if req.tags["Status"]==Requirement.st_finished:
+            if req.get_value("Status")==Requirement.st_finished:
                 v = "100"
             xml_task.setAttribute("complete", v)
 
@@ -70,18 +70,19 @@ class xml_ganttproject_2:
         # Add the description and if available also the rationale and
         # note.
         notes = "== Description ==\n"
-        notes += LaTeXMarkup.replace_txt(req.tags["Description"].get_content())
+        notes += LaTeXMarkup.replace_txt(req.get_value("Description")
+                                         .get_content())
         
-        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
+        if req.is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
 
-            print("RATIONALE '%s'" % req.tags["Rationale"].get_content())
+            print("RATIONALE '%s'" % req.get_value("Rationale").get_content())
             asdfasdf
 
             notes += LaTeXMarkup.replace_txt(
-                req.tags["Rationale"].get_content())
+                req.get_value("Rationale").get_content())
 
-        if "Note" in req.tags and req.tags["Note"]!=None:
+        if req.is_val_av_and_not_null("Note"):
             notes += "\n\n== Note ==\n"
             notes += LaTeXMarkup.replace_txt(req.tags["Note"].get_content())
 

@@ -52,20 +52,21 @@ class xml_ganttproject_1:
         xml_task = doc.createElement("task")
         xml_task.setAttribute("name", req.id)
         xml_task.setAttribute("id", str(self.get_req_id(req.id)))
-        if "Effort estimation" in req.tags \
-                and req.tags["Effort estimation"]!=None:
+        if req.is_value_available("Effort estimation") \
+                and req.get_value("Effort estimation")!=None:
             # The Effort Estimation is only rounded: ganntproject can
             # only handle integers as duration
             xml_task.setAttribute(
                 "duration", 
-                str(int(req.tags["Effort estimation"]*self.effot_factor+1)))
+                str(int(req.get_value("Effort estimation")
+                        *self.effot_factor+1)))
 
         # The Status (a la complete) must be given in percent.
         # Currently rmtoo supports only two states: not done (~0) or
         # finished (~100)
-        if "Status" in req.tags and req.tags["Status"]!=None:
+        if req.is_value_available("Status") and req.get_value("Status")!=None:
             v = "0"
-            if req.tags["Status"]==Requirement.st_finished:
+            if req.get_value("Status")==Requirement.st_finished:
                 v = "100"
             xml_task.setAttribute("complete", v)
             

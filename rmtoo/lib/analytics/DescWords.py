@@ -99,7 +99,7 @@ class DescWords:
         ok = True
         for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
             ares = DescWords.analyse(
-                lwords, req.tags["Description"].get_content())
+                lwords, req.get_value("Description").get_content())
             req.analytics["DescWords"] = ares
             if ares[0]<0:
                 ok = False

@@ -97,14 +97,17 @@ class latex2:
         fd.write("%% REQ '%s'\n" % req.id)
 
         fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n" 
-                 % (self.level_names[level], req.tags["Name"].get_content(),
-                    req.id, req.tags["Description"].get_content()))
+                 % (self.level_names[level], 
+                    req.get_value("Name").get_content(),
+                    req.id, req.get_value("Description").get_content()))
 
-        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
-            fd.write("\n\\textbf{Rationale:} %s\n" % req.tags["Rationale"])
+        if req.is_value_available("Rationale") \
+                and req.get_value("Rationale")!=None:
+            fd.write("\n\\textbf{Rationale:} %s\n"
+                     % req.get_value["Rationale"])
 
-        if "Note" in req.tags and req.tags["Note"]!=None:
-            fd.write("\n\\textbf{Note:} %s\n" % req.tags["Note"])
+        if req.is_value_available("Note") and req.get_value("Note")!=None:
+            fd.write("\n\\textbf{Note:} %s\n" % req.get_value("Note"))
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:
@@ -123,12 +126,12 @@ class latex2:
                                                 key=lambda r: r.id)]))
             fd.write("\n")
 
-        if req.tags["Status"]==req.st_finished:
+        if req.get_value("Status")==req.st_finished:
             status = "completed"
         else:
             status = "open"
 
-        if req.tags["Class"]==req.ct_implementable:
+        if req.get_value("Class")==req.ct_implementable:
             clstr="implementable"
         else:
             clstr="detailable"
@@ -141,14 +144,17 @@ class latex2:
             if rattr=="Id":
                 fd.write("\\textbf{Id:} & %s " % req.id)
             elif rattr=="Priority":
-                fd.write("\\textbf{Priority:} & %4.2f " % (req.tags["Priority"]*10))
+                fd.write("\\textbf{Priority:} & %4.2f " 
+                         % (req.get_value("Priority")*10))
             elif rattr=="Owner":
-                fd.write("\\textbf{Owner:} & %s" % req.tags["Owner"])
+                fd.write("\\textbf{Owner:} & %s" % req.get_value("Owner"))
             elif rattr=="Invented on":
                 fd.write("\\textbf{Invented on:} & %s " 
-                         % time.strftime("%Y-%m-%d", req.tags["Invented on"]))
+                         % time.strftime("%Y-%m-%d", 
+                                         req.get_value("Invented on")))
             elif rattr=="Invented by":
-                fd.write("\\textbf{Invented by:} & %s " % req.tags["Invented by"])
+                fd.write("\\textbf{Invented by:} & %s " 
+                         % req.get_value("Invented by"))
             elif rattr=="Status":
                 fd.write("\\textbf{Status:} & %s " % status)
             elif rattr=="Class":

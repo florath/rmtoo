@@ -131,24 +131,26 @@ class html:
     def output_requirement(self, fd, req, level):
         fd.write("\n<!- REQ '%s' -->\n" % req.id)
         fd.write('<h%d><a name="%s">%s</a></h%d>\n' % 
-                 (level+1, req.id, req.tags["Name"].get_content(), level+1))
+                 (level+1, req.id, req.get_value("Name").get_content(), 
+                  level+1))
         fd.write("<dl>")
 
         fd.write('<dt><span class="dlt_description">Description</span>'
                  '</dt><dd><span class="dlv_description">%s</span></dd>' % 
-                  LaTeXMarkup.replace_html(req.tags["Description"]
+                  LaTeXMarkup.replace_html(req.get_value("Description")
                                            .get_content()))
 
-        if "Rationale" in req.tags and req.tags["Rationale"]!=None:
+        if req.is_value_available("Rationale") \
+                and req.get_value("Rationale")!=None:
             fd.write('<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.tags["Rationale"].
+                     LaTeXMarkup.replace_html_par(req.get_value["Rationale"].
                                                   get_content()))
 
-        if "Note" in req.tags and req.tags["Note"]!=None:
+        if req.is_value_available("Note") and req.get_value("Note")!=None:
             fd.write('<dt><span class="dlt_note">Note</span></dt>'
                      '<dd><span class="dlv_note">%s</span></dd>' 
-                     % req.tags["Note"].get_content())
+                     % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:
@@ -161,7 +163,7 @@ class html:
                     fd.write(", ")
                 is_first=False
                 fd.write('<a href="%s.html#%s">%s</a>' % 
-                         (d.tags["Topic"], d.id, d.id))
+                         (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
         if len(req.incoming)>0:
@@ -174,15 +176,15 @@ class html:
                     fd.write(", ")
                 is_first=False
                 fd.write('<a href="%s.html#%s">%s</a>' % 
-                         (d.tags["Topic"], d.id, d.id))
+                         (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
-        if req.tags["Status"]==req.st_finished:
+        if req.get_value("Status")==req.st_finished:
             status = "completed"
         else:
             status = "open"
 
-        if req.tags["Class"]==req.ct_implementable:
+        if req.get_value("Class")==req.ct_implementable:
             clstr="implementable"
         else:
             clstr="detailable"
@@ -201,9 +203,10 @@ class html:
                  '<dd><span class="dlv_status">%s</span></dd>'
                  '<dt><span class="dlt_class">Class</span></dt>'
                  '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.id, req.tags["Priority"]*10, req.tags["Owner"],
-                    time.strftime("%Y-%m-%d", req.tags["Invented on"]),
-                    req.tags["Invented by"], status, clstr))
+                 % (req.id, req.get_value("Priority")*10, 
+                    req.get_value("Owner"),
+                    time.strftime("%Y-%m-%d", req.get_value("Invented on")),
+                    req.get_value("Invented by"), status, clstr))
         fd.write("</dl>")
 
         # Mark the end of the requirment - then it is possible to add

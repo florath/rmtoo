@@ -50,7 +50,12 @@ class Requirement(Digraph.Node):
 
     def internal_init(self, rid, mls, mods, opts, config):
         Digraph.Node.__init__(self, rid)
-        self.tags = {}
+        # This are the original tags - when there is no
+        # need to convert them to specific values, they are left
+        # here.
+        self.otags = {}
+        # This is the list of converted values.
+        self.values = {}
         self.id = rid
         self.mls = mls
         self.mods = mods
@@ -94,13 +99,13 @@ class Requirement(Digraph.Node):
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key
                 # in the map.
-                if key in self.tags:
+                if key in self.values:
                     self.mls.error(54, "tag '%s' already defined" %
                           (key), self.id)
                     self.state = self.er_error
                     # Also continue to get possible further error
                     # messages.
-                self.tags[key] = value
+                self.values[key] = value
             except RMTException, rmte:
                 # Some sematic error occured: do not interpret key or
                 # value.
@@ -126,13 +131,25 @@ class Requirement(Digraph.Node):
 #        self.state = self.er_error
 
     def get_prio(self):
-        return self.tags["Priority"]
+        return self.values["Priority"]
 
     def is_open(self):
-        return self.tags["Status"] == self.st_not_done
+        return self.values["Status"] == self.st_not_done
 
     def is_implementable(self):
-        return self.tags["Class"] == self.ct_implementable
+        return self.values["Class"] == self.ct_implementable
+
+    def get_value(self, key):
+        return self.values[key]
+
+    def is_value_available(self, key):
+        return key in self.values
+
+    def is_val_av_and_not_null(self, key):
+        return key in self.values and self.get_value(key)!=None
+
+    def set_value(self, key, value):
+        self.values[key] = value
 
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):
@@ -160,16 +177,17 @@ class Requirement(Digraph.Node):
         # Create the new Requirement itself.
         r = Requirement(None, self.id, self.mls, self.mods,
                         self.opts, self.config)
-        r.tags = self.tags
+        r.otags = self.otags
+        r.values = self.values
 
         # The only things to copy over are the incoming and the
         # outgoing lists.
         # These are pointers to the old ones!!!
         for req in self.incoming:
-            if req.tags["Topic"] in topic_name_list:
+            if req.values["Topic"] in topic_name_list:
                 r.incoming.append(req)
         for req in self.outgoing:
-            if req.tags["Topic"] in topic_name_list:
+            if req.values["Topic"] in topic_name_list:
                 r.outgoing.append(req)
 
         return r

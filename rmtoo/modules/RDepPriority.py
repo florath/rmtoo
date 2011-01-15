@@ -38,14 +38,14 @@ class RDepPriority(Digraph.Node):
         # incoming edge.
         def handle_priorization(node, inc_weight):
             # This is the weight which is inherited
-            weight = inc_weight * node.tags["Factor"]
+            weight = inc_weight * node.get_value("Factor")
 
             # If there is none, or if the current priority is lower
             # that the newly computed, recompute this node and
             # everything beneath.
-            if "Priority" not in node.tags \
-                    or node.tags["Priority"] < weight:
-                node.tags["Priority"] = weight
+            if not node.is_value_available("Priority") \
+                    or node.get_value("Priority") < weight:
+                node.set_value("Priority", weight)
                 for n in node.incoming:
                     handle_priorization(n, weight)
 

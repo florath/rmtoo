@@ -36,7 +36,10 @@ class RDepDependsOn(Digraph.Node):
 
     # The rewriting of one requirment is done 'in place'.
     def rewrite_one_req(self, rr, reqset):
-        if rr.tags["Type"] == Requirement.rt_master_requirement:
+
+        print("HHHHHHHHHHHHHHHHHHHH2 %s" % rr.get_value("Type"))
+
+        if rr.get_value("Type") == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
                 print("+++ ERROR %s: initial requirement has "
@@ -60,7 +63,9 @@ class RDepDependsOn(Digraph.Node):
                   "no 'Depends on' field." % (rr.id))
             return False
 
-        t = rr.req[self.tag].get_content()
+        print("ZZZZZZZZZZ %s" % self.tag)
+        print("ZZZZZZZZZZ %s" % type(self.tag).__name__)
+        t = rr.req[self.tag] ####.get_content()
 
         # If available, it must not empty
         if len(t)==0:
