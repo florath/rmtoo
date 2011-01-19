@@ -144,7 +144,7 @@ class html:
                 and req.get_value("Rationale")!=None:
             fd.write('<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.get_value["Rationale"].
+                     LaTeXMarkup.replace_html_par(req.get_value("Rationale").
                                                   get_content()))
 
         if req.is_value_available("Note") and req.get_value("Note")!=None:

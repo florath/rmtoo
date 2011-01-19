@@ -34,5 +34,5 @@ class TestReqRationale:
         rt = ReqRationale(opts, config)
         name, value = rt.rewrite("Rationale-test", req)
         assert(name=="Rationale")
-        assert(value=="something")
+        assert(value.get_content()=="something")
 
