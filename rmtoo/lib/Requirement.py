@@ -146,7 +146,8 @@ class Requirement(Digraph.Node):
         return key in self.values
 
     def is_val_av_and_not_null(self, key):
-        return key in self.values and self.get_value(key)!=None
+        return key in self.values \
+            and self.get_value(key)!=None
 
     def set_value(self, key, value):
         self.values[key] = value

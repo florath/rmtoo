@@ -16,7 +16,7 @@ class ReqTopicCohe:
         in_cnt = 0 
         out_cnt = 0
         for l in li:
-            if l.tags["Topic"]==topic:
+            if l.get_value("Topic")==topic:
                 in_cnt += 1
             else:
                 out_cnt += 1

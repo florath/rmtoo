@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for ReqPriority
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -12,6 +13,7 @@ from rmtoo.modules.ReqPriority import ReqPriority
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestReqPriority:
 
@@ -28,7 +30,7 @@ class TestReqPriority:
         "Requirement Tag Priority - tag given one stakeholder"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "marketing:7"
+        req["Priority"] = RecordEntry("Priority", "marketing:7")
 
         rt = ReqPriority(opts, config)
         name, value = rt.rewrite("Priority-test", req)
@@ -39,7 +41,7 @@ class TestReqPriority:
         "Requirement Tag Priority - tag given two stakeholders"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "marketing:7 security:3"
+        req["Priority"] = RecordEntry("Priority", "marketing:7 security:3")
 
         rt = ReqPriority(opts, config)
         name, value = rt.rewrite("Priority-test", req)
@@ -50,7 +52,7 @@ class TestReqPriority:
         "Requirement Tag Priority - faulty priority declaration ':'"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "marketing:"
+        req["Priority"] = RecordEntry("Priority", "marketing:")
 
         rt = ReqPriority(opts, config)
         try:
@@ -63,7 +65,7 @@ class TestReqPriority:
         "Requirement Tag Priority - invalid stakeholder"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "nixda:3"
+        req["Priority"] = RecordEntry("Priority", "nixda:3")
 
         rt = ReqPriority(opts, config)
         try:
@@ -76,7 +78,8 @@ class TestReqPriority:
         "Requirement Tag Priority - stakeholder voted more than once"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "security:3 marketing:7 security:4"
+        req["Priority"] = RecordEntry("Priority",
+                                      "security:3 marketing:7 security:4")
 
         rt = ReqPriority(opts, config)
         try:
@@ -89,7 +92,7 @@ class TestReqPriority:
         "Requirement Tag Priority - invalid priority (too big)"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "security:30"
+        req["Priority"] = RecordEntry("Priority", "security:30")
 
         rt = ReqPriority(opts, config)
         try:
@@ -102,7 +105,7 @@ class TestReqPriority:
         "Requirement Tag Priority - invalid priority (too small)"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Priority"] = "security:-10"
+        req["Priority"] = RecordEntry("Priority", "security:-10")
 
         rt = ReqPriority(opts, config)
         try:

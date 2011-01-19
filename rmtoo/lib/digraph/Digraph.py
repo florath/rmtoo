@@ -66,10 +66,10 @@ class Digraph:
 
     # Create a digraph from the given dictionary representation. 
     # If no dictionary is given, an empty digraph will be created.
-    def __init__(self, d=None):
+    def __init__(self, d=None, node_gen_func = Node):
         self.nodes = []
         if d!=None:
-            self.create_from_dict(d)
+            self.create_from_dict(d, node_gen_func)
 
     # Creates an edge from a to b - both must be nodes.
     @staticmethod
@@ -88,13 +88,13 @@ class Digraph:
 
     # Low level creation method, which really does the job of
     # converting a given dictionary to a digraph
-    def create_from_dict(self, d):
+    def create_from_dict(self, d, node_gen_func = Node):
         # First run: create all nodes
         named_nodes = {}
         for node_name in d:
             # Create the node and put it into the object list of all
             # nodes and into the local dictionary of named nodes.
-            named_node = self.Node(node_name)
+            named_node = node_gen_func(node_name)
             self.nodes.append(named_node)
             named_nodes[node_name] = named_node
 

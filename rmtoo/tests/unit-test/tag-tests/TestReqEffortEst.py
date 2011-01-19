@@ -12,6 +12,7 @@ from rmtoo.modules.ReqEffortEst import ReqEffortEst
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestReqClass:
 
@@ -29,7 +30,7 @@ class TestReqClass:
         opts, config, req = create_parameters()
 
         for i in ReqEffortEst.valid_values:
-            req["Effort estimation"] = str(i)
+            req["Effort estimation"] = RecordEntry("Effort estimation", str(i))
             rt = ReqEffortEst(opts, config)
             name, value = rt.rewrite("EffortEstimation-test", req)
             assert(name=="Effort estimation")
@@ -41,7 +42,7 @@ class TestReqClass:
 
         for i in [4, 6, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 22,
                   23, 24, 25, 26, 27, 28, 29, 30, 31, 32]:
-            req["Effort estimation"] = str(i)
+            req["Effort estimation"] = RecordEntry("Effort estimation", str(i))
             rt = ReqEffortEst(opts, config)
             try:
                 name, value = rt.rewrite("EffortEstimation-test", req)

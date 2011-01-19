@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for RDepPriority
 #
-# (c) 2010 on flonatel
+# (c) 2010-2011 on flonatel
 #
 # For licencing details see COPYING
 #
@@ -18,14 +19,14 @@ class TestRDepPriority:
         opts, config, reqset = create_parameters({"B": ["A"], "A": [] })
         reqset.build_named_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").tags = {"Factor": 1.0}
-        reqset.get_named_node("B").tags = {"Factor": 0.8}
+        reqset.get_named_node("A").set_value("Factor", 1.0)
+        reqset.get_named_node("B").set_value("Factor", 0.8)
 
         rdep = RDepPriority(opts, config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_named_node("A").tags["Priority"]==1.0)
-        assert(reqset.get_named_node("B").tags["Priority"]==0.8)
+        assert(reqset.get_named_node("A").get_value("Priority")==1.0)
+        assert(reqset.get_named_node("B").get_value("Priority")==0.8)
 
     def test_positive_02(self):
         "Three node digraph C -> B -> A"
@@ -33,16 +34,16 @@ class TestRDepPriority:
             {"C": ["B"], "B": ["A"], "A": [] })
         reqset.build_named_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").tags = {"Factor": 1.0}
-        reqset.get_named_node("B").tags = {"Factor": 0.8}
-        reqset.get_named_node("C").tags = {"Factor": 0.5}
+        reqset.get_named_node("A").set_value("Factor", 1.0)
+        reqset.get_named_node("B").set_value("Factor", 0.8)
+        reqset.get_named_node("C").set_value("Factor", 0.5)
 
         rdep = RDepPriority(opts, config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_named_node("A").tags["Priority"]==1.0)
-        assert(reqset.get_named_node("B").tags["Priority"]==0.8)
-        assert(reqset.get_named_node("C").tags["Priority"]==0.4)
+        assert(reqset.get_named_node("A").get_value("Priority")==1.0)
+        assert(reqset.get_named_node("B").get_value("Priority")==0.8)
+        assert(reqset.get_named_node("C").get_value("Priority")==0.4)
 
     def test_positive_03(self):
         "Four node digraph D -> B -> A and D -> C -> A"
@@ -50,15 +51,15 @@ class TestRDepPriority:
             {"D": ["B", "C"], "C": ["A"], "B": ["A"], "A": [] })
         reqset.build_named_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").tags = {"Factor": 1.0}
-        reqset.get_named_node("B").tags = {"Factor": 0.2}
-        reqset.get_named_node("C").tags = {"Factor": 0.4}
-        reqset.get_named_node("D").tags = {"Factor": 0.5}
+        reqset.get_named_node("A").set_value("Factor", 1.0)
+        reqset.get_named_node("B").set_value("Factor", 0.2)
+        reqset.get_named_node("C").set_value("Factor", 0.4)
+        reqset.get_named_node("D").set_value("Factor", 0.5)
 
         rdep = RDepPriority(opts, config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_named_node("A").tags["Priority"]==1.0)
-        assert(reqset.get_named_node("B").tags["Priority"]==0.2)
-        assert(reqset.get_named_node("C").tags["Priority"]==0.4)
-        assert(reqset.get_named_node("D").tags["Priority"]==0.2)
+        assert(reqset.get_named_node("A").get_value("Priority")==1.0)
+        assert(reqset.get_named_node("B").get_value("Priority")==0.2)
+        assert(reqset.get_named_node("C").get_value("Priority")==0.4)
+        assert(reqset.get_named_node("D").get_value("Priority")==0.2)

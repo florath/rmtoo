@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for ReqOwner
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -12,6 +13,7 @@ from rmtoo.modules.ReqOwner import ReqOwner
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestReqOwner:
 
@@ -19,7 +21,7 @@ class TestReqOwner:
         "Requirement Tag Owner - tag given"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Owner"] = "marketing"
+        req["Owner"] = RecordEntry("Owner", "marketing")
 
         rt = ReqOwner(opts, config)
         name, value = rt.rewrite("Owner-test", req)
@@ -42,7 +44,7 @@ class TestReqOwner:
         "Requirement Tag Owner - invalid tag given"
         opts, config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
-        req["Owner"] = "SomethingDifferent"
+        req["Owner"] = RecordEntry("Owner", "SomethingDifferent")
 
         rt = ReqOwner(opts, config)
         try:

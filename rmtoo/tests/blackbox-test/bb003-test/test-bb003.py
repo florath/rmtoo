@@ -1,5 +1,6 @@
 #
-# Blackbox rmtoo tests
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # (c) 2010 by flonatel
 #
@@ -26,5 +27,8 @@ class TestBB001:
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
+
+        print("DIFFS '%s'"  % diffs)
+
         assert(len(diffs)==0)
         delete_result_is_dir()

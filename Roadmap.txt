@@ -19,8 +19,6 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
-==> Send things out to INCOSE.
-
 v17
 ===
 o Archive old versions from slashdot to flonatel.de

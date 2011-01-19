@@ -101,13 +101,13 @@ class latex2:
                     req.get_value("Name").get_content(),
                     req.id, req.get_value("Description").get_content()))
 
-        if req.is_value_available("Rationale") \
-                and req.get_value("Rationale")!=None:
+        if req.is_val_av_and_not_null("Rationale"):
             fd.write("\n\\textbf{Rationale:} %s\n"
-                     % req.get_value["Rationale"])
+                     % req.get_value("Rationale").get_content())
 
-        if req.is_value_available("Note") and req.get_value("Note")!=None:
-            fd.write("\n\\textbf{Note:} %s\n" % req.get_value("Note"))
+        if req.is_val_av_and_not_null("Note"):
+            fd.write("\n\\textbf{Note:} %s\n" 
+                     % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
         if len(req.outgoing)>0:

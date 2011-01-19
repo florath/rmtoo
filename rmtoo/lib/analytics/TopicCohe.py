@@ -37,7 +37,7 @@ class TopicCohe:
         for l in li:
             # Count only, if the requirement is in the current chosen
             # topic set.
-            ltopic = l.tags["Topic"]
+            ltopic = l.get_value("Topic")
             if topic_set.get_named_node_no_throw(ltopic)!=None:
                 TopicCohe.add_releation(tcnt, topic,
                                         topic_set.get_named_node(ltopic))

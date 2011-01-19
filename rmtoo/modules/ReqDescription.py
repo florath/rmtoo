@@ -28,10 +28,10 @@ class ReqDescription(ReqTagGeneric):
         # like 'have to' or 'must'.
         if len(t.get_content())>1024:
             raise RMTException(3, "%s: Description is much too long: "
-                               "%d characters" % (rid, len(t)))
+                               "%d characters" % (rid, len(t.get_content())))
         if len(t.get_content())>255:
             print("+++ WARNING %s: Description is too long: %d characters"
-                  % (rid, len(t)))
+                  % (rid, len(t.get_content())))
             print("+++          Please consider split up this requirement")
         # Copy and delete the original
         del req[self.tag]

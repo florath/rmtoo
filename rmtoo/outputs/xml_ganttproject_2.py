@@ -76,15 +76,15 @@ class xml_ganttproject_2:
         if req.is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
 
-            print("RATIONALE '%s'" % req.get_value("Rationale").get_content())
-            asdfasdf
-
+            print("RATIONALE '%s'" % req.get_value("Rationale")
+                  .get_content())
             notes += LaTeXMarkup.replace_txt(
                 req.get_value("Rationale").get_content())
 
         if req.is_val_av_and_not_null("Note"):
             notes += "\n\n== Note ==\n"
-            notes += LaTeXMarkup.replace_txt(req.tags["Note"].get_content())
+            notes += LaTeXMarkup.replace_txt(req.get_value("Note")
+                                             .get_content())
 
         xml_note = doc.createElement("notes")
         xml_text = doc.createCDATASection(notes)

@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for ReqStatus
 #
-# (c) 2010 on flonatel
+# (c) 2010-2011 on flonatel
 #
 # For licencing details see COPYING
 #
@@ -12,13 +13,14 @@ from rmtoo.modules.ReqStatus import ReqStatus
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestReqStatus:
 
     def test_positive_01(self):
         "Requirement Tag Status - tag given 'not done'"
         opts, config, req = create_parameters()
-        req["Status"] = "not done"
+        req["Status"] = RecordEntry("Status", "not done")
 
         rt = ReqStatus(opts, config)
         name, value = rt.rewrite("Status-test", req)
@@ -28,7 +30,7 @@ class TestReqStatus:
     def test_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
         opts, config, req = create_parameters()
-        req["Status"] = "finished"
+        req["Status"] = RecordEntry("Status", "finished")
 
         rt = ReqStatus(opts, config)
         name, value = rt.rewrite("Status-test", req)
@@ -49,7 +51,7 @@ class TestReqStatus:
     def test_negative_02(self):
         "Requirement Tag Status - invalid tag given"
         opts, config, req = create_parameters()
-        req["Status"] = "dasjibtedjarnich"
+        req["Status"] = RecordEntry("Status", "dasjibtedjarnich")
 
         rt = ReqStatus(opts, config)
         try:
