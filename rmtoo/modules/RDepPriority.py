@@ -41,8 +41,6 @@ class RDepPriority(Digraph.Node):
         # incoming edge.
         def handle_priorization(node, inc_weight):
             # This is the weight which is inherited
-            print("NODE '%s'" % node)
-            print("NODEDIR '%s'" % dir(node))
             weight = inc_weight * node.get_value("Factor")
 
             # If there is none, or if the current priority is lower

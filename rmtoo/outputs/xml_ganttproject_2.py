@@ -75,9 +75,6 @@ class xml_ganttproject_2:
         
         if req.is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
-
-            print("RATIONALE '%s'" % req.get_value("Rationale")
-                  .get_content())
             notes += LaTeXMarkup.replace_txt(
                 req.get_value("Rationale").get_content())
 
