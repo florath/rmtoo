@@ -20,7 +20,7 @@ class ReqOwner(ReqTagGeneric):
         self.check_mandatory_tag(rid, req, 10)
 
         # Also the owner must be in the list of stakeholders
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         if t not in self.config.stakeholders:
             raise RMTException(11, "%s: invalid owner '%s'. Must be one "
                                "of the stakeholder '%s'" %

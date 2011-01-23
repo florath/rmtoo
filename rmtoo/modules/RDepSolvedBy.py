@@ -29,7 +29,7 @@ class RDepSolvedBy(Digraph.Node):
 
     # The rewriting of one requirment is done 'in place'.
     def rewrite_one_req(self, rr, reqset):
-        if rr.tags["Type"] == Requirement.rt_master_requirement:
+        if rr.get_value("Type") == Requirement.rt_master_requirement:
             # It self does not have any depends on nodes
             rr.graph_depends_on = None
             # This is the master!
@@ -46,7 +46,7 @@ class RDepSolvedBy(Digraph.Node):
         if self.tag not in rr.req:
             return True
 
-        t = rr.req[self.tag]
+        t = rr.req[self.tag].get_content()
         # If available, it must not empty
         if len(t)==0:
             reqset.error(77, "'Solved by' field has len 0", rr.id)

@@ -44,7 +44,7 @@ class ReqType(ReqTagGeneric):
         # This tag (Type) is mandatory
         self.check_mandatory_tag(rid, req, 18)
 
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         rt = self.find_type(t)
         if rt==None:
             raise RMTException(19, "%s: invalid type field '%s': "

@@ -1,7 +1,8 @@
 #
-# Blackbox rmtoo tests
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #

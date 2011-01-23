@@ -1,6 +1,13 @@
 User visible changes
 --------------------
 
+Changed error message from 
+ 'Missing tag handers for '{'TAGNAME': 'TAGVALUE'}''
+to 
+ '+++ Error: NN:TAG:No tag handler found for tag(s) '['...']' \
+   - Hint: typo in tag(s)?'  
+(Thanks to radar8.)
+
 Internal Changes
 ----------------
 

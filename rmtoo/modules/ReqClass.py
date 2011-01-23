@@ -28,7 +28,7 @@ class ReqClass(ReqTagGeneric):
         if "Class" not in req:
             v = Requirement.ct_detailable
         else:
-            t = req['Class']
+            t = req['Class'].get_content()
             if t=="implementable":
                 v = Requirement.ct_implementable
             elif t=="detailable":

@@ -55,20 +55,20 @@ class graph:
         # Colorize the current requirement depending on type
         nodeparam = []
         if get_conf_attr("Type") \
-                and req.tags["Type"] == req.rt_initial_requirement:
+                and req.get_value("Type") == req.rt_initial_requirement:
             nodeparam.append("color=orange")
         if get_conf_attr("Type") \
-                and req.tags["Type"] == req.rt_design_decision:
+                and req.get_value("Type") == req.rt_design_decision:
             nodeparam.append("color=green")
 
         if get_conf_attr("Status") \
-                and req.tags["Status"] == req.st_not_done:
+                and req.get_value("Status") == req.st_not_done:
             nodeparam.append("fontcolor=red")
             nodeparam.append('label="%s\\n[%4.2f]"' %
-                             (req.id, req.tags["Priority"]*10))
+                             (req.id, req.get_value("Priority")*10))
 
         if get_conf_attr("Class") \
-                and req.tags["Class"] == req.ct_implementable:
+                and req.get_value("Class") == req.ct_implementable:
             nodeparam.append("shape=octagon")
 
         return ",".join(nodeparam)

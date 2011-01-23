@@ -16,3 +16,4 @@ class ReqRationale(ReqTagGeneric):
 
     def rewrite(self, rid, req):
         return self.handle_optional_tag(req)
+    

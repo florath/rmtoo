@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-#   RequirementSet
+# RequirementSet
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -122,8 +123,8 @@ class RequirementSet(Digraph, MemLogStore):
         for r in self.reqs:
             rr = self.reqs[r]
             if len(rr.req)>0:
-                self.error(57, "req not empty. Missing tag handers "
-                           "for '%s'" % (rr.req), rr.id)
+                self.error(57, "No tag handler found for tag(s) '%s' "
+                           "- Hint: typo in tag(s)?" % rr.req.keys(), rr.id)
                 alls_fine = False
         return alls_fine
 

@@ -77,20 +77,21 @@ class TxtRecord(Record):
         self.comment_raw = TxtParser.extract_record_comment(sl)
         self.set_comment(TxtParser.extract_comment(self.comment_raw))
 
-        success, rp = TxtParser.split_entries(sl, rid, self)
+        success, rp = TxtParser.split_entries(
+            sl, rid, self, len(self.comment_raw) + 1)
         # If there was an error during the split already - stop
         # processing here
         if not success:
             self.set_unusable()
             return
         for i in rp:
-            self.llist.append(TxtRecordEntry(i))
-        return 
+            self.append(TxtRecordEntry(i))
+        return
 
     # Convert to string
     def to_string(self):
         s = TxtParser.add_newlines(self.comment_raw)
-        for l in self.llist:
+        for l in self:
             # There is the need to check for the type: only the
             # TxtRecordEntry provides a (for this method) usable
             # output.

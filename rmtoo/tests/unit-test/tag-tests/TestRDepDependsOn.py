@@ -13,6 +13,7 @@ from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.modules.RDepDependsOn import RDepDependsOn
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestRDepDependsOn:
 
@@ -25,7 +26,7 @@ class TestRDepDependsOn:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_initial_requirement},
-                         {"Depends on": "A"})}
+                         {"Depends on": RecordEntry("Depends on", "A")})}
 
         rdep = RDepDependsOn(opts, config)
         rdep.rewrite(reqset)
@@ -44,10 +45,10 @@ class TestRDepDependsOn:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_initial_requirement},
-                         {"Depends on": "A"}),
+                         {"Depends on": RecordEntry("Depends on", "A")}),
             "C": TestReq("C",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": "A B"}),
+                         {"Depends on": RecordEntry("Depends on", "A B")}),
             }
 
         rdep = RDepDependsOn(opts, config)
@@ -66,7 +67,7 @@ class TestRDepDependsOn:
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
-                         {"Depends on": "A"})}
+                         {"Depends on": RecordEntry("Depends on", "A")})}
 
         rdep = RDepDependsOn(opts, config)
         status = rdep.rewrite(reqset)
@@ -114,7 +115,7 @@ class TestRDepDependsOn:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": ""})}
+                         {"Depends on": RecordEntry("Depends on", "")})}
 
         rdep = RDepDependsOn(opts, config)
         status = rdep.rewrite(reqset)
@@ -130,7 +131,7 @@ class TestRDepDependsOn:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": "C"})}
+                         {"Depends on": RecordEntry("Depends on", "C")})}
 
         rdep = RDepDependsOn(opts, config)
         status = rdep.rewrite(reqset)
@@ -143,10 +144,10 @@ class TestRDepDependsOn:
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": "B"}),
+                         {"Depends on": RecordEntry("Depends on", "B")}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": "A"})}
+                         {"Depends on": RecordEntry("Depends on", "A")})}
 
         rdep = RDepDependsOn(opts, config)
         status = rdep.rewrite(reqset)
@@ -162,7 +163,7 @@ class TestRDepDependsOn:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Depends on": "B"})}
+                         {"Depends on": RecordEntry("Depends on", "B")})}
 
         rdep = RDepDependsOn(opts, config)
         status = rdep.rewrite(reqset)

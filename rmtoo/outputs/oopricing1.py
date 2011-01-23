@@ -446,7 +446,7 @@ class oopricing1:
         # First cell is the id
         self.create_text_cell(tr, req.name)
         # Second cell is the name
-        self.create_text_cell(tr, req.tags["Name"])
+        self.create_text_cell(tr, req.get_value("Name").get_content())
         # Third is the compliant
         tc = odf.table.TableCell()
         dc = odf.draw.Control(control="lbcompliant%s" % req.name,

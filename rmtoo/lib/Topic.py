@@ -1,14 +1,16 @@
 #
-# Topic
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
+# Topic
 #  This holds one topic - and all subtopics of this topic
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
 
-from rmtoo.lib.Parser import Parser
+from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 import os
@@ -52,8 +54,8 @@ class Topic(Digraph.Node):
     # Extract the name from the list (it's mandatory!)
     def extract_name(self):
         for nt in self.t:
-            if nt[0] == "Name":
-                self.topic_name = nt[1]
+            if nt.get_tag() == "Name":
+                self.topic_name = nt.get_content()
                 del(nt)
                 return 
         raise RMTException(62, "Mandatory tag 'Name' not given in topic",
@@ -74,15 +76,17 @@ class Topic(Digraph.Node):
     def read(self):
         self.digraph.add_node(self)
         fd = file(os.path.join(self.dir, self.name + ".tic"))
-        self.t = Parser.read_as_list(self.name, fd, self.parser_config)
-        if self.t==None:
-            # Something during the parsing process went wrong
-            raise RMTException(73, "Parsing of topic [%s] failed"
-                               % self.name)
+        self.t = TxtRecord.from_fd(fd, self.name, 
+                                   self.parser_config)
+        print("???? Enable this ????")
+##        if self.t==None:
+##            # Something during the parsing process went wrong
+##            raise RMTException(73, "Parsing of topic [%s] failed"
+##                               % self.name)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
-            if tag[0]=="SubTopic":
-                ntopic = Topic(self.dir, tag[1], self.digraph,
+            if tag.get_tag()=="SubTopic":
+                ntopic = Topic(self.dir, tag.get_content(), self.digraph,
                                self.parser_config, self.level+1, self)
                 #self.outgoing.append(ntopic)
                 Digraph.create_edge(self, ntopic)

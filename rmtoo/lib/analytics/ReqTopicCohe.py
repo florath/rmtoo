@@ -16,7 +16,7 @@ class ReqTopicCohe:
         in_cnt = 0 
         out_cnt = 0
         for l in li:
-            if l.tags["Topic"]==topic:
+            if l.get_value("Topic")==topic:
                 in_cnt += 1
             else:
                 out_cnt += 1
@@ -27,9 +27,9 @@ class ReqTopicCohe:
         ok = True
         for _, req in reqs.reqs.iteritems():
             it_in, it_out = ReqTopicCohe.count_in_out_topic(
-                req.tags["Topic"], req.incoming)
+                req.get_value("Topic"), req.incoming)
             ot_in, ot_out = ReqTopicCohe.count_in_out_topic(
-                req.tags["Topic"], req.outgoing)
+                req.get_value("Topic"), req.outgoing)
             
             # This is only problematic, if the in and out are not
             # really coherent to the topic.

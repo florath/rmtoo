@@ -90,10 +90,10 @@ class TopicSet(Digraph, MemLogStore):
         # to access it. 
         self.build_named_nodes()
         for req in reqset.nodes:
-            if "Topic" in req.tags \
-                    and req.tags["Topic"]!=None:
+            if req.is_value_available("Topic") \
+                    and req.get_value("Topic")!=None:
                 # A referenced topic must exists!
-                ref_topic = req.tags["Topic"]
+                ref_topic = req.get_value("Topic")
                 assert(ref_topic in self.named_nodes)
                 self.named_nodes[ref_topic].add_req(req)
 
@@ -112,7 +112,7 @@ class TopicSet(Digraph, MemLogStore):
         def copy_only_reqs(lreqset, ltopic_name_list, lall_topic_names):
             old2new = {}
             for _, req in lreqset.reqs.iteritems():
-                topic = req.tags["Topic"]
+                topic = req.get_value("Topic")
                 # If the referenced topic does not exists at all, emit
                 # an error.
                 if topic not in lall_topic_names:
@@ -120,7 +120,7 @@ class TopicSet(Digraph, MemLogStore):
                                   "in topic name?", req.id)
                     lreqset.not_usable()
                     continue
-                if not req.tags["Topic"] in ltopic_name_list:
+                if not req.get_value("Topic") in ltopic_name_list:
                     lreqset.debug(65, "Skipping requirement because "
                           "not in topic", req.id)
                     continue
@@ -154,7 +154,7 @@ class TopicSet(Digraph, MemLogStore):
         # requirements which has no incoming.
         for _, req in r.reqs.iteritems():
             if len(req.outgoing)==0 and \
-                    req.tags["Type"]!=Requirement.rt_master_requirement:
+                    req.get_value("Type")!=Requirement.rt_master_requirement:
                 print("+++ Info:%s: no outgoing edges" % req.name)
 
         return r

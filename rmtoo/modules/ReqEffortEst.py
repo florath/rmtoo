@@ -27,7 +27,7 @@ class ReqEffortEst(ReqTagGeneric):
         if value==None:
             return tag, value
 
-        v = int(value)
+        v = int(value.get_content())
 
         if v not in self.valid_values:
             raise RMTException(4, "%s: effort estimation must be one of %s"

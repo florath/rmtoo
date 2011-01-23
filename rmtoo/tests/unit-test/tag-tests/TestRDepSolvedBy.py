@@ -14,6 +14,7 @@ from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.modules.RDepSolvedBy import RDepSolvedBy
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.MemLogStore import MemLogStore, MemLog
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestRDepSolvedBy:
 
@@ -45,7 +46,7 @@ class TestRDepSolvedBy:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Solved by": ""})}
+                         {"Solved by": RecordEntry("Solved by", "")})}
 
         config.set_solved_by()
         rdep = RDepSolvedBy(opts, config)
@@ -64,7 +65,7 @@ class TestRDepSolvedBy:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Solved by": "C"})}
+                         {"Solved by": RecordEntry("Solved by", "C")})}
 
         config.set_solved_by()
         rdep = RDepSolvedBy(opts, config)
@@ -84,7 +85,7 @@ class TestRDepSolvedBy:
                          {}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Solved by": "B"})}
+                         {"Solved by": RecordEntry("Solved by", "B")})}
 
         config.set_solved_by()
         rdep = RDepSolvedBy(opts, config)
@@ -101,10 +102,10 @@ class TestRDepSolvedBy:
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_requirement},
-                         {"Solved by": "B"}),
+                         {"Solved by": RecordEntry("Solved by", "B")}),
             "B": TestReq("B",
                          {"Type": Requirement.rt_requirement},
-                         {"Solved by": "A"})}
+                         {"Solved by": RecordEntry("Solved by", "A")})}
 
         config.set_solved_by()
         rdep = RDepSolvedBy(opts, config)

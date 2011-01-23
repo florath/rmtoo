@@ -1,9 +1,10 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
 # Unit test for ReqInventedBy
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -12,6 +13,7 @@ from rmtoo.modules.ReqInventedBy import ReqInventedBy
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 class TestReqInventedBy:
 
@@ -19,7 +21,7 @@ class TestReqInventedBy:
         "Requirement Tag Invented by - tag given"
         opts, config, req = create_parameters()
         config.inventors = ["meinereiner", "keinerseiner"]
-        req["Invented by"] = "meinereiner"
+        req["Invented by"] = RecordEntry("Invented by", "meinereiner")
 
         rt = ReqInventedBy(opts, config)
         name, value = rt.rewrite("InventedBy-test", req)
@@ -42,7 +44,7 @@ class TestReqInventedBy:
         "Requirement Tag Invented by - invalid tag given"
         opts, config, req = create_parameters()
         config.inventors = ["meinereiner", "keinerseiner"]
-        req["Invented by"] = "MeinNameIstHase"
+        req["Invented by"] = RecordEntry("Invented by", "MeinNameIstHase")
 
         rt = ReqInventedBy(opts, config)
         try:

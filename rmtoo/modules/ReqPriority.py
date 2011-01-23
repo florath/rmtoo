@@ -29,7 +29,7 @@ class ReqPriority(ReqTagGeneric):
         # Compute the priority.  This is done by adding the simple
         # priorities and afterwars build the average from this.
         t = req[self.tag]
-        lop = t.split()
+        lop = t.get_content().split()
         # The (computed) priority
         priority_sum = 0.0
         num_stakeholders = 0

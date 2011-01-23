@@ -1,7 +1,8 @@
 #
-# Requirement Management Toolset
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -19,7 +20,7 @@ class ReqInventedBy(ReqTagGeneric):
         # This tag (Invented by) is mandatory
         self.check_mandatory_tag(rid, req, 5)
 
-        t = req[self.tag]
+        t = req[self.tag].get_content()
         # This must be one of the inventors
         if t not in self.config.inventors:
             raise RMTException(6, "Invalid invented by '%s'. Must be one "
