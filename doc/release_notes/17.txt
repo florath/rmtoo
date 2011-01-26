@@ -8,6 +8,8 @@ to
    - Hint: typo in tag(s)?'  
 (Thanks to radar8.)
 
+Added Install.txt to tar package.
+
 Internal Changes
 ----------------
 
