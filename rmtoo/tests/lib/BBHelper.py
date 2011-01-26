@@ -13,6 +13,9 @@ import tempfile
 import zipfile
 import xml.dom.minidom
 
+def tmp_dir():
+    return os.environ["rmtoo_test_dir"]
+
 def find(mdir):
     r = set()
     for d, _, files in os.walk(mdir):

@@ -17,12 +17,11 @@ import sys
 from optparse import OptionParser
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
-from rmtoo.lib.Modules import Modules
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicHandler import TopicHandler
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
-from rmtoo.lib.ConfigUtils import ConfigUtils
+from rmtoo.lib.main.MainHelper import MainHelper
 
 def parse_cmd_line_opts(args):
     parser = OptionParser()
@@ -100,25 +99,12 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
 
     # Output everything
     ohandler.output(rc)
-    
+   
     return True
 
-def load_config(opts):
-    # Load config file
-    # ('execfile' does not work here.)
-    f = file(opts.config_file, "r")
-    conf_file = f.read()
-    exec(conf_file)
-    config = Config()
-    ConfigUtils.set_defaults(config)
-    ConfigUtils.check(config)
-    f.close()
-    return config
-
 def main_impl(args, mstdout, mstderr):
-    opts = parse_cmd_line_opts(args)
-    config = load_config(opts)
-    mods = Modules(opts.modules_directory, opts, config)
+    opts, config, mods = MainHelper.main_setup(args, mstdout, mstderr,
+                                               parse_cmd_line_opts)
     return execute_cmds(opts, config, mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):

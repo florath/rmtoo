@@ -47,6 +47,11 @@ class TxtRecord(Record):
         obj.parse(fd.read(), rid)
         return obj
 
+    # Write to filesystem
+    def write_fd(self, fd):
+        for l in self:
+            l.write_fd(fd)
+
     # Remove the last empty line - which might be a relict from the split.
     def maybe_remove_last_empty_line(self, sl):
         sl_len = len(sl)

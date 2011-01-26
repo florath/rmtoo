@@ -79,3 +79,11 @@ class Record(MemLogStore, list):
         self.ldict = None
         list.__delitem__(self, index)
 
+    # Remove the first occurance of value with the given tag
+    def remove(self, v):
+        for l in self:
+            if l.get_tag()==v:
+                list.remove(self, l)
+                return
+        return
+

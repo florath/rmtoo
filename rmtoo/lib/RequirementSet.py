@@ -19,6 +19,7 @@ import StringIO
 from Requirement import Requirement
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 # This class handles a whole set of requirments.
 # These set must be enclosed, i.e. all references must be resolvable.
@@ -162,3 +163,26 @@ class RequirementSet(Digraph, MemLogStore):
         self.own_write_analytics_result(mstderr)
         for req in sorted(self.reqs.values(), key=lambda r: r.id):
             req.write_analytics_result(mstderr)
+
+    def normalize_dependencies(self):
+        print("Staring normalization")
+        print(self.reqs.keys())
+
+        for r in self.reqs.itervalues():
+            # Remove the old 'Depends on'
+            r.record.remove("Depends on")
+
+            # Create the list of dependencies
+            onodes = []
+            for n in r.incoming:
+                onodes.append(n.name)
+            on = " ".join(onodes)
+            r.record.append(RecordEntry(
+                    "Solved by", on,
+                    "Added by rmtoo-normalize-dependencies"))
+
+    def write_to_filesystem(self, directory):
+        for r in self.reqs.itervalues():
+            fd = file(directory + "/" + r.id + ".req", "w")
+            r.record.write_fd(fd)
+            fd.close()

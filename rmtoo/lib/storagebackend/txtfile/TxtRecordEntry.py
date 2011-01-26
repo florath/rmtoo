@@ -13,6 +13,7 @@
 
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from rmtoo.lib.StringHelper import StringHelper
 
 class TxtRecordEntry(RecordEntry):
 
@@ -52,3 +53,22 @@ class TxtRecordEntry(RecordEntry):
             comment = "# " + l.get_comment()
 
         return l.get_tag() + ": " + l.get_content() + "\n" + comment
+
+    # Write record entry to filesystem
+    def write_fd(self, fd):
+        if self.content_raw!=None:
+            fd.write(self.content_raw[0])
+            fd.write("\n")
+            fd.write(StringHelper.join_ate("\n", self.content_raw[1]))
+        else:
+            fd.write(self.get_tag())
+            fd.write(": ")
+            fd.write(self.get_content())
+            fd.write("\n")
+            
+        if self.comment_raw!=None:
+            fd.write(StringHelper.join_ate("\n", self.comment_raw))
+        else:
+            fd.write("# ")
+            fd.write(self.get_comment())
+            fd.write("\n")

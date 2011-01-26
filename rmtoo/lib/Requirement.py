@@ -74,9 +74,9 @@ class Requirement(Digraph.Node):
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
-        req_record = TxtRecord.from_fd(fd, self.id,
+        self.record = TxtRecord.from_fd(fd, self.id,
                                  self.config.txtio["requirements"])
-        req = req_record.get_dict()
+        req = self.record.get_dict()
         if req == None:
             self.state = self.er_error
             self.mls.error(42, "parser returned error", self.id)

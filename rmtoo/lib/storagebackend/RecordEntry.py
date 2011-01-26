@@ -33,3 +33,12 @@ class RecordEntry:
     def get_comment(self):
         return self.comment
 
+    def write_fd(self, fd):
+        fd.write(self.get_tag())
+        fd.write(": ")
+        fd.write(self.get_content())
+        fd.write("\n")
+
+        fd.write("# ")
+        fd.write(self.get_comment())
+        fd.write("\n")
