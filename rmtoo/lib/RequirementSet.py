@@ -162,3 +162,9 @@ class RequirementSet(Digraph, MemLogStore):
         self.own_write_analytics_result(mstderr)
         for req in sorted(self.reqs.values(), key=lambda r: r.id):
             req.write_analytics_result(mstderr)
+
+    def edge_count(self):
+        r = 0
+        for n in self.reqs.itervalues():
+            r += len(n.outgoing)
+        return r

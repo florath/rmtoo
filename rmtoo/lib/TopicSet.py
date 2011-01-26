@@ -1,11 +1,14 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # TopicSet
 #
 #  Collection of all topics.
 #  Note that the TopicSet is a tree where the leaves are 
 #  orders - i.e. it is not possible to put them into a set.
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #

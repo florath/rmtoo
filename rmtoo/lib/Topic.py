@@ -78,11 +78,6 @@ class Topic(Digraph.Node):
         fd = file(os.path.join(self.dir, self.name + ".tic"))
         self.t = TxtRecord.from_fd(fd, self.name, 
                                    self.parser_config)
-        print("???? Enable this ????")
-##        if self.t==None:
-##            # Something during the parsing process went wrong
-##            raise RMTException(73, "Parsing of topic [%s] failed"
-##                               % self.name)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
             if tag.get_tag()=="SubTopic":

@@ -58,4 +58,7 @@ class Config:
 
           ["oopricing1",
            ["ts_common", "artifacts/reqspricing"]],
+
+#          ["libsea1",
+#           ["ts_common", "artifacts/reqs3d.graph"]],
         ]
