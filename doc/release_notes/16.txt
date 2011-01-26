@@ -8,9 +8,6 @@ consult the document doc/other/HowToDigraph.txt for more details).
 The old 'Depends on' is still supported - but new projects should use
 the new way.
 
-The 'Solved by' N:1 digraph relation description was added - which can
-be used instead of using 'Depends on'.
-
 Maximum line length is now configurable - separately for requirements
 and topics.
 

@@ -186,3 +186,10 @@ class RequirementSet(Digraph, MemLogStore):
             fd = file(directory + "/" + r.id + ".req", "w")
             r.record.write_fd(fd)
             fd.close()
+
+    def edge_count(self):
+        r = 0
+        for n in self.reqs.itervalues():
+            r += len(n.outgoing)
+        return r
+
