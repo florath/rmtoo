@@ -72,3 +72,8 @@ class TxtRecordEntry(RecordEntry):
             fd.write("# ")
             fd.write(self.get_comment())
             fd.write("\n")
+
+    # There is the need to clean up the raw stored content
+    def set_content(self, c):
+        RecordEntry.set_content(self, c)
+        self.content_raw = None

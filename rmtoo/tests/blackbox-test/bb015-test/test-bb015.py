@@ -8,8 +8,9 @@
 #
 
 import os
+import shutil
 
-from rmtoo.lib.main.NormalizeDependencies import main
+from rmtoo.lib.main.NormalizeDependencies import main, main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir, extract_container_files, tmp_dir
 
@@ -21,26 +22,28 @@ class TestBB015:
         "Normalization test"
 
         def myexit(n):
-            pass
+            self.rval = n
 
         mout, merr = prepare_result_is_dir()
         td = tmp_dir()
 
-        print("TD %s" % td)
+        #print("TD %s" % td)
 
         # Copy requirements to tmp dir
         destdir = os.path.join(td, "reqs") 
-        os.mkdir(destdir)
-        os.system("cp %s/input/reqs/* %s" % (mdir, destdir))
+        shutil.copytree("%s/input/reqs" % mdir, destdir,
+                        ignore=shutil.ignore_patterns('*~', ))
 
+        # Call the converter
+        main(["-f", os.path.join(mdir, "input", "Config2.py"),
+              "-m", "..", destdir], mout, merr, main_impl, myexit)
 
-#        main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr,
-#             exitfun=myexit)
-#        cleanup_std_log(mout, merr)
-#        extract_container_files(["reqspricing.ods",])
-#        missing_files, additional_files, diffs = compare_results(mdir)
-#        assert(len(missing_files)==0)
-#        assert(len(additional_files)==0)
-#        assert(len(diffs)==0)
+        assert(self.rval==0)
 
-#        delete_result_is_dir()
+        cleanup_std_log(mout, merr)
+        missing_files, additional_files, diffs = compare_results(mdir)
+        assert(len(missing_files)==0)
+        assert(len(additional_files)==0)
+        assert(len(diffs)==0)
+
+        delete_result_is_dir()

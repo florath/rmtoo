@@ -1,0 +1,12 @@
+Name: A1
+Type: master requirement
+Invented on: 2010-07-27
+Invented by: flonatel
+Owner: development
+Description: A1 \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: B1
+Solved by: B1 B2
+# Added by rmtoo-normalize-dependencies

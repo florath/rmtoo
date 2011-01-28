@@ -9,6 +9,8 @@
 # For licencing details see COPYING
 #
 
+import os
+
 from rmtoo.lib.ConfigUtils import ConfigUtils
 from rmtoo.lib.Modules import Modules
 

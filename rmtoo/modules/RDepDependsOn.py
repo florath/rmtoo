@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Requirments Depends On Tag handling
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -35,7 +38,7 @@ class RDepDependsOn(Digraph.Node):
         self.mods = mods
 
     # The rewriting of one requirment is done 'in place'.
-    def rewrite_one_req(self, rr, reqset):
+    def rewrite_one_req(self, rr, reqset, also_solved_by):
         if rr.get_value("Type") == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if self.tag in rr.req:
@@ -56,6 +59,9 @@ class RDepDependsOn(Digraph.Node):
 
         # For all other requirments types there must be a 'Depends on'
         if self.tag not in rr.req:
+            if also_solved_by:
+                # Skip handling this requirement
+                return True
             print("+++ ERROR %s: non-initial requirement has "
                   "no 'Depends on' field." % (rr.id))
             return False
@@ -98,13 +104,17 @@ class RDepDependsOn(Digraph.Node):
         if "Depends on" not in self.config.reqs_spec["dependency_notation"]:
             return True
 
+        # Check if the "Solved by" is also available in the config
+        also_solved_by = "Solved by" in \
+            self.config.reqs_spec["dependency_notation"]
+
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)
         everythings_fine = True
         # Prepare the Master Node
         reqset.graph_master_node = None
         for k, v in reqset.reqs.items():
-            if not self.rewrite_one_req(v, reqset):
+            if not self.rewrite_one_req(v, reqset, also_solved_by):
                 everythings_fine = False
         # Double check if one was found
         if reqset.graph_master_node==None:

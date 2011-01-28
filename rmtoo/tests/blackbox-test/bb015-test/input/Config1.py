@@ -2,12 +2,8 @@ import os
 
 class Config:
 
-    basedir = "tests/blackbox-test/bb001-test/"
+    basedir = "tests/blackbox-test/bb015-test/"
     result_is = os.environ["rmtoo_test_dir"]
-
-    stakeholders = ["development", "management", "users", "customers"]
-
-    inventors = ["flonatel", ]
 
     reqs_spec = \
         {

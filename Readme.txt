@@ -73,7 +73,7 @@ All other (including Ubuntu) should use the provided tar ball.
 
 --- Preconditions ---
 
-rmtoo is written in python.  At least version 2.5 of python is
+rmtoo is written in python.  At least version 2.6 of python is
 needed. 
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed. 

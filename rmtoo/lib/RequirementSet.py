@@ -165,9 +165,6 @@ class RequirementSet(Digraph, MemLogStore):
             req.write_analytics_result(mstderr)
 
     def normalize_dependencies(self):
-        print("Staring normalization")
-        print(self.reqs.keys())
-
         for r in self.reqs.itervalues():
             # Remove the old 'Depends on'
             r.record.remove("Depends on")
@@ -176,16 +173,24 @@ class RequirementSet(Digraph, MemLogStore):
             onodes = []
             for n in r.incoming:
                 onodes.append(n.name)
+            onodes.sort()
             on = " ".join(onodes)
-            r.record.append(RecordEntry(
-                    "Solved by", on,
-                    "Added by rmtoo-normalize-dependencies"))
+
+            # Check if there is already a 'Solved by'
+            try:
+                r.record.set_content("Solved by", on)
+            except ValueError, ve:
+                r.record.append(RecordEntry(
+                        "Solved by", on,
+                        "Added by rmtoo-normalize-dependencies"))
+        return True
 
     def write_to_filesystem(self, directory):
         for r in self.reqs.itervalues():
             fd = file(directory + "/" + r.id + ".req", "w")
             r.record.write_fd(fd)
             fd.close()
+        return True
 
     def edge_count(self):
         r = 0

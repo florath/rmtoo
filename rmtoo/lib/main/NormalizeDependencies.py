@@ -32,7 +32,7 @@ def parse_cmd_line_opts(args):
         raise RMTException(82, "no config_file option is specified")
 
     if len(args)!=1:
-        raise RMTException(83, "args must be the requirements directory")
+        raise RMTException(83, "args must be set to the requirements directory")
     options.args = args
 
     return options
@@ -41,10 +41,9 @@ def main_impl(args, mstdout, mstderr):
     opts, config, mods = MainHelper.main_setup(args, mstdout, mstderr,
                                                parse_cmd_line_opts)
     rs = RequirementSet(mods, opts, config)
-    rs.read_from_filesystem(opts.args[0])
-    rs.normalize_dependencies()
-    rs.write_to_filesystem(opts.args[0])
-    return 
+    return rs.read_from_filesystem(opts.args[0]) \
+        and rs.normalize_dependencies() \
+        and rs.write_to_filesystem(opts.args[0])
 
 def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
     try:

@@ -87,3 +87,12 @@ class Record(MemLogStore, list):
                 return
         return
 
+    # Set the value for the given key. If not available throws an
+    # ValueError.
+    def set_content(self, k, c):
+        for l in self:
+            if l.get_tag()==k:
+                l.set_content(c)
+                return
+        raise ValueError()
+ 
