@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # HTML output class
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -17,8 +20,12 @@ class html:
     def __init__(self, param):
         self.topic_name = param[0]
         self.output_dir = param[1]
-        self.html_header_filename = param[2]
-        self.html_footer_filename = param[3]
+        self.html_header_filename = None
+        self.html_footer_filename = None
+        if len(param)>2:
+            self.html_header_filename = param[2]
+        if len(param)>3:
+            self.html_footer_filename = param[3]
         self.read_html_arts()
 
     def set_topics(self, topics):
@@ -49,12 +56,14 @@ class html:
         ofile.write("\n")
 
     def read_html_arts(self):
-        fd = file(self.html_header_filename, "r")
-        self.html_header = fd.read()
-        fd.close()
-        fd = file(self.html_footer_filename, "r")
-        self.html_footer = fd.read()
-        fd.close()
+        if self.html_header_filename!=None:
+            fd = file(self.html_header_filename, "r")
+            self.html_header = fd.read()
+            fd.close()
+        if self.html_footer_filename!=None:
+            fd = file(self.html_footer_filename, "r")
+            self.html_footer = fd.read()
+            fd.close()
 
     # The real output
     # Note that currently the 'reqscont' is not used in case of topics
@@ -68,6 +77,14 @@ class html:
         self.output_html_topic(self.topic_set.get_master())
 
     def output_html_topic(self, topic):
+        self.ouput_html_topic_mkdirs()
+        fd = self.ouput_html_topic_open_output_file(topic.name)
+        self.output_html_topic_write_header(fd)
+        self.output_html_topic_output_content(fd, topic)
+        self.output_html_topic_write_footer(fd)
+        fd.close()
+
+    def ouput_html_topic_mkdirs(self):
         # If not already there, create the directory.
         try:
             os.makedirs(self.output_dir)
@@ -75,11 +92,16 @@ class html:
             # It's ok if already there
             pass
 
+    def ouput_html_topic_open_output_file(self, name):
         # Each Topic will be stored in an seperate html file.
-        fd = file(os.path.join(self.output_dir, topic.name + ".html"),
+        fd = file(os.path.join(self.output_dir, name + ".html"),
                   "w")
+        return fd
+
+    def output_html_topic_write_header(self, fd):
         fd.write(self.html_header)
 
+    def output_html_topic_output_content(self, fd, topic):
         # Subtopics go in a ul
         ul_open = False
         for t in topic.t:
@@ -120,8 +142,8 @@ class html:
         if ul_open:
             fd.write("</ul></span>")
 
+    def output_html_topic_write_footer(self, fd):
         fd.write(self.html_footer)
-        fd.close()
 
     def output_requirements(self, fd, topic):
         # Output must be sorted - to be comparable

@@ -77,10 +77,8 @@ class Requirement(Digraph.Node):
         self.record = TxtRecord.from_fd(fd, self.id,
                                  self.config.txtio["requirements"])
         req = self.record.get_dict()
-        if req == None:
-            self.state = self.er_error
-            self.mls.error(42, "parser returned error", self.id)
-            return
+        # This 'req' is always valid - if there is a problem, an exception 
+        # is raised.
 
         # Handle all the modules (Semantic input)
         self.handle_modules_reqtag(req)

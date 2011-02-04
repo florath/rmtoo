@@ -192,9 +192,10 @@ class RequirementSet(Digraph, MemLogStore):
             fd.close()
         return True
 
-    def edge_count(self):
-        r = 0
-        for n in self.reqs.itervalues():
-            r += len(n.outgoing)
-        return r
+# Not used at the moment
+#    def edge_count(self):
+#        r = 0
+#        for n in self.reqs.itervalues():
+#            r += len(n.outgoing)
+#        return r
 
