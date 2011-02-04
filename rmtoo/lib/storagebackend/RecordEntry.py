@@ -33,6 +33,9 @@ class RecordEntry:
     def set_content(self, c):
         self.content = c
 
+    def set_comment(self, c):
+        self.comment = c
+
     def get_comment(self):
         return self.comment
 

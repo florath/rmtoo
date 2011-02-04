@@ -77,3 +77,8 @@ class TxtRecordEntry(RecordEntry):
     def set_content(self, c):
         RecordEntry.set_content(self, c)
         self.content_raw = None
+
+    # Same for comment
+    def set_comment(self, c):
+        RecordEntry.set_comment(self, c)
+        self.comment_raw = None
