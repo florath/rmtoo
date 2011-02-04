@@ -82,4 +82,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/blackbox-test/bb015-test/test-bb015.py
+		tests/unit-test/core-tests/TestTxtRecord.py
