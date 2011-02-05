@@ -172,4 +172,4 @@ class latex2:
             fd.write("& & ")
             i+=1
 
-        fd.write("\end{tabular}\end{center} }\n")
+        fd.write("\end{tabular}\end{center} }\n\n")

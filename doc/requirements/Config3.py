@@ -31,7 +31,7 @@ class Config:
            "topics": "ts_common",
         }
 
-    output_specs1 = \
+    output_specs = \
         [ 
           ["prios", 
            ["ts_common", "artifacts/reqsprios.tex"]],
@@ -63,7 +63,7 @@ class Config:
            ["ts_common", "artifacts/reqdeps1.tlp"]],
         ]
 
-    output_specs = \
+    output_specs2 = \
         [
           ["tlp1",
            ["ts_common", "artifacts/reqdeps1.tlp"]],
