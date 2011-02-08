@@ -20,7 +20,9 @@ class latex2:
         "chapter",
         "section",
         "subsection",
-        "subsubsection" ]
+        "subsubsection",
+        "paragraph",
+        "subparagraph" ]
 
     def __init__(self, params):
         self.topic_name = params[0]

@@ -22,6 +22,8 @@ subtopic in the same paragraph than the subtopic itself.
 The config file can now be given as a command line parameter for the
 template project. (Thanks to Pierre Roth)
 
+Extended list of section names for latex2 output. (Thanks to Pierre
+Roth) 
 
 Internal Changes
 ----------------
