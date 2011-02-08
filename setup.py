@@ -72,5 +72,5 @@ setup(name=package, version=version,
 
       license="GPL V3",
       platforms="all",
-      scripts=["bin/rmtoo", ],
+      scripts=["bin/rmtoo", "bin/rmtoo-normalize-dependencies"],
      )

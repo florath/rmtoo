@@ -1,0 +1,73 @@
+.\" 
+.\" Man page for rmtoo-normalize-dependencies
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2011 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-normalize-dependencies 1 2011-02-08 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-normalize-dependencies \- requirements management tool: convert dependency notation
+.SH SYNOPSIS
+.B rmtoo-normalize-dependencies
+.B \-f
+.I cfgfile
+.B [\-h]
+.B [\-m
+.I moduledir]
+.B reqs_dir
+.SH DESCRIPTION
+There are currently two ways to describe dependencies: the 'Solved by'
+and 'Depends on' way.  Please consult rmtoo-req-format.5 for a
+detailed discussion.
+.P
+This tool converts a set of requirements from the old and
+deprecated 'Depends on' way to the new 'Solved by' way of dependency
+notation. 
+.P
+Please note that the tools overwrites the requirements text
+files. Please first backup the original files before using this tool.
+.SH OPTIONS
+.TP
+\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
+The directory with the requirements files.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display a short usage help.
+.TP
+\fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
+The directory where the rmtoo modules can be found.  When the program
+was installed by standard system routines (e.g. as a deb or a rpm
+package) this option is not necessary.  When using rmtoo from the
+repository or from a release tar ball this must point to the main
+directory.
+.TP
+\fBreqs_dir\fR The directory of the requirements which will be
+converted.
+.SH RETURN
+.B rmtoo-normalize-dependencies
+returns 0 when all commands are successfully completed and a value not
+equal 0 when there was a problem.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2011 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

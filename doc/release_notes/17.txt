@@ -1,6 +1,10 @@
 User visible changes
 --------------------
 
+Added rmtoo-normalize-dependencies tool which converts a set of
+requirements from the old 'Depends on' to the new 'Solved by'
+notation.
+
 Changed error message from 
  'Missing tag handers for '{'TAGNAME': 'TAGVALUE'}''
 to 
@@ -17,5 +21,11 @@ subtopic in the same paragraph than the subtopic itself.
 
 Internal Changes
 ----------------
+
+Text input / output classes were completely rewritten and replace the
+old parser. The new classes can be used for writing text files. This
+makes it possible that text files can be read in (requirements and
+topcs), can be changed programmatically and can then be written back
+to the file system. 
 
 Added more automatic regression tests.
