@@ -19,20 +19,12 @@ o Get rmtoo listed in the INCOSE tool survey.
 o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
+=> Mail to INCOSE was sent - they answered that they will include
+rmtoo in their list as soon as possible.
+
 v17
 ===
-o Archive old versions from slashdot to flonatel.de
-  (leave only last three versions on slashdot)
 o Increase test case coverage to minimum 96%
-o New Parser (which is able to also output txt files)
-o convert tool: automatically change dependency noting
-  It is currently unknown who uses these type of comments - and if a
-  tool is needed which converts the old problematic files to files
-  with the new semantic. But: this tool needs the new parser. Maybe it
-  is a good idea to have one tool for converting things: 
-   rmtoo-convert --to-solved-by reqsdir
-  or
-   rmtoo-convert --clean-up-comments reqsdir.
  
 
 ==> This will be the point of time to get rmtoo into one Linux
@@ -40,6 +32,8 @@ o convert tool: automatically change dependency noting
 
 v18
 ===
+o Archive old versions from slashdot to flonatel.de
+  (leave only last three versions on slashdot)
 o Include sub-graphs in the PDF and HTML documentation
   - Topic based (all reqs of a topic)
   - req based (all reqs dependend and depend on one req)
