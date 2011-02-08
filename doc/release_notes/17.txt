@@ -19,6 +19,10 @@ Added experimental tlp (tulip graph package) output.
 Fixed small layout problem in LaTeX files which rendered text after a
 subtopic in the same paragraph than the subtopic itself.
 
+The config file can now be given as a command line parameter for the
+template project. (Thanks to Pierre Roth)
+
+
 Internal Changes
 ----------------
 

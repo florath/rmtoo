@@ -13,9 +13,14 @@ force:
 
 #
 # This is the way the rmtoo must be called.
-# (The variable is set in the setenv.sh script)
+# (The RMTOO_CALL variable is set in the setenv.sh script)
+# You can override the default Config.py file by setting
+# the RMTOO_CONFIG variable from the command line.
+# ie:
+#      make RMTOO_CONFIG=YourConfig.py
 #
-CALL_RMTOO=${RMTOO_CALL} -f Config.py
+RMTOO_CONFIG=Config.py
+CALL_RMTOO=${RMTOO_CALL} -f ${RMTOO_CONFIG}
 
 #
 # Dependency handling
