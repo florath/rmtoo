@@ -52,4 +52,7 @@ class Config:
           ["xml_ganttproject_2",
            ["ts_common", result_is + "/gantt2.xml", 1]],
 
+          ["tlp1",
+           ["ts_common", result_is + "/reqsgraph.tlp"]],
+
         ]
