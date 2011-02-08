@@ -25,6 +25,7 @@ rmtoo in their list as soon as possible.
 v17
 ===
 o Increase test case coverage to minimum 96%
+o Conversion tool outputs empty "Solved by"
  
 
 ==> This will be the point of time to get rmtoo into one Linux
