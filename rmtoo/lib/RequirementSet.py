@@ -173,6 +173,15 @@ class RequirementSet(Digraph, MemLogStore):
             onodes = []
             for n in r.incoming:
                 onodes.append(n.name)
+            
+            # If the onodes is empty: There must no old 'Solved by'
+            # tag available - if so something completey strange has
+            # happens and it is better to stop directly.
+            if len(onodes)==0:
+                assert(not r.record.is_tag_available("Solved by"))
+                # Looks that everything is ok: continue
+                continue
+
             onodes.sort()
             on = " ".join(onodes)
 

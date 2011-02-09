@@ -96,3 +96,11 @@ class Record(MemLogStore, list):
                 return
         raise ValueError()
  
+    # Checks if the given tag is available
+    def is_tag_available(self, tag):
+        for i in self:
+            if tag==i.get_tag():
+                return True;
+        return False
+
+

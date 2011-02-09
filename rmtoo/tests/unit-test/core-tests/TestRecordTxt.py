@@ -116,3 +116,12 @@ class TestRecordTxt:
         except KeyError, ke:
             pass
         assert(txt_doc.to_string()==doc3)
+
+    def test_pos_06(self):
+        "Check top level Record: is_tag_available"
+
+        txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
+        txt_doc.insert(2, RecordEntry("Hinzu", "This is quite new."))
+
+        assert(txt_doc.is_tag_available("Hinzu"))
+        assert(not txt_doc.is_tag_available("NichtDa"))
