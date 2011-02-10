@@ -6,6 +6,5 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} support genration of
  a requirements dependency graph which is topic based.
 Rationale: A graph says more than thousand words.
-Depends on: OutputDocument
 Status: finished
 Topic: Output

@@ -5,9 +5,10 @@ Invented by: flonatel
 Description: There \textbf{must} be an Emacs mode which supports the
  text file format used by \textsl{rmtoo}.
 Owner: development
-Depends on: EasyEditable
 Status: not done
 Priority: development:7
 Effort estimation: 8
 Topic: EmacsMode
 
+Solved by: EMHighLightTags EMInput EMSupportAuthor EMValueHighlight
+# Added by rmtoo-normalize-dependencies

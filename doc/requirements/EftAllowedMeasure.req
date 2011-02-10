@@ -8,7 +8,6 @@ Rationale: This is the typically used start of the fibonacci numbers
  for this.  0 is no effort, 1 is tiny effort and so on until 21 is
  huge effort.
 Owner: development
-Depends on: EftMeasure
 Status: finished
 Class: implementable
 Topic: ReqTagEffortDesc

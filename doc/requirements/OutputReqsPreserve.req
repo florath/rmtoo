@@ -6,7 +6,6 @@ Owner: development
 Description: When changing an already existing requirement, everything
  which is possible \textbf{must} be preserved.
 Rationale: This is especially true for comments and empty lines.
-Depends on: OutputRequirements
 Status: not done
 Priority: development:10
 Effort estimation: 21

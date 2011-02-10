@@ -7,8 +7,9 @@ Description: At all places where it makes sense, a default
 Note: This simplifies the normal use of rmtoo: not all aspects must be
  defined always (but can).
 Owner: development
-Depends on: Configuration
 Status: not done
 Priority: development:10
 Effort estimation: 13
 Topic: Basics
+Solved by: ConfigTopicMaxLineLength ConfigTopicMaxLineLengthDefault
+# Added by rmtoo-normalize-dependencies

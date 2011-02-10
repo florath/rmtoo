@@ -5,8 +5,9 @@ Invented by: flonatel
 Description: \textsl{rmtoo} \textbf{must} work on requirements.
 Rationale: That's is what's about.
 Owner: development
-Depends on: Input
 Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: Basics
+Solved by: EMRequirements FilesInFS ReqGenTagOrder ReqTags VersionControlSystem
+# Added by rmtoo-normalize-dependencies

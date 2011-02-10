@@ -6,6 +6,5 @@ Description: Each requirement \textbf{must} have a type tag which must
  be one of "master requirement", "initial requirement", "requirement"
  or "design decision".
 Owner: development
-Depends on: ReqTagsBasic
 Status: finished
 Topic: ReqTags

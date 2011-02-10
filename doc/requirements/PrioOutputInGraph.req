@@ -6,7 +6,6 @@ Description: The priority output \textbf{must} be included in graph
  for all open requirements.
 Rationale: This gives a great overview what must be done.
 Owner: development
-Depends on: OutputPrio
 Status: finished
 Priority: development:8
 Topic: Output

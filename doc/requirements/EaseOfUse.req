@@ -5,9 +5,10 @@ Invented by: flonatel
 Description: \textsl{rmtoo} \textbf{must} be easy to use.
 Rationale: Only then it will be used.
 Owner: development
-Depends on: Simplicity
 Status: not done
 Priority: management:10
 Effort estimation: 3
 Topic: Basics
 
+Solved by: Packaging
+# Added by rmtoo-normalize-dependencies

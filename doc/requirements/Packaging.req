@@ -7,9 +7,10 @@ Description: \textsl{rmtoo} \textbf{must} be distributed as a
 Rationale: This makes it very easy to install and update
  \textsl{rmtoo}. 
 Owner: development
-Depends on: EaseOfUse
 Status: not done
 Priority: management:10
 Effort estimation: 3
 Topic: Deployment
 
+Solved by: PackDebian TestBeforePack
+# Added by rmtoo-normalize-dependencies

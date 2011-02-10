@@ -7,7 +7,8 @@ Description: \textsl{rmtoo} \textbf{must} check the requirements for
  graph errors.
 Rationale: Graph errors are errors which result in a broken
  requirement dependency graph, e.g. a circular dependency.
-Depends on: Checks
 Status: finished
 Priority: development:9
 Topic: Input
+Solved by: CheckGraphOneComponent CheckGraphOneMaster CheckGraphSCC
+# Added by rmtoo-normalize-dependencies

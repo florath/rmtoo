@@ -7,9 +7,10 @@ Description: The generated document \textbf{must} support automatic
  computation of the results needed to compare different biddings.
 Rationale: These are the fields which the document must automatically
  compute.
-Depends on: OutputPricing
 Status: finished
 Class: implementable
 Priority: development:10
 Effort estimation: 5
 Topic: Output
+Solved by: OPCDependent OPCSum
+# Added by rmtoo-normalize-dependencies

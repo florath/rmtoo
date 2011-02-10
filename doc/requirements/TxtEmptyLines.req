@@ -6,7 +6,6 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} support empty lines in the
  text input files.
 Rationale: This makes it easier to read requirements.
-Depends on: TxtCommentSemantics
 Status: not done
 Priority: development:10
 Topic: Basics

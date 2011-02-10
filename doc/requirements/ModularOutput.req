@@ -7,6 +7,5 @@ Description: The output generation \textbf{must} be modular on a
  requirement tag level.
 Rationale: This means, that the class for handling (i.e. parsing) is
  also responsible for the output.
-Depends on: Output
 Status: finished
 Topic: Output

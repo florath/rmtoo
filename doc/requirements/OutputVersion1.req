@@ -10,7 +10,6 @@ Rationale: This is typically a version number; for git this is the hex
  hash string.\par
  This is very important to automatically include the version number in
  different output documents.
-Depends on: OutputElements
 Status: finished
 Effort estimation: 5
 Priority: management:8

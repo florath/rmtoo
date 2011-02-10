@@ -7,7 +7,6 @@ Description: The pricing evaluation graph \textbf{must} be dye by using
  the compliance statement.
 Rationale: This helps when evaluating incoming filled in pricing
  sheets. 
-Depends on: EvalPriceGraph
 Status: finished
 Priority: development:10
 Effort estimation: 8

@@ -9,8 +9,9 @@ Rationale: This is needed by different other (automatic) tools which
  work on the rmtoo input files.  For example a (possible and not yet
  planned) GUI can write new requirements or changes to existing
  requirements with the help of this functionality.
-Depends on: Output
 Status: not done
 Priority: development:10
 Effort estimation: 21
 Topic: Output
+Solved by: OutputReqsPreserve
+# Added by rmtoo-normalize-dependencies

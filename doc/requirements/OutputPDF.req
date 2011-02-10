@@ -9,8 +9,9 @@ Rationale: Typically the PDF output holds all the requirements and
  additional explanations.
 Note: This might be implemented in the way of an additional layout
  layer, e.g. LaTeX.
-Depends on: OutputTextDocument OutputTextSameBase
 Status: finished
 Effort estimation: 13
 Priority: management:8
 Topic: Output
+Solved by: OutputPDFConfig
+# Added by rmtoo-normalize-dependencies

@@ -7,7 +7,6 @@ Description: The latest version specified is the version
 Rationale: This means that all documents and other artifacts which
  only allow one version as base must use the latest given.
 Owner: development
-Depends on: VCSInterval
 Status: finished
 Priority: development:10
 Effort estimation: 3

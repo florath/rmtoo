@@ -5,7 +5,6 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with a man page which
  describes the backlog output.
-Depends on: ManSecArtElements
 Status: not done
 Priority: development:3 customers:7
 Class: implementable

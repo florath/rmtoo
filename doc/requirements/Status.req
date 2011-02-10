@@ -5,7 +5,6 @@ Invented by: flonatel
 Description: Status \textbf{must} have one of the following states:
  'not done', 'finished'. 
 Owner: development
-Depends on: ReqTagStatus
 Status: finished
 Class: implementable
 Topic: ReqTagFormatDesc

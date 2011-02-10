@@ -9,7 +9,6 @@ Rationale: There are some cases to check if the given compliance
  compliant' statement if one of the dependent requirements is not or
  partially compliant.
 Note: It might be possible to put these information into the graph.
-Depends on: EvalPriceChecks
 Status: not done
 Priority: development:10
 Effort estimation: 8

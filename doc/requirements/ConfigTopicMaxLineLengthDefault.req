@@ -6,7 +6,6 @@ Description: The default maximum line length used in topics
  \textbf{must} be 80.
 Rationale: This is the old and ever used value for this.
 Owner: development
-Depends on: ConfigDefault ConfigTopicMaxLineLength
 Status: not done
 Priority: development:10
 Effort estimation: 13

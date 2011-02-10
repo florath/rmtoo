@@ -5,9 +5,10 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with (*nix) man pages
  describing the generated artifacts.
-Depends on: DocManPage
 Status: not done
 Priority: development:10 customers:5
 Class: detailable
 Effort estimation: 5
 Topic: Documentation
+Solved by: ManSecArtDocuments ManSecArtElements
+# Added by rmtoo-normalize-dependencies

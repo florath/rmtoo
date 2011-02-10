@@ -7,8 +7,9 @@ Description: \textsl{rmtoo} \textbf{must} support generation of
  a pricing table which can be easily filled in by vendors.
 Rationale: This pricing table can be used to get the commercial
  bidding of different vendors.
-Depends on: OutputDocument
 Status: not done
 Priority: development:10
 Effort estimation: 13
 Topic: Output
+Solved by: EvaluatePricing OPComputation OPInput
+# Added by rmtoo-normalize-dependencies

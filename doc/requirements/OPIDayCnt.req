@@ -7,7 +7,6 @@ Description: It \textbf{must} be possible to define the number of days
  for each requirement.
 Rationale: Different requirements might need different amount of
  effort.
-Depends on: OPInput
 Status: finished
 Class: implementable
 Priority: development:10

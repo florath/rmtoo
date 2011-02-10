@@ -7,8 +7,9 @@ Description: Requirement properties which are needed for agile
 Note: The requirement properties are the one which depend on
  this requirement.
 Owner: development
-Depends on: ReqTags
 Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: ReqTags
+Solved by: ReqTagClass ReqTagEffortEst ReqTagPriority
+# Added by rmtoo-normalize-dependencies

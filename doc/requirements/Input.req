@@ -6,8 +6,9 @@ Description: \textsl{rmtoo} \textbf{must} support different types of
  input files - one type for each usage.
 Note: A usage is e.g. documenting requirements or handling topics.
 Owner: development
-Depends on: Processing
 Status: not done
 Priority: development:10
 Effort estimation: 8
 Topic: Basics
+Solved by: Configuration Glossary Requirements Topics UseTxt
+# Added by rmtoo-normalize-dependencies

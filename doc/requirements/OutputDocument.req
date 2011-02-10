@@ -8,8 +8,9 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
 Rationale: Different output documents might display different aspects
  of the requirements, Some might e.g. include the text, others the
  dependency graph.
-Depends on: Output
 Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output
+Solved by: OutputGraph OutputGraph2 OutputPricing OutputTextDocument
+# Added by rmtoo-normalize-dependencies

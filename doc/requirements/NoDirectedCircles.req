@@ -7,7 +7,6 @@ Description: Directed circles in requirements dependencies
 Rationale: Directed circles make no sense in requirements management
  and make traceability impossible.
 Owner: development
-Depends on: Traceability
 Status: finished
 Priority: development:9
 Class: implementable

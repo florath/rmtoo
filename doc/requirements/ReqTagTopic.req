@@ -7,6 +7,5 @@ Rationale: The topic tag defines the relation of requirement to a
  special topic.
 Owner: development
 Priority: development:10
-Depends on: ReqTags
 Status: finished
 Topic: ReqTags

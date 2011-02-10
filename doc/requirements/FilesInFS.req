@@ -8,7 +8,6 @@ Rationale: This can e.g. the checked out working copy of the
  requirements from the Version Control System.  But the files can also
  be completely independent from any Version Control System.
 Owner: development
-Depends on: Requirements
 Status: finished
 Priority: development:10
 Effort estimation: 13

@@ -7,8 +7,9 @@ Description: The maximum line length used in topic input file
 Rationale: Some customers like strict length limitations where other
  do not like any limitation at all.
 Owner: development
-Depends on: ConfigDefault
 Status: not done
 Priority: development:10
 Effort estimation: 13
 Topic: Basics
+Solved by: ConfigTopicMaxLineLengthDefault
+# Added by rmtoo-normalize-dependencies

@@ -26,6 +26,10 @@ v17
 ===
 o Increase test case coverage to minimum 96%
 o Conversion tool outputs empty "Solved by"
+o Documentation for 
+    reqs_spec = {
+        "dependency_notation": set(["Depends on", "Solved by"])
+        }
  
 
 ==> This will be the point of time to get rmtoo into one Linux

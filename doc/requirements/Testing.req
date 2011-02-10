@@ -7,8 +7,9 @@ Description: Each feature of \textsl{rmtoo} \textbf{must} be
 Rationale: This gives the possibility to run a set of regression test
  and check the whole functionality of rmtoo.
 Owner: development
-Depends on: rmtoo
 Status: not done
 Priority: development:10 management:10 customers:10
 Effort estimation: 3
 Topic: Testing
+Solved by: TestBeforePack TestIntegration TestUnit
+# Added by rmtoo-normalize-dependencies

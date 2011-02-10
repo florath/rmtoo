@@ -8,7 +8,6 @@ Description: There \textbf{must} be an analytics module which compares
 Rationale: If there are too many links to the outside, the requirement
  might be in the wrong topic.
 Owner: development
-Depends on: Analytics
 Status: finished
 Class: implementable
 Priority: development:10

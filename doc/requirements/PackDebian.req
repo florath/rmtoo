@@ -7,7 +7,6 @@ Description: \textsl{rmtoo} \textbf{must} be distributed as a
 Rationale: This is the main development platform --- and currently the
  most used platform for \textsl{rmtoo}.
 Owner: development
-Depends on: Packaging
 Status: finished
 Priority: management:8
 Class: implementable

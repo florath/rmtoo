@@ -6,9 +6,10 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with a (*nix) man page
  describing generic parts of the rmtoo.
 Note: This includes e.g. the invoking of rmtoo.
-Depends on: DocManPage
 Status: not done
 Priority: development:10 customers:5
 Class: detailable
 Effort estimation: 5
 Topic: Documentation
+Solved by: ManConfig ManInvoking
+# Added by rmtoo-normalize-dependencies

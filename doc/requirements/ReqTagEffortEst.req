@@ -6,8 +6,9 @@ Description: Each requirement \textbf{may} have a tag 'Effort
  estimation'. 
 Rationale: This gives a hint how much effort is pending.
 Owner: development
-Depends on: ReqTagsAgile
 Status: finished
 Class: implementable
 Priority: customers:10
 Topic: ReqTags
+Solved by: EftMeasure PrioOutputEft
+# Added by rmtoo-normalize-dependencies

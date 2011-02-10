@@ -10,6 +10,5 @@ Rationale: It makes no sense to have one big common list of all
   and one list for the SCRUM master who can then elaborate the highest
   prioritized requirements.
 Owner: development
-Depends on: OutputPrio Class 
 Status: finished
 Topic: Output

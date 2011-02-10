@@ -9,7 +9,6 @@ Note: There are some major reasons to do this at one point and not to
  spread it over the different classes - especially those things which
  are used in multiple classes.
 Owner: development
-Depends on: Configuration
 Status: not done
 Priority: development:10
 Effort estimation: 13

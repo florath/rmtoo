@@ -9,7 +9,6 @@ Rationale: Different requirements might need different amount of
  money.
 Note: Material is everything which is not day or day rate,
  e.g. hardware costs, license costs, ...
-Depends on: OPInput
 Status: not done
 Priority: development:10
 Effort estimation: 5

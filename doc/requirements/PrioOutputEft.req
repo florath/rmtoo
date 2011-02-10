@@ -8,7 +8,6 @@ Description: The priority output list \textbf{must} include the effort
 Rationale: This gives a good overview which requirements need which
  effort. 
 Owner: development
-Depends on: ReqTagEffortEst OutputPrio
 Status: finished
 Class: implementable
 Topic: Output

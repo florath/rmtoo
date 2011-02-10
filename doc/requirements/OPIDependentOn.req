@@ -7,7 +7,6 @@ Description: It \textbf{must} be possible to define the dependent on
  relation for each requirement.
 Rationale: Different vendors might want to split up the costs to
  different departments.
-Depends on: OPInput
 Status: finished
 Class: implementable
 Priority: development:10

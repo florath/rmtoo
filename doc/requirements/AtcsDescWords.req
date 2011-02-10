@@ -7,7 +7,6 @@ Description: The description \textbf{must} be analyzed by means of a
 Rationale: This is a easy and fast way to get some hint of the quality
  of the description itself.
 Owner: development
-Depends on: Analytics
 Status: finished
 Class: implementable
 Priority: development:10

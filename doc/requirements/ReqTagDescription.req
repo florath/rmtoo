@@ -5,6 +5,5 @@ Invented by: flonatel
 Description: Each requirement \textbf{must} have a description tag.
 Rationale: This is the description what the requirment must fulfill.
 Owner: development
-Depends on: ReqTags
 Status: finished
 Topic: ReqTags

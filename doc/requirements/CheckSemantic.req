@@ -7,7 +7,6 @@ Description: \textsl{rmtoo} \textbf{must} check the requirements for
  semantic errors.
 Rationale: Semantic errors are errors which affect the meaning of a
  set of requirements.
-Depends on: Checks
 Status: finished
 Priority: development:9
 Topic: Input

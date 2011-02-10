@@ -5,8 +5,9 @@ Invented by: flonatel
 Description: For each input format ther \textbf{must} be an Emacs mode
  which supports the file format.
 Owner: development
-Depends on: EmacsMode
 Status: not done
 Priority: development:7
 Effort estimation: 8
 Topic: EmacsMode
+Solved by: EMGlossary EMRequirements EMTopics EMTraceability
+# Added by rmtoo-normalize-dependencies

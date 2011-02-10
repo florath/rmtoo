@@ -7,8 +7,9 @@ Description: The Emacs Mode \textbf{must} be implemented in the way
 Note: This can be done by e.g. switching on some different commonly
  used minor modes like flyspell and auto-fill.
 Owner: development
-Depends on: EmacsMode
 Status: finished
 Priority: development:7
 Effort estimation: 8
 Topic: EmacsMode
+Solved by: EMAutoFill EMFlyspellMode EMIndentation
+# Added by rmtoo-normalize-dependencies

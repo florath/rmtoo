@@ -6,7 +6,6 @@ Owner: development
 Description: \textbf{rmtoo} \textbf{must} be easy extensible.
 Rationale: There must no need to redisign the whole program when e.g.
  adding a requirements tag. 
-Depends on: Simplicity
 Status: not done
 Priority: development:6
 Effort estimation: 5

@@ -7,8 +7,9 @@ Description: For each requirement there \textbf{must} be a integration
 Rationale: This tests the interaction between the different layers of
  implementation and makes sure that the interaction works.
 Owner: development
-Depends on: Testing
 Status: not done
 Priority: development:10
 Effort estimation: 13
 Topic: Testing
+Solved by: TestTool
+# Added by rmtoo-normalize-dependencies

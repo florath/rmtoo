@@ -6,6 +6,5 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} support genration of
  requirements statistics where the number of requirements related to
  the point of time.
-Depends on: Output
 Status: finished
 Topic: Output

@@ -10,8 +10,9 @@ Rationale: First the requirements must be read in (and checked for
  As a last step the output artifacts must be generated.
 Note: Please see the depended requirements for more details.
 Owner: development
-Depends on: rmtoo
 Status: not done
 Priority: development:10
 Effort estimation: 21
 Topic: Basics
+Solved by: Analytics AutomaticGeneration Input Output
+# Added by rmtoo-normalize-dependencies

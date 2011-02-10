@@ -7,8 +7,9 @@ Description: All \textsl{rmtoo} output modules \textbf{must} support a
  common set of functionality.
 Rationale: There are some functionalities which must be implemented
  for all requirements.
-Depends on: Output
 Status: not done
 Priority: development:10
 Effort estimation: 13
 Topic: Output
+Solved by: OutGenVersionId
+# Added by rmtoo-normalize-dependencies

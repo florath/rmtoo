@@ -7,7 +7,6 @@ Description: It \textbf{must} be possible that the vendor can define
  the compliant of each requirement.
 Note: This is typically done with the help of \textsl{full},
  \textsl{partially} or \textsl{none}.
-Depends on: OPInput
 Status: finished
 Class: implementable
 Priority: development:10

@@ -7,7 +7,6 @@ Description: The priority \textbf{must} be a number between (and
 Rationale: Note that for internal computations the number is
  normalized. 
 Owner: development
-Depends on: ReqTagPriority CheckSyntax
 Status: finished
 Priority: development:8
 Topic: Input

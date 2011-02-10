@@ -5,7 +5,6 @@ Invented by: flonatel
 Owner: development
 Description: It \textbf{must} be possible that the vendor can comment
  each requirement.
-Depends on: OPInput
 Status: not done
 Class: implementable
 Priority: development:10

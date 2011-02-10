@@ -7,8 +7,9 @@ Description: \textsl{rmtoo} \textbf{must} use txt-files for
  documenting requirments. 
 Rationale: There is no need for a special editor - normal editors (such
  as emacs and vi) can be used.
-Depends on: Input
 Status: finished
 Priority: development:10
 Topic: Basics
 
+Solved by: Checks TxtCommentSemantics
+# Added by rmtoo-normalize-dependencies

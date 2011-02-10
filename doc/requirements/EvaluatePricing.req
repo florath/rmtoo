@@ -5,8 +5,9 @@ Invented by: flonatel
 Owner: development
 Description: There \textbf{must} be the possibility to evaluate the
  pricing information.
-Depends on: OutputPricing
 Status: not done
 Priority: development:7
 Effort estimation: 8
 Topic: Output
+Solved by: EvalPriceChecks EvalPriceGraph
+# Added by rmtoo-normalize-dependencies

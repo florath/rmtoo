@@ -6,8 +6,9 @@ Description: Many aspects of the \textsl{rmtoo} behavior
  \textbf{must} be configured.
 Note: The sub-requirements define which aspects must be defined.
 Owner: development
-Depends on: Input
 Status: not done
 Priority: development:10
 Effort estimation: 8
 Topic: Basics
+Solved by: ConfigCheck ConfigDefault
+# Added by rmtoo-normalize-dependencies

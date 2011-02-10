@@ -5,9 +5,10 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with man pages
  describing the Emacs Mode.
-Depends on: DocManPage
 Status: not done
 Priority: development:3 customers:7
 Class: implementable
 Effort estimation: 3
 Topic: Documentation
+Solved by: ManEmacsModeGlo ManEmacsModeReq ManEmacsModeTic
+# Added by rmtoo-normalize-dependencies

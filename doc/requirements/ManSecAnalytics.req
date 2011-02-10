@@ -5,9 +5,10 @@ Invented by: flonatel
 Owner: development
 Description: \textsl{rmtoo} \textbf{must} come with (*nix) man pages
  describing the analytics modules.
-Depends on: DocManPage
 Status: not done
 Priority: development:10 customers:5
 Class: detailable
 Effort estimation: 5
 Topic: Documentation
+Solved by: ManAnaDescWords ManAnaHotSpot ManAnaReqTopicCohe ManAnaTopicCohe
+# Added by rmtoo-normalize-dependencies

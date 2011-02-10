@@ -7,7 +7,6 @@ Description: The document \textbf{must} compute the costs of all the
  dependent requirements.
 Rationale: This must be based on the customer's input of dependent
  requirements.
-Depends on: OPComputation
 Class: implementable
 Status: finished
 Priority: development:10

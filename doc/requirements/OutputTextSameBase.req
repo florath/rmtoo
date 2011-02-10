@@ -8,8 +8,9 @@ Description: The output of the text document \textbf{must} use the
 Rationale: I.e. with the help of one document description, it must be
  possible to generate different formats.
 Note: This is implemented using so called 'topics'.
-Depends on: OutputTextDocument TopicGenFormat
 Status: finished
 Priority: customers:8
 Effort estimation: 13
 Topic: Output
+Solved by: OutputHTML OutputPDF
+# Added by rmtoo-normalize-dependencies

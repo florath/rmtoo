@@ -7,7 +7,6 @@ Rationale: There were first experiments using plain files (*.txt) ---
  but this was not really usable --- especially when classes were
  added. 
 Owner: development
-Depends on: OutputPrio
 Status: finished
 Class: implementable
 Topic: Output

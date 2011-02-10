@@ -8,7 +8,6 @@ Description: The output PDF module \textbf{must} support configuration
  on.
 Rationale: Often there is the need that different information should
  be written in different documents,
-Depends on: OutputPDF
 Status: finished
 Effort estimation: 13
 Priority: management:8

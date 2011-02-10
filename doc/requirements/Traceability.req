@@ -7,8 +7,9 @@ Description: When a requirement changes, all dependency requirements
 Rationale: Maked means e.g. colorized in the graph. There is the need
  for a tag 'last changed' and 'last checked'.
 Owner: development
-Depends on: EasyEditable
 Status: not done
 Priority: development:5
 Effort estimation: 13
 Topic: Basics
+Solved by: EMTraceability NoDirectedCircles
+# Added by rmtoo-normalize-dependencies

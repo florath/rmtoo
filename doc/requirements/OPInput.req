@@ -6,9 +6,10 @@ Owner: development
 Description: The generated document \textbf{must} support input fields
  for pricing information.
 Rationale: These are the fields which the vendors must fill in.
-Depends on: OutputPricing
 Status: not done
 Priority: development:10
 Effort estimation: 5
 Topic: Output
 Class: implementable
+Solved by: OPIComment OPICompliant OPIDayCnt OPIDayrate OPIDependentOn OPIMaterial
+# Added by rmtoo-normalize-dependencies

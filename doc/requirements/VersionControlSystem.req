@@ -8,8 +8,9 @@ Rationale: A major use case is working with different sets of
  requirements: e.g. develop version 2 while adding features to version
  1. 
 Owner: development
-Depends on: Requirements
 Status: finished
 Priority: development:10
 Effort estimation: 13
 Topic: Basics
+Solved by: VCSInterval
+# Added by rmtoo-normalize-dependencies

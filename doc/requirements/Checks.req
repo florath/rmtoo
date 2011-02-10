@@ -7,9 +7,10 @@ Description: \textsl{rmtoo} \textbf{must} check requirements.
 Rationale: Because there is no database or other implicit check,
  \textsl{rmtoo} must do consistency checks every time it reads in the
  requirements. 
-Depends on: UseTxt
 Status: finished
 Priority: development:8 management:10
 Effort estimation: 8
 Topic: Input
 
+Solved by: CheckGraph CheckSemantic CheckSyntax
+# Added by rmtoo-normalize-dependencies

@@ -7,8 +7,9 @@ Description: The basic requirements properties \textbf{must} be
 Note: The basic requirements properties are the one which depend on
  this requirement.
 Owner: development
-Depends on: ReqTags
 Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: ReqTags
+Solved by: ReqTagName ReqTagOwner ReqTagType
+# Added by rmtoo-normalize-dependencies

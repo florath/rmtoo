@@ -8,7 +8,6 @@ Description: \textsl{rmtoo} \textbf{must} check that there exactly one
 Rationale: The master requirement does not have any successors.  It is
  the only requirement without successors.  There must be only one
  master requirement --- which is the base or root of everything. 
-Depends on: CheckGraph
 Status: finished
 Priority: development:10
 Topic: Input

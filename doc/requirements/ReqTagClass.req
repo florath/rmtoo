@@ -5,6 +5,7 @@ Invented by: flonatel
 Description: Each requirement \textbf{must} have a class tag.
 Rationale: The class decides which class type the requirment is.
 Owner: development
-Depends on: ReqTagsAgile
 Status: finished
 Topic: ReqTags
+Solved by: Class
+# Added by rmtoo-normalize-dependencies

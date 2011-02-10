@@ -9,9 +9,10 @@ Rationale: Because rmtoo is aimed to be used in productive development
  environments, there is the need that all the different outputs
  (e.g. PDFs, graphs, ...) must be generated automatically (without
  user interaction).
-Depends on: Processing
 Status: not done
 Priority: development:3
 Effort estimation: 3
 Topic: Basics
 
+Solved by: Completed Makefile
+# Added by rmtoo-normalize-dependencies

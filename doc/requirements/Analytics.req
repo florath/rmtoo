@@ -8,8 +8,9 @@ Rationale: It is hard to write good requirements - as far as possible
 Note: Analytics are implemented using modules with a defined
  interface. 
 Owner: development
-Depends on: Processing
 Status: finished
 Priority: development:10
 Effort estimation: 5
 Topic: Basics
+Solved by: AtcsDescWords AtcsHotSpot AtcsReqTopicCohe AtcsTopicCohe
+# Added by rmtoo-normalize-dependencies

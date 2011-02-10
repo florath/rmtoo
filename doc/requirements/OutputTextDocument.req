@@ -7,8 +7,9 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
  different types text documents.
 Rationale: Different types mean, that it must be possible to convert
  one document to a LaTeX / PDF document or e.g. to a HTML document.
-Depends on: OutputDocument
 Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output
+Solved by: OutputBaseReqRefs OutputBaseTags OutputConfgbl OutputHTML OutputPDF OutputTextSameBase
+# Added by rmtoo-normalize-dependencies

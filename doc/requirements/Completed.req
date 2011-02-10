@@ -9,7 +9,6 @@ Rationale: Completed means that i.e. it and all the children are
  This can be used for a 'not yet finished' list as an output
  artifact. 
 Owner: development
-Depends on: AutomaticGeneration
 Status: finished
 Priority: management:1
 Topic: Basics

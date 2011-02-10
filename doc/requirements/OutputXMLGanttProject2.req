@@ -13,7 +13,6 @@ Note: This was suggested by a customer - but currently some details
  the requirements sorted.\par
  This is similar to the GantProject output (without a number) - but is
  now based on the topics.
-Depends on: OutputXML
 Status: not done
 Priority: management:10 development:10 customers:10
 Effort estimation: 13

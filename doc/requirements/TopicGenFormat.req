@@ -7,8 +7,9 @@ Description: The format of the topic \textbf{must} be output
 Rationale: It must be possible to create a wide range of possible
  formats, e.g. least LaTeX and HTML.
 Owner: development
-Depends on: Topics
 Status: finished
 Priority: development:10
 Effort estimation: 13
 Topic: Topic
+Solved by: OutputTextSameBase
+# Added by rmtoo-normalize-dependencies

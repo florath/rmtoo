@@ -7,7 +7,6 @@ Description: All \textsl{rmtoo} output modules \textbf{must} include
  the Version Control System identifier of the used requirements.
 Rationale: This can be one identifier for e.g. documents or an
  interval for statistic output.
-Depends on: OutputGeneric
 Status: not done
 Priority: development:10
 Effort estimation: 3

@@ -9,8 +9,9 @@ Rationale: Elements are only one small aspect of the whole set of
  information which are typically used in other output documents
  because only these elements make no sense at all. Example: file with
  version number of used requirements set.
-Depends on: Output
 Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output
+Solved by: OutputPrio OutputVersion1
+# Added by rmtoo-normalize-dependencies

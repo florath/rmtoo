@@ -8,7 +8,6 @@ Description: \textsl{rmtoo} \textbf{must} implement an example XML
 Rationale: To show how to implement (customer) specific XML output
  modules, this example XML output can be used as a reference
  implementation. 
-Depends on: OutputXML
 Status: finished
 Priority: development:2 customers:2
 Effort estimation: 3

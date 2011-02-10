@@ -6,8 +6,9 @@ Description: Each topic \textbf{must} include a set
  of tag-value pairs.
 Rationale: This can be easily implemented.
 Owner: development
-Depends on: Topics
 Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: Topic
+Solved by: TopicTagName TopicTagSubTopic
+# Added by rmtoo-normalize-dependencies

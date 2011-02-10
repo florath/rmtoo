@@ -8,7 +8,6 @@ Rationale: E.g. in the Status line 'not done' and 'finished' should be
  highlighted --- but these words should not highlighted in e.g. the
  Description section.
 Owner: development
-Depends on: EmacsMode
 Status: not done
 Class: detailable
 Priority: customers:6

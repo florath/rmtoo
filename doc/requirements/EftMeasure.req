@@ -8,7 +8,8 @@ Rationale: This given an independence between 'real' effort
  (e.g. days) and estimated which can be easy re-based to a 'real'
  effort after some (SCRUM) Sprints.
 Owner: development
-Depends on: ReqTagEffortEst
 Status: finished
 Class: implementable
 Topic: ReqTagEffortDesc
+Solved by: EftAllowedMeasure
+# Added by rmtoo-normalize-dependencies

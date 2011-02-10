@@ -4,6 +4,5 @@ Invented on: 2010-02-14
 Invented by: flonatel
 Description: The Emacs mode \textbf{must} provide tag highlighting.
 Owner: development
-Depends on: EmacsMode
 Status: finished
 Topic: EmacsMode

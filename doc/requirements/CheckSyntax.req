@@ -7,8 +7,9 @@ Description: \textsl{rmtoo} \textbf{must} check the requirements for
  syntax errors.
 Rationale: Syntax errors are parse errors or other 'low level'
  errors. 
-Depends on: Checks
 Status: finished
 Priority: development:9
 Topic: Input
 
+Solved by: ReqTagPriorityCheck
+# Added by rmtoo-normalize-dependencies

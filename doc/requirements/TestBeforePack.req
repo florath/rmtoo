@@ -7,7 +7,6 @@ Description: The packaging procedure \textbf{must} guarantee that all
 Rationale: This gives the possibility to run a set of regression test
  and check the whole functionality of rmtoo.
 Owner: development
-Depends on: Testing Packaging
 Status: not done
 Priority: development:10
 Effort estimation: 3

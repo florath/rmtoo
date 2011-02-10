@@ -8,8 +8,9 @@ Description: \textsl{rmtoo} \textbf{must} support genration of
 Rationale: XML is used in many projects to import data or exchange
  data. This should be an implementation which supports output of one
  set of requirements.
-Depends on: Output
 Status: not done
 Priority: management:10 development:10 customers:10
 Effort estimation: 8
 Topic: Output
+Solved by: OutputXMLExample OutputXMLGanttProject OutputXMLGanttProject2
+# Added by rmtoo-normalize-dependencies

@@ -7,7 +7,8 @@ Description: Comments (resp. empty lines) \textbf{must} be treated as
  comments which describe the next tag.
 Rationale: This definition is needed to have the possibility to
  re-arrange or extend existing requirements.
-Depends on: UseTxt
 Status: not done
 Priority: development:10
 Topic: Basics
+Solved by: TxtComments TxtEmptyLines
+# Added by rmtoo-normalize-dependencies
