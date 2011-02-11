@@ -89,6 +89,7 @@ class TxtRecord(Record):
         if not success:
             self.set_unusable()
             return
+        
         for i in rp:
             self.append(TxtRecordEntry(i))
         return

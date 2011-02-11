@@ -21,6 +21,7 @@ class ReqStatus(ReqTagGeneric):
 
         # Handle Status semantics
         t = req[self.tag].get_content()
+
         if t=="not done":
             v = Requirement.st_not_done
         elif t=="finished":

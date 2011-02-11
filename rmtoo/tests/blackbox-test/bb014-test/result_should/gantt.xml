@@ -32,7 +32,7 @@
 	<task complete="0" duration="3" id="5" name="RoughlyCleanUpSeats">
 		<depend difference="0" hardness="Strong" id="4" type="2"/>
 	</task>
-	<task complete="0" duration="3" id="7" name="SoapAndColdWater"/>
+	<task complete="100" duration="3" id="7" name="SoapAndColdWater"/>
 	<task complete="0" duration="3" id="8" name="TakeCareOfClothing"/>
 	<task complete="0" duration="3" id="9" name="TakeOff">
 		<depend difference="0" hardness="Strong" id="7" type="2"/>

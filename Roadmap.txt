@@ -24,6 +24,7 @@ rmtoo in their list as soon as possible.
 
 v17
 ===
+o Fix status 'open' problem
 o Increase test case coverage to minimum 96%
 o Conversion tool outputs empty "Solved by"
 o Documentation for 

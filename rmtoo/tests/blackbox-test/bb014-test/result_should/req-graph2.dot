@@ -13,7 +13,7 @@ CreateOrder [fontcolor=red,label="CreateOrder\n[10.00]"];
 DeadManDisapper [fontcolor=red,label="DeadManDisapper\n[10.00]"];
 DetergentForCar [fontcolor=red,label="DetergentForCar\n[10.00]",shape=octagon];
 RoughlyCleanUpSeats [fontcolor=red,label="RoughlyCleanUpSeats\n[10.00]",shape=octagon];
-SoapAndColdWater [fontcolor=red,label="SoapAndColdWater\n[10.00]",shape=octagon];
+SoapAndColdWater [shape=octagon];
 TakeCareOfClothing [fontcolor=red,label="TakeCareOfClothing\n[10.00]",shape=octagon];
 TakeOff [fontcolor=red,label="TakeOff\n[10.00]",shape=octagon];
 }

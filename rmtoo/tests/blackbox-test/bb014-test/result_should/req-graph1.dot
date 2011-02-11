@@ -20,7 +20,7 @@ DetergentForCar [fontcolor=red,label="DetergentForCar\n[10.00]",shape=octagon];
 DetergentForCar -> CleanUpCar;
 RoughlyCleanUpSeats [fontcolor=red,label="RoughlyCleanUpSeats\n[10.00]",shape=octagon];
 RoughlyCleanUpSeats -> CleanUpSeats;
-SoapAndColdWater [fontcolor=red,label="SoapAndColdWater\n[10.00]",shape=octagon];
+SoapAndColdWater [shape=octagon];
 SoapAndColdWater -> CleanUpVicentAndJules;
 SoapAndColdWater -> TakeOff;
 TakeCareOfClothing [fontcolor=red,label="TakeCareOfClothing\n[10.00]",shape=octagon];

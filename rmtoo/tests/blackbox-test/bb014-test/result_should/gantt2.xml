@@ -83,7 +83,7 @@ There are some different things which must be cleaned and others which must vani
 == Note ==
 There is only 40 minutes time to do the whole job.]]>			</notes>
 		</task>
-		<task complete="0" duration="3" id="10" name="SoapAndColdWater">
+		<task complete="100" duration="3" id="10" name="SoapAndColdWater">
 			<notes>
 <![CDATA[== Description ==
 Vincent and Jules must clean themselves with soap and cold water.
