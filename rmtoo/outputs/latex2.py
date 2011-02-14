@@ -1,7 +1,10 @@
 #
+# rmtoo 
+#   Free and Open Source Requirements Management Tool
+#
 # LaTeX output class version 2
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -13,8 +16,9 @@ from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.RMTException import RMTException
 
 class latex2:
-    default_config = { "req_attributes": ["Id", "Priority", "Owner", "Invented on",
-                                          "Invented by", "Status", "Class"] }
+    default_config = { "req_attributes": 
+                       ["Id", "Priority", "Owner", "Invented on",
+                        "Invented by", "Status", "Class"] }
 
     level_names = [
         "chapter",
@@ -88,7 +92,7 @@ class latex2:
                 self.output_requirements(fd, topic)
                 continue
 
-            print("+++ ERROR: Ignoring unknown tag '%s' in "
+            raise RMTException(84, "Unknown tag '%s' in "
                   "topic file" % tag)
 
     def output_requirements(self, fd, topic):
@@ -162,8 +166,9 @@ class latex2:
             elif rattr=="Class":
                 fd.write("\\textbf{Class:} & %s " % clstr)
             else:
-                # This can never happen
-                assert(False)
+                # This only happens when a wrong configuration is supllied.
+                raise RMTException(85, "Wrong latex2 output configuration "
+                                   "supplied: unknown tag [%s]" % rattr)
             i+=1
             if i==3:
                 i=0
