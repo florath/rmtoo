@@ -20,21 +20,9 @@ o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
 => Mail to INCOSE was sent - they answered that they will include
-rmtoo in their list as soon as possible.
-
-v17
-===
-o Fix status 'open' problem
-o Increase test case coverage to minimum 96%
-o Conversion tool outputs empty "Solved by"
-o Documentation for 
-    reqs_spec = {
-        "dependency_notation": set(["Depends on", "Solved by"])
-        }
- 
-
-==> This will be the point of time to get rmtoo into one Linux
-    distribution.
+   rmtoo in their list as soon as possible.
+=> This will be the point of time to get rmtoo into one Linux
+   distribution - preferred Debian.
 
 v18
 ===

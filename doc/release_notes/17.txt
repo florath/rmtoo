@@ -14,7 +14,7 @@ to
 
 Added Install.txt to tar package.
 
-Added experimental tlp (tulip graph package) output.
+Added tlp (tulip graph package) output.
 
 Fixed small layout problem in LaTeX files which rendered text after a
 subtopic in the same paragraph than the subtopic itself.
