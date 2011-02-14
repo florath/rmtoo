@@ -18,6 +18,7 @@ class Config:
            # This is used for releases (epoch -> HEAD)
            #["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
            "default_language": "en_GB",
+           #"dependency_notation": set(["Solved by", "Depends on"])
            "dependency_notation": set(["Solved by", ])
         }
 
