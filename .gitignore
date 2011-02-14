@@ -22,7 +22,4 @@ debian/rmtoo.substvars
 doc/html/reqs
 doc/presentations/reqspricing.dot
 doc/presentations/reqspricing.png
-reqs-version.txt
-reqspricing.ods
-requirements.xml
 ttt
