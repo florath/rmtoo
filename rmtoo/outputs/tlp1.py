@@ -36,6 +36,10 @@ class tlp1:
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
 
+    # Create Makefile Dependencies
+    def cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.filename))
+
     # The real output
     # Note that currently the 'reqscont' is not used in case of topics
     # based output.
