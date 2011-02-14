@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-config 5 2011-01-11 "User Commands" "Requirements Management"
+.TH rmtoo-config 5 2011-02-14 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-config \- requirements management tool configuration file
 .SH DESCRIPTION
@@ -57,6 +57,7 @@ class Config:
            "commit_interval": 
               ["93c4951bed1a01c82342e370be891a5fc569985f", "FILES"],
            "default_language": "en_GB",
+           "dependency_notation": set(["Solved by", ])
         }
 
     topic_specs = \
@@ -150,6 +151,13 @@ which the requirements are written.  This must be a standard language
 specifier like \fIen_GB\fR or \fIde_DE\fR. Please consult the 
 \fBrmtoo-analytics-descwords(7)\fR man page for the list of available
 languages. 
+.P
+The parameter \fIdependency_notation\fR determines the way
+dependencies are specified.  There are two ways how requirements can
+be specified: \fIDepends on\fR and \fISolved by\fR.  The last one is
+the preferred way of specifying dependencies - but the first is the
+old and default one.  Therefore it is recommended to set the value to
+\fISolved by\fR only.
 .SS topic_specs
 The configuration parameter \fItopic_spec\fR is a map.  The key is the
 name with which the entry can be referenced.  The value is a list
