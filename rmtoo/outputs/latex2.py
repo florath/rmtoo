@@ -13,6 +13,7 @@ import os
 import time
 
 from rmtoo.lib.TopicSet import TopicSet
+from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.RMTException import RMTException
 
 class latex2:
@@ -37,6 +38,16 @@ class latex2:
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
+
+    @staticmethod
+    def strescape(string):
+        r = ""
+        for s in string:
+            if ord(s)>=32 and ord(s)<127:
+                r += s
+            else:
+                r += "%02x" % ord(s)
+        return r
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -64,7 +75,9 @@ class latex2:
     def output_latex_topic_set(self, topic_set):
         fd = file(self.filename, "w")
         # The TopicSet itself needs no output.
+        self.constraints = Constraints.collect(topic_set)
         self.output_latex_topic(fd, topic_set.get_master())
+        self.output_latex_constraints(fd, topic_set)
         fd.close()
 
     def output_latex_topic(self, fd, topic):
@@ -105,7 +118,8 @@ class latex2:
         fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n" 
                  % (self.level_names[level], 
                     req.get_value("Name").get_content(),
-                    req.id, req.get_value("Description").get_content()))
+                    latex2.strescape(req.id), 
+                    req.get_value("Description").get_content()))
 
         if req.is_val_av_and_not_null("Rationale"):
             fd.write("\n\\textbf{Rationale:} %s\n"
@@ -119,7 +133,9 @@ class latex2:
         if len(req.outgoing)>0:
             # Create links to the corresponding labels.
             fd.write("\n\\textbf{Depends on:} ")
-            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % 
+                                (latex2.strescape(d.id), 
+                                 latex2.strescape(d.id)) 
                                 for d in req.outgoing]))
             fd.write("\n")
 
@@ -127,9 +143,29 @@ class latex2:
             # Create links to the corresponding dependency nodes.
             fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
-            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % (d.id, d.id) 
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %  
+                                (latex2.strescape(d.id), 
+                                 latex2.strescape(d.id)) 
                                 for d in sorted(req.incoming,
                                                 key=lambda r: r.id)]))
+            fd.write("\n")
+
+        if req.is_val_av_and_not_null("Constraints"):
+            fd.write("\n\\textbf{Constraints:} ")
+            print("CONSTRAINTS AVAILABLE in '%s'" % req.get_id())
+
+            cl = req.get_value("Constraints") # .split()
+
+            print("CONSTRAINTS AVAILABLE '%s'" % cl)
+            cs = []
+            for k, v in sorted(cl.iteritems()):
+                name = v.get_value("Name").get_content()
+                refid = latex2.strescape(k)
+                cs.append("\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" 
+                          % (refid, refid))
+            print("CSCSCS %s" % cs)
+
+            fd.write(", ".join(cs))
             fd.write("\n")
 
         if req.get_value("Status")==req.st_finished:
@@ -180,3 +216,32 @@ class latex2:
             i+=1
 
         fd.write("\end{tabular}\end{center} }\n\n")
+
+    def output_latex_constraints(self, fd, topic_set):
+
+        print("AC %s" % self.constraints)
+
+        if len(self.constraints)>0:
+            fd.write("\\%s{Constraints}\n" % self.level_names[0])
+            for cname, cnstrt in sorted(self.constraints.iteritems()):
+                self.output_latex_one_constraint(fd, cname, cnstrt)
+
+    def output_latex_one_constraint(self, fd, cname, cnstrt):
+        cname = latex2.strescape(cname)
+        fd.write("%% CONSTRAINT '%s'\n" % cname)
+
+        fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n" 
+                 % (self.level_names[1],
+                    cnstrt.get_value("Name").get_content(), 
+                    cname, cnstrt.get_value("Description").get_content()))
+
+        if cnstrt.is_val_av_and_not_null("Rationale"):
+            fd.write("\n\\textbf{Rationale:} %s\n"
+                     % cnstrt.get_value("Rationale").get_content())
+
+        if cnstrt.is_val_av_and_not_null("Note"):
+            fd.write("\n\\textbf{Note:} %s\n" 
+                     % cnstrt.get_value("Note").get_content())
+
+                
+        

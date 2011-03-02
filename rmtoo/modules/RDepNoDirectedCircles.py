@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Detect if the graph has directed circles
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -22,7 +25,7 @@ class RDepNoDirectedCircles(Digraph.Node):
         self.config = config
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
     
     def set_modules(self, mods):
         self.mods = mods

@@ -32,7 +32,7 @@ class RDepDependsOn(Digraph.Node):
         self.config = config
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
 
     def set_modules(self, mods):
         self.mods = mods

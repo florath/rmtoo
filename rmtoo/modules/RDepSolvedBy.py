@@ -22,7 +22,7 @@ class RDepSolvedBy(Digraph.Node):
         self.config = config
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
 
     def set_modules(self, mods):
         self.mods = mods
@@ -43,10 +43,10 @@ class RDepSolvedBy(Digraph.Node):
             # return True
 
         # It is a 'normal' case when there is no 'Solved by' (until now).
-        if self.tag not in rr.req:
+        if self.tag not in rr.brmo:
             return True
 
-        t = rr.req[self.tag].get_content()
+        t = rr.brmo[self.tag].get_content()
         # If available, it must not empty
         if len(t)==0:
             reqset.error(77, "'Solved by' field has len 0", rr.id)
@@ -75,7 +75,7 @@ class RDepSolvedBy(Digraph.Node):
             dependend.outgoing.append(rr)
 
         # Copy and delete the original tag
-        del rr.req[self.tag]
+        del rr.brmo[self.tag]
         return True
 
     def rewrite(self, reqset):

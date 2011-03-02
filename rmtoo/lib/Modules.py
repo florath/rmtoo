@@ -56,6 +56,7 @@ class Modules(Digraph):
         # The different types of tags
         self.reqtag = {}
         self.reqdeps = {}
+        self.ctstag = {}
 
         # Split it up into components
         dir_components = self.split_directory(directory)
@@ -80,8 +81,8 @@ class Modules(Digraph):
             mc.append(modulename)
 
             # Import module
-            #print("Loading module '%s' from '%s'" %
-            #      (modulename, ".".join(mod_components)))
+            print("Loading module '%s' from '%s'" %
+                  (modulename, ".".join(mod_components)))
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 
@@ -89,11 +90,12 @@ class Modules(Digraph):
             o = eval("module.%s(self.opts, self.config)"
                      % modulename)
             # Query the object itself which type it is
-            tag = o.type()
-            # Add the object to the appropriate directory
-            exec("self.%s[modulename]=o" % tag)
+            types = o.type()
+            # Add the objects to the appropriate directory
+            for ltype in types:
+                exec("self.%s[modulename]=o" % ltype)
             # If a reqdeps type, put also the in the nodes list.
-            if tag=="reqdeps":
+            if "reqdeps" in types:
                 self.nodes.append(o)
 
         # Not sure, if this is really needed.

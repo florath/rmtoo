@@ -16,7 +16,8 @@ import time
 import operator
 import StringIO
 
-from Requirement import Requirement
+from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.MemLogStore import MemLogStore
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
@@ -43,6 +44,7 @@ class RequirementSet(Digraph, MemLogStore):
 
         # The analytic modules store the results in this map:
         self.analytics = {}
+        self.constraints = {}
 
     def handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
@@ -69,6 +71,13 @@ class RequirementSet(Digraph, MemLogStore):
         everythings_fine = self.read(directory)
         if not everythings_fine:
             self.error(44, "There were errors in the requirment set")
+            self.state = self.er_error
+            return False
+
+        everythings_fine = self.read_constraints(directory)
+        if not everythings_fine:
+            self.error(86, "There were errors in the requirment set - "
+                       "in the constraints")
             self.state = self.er_error
             return False
 
@@ -106,6 +115,29 @@ class RequirementSet(Digraph, MemLogStore):
         self.ts = time.time()
         return everythings_fine
 
+    # This is mostly a copy of the read - but changed at at least some
+    # major points. 
+    def read_constraints(self, directory):
+        everythings_fine = True
+        files = os.listdir(directory)
+        for f in files:
+            m = re.match("^.*\.cts$", f)
+            if m==None:
+                continue
+            rid = f[:-4]
+            fd = file(os.path.join(directory, f))
+            cnstrnt = Constraint(fd, rid, self, self.mods, 
+                                 self.opts, self.config)
+            if cnstrnt.ok():
+                # Store in the map, so that it is easy to access the
+                # node by id.
+                self.constraints[cnstrnt.get_id()] = cnstrnt
+            else:
+                self.error(87, "could not be parsed", cnstrnt.get_id())
+                everythings_fine = False
+        self.ts = time.time()
+        return everythings_fine
+
     # This is mostly the same functionallaty of similar method of the
     # class Requirement - but with one major difference: for this
     # implementation stop if an error occured.
@@ -123,7 +155,7 @@ class RequirementSet(Digraph, MemLogStore):
         alls_fine = True
         for r in self.reqs:
             rr = self.reqs[r]
-            if len(rr.req)>0:
+            if len(rr.brmo)>0:
                 self.error(57, "No tag handler found for tag(s) '%s' "
                            "- Hint: typo in tag(s)?" % rr.req.keys(), rr.id)
                 alls_fine = False

@@ -1,0 +1,9 @@
+Name: Minimal 5G
+Invented on: 2011-02-24
+Invented by: Andre
+Owner: Andre
+Description: The thing must work at acclerations of 5G.
+CE3:
+ constraints['MinG'] = 5
+ print("Hello")
+ print("Value is [%s]" % constraints['MinG'])

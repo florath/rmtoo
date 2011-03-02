@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Requirement Management Toolset
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -17,6 +20,7 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqType(ReqTagGeneric):
     tag = "Type"
+    ltype = set(["reqtag", ])
 
     types = [
         [ "master requirement", Requirement.rt_master_requirement ],

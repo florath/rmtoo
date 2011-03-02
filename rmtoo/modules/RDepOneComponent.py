@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Detect if the graph is connected or not
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -20,7 +23,7 @@ class RDepOneComponent(Digraph.Node):
         self.config = config
     
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
     
     def set_modules(self, mods):
         self.mods = mods

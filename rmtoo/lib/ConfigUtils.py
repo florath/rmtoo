@@ -44,6 +44,8 @@ class ConfigUtils:
     @staticmethod
     def set_defaults_parser(config):
         config.txtio = {
+            "constraints": TxtIOConfig(
+                ConfigUtils.use_or_empty(config, "constraints")),
             "requirements": TxtIOConfig(
                 ConfigUtils.use_or_empty(config, "requirements")),
             "topics": TxtIOConfig(
