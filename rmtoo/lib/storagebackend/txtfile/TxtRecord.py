@@ -90,6 +90,8 @@ class TxtRecord(Record):
             self.set_unusable()
             return
         
+        print("RRRRRRRRRRRRRRRRRRRPPPPPPPPPPPPPPPP %s" % rp)
+
         for i in rp:
             self.append(TxtRecordEntry(i))
         return

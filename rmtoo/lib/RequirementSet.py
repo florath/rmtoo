@@ -121,7 +121,7 @@ class RequirementSet(Digraph, MemLogStore):
         everythings_fine = True
         files = os.listdir(directory)
         for f in files:
-            m = re.match("^.*\.cts$", f)
+            m = re.match("^.*\.ctr$", f)
             if m==None:
                 continue
             rid = f[:-4]

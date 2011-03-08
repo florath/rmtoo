@@ -28,11 +28,14 @@ class TxtRecordEntry(RecordEntry):
 
     def setup(self, se):
         # Store the raw input for possible later output
-        self.content_raw = [se[0], se[1]]
+        self.tag_raw = se[0]
+        self.content_raw = se[1]
         self.comment_raw = se[2]
         # Parse the rest
-        tag, value = TxtParser.split_tag_line(se[0])
-        value += TxtParser.extract_continuation_lines(se[1])
+        tag = self.tag_raw[0:-1]
+#        tag, value = TxtParser.split_tag_line(se[0])
+        value = "".join(se[1])
+# TxtParser.extract_continuation_lines(se[1])
         comment = TxtParser.extract_comment(se[2])
         RecordEntry.__init__(self, tag, value, comment)
 
@@ -82,3 +85,7 @@ class TxtRecordEntry(RecordEntry):
     def set_comment(self, c):
         RecordEntry.set_comment(self, c)
         self.comment_raw = None
+
+    def get_content_with_nl(self):
+        return self.content_raw
+

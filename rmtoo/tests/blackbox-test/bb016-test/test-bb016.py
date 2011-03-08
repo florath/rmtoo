@@ -29,7 +29,7 @@ class TestBB01:
         main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr,
              exitfun=myexit)
         cleanup_std_log(mout, merr)
-        extract_container_files(["reqspricing.ods",])
+#        extract_container_files(["reqspricing.ods",])
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
@@ -38,3 +38,7 @@ class TestBB01:
 
         assert(len(diffs)==0)
         delete_result_is_dir()
+
+if __name__=="__main__":
+    t = TestBB01()
+    t.test_pos_001()

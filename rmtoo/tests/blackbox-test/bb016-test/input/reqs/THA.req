@@ -8,5 +8,5 @@ Status: not done
 Priority: development:10
 Effort estimation: 5
 Topic: B1
-Constraints: Min5G
+Constraints: Acceleration(5)
 Solved by: Gehaeuse

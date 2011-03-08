@@ -19,6 +19,7 @@ class ReqNote(ReqTagGeneric):
         ReqTagGeneric.__init__(self, opts, config)
 
     def rewrite(self, rid, req):
+        print("RRRRRRRRRRRRRRRRRWWWWWWWWWWWWWW 2 calles")
     	# This is optional
         return self.handle_optional_tag(req)
 

@@ -12,6 +12,7 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 
 class BaseRMObject:
@@ -84,13 +85,12 @@ class BaseRMObject:
         # If everything's fine, store the rest of the req for later
         # inspection.
         self.brmo = brmo
-        print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU %s [%s]" % (self.id, self.brmo))
 
     def handle_modules_tag(self, reqs):
-        for modkey, module in self.mods.reqtag.items():
+        for modkey, module in self.mods.tagtypes[self.tbhtags].items():
             try:
                 if self.tbhtags not in module.type():
-                    print("***** '%s' SKIPPING '%s'" % (self.id, module))
+                    assert(False)
                     continue
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key
