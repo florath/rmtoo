@@ -70,17 +70,17 @@ class latex2:
 
     def output_reqset(self, reqset):
         # Call the topic to write out everything
-        self.output_latex_topic_set(self.topic_set)
+        self.output_latex_topic_set(self.topic_set, reqset.ce3set)
 
-    def output_latex_topic_set(self, topic_set):
+    def output_latex_topic_set(self, topic_set, ce3set):
         fd = file(self.filename, "w")
         # The TopicSet itself needs no output.
-        self.constraints = Constraints.collect(topic_set)
-        self.output_latex_topic(fd, topic_set.get_master())
-        self.output_latex_constraints(fd, topic_set)
+        self.output_latex_topic(fd, topic_set.get_master(), ce3set)
+        constraints = Constraints.collect(topic_set)
+        self.output_latex_constraints(fd, topic_set, constraints)
         fd.close()
 
-    def output_latex_topic(self, fd, topic):
+    def output_latex_topic(self, fd, topic, ce3set):
         fd.write("%% Output topic '%s'\n" % topic.name)
         for t in topic.t:
 
@@ -94,7 +94,7 @@ class latex2:
 
             if tag == "SubTopic":
                 rtopic = topic.find_outgoing(val)
-                self.output_latex_topic(fd, rtopic)
+                self.output_latex_topic(fd, rtopic, ce3set)
                 continue
 
             if tag == "Text":
@@ -102,17 +102,17 @@ class latex2:
                 continue
 
             if tag == "IncludeRequirements":
-                self.output_requirements(fd, topic)
+                self.output_requirements(fd, topic, ce3set)
                 continue
 
             raise RMTException(84, "Unknown tag '%s' in "
                   "topic file" % tag)
 
-    def output_requirements(self, fd, topic):
+    def output_requirements(self, fd, topic, ce3set):
         for req in sorted(topic.reqs, key = lambda r: r.id):
-            self.output_requirement(fd, req, topic.level + 1)
+            self.output_requirement(fd, req, topic.level + 1, ce3set)
 
-    def output_requirement(self, fd, req, level):
+    def output_requirement(self, fd, req, level, ce3set):
         fd.write("%% REQ '%s'\n" % req.id)
 
         fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n" 
@@ -150,19 +150,29 @@ class latex2:
                                                 key=lambda r: r.id)]))
             fd.write("\n")
 
-        if req.is_val_av_and_not_null("Constraints"):
+
+        cnstrt = ce3set.get(req.get_id())
+        if cnstrt!=None:
+        #if req.is_val_av_and_not_null("Constraints"):
             fd.write("\n\\textbf{Constraints:} ")
             print("CONSTRAINTS AVAILABLE in '%s'" % req.get_id())
 
-            cl = req.get_value("Constraints") # .split()
+            print("FOUND CE3: %s" % cnstrt)
 
-            print("CONSTRAINTS AVAILABLE '%s'" % cl)
+            #cl = req.get_value("Constraints") # .split()
+
+            print("CONSTRAINTS AVAILABLE '%s'" % cnstrt.get_values())
             cs = []
-            for k, v in sorted(cl.iteritems()):
-                name = v.get_value("Name").get_content()
+            for k, v in sorted(cnstrt.get_values().iteritems()):
+                #name = v.get_value("Name").get_content()
                 refid = latex2.strescape(k)
-                cs.append("\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" 
-                          % (refid, refid))
+                rs = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
+                       % (refid, refid)
+                description = v.description()
+                if description!=None:
+                    rs += " [" + description + "] "
+                cs.append(rs)
+                    
             print("CSCSCS %s" % cs)
 
             fd.write(", ".join(cs))
@@ -217,13 +227,13 @@ class latex2:
 
         fd.write("\end{tabular}\end{center} }\n\n")
 
-    def output_latex_constraints(self, fd, topic_set):
+    def output_latex_constraints(self, fd, topic_set, constraints):
 
-        print("AC %s" % self.constraints)
+        #print("AC %s" % self.constraints)
 
-        if len(self.constraints)>0:
+        if len(constraints)>0:
             fd.write("\\%s{Constraints}\n" % self.level_names[0])
-            for cname, cnstrt in sorted(self.constraints.iteritems()):
+            for cname, cnstrt in sorted(constraints.iteritems()):
                 self.output_latex_one_constraint(fd, cname, cnstrt)
 
     def output_latex_one_constraint(self, fd, cname, cnstrt):

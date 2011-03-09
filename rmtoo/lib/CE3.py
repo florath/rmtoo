@@ -38,6 +38,15 @@ class CE3:
     def get_value(self, k):
         return self.values[k]
 
+    def set_value(self, k, v):
+        self.values[k] = v
+
+    def get_values(self):
+        return self.values
+
+    def len(self):
+        return len(self.values)
+
     # Try to unite all given ce3s into the local ce3
     def unite(self, oce3s):
         okeys = set()
@@ -68,5 +77,15 @@ class CE3:
             if mobj==None:
                 eobj = lobj[0]
                 ### lobj.add(eobj)
+
+            print("ZZZZZZZZZZZUUUUUUUUUUUUUUU 1")
+            ro = eobj.unite(mobj, lobj)
+            print("ZZZZZZZZZZZUUUUUUUUUUUUUUU 2 %s" % ro)
+
+            if ro!=None:
+                # There is a new constraint for the local key
+                assert(mobj==None)
+                print("SET NEW OBJ %s" % ro)
+                self.set_value(k, ro)
+
                 
-            eobj.unite(mobj, lobj)

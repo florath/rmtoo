@@ -1,0 +1,24 @@
+Name: Minimal Shock Resistance
+Invented on: 2011-03-07
+Invented by: flonatel
+Owner: development
+Description: Defines the minimal shock resistance of a device.
+CE3:
+ class MinShockResistance:
+    def __init__(self, v):
+      self.msr = v
+    def description(self):
+      return "minimal shock resistance of %d G" % self.msr
+    def unite(self, mobj, loa):
+      # The maximum is needed here
+      ma = 0
+      for l in loa:
+        if ma<l.msr:
+          ma = l.msr
+      # If there is no local constraint, put the max into the local
+      if mobj==None:
+        return self.mclass(ma)
+      # Check if the local is at least the maximum
+      ce3assert(mobj.msr>=ma)
+      return None
+ MinShockResistance.mclass = MinShockResistance

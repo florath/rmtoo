@@ -34,6 +34,15 @@ o Add Constraints (aka non-functional requirements)
   -> Constrains are inherited:
      Each requirement gets all the constraints of the whole track.
 
+v19
+===
+o Major code refactoring is needed
+  - restriction of reqset to topic set
+    + especially the new constraints
+    + Is the 'reqset' needed at all?
+    + How to 'restrict' different views? Have the same objects
+      around with different pointers or copy the objects?
+
 IMPORTANT
 =========
 o Add requirements from Roadmap.

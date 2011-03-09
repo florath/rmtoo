@@ -9,6 +9,8 @@
 # For licencing details see COPYING
 #
 
+import json
+
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.digraph.Digraph import Digraph
@@ -33,23 +35,32 @@ class RDepConstraints(Digraph.Node):
     def get_ctr_name(s):
         i = s.find("(")
         if i==-1:
+            print("ASSERT %s" % s)
             # Throw: does not contain (
             assert(False)
         return s[:i]
 
     # Create the local Constraint Execution Environments
     # and evaluate the given statements
+    # This method does two things:
+    # - evaluating the constraints in the CE3
+    # - Resetting the 'Constraints' entry in the requirement
+    #   (instead of the TextRecord a map of name to constraint
+    #    object is stored).
     def create_local_ce3s(self, reqset):
         ce3set = CE3Set()
         for k, v in reqset.reqs.items():
             ce3 = CE3()
             cstrnts = v.get_value("Constraints")
             if cstrnts!=None:
-                sval = cstrnts.get_content().split()
+                sval = json.loads(cstrnts.get_content())
+                cs = {}
                 for s in sval:
                     ctr_name = self.get_ctr_name(s)
                     rcs = reqset.constraints[ctr_name]
                     ce3.eval(rcs, ctr_name, s)
+                    cs[ctr_name] = rcs
+                v.set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
             ce3set.insert(k, ce3)
         return ce3set
@@ -70,14 +81,6 @@ class RDepConstraints(Digraph.Node):
             lce3 = ce3set.get(r.get_id())
             lce3.unite(ince3s)
 
-    def distribute_constraints(self, reqset):
-        
-        def distribute_constraints_req(req):
-            for n in req.outgoing:
-                pass
-
-        distribute_constraints_req(reqset.graph_master_node)
-
     # The constrains value gets a dictionary from the name of the
     # constraints to the object.
     def rewrite(self, reqset):
@@ -85,10 +88,6 @@ class RDepConstraints(Digraph.Node):
         ce3set = self.create_local_ce3s(reqset)
         # Evaluate all the CE3 in topological order
         self.unite_ce3s(reqset, ce3set)
-        assert(False)
-
-        print("TTTTTTTTTTTTTTTTTT %s" % reqset.graph_master_node)
-        self.set_initial_constraints(reqset)
-        self.distribute_constraints(reqset)
-
+        # Store all the CE3s for possible later evaluation
+        reqset.ce3set = ce3set
         return True
