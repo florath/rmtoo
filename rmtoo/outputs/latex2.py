@@ -152,12 +152,12 @@ class latex2:
 
 
         cnstrt = ce3set.get(req.get_id())
-        if cnstrt!=None:
+        if cnstrt!=None and cnstrt.len()>0:
         #if req.is_val_av_and_not_null("Constraints"):
             fd.write("\n\\textbf{Constraints:} ")
             print("CONSTRAINTS AVAILABLE in '%s'" % req.get_id())
 
-            print("FOUND CE3: %s" % cnstrt)
+            print("FOUND CE3: %s" % cnstrt.values)
 
             #cl = req.get_value("Constraints") # .split()
 

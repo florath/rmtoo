@@ -3,6 +3,13 @@ Invented on: 2011-03-07
 Invented by: flonatel
 Owner: development
 Description: Defines the minimal shock resistance of a device.
+Note: This constraint is automatically evaluated.\par
+ If the current node does not explicitly include this constraint, a
+ new constraint is computed from the parent's constraints: the maximum
+ number is used.\
+ If the current node does explicitly define this constraint, it is
+ checked if all the parent's constraints values are less or equal to
+ the node's value.
 CE3:
  class MinShockResistance:
     def __init__(self, v):
