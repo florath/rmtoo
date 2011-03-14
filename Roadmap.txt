@@ -51,6 +51,11 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o Design issue: (from WEB)
+  If the intent of the original heuristic was to discover disconnected
+  (i.e. floating) topics, the checks should definitely be adjusted to
+  also count sub-topics and parent topics, as parent-child connections
+  are of course valid connections, too.
 o Build a server which can serve as the interface to different GUIs
   (e.g. native gtk, WEB, ...)
   - Build gtk GUI
