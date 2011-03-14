@@ -1,0 +1,17 @@
+Name: Version
+Type: requirement
+Invented on: 2011-03-14
+Invented by: flonatel
+Description: Version information \textbf{must} be available.
+Note: This is valid for the documentation and all program files: see
+ Solved by dependencies.
+Owner: development
+Status: not done
+Priority: users:10
+Effort estimation: 5
+Topic: Documentation
+Solved by: VersionDocumentation VersionApplication
+# When constraints are finished: add
+# Constraint: SingleSourceOfInformation
+# There must be only one place where the version number is available
+# in the source tree.
