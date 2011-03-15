@@ -74,7 +74,8 @@ class RequirementSet(Digraph, MemLogStore):
             self.state = self.er_error
             return False
 
-        everythings_fine = self.read_constraints(directory)
+        everythings_fine = self.read_constraints(
+            self.config.constraints_specs["search_dirs"])
         if not everythings_fine:
             self.error(86, "There were errors in the requirment set - "
                        "in the constraints")
@@ -117,7 +118,19 @@ class RequirementSet(Digraph, MemLogStore):
 
     # This is mostly a copy of the read - but changed at at least some
     # major points. 
-    def read_constraints(self, directory):
+    def read_constraints(self, directories):
+        everythings_fine = True
+        for d in directories:
+            if not os.path.isdir(d):
+                print("+++ WARN: skipping non-existant constraint "
+                      "directory [%s]" % d)
+                continue
+            ef = self.read_constraints_one_dir(d)
+            if not ef:
+                everythings_fine = False
+        return everythings_fine
+
+    def read_constraints_one_dir(self, directory):
         everythings_fine = True
         files = os.listdir(directory)
         for f in files:

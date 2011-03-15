@@ -15,6 +15,7 @@ from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.RMTException import RMTException
 
 class RDepConstraints(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
@@ -57,6 +58,9 @@ class RDepConstraints(Digraph.Node):
                 cs = {}
                 for s in sval:
                     ctr_name = self.get_ctr_name(s)
+                    if not ctr_name in reqset.constraints:
+                        raise RMTException(88, "Constraint [%s] does not "
+                                           "exists" % ctr_name)
                     rcs = reqset.constraints[ctr_name]
                     ce3.eval(rcs, ctr_name, s)
                     cs[ctr_name] = rcs

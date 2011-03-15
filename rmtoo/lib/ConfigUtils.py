@@ -55,9 +55,19 @@ class ConfigUtils:
             del(config.parser)
 
     @staticmethod
+    def set_defaults_constraints(config):
+        if not hasattr(config, "constraints_specs"):
+            config.constraints_specs = {}
+        if "search_dirs" not in config.constraints_specs:
+            # Use the system one.
+            config.constraints_specs["search_dirs"] = \
+                [ "/usr/share/pyshared/rmtoo/library/constraints" ]
+
+    @staticmethod
     def set_defaults(config):
         ConfigUtils.set_defaults_reqs_spec(config)
         ConfigUtils.set_defaults_parser(config)
+        ConfigUtils.set_defaults_constraints(config)
 
 
     #####

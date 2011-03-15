@@ -1,7 +1,0 @@
-digraph reqdeps {
-rankdir=BT;
-mclimit=10.0;
-nslimit=10.0;ranksep=1;
-A1 [fontcolor=red,label="A1\n[10.00]"];
-ReqVersion [shape=plaintext label="ReqVersion\nc35f8e918ab1d05ab3e2ba0be52a3f4092035663"]
-}

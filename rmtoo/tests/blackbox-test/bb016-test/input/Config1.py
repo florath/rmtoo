@@ -27,11 +27,16 @@ class Config:
            "stop_on_errors": False,
            "topics": "ts_common",
         }
+
+    constraints_specs = \
+        {
+           "search_dirs": ["../rmtoo/library/constraints"]
+        }
     
     output_specs = \
         [ 
-          ["prios", 
-           ["ts_common", result_is + "/reqsprios.tex"]],
+#          ["prios", 
+#           ["ts_common", result_is + "/reqsprios.tex"]],
 
 #          ["graph",
 #           ["ts_common", result_is + "/req-graph1.dot"]],
@@ -39,8 +44,8 @@ class Config:
 #          ["graph2",
 #           ["ts_common", result_is + "/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
-           ["ts_common", result_is + "/stats_reqs_cnt.csv"]],
+#          ["stats_reqs_cnt", 
+#           ["ts_common", result_is + "/stats_reqs_cnt.csv"]],
 
           ["latex2", 
            ["ts_common", result_is + "/reqtopics.tex"]],
