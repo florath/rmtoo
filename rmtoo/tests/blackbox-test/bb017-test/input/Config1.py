@@ -2,7 +2,7 @@ import os
 
 class Config:
 
-    basedir = "tests/blackbox-test/bb016-test/"
+    basedir = "tests/blackbox-test/bb017-test/"
     result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]

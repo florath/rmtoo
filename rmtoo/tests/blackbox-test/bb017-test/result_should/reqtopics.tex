@@ -1,0 +1,69 @@
+% Output topic 'ReqsDocument'
+\chapter{B0}
+% Output topic 'B1'
+\section{B1}
+% REQ 'Case'
+\subsection{Thermometer Case}\label{Case}
+\textbf{Description:} A thermometer case \textsl{must} exists.
+
+\textbf{Depends on:} \ref{THA} \nameref{THA}, \ref{THB} \nameref{THB}
+
+\textbf{Constraints:} \ref{CONSTRAINTMinShockResistance} \nameref{CONSTRAINTMinShockResistance} [minimal shock resistance of 9 G] 
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Case  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2011-02-24  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'TH'
+\subsection{Thermometers}\label{TH}
+\textbf{Description:} Thermometers \textsl{must} exists.
+
+\textbf{Solved by:} \ref{THA} \nameref{THA}, \ref{THB} \nameref{THB}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & TH  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2011-02-24  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'THA'
+\subsection{Thermometer A}\label{THA}
+\textbf{Description:} TH A \textsl{must} exists.
+
+\textbf{Depends on:} \ref{TH} \nameref{TH}
+
+\textbf{Solved by:} \ref{Case} \nameref{Case}
+
+\textbf{Constraints:} \ref{CONSTRAINTMinShockResistance} \nameref{CONSTRAINTMinShockResistance} [minimal shock resistance of 5 G] 
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & THA  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2011-02-24  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'THB'
+\subsection{Thermometer B}\label{THB}
+\textbf{Description:} TH B \textsl{must} exists.
+
+\textbf{Depends on:} \ref{TH} \nameref{TH}
+
+\textbf{Solved by:} \ref{Case} \nameref{Case}
+
+\textbf{Constraints:} \ref{CONSTRAINTMinShockResistance} \nameref{CONSTRAINTMinShockResistance} [minimal shock resistance of 7 G] 
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & THB  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2011-02-24  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & open \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+Some more text.
+\chapter{Constraints}
+% CONSTRAINT 'MinShockResistance'
+\section{Minimal Shock Resistance}\label{CONSTRAINTMinShockResistance}
+\textbf{Description:} Defines the minimal shock resistance of a device.
+
+\textbf{Note:} This constraint is automatically evaluated.\par If the current node does not explicitly include this constraint, a new constraint is computed from the parent's constraints: the maximum number is used.\ If the current node does explicitly define this constraint, it is checked if all the parent's constraints values are less or equal to the node's value.

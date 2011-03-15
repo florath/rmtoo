@@ -9,6 +9,14 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
+# Some common used functions
+def ce3assert(b, errmsg):
+    if not b:
+        raise RMTException(90, "Failed CE3 assert: msg [%s]"
+                           % errmsg)
+
 class CE3:
 
     def __init__(self):
@@ -24,7 +32,7 @@ class CE3:
         for r in v.get_content_with_nl():
             s += r[1:] + "\n"
 
-        exec(s)
+        exec(s) in globals(), locals()
         exec("self.values[class_name] = %s" % cstr_call)
 
         print("HJKHKJHKJHKJHKJH %s" % self.values)

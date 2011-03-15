@@ -26,6 +26,10 @@ CE3:
       if mobj==None:
         return self.mclass(ma)
       # Check if the local is at least the maximum
-      ce3assert(mobj.msr>=ma)
+      ce3assert(mobj.msr>=ma, \
+                "MinShockResistance: " \
+                "Value of device is smaller than the needed - " \
+                "device will fail. " \
+                "Device [%dG] - needed [%dG]" % (mobj.msr, ma))
       return None
  MinShockResistance.mclass = MinShockResistance
