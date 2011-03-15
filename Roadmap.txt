@@ -51,6 +51,11 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o SCRUM Burndown diagram
+o Due Date for all requirements as optional
+o Requirement: prosponed, withdrawn as additional state of a requirement
+o For later 'gantt' export:
+  start-date, end-date, ...
 o Design issue: (from WEB)
   If the intent of the original heuristic was to discover disconnected
   (i.e. floating) topics, the checks should definitely be adjusted to
