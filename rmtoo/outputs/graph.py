@@ -74,8 +74,8 @@ class graph:
         return ",".join(nodeparam)
 
     def output_req(self, req, dotfile):
-        dotfile.write("%s [%s];\n" %
+        dotfile.write('"%s" [%s];\n' %
                       (req.id, self.node_attributes(req, self.config)))
 
         for d in req.outgoing:
-            dotfile.write("%s -> %s;\n" % (req.id, d.id))
+            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))
