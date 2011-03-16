@@ -49,6 +49,9 @@ class TxtParser:
     # Precondition: it can be assumed that len(sl)>0
     @staticmethod
     def split_next_record(sl, rid, lineno, mls):
+
+        print("SPLIT %d [%s]" % (lineno, sl))
+
         i = 0
         sl_len = len(sl)
         # The first line must contain the tag.
@@ -71,10 +74,12 @@ class TxtParser:
 ##      specification.
         while i<sl_len:
             if TxtParser.re_tag_line.match(sl[i]):
+                print("TAGLINE %s  I %s [%s]" % (lineno, i, sl[i]))
                 break
             elif len(sl[i])>0 and sl[i][0]==" ":
                 content.append(sl[i])
                 if len(comment)>0:
+                    print("LINENO %s  I %s" % (lineno, i))
                     # This is the possible problematic case where
                     # continuation lines are intermixed with comments.
                     mls.info(80, TxtParser.comment_in_req,
@@ -115,7 +120,7 @@ class TxtParser:
             try:
                 nr = TxtParser.split_next_record(sl, rid, lineno, mls)
                 doc.append(nr)
-                lineno += 1 + len(nr[1]) + len(nr[2])
+                lineno += len(nr[1]) + len(nr[2])
             except RMTException, rmte:
                 # This is a hint that the tag line could not correctly
                 # parsed.

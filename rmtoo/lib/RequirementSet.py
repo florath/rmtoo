@@ -170,7 +170,7 @@ class RequirementSet(Digraph, MemLogStore):
             rr = self.reqs[r]
             if len(rr.brmo)>0:
                 self.error(57, "No tag handler found for tag(s) '%s' "
-                           "- Hint: typo in tag(s)?" % rr.req.keys(), rr.id)
+                           "- Hint: typo in tag(s)?" % rr.brmo.keys(), rr.id)
                 alls_fine = False
         return alls_fine
 
