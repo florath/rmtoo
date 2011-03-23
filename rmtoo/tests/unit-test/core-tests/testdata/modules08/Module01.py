@@ -2,7 +2,7 @@
 # Requirement Management Toolset
 #  Test Module
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #

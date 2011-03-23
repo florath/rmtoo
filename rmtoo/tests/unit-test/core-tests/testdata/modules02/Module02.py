@@ -16,7 +16,7 @@ class Module02(Digraph.Node):
         Digraph.Node.__init__(self, "Module02")
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
 
     def set_modules(self, mods):
         pass

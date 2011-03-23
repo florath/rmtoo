@@ -40,9 +40,9 @@ class TxtRecordEntry(RecordEntry):
         RecordEntry.__init__(self, tag, value, comment)
 
     def to_string(self):
-        add_content = TxtParser.add_newlines(self.content_raw[1])
+        add_content = TxtParser.add_newlines(self.content_raw)
         add_comment = TxtParser.add_newlines(self.comment_raw)
-        r = self.content_raw[0] + '\n' + add_content + add_comment
+        r = self.tag_raw + add_content + add_comment
         return r
 
     # For 'Normal' RecordEntries there is the need to convert them

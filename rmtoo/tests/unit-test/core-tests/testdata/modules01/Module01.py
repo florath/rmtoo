@@ -2,7 +2,7 @@
 # Requirement Management Toolset
 #  Test Module
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -12,4 +12,4 @@ class Module01:
         pass
 
     def type(self):
-        return "reqtag"
+        return set(["reqtag", ])
