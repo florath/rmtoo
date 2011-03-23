@@ -10,7 +10,8 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class MyTag(ReqTagGeneric):
-    tag="mytag"
+    tag = "mytag"
+    ltype = set(["reqtag", ])
 
     def __init__(self, opts, config):
         ReqTagGeneric.__init__(self, opts, config)
@@ -26,7 +27,7 @@ class TestGenericTag:
         "Generic Tag: type()"
         mt = MyTag(None, None)
         t = mt.type()
-        assert(t=="reqtag")
+        assert(t==set(["reqtag", ]))
 
     def test_positive_03(self):
         "Generic Tag: mandatory tag"
