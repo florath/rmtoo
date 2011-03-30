@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-req-format 5 2010-03-05 "File Formats" "Requirements Management"
+.TH rmtoo-req-format 5 2011-03-29 "File Formats" "Requirements Management"
 .SH NAME
 rmtoo-req-format \- requirements management tool: requirements format
 .SH FILE FORMAT
@@ -64,6 +64,8 @@ tested.
 .SH KEY 'Rationale'
 This is optional.  This gives a hint and some more details about the
 requirement.  Typically some background information is given here. 
+.SH KEY 'Note'
+The note is an additional comment for the requirement.  
 .SH KEY 'Solved by'
 Each requirement which is 'solved' by other requirements must have one
 or more children.  The 'Solved by' tag contains a list of these
@@ -119,6 +121,11 @@ burn-down speed and the expected finished date.
 .P
 .B 21
 - huge effort (same as very big effort and big effort)
+.SH KEY 'Constraints'
+This must be a list of constraints - including possible
+arguments. Please consult the
+.B rmtoo-constraints(5)
+man page for more details.
 .SH EXAMPLE
 Note that the following example has some initial indent resulting
 from the word processing program.  The keywords must start at the
@@ -137,6 +144,7 @@ Rationale: Here are some reasons why this must be
 Owner: security
 Solved by: DetailedRequirement
 Status: not done
+Constraints: [ "MinShockResistance(5)" ]
 
 .SH "SEE ALSO"
 .B rmtoo(7)
@@ -154,6 +162,6 @@ is the one which should be used in new projects.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 

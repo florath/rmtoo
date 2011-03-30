@@ -20,9 +20,6 @@
 class RecordEntry:
 
     def __init__(self, tag, content, comment=None):
-
-        print("REEEE [%s]" % tag)
-
         self.tag = tag
         self.content = content
         self.comment = comment

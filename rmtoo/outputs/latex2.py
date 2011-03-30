@@ -155,13 +155,9 @@ class latex2:
         if cnstrt!=None and cnstrt.len()>0:
         #if req.is_val_av_and_not_null("Constraints"):
             fd.write("\n\\textbf{Constraints:} ")
-            print("CONSTRAINTS AVAILABLE in '%s'" % req.get_id())
-
-            print("FOUND CE3: %s" % cnstrt.values)
 
             #cl = req.get_value("Constraints") # .split()
 
-            print("CONSTRAINTS AVAILABLE '%s'" % cnstrt.get_values())
             cs = []
             for k, v in sorted(cnstrt.get_values().iteritems()):
                 #name = v.get_value("Name").get_content()
@@ -173,8 +169,6 @@ class latex2:
                     rs += " [" + description + "] "
                 cs.append(rs)
                     
-            print("CSCSCS %s" % cs)
-
             fd.write(", ".join(cs))
             fd.write("\n")
 

@@ -82,8 +82,8 @@ class Modules(Digraph):
             mc.append(modulename)
 
             # Import module
-            print("Loading module '%s' from '%s'" %
-                  (modulename, ".".join(mod_components)))
+            #print("Loading module '%s' from '%s'" %
+            #      (modulename, ".".join(mod_components)))
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 
@@ -100,7 +100,7 @@ class Modules(Digraph):
                 self.nodes.append(o)
 
         # Not sure, if this is really needed.
-        print("***** NEEDED?????????")        
+#        print("***** NEEDED?????????")        
 #        for rd in self.reqdeps:
 #            self.reqdeps[rd].set_modules(self)
 

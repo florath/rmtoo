@@ -23,10 +23,7 @@ class CE3:
         self.values = {}
 
     def eval(self, cs, class_name, cstr_call):
-        print("EVAL CS %s / %s / %s" % (cs, class_name, cstr_call))
-        print("DDDDDDDDDDD %s" % cs.values)
         v = cs.get_value("CE3")
-        print("EVAL CS V %s" % v.get_content_with_nl())
 
         s = ""
         for r in v.get_content_with_nl():
@@ -34,8 +31,6 @@ class CE3:
 
         exec(s) in globals(), locals()
         exec("self.values[class_name] = %s" % cstr_call)
-
-        print("HJKHKJHKJHKJHKJH %s" % self.values)
 
     def has_key(self, k):
         return k in self.values
@@ -59,11 +54,7 @@ class CE3:
     def unite(self, oce3s):
         okeys = set()
         for o in oce3s:
-            print("OOOOOOOOOOOOOOOOOOOO %s" % o.get_keys())
-            print("OOOOOOOOOOOOOOOOOOOO %s" % set(o.get_keys()))
             okeys = okeys.union(set(o.get_keys()))
-            print("OOOOOOOOOOOOOOOOOOOO %s" % okeys)
-        print("OOOKKKKKKKKK %s" % okeys)
  
         for k in okeys:
             # Is the key locally available?
@@ -71,14 +62,11 @@ class CE3:
             if self.has_key(k):
                 mobj = self.get_value(k)
 
-            print("KKKKKVVVVVVVVVVVVV %s" % k)
             lobj = []
             # Look for this in all other oce3s
             for o in oce3s:
-                print("OOOOOOOOOOO %s" % o)
                 if o.has_key(k):
                     lobj.append(o.get_value(k))
-            print("LLLLLLLLLLLLOOOOOOOOOOOOOOOBBBBBBBBBBJJJJJ %s" % lobj)
             
             # For the execution one object is needed
             eobj = mobj
@@ -86,14 +74,11 @@ class CE3:
                 eobj = lobj[0]
                 ### lobj.add(eobj)
 
-            print("ZZZZZZZZZZZUUUUUUUUUUUUUUU 1")
             ro = eobj.unite(mobj, lobj)
-            print("ZZZZZZZZZZZUUUUUUUUUUUUUUU 2 %s" % ro)
 
             if ro!=None:
                 # There is a new constraint for the local key
                 assert(mobj==None)
-                print("SET NEW OBJ %s" % ro)
                 self.set_value(k, ro)
 
                 

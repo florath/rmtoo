@@ -36,6 +36,7 @@ class RDepConstraints(Digraph.Node):
     def get_ctr_name(s):
         i = s.find("(")
         if i==-1:
+            print("+++ Error: no '(' in constraints")
             print("ASSERT %s" % s)
             # Throw: does not contain (
             assert(False)
@@ -75,12 +76,10 @@ class RDepConstraints(Digraph.Node):
     def unite_ce3s(self, reqset, ce3set):
         # The ce3s must be executed in topological order.
         ce3tsort = topological_sort(reqset)
-        print("CETORET %s" % ce3tsort)
         for r in ce3tsort:
             # Have a look for incoming nodes
             ince3s = []
             for i in r.outgoing:
-                print("INCOMING %s -> %s" % (r.get_id(), i.get_id()))
                 ince3s.append(ce3set.get(i.get_id()))
             lce3 = ce3set.get(r.get_id())
             lce3.unite(ince3s)
