@@ -59,7 +59,23 @@ i.e. all those from the list given in the requirement's constraints
 tag.  The parameters given are the parameters which are used to call
 the object's constructor.
 .P
-If a 
+The provided class must have a method called \fIunite\fR. This method
+has two parameterers: the first is the constraint object of the
+requirement itself, the second is the list of constraint objects from
+the parents (the inherited objects).
+.P
+When it receives only a list of inherited objects, the method must
+return an object with represents these constraints for the local
+requirement.
+.P
+When the method is also called with the constraint object of the
+requirement itself, the method must check if the local requirement
+constraint can be hold against the list of inherited constraints from
+the parents.
+.SH EXAMPLE
+Please consule the file \fIMinShockResistance.ctr\fR and testcases 
+\fItests/blackbox-test/bb017-test\fR and
+\fItests/blackbox-test/bb018-test\fR. 
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
