@@ -22,7 +22,7 @@ class BaseRMObject:
     er_fine = 0
     er_error = 1
 
-    def internal_init(self, tbhtags, rid, mls, mods, opts, config):
+    def internal_init(self, tbhtags, rid, mls, mods, opts, config, type_str):
         # This is the name of the tags which will be handled by the
         # module input. 
         self.tbhtags = tbhtags
@@ -37,14 +37,16 @@ class BaseRMObject:
         self.mods = mods
         self.opts = opts
         self.config = config
+        self.type_str = type_str
 
         # The analytic modules store the results in this map:
         self.analytics = {}
 
         self.state = self.er_fine
 
-    def __init__(self, tbhtags, fd, rid, mls, mods, opts, config):
-        self.internal_init(tbhtags, rid, mls, mods, opts, config)
+    def __init__(self, tbhtags, fd, rid, mls, mods, opts, config,
+                 type_str):
+        self.internal_init(tbhtags, rid, mls, mods, opts, config, type_str)
         if fd!=None:
             self.input(fd)
     
@@ -70,7 +72,7 @@ class BaseRMObject:
     def input(self, fd):
         # Read it in from the file (Syntactic input)
         self.record = TxtRecord.from_fd(fd, self.id,
-                                 self.config.txtio["constraints"])
+                                 self.config.txtio[self.type_str])
         brmo = self.record.get_dict()
         # This 'brmo' is always valid - if there is a problem, an exception 
         # is raised.

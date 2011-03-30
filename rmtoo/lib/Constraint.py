@@ -14,5 +14,6 @@ from rmtoo.lib.BaseRMObject import BaseRMObject
 class Constraint(BaseRMObject):
     
     def __init__(self, fd, rid, mls, mods, opts, config):
-        BaseRMObject.__init__(self, "ctstag", fd, rid, mls, mods, opts, config)
+        BaseRMObject.__init__(self, "ctstag", fd, rid, mls, mods, opts, 
+                              config, "constraints")
 
