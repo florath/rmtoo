@@ -21,8 +21,6 @@ class Constraints:
         def collect_constraints_rec(topic):
             for req in topic.reqs:
                 if req.values["Constraints"]!=None:
-                    print("FOUND CONSTRAINTS %s" % req.values["Constraints"])
-
                     for k, v in req.values["Constraints"].items():
                         cnsts[k] = v
 

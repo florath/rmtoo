@@ -28,15 +28,7 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v18
 ===
-o Remove log output
-o man pages
-  - add constraint man page
-  - adapt requirements man page
 o Add changes to presentation
-o Add Constraints (aka non-functional requirements)
-  -> Constrains are inherited:
-     Each requirement gets all the constraints of the whole track.
-o Remove xml_ganttproject_1
 o More testcases
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
