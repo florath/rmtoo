@@ -82,7 +82,7 @@ class BaseRMObject:
 
         # Do not check for remaining tags here. There must be some
         # left over: all those that work on the whole requirement set
-        # (e.g. 'Depends on').
+        # (e.g. 'Solved by').
 
         # If everything's fine, store the rest of the req for later
         # inspection.
@@ -91,8 +91,11 @@ class BaseRMObject:
     def handle_modules_tag(self, reqs):
         for modkey, module in self.mods.tagtypes[self.tbhtags].items():
             try:
+                #print("handle_modules_tag [%s] [%s] [%s] [%s]" 
+                #      % (modkey, module, self.tbhtags, module.type()))
                 if self.tbhtags not in module.type():
-                    assert(False)
+                    self.mls.error(90, "Wrong module type [%s] not in [%s]" %
+                                   (self.tbhtags, module.type()))
                     continue
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key
