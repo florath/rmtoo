@@ -1,0 +1,35 @@
+Name: Minimal Shock Resistance
+Invented on: 2011-03-07
+Invented by: flonatel
+Owner: development
+Description: Defines the minimal shock resistance of a device.
+Note: This constraint is automatically evaluated.\par
+ If the current node does not explicitly include this constraint, a
+ new constraint is computed from the parent's constraints: the maximum
+ number is used.\
+ If the current node does explicitly define this constraint, it is
+ checked if all the parent's constraints values are less or equal to
+ the node's value.
+CE3:
+ class MinShockResistance:
+    def __init__(self, v):
+      self.msr = v
+    def description(self):
+      return "minimal shock resistance of %d G" % self.msr
+    def unite(self, mobj, loa):
+      # The maximum is needed here
+      ma = 0
+      for l in loa:
+        if ma<l.msr:
+          ma = l.msr
+      # If there is no local constraint, put the max into the local
+      if mobj==None:
+        return self.mclass(ma)
+      # Check if the local is at least the maximum
+      ce3assert(mobj.msr>=ma, \
+                "MinShockResistance: " \
+                "Value of device is smaller than the needed - " \
+                "device will fail. " \
+                "Device [%dG] - needed [%dG]" % (mobj.msr, ma))
+      return None
+ MinShockResistance.mclass = MinShockResistance

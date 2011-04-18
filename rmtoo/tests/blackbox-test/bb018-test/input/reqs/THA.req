@@ -1,0 +1,12 @@
+Name: Thermometer A
+Type:requirement
+Invented on: 2011-02-24
+Invented by: flonatel
+Owner: development
+Description: TH A \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: B1
+Constraints: [ "MinShockResistance(5)" ]
+Solved by: Case

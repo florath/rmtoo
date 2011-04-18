@@ -50,9 +50,6 @@ class Config:
             result_is + "/html", basedir + "input/header.html",
             basedir + "input/footer.html"]],
 
-          ["xml_ganttproject_1",
-           ["ts_common", result_is + "/gantt.xml", 1]],
-
           ["xml_ganttproject_2",
            ["ts_common", result_is + "/gantt2.xml", 1]],
         ]

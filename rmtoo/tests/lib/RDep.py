@@ -29,11 +29,11 @@ def create_parameters(d=None):
 # This is a test (minimalistic) requirement
 class TestReq(Digraph.Node):
 
-    def __init__(self, name, tags, req=None):
+    def __init__(self, name, tags, brmo=None):
         Digraph.Node.__init__(self, name)
         self.id = name
         self.otags = tags
-        self.req = req
+        self.brmo = brmo
 
     def get_value(self, key):
         return self.otags[key]

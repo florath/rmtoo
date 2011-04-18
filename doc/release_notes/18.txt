@@ -1,0 +1,11 @@
+User visible changes
+--------------------
+
+Fixed bug in .dot generation: when using special characters in the ID
+the graph was not correctly drawn.
+
+Fixed typos in man pages: rmtoo.7 rmtoo-invoking.1
+
+
+Internal Changes
+----------------

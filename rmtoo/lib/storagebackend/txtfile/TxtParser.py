@@ -15,7 +15,7 @@ import re
 
 class TxtParser:
 
-    re_tag_line = re.compile("^[a-zA-Z][a-zA-Z0-9_ ]*:.*$")
+    re_tag_line = re.compile("^([a-zA-Z][a-zA-Z0-9_ ]*:)(.*)$")
 
     # Checks if the given line is empty or a comment.
     @staticmethod
@@ -52,14 +52,23 @@ class TxtParser:
         i = 0
         sl_len = len(sl)
         # The first line must contain the tag.
-        if not TxtParser.re_tag_line.match(sl[i]):
+        retl = TxtParser.re_tag_line.match(sl[i])
+        if not retl:
             raise RMTException(79, "Expected tag line not found",
                                rid, lineno)
-        i+=1
-##      This is what is needed - to be compatible with the old
-##      specification. 
+
+        tag = None
         content = []
         comment = []
+        
+        # Split first line: the Tag is everyting including the ':'
+        # The content starts directly after this ':'
+        tag = retl.group(1)
+        content.append(retl.group(2))
+
+        i+=1
+##      This is what is needed - to be compatible with the old
+##      specification.
         while i<sl_len:
             if TxtParser.re_tag_line.match(sl[i]):
                 break
@@ -73,7 +82,7 @@ class TxtParser:
             elif TxtParser.is_comment_or_empty(sl[i]):
                 comment.append(sl[i])
             i+=1
-        rec = [sl[0], content, comment]
+        rec = [tag, content, comment]
         del(sl[0:i])
         return rec
 
@@ -106,7 +115,7 @@ class TxtParser:
             try:
                 nr = TxtParser.split_next_record(sl, rid, lineno, mls)
                 doc.append(nr)
-                lineno += 1 + len(nr[1]) + len(nr[2])
+                lineno += len(nr[1]) + len(nr[2])
             except RMTException, rmte:
                 # This is a hint that the tag line could not correctly
                 # parsed.
@@ -132,6 +141,7 @@ class TxtParser:
         return s
 
     # Splits up a tag line into tag and rest
+# XXX IS THIS NEEDED ANYMORE????
     @staticmethod
     def split_tag_line(line):
         # Line must not be empty
@@ -146,6 +156,7 @@ class TxtParser:
         return line[0:colon_pos], rest
 
     # Extract the contents of the contination lines
+# XXX IS THIS NEEDED ANYMORE?????
     @staticmethod
     def extract_continuation_lines(lines):
         return "".join(lines)

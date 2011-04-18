@@ -33,6 +33,12 @@ class Config:
            "topics": "ts_common",
         }
 
+    constraints_specs = \
+        {
+           "search_dirs": ["rmtoo/library/constraints",
+                           "doc/constraints"]
+        }
+
     output_specs = \
         [ 
           ["prios", 

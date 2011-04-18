@@ -1,0 +1,10 @@
+Name: Thermometer Case
+Type: requirement
+Invented on: 2011-02-24
+Invented by: flonatel
+Owner: development
+Description: A thermometer case \textsl{must} exists.
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: B1

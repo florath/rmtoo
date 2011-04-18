@@ -1,0 +1,84 @@
+.\" 
+.\" Man page for rmtoo constraints input format
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2011 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-constraints 5 2011-03-29 "File Formats" "Requirements Management"
+.SH NAME
+rmtoo-constraints \- requirements management tool: constraints format
+.SH FILE FORMAT
+Each constraint must be in its own file.  The filename must be end
+in '.ctr'.  Only ASCII characters are allowed.  Each line must at
+maximum 80 characters long.
+.P
+The constraint must be written as a set of 'key: value' pairs.  A
+value is extended if the first column of a line is a space.
+.P
+A key can only exists once in a constraint description file. 
+.SH KEYS
+The following keys with the described syntax and semantic exists: 
+.SH KEY 'Name'
+This value of this key is a short headline for the constraint. 
+.SH KEY 'Invented on'
+The value of 'Invented on' is the date when the constraint was
+written.  The format must be YYYY-MM-DD.
+.SH KEY 'Invented by'
+This value is the name of the author of the constraint. 
+.SH KEY 'Owner'
+This is the owner of the constraint.  He is responsible for the
+constraint.
+.SH KEY 'Description'
+The description is the formulation of the constraint.  There must be
+.SH KEY 'Note'
+The note is an additional comment for the constraint.  
+.SH KEY 'CE3'
+This defines the class for the constraint execution and evaluation
+environment. The class must follow a specific interface with a special
+semantic. Please see the section
+.B CE3
+for more details.
+.SH CE3
+The evaluation for all constraints is started at the master
+requirement. For each requirement all constraint objects are created -
+i.e. all those from the list given in the requirement's constraints
+tag.  The parameters given are the parameters which are used to call
+the object's constructor.
+.P
+The provided class must have a method called \fIunite\fR. This method
+has two parameterers: the first is the constraint object of the
+requirement itself, the second is the list of constraint objects from
+the parents (the inherited objects).
+.P
+When it receives only a list of inherited objects, the method must
+return an object with represents these constraints for the local
+requirement.
+.P
+When the method is also called with the constraint object of the
+requirement itself, the method must check if the local requirement
+constraint can be hold against the list of inherited constraints from
+the parents.
+.SH EXAMPLE
+Please consule the file \fIMinShockResistance.ctr\fR and testcases 
+\fItests/blackbox-test/bb017-test\fR and
+\fItests/blackbox-test/bb018-test\fR. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2011 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+

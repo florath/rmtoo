@@ -14,7 +14,7 @@ class Module01:
         pass
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
 
     def set_modules(self, mods):
         pass

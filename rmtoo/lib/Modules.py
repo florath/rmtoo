@@ -54,8 +54,10 @@ class Modules(Digraph):
         self.config = config
 
         # The different types of tags
-        self.reqtag = {}
-        self.reqdeps = {}
+        self.tagtypes = {}
+        self.tagtypes["reqtag"] = {}
+        self.tagtypes["reqdeps"] = {}
+        self.tagtypes["ctstag"] = {}
 
         # Split it up into components
         dir_components = self.split_directory(directory)
@@ -89,16 +91,18 @@ class Modules(Digraph):
             o = eval("module.%s(self.opts, self.config)"
                      % modulename)
             # Query the object itself which type it is
-            tag = o.type()
-            # Add the object to the appropriate directory
-            exec("self.%s[modulename]=o" % tag)
+            types = o.type()
+            # Add the objects to the appropriate directory
+            for ltype in types:
+                self.tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
-            if tag=="reqdeps":
+            if "reqdeps" in types:
                 self.nodes.append(o)
 
         # Not sure, if this is really needed.
-        for rd in self.reqdeps:
-            self.reqdeps[rd].set_modules(self)
+#        print("***** NEEDED?????????")        
+#        for rd in self.reqdeps:
+#            self.reqdeps[rd].set_modules(self)
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.
@@ -111,14 +115,14 @@ class Modules(Digraph):
     # Precondition: the depends_on must be set.
     # The method connect all the nodes based on this value.
     def connect_nodes(self):
-        for mod_name, mod in self.reqdeps.items():
+        for mod_name, mod in self.tagtypes["reqdeps"].items():
             for n in mod.depends_on:
                 # Connect in both directions
-                if n not in self.reqdeps:
+                if n not in self.tagtypes["reqdeps"]:
                     raise RMTException(27, "Module '%s' depends on "
                                        "'%s' - which does not exists"
                                        % (mod_name, n))
-                self.create_edge(mod, self.reqdeps[n])
+                self.create_edge(mod, self.tagtypes["reqdeps"][n])
     
     # This does check if there is a directed circle (e.g. an strongly
     # connected component) in the modules graph.

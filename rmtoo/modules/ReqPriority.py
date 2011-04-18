@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Requirement Tag Priority
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -18,6 +21,7 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqPriority(ReqTagGeneric):
     tag = "Priority"
+    ltype = set(["reqtag", ])
 
     def __init__(self, opts, config):
         ReqTagGeneric.__init__(self, opts, config)

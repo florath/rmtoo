@@ -28,18 +28,21 @@ class TxtRecordEntry(RecordEntry):
 
     def setup(self, se):
         # Store the raw input for possible later output
-        self.content_raw = [se[0], se[1]]
+        self.tag_raw = se[0]
+        self.content_raw = se[1]
         self.comment_raw = se[2]
         # Parse the rest
-        tag, value = TxtParser.split_tag_line(se[0])
-        value += TxtParser.extract_continuation_lines(se[1])
+        tag = self.tag_raw[0:-1]
+#        tag, value = TxtParser.split_tag_line(se[0])
+        value = "".join(se[1])
+# TxtParser.extract_continuation_lines(se[1])
         comment = TxtParser.extract_comment(se[2])
         RecordEntry.__init__(self, tag, value, comment)
 
     def to_string(self):
-        add_content = TxtParser.add_newlines(self.content_raw[1])
+        add_content = TxtParser.add_newlines(self.content_raw)
         add_comment = TxtParser.add_newlines(self.comment_raw)
-        r = self.content_raw[0] + '\n' + add_content + add_comment
+        r = self.tag_raw + add_content + add_comment
         return r
 
     # For 'Normal' RecordEntries there is the need to convert them
@@ -52,14 +55,15 @@ class TxtRecordEntry(RecordEntry):
         if l.get_comment()!=None:
             comment = "# " + l.get_comment()
 
+        print("TTTTTTT [%s]" % l.get_tag())
+
         return l.get_tag() + ": " + l.get_content() + "\n" + comment
 
     # Write record entry to filesystem
     def write_fd(self, fd):
         if self.content_raw!=None:
-            fd.write(self.content_raw[0])
-            fd.write("\n")
-            fd.write(StringHelper.join_ate("\n", self.content_raw[1]))
+            fd.write(self.tag_raw)
+            fd.write(StringHelper.join_ate("\n", self.content_raw))
         else:
             fd.write(self.get_tag())
             fd.write(": ")
@@ -82,3 +86,7 @@ class TxtRecordEntry(RecordEntry):
     def set_comment(self, c):
         RecordEntry.set_comment(self, c)
         self.comment_raw = None
+
+    def get_content_with_nl(self):
+        return self.content_raw
+

@@ -16,6 +16,8 @@ from rmtoo.lib.Topic import Topic
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from rmtoo.lib.CE3Set import CE3Set
+from rmtoo.lib.CE3 import CE3
 
 class TestOutputLaTeX2:
 
@@ -35,7 +37,7 @@ class TestOutputLaTeX2:
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         l2 = latex2([None, None])
         try:
-            l2.output_latex_topic(fd, topic)
+            l2.output_latex_topic(fd, topic, None)
             assert(False)
         except RMTException, rmte:
             pass
@@ -54,9 +56,13 @@ class TestOutputLaTeX2:
         req.values["Description"] = RecordEntry("Description", "my desc")
         req.values["Status"] = RecordEntry("Status", "my status")
         req.values["Class"] = RecordEntry("Class", "my class")
-       
+
+        ce3set = CE3Set()
+        ce3 = CE3()
+        ce3set.insert("TestReq", ce3)
+               
         try:
-            l2.output_requirement(fd, req, 2)
+            l2.output_requirement(fd, req, 2, ce3set)
             assert(False)
         except RMTException, rmte:
             pass

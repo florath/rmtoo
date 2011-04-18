@@ -13,12 +13,12 @@ import os
 import time
 import operator
 
-from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.BaseRMObject import BaseRMObject
 
-class Requirement(Digraph.Node):
+class Requirement(Digraph.Node, BaseRMObject):
 
     # Requirment Type
     # Each requirement has exactly one type.
@@ -43,80 +43,10 @@ class Requirement(Digraph.Node):
     ct_implementable = 1
     ct_detailable = 2
 
-    # Error Status of Requirement
-    # (i.e. is the requirment usable?)
-    er_fine = 0
-    er_error = 1
-
-    def internal_init(self, rid, mls, mods, opts, config):
-        Digraph.Node.__init__(self, rid)
-        # This are the original tags - when there is no
-        # need to convert them to specific values, they are left
-        # here.
-        self.otags = {}
-        # This is the list of converted values.
-        self.values = {}
-        self.id = rid
-        self.mls = mls
-        self.mods = mods
-        self.opts = opts
-        self.config = config
-
-        # The analytic modules store the results in this map:
-        self.analytics = {}
-
-        self.state = self.er_fine
-
     def __init__(self, fd, rid, mls, mods, opts, config):
-        self.internal_init(rid, mls, mods, opts, config)
-        if fd!=None:
-            self.input(fd)
-
-    def input(self, fd):
-        # Read it in from the file (Syntactic input)
-        self.record = TxtRecord.from_fd(fd, self.id,
-                                 self.config.txtio["requirements"])
-        req = self.record.get_dict()
-        # This 'req' is always valid - if there is a problem, an exception 
-        # is raised.
-
-        # Handle all the modules (Semantic input)
-        self.handle_modules_reqtag(req)
-
-        # Do not check for remaining tags here. There must be some
-        # left over: all those that work on the whole requirement set
-        # (e.g. 'Depends on').
-
-        # If everything's fine, store the rest of the req for later
-        # inspection.
-        self.req = req
-
-    def handle_modules_reqtag(self, reqs):
-        for modkey, module in self.mods.reqtag.items():
-            try:
-                key, value = module.rewrite(self.id, reqs)
-                # Check if there is already a key with the current key
-                # in the map.
-                if key in self.values:
-                    self.mls.error(54, "tag '%s' already defined" %
-                          (key), self.id)
-                    self.state = self.er_error
-                    # Also continue to get possible further error
-                    # messages.
-                self.values[key] = value
-            except RMTException, rmte:
-                # Some sematic error occured: do not interpret key or
-                # value.
-                self.mls.error_from_rmte(rmte)
-                self.mls.error(41, "semantic error occured in "
-                               "module '%s'" % modkey, self.id)
-                #print("+++ root cause is: '%s'" % rmte)
-                self.state = self.er_error
-                # Continue (do not return immeditely) to get also
-                # possible other errors.
-
-    def ok(self):
-        return self.state==self.er_fine
+        Digraph.Node.__init__(self, rid)
+        BaseRMObject.__init__(self, "reqtag", fd, rid, mls, mods, opts, 
+                              config, "requirements")
 
 ### Looks that these functions are not used at all
 
@@ -136,19 +66,6 @@ class Requirement(Digraph.Node):
 
     def is_implementable(self):
         return self.values["Class"] == self.ct_implementable
-
-    def get_value(self, key):
-        return self.values[key]
-
-    def is_value_available(self, key):
-        return key in self.values
-
-    def is_val_av_and_not_null(self, key):
-        return key in self.values \
-            and self.get_value(key)!=None
-
-    def set_value(self, key, value):
-        self.values[key] = value
 
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):

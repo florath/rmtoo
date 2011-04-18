@@ -1,0 +1,14 @@
+Name: Version in Documentation
+Type: requirement
+Invented on: 2011-03-14
+Invented by: flonatel
+Description: Version information \textbf{must} be available in all
+ documents. 
+Note: Documents are: man pages, presentations, requirement documents,
+ graphs, ...
+Owner: development
+Status: not done
+Priority: users:10
+Effort estimation: 3
+Topic: Documentation
+

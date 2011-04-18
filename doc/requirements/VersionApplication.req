@@ -1,0 +1,15 @@
+Name: Version in Application
+Type: requirement
+Invented on: 2011-03-14
+Invented by: flonatel
+Description: Version information \textbf{must} be available in all
+ applications. 
+Note: This includes every single script which can be executed. If
+ there is someday a GUI there must be a function to display the
+ version.
+Owner: development
+Status: not done
+Priority: users:10
+Effort estimation: 3
+Topic: Documentation
+

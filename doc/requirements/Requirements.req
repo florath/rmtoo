@@ -9,5 +9,5 @@ Status: finished
 Priority: development:10
 Effort estimation: 3
 Topic: Basics
-Solved by: EMRequirements FilesInFS ReqGenTagOrder ReqTags VersionControlSystem
-# Added by rmtoo-normalize-dependencies
+Solved by: EMRequirements FilesInFS ReqGenTagOrder ReqTags
+ VersionControlSystem Constraints

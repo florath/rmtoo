@@ -1,7 +1,10 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # Generic Tag Class
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -19,7 +22,7 @@ class ReqTagGeneric:
         self.config = config
         
     def type(self):
-        return "reqtag"
+        return self.ltype
 
     # Call this from the 'rewrite()' method, if the tag is mandatory.
     # Note: this function only checks the availability of the tag but

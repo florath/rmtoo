@@ -32,7 +32,7 @@ class RDepDependsOn(Digraph.Node):
         self.config = config
 
     def type(self):
-        return "reqdeps"
+        return set(["reqdeps", ])
 
     def set_modules(self, mods):
         self.mods = mods
@@ -41,7 +41,7 @@ class RDepDependsOn(Digraph.Node):
     def rewrite_one_req(self, rr, reqset, also_solved_by):
         if rr.get_value("Type") == Requirement.rt_master_requirement:
             # There must no 'Depends on'
-            if self.tag in rr.req:
+            if self.tag in rr.brmo:
                 print("+++ ERROR %s: initial requirement has "
                       "Depends on field." % (rr.id))
                 return False
@@ -58,7 +58,7 @@ class RDepDependsOn(Digraph.Node):
             return True
 
         # For all other requirments types there must be a 'Depends on'
-        if self.tag not in rr.req:
+        if self.tag not in rr.brmo:
             if also_solved_by:
                 # Skip handling this requirement
                 return True
@@ -66,7 +66,7 @@ class RDepDependsOn(Digraph.Node):
                   "no 'Depends on' field." % (rr.id))
             return False
 
-        t = rr.req[self.tag] 
+        t = rr.brmo[self.tag] 
 
         # If available, it must not empty
         if len(t.get_content())==0:
@@ -97,7 +97,7 @@ class RDepDependsOn(Digraph.Node):
 
         # Copy and delete the original tag
         ## XXX Not neede any more? rr.tags["Depends on"] = t.split()
-        del rr.req[self.tag]
+        del rr.brmo[self.tag]
         return True
 
     def rewrite(self, reqset):

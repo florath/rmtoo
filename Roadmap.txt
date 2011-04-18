@@ -20,25 +20,28 @@ o Get rmtoo added to at least one Linux distribution (preferred
   Debian)
 
 => Mail to INCOSE was sent - they answered that they will include
-   rmtoo in their list as soon as possible.
+   rmtoo in their list as soon as possible. (Status 2011-02-14:
+   they move servers - therefore the inclusion will take some time.) 
 => This will be the point of time to get rmtoo into one Linux
    distribution - preferred Debian.
+   Problem: will eat up a lot of time
 
 v18
 ===
 o Add to FAQ: max level of topic inclusion.
+o Add changes to presentation
+o More testcases
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
-o Include sub-graphs in the PDF and HTML documentation
-  - Topic based (all reqs of a topic)
-  - req based (all reqs dependend and depend on one req)
-  - Try to implement this is a generic way that makes it
-    possible to include dot files from within a requirement.
-    (If this is not possible, add this to the OTHER / LATER
-    features.)
-o Adapt man pages
-o Adapt presentation
 
+v19
+===
+o Major code refactoring is needed
+  - restriction of reqset to topic set
+    + especially the new constraints
+    + Is the 'reqset' needed at all?
+    + How to 'restrict' different views? Have the same objects
+      around with different pointers or copy the objects?
 
 IMPORTANT
 =========
@@ -48,6 +51,37 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o SCRUM Burndown diagram
+o Due Date for all requirements as optional
+o Requirement: prosponed, withdrawn as additional state of a requirement
+o For later 'gantt' export:
+  start-date, end-date, ...
+o Design issue: (from WEB)
+  If the intent of the original heuristic was to discover disconnected
+  (i.e. floating) topics, the checks should definitely be adjusted to
+  also count sub-topics and parent topics, as parent-child connections
+  are of course valid connections, too.
+o Build a server which can serve as the interface to different GUIs
+  (e.g. native gtk, WEB, ...)
+  - Build gtk GUI
+  - Build WEB GUI
+o Include sub-graphs in the PDF and HTML documentation
+  - Topic based (all reqs of a topic)
+  - req based (all reqs dependend and depend on one req)
+  - Try to implement this is a generic way that makes it
+    possible to include dot files from within a requirement.
+    (If this is not possible, add this to the OTHER / LATER
+    features.)
+  o Adapt man pages
+  o Adapt presentation
+o It often happens that one requirement is resolved into two different
+  'types' of solutions:
+  1) The genral properties of all 'direct' solutions
+  2) The direkt solutions.
+  There is currently no way to differ between those two different
+  'types' of requirements. It should be elaborated if these are really
+  two 'types' or if this can be described with the current implemented
+  features. 
 o Long Term Evolution: It's all about data storage and who (which
   program) can access (read, write, change, ...) which data.
   - Write requirements

@@ -28,7 +28,7 @@ class RecordEntry:
         return self.tag
 
     def get_content(self):
-        return self.content
+        return self.content.lstrip()
 
     def set_content(self, c):
         self.content = c
