@@ -26,6 +26,7 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v18
 ===
+o Add to FAQ: max level of topic inclusion.
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
 o Include sub-graphs in the PDF and HTML documentation
