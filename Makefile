@@ -61,8 +61,10 @@ PYSETUP = python setup.py
 .PHONY: prepare_install
 prepare_install:
 	echo "add_data = [" >add_data.py
-	find rmtoo/tests -type f | \
-	 while read f; do d=`dirname $$f` ; printf "\t('share/pyshared/%s', ['%s']),\n" $$d $$f; done >>add_data.py
+	for dadi in "rmtoo/tests" "rmtoo/collection"; do \
+	 find $${dadi} -type f | \
+	  while read f; do d=`dirname $$f` ; printf "\t('share/pyshared/%s', ['%s']),\n" $$d $$f; done >>add_data.py; \
+	done
 	echo "]" >>add_data.py
 
 .PHONY: install

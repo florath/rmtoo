@@ -61,7 +61,7 @@ class ConfigUtils:
         if "search_dirs" not in config.constraints_specs:
             # Use the system one.
             config.constraints_specs["search_dirs"] = \
-                [ "/usr/share/pyshared/rmtoo/library/constraints" ]
+                [ "/usr/share/pyshared/rmtoo/collection/constraints" ]
 
     @staticmethod
     def set_defaults(config):
