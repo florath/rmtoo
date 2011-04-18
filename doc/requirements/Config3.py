@@ -35,8 +35,8 @@ class Config:
 
     constraints_specs = \
         {
-           "search_dirs": ["rmtoo/library/constraints",
-                           "doc/constraints"]
+           "search_dirs": ["rmtoo/collection/constraints",
+                           "/usr/share/pyshared/rmtoo/collection/constraints"]
         }
 
     output_specs = \

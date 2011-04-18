@@ -26,16 +26,19 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v18
+v19
+===
+o Check Web-Site for user features / bugs
+  - Fix (small) bugs
+  - Add feature request requirements
+
+v20
 ===
 o Add to FAQ: max level of topic inclusion.
 o Add changes to presentation
 o More testcases
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
-
-v19
-===
 o Major code refactoring is needed
   - restriction of reqset to topic set
     + especially the new constraints
