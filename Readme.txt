@@ -45,6 +45,7 @@ o Fully integrated revision control system: git. Usages: history,
   statistics and baseline handling. 
 o A topic based output handling provides a common set of files for
   different types of output (PDF, HTML, ...) 
+o Complete support for automatic checking of constraints.
 o Analytics modules: Heuristics help to evaluate the quality of
   requirements 
 o Modules to support commercial biddings based on a given set of
@@ -70,6 +71,7 @@ dpkg.
 
 All other (including Ubuntu) should use the provided tar ball.
 
+Mac OS X user might want to read Readme-OS-X.txt.
 
 --- Preconditions ---
 
