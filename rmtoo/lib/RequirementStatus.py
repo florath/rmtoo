@@ -10,18 +10,7 @@
 #
 
 from rmtoo.lib.DateUtils import parse_date, format_date
-
-#class RequirementStatus:
-    # Status Type
-    # Each requirement has a Status.
-    # It will be read in and set by the ReqStatus class.
-    # The status must be one of the following:
-#    st_not_done = 1
-#    st_finished = 2
-#    st_assigned = 3
-
-#    def __init__(self, s):
-#        self.status = s
+from rmtoo.lib.RMTException import RMTException
 
 class RequirementStatusNotDone:
     tval = "not done"

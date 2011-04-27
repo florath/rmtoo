@@ -18,6 +18,8 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
+from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
+    RequirementStatusAssigned, RequirementStatusFinished
 
 class TestOutputLaTeX2:
 
@@ -54,7 +56,8 @@ class TestOutputLaTeX2:
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")
         req.values["Description"] = RecordEntry("Description", "my desc")
-        req.values["Status"] = RecordEntry("Status", "my status")
+        req.values["Status"] = RequirementStatusFinished(
+                None, "rid", "finished:meiner:2011-04-15:4h")
         req.values["Class"] = RecordEntry("Class", "my class")
 
         ce3set = CE3Set()

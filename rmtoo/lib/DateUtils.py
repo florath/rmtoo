@@ -11,6 +11,8 @@
 
 import time
 
+from rmtoo.lib.RMTException import RMTException
+
 def parse_date(rid, ds):
     try:
         return time.strptime(ds, "%Y-%m-%d")
