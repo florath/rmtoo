@@ -12,6 +12,7 @@
 import time
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.DateUtils import parse_date
 
 class ReqInventedOn(ReqTagGeneric):
     tag = "Invented on"
@@ -25,14 +26,6 @@ class ReqInventedOn(ReqTagGeneric):
         self.check_mandatory_tag(rid, req, 7)
 
         t = req[self.tag]
-        try:
-            # It's better to check, if the date is ok
-
-            pt = time.strptime(t.get_content(), "%Y-%m-%d")
-            del req[self.tag]
-            return self.tag, pt
-        except ValueError, ve:
-            raise RMTException(8, "%s: invalid date specified (must be "
-                               "YYYY-MM-DD) was '%s'" % (rid, t))
-
-            
+        pt = parse_date(rid, t.get_content())
+        del req[self.tag]
+        return self.tag, pt

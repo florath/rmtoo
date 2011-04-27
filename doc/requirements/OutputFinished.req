@@ -1,0 +1,13 @@
+Name: Output of Finished List
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: It \textbf{must} be possible, to output a list of all
+ \textsl{finished} requirements sorted by date.
+Rationale: This gives information about the finished work.
+Priority: development:10
+Class: implementable
+Effort estimation: 3
+Status: finished:Florath:2011-04-27:1h
+Topic: Output

@@ -1,0 +1,16 @@
+Name: Status: Assigned Value
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Description: The status 'assigned' \textbf{must} be followed by the
+ name of a person (separated with a colon) which works on the
+ requirement and the date when the work was assigned to the person. 
+Note: The name of the person should be checked against a configured
+ list.\par
+ Example: Status: assigned:Mustermann:2011-04-27
+Owner: development
+Priority: development:10
+Status: finished:Florath:2011-04-27:2h
+Class: implementable
+Effort estimation: 5
+Topic: ReqTagFormatDesc

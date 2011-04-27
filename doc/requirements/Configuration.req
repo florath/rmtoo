@@ -10,5 +10,5 @@ Status: not done
 Priority: development:10
 Effort estimation: 8
 Topic: Basics
-Solved by: ConfigCheck ConfigDefault
-# Added by rmtoo-normalize-dependencies
+Solved by: ConfigCheck ConfigDefault ConfigDevelopers
+

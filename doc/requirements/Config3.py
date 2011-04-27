@@ -42,7 +42,7 @@ class Config:
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", "artifacts/reqsprios.tex"]],
+           ["ts_common", "artifacts/reqsprios.tex", "2011-04-25"]],
 
           ["graph",
            ["ts_common", "artifacts/req-graph1.dot"]],

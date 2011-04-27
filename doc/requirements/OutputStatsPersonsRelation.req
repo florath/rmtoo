@@ -1,0 +1,12 @@
+Name: Output Statistics about Persons: Relation
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: The relation between the abstract EfE units and the real
+ spent working hours \textbf{must} be included in the person amount
+ statistics.
+Status: not done
+Priority: development:10
+Class: implementable
+Topic: Output

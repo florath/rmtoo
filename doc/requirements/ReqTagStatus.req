@@ -4,6 +4,7 @@ Invented on: 2010-02-11
 Invented by: flonatel
 Description: Each requirement \textbf{must} have a status tag.
 Owner: development
+Priority: development:10
 Status: finished
 Topic: ReqTags
 Solved by: Status

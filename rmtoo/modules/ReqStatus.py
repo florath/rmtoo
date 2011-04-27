@@ -12,6 +12,7 @@
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.RequirementStatus import create_requirement_status
 
 class ReqStatus(ReqTagGeneric):
     tag = "Status"
@@ -25,14 +26,6 @@ class ReqStatus(ReqTagGeneric):
 
         # Handle Status semantics
         t = req[self.tag].get_content()
-
-        if t=="not done":
-            v = Requirement.st_not_done
-        elif t=="finished":
-            v = Requirement.st_finished
-        else:
-            raise RMTException(17, "%s: Status tag invalid '%s'" 
-                               % (rid, t))
-
+        v = create_requirement_status(self.config, rid, t)
         del req[self.tag]
         return self.tag, v

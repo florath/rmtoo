@@ -1,0 +1,11 @@
+Name: Output Statistics about Work: Not Done
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: The work amount statistics \textbf{must} include the
+ number of not done work units.
+Status: not done
+Priority: development:10
+Class: implementable
+Topic: Output

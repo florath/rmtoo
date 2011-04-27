@@ -201,10 +201,7 @@ class html:
                          (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
-        if req.get_value("Status")==req.st_finished:
-            status = "completed"
-        else:
-            status = "open"
+        status = req.get_value("Status").get_output_string()
 
         if req.get_value("Class")==req.ct_implementable:
             clstr="implementable"

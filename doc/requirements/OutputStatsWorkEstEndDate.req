@@ -1,0 +1,12 @@
+Name: Output Statistics about Work: Estimated End Date
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: The work amount statistics \textbf{must} include an
+ estimated end date which is computed based on the finished work and
+ the relation of the EfE units and real spent hours.
+Status: not done
+Priority: development:10
+Class: implementable
+Topic: Output
