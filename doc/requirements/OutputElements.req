@@ -13,5 +13,5 @@ Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output
-Solved by: OutputPrio OutputVersion1
+Solved by: OutputPrio OutputVersion1 OutputAssigned OutputFinished
 # Added by rmtoo-normalize-dependencies

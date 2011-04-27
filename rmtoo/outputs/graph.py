@@ -1,10 +1,16 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # graph output class
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
+
+from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
+    RequirementStatusAssigned, RequirementStatusFinished
 
 class graph:
     default_config = { "node_attributes": ["Type", "Status", "Class", "Topic"] }
@@ -62,8 +68,15 @@ class graph:
             nodeparam.append("color=green")
 
         if get_conf_attr("Status") \
-                and req.get_value("Status") == req.st_not_done:
+                and isinstance(req.get_value("Status"), 
+                               RequirementStatusNotDone):
             nodeparam.append("fontcolor=red")
+            nodeparam.append('label="%s\\n[%4.2f]"' %
+                             (req.id, req.get_value("Priority")*10))
+        elif get_conf_attr("Status") \
+                and isinstance(req.get_value("Status"), 
+                               RequirementStatusAssigned):
+            nodeparam.append("fontcolor=blue")
             nodeparam.append('label="%s\\n[%4.2f]"' %
                              (req.id, req.get_value("Priority")*10))
 

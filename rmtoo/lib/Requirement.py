@@ -30,13 +30,6 @@ class Requirement(Digraph.Node, BaseRMObject):
     rt_design_decision = 3
     rt_requirement = 4
 
-    # Status Type
-    # Each requirement has a Status.
-    # It will be read in and set by the ReqStatus class.
-    # The status must be one of the following:
-    st_not_done = 1
-    st_finished = 2
-
     # Class Type
     # This specifies, if this node is really a node or if this can /
     # must be elaborated in more detail.
@@ -61,8 +54,18 @@ class Requirement(Digraph.Node, BaseRMObject):
     def get_prio(self):
         return self.values["Priority"]
 
-    def is_open(self):
-        return self.values["Status"] == self.st_not_done
+#    def is_open(self):
+#        return self.values["Status"] == self.st_not_done
+
+    def get_status(self):
+        return self.values["Status"]
+
+    # Returns the EfE units or 0 if not available.
+    def get_efe_or_0(self):
+        efe = self.get_value("Effort estimation")
+        if efe==None:
+            return 0
+        return efe
 
     def is_implementable(self):
         return self.values["Class"] == self.ct_implementable

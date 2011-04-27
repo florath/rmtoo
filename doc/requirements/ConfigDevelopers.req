@@ -1,0 +1,11 @@
+Name: Configuration of Developers
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Description: The list of persons which can realize / implement
+ requirement \textbf{must} be configurable.
+Owner: development
+Status: not done
+Priority: development:10
+Effort estimation: 8
+Topic: Basics

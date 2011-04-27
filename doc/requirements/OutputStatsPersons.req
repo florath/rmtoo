@@ -1,0 +1,13 @@
+Name: Output Statistics about Persons
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support generation of
+ statistics about each person which works on the project.
+Status: not done
+Priority: development:8
+Class: implementable
+Solved by: OutputStatsPersonsUnits OutputStatsPersonsTime
+ OutputStatsPersonsRelation 
+Topic: Output

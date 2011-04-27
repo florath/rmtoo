@@ -1,0 +1,13 @@
+Name: Status: Not done
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Description: The status \textbf{must} be set to 'not done' when the
+ requirement should be implemented but the work (design /
+ implementation) has not yet started.
+Note: There are no extensions available for the 'not done' value.
+Owner: development
+Priority: development:10
+Status: not done
+Class: implementable
+Topic: ReqTagFormatDesc

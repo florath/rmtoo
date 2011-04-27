@@ -1,5 +1,8 @@
 #
-# xml ganttproject2 output class
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
+#  xml ganttproject2 output class
 #
 # This is a second version of xml ganttproject output.
 # This must be seen as alpha software, because there are some base
@@ -11,7 +14,7 @@
 #   new level.  The last (innermost) level are the requirements of the
 #   appropriate (sub)-topic.
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -19,6 +22,8 @@
 from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
+    RequirementStatusAssigned, RequirementStatusFinished
 
 class xml_ganttproject_2:
 
@@ -62,8 +67,10 @@ class xml_ganttproject_2:
         # finished (~100)
         if req.is_val_av_and_not_null("Status"):
             v = "0"
-            if req.get_value("Status")==Requirement.st_finished:
+            if isinstance(req.get_status(), RequirementStatusFinished):
                 v = "100"
+            elif isinstance(req.get_status(), RequirementStatusAssigned):
+                v = "50"
             xml_task.setAttribute("complete", v)
 
         # Notes

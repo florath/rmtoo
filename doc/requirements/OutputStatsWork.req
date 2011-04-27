@@ -1,0 +1,14 @@
+Name: Output Statistics about Work
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support generation of
+ statistics about the amount of work.
+Status: not done
+Priority: development:10
+Class: implementable
+Solved by: OutputStatsWorkStartDate OutputStatsWorkNotDone
+ OutputStatsWorkAssigned OutputStatsWorkFinished
+ OutputStatsWorkEstEndDate OutputStatsWorkRelation
+Topic: Output

@@ -1,0 +1,11 @@
+Name: Output Statistics about Persons: Time
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Owner: development
+Description: The amount of time which were finished by a
+ person \textbf{must} be included into the person statistics.
+Status: not done
+Priority: development:10
+Class: implementable
+Topic: Output

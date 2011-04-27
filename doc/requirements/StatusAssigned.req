@@ -1,0 +1,19 @@
+Name: Status: Assigned
+Type: requirement
+Invented on: 2011-04-27
+Invented by: flonatel
+Description: The status \textbf{must} be set to 'assigned' when a
+ person works on this requirement.
+Rationale: Work is typically not atomic.  The assigned state means,
+ that one persons works on this.  This could be seen as a mutex: only
+ the one which successfully checks in the assigned with his name is
+ allowed to work on this requirement.
+Note: There are extensions available - please consult the dependent
+ requirements. 
+Owner: development
+Priority: development:10
+Effort estimation: 3
+Status: finished:Florath:2011-04-27:1h
+Class: implementable
+Solved by: StatusAssignedValue OutputAssigned ConfigDevelopers
+Topic: ReqTagFormatDesc
