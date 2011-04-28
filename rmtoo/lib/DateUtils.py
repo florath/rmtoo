@@ -9,16 +9,16 @@
 # For licencing details see COPYING
 #
 
-import time
+import datetime
 
 from rmtoo.lib.RMTException import RMTException
 
 def parse_date(rid, ds):
     try:
-        return time.strptime(ds, "%Y-%m-%d")
+        return datetime.datetime.strptime(ds, "%Y-%m-%d").date()
     except ValueError, ve:
         raise RMTException(8, "%s: invalid date specified (must be "
                            "YYYY-MM-DD) was '%s'" % (rid, ds))
 
-def format_date(tm):
-    return "%04d-%02d-%02d" % (tm.tm_year, tm.tm_mon, tm.tm_mday)    
+def format_date(dt):
+    return dt.strftime("%Y-%m-%d")

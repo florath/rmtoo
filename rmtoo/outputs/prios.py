@@ -31,7 +31,7 @@ class prios:
         if len(param)>2:
             self.start_date = parse_date("prios config", param[2])
         else:
-            self.start_date = time.localtime()
+            self.start_date = datetime.date.today()
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
@@ -215,9 +215,7 @@ class prios:
                         % (hours_to_do))
 
                 # Estimated End Date
-                dt = datetime.date(self.start_date.tm_year,
-                                   self.start_date.tm_mon,
-                                   self.start_date.tm_mday)
+                dt = self.start_date
                 dtdiff = datetime.timedelta(
                     days = hours_to_do / (8  * 5 / 7) + 1)
                 f.write("Estimated End date & %s & \\\ \n" %

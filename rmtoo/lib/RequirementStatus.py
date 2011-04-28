@@ -42,6 +42,9 @@ class RequirementStatusAssigned:
     def get_date_str(self):
         return format_date(self.date)
 
+    def get_date(self):
+        return self.date
+
     def get_output_string(self):
         return "%s (%s, %s)" % (self.tval, self.person, self.get_date_str())
 
@@ -69,6 +72,9 @@ class RequirementStatusFinished:
         if self.date==None:
             return ""
         return format_date(self.date)
+
+    def get_date(self):
+        return self.date
 
     def get_duration(self):
         return self.duration

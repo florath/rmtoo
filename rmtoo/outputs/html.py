@@ -224,7 +224,7 @@ class html:
                  '<dd><span class="dlv_class">%s</span></dd>'
                  % (req.id, req.get_value("Priority")*10, 
                     req.get_value("Owner"),
-                    time.strftime("%Y-%m-%d", req.get_value("Invented on")),
+                    req.get_value("Invented on").strftime("%Y-%m-%d"),
                     req.get_value("Invented by"), status, clstr))
         fd.write("</dl>")
 

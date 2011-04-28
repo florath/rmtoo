@@ -193,8 +193,7 @@ class latex2:
                 fd.write("\\textbf{Owner:} & %s" % req.get_value("Owner"))
             elif rattr=="Invented on":
                 fd.write("\\textbf{Invented on:} & %s " 
-                         % time.strftime("%Y-%m-%d", 
-                                         req.get_value("Invented on")))
+                         % req.get_value("Invented on").strftime("%Y-%m-%d"))
             elif rattr=="Invented by":
                 fd.write("\\textbf{Invented by:} & %s " 
                          % req.get_value("Invented by"))

@@ -71,7 +71,7 @@ class Config:
            ["ts_common", "artifacts/reqdeps1.tlp"]],
 
           ["stats_burndown1",
-           ["ts_common", "artifacts/stats_burndown.csv"]],
+           ["ts_common", "artifacts/stats_burndown.csv", "2011-04-25"]],
            
         ]
 
