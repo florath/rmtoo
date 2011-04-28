@@ -1,13 +1,17 @@
 #
-# Blackbox rmtoo tests
+# rmtoo
+#   Free and Open Source Requirements Management Tool
 #
-# (c) 2010 by flonatel
+# Blackbox rmtoo test
+#
+# (c) 2010-2011 by flonatel
 #
 # For licencing details see COPYING
 #
 
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, cleanup_std_log, delete_result_is_dir
+from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
+    compare_results, cleanup_std_log, delete_result_is_dir
 
 mdir = "tests/blackbox-test/bb002-test"
 

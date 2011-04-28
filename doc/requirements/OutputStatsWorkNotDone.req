@@ -5,7 +5,8 @@ Invented by: flonatel
 Owner: development
 Description: The work amount statistics \textbf{must} include the
  number of not done work units.
-Status: not done
+Status: finished:Florath:2011-04-27:1h
 Priority: development:10
 Class: implementable
+Effort estimation: 2
 Topic: Output

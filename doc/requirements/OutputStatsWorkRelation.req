@@ -6,7 +6,8 @@ Owner: development
 Description: The relation between the abstract EfE units and the real
  spent working hours \textbf{must} be included in the work amount
  statistics.
-Status: not done
+Status: finished:Florath:2011-04-27:1h
 Priority: development:10
 Class: implementable
+Effort estimation: 2
 Topic: Output

@@ -69,6 +69,10 @@ class Config:
 
           ["tlp1",
            ["ts_common", "artifacts/reqdeps1.tlp"]],
+
+          ["stats_burndown1",
+           ["ts_common", "artifacts/stats_burndown.csv"]],
+           
         ]
 
     output_specs2 = \
