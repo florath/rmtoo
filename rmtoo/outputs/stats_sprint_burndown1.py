@@ -14,7 +14,7 @@ import datetime
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.Statistics import Statistics
 
-class stats_burndown1:
+class stats_sprint_burndown1:
 
     def __init__(self, param):
         self.topic_name = param[0]
@@ -31,7 +31,7 @@ class stats_burndown1:
     def output(self, reqscont):
         ofile = file(self.output_filename, "w")
         one_day = datetime.timedelta(1)
-        rv = Statistics.get_units(self.topic_set.reqset, self.start_date)
+        rv = Statistics.get_units_sprint(self.topic_set.reqset, self.start_date)
         iday = self.start_date
 
         for r in rv:

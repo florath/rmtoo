@@ -11,6 +11,8 @@
 
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.ClassType import ClassTypeImplementable, \
+    ClassTypeDetailable, ClassTypeSelected
 
 class graph:
     default_config = { "node_attributes": ["Type", "Status", "Class", "Topic"] }
@@ -80,9 +82,12 @@ class graph:
             nodeparam.append('label="%s\\n[%4.2f]"' %
                              (req.id, req.get_value("Priority")*10))
 
-        if get_conf_attr("Class") \
-                and req.get_value("Class") == req.ct_implementable:
-            nodeparam.append("shape=octagon")
+        if get_conf_attr("Class"):
+            rclass = req.get_value("Class") 
+            if isinstance(rclass, ClassTypeImplementable):
+                nodeparam.append("shape=octagon")
+            elif isinstance(rclass, ClassTypeSelected):
+                nodeparam.append("shape=parallelogram")
 
         return ",".join(nodeparam)
 

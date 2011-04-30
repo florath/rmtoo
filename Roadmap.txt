@@ -36,6 +36,9 @@ o State extension:
   - Statistics
     + For each developer
     + Burndown diagram and table for whole project
+o Documentation for all new things
+  - see above
+  - Class 'selected'
 
 v20
 ===

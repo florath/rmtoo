@@ -21,6 +21,8 @@ import time
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.ClassType import ClassTypeImplementable, \
+    ClassTypeDetailable, ClassTypeSelected
 from rmtoo.lib.DateUtils import parse_date, format_date
 
 class prios:
@@ -49,6 +51,7 @@ class prios:
         # sorted.
         prios_impl = []
         prios_detail = []
+        prios_selected = []
         prios_assigned = []
         prios_finished = []
 
@@ -56,8 +59,11 @@ class prios:
             try:
                 status = tr.get_status() 
                 if isinstance(status, RequirementStatusNotDone):
-                    if tr.is_implementable():
+                    rclass = tr.values["Class"]
+                    if isinstance(rclass, ClassTypeImplementable):
                         prios_impl.append([tr.get_prio(), tr.id])
+                    elif isinstance(rclass, ClassTypeSelected):
+                        prios_selected.append([tr.get_prio(), tr.id])
                     else:
                         prios_detail.append([tr.get_prio(), tr.id])
                 elif isinstance(status, RequirementStatusAssigned):
@@ -67,10 +73,12 @@ class prios:
             except KeyError, ke:
                 raise RMTException(35, "%s: KeyError: %s" % (tr.id, ke))
 
-        return prios_impl, prios_detail, prios_assigned, prios_finished
+        return prios_impl, prios_detail, prios_selected, \
+            prios_assigned, prios_finished
 
     def output_reqset(self, reqset):
-        prios_impl, prios_detail, prios_assigned, prios_finished  \
+        prios_impl, prios_detail, prios_selected, \
+            prios_assigned, prios_finished  \
             = self.get_reqs_impl_detail()
 
         # Sort them after prio
@@ -78,6 +86,8 @@ class prios:
                              reverse=True)
         sprios_detail = sorted(prios_detail, key=operator.itemgetter(0, 1),
                                reverse=True)
+        sprios_selected = sorted(prios_selected, key=operator.itemgetter(0, 1),
+                                 reverse=True)
         sprios_assigned = sorted(
             prios_assigned, key=lambda x: x.get_value("Status").get_date_str(),
             reverse=False)
@@ -224,9 +234,10 @@ class prios:
             f.write("\end{longtable}")
 
         # Really output the priority tables.
+        output_prio_table("Selected for Sprint", sprios_selected)
+        output_assigned_table("Assigned", sprios_assigned)
         output_prio_table("Backlog", sprios_impl)
         output_prio_table("Requirements Elaboration List", sprios_detail)
-        output_assigned_table("Assigned", sprios_assigned)
         output_finished_table("Finished", sprios_finished)
         output_statistics("Statistics", sprios_impl, sprios_detail, 
                           sprios_assigned, sprios_finished) 

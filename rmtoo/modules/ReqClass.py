@@ -12,6 +12,7 @@
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.ClassType import create_class_type, ClassTypeDetailable
 
 # Note:
 # The class of the requirement is used in the 'Depends on' checker.
@@ -30,17 +31,9 @@ class ReqClass(ReqTagGeneric):
         # (which means: if it's not there, there is a default - but
         # every requirment do own one class)
         if "Class" not in req:
-            v = Requirement.ct_detailable
+            v = ClassTypeDetailable()
         else:
             t = req['Class'].get_content()
-            if t=="implementable":
-                v = Requirement.ct_implementable
-            elif t=="detailable":
-                v = Requirement.ct_detailable
-            else:
-                raise RMTException(
-                    1, "%s: invalid class field '%s': " 
-                    "must be one of 'implementable' or 'detailable'"
-                    % (rid, t))
+            v = create_class_type(rid, t)
             del req['Class']
         return self.tag, v

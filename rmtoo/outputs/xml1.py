@@ -70,6 +70,8 @@ class xml1:
             req_xml.appendChild(tm)
             if req.tags["Class"]==Requirement.ct_implementable:
                 tn = doc.createTextNode("implementable")
+            elif req.tags["Class"]==Requirement.ct_selected:
+                tn = doc.createTextNode("selected")
             else:
                 tn = doc.createTextNode("detailable")
             tm.appendChild(tn)

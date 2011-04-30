@@ -14,6 +14,8 @@ import datetime
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.ClassType import ClassTypeImplementable, \
+    ClassTypeDetailable, ClassTypeSelected
 
 class Statistics:
 
@@ -36,7 +38,7 @@ class Statistics:
         return rv
     
     @staticmethod
-    def get_units(rset, start_date):
+    def get_units_generic(rset, start_date, skip_requirement):
         # Run through the requirements and count the not done
         # depending on the date.
         rv = Statistics.prepare_result_vector(start_date)
@@ -55,9 +57,13 @@ class Statistics:
             if efe==None:
                 continue
 
+            if skip_requirement(req):
+                continue
+
             if isinstance(status, RequirementStatusNotDone):
                 # Only count those which are implementable
-                if req.get_value("Class")==Requirement.ct_implementable:
+                rclass = req.get_value("Class")
+                if req.get_value("Class").is_implementable():
                     Statistics.inc_stats(rv, start_date, 0, invented_on, 
                                          today, efe)
             elif isinstance(status, RequirementStatusAssigned):
@@ -93,3 +99,19 @@ class Statistics:
                 Statistics.inc_stats(rv, start_date, 2, finished_date, 
                                      today, efe)
         return rv
+
+    @staticmethod
+    def get_units(rset, start_date):
+
+        def skip_never(req):
+            return False
+
+        return Statistics.get_units_generic(rset, start_date, skip_never)
+
+    @staticmethod
+    def get_units_sprint(rset, start_date):
+
+        def skip_not_selected(req):
+            return not isinstance(req.get_value("Class"), ClassTypeSelected)
+
+        return Statistics.get_units_generic(rset, start_date, skip_not_selected)

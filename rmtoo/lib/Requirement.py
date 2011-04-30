@@ -30,12 +30,6 @@ class Requirement(Digraph.Node, BaseRMObject):
     rt_design_decision = 3
     rt_requirement = 4
 
-    # Class Type
-    # This specifies, if this node is really a node or if this can /
-    # must be elaborated in more detail.
-    ct_implementable = 1
-    ct_detailable = 2
-
     def __init__(self, fd, rid, mls, mods, opts, config):
         Digraph.Node.__init__(self, rid)
         BaseRMObject.__init__(self, "reqtag", fd, rid, mls, mods, opts, 
@@ -68,7 +62,7 @@ class Requirement(Digraph.Node, BaseRMObject):
         return efe
 
     def is_implementable(self):
-        return self.values["Class"] == self.ct_implementable
+        return self.values["Class"].is_implementable()
 
     # Write out the analytics results.
     def write_analytics_result(self, mstderr):

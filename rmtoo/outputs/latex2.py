@@ -173,11 +173,7 @@ class latex2:
             fd.write("\n")
 
         status = req.get_value("Status").get_output_string()
-
-        if req.get_value("Class")==req.ct_implementable:
-            clstr="implementable"
-        else:
-            clstr="detailable"
+        clstr = req.get_value("Class").get_output_string()
 
         fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n")
 

@@ -202,11 +202,7 @@ class html:
             fd.write("</span></dd>")
 
         status = req.get_value("Status").get_output_string()
-
-        if req.get_value("Class")==req.ct_implementable:
-            clstr="implementable"
-        else:
-            clstr="detailable"
+        clstr = req.get_value("Class").get_output_string()
 
         fd.write('<dt><span class="dlt_id">Id</span></dt>'
                  '<dd><span class="dlv_id">%s</span></dd>'
