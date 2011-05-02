@@ -56,4 +56,11 @@ class Config:
 
           ["version1",
            ["ts_common", "artifacts/reqs-version.txt"]],
+
+          ["stats_burndown1",
+           ["ts_common", "artifacts/reqspricing", "2011-05-01"]],
+
+          ["stats_sprint_burndown1",
+           ["ts_common", "artifacts/reqspricing", "2011-05-01"]],
+
         ]

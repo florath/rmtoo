@@ -48,6 +48,12 @@ artifacts/requirements.pdf: ${REQS_LATEX2} latex/requirements.tex
 	(cd artifacts && \
 	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_reqs_cnt.inc && \
 	   epstopdf stats_reqs_cnt.eps)
+	(cd artifacts && \
+	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_burndown.inc && \
+	   epstopdf stats_burndown.eps)
+	(cd artifacts && \
+	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_sprint_burndown.inc && \
+	   epstopdf stats_sprint_burndown.eps)
 	(cd artifacts && pdflatex ../latex/requirements.tex; \
 		pdflatex ../latex/requirements.tex; \
 		pdflatex ../latex/requirements.tex)
