@@ -58,9 +58,9 @@ class Config:
            ["ts_common", "artifacts/reqs-version.txt"]],
 
           ["stats_burndown1",
-           ["ts_common", "artifacts/reqspricing", "2011-05-01"]],
+           ["ts_common", "artifacts/stats_burndown.csv", "2011-05-01"]],
 
           ["stats_sprint_burndown1",
-           ["ts_common", "artifacts/reqspricing", "2011-05-01"]],
+           ["ts_common", "artifacts/stats_sprint_burndown.csv", "2011-05-01"]],
 
         ]
