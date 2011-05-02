@@ -63,6 +63,8 @@ binary-indep: build install
 
 	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/contrib
 	install --mode=644 contrib/gnuplot_stats_reqs_cnt.inc debian/rmtoo/usr/share/doc/rmtoo/contrib
+	install --mode=644 contrib/gnuplot_stats_burndown.inc debian/rmtoo/usr/share/doc/rmtoo/contrib
+	install --mode=644 contrib/gnuplot_stats_sprint_burndown.inc debian/rmtoo/usr/share/doc/rmtoo/contrib
 
 	dh_installexamples
 #	dh_install
