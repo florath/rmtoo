@@ -14,6 +14,8 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from rmtoo.lib.ClassType import ClassTypeImplementable, \
+    ClassTypeDetailable, ClassTypeSelected
 
 class TestReqClass:
 
@@ -24,7 +26,7 @@ class TestReqClass:
         rt = ReqClass(opts, config)
         name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
-        assert(value==Requirement.ct_detailable)
+        assert(isinstance(value, ClassTypeDetailable))
 
     def test_positive_02(self):
         "Requirement Tag Class - Class set to 'detailable'"
@@ -34,7 +36,7 @@ class TestReqClass:
         rt = ReqClass(opts, config)
         name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
-        assert(value==Requirement.ct_detailable)
+        assert(isinstance(value, ClassTypeDetailable))
 
     def test_positive_03(self):
         "Requirement Tag Class - no Class implementable"
@@ -44,7 +46,7 @@ class TestReqClass:
         rt = ReqClass(opts, config)
         name, value = rt.rewrite("Class-test", req)
         assert(name=="Class")
-        assert(value==Requirement.ct_implementable)
+        assert(isinstance(value, ClassTypeImplementable))
 
     def test_negative_01(self):
         "Requirement Tag Class - unsupported Class value"

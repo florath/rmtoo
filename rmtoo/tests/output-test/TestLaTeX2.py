@@ -20,6 +20,7 @@ from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.ClassType import ClassTypeImplementable
 
 class TestOutputLaTeX2:
 
@@ -58,7 +59,7 @@ class TestOutputLaTeX2:
         req.values["Description"] = RecordEntry("Description", "my desc")
         req.values["Status"] = RequirementStatusFinished(
                 None, "rid", "finished:meiner:2011-04-15:4h")
-        req.values["Class"] = RecordEntry("Class", "my class")
+        req.values["Class"] = ClassTypeImplementable()
 
         ce3set = CE3Set()
         ce3 = CE3()

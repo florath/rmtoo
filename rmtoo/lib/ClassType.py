@@ -9,6 +9,8 @@
 # For licencing details see COPYING
 #
 
+from rmtoo.lib.RMTException import RMTException
+
 class ClassTypeImplementable:
 
     def get_output_string(self):
