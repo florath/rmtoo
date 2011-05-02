@@ -31,6 +31,10 @@ class TestBB001:
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
         # The count stats is always different because of the timestamp
+
+        if len(diffs)!=1:
+            print("DIFFS '%s'" % diffs)
+
         assert(len(diffs)==1)
         # Diffs are the from the stats count file:
         # ['---  \n', 
