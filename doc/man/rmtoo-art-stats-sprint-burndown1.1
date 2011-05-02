@@ -1,0 +1,64 @@
+.\" 
+.\" Man page for rmtoo
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-art-stats-sprint-burndown1 1 2011-05-02 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-art-stats-sprint-burndown1 \- requirements management tool: Burndown diagram for current sprint
+.SH DESCRIPTION
+The
+.B rmtoo
+requirment management tool is able to output the burndown diagram for 
+the complete project as well as for the current sprint.  For the first
+one, please consult \fBrmtoo-art-stats-burndown(1)\fR.
+.P
+The burndown diagram contains the 'not done', 'assigned' and 'finished'
+requirements started from the given sprint start until today in units
+of the Effort Estimation.  Please consult \fBrmtoo-req-format(5)\fR 
+section \fIKEY 'Effort estimation'\fR for details about this units.
+.SH CONFIGURATION
+The configuration for this output module goes (as all other output
+module's configuration) in the \fBoutput_specs\fR section of the
+Config file. 
+.P
+The first element (the key) must be \fIstats_sprint_burndown1\fR.  This must be
+followed by a list of three elements.  The first element is the
+name of the to be used topic set, the second the basename of the
+output file (without the suffix), the third the start of the project.
+.P
+Example
+.sp
+.RS
+.nf
+    output_specs = \
+        [
+          ["stats__sprint_burndown1", 
+           ["ts_common", "reqspricing", "2011-04-01"]],
+        ]
+
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2011 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+

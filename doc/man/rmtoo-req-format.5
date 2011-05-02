@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-req-format 5 2011-03-29 "File Formats" "Requirements Management"
+.TH rmtoo-req-format 5 2011-05-02 "File Formats" "Requirements Management"
 .SH NAME
 rmtoo-req-format \- requirements management tool: requirements format
 .SH FILE FORMAT
@@ -76,14 +76,19 @@ The status can be one of 'not done' or 'finished'.
 This is the topic this requirement belongs to.
 .SH KEY 'Class'
 This gives the class of the requirement.  Currently two values are
-possible 'implementable' or 'detailable'.
+possible 'detailable', 'implementable' or 'selected'
+.P
+.B detailable
+means that the requirement must be elaborated before they can be
+implemented. 
 .P
 .B implementable
 means that the requirement is detailed enough to start with
 implementation. 
-.B detailable
-means that the requirement must be elaborated before they can be
-implemented. 
+.P
+.B selected
+means that the requirement is selected for the next sprint.  Based on
+this selection the sprint burndown and the selected table is printed.
 .SH KEY 'Priority'
 Each requirement must have a priority.  The effective priority is
 computed by the currently given priority multiplied by a normalized
