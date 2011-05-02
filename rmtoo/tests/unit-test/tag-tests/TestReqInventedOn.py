@@ -9,6 +9,7 @@
 # For licencing details see COPYING
 #
 
+import datetime
 from rmtoo.modules.ReqInventedOn import ReqInventedOn
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
@@ -25,7 +26,7 @@ class TestReqInventedOn:
         rt = ReqInventedOn(opts, config)
         name, value = rt.rewrite("InventedOn-test", req)
         assert(name=="Invented on")
-        assert(value==(2010, 3, 8, 0, 0, 0, 0, 67, -1))
+        assert(value==datetime.date(2010, 3, 8))
 
     def test_negative_01(self):
         "Requirement Tag Invented on - no tag given"
