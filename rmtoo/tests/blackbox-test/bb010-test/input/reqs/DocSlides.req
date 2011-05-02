@@ -10,8 +10,9 @@ Rationale: Software not only needs to be good --- also the 'marketing'
  \textsl{rmtoo} using, the more bug reports and comments there will
  be, the better \textsl{rmtoo} will be.
 Depends on: Documentation
-Status: finished
+Status: finished:Florath:2011-04-18:21h
+Effort estimation: 13
 Priority: development:10 customers:7
-Class: implementable
+Class: selected
 Topic: ReqsDocument
 

@@ -33,7 +33,7 @@ rmtoo must support the automatic genration of outputs.
 Because rmtoo is aimed to be used in productive development environments, there is the need that all the different outputs (e.g. PDFs, graphs, ...) must be generated automatically (without user interaction).]]>			</notes>
 			<depend difference="0" hardness="Strong" id="6" type="2"/>
 		</task>
-		<task complete="100" id="7" name="DocSlides">
+		<task complete="100" duration="14" id="7" name="DocSlides">
 			<notes>
 <![CDATA[== Description ==
 For documentation purposes there must exists a slide show introducing the major features.
@@ -68,7 +68,7 @@ It is hard to write good requirements - as far as possible rmtoo should support 
 Analytics are implemented using modules with a defined interface. ]]>			</notes>
 			<depend difference="0" hardness="Strong" id="6" type="2"/>
 		</task>
-		<task complete="0" duration="22" id="10" name="Output">
+		<task complete="50" duration="22" id="10" name="Output">
 			<notes>
 <![CDATA[== Description ==
 rmtoo must support generation of different outputs. 

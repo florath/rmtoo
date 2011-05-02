@@ -9,7 +9,7 @@ Note: Analytics are implemented using modules with a defined
  interface. 
 Owner: development
 Depends on: Processing
-Status: finished
+Status: finished:Florath:2011-04-18:4h
 Priority: development:10
 Effort estimation: 5
 Topic: ReqsDocument

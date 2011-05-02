@@ -9,7 +9,8 @@ Rationale: It's not very easy to e.g. visualize the dependency graph.
  Also typically for the testing department a document is needed that
  decribes the requirements (features) of the product.
 Depends on: Processing
-Status: not done
+Status: assigned:Florath:2011-04-12
 Priority: development:10
 Effort estimation: 21
+Class: selected
 Topic: ReqsDocument

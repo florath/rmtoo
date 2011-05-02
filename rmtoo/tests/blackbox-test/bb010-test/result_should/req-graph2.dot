@@ -7,13 +7,13 @@ subgraph cluster_GRAPH_ReqsDocument {
 Analytics [];
 AutomaticGeneration [fontcolor=red,label="AutomaticGeneration\n[3.00]"];
 DocManPage [color=green,fontcolor=red,label="DocManPage\n[4.12]"];
-DocSlides [color=green,shape=octagon];
+DocSlides [color=green,shape=parallelogram];
 Documentation [fontcolor=red,label="Documentation\n[5.50]"];
 Input [fontcolor=red,label="Input\n[10.00]"];
-Output [fontcolor=red,label="Output\n[10.00]"];
+Output [fontcolor=blue,label="Output\n[10.00]",shape=parallelogram];
 Processing [fontcolor=red,label="Processing\n[10.00]"];
 Simplicity [fontcolor=red,label="Simplicity\n[9.00]"];
-TestIntegration [fontcolor=red,label="TestIntegration\n[10.00]"];
+TestIntegration [fontcolor=red,label="TestIntegration\n[10.00]",shape=parallelogram];
 TestUnit [fontcolor=red,label="TestUnit\n[10.00]"];
 Testing [fontcolor=red,label="Testing\n[10.00]"];
 rmtoo [fontcolor=red,label="rmtoo\n[10.00]"];

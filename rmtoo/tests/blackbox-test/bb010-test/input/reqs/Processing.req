@@ -14,4 +14,5 @@ Depends on: rmtoo
 Status: not done
 Priority: development:10
 Effort estimation: 21
+Class: implementable
 Topic: ReqsDocument

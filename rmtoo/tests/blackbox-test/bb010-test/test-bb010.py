@@ -30,8 +30,12 @@ class TestBB010:
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
+
+        if len(diffs)!=0:
+            print("DIFFS '%s'" % diffs)
+
         assert(len(diffs)==0)
-        delete_result_is_dir()
+        #delete_result_is_dir()
 
 
 if __name__=="__main__":
