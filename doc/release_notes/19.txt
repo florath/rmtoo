@@ -1,0 +1,9 @@
+User visible changes
+--------------------
+
+Added complete set of features for SCRUM: planning, selection of
+requirements, assignment of requirements to developer, burndown
+diagrams (whole project and current sprint), statistics.
+
+Internal Changes
+----------------
