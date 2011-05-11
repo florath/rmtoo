@@ -29,13 +29,6 @@ class stats_burndown1:
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
     def output(self, reqscont):
-        ofile = file(self.output_filename, "w")
-        one_day = datetime.timedelta(1)
         rv = Statistics.get_units(self.topic_set.reqset, self.start_date)
-        iday = self.start_date
+        Statistics.output_stat_files(self.output_filename, self.start_date, rv)
 
-        for r in rv:
-            ofile.write("%s %s\n" % (iday.isoformat(), " ".join(map(str, r))))
-            iday += one_day
-        
-        ofile.close()

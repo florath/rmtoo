@@ -10,6 +10,7 @@
 #
 
 import datetime
+from scipy import stats
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
@@ -115,3 +116,39 @@ class Statistics:
             return not isinstance(req.get_value("Class"), ClassTypeSelected)
 
         return Statistics.get_units_generic(rset, start_date, skip_not_selected)
+
+    @staticmethod
+    def output_stat_files(filename, start_date, rv):
+        ofile = file(filename, "w")
+        one_day = datetime.timedelta(1)
+        iday = start_date
+
+        for r in rv:
+            ofile.write("%s %d %d %d %d\n" 
+                        % (iday.isoformat(), r[0], r[1], r[2], r[0]+r[1]))
+            iday += one_day
+
+        ofile.close()
+
+        # Estimation file
+        eofile = file(filename + ".est", "w")
+        x = list(i for i in xrange(0, len(rv)))
+        y = list(x[0]+x[1] for x in rv)
+
+        gradient, intercept, r_value, p_value, std_err = stats.linregress(x,y)
+
+        if gradient>=0.0:
+            print("+++ WARN: gradient is positive [%d]: "
+                  "you get more than you finished" % gradient)
+            eofile.close()
+            return
+
+        d = intercept / - gradient
+        end_date = start_date + datetime.timedelta(d)
+
+        eofile.write("%s %d\n" % (start_date, intercept))
+        eofile.write("%s 0\n" % end_date)
+        
+        eofile.close()
+        
+        

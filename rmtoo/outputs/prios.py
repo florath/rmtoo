@@ -18,12 +18,14 @@
 import datetime
 import operator
 import time
+from scipy import stats
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
 from rmtoo.lib.DateUtils import parse_date, format_date
+from rmtoo.lib.Statistics import Statistics
 
 class prios:
 
@@ -33,7 +35,7 @@ class prios:
         if len(param)>2:
             self.start_date = parse_date("prios config", param[2])
         else:
-            self.start_date = datetime.date.today()
+            self.start_date = datetime.date.today() - datetime.timedelta(1)
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
@@ -160,7 +162,7 @@ class prios:
                     durs = str(dur)
                 if tr.get_value("Effort estimation")!=None:
                     efe = tr.get_value("Effort estimation")
-                    if dur!=None:
+                    if dur!=None and dur!=0.0:
                         rel = "%4.2f" % (efe / float(dur))
                 person = status.get_person()
                 if person==None:
@@ -174,15 +176,17 @@ class prios:
             f.write("\end{longtable}")
             f.write("}")
 
-        def output_statistics(name, simpl, sdetail, sassigned, sfinished):
+        def output_statistics(name, simpl, sselected, sdetail, 
+                              sassigned, sfinished):
             f.write("\section{%s}\n" % name)
             f.write("\\begin{longtable}{rrl}\n")
             f.write("Start date & %s & \\\ \n" % format_date(self.start_date))
             
             # Compute the opens
             sum_open=0
-            for p in simpl:
-                sum_open += reqset.reqs[p[1]].get_efe_or_0()
+            for sp in [simpl, sselected]:
+                for p in sp:
+                    sum_open += reqset.reqs[p[1]].get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned
@@ -225,11 +229,25 @@ class prios:
                         % (hours_to_do))
 
                 # Estimated End Date
-                dt = self.start_date
-                dtdiff = datetime.timedelta(
-                    days = hours_to_do / (8  * 5 / 7) + 1)
-                f.write("Estimated End date & %s & \\\ \n" %
-                        (dt + dtdiff))
+
+                rv = Statistics.get_units(self.topic_set.reqset, 
+                                          self.start_date)                
+                x = list(i for i in xrange(0, len(rv)))
+                y = list(x[0]+x[1] for x in rv)
+
+                print("X %s" % x)
+                print("Y %s" % y)
+
+                gradient, intercept, r_value, p_value, std_err \
+                    = stats.linregress(x,y)
+
+                if gradient>=0.0:
+                    f.write("Estimated End date & unpredictable & \\\ \n")
+                else:
+                    print("STSTA %s %s" % (gradient, self.start_date))
+                    d = intercept / - gradient
+                    end_date = self.start_date + datetime.timedelta(d)
+                    f.write("Estimated End date & %s & \\\ \n" % end_date)
 
             f.write("\end{longtable}")
 
@@ -239,8 +257,8 @@ class prios:
         output_prio_table("Backlog", sprios_impl)
         output_prio_table("Requirements Elaboration List", sprios_detail)
         output_finished_table("Finished", sprios_finished)
-        output_statistics("Statistics", sprios_impl, sprios_detail, 
-                          sprios_assigned, sprios_finished) 
+        output_statistics("Statistics", sprios_impl, sprios_selected,
+                          sprios_detail, sprios_assigned, sprios_finished) 
 
 
         f.close()
