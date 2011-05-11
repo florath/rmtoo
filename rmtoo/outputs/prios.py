@@ -160,7 +160,7 @@ class prios:
                     durs = str(dur)
                 if tr.get_value("Effort estimation")!=None:
                     efe = tr.get_value("Effort estimation")
-                    if dur!=None:
+                    if dur!=None and dur!=0.0:
                         rel = "%4.2f" % (efe / float(dur))
                 person = status.get_person()
                 if person==None:
