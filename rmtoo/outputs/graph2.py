@@ -1,10 +1,13 @@
 #
+# rmtoo
+#   Free and Open Source Requirements Management Tool
+#
 # graph2 output class
 #
 #  This is the graph output class using topics as base for a clustered
 #  subgraph. 
 #
-# (c) 2010 by flonatel
+# (c) 2011 by flonatel
 #
 # For licencing details see COPYING
 #
@@ -55,11 +58,11 @@ class graph2:
         for t in sorted(topic.outgoing, key = lambda t: t.name):
             self.output_topic(dotfile, t)
         for req in sorted(topic.reqs, key = lambda r: r.id):
-            dotfile.write('%s%s [%s];\n'
+            dotfile.write('"%s%s" [%s];\n'
                           % (ident, req.name, graph.node_attributes(req)))
         dotfile.write('%s}\n' % ident)
 
     # This writes out the edges
     def output_req(self, req, dotfile):
         for d in sorted(req.outgoing, key = lambda r: r.id):
-            dotfile.write("%s -> %s;\n" % (req.id, d.id))
+            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))

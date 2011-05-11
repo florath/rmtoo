@@ -15,7 +15,8 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
 
 class graph:
-    default_config = { "node_attributes": ["Type", "Status", "Class", "Topic"] }
+    default_config = { "node_attributes": 
+                       ["Type", "Status", "Class", "Topic", "Priority", ] }
 
     def __init__(self, params):
         self.topic_name = params[0]
@@ -69,25 +70,33 @@ class graph:
                 and req.get_value("Type") == req.rt_design_decision:
             nodeparam.append("color=green")
 
-        if get_conf_attr("Status") \
-                and isinstance(req.get_value("Status"), 
-                               RequirementStatusNotDone):
-            nodeparam.append("fontcolor=red")
-            nodeparam.append('label="%s\\n[%4.2f]"' %
-                             (req.id, req.get_value("Priority")*10))
-        elif get_conf_attr("Status") \
-                and isinstance(req.get_value("Status"), 
-                               RequirementStatusAssigned):
-            nodeparam.append("fontcolor=blue")
-            nodeparam.append('label="%s\\n[%4.2f]"' %
-                             (req.id, req.get_value("Priority")*10))
+        if get_conf_attr("Status"):
+            req_status = req.get_value("Status")
+
+            if isinstance(req_status, RequirementStatusNotDone):
+                nodeparam.append("fontcolor=red")
+            elif isinstance(req_status, RequirementStatusAssigned):
+                nodeparam.append("fontcolor=blue")
+
+            label = 'label="%s' % req.id
+
+            if get_conf_attr("Priority"):
+                label += "\\n[%4.2f]" % (req.get_value("Priority")*10)
+
+            if get_conf_attr("EffortEstimation"):
+                est_effort = req.get_value("Effort estimation")
+                if est_effort!=None:
+                    label += "\\n(%d EfEU)" % est_effort
+
+            label += '"'
+            nodeparam.append(label)
 
         if get_conf_attr("Class"):
             rclass = req.get_value("Class") 
             if isinstance(rclass, ClassTypeImplementable):
                 nodeparam.append("shape=octagon")
             elif isinstance(rclass, ClassTypeSelected):
-                nodeparam.append("shape=parallelogram")
+                nodeparam.append("shape=box")
 
         return ",".join(nodeparam)
 
