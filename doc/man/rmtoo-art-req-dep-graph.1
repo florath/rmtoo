@@ -16,7 +16,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
 .TH rmtoo-art-req-dep-graph 1 2010-09-23 "User Commands" "Requirements Management"
 .SH NAME
@@ -37,9 +37,33 @@ module's configuration) in the \fBoutput_specs\fR section of the
 Config file. 
 .P
 The first element (the key) must be \fIgraph\fR.  This must be
-followed by a pair (list of two elements).  The first element is the
+followed by a list of two or three elements.  The first element is the
 name of the to be used topic set, the second the filename where the
-output is written to.
+output is written to, the third parameter is optional and contains a
+map of output fine tuning.
+.P
+When the key \fInode_attributes\fR exists, the value must be a list of
+all information which is included in the graph. The following values
+might be used:
+.TP
+\fBType\fR If this is included in the list, depending on the type the
+border line of the node is colored (e.g. orange for initial
+requirement, green for design decision, black for all other).
+.TP
+\fBStatus\fR If this is included in the list, depending on the status
+of the requirement the font color is chosen (e.g. 'not done'
+requirements uses a red font).
+.TP
+\fBClass\fR If this is included in the list, depending on the class
+the shape of the node is rendered (e.g. for implementable requirements
+a octagon is used to render the requirement).
+.TP
+\fBPriority\fR If this is included in the list, the priority of the
+requirement is included.
+.TP
+\fBEffortEstimation\fR If this is included in the list, depending on
+the effort estimation is included. Note: this is not included by
+default. 
 .P
 Example
 .sp
@@ -48,7 +72,9 @@ Example
     output_specs = \
         [
           ["graph", 
-           ["ts_common", "req-graph1.dot"]],
+           ["ts_common", "req-graph1.dot", 
+	    { "node_attributes": 
+		["Type", "Status", "Class", "Topic", "Priority", ] } ]],
         ]
 .SH POSTPROCESSING
 The resulting dot file can be converted with the following command to
