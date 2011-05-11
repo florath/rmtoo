@@ -1,2 +1,192 @@
 % Output topic 'ReqsDocument'
 \chapter{Requirements Document for Example Comercial Pricing Module}
+% REQ 'Analytics'
+\section{Analytics}\label{Analytics}
+\textbf{Description:} The requirements \textbf{must} be analyzed.
+
+\textbf{Rationale:} It is hard to write good requirements - as far as possible rmtoo should support writing good requirements.
+
+\textbf{Note:} Analytics are implemented using modules with a defined interface. 
+
+\textbf{Depends on:} \ref{Processing} \nameref{Processing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Analytics  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-08-05  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & finished (Florath, 2011-04-18, 4 h) \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'AutomaticGeneration'
+\section{Automatic Generation of Results}\label{AutomaticGeneration}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} support the automatic genration of outputs.
+
+\textbf{Rationale:} Because rmtoo is aimed to be used in productive development environments, there is the need that all the different outputs (e.g. PDFs, graphs, ...) must be generated automatically (without user interaction).
+
+\textbf{Depends on:} \ref{Processing} \nameref{Processing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & AutomaticGeneration  & \textbf{Priority:} & 3.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-12  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'DocManPage'
+\section{Documentation Man Page}\label{DocManPage}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} come with a (*nix) man page describing the basic behaviour.
+
+\textbf{Rationale:} This typically describes the input and output and all the parameters needed (but not the ideas behind).
+
+\textbf{Depends on:} \ref{Documentation} \nameref{Documentation}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & DocManPage  & \textbf{Priority:} & 4.12  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-12  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & selected  & & & \end{tabular}\end{center} }
+
+% REQ 'DocSlides'
+\section{Documentation Slides}\label{DocSlides}
+\textbf{Description:} For documentation purposes there \textbf{must} exists a slide show introducing the major features.
+
+\textbf{Rationale:} Software not only needs to be good --- also the 'marketing' aspect should be considered: the more people / companies \textsl{rmtoo} using, the more bug reports and comments there will be, the better \textsl{rmtoo} will be.
+
+\textbf{Depends on:} \ref{Documentation} \nameref{Documentation}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & DocSlides  & \textbf{Priority:} & 4.68  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-14  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & finished (Florath, 2011-04-18, 21 h) \\ 
+\textbf{Class:} & selected  & & & \end{tabular}\end{center} }
+
+% REQ 'Documentation'
+\section{Documentation}\label{Documentation}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} be documented.
+
+\textbf{Depends on:} \ref{rmtoo} \nameref{rmtoo}
+
+\textbf{Solved by:} \ref{DocManPage} \nameref{DocManPage}, \ref{DocSlides} \nameref{DocSlides}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Documentation  & \textbf{Priority:} & 5.50  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-12  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'Input'
+\section{Different Inputs}\label{Input}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} support different types of input files - one type for each usage.
+
+\textbf{Note:} A usage is e.g. documenting requirements or handling topics.
+
+\textbf{Depends on:} \ref{Processing} \nameref{Processing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Input  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-05-16  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'Output'
+\section{Output of Different Artifacts}\label{Output}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} support generation of different outputs. 
+
+\textbf{Rationale:} It's not very easy to e.g. visualize the dependency graph. Also typically for the testing department a document is needed that decribes the requirements (features) of the product.
+
+\textbf{Depends on:} \ref{Processing} \nameref{Processing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Output  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-12  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & assigned (Florath, 2011-04-12) \\ 
+\textbf{Class:} & selected  & & & \end{tabular}\end{center} }
+
+% REQ 'Processing'
+\section{Processing}\label{Processing}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} process the requirements by means of a defined order.
+
+\textbf{Rationale:} First the requirements must be read in (and checked for syntactic - and if possible for semantic) problems.\par Then the requirements must be analyzed.\par As a last step the output artifacts must be generated.
+
+\textbf{Note:} Please see the depended requirements for more details.
+
+\textbf{Depends on:} \ref{rmtoo} \nameref{rmtoo}
+
+\textbf{Solved by:} \ref{Analytics} \nameref{Analytics}, \ref{AutomaticGeneration} \nameref{AutomaticGeneration}, \ref{Input} \nameref{Input}, \ref{Output} \nameref{Output}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Processing  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-08-05  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & implementable  & & & \end{tabular}\end{center} }
+
+% REQ 'Simplicity'
+\section{Simplicity}\label{Simplicity}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} be simple.
+
+\textbf{Rationale:} To get started, concentrate on the major things, which are really needed.\par Use techniques which are available.
+
+\textbf{Depends on:} \ref{rmtoo} \nameref{rmtoo}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Simplicity  & \textbf{Priority:} & 9.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-08  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'TestIntegration'
+\section{Test Integration}\label{TestIntegration}
+\textbf{Description:} For each requirement there \textbf{must} be a integration test which tests the requirement in a larger context.
+
+\textbf{Rationale:} This tests the interaction between the different layers of implementation and makes sure that the interaction works.
+
+\textbf{Depends on:} \ref{Testing} \nameref{Testing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & TestIntegration  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-03-10  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & selected  & & & \end{tabular}\end{center} }
+
+% REQ 'TestUnit'
+\section{Unit Testing}\label{TestUnit}
+\textbf{Description:} For each code path there \textbf{must} be a unit test.
+
+\textbf{Rationale:} Each class, function and method must be tested.  Each decision and error condition must be tested.
+
+\textbf{Depends on:} \ref{Testing} \nameref{Testing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & TestUnit  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-03-10  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'Testing'
+\section{rmtoo Automated Testing}\label{Testing}
+\textbf{Description:} Each feature of \textsl{rmtoo} \textbf{must} be automatically testable.
+
+\textbf{Rationale:} This gives the possibility to run a set of regression test and check the whole functionality of rmtoo.
+
+\textbf{Depends on:} \ref{rmtoo} \nameref{rmtoo}
+
+\textbf{Solved by:} \ref{TestIntegration} \nameref{TestIntegration}, \ref{TestUnit} \nameref{TestUnit}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & Testing  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-03-04  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'rmtoo'
+\section{rmtoo}\label{rmtoo}
+\textbf{Description:} \textsl{rmtoo} \textbf{must} exists.
+
+\textbf{Rationale:} The world needs a good, usable and free Requirements Management Tool.\par It looks that there are no such programs out.\par But: it's complex! 
+
+\textbf{Solved by:} \ref{Documentation} \nameref{Documentation}, \ref{Processing} \nameref{Processing}, \ref{Simplicity} \nameref{Simplicity}, \ref{Testing} \nameref{Testing}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & rmtoo  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-02-06  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+

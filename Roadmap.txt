@@ -26,27 +26,22 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v19
-===
-o State extension:
-  There is the need to use rmtoo as a SCRUM tool
-  Missing:
-  - Status: assigned:nameOfDeveloper
-  - Status: finished:nameOfDeveloper:3h
-  - Statistics
-    + For each developer
-    + Burndown diagram and table for whole project
-o Documentation for all new things
-  - see above
-  - Class 'selected'
-
 v20
+===
+o Bug fixes! (Estimation diagram)
+o Man page: 
+  + graph
+  + graph2
+  + EfEU
+o Update Presentations
+
+v21
 ===
 o Check Web-Site for user features / bugs
   - Fix (small) bugs
   - Add feature request requirements
 
-v21
+v22
 ===
 o Add to FAQ: max level of topic inclusion.
 o Add changes to presentation

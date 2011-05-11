@@ -24,5 +24,5 @@ class CE3Set:
     def get(self, name):
         return self.ce3s[name]
 
-    def len(self):
-        return len(self.ce3s)
+#    def len(self):
+#        return len(self.ce3s)

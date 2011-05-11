@@ -88,4 +88,3 @@ deb:
 last_test:
 	nosetests -w rmtoo -v -s \
 		tests/blackbox-test/bb010-test/test-bb010.py
-

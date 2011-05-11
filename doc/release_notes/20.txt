@@ -1,0 +1,10 @@
+User visible changes
+--------------------
+
+Added estimation to burndown diagram.
+
+The requirements dependency graph nodes may now also contain the EfEUs
+(Effort Estimation Units)
+
+Internal Changes
+----------------
