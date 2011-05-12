@@ -34,6 +34,7 @@ o Man page:
   + graph2
   + EfEU
 o Update Presentations
+o Fixe asserts from 'RequirementStatus.py'
 
 v21
 ===

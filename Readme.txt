@@ -76,13 +76,14 @@ Mac OS X user might want to read Readme-OS-X.txt.
 --- Preconditions ---
 
 rmtoo is written in python.  At least version 2.6 of python is
-needed. 
+needed.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed. 
 
 For the requirements dependency graph, graphviz is used.
 
-For statistics plot gnuplot is used.
+For statistics plot gnuplot is used.  For the estimation the
+python-scipy package is needed. 
 
 Typically the packages from your distribution will work.
 
