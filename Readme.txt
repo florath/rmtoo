@@ -71,7 +71,10 @@ dpkg.
 
 All other (including Ubuntu) should use the provided tar ball.
 
-Mac OS X user might want to read Readme-OS-X.txt.
+Mac OS X users might want to read Readme-OS-X.txt.
+
+Windows users might want to read the Readme-Windows.txt.
+
 
 --- Preconditions ---
 
