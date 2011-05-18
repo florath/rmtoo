@@ -31,7 +31,7 @@ class RequirementStatusAssigned:
         
         if len(ts)!=3:
             raise RMTException(93, "%s: Assigned values invalid '%s'"
-                               % (rid, l))
+                               % (rid, t))
         assert(ts[0]==self.tval)
         self.person = ts[1]
         self.date = parse_date(rid, ts[2])

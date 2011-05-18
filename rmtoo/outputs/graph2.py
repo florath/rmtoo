@@ -58,7 +58,7 @@ class graph2:
         for t in sorted(topic.outgoing, key = lambda t: t.name):
             self.output_topic(dotfile, t)
         for req in sorted(topic.reqs, key = lambda r: r.id):
-            dotfile.write('"%s%s" [%s];\n'
+            dotfile.write('%s"%s" [%s];\n'
                           % (ident, req.name, graph.node_attributes(req)))
         dotfile.write('%s}\n' % ident)
 

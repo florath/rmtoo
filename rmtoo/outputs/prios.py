@@ -235,9 +235,6 @@ class prios:
                 x = list(i for i in xrange(0, len(rv)))
                 y = list(x[0]+x[1] for x in rv)
 
-                print("X %s" % x)
-                print("Y %s" % y)
-
                 gradient, intercept, r_value, p_value, std_err \
                     = stats.linregress(x,y)
 
