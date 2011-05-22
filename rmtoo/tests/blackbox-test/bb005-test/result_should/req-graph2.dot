@@ -6,7 +6,7 @@ subgraph cluster_GRAPH_ReqsDocument {
  label="Topic: ReqsDocument";
  subgraph cluster_GRAPH_B1 {
  label="Topic: B1";
- A1 [fontcolor=red,label="A1\n[10.00]"];
+ "A1" [fontcolor=red,label="A1\n[10.00]"];
  }
 }
 }
