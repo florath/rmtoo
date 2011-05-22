@@ -33,12 +33,32 @@ class prios:
         self.topic_name = param[0]
         self.output_filename = param[1]
         if len(param)>2:
-            self.start_date = parse_date("prios config", param[2])
+            self.set_start_date(param[2]["start_date"])
+            self.set_end_date(param[2]["end_date"])
         else:
-            self.start_date = datetime.date.today() - datetime.timedelta(1)
+            self.set_start_date_default()
+            self.set_end_date_default()
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
+
+    def set_start_date(self, pm):
+        if "start_date" in pm:
+            self.start_date = parse_date("prios config", pm["start_date"])
+        else:
+            self.set_start_date_default()
+
+    def set_start_date_default(self):
+        self.start_date = datetime.date.today() - datetime.timedelta(1)
+
+    def set_end_date(self, pm):
+        if "end_date" in pm:
+            self.end_date = parse_date("prios config", pm["end_date"])
+        else:
+            self.set_end_date_default()
+
+    def set_end_date_default(self):
+        self.end_date = datetime.date.today()
 
     # Create MAkefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -231,7 +251,7 @@ class prios:
                 # Estimated End Date
 
                 rv = Statistics.get_units(self.topic_set.reqset, 
-                                          self.start_date)                
+                                          self.start_date, self.end_date)
                 x = list(i for i in xrange(0, len(rv)))
                 y = list(x[0]+x[1] for x in rv)
 

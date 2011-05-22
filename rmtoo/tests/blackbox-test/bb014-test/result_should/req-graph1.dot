@@ -20,7 +20,7 @@ nslimit=10.0;ranksep=1;
 "DetergentForCar" -> "CleanUpCar";
 "RoughlyCleanUpSeats" [fontcolor=red,label="RoughlyCleanUpSeats\n[10.00]",shape=octagon];
 "RoughlyCleanUpSeats" -> "CleanUpSeats";
-"SoapAndColdWater" [shape=octagon];
+"SoapAndColdWater" [label="SoapAndColdWater\n[10.00]",shape=octagon];
 "SoapAndColdWater" -> "CleanUpVicentAndJules";
 "SoapAndColdWater" -> "TakeOff";
 "TakeCareOfClothing" [fontcolor=red,label="TakeCareOfClothing\n[10.00]",shape=octagon];

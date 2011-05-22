@@ -28,10 +28,9 @@ class Statistics:
             rv[i][idx] += efe
 
     @staticmethod
-    def prepare_result_vector(start_date):
-        today = datetime.date.today()
+    def prepare_result_vector(start_date, end_date):
         rv = []
-        diff = today - start_date
+        diff = end_date - start_date
         diff_in_days = diff.days
 
         for i in xrange(0, diff_in_days + 1):
@@ -39,11 +38,10 @@ class Statistics:
         return rv
     
     @staticmethod
-    def get_units_generic(rset, start_date, skip_requirement):
+    def get_units_generic(rset, start_date, end_date, skip_requirement):
         # Run through the requirements and count the not done
         # depending on the date.
-        rv = Statistics.prepare_result_vector(start_date)
-        today = datetime.date.today()
+        rv = Statistics.prepare_result_vector(start_date, end_date)
 
         for rid, req in rset.reqs.iteritems():
             invented_on = req.get_value("Invented on")
@@ -51,7 +49,7 @@ class Statistics:
             if start_date > invented_on:
                 invented_on = start_date
 
-            assert(today>=invented_on)
+            assert(end_date>=invented_on)
 
             status = req.get_status()
             efe = req.get_value("Effort estimation")
@@ -66,7 +64,7 @@ class Statistics:
                 rclass = req.get_value("Class")
                 if req.get_value("Class").is_implementable():
                     Statistics.inc_stats(rv, start_date, 0, invented_on, 
-                                         today, efe)
+                                         end_date, efe)
             elif isinstance(status, RequirementStatusAssigned):
                 assigned_date = status.get_date()
 
@@ -78,9 +76,9 @@ class Statistics:
                 # Count from start_date until it was assigned as open:
                 Statistics.inc_stats(rv, start_date, 0, start_date, 
                                      adm1, efe)
-                # Count from assigned date until today as assigned
+                # Count from assigned date until end_date as assigned
                 Statistics.inc_stats(rv, start_date, 1, assigned_date, 
-                                     today, efe)
+                                     end_date, efe)
 
             elif isinstance(status, RequirementStatusFinished):
                 finished_date = status.get_date()
@@ -96,26 +94,28 @@ class Statistics:
                 # Count from start_date until it was finished as open:
                 Statistics.inc_stats(rv, start_date, 0, start_date, 
                                      adm1, efe)
-                # Count from assigned date until today as assigned
+                # Count from assigned date until end_date as assigned
                 Statistics.inc_stats(rv, start_date, 2, finished_date, 
-                                     today, efe)
+                                     end_date, efe)
         return rv
 
     @staticmethod
-    def get_units(rset, start_date):
+    def get_units(rset, start_date, end_date):
 
         def skip_never(req):
             return False
 
-        return Statistics.get_units_generic(rset, start_date, skip_never)
+        return Statistics.get_units_generic(rset, start_date, 
+                                            end_date, skip_never)
 
     @staticmethod
-    def get_units_sprint(rset, start_date):
+    def get_units_sprint(rset, start_date, end_date):
 
         def skip_not_selected(req):
             return not isinstance(req.get_value("Class"), ClassTypeSelected)
 
-        return Statistics.get_units_generic(rset, start_date, skip_not_selected)
+        return Statistics.get_units_generic(rset, start_date, end_date,
+                                            skip_not_selected)
 
     @staticmethod
     def output_stat_files(filename, start_date, rv):

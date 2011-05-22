@@ -30,7 +30,9 @@ class Config:
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", result_is + "/reqsprios.tex", "2011-04-01"]],
+           ["ts_common", result_is + "/reqsprios.tex", 
+            { "start_date": "2011-04-01",
+              "end_date": "2011-05-10"} ]],
 
           ["graph",
            ["ts_common", result_is + "/req-graph1.dot"]],
@@ -53,9 +55,12 @@ class Config:
            ["ts_common", result_is + "/reqspricing"]],
 
           ["stats_burndown1",
-           ["ts_common", result_is + "/stats_burndown.csv", "2011-04-01"]],
+           ["ts_common", result_is + "/stats_burndown.csv",
+            { "start_date": "2011-04-01" } ]],
 
           ["stats_sprint_burndown1",
-           ["ts_common", result_is + "/stats_sprint_burndown.csv", "2011-04-01"]],
+           ["ts_common", result_is + "/stats_sprint_burndown.csv", 
+            { "start_date": "2011-04-01",
+              "end_date": "2011-05-10"} ]],
            
         ]
