@@ -1,0 +1,14 @@
+Name: GUI
+Text: One and a half year after the first idea to create a free and
+ open source requirements management tool, it was decided (as of
+ 2011-05) to add a GUI to the tool.\par
+ The file format for the requirements will be kept - maybe there is
+ the need to redefine the configuration.  The creation of the GUI will
+ be done incrementally - as the whole development of \textsl{rmtoo}.
+ It will take at least some 10th of releases to get a good and usable
+ GUI for the tool - which supports all the features and is well
+ implemented and tested.\par
+ The GUI will be implemented in two parts: the major work and business
+ logic will be implemented in a \textsl{rmtoo}-server.  There will be
+ some clients which are very thin and only render the data in
+ different technologies (e.g. GTK, browser, Java, ...)
