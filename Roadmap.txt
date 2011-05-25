@@ -68,6 +68,8 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o Draw overview picture for current Sprint (a la 'Paper' overview with
+  'Chosen', 'In Progress' and 'Finished'.
 o Now that the finished date and duration is available, gantt output
   should be extended to use this.
 o SCRUM Burndown diagram

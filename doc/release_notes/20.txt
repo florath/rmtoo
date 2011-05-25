@@ -6,5 +6,9 @@ Added estimation to burndown diagram.
 The requirements dependency graph nodes may now also contain the EfEUs
 (Effort Estimation Units)
 
+Added start and end-date for prios and burndown output. Please note:
+the configuration parameters introduced in version 19 slightly
+changed. 
+
 Internal Changes
 ----------------

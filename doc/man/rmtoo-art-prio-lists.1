@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-prio-lists 1 2011-05-02 "User Commands" "Requirements Management"
+.TH rmtoo-art-prio-lists 1 2011-05-25 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-prio-lists \- requirements management tool: priority lists.
 .SH DESCRIPTION
@@ -53,13 +53,20 @@ effort points to finish work on all most important things (level 10
 requirements). 
 .SH CONFIGURATION
 The first field (i.e. the name) must be set to \fIprios\fR.  A list
-of two parameters must follow.
+of two or three parameters must follow.
 .P
 The first parameter is the name of the topic set which is used to get
 the information.
 .P
 The second parameter is the name of the file where the priority lists
 will be stored.
+.P
+The third parameter must be a map. The map might contain the following
+entries: 
+.TP
+\fBstart_date\fR The date when the project starts. The format must be
+YYYY-MM-DD. If this is not specified, yesterday is assumed.
+.P 
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 

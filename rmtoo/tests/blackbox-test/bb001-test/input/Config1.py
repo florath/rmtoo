@@ -34,7 +34,8 @@ class Config:
     output_specs = \
         [ 
           ["prios", 
-           ["ts_common", result_is + "/reqsprios.tex", "2011-04-26"]],
+           ["ts_common", result_is + "/reqsprios.tex", 
+            {"start_date": "2011-04-26"} ]],
 
           ["graph",
            ["ts_common", result_is + "/req-graph1.dot"]],

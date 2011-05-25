@@ -29,8 +29,6 @@ class TestBB010:
         extract_container_files(["reqspricing.ods",])
         missing_files, additional_files, diffs = compare_results(mdir)
 
-        print("MISSING: %s" % missing_files)
-
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
 

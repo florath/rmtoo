@@ -26,41 +26,28 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
 from rmtoo.lib.DateUtils import parse_date, format_date
 from rmtoo.lib.Statistics import Statistics
+from rmtoo.lib.ParamMap import ParamMap
 
 class prios:
 
     def __init__(self, param):
         self.topic_name = param[0]
         self.output_filename = param[1]
+
+        pmap = {}
         if len(param)>2:
-            self.set_start_date(param[2]["start_date"])
-            self.set_end_date(param[2]["end_date"])
-        else:
-            self.set_start_date_default()
-            self.set_end_date_default()
+            pmap = param[2]
+
+        today = datetime.date.today()
+        yesterday = today - datetime.timedelta(1)
+        self.start_date = ParamMap.extract(
+            pmap, "start_date", parse_date, yesterday)
+        self.end_date = ParamMap.extract(pmap, "end_date", parse_date, today)
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
 
-    def set_start_date(self, pm):
-        if "start_date" in pm:
-            self.start_date = parse_date("prios config", pm["start_date"])
-        else:
-            self.set_start_date_default()
-
-    def set_start_date_default(self):
-        self.start_date = datetime.date.today() - datetime.timedelta(1)
-
-    def set_end_date(self, pm):
-        if "end_date" in pm:
-            self.end_date = parse_date("prios config", pm["end_date"])
-        else:
-            self.set_end_date_default()
-
-    def set_end_date_default(self):
-        self.end_date = datetime.date.today()
-
-    # Create MAkefile Dependencies
+    # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
@@ -261,7 +248,6 @@ class prios:
                 if gradient>=0.0:
                     f.write("Estimated End date & unpredictable & \\\ \n")
                 else:
-                    print("STSTA %s %s" % (gradient, self.start_date))
                     d = intercept / - gradient
                     end_date = self.start_date + datetime.timedelta(d)
                     f.write("Estimated End date & %s & \\\ \n" % end_date)
