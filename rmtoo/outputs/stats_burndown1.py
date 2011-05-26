@@ -13,19 +13,14 @@ import datetime
 
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.Statistics import Statistics
+from rmtoo.lib.StdParams import StdParams
 
 class stats_burndown1:
 
     def __init__(self, param):
         self.topic_name = param[0]
         self.output_filename = param[1]
-        self.start_date = \
-            parse_date("stats burndown init", param[2]["start_date"])
-        if "end_date" in param[2]:
-            self.end_date = \
-                parse_date("stats burndown init", param[2]["end_date"])
-        else:
-            self.end_date = datetime.date.today()
+        StdParams.parse(self, param)
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)

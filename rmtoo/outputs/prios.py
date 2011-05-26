@@ -24,25 +24,16 @@ from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
-from rmtoo.lib.DateUtils import parse_date, format_date
+from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
-from rmtoo.lib.ParamMap import ParamMap
+from rmtoo.lib.StdParams import StdParams
 
 class prios:
 
     def __init__(self, param):
         self.topic_name = param[0]
         self.output_filename = param[1]
-
-        pmap = {}
-        if len(param)>2:
-            pmap = param[2]
-
-        today = datetime.date.today()
-        yesterday = today - datetime.timedelta(1)
-        self.start_date = ParamMap.extract(
-            pmap, "start_date", parse_date, yesterday)
-        self.end_date = ParamMap.extract(pmap, "end_date", parse_date, today)
+        StdParams.parse(self, param)
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
