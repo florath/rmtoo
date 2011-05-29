@@ -26,10 +26,10 @@ class TestBB001:
         cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
         assert(len(missing_files)==0)
+        if len(additional_files)!=0:
+            print("ADDITIONAL_FILES '%s'" % additional_files)
         assert(len(additional_files)==0)
-
         if len(diffs)!=0:
             print("DIFFS '%s'" % diffs)
-
         assert(len(diffs)==0)
         delete_result_is_dir()

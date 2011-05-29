@@ -89,4 +89,4 @@ last_test:
 	nosetests -w rmtoo -v -s \
 		tests/blackbox-test/bb010-test/test-bb010.py
 
-# 5 10 14
+# 3 4 10 14

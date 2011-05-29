@@ -32,10 +32,12 @@ class TestBB010:
         assert(len(missing_files)==0)
         assert(len(additional_files)==0)
 
-        if len(diffs)!=0:
+        # There must be a diff - because the estimated end date 
+        # is also based on the date of today
+        if len(diffs)!=2:
             print("DIFFS '%s'" % diffs)
 
-        assert(len(diffs)==0)
+        assert(len(diffs)==2)
         #delete_result_is_dir()
 
 

@@ -1,7 +1,7 @@
 Name: Minimal Shock Resistance
 Invented on: 2011-03-07
 Invented by: flonatel
-Owner: development
+Owner: flonatel
 Description: Defines the minimal shock resistance of a device.
 Note: This constraint is automatically evaluated.\par
  If the current node does not explicitly include this constraint, a

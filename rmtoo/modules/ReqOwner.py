@@ -25,7 +25,9 @@ class ReqOwner(ReqTagGeneric):
 
         # Also the owner must be in the list of stakeholders
         t = req[self.tag].get_content()
-        if t not in self.config.stakeholders:
+        # flonatel is always a valid stakeholder - because the
+        # standard constraints are introduced by them.
+        if t!='flonatel' and t not in self.config.stakeholders:
             raise RMTException(11, "%s: invalid owner '%s'. Must be one "
                                "of the stakeholder '%s'" %
                                (rid, t, self.config.stakeholders))
