@@ -25,6 +25,9 @@ class CE3:
     def eval(self, cs, class_name, cstr_call):
         v = cs.get_value("CE3")
 
+        if v==None:
+            return
+
         s = ""
         for r in v.get_content_with_nl():
             s += r[1:] + "\n"

@@ -10,5 +10,8 @@ Added start and end-date for prios and burndown output. Please note:
 the configuration parameters introduced in version 19 slightly
 changed. 
 
+Constraints: the CE3 is now optional.
+
+
 Internal Changes
 ----------------
