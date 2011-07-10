@@ -108,8 +108,8 @@ def main_impl(args, mstdout, mstderr):
     return execute_cmds(opts, config, mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
-    try:
+#    try:
         exitfun(not main_impl(args, mstdout, mstderr))
-    except RMTException, rmte:
-        mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
-        exitfun(1)
+#    except RMTException, rmte:
+#        mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
+#        exitfun(1)

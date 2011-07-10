@@ -18,6 +18,10 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.MemLogStore import MemLogStore
 from rmtoo.lib.BaseRMObject import BaseRMObject
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 class Requirement(Digraph.Node, BaseRMObject):
 
     # Requirment Type
