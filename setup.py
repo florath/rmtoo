@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 
-from add_data import add_data
 from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
 version = '19'
+
+add_data = []
+for dadi in ['rmtoo/tests', 'rmtoo/collection']:
+    for (path, dirs, files) in os.walk(dadi):
+        add_data.append((
+            'share/pyshared/' + path,
+            [path + '/' + filename for filename in files]))
 
 def adjust(input, output):
     if os.path.exists(output):

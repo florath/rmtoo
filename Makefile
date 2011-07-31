@@ -61,17 +61,8 @@ clean:
 
 PYSETUP = python setup.py
 
-.PHONY: prepare_install
-prepare_install:
-	echo "add_data = [" >add_data.py
-	for dadi in "rmtoo/tests" "rmtoo/collection"; do \
-	 find $${dadi} -type f | \
-	  while read f; do d=`dirname $$f` ; printf "\t('share/pyshared/%s', ['%s']),\n" $$d $$f; done >>add_data.py; \
-	done
-	echo "]" >>add_data.py
-
 .PHONY: install
-install: prepare_install
+install:
 	$(PYSETUP) install --prefix=${DESTDIR}/usr \
 		--install-scripts=${DESTDIR}/usr/bin
 
@@ -88,5 +79,3 @@ deb:
 last_test:
 	nosetests -w rmtoo -v -s \
 		tests/blackbox-test/bb010-test/test-bb010.py
-
-# 3 4 10 14

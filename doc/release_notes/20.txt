@@ -15,3 +15,6 @@ Constraints: the CE3 is now optional.
 
 Internal Changes
 ----------------
+
+Moved collecting of files from Makefile to setup.py (thanks to
+Vytautas Astrauskas <vastrauskas@gmail.com>). 

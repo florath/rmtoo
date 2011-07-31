@@ -1,7 +1,6 @@
 *.pyc
 *~
 .coverage
-add_data.py
 artifacts
 build
 build-stamp
