@@ -18,7 +18,7 @@ class RequirementStatusNotDone:
     def __init__(self, config, rid, t):
         if t!=self.tval:
             raise RMTException(92, "%s: Not done contains "
-                               "additional data '%s'" % (rid, l))
+                               "additional data '%s'" % (rid, t))
 
     def get_output_string(self):
         return self.tval
