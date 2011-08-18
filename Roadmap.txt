@@ -28,7 +28,11 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v20
 ===
-o Bug fixes! (Estimation diagram)
+o Bug fixes! 
+  - Estimation diagram (should be fixed - check it)
+  - Time zone problem when running test cases
+  - Sort 'Depends on' to get test cases running
+  - 
 o Man page: 
   + graph
   + graph2
