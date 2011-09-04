@@ -14,6 +14,8 @@ Constraints: the CE3 is now optional.
 
 Fixed bug #3393985: wrong variable was used in error message.
 
+Added hint about wrong file encoding to FAQ.
+
 
 Internal Changes
 ----------------

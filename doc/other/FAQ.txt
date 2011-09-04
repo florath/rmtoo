@@ -112,3 +112,11 @@ Frequently Asked Questions
    After removing all (old) .pyc files
         find . -name "*.pyc" | xargs rm
    the coverage is correctly computed.   
+
+** The requirement looks fine but rmtoo complains about a missing tag
+   If you are using some strange line delimiters (such as carriage
+   return and linefeed - as used by MSDos), rmtoo cannot parse the
+   requirements.  Please convert it to the commonly used file format
+   just using line feeds (LF, 0x0A).
+
+
