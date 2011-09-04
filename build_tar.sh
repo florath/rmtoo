@@ -25,7 +25,7 @@ mv artifacts/req-graph1.png artifacts/req-graph2.png ttt
 make clean
 
 mkdir -p package/${PACKAGE_NAME}
-for d in bin COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme.txt Install.txt Makefile contrib
+for d in bin COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme.txt Readme-Windows.txt Readme-OS-X.txt Install.txt Makefile contrib
 do
     cp -r $d package/${PACKAGE_NAME}
 done

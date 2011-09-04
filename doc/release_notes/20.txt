@@ -16,6 +16,8 @@ Fixed bug #3393985: wrong variable was used in error message.
 
 Added hint about wrong file encoding to FAQ.
 
+Added Reame files for Windows and Mac to tar ball.
+
 
 Internal Changes
 ----------------
