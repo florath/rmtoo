@@ -180,7 +180,7 @@ class html:
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on"')
             is_first = True
-            for d in req.outgoing:
+            for d in sorted(req.outgoing, key = lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
                 is_first=False
@@ -193,7 +193,7 @@ class html:
             fd.write('<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in req.incoming:
+            for d in sorted(req.incoming, key=lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
                 is_first=False

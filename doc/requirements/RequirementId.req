@@ -1,0 +1,13 @@
+Name: Requirement ID
+Type: requirement
+Invented on: 2011-09-27
+Invented by: flonatel
+Description: Each requirement \textbf{must} have an unique id .
+Note: This means that there is a 1:1 correlation between an id and a
+ requirement. 
+Owner: development
+Status: not done
+Priority: development:10
+Effort estimation: 13
+Topic: Basics
+Solved by: UseFilenameAsId

@@ -136,7 +136,8 @@ class latex2:
             fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % 
                                 (latex2.strescape(d.id), 
                                  latex2.strescape(d.id)) 
-                                for d in req.outgoing]))
+                                for d in sorted(req.outgoing, 
+                                                key = lambda r: r.id)]))
             fd.write("\n")
 
         if len(req.incoming)>0:

@@ -7,11 +7,14 @@
 #
 
 import os
+import time
 import shutil
 import difflib
 import tempfile
 import zipfile
 import xml.dom.minidom
+
+from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
 
 def tmp_dir():
     return os.environ["rmtoo_test_dir"]
@@ -46,14 +49,19 @@ def unified_diff(mdir, fname):
 # This implements the compare_xml with the help of the xmldiff
 # package.
 def compare_xml(mdir, fname):
+    if fname=="reqspricing.ods-extracted/content.xml":
+        # Skip this (output from oomodule)
+        return True
+
     file1 = os.path.join(os.environ["rmtoo_test_dir"], fname)
     file2 = os.path.join(mdir, "result_should", fname)
 
-    from xmldiff.main import process_files
+    r, s = xmlcmp_files(file1, file2)
 
-    res = process_files(file1, file2, False, False, False, False,
-                        False, False, False, "UTF-8", False)
-    return not res
+    if not r:
+        print("XMLCmp difference: file [%s] diff [%s]" % (fname, s))
+    
+    return r
 
 # This returns a trippel:
 #  missing files in result_is

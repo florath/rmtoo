@@ -73,9 +73,9 @@ class tlp1:
 
     def write_edges(self, fd, reqset, i2im):
         e = 0
-        for r in reqset.reqs.itervalues():
+        for r in sorted(reqset.reqs.itervalues(), key=lambda r: r.id):
             ei = i2im.get(r.id)
-            for o in r.outgoing:
+            for o in sorted(r.outgoing, key = lambda t: t.name):
                 ej = i2im.get(o.id)
                 fd.write("(edge %d %d %d)\n" % (e, ei, ej))
                 e += 1
@@ -83,7 +83,8 @@ class tlp1:
     def write_labels(self, fd, i2im):
         fd.write('(property  0 string "viewLabel"\n')
         fd.write('(default "" "" )')
-        for k,v in i2im.imapping.iteritems():
+
+        for k,v in sorted(i2im.imapping.items()):
             fd.write('(node %d "%s")\n' % (k, v))
         fd.write(")\n")
 

@@ -6,70 +6,50 @@
 		<displaycolumn property-id="tpd5" width="25"/>
 	</taskdisplaycolumns>
 	<task id="1" name="PulpFiction">
-		<task complete="0" duration="3" id="2" name="CleanUpSeats">
-			<notes>
-<![CDATA[== Description ==
-Die Autositzte \textbf{müssen} gereinigt werden.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="3" type="2"/>
-		</task>
-		<task complete="0" duration="3" id="4" name="RoughlyCleanUpSeats">
-			<notes>
-<![CDATA[== Description ==
-Die Autositzte \textbf{müssen} grob gereinigt werden.
-
-== Rationale ==
-Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinübergelegt.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="2" type="2"/>
-		</task>
-		<task complete="0" duration="6" id="5" name="CorpseInTrunk">
-			<notes>
-<![CDATA[== Description ==
-Die Leiche muss in den Kofferraum.
-
-== Rationale ==
-Das fahrende Auto darf kein Aufsehen erregen - so kann der Tote transportiert werden.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="6" type="2"/>
-		</task>
-		<task complete="0" duration="6" id="6" name="DeadManDisapper">
-			<notes>
-<![CDATA[== Description ==
-Der tote Mann muss verschwinden.
-
-== Rationale ==
-Der bei einem Unfall zu Tode gekommene muss verschwinden.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="7" type="2"/>
-		</task>
-		<task complete="0" duration="6" id="8" name="CleanUpVicentAndJules">
-			<notes>
-<![CDATA[== Description ==
-Vincent und Jules \textbf{müssen} gereinigt werden.
-
-== Rationale ==
-Beide sind über und über mit Blut bedeckt.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="7" type="2"/>
-		</task>
-		<task complete="0" duration="4" id="9" name="DetergentForCar">
-			<notes>
-<![CDATA[== Description ==
-Das Auto muss mit Putzmitteln gereinigt werden. 
-
-== Rationale ==
-Das Auto ist voller Blut - daher ist Putzmittel notwendig es zu reinigen.
-
-== Note ==
-Die Putzmittel stehen in der Küche unter der Spüle.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="3" type="2"/>
-		</task>
-		<task complete="0" duration="6" id="3" name="CleanUpCar">
+		<task complete="0" duration="6" id="2" name="CleanUpCar">
 			<notes>
 <![CDATA[== Description ==
 Auf den ersten Blick muss das Auto normal aussehen. 
 
 == Rationale ==
 Aktuell ist das Auto voller Blut.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="3" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="4" name="CleanUpSeats">
+			<notes>
+<![CDATA[== Description ==
+Die Autositzte \textbf{müssen} gereinigt werden.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="2" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="5" name="CleanUpVicentAndJules">
+			<notes>
+<![CDATA[== Description ==
+Vincent und Jules \textbf{müssen} gereinigt werden.
+
+== Rationale ==
+Beide sind über und über mit Blut bedeckt.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="3" type="2"/>
+		</task>
+		<task complete="0" duration="6" id="6" name="CorpseInTrunk">
+			<notes>
+<![CDATA[== Description ==
+Die Leiche muss in den Kofferraum.
+
+== Rationale ==
+Das fahrende Auto darf kein Aufsehen erregen - so kann der Tote transportiert werden.]]>			</notes>
 			<depend difference="0" hardness="Strong" id="7" type="2"/>
 		</task>
-		<task complete="0" duration="14" id="7" name="CreateOrder">
+		<task complete="0" duration="3" id="8" name="CoverWithBlankets">
+			<notes>
+<![CDATA[== Description ==
+Die Autositze \textbf{müssen} mit Decken abgedeckt werden.
+
+== Rationale ==
+Es ist nicht möglich, die Sitze vollständig zu reinigen. ]]>			</notes>
+			<depend difference="0" hardness="Strong" id="4" type="2"/>
+			<depend difference="0" hardness="Strong" id="9" type="2"/>
+		</task>
+		<task complete="0" duration="14" id="3" name="CreateOrder">
 			<notes>
 <![CDATA[== Description ==
 The unglückliche Unfall, der einen Mann getötet hat, muss versteckt werden.
@@ -80,17 +60,57 @@ Es gibt einige dreckige und mit Blut verschmierte Sachen, die gereinigt werden m
 == Note ==
 Sie haben nur 40 Minuten für alles.]]>			</notes>
 		</task>
-		<task complete="0" duration="3" id="10" name="SoapAndColdWater">
+		<task complete="0" duration="6" id="7" name="DeadManDisapper">
+			<notes>
+<![CDATA[== Description ==
+Der tote Mann muss verschwinden.
+
+== Rationale ==
+Der bei einem Unfall zu Tode gekommene muss verschwinden.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="3" type="2"/>
+		</task>
+		<task complete="0" duration="4" id="10" name="DetergentForCar">
+			<notes>
+<![CDATA[== Description ==
+Das Auto muss mit Putzmitteln gereinigt werden. 
+
+== Rationale ==
+Das Auto ist voller Blut - daher ist Putzmittel notwendig es zu reinigen.
+
+== Note ==
+Die Putzmittel stehen in der Küche unter der Spüle.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="2" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="9" name="RoughlyCleanUpSeats">
+			<notes>
+<![CDATA[== Description ==
+Die Autositzte \textbf{müssen} grob gereinigt werden.
+
+== Rationale ==
+Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinübergelegt.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="4" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="11" name="SoapAndColdWater">
 			<notes>
 <![CDATA[== Description ==
 Vincent und Jules \textbf{müssen} sich mit Seife und kaltem Wasser vom Blut reinigen.
 
 == Rationale ==
 Sie sind blutig.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="8" type="2"/>
-			<depend difference="0" hardness="Strong" id="11" type="2"/>
+			<depend difference="0" hardness="Strong" id="5" type="2"/>
+			<depend difference="0" hardness="Strong" id="12" type="2"/>
 		</task>
-		<task complete="0" duration="3" id="11" name="TakeOff">
+		<task complete="0" duration="3" id="13" name="TakeCareOfClothing">
+			<notes>
+<![CDATA[== Description ==
+Auf Vincent und Jules' Kleidung muss geachtet werden. 
+
+== Rationale ==
+Die Kleidung ist blutig - Otto der Müllmann wird sich weigern dies einzusammeln.]]>			</notes>
+			<depend difference="0" hardness="Strong" id="5" type="2"/>
+			<depend difference="0" hardness="Strong" id="12" type="2"/>
+		</task>
+		<task complete="0" duration="3" id="12" name="TakeOff">
 			<notes>
 <![CDATA[== Description ==
 Vincent und Jules \textbf{müssen} ihre Kleider ausziehen. 
@@ -100,27 +120,7 @@ Sie sind blutig.
 
 == Note ==
 Wulf: 'Bis auf den nackten Arsch'.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="8" type="2"/>
-		</task>
-		<task complete="0" duration="3" id="12" name="TakeCareOfClothing">
-			<notes>
-<![CDATA[== Description ==
-Auf Vincent und Jules' Kleidung muss geachtet werden. 
-
-== Rationale ==
-Die Kleidung ist blutig - Otto der Müllmann wird sich weigern dies einzusammeln.]]>			</notes>
-			<depend difference="0" hardness="Strong" id="8" type="2"/>
-			<depend difference="0" hardness="Strong" id="11" type="2"/>
-		</task>
-		<task complete="0" duration="3" id="13" name="CoverWithBlankets">
-			<notes>
-<![CDATA[== Description ==
-Die Autositze \textbf{müssen} mit Decken abgedeckt werden.
-
-== Rationale ==
-Es ist nicht möglich, die Sitze vollständig zu reinigen. ]]>			</notes>
-			<depend difference="0" hardness="Strong" id="2" type="2"/>
-			<depend difference="0" hardness="Strong" id="4" type="2"/>
+			<depend difference="0" hardness="Strong" id="5" type="2"/>
 		</task>
 	</task>
 </project>

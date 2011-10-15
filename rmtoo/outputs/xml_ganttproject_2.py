@@ -122,10 +122,10 @@ class xml_ganttproject_2:
                     "TOPIC-" + topic.name)))
 
         # Run through all the requirements and output them
-        for req in topic.reqs:
+        for req in sorted(topic.reqs, key = lambda r: r.id):
             self.output_req(req, reqset, doc, xml_task)
         # After this have a look at the (sub-)topics
-        for st in topic.outgoing:
+        for st in sorted(topic.outgoing, key = lambda t: t.name):
             self.output_topic(st, reqset, doc, xml_task)
 
         # Add the xml_task to the current document

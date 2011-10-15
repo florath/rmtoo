@@ -1,0 +1,14 @@
+Name: Use Filename as Requirement ID
+Type: design decision
+Invented on: 2011-09-27
+Invented by: flonatel
+Description: The file name of the requirement \textbf{must} be used as
+ the unique id.
+Rationale: It's there and it's unique.
+Note: Possible slashes ('/') which are used as path separator are part
+ of the unique requirement id.
+Owner: development
+Status: not done
+Priority: development:10
+Effort estimation: 13
+Topic: Basics
