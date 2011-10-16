@@ -64,27 +64,27 @@ class CmdLineParams:
     @staticmethod
     def add_parameters(parser):
         '''Add the command line parameters to the given parser.'''
-        parser.add_option("-j", "--json-str", dest="json_strs",
+        parser.add_option("-j", "--json", dest="json",
                           action="append",
-                          help="JSON string which is merged into the "
-                          "existing configuration. Can be specified multiple "
-                          "times.")
-        parser.add_option("-k", "--json-file", dest="json_files",
-                          action="append",
-                          help="JSON file which is merged into the "
+                          help="JSON string or file which is merged into the "
                           "existing configuration. Can be specified multiple "
                           "times.")
 
     @staticmethod
     def add_values(options):
         '''Add all the new command line parameter values.'''
-        ldict = {}
+        if options.json == None:
+            return {}
 
-        if options.json_strs != None:
-            ldict['configuration'] = {'json_strs': options.json_str}
-
-        if options.json_files != None:
-            ldict['configuration'] = {'json_files': options.json_files}
+        jopts = []
+        for jopt in options.json:
+            if jopt.startswith("file://"):
+                jopts.append(jopt)
+            elif jopt.startswith("json:"):
+                jopts.append(jopt)
+            else:
+                jopts.append("json:" + jopt)
+        return {'configuration': {'json': jopts }}
 
     @staticmethod
     def create_dicts(args):

@@ -13,10 +13,12 @@
 
  For licensing details see COPYING
 '''
+import json
 
 from types import StringType, DictType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
+from rmtoo.lib.configuration.Utils import Utils
 
 class Cfg:
     '''
@@ -45,47 +47,46 @@ class Cfg:
         return config
 
     def merge_json_str(self, jstr):
-        '''Adds all the values from the given json string to
+        '''Adds all the values from the given JSON string to
            the existing configuration.'''
-        import json
+        print("STR [%s]" % jstr)
         jdict = json.loads(jstr)
         if type(jdict) != DictType:
             raise CfgEx("Given JSON string encodes no dictionary.")
         self.merge_dictionary(jdict)
 
-    @staticmethod
-    def internal_merge_dictionary(orig_dict, new_dict):
-        '''Copies all the values from the new_dict into the
-           orig_dict.  If a value already exists, it is overwritten.'''
-        assert(type(orig_dict) == DictType)
-        assert(type(new_dict) == DictType)
-
-        for key, value in new_dict.iteritems():
-            if key not in orig_dict:
-                orig_dict[key] = value
-                continue
-            if type(orig_dict[key]) == DictType and type(value) == DictType:
-                Cfg.internal_merge_dictionary(orig_dict[key], value)
-            else:
-                orig_dict[key] = value
-
     def merge_dictionary(self, ldict):
         '''Merges the contents of the local dictionary into the 
            existing one.
            If a value already exists, it is overwritten'''
-        self.internal_merge_dictionary(self.config, ldict)
+        Utils.internal_merge_dictionary(self.config, ldict)
 
     def merge_cmd_line_params(self, args):
         '''Merges the command line arguments into the 
            existing configuration.'''
         ldicts = CmdLineParams.create_dicts(args)
+
+        TOTALER UNSINN:
+        HIER MUSS IN JEDEM LDICT IN configuration.json NACHGESEHEN
+        WERDEN UND JSON ANGEWANT WERDEN
+        WEITERHIN MUSS NOCH IN configuration.deprecated.config_file
+        DAS FILE GEPARSED WERDEN.
+
+        VIELLEICHT IST ES VIEL EINFACHER ZWEI RÜCKGABEWERTE ZU ERHALTEN
+        EINEN ALS DICT (FÜR DAS ALTE) UND EINEN ALS LISTE VON JSON
+        BESCHREIBUNGEN FÜR DAS NEUE.
+
         for ldict in ldicts:
+            print("Processing ldict [%s]" % ldict)
             if ldict == None:
                 continue
-            print("ORIG [%s]" % self.config)
-            print("MERGE [%s]" % ldict)
-            self.merge_dictionary(ldict)
-            print("CHANGED ORIG [%s]" % self.config)
+            if type(ldict) == StringType and ldict.startswith("file://"):
+                self.merge_json_file(ldict)
+            elif type(ldict) == StringType and ldict.startswith("json:"):
+                self.merge_json_str(ldict)
+            else:
+                assert(type(ldict) == DictType)
+                self.merge_dictionary(ldict)
 
     @staticmethod
     def internal_parse_key_string(key):

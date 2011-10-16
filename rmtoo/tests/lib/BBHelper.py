@@ -10,11 +10,11 @@ import os
 import time
 import shutil
 import difflib
-import tempfile
 import zipfile
 import xml.dom.minidom
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
+from rmtoo.tests.lib.Utils import create_tmp_dir
 
 def tmp_dir():
     return os.environ["rmtoo_test_dir"]
@@ -26,7 +26,7 @@ def find(mdir):
             o = os.path.join(d, f)
             # Cut off the mdir at the beginning
             assert(o.startswith(mdir))
-            r.add(o[len(mdir)+1:])
+            r.add(o[len(mdir) + 1:])
     return r
 
 def unified_diff(mdir, fname):
@@ -42,14 +42,14 @@ def unified_diff(mdir, fname):
     for l in difflib.unified_diff(a, b):
         r.append(l)
 
-    if len(r)==0:
+    if len(r) == 0:
         return None
     return r
 
 # This implements the compare_xml with the help of the xmldiff
 # package.
 def compare_xml(mdir, fname):
-    if fname=="reqspricing.ods-extracted/content.xml":
+    if fname == "reqspricing.ods-extracted/content.xml":
         # Skip this (output from oomodule)
         return True
 
@@ -60,7 +60,7 @@ def compare_xml(mdir, fname):
 
     if not r:
         print("XMLCmp difference: file [%s] diff [%s]" % (fname, s))
-    
+
     return r
 
 # This returns a trippel:
@@ -88,7 +88,7 @@ def compare_results(mdir):
                 r[df] = "XML files differ"
         else:
             ud = unified_diff(mdir, df)
-            if ud!=None:
+            if ud != None:
                 r[df] = ud
 
     return missing_files, additional_files, r
@@ -103,12 +103,8 @@ def cleanup_std_log(mout, merr):
     mout.close()
     merr.close()
 
-# Creates a temporary directory
-def create_tmp_dir():
-    return tempfile.mkdtemp(prefix="rmtoo-tst-ris-")
-
 def delete_result_is_dir():
-    assert(os.environ["rmtoo_test_dir"]!=None)
+    assert(os.environ["rmtoo_test_dir"] != None)
     shutil.rmtree(os.environ["rmtoo_test_dir"])
     del(os.environ["rmtoo_test_dir"])
 
@@ -180,4 +176,4 @@ def unify_output_dir(filename):
     fd = file(fullpathname, "w")
     fd.write(d)
     fd.close()
-    
+
