@@ -45,9 +45,9 @@ def main_impl(args, mstdout, mstderr):
         and rs.normalize_dependencies() \
         and rs.write_to_filesystem(opts.args[0])
 
-def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
+def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     try:
-        exitfun(not main_impl(args, mstdout, mstderr))
+        exitfun(not main_func(args, mstdout, mstderr))
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
         exitfun(1)

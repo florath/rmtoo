@@ -1,21 +1,20 @@
 #
-# Requirement Management Toolset
+# rmtoo 
+#   Free and Open Source Requirements Management Tool
 #
 #  This is the main function - it is called from the 'rmtoo'
 #  executable directly. 
-#  It is stored here (in a seperate file) for (blackbox) testing
+#  It is stored here (in a separate file) for (black-box) testing
 #  proposes. 
 #
-# (c) 2010 by flonatel
+# (c) 2010-2011 by flonatel
 #
-# For licencing details see COPYING
+# For licensing details see COPYING
 #
 
-import os
 import sys
 
 from optparse import OptionParser
-from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicHandler import TopicHandler
@@ -26,7 +25,7 @@ from rmtoo.lib.main.MainHelper import MainHelper
 def parse_cmd_line_opts(args):
     parser = OptionParser()
     parser.add_option("-f", "--file-config", dest="config_file",
-                  help="Config file")
+                  help="Configuration file")
     parser.add_option("-m", "--modules-directory", dest="modules_directory",
                   help="Directory with modules")
     parser.add_option("-c", "--create-makefile-dependencies",
@@ -35,20 +34,20 @@ def parse_cmd_line_opts(args):
 
     (options, args) = parser.parse_args(args=args)
 
-    if options.modules_directory==None:
-        # If there is no modules directory given, use the pycentral one.
+    if options.modules_directory == None:
+        # If there is no modules directory given, use the pyshared one.
         options.modules_directory = "/usr/share/pyshared"
 
-    if options.config_file==None:
+    if options.config_file == None:
         raise RMTException(60, "no config_file option is specified")
 
-    if len(args)>0:
-        raise RMTException(61, "too many args")
+    if len(args) > 0:
+        raise RMTException(61, "too many arguments")
 
     return options
 
 def execute_cmds(opts, config, mods, mstdout, mstderr):
-    # Checks are allways done - to be sure that e.g. the dependencies
+    # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     try:
         rc = ReqsContinuum(mods, opts, config)
@@ -68,7 +67,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
 
     # When only the dependencies are needed, output them to the given
     # file. 
-    if opts.create_makefile_dependencies!=None:
+    if opts.create_makefile_dependencies != None:
         ofile = file(opts.create_makefile_dependencies, "w")
         # Write out the REQS=
         rc.cmad_write_reqs_list(ofile)
@@ -86,7 +85,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
     if not reqs.is_usable():
         return False
 
-    # The requirments are syntatically correct now: therefore it is
+    # The requirements are syntactically correct now: therefore it is
     # possible to do some analytics on them
     if not Analytics.run(config, reqs, topics):
         reqs.write_log(mstderr)
@@ -99,7 +98,7 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
 
     # Output everything
     ohandler.output(rc)
-   
+
     return True
 
 def main_impl(args, mstdout, mstderr):
@@ -107,9 +106,11 @@ def main_impl(args, mstdout, mstderr):
                                                parse_cmd_line_opts)
     return execute_cmds(opts, config, mods, mstdout, mstderr)
 
-def main(args, mstdout, mstderr, main_impl=main_impl, exitfun=sys.exit):
+def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
+    '''The main entry function
+    This calls the main_func function and does the exception handling.'''
     try:
-        exitfun(not main_impl(args, mstdout, mstderr))
+        exitfun(not main_func(args, mstdout, mstderr))
     except RMTException, rmte:
-        mstderr.write("+++ ERROR: Exception occured: %s\n" % rmte)
+        mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)

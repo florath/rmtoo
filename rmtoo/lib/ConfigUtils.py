@@ -14,7 +14,7 @@
 #
 # (c) 2010-2011 by flonatel
 #
-# For licencing details see COPYING
+# For licensing details see COPYING
 #
 
 from rmtoo.lib.RMTException import RMTException
@@ -30,7 +30,7 @@ class ConfigUtils:
         # The dependency notation is by default the (old) Depends on
         # notation. 
         if "dependency_notation" not in config.reqs_spec:
-            config.reqs_spec["dependency_notation"] = set(["Depends on",] )
+            config.reqs_spec["dependency_notation"] = set(["Depends on", ])
 
 
     @staticmethod
@@ -77,7 +77,7 @@ class ConfigUtils:
         allowed = set(["Depends on", "Solved by"])
         set_diff = config.reqs_spec["dependency_notation"].difference(
             allowed)
-        if len(set_diff)>0:
+        if len(set_diff) > 0:
             raise RMTException(70, "Invalid value in "
                                "'dependency_notation': "
                                "should be one of '%s' - but was '%s'"

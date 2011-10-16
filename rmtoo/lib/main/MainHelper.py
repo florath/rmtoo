@@ -6,7 +6,7 @@
 #
 # (c) 2011 by flonatel
 #
-# For licencing details see COPYING
+# For licensing details see COPYING
 #
 
 import os
@@ -28,7 +28,7 @@ class MainHelper:
         ConfigUtils.check(config)
         f.close()
         return config
-    
+
     @staticmethod
     def main_setup(args, mstdout, mstderr, parse_cmd_line_opts):
         opts = parse_cmd_line_opts(args)
