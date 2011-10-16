@@ -36,3 +36,14 @@ class TestConfiguration(unittest.TestCase):
         self.failUnlessEqual(5, config.get_value("m.n"), "m.n is not 5")
         self.failUnlessEqual(5, config.get_value(["m", "n"]), "m.n is not 5")
         self.failUnlessEqual(7, config.get_value("o"), "o is not 7")
+
+    def test_json_init_add_cmd_line_params(self):
+        '''Init Cfg class with JSON and adds parameters with command 
+           line options'''
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config.merge_cmd_line_params(['-m', '/tmp/something',
+                                      '-c', '/tmp/cmad'])
+
+        self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
+        self.failUnlessEqual({'create_makefile_dependencies': '/tmp/cmad'},
+                             config.get_value("actions"))

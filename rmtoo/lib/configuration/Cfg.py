@@ -16,6 +16,7 @@
 
 from types import StringType, DictType
 from rmtoo.lib.configuration.CfgEx import CfgEx
+from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 
 class Cfg:
     '''
@@ -73,6 +74,18 @@ class Cfg:
            existing one.
            If a value already exists, it is overwritten'''
         self.internal_merge_dictionary(self.config, ldict)
+
+    def merge_cmd_line_params(self, args):
+        '''Merges the command line arguments into the 
+           existing configuration.'''
+        ldicts = CmdLineParams.create_dicts(args)
+        for ldict in ldicts:
+            if ldict == None:
+                continue
+            print("ORIG [%s]" % self.config)
+            print("MERGE [%s]" % ldict)
+            self.merge_dictionary(ldict)
+            print("CHANGED ORIG [%s]" % self.config)
 
     @staticmethod
     def internal_parse_key_string(key):

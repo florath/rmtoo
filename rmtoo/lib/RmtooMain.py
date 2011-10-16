@@ -22,6 +22,7 @@ from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
 
+#deprecated
 def parse_cmd_line_opts(args):
     parser = OptionParser()
     parser.add_option("-f", "--file-config", dest="config_file",
