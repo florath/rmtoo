@@ -71,4 +71,9 @@ class TestConfiguration(unittest.TestCase):
                                       '-j', 'file://' + jsonfile2])
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
         print("j [%s]" % config.config)
-        assert(False)
+        config.evaluate()
+        print("jk [%s]" % config.config)
+        self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
+        self.failUnlessEqual(11, config.get_value("m.w"))
+
+# Testcase with old config

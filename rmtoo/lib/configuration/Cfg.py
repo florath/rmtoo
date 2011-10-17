@@ -49,8 +49,22 @@ class Cfg:
     def merge_json_str(self, jstr):
         '''Adds all the values from the given JSON string to
            the existing configuration.'''
+        if jstr.startswith("json:"):
+            jstr = jstr[5:]
         print("STR [%s]" % jstr)
         jdict = json.loads(jstr)
+        if type(jdict) != DictType:
+            raise CfgEx("Given JSON string encodes no dictionary.")
+        self.merge_dictionary(jdict)
+
+    def merge_json_file(self, jfile):
+        '''Adds all the values from the given JSON file to
+           the existing configuration.'''
+        if jfile.startswith("file://"):
+            jfile = jfile[7:]
+        jfd = file(jfile, "r")
+        jdict = json.load(jfd)
+        jfd.close()
         if type(jdict) != DictType:
             raise CfgEx("Given JSON string encodes no dictionary.")
         self.merge_dictionary(jdict)
@@ -65,28 +79,45 @@ class Cfg:
         '''Merges the command line arguments into the 
            existing configuration.'''
         ldicts = CmdLineParams.create_dicts(args)
-
-        TOTALER UNSINN:
-        HIER MUSS IN JEDEM LDICT IN configuration.json NACHGESEHEN
-        WERDEN UND JSON ANGEWANT WERDEN
-        WEITERHIN MUSS NOCH IN configuration.deprecated.config_file
-        DAS FILE GEPARSED WERDEN.
-
-        VIELLEICHT IST ES VIEL EINFACHER ZWEI RÜCKGABEWERTE ZU ERHALTEN
-        EINEN ALS DICT (FÜR DAS ALTE) UND EINEN ALS LISTE VON JSON
-        BESCHREIBUNGEN FÜR DAS NEUE.
-
         for ldict in ldicts:
-            print("Processing ldict [%s]" % ldict)
-            if ldict == None:
-                continue
-            if type(ldict) == StringType and ldict.startswith("file://"):
-                self.merge_json_file(ldict)
-            elif type(ldict) == StringType and ldict.startswith("json:"):
-                self.merge_json_str(ldict)
-            else:
-                assert(type(ldict) == DictType)
-                self.merge_dictionary(ldict)
+            self.merge_dictionary(ldict)
+
+    def internal_merge_json_url(self, json_url):
+        '''Depending on the JSON URL the low level method to
+           merge the configuration is called.'''
+        if json_url.startswith("json:"):
+            self.merge_json_str(json_url)
+        elif json_url.startswith("file:"):
+            self.merge_json_file(json_url)
+
+    def internal_evaluate_json_once(self, json_config):
+        '''Evaluates the given json configuration and merges it
+           into the current configuration.'''
+        for jcfg in json_config:
+            self.internal_merge_json_url(jcfg)
+
+    def internal_evaluate_json(self):
+        '''As long as there are JSON parameters, handle them.'''
+        try:
+            while True:
+                json_config = self.get_value(['configuration', 'json'])
+                # This must be removed before the evaluation, because it
+                # is possible that during the evaluation additional
+                # entries will appear.
+                del(self.config['configuration']['json'])
+                self.internal_evaluate_json_once(json_config)
+        except CfgEx, cfgex:
+            # Nothing to do: JSON entries not available
+            pass
+
+    def evaluate(self):
+        '''Evaluates the configuration.
+           This does two things:
+           o Read in the 'old' configuration
+           o Read in the new configuration'''
+        self.internal_evaluate_json()
+        # assert(False)
+        # TODO: evaluate old style config missing
 
     @staticmethod
     def internal_parse_key_string(key):
@@ -119,4 +150,3 @@ class Cfg:
         if type(key) == StringType:
             key = self.internal_parse_key_string(key)
         return Cfg.internal_get_value(key, self.config)
-
