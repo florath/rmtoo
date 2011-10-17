@@ -80,8 +80,7 @@ class TestConfiguration(unittest.TestCase):
         config.merge_cmd_line_params(['-f', 'tests/unit-test/core-tests/'
                                       'testdata/Config3.py'])
 
-        print("jk [%s]" % config.config)
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
         config.evaluate()
-        print("jk [%s]" % config.config)
-        assert(False)
+        self.failUnlessEqual(['development', 'management', 'users', 'customers'],
+                             config.get_value("requirements.stakeholders"))
