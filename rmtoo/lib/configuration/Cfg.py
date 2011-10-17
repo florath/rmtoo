@@ -19,6 +19,7 @@ from types import StringType, DictType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
+from rmtoo.lib.configuration.Old import Old
 
 class Cfg:
     '''
@@ -106,8 +107,22 @@ class Cfg:
                 # entries will appear.
                 del(self.config['configuration']['json'])
                 self.internal_evaluate_json_once(json_config)
-        except CfgEx, cfgex:
+        except CfgEx:
             # Nothing to do: JSON entries not available
+            pass
+
+    def internal_evaluate_old_config(self):
+        '''Looks if the old config file handling must be applied -
+           and if so applies it.'''
+        try:
+            old_config_file = self.get_value(['configuration', 'deprecated',
+                                              'config_file'])
+            print("CONFIG [%s]" % self.config)
+            print("OCF [%s]" % old_config_file)
+            del(self.config['configuration']['deprecated']['config_file'])
+            self.merge_dictionary(Old.convert_to_new(old_config_file))
+        except CfgEx:
+            # Nothing to do: old config file not specified
             pass
 
     def evaluate(self):
@@ -115,9 +130,8 @@ class Cfg:
            This does two things:
            o Read in the 'old' configuration
            o Read in the new configuration'''
+        self.internal_evaluate_old_config()
         self.internal_evaluate_json()
-        # assert(False)
-        # TODO: evaluate old style config missing
 
     @staticmethod
     def internal_parse_key_string(key):

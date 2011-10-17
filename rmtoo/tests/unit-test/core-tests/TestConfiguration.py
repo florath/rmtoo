@@ -70,10 +70,18 @@ class TestConfiguration(unittest.TestCase):
                                       '-j', '{"m": {"q": 100}}',
                                       '-j', 'file://' + jsonfile2])
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        print("j [%s]" % config.config)
         config.evaluate()
-        print("jk [%s]" % config.config)
         self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
         self.failUnlessEqual(11, config.get_value("m.w"))
 
-# Testcase with old config
+    def test_json_init_add_old_cmd_line_params(self):
+        '''Init Cfg with old config and adds parameters with command line options'''
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config.merge_cmd_line_params(['-f', 'tests/unit-test/core-tests/'
+                                      'testdata/Config3.py'])
+
+        print("jk [%s]" % config.config)
+        self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
+        config.evaluate()
+        print("jk [%s]" % config.config)
+        assert(False)
