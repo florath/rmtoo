@@ -20,6 +20,7 @@ from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
 from rmtoo.lib.configuration.Old import Old
+from rmtoo.lib.RMTException import RMTException
 
 class Cfg:
     '''
@@ -107,21 +108,25 @@ class Cfg:
                 # entries will appear.
                 del(self.config['configuration']['json'])
                 self.internal_evaluate_json_once(json_config)
-        except CfgEx:
+        except RMTException:
             # Nothing to do: JSON entries not available
             pass
 
     def internal_evaluate_old_config(self):
-        '''Looks if the old config file handling must be applied -
+        '''Looks if the old configuration file handling must be applied -
            and if so applies it.'''
         try:
             old_config_file = self.get_value(['configuration', 'deprecated',
                                               'config_file'])
-            print("CONFIG [%s]" % self.config)
-            print("OCF [%s]" % old_config_file)
+            # housekeeping
             del(self.config['configuration']['deprecated']['config_file'])
-            self.merge_dictionary(Old.convert_to_new(old_config_file))
-        except CfgEx:
+            if self.config['configuration']['deprecated'] == {}:
+                del(self.config['configuration']['deprecated'])
+            if self.config['configuration'] == {}:
+                del(self.config['configuration'])
+
+            Old.convert_to_new(self, old_config_file)
+        except RMTException:
             # Nothing to do: old config file not specified
             pass
 
@@ -157,10 +162,78 @@ class Cfg:
                         "dictionary " % key[0])
         return Cfg.internal_get_value(key[1:], val)
 
-    def get_value(self, key):
+    def get_raw(self, key):
         '''Returns the value of the given key.
-           If key is not found a CfgEx is thrown.'''
+           If the key is not found a CfgEx is raised.'''
         # If the type is a string, this must first be parsed.
         if type(key) == StringType:
             key = self.internal_parse_key_string(key)
         return Cfg.internal_get_value(key, self.config)
+
+    def get_value(self, key):
+        '''Returns the value of the given key.
+           If key is not found a RMTException is thrown.'''
+        try:
+            return self.get_raw(key)
+        except CfgEx:
+            raise RMTException(96, "Mandatory configuration parameter "
+                               "[%s] not found" % key)
+
+    def get_value_default(self, key, default_value):
+        '''Return the value of the key from the configuration.
+           If the key is not available, the default_value is returned.'''
+        try:
+            return self.get_raw(key)
+        except CfgEx:
+            return default_value
+
+    @staticmethod
+    def internal_change(ldict, key, empty_val, change_func):
+        assert(type(ldict) == DictType)
+        assert(len(key) > 0)
+
+        if len(key) == 1:
+            # Really insert the value (if not there).
+            change_func(ldict, key[0])
+            return
+
+        if key[0] not in ldict:
+            ldict[key[0]] = empty_val
+
+        Cfg.internal_change(ldict[key[0]], key[1:], empty_val, change_func)
+
+    @staticmethod
+    def internal_set(ldict, key, value):
+        '''Sets the value for the appropriate key.
+           If the key has already a value (i.e. exists)
+           a CfgEx is raised.'''
+        def assign_value(ldict, key):
+            if key in ldict:
+                raise CfgEx("(Sub-)Key [%s] exists." % key)
+            ldict[key] = value
+
+        Cfg.internal_change(ldict, key, None, assign_value)
+
+    def set_value(self, key, value):
+        '''Sets the value. If the key is already there a CfgEx is
+           raised.'''
+        if type(key) == StringType:
+            key = self.internal_parse_key_string(key)
+        Cfg.internal_set(self.config, key, value)
+
+    @staticmethod
+    def internal_append_list(ldict, key, value):
+        '''Appends the value to the list at key.
+           If key is unset a new list is created.'''
+        def append_value(ldict, key):
+            ldict[key].append(value)
+
+        Cfg.internal_change(ldict, key, [], append_value)
+
+    def append_list(self, key, value):
+        '''Appends value to existing list under key.
+           If key does not exists, a new list is created.'''
+        if type(key) == StringType:
+            key = self.internal_parse_key_string(key)
+        Cfg.internal_append_list(self.config, key, value)
+

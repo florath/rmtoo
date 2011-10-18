@@ -19,97 +19,104 @@ class TestReqPriority:
 
     def test_positive_01(self):
         "Requirement Tag Priority - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name=="Factor")
-        assert(value==0.0)
+        assert(name == "Factor")
+        assert(value == 0.0)
 
     def test_positive_02(self):
         "Requirement Tag Priority - tag given one stakeholder"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "marketing:7")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name=="Factor")
-        assert(value==0.7)
+        assert(name == "Factor")
+        assert(value == 0.7)
 
     def test_positive_03(self):
         "Requirement Tag Priority - tag given two stakeholders"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "marketing:7 security:3")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name=="Factor")
-        assert(value==0.5)
+        assert(name == "Factor")
+        assert(value == 0.5)
 
     def test_negative_01(self):
         "Requirement Tag Priority - faulty priority declaration ':'"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "marketing:")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==12)
+            assert(rmte.id() == 12)
 
     def test_negative_02(self):
         "Requirement Tag Priority - invalid stakeholder"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "nixda:3")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==13)
+            assert(rmte.id() == 13)
 
     def test_negative_03(self):
         "Requirement Tag Priority - stakeholder voted more than once"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority",
                                       "security:3 marketing:7 security:4")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==14)
+            assert(rmte.id() == 14)
 
     def test_negative_04(self):
         "Requirement Tag Priority - invalid priority (too big)"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "security:30")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==15)
+            assert(rmte.id() == 15)
 
     def test_negative_05(self):
         "Requirement Tag Priority - invalid priority (too small)"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Priority"] = RecordEntry("Priority", "security:-10")
 
-        rt = ReqPriority(opts, config)
+        rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==15)
+            assert(rmte.id() == 15)

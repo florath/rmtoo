@@ -17,10 +17,9 @@ from rmtoo.lib.RMTException import RMTException
 #
 class ReqTagGeneric:
 
-    def __init__(self, opts, config):
-        self.opts = opts
+    def __init__(self, config):
         self.config = config
-        
+
     def type(self):
         return self.ltype
 

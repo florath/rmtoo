@@ -17,20 +17,20 @@ class TestReqNote:
 
     def test_positive_01(self):
         "Requirement Tag Note - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqNote(opts, config)
+        rt = ReqNote(config)
         name, value = rt.rewrite("Note-test", req)
-        assert(name=="Note")
-        assert(value==None)
+        assert(name == "Note")
+        assert(value == None)
 
     def test_positive_02(self):
         "Requirement Tag Note - Note set"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req = {"Note": "something"}
 
-        rt = ReqNote(opts, config)
+        rt = ReqNote(config)
         name, value = rt.rewrite("Note-test", req)
-        assert(name=="Note")
-        assert(value=="something")
+        assert(name == "Note")
+        assert(value == "something")
 

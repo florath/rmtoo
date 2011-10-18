@@ -87,6 +87,13 @@ class CmdLineParams:
         return {'configuration': {'json': jopts }}
 
     @staticmethod
+    def add_args(args):
+        '''Add the arguments to the configuration.'''
+        if args == None or args == []:
+            return {}
+        return {'general': {'command_line_arguments': args}}
+
+    @staticmethod
     def create_dicts(args):
         '''Creates a dictionary from all the command line parameters.'''
         parser = CmdLineParams.initialize_parser()
@@ -94,14 +101,11 @@ class CmdLineParams:
         CmdLineParams.add_parameters(parser)
 
         (options, args) = parser.parse_args(args=args)
-        if len(args) > 0:
-            raise CfgEx("Too many arguments")
 
-        ldicts = []
-
-        ldicts.append(CmdLineParams.add_deprecated_values(options))
-        ldicts.append(CmdLineParams.add_values(options))
-
-        return ldicts
+        lresult = []
+        lresult.append(CmdLineParams.add_args(args))
+        lresult.append(CmdLineParams.add_deprecated_values(options))
+        lresult.append(CmdLineParams.add_values(options))
+        return lresult
 
 

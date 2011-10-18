@@ -20,7 +20,7 @@ class TestRDepSolvedBy:
 
     def test_negative_01(self):
         "Two nodes as master requirement"
-        opts, config, reqset = create_parameters()
+        config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -30,16 +30,16 @@ class TestRDepSolvedBy:
                          {})}
 
         config.set_solved_by()
-        rdep = RDepSolvedBy(opts, config)
+        rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
-        assert(status==False)
-        assert(reqset.mls()==MemLogStore.create_mls(
+        assert(status == False)
+        assert(reqset.mls() == MemLogStore.create_mls(
                 [ [76, MemLog.error, "Another master is already there. "
                    "There can only be one.", "B"] ]))
 
     def test_negative_02(self):
         "Normal requirement has empty 'Solved by'"
-        opts, config, reqset = create_parameters()
+        config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -49,16 +49,16 @@ class TestRDepSolvedBy:
                          {"Solved by": RecordEntry("Solved by", "")})}
 
         config.set_solved_by()
-        rdep = RDepSolvedBy(opts, config)
+        rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
-        
-        assert(status==False)
-        assert(reqset.mls()==MemLogStore.create_mls(
+
+        assert(status == False)
+        assert(reqset.mls() == MemLogStore.create_mls(
                 [ [77, MemLog.error, "'Solved by' field has len 0", "B"] ]))
 
     def test_negative_03(self):
         "'Solved by' points to a non existing requirement"
-        opts, config, reqset = create_parameters()
+        config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -68,17 +68,17 @@ class TestRDepSolvedBy:
                          {"Solved by": RecordEntry("Solved by", "C")})}
 
         config.set_solved_by()
-        rdep = RDepSolvedBy(opts, config)
+        rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        assert(status==False)
-        assert(reqset.mls()==MemLogStore.create_mls(
+        assert(status == False)
+        assert(reqset.mls() == MemLogStore.create_mls(
                 [[74, MemLog.error, "'Solved by' points to a non-existing "
                   "requirement 'C'", "B" ], ]))
 
     def test_negative_04(self):
         "'Solved by' points to same requirement"
-        opts, config, reqset = create_parameters()
+        config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -88,17 +88,17 @@ class TestRDepSolvedBy:
                          {"Solved by": RecordEntry("Solved by", "B")})}
 
         config.set_solved_by()
-        rdep = RDepSolvedBy(opts, config)
+        rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        assert(status==False)
-        assert(reqset.mls()==MemLogStore.create_mls(
+        assert(status == False)
+        assert(reqset.mls() == MemLogStore.create_mls(
                 [[75, MemLog.error, "'Solved by' points to the requirement "
                   "itself", "B" ], ]))
 
     def test_negative_05(self):
         "Set without any master requirement"
-        opts, config, reqset = create_parameters()
+        config, reqset = create_parameters()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_requirement},
@@ -108,9 +108,9 @@ class TestRDepSolvedBy:
                          {"Solved by": RecordEntry("Solved by", "A")})}
 
         config.set_solved_by()
-        rdep = RDepSolvedBy(opts, config)
+        rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        assert(status==False)
-        assert(reqset.mls()==MemLogStore.create_mls(
+        assert(status == False)
+        assert(reqset.mls() == MemLogStore.create_mls(
                 [[78, MemLog.error, "no master requirement found"], ]))

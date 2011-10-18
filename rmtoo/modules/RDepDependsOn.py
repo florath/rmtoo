@@ -26,9 +26,8 @@ class RDepDependsOn(Digraph.Node):
     depends_on = []
     tag = "Depends on"
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "RDepDependsOn")
-        self.opts = opts
         self.config = config
 
     def type(self):
@@ -49,7 +48,7 @@ class RDepDependsOn(Digraph.Node):
             rr.graph_depends_on = None
             # This is the master!
             # Check if there is already another master:
-            if reqset.graph_master_node!=None:
+            if reqset.graph_master_node != None:
                 print("+++ ERROR %s: Another master is already there. "
                       "There can only be one." % (rr.id))
                 return False
@@ -66,10 +65,10 @@ class RDepDependsOn(Digraph.Node):
                   "no 'Depends on' field." % (rr.id))
             return False
 
-        t = rr.brmo[self.tag] 
+        t = rr.brmo[self.tag]
 
         # If available, it must not empty
-        if len(t.get_content())==0:
+        if len(t.get_content()) == 0:
             print("+++ ERROR %s: 'Depends on' field has len 0" %
                   (rr.id))
             return False
@@ -83,7 +82,7 @@ class RDepDependsOn(Digraph.Node):
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
-            if ts==rr.id:
+            if ts == rr.id:
                 reqset.error(59, "'Depends on' points to the "
                              "requirement itself", rr.id)
                 return False
@@ -101,7 +100,9 @@ class RDepDependsOn(Digraph.Node):
         return True
 
     def rewrite(self, reqset):
-        if "Depends on" not in self.config.reqs_spec["dependency_notation"]:
+        if "Depends on" not in \
+            self.config.get_value_default(
+                    'requirements.dependency_notation', set()):
             return True
 
         # Check if the "Solved by" is also available in the config
@@ -117,7 +118,7 @@ class RDepDependsOn(Digraph.Node):
             if not self.rewrite_one_req(v, reqset, also_solved_by):
                 everythings_fine = False
         # Double check if one was found
-        if reqset.graph_master_node==None:
+        if reqset.graph_master_node == None:
             reqset.error(48, "no master requirement found")
             return False
         return everythings_fine

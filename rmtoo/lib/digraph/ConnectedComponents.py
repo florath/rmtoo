@@ -10,7 +10,7 @@
 from rmtoo.lib.RMTException import RMTException
 
 class CC_Components:
-    
+
     def __init__(self):
         self.cs = []
 
@@ -45,7 +45,7 @@ class CC_Components:
     def contract(self, n, v):
         gi, g = self.find(n)
         hi, h = self.find(v)
-        if g==h:
+        if g == h:
             # Already in one component - nothing to do
             return
         # Append elements from h to g
@@ -59,7 +59,7 @@ def connected_components(dg):
     components = CC_Components()
 
     for n in dg.nodes:
-        # Each node itself is a seperate component
+        # Each node itself is a separate component
         components.add_component(n)
 
     for n in dg.nodes:

@@ -31,12 +31,11 @@ class RequirementSet(Digraph, MemLogStore):
     er_fine = 0
     er_error = 1
 
-    def __init__(self, mods, opts, config):
+    def __init__(self, mods, config):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         self.reqs = {}
         self.mods = mods
-        self.opts = opts
         # The requirement set is only (fully) usable, when everything
         # is fine.
         self.state = self.er_fine
@@ -99,11 +98,11 @@ class RequirementSet(Digraph, MemLogStore):
         files = os.listdir(directory)
         for f in files:
             m = re.match("^.*\.req$", f)
-            if m==None:
+            if m == None:
                 continue
             rid = f[:-4]
             fd = codecs.open(os.path.join(directory, f), "r", "utf-8")
-            req = Requirement(fd, rid, self, self.mods, self.opts, self.config)
+            req = Requirement(fd, rid, self, self.mods, self.config)
             if req.ok():
                 # Store in the map, so that it is easy to access the
                 # node by id.
@@ -137,11 +136,11 @@ class RequirementSet(Digraph, MemLogStore):
         files = os.listdir(directory)
         for f in files:
             m = re.match("^.*\.ctr$", f)
-            if m==None:
+            if m == None:
                 continue
             rid = f[:-4]
             fd = codecs.open(os.path.join(directory, f), "r", "utf-8")
-            cnstrnt = Constraint(fd, rid, self, self.mods, 
+            cnstrnt = Constraint(fd, rid, self, self.mods,
                                  self.opts, self.config)
             if cnstrnt.ok():
                 # Store in the map, so that it is easy to access the
@@ -159,7 +158,7 @@ class RequirementSet(Digraph, MemLogStore):
     def handle_modules_reqdeps(self):
         for module in self.mods.reqdeps_sorted:
             state = module.rewrite(self)
-            if state==False:
+            if state == False:
                 # Some sematic error occured.
                 self.state = self.er_error
                 # Do not continue - return immediately, because some
@@ -170,7 +169,7 @@ class RequirementSet(Digraph, MemLogStore):
         alls_fine = True
         for r in self.reqs:
             rr = self.reqs[r]
-            if len(rr.brmo)>0:
+            if len(rr.brmo) > 0:
                 self.error(57, "No tag handler found for tag(s) '%s' "
                            "- Hint: typo in tag(s)?" % rr.brmo.keys(), rr.id)
                 alls_fine = False
@@ -192,14 +191,14 @@ class RequirementSet(Digraph, MemLogStore):
 
     def is_usable(self):
         return self.state == self.er_fine
-        
+
     def set_version_id(self, vid):
         self.version_id = vid
 
     def own_write_analytics_result(self, mstderr):
         for k, v in sorted(self.analytics.items(),
                            key=operator.itemgetter(0)):
-            if v[0]<0:
+            if v[0] < 0:
                 mstderr.write("+++ Error:Analytics:%s:result is '%+3d'\n"
                               % (k, v[0]))
                 for l in v[1]:
@@ -220,11 +219,11 @@ class RequirementSet(Digraph, MemLogStore):
             onodes = []
             for n in r.incoming:
                 onodes.append(n.name)
-            
+
             # If the onodes is empty: There must no old 'Solved by'
             # tag available - if so something completey strange has
             # happens and it is better to stop directly.
-            if len(onodes)==0:
+            if len(onodes) == 0:
                 assert(not r.record.is_tag_available("Solved by"))
                 # Looks that everything is ok: continue
                 continue

@@ -6,7 +6,7 @@
 #
 #  Collection of all topics.
 #  Note that the TopicSet is a tree where the leaves are 
-#  orders - i.e. it is not possible to put them into a set.
+#  orders - i.e. it is not possible to put them into a set_value.
 #
 # (c) 2010-2011 by flonatel
 #
@@ -72,7 +72,7 @@ class TopicSet(Digraph, MemLogStore):
     # - to differentiate between the non-existance of a topic vs a
     # topic which is not a children of the currently chosen topic.
     def read_all_topic_names(self, tdir):
-        self.all_topic_names = set()
+        self.all_topic_names = set_value()
         for f in os.listdir(tdir):
             # Ignore Emacs Backup Files
             if f.endswith(".tic~"):
@@ -139,8 +139,8 @@ class TopicSet(Digraph, MemLogStore):
         for _, req in r.reqs.iteritems():
             req.internal_copy_phase2(old2new)
 
-        # Now there is a fully limited version of the requirement set
-        # to the topic set.  Assign the requirements to the given
+        # Now there is a fully limited version of the requirement set_value
+        # to the topic set_value.  Assign the requirements to the given
         # topics.
         self.internal_depict(r)
 

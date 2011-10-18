@@ -18,8 +18,8 @@ class ReqInventedOn(ReqTagGeneric):
     tag = "Invented on"
     ltype = set(["reqtag", "ctstag"])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         # This tag (Invented on) is mandatory

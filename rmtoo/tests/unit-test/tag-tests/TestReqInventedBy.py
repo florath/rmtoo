@@ -19,37 +19,38 @@ class TestReqInventedBy:
 
     def test_positive_01(self):
         "Requirement Tag Invented by - tag given"
-        opts, config, req = create_parameters()
-        config.inventors = ["meinereiner", "keinerseiner"]
+        config, req = create_parameters()
+        config.set_value('requirements.inventors',
+                         ["meinereiner", "keinerseiner"])
         req["Invented by"] = RecordEntry("Invented by", "meinereiner")
 
-        rt = ReqInventedBy(opts, config)
+        rt = ReqInventedBy(config)
         name, value = rt.rewrite("InventedBy-test", req)
-        assert(name=="Invented by")
-        assert(value=="meinereiner")
+        assert(name == "Invented by")
+        assert(value == "meinereiner")
 
     def test_negative_01(self):
         "Requirement Tag Invented by - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         config.inventors = ["meinereiner", "keinerseiner"]
 
-        rt = ReqInventedBy(opts, config)
+        rt = ReqInventedBy(config)
         try:
             name, value = rt.rewrite("InventedBy-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==5)
+            assert(rmte.id() == 5)
 
     def test_negative_02(self):
         "Requirement Tag Invented by - invalid tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         config.inventors = ["meinereiner", "keinerseiner"]
         req["Invented by"] = RecordEntry("Invented by", "MeinNameIstHase")
 
-        rt = ReqInventedBy(opts, config)
+        rt = ReqInventedBy(config)
         try:
             name, value = rt.rewrite("InventedBy-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==6)
+            assert(rmte.id() == 6)
 

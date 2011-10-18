@@ -17,14 +17,13 @@ from rmtoo.lib.RMTException import RMTException
 class RDepOneComponent(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "RDepOneComponent")
-        self.opts = opts
         self.config = config
-    
+
     def type(self):
         return set(["reqdeps", ])
-    
+
     def set_modules(self, mods):
         self.mods = mods
 
@@ -33,7 +32,7 @@ class RDepOneComponent(Digraph.Node):
     # components.
     def rewrite(self, reqset):
         components = connected_components(reqset)
-        if components.len()==1:
+        if components.len() == 1:
             # Everything is ok: graph is connected
             return True
 

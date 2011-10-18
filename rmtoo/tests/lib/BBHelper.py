@@ -20,7 +20,7 @@ def tmp_dir():
     return os.environ["rmtoo_test_dir"]
 
 def find(mdir):
-    r = set()
+    r = set_value()
     for d, _, files in os.walk(mdir):
         for f in files:
             o = os.path.join(d, f)

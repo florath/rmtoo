@@ -15,6 +15,7 @@ import StringIO
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RmtooMain import execute_cmds
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class TestReqsCont:
 
@@ -23,15 +24,15 @@ class TestReqsCont:
         try:
             tdir = tempfile.mkdtemp(prefix="rmtoo-tst-ctnt-")
 
-            class Config:
-                reqs_spec = {"commit_interval": ["v1", "v7"],
-                             "directory": tdir }
-                
-            ReqsContinuum(None, None, Config)
+            config = Cfg()
+            config.set_value('commit_interval', ["v1", "v7"])
+            config.set_value('directory', tdir)
+
+            ReqsContinuum(None, config)
             assert(False)
         except RMTException, rmte:
             shutil.rmtree(tdir)
-            assert(rmte.id()==40)
+            assert(rmte.id() == 40)
 
     def test_neg_02(self):
         "ReqsContinuum: check exception when vcs is needed but not available \
@@ -39,15 +40,15 @@ class TestReqsCont:
 
         tdir = tempfile.mkdtemp(prefix="rmtoo-tst-ctnt-")
 
-        class Config:
-            reqs_spec = {"commit_interval": ["v1", "v7"],
-                         "directory": tdir }
+        config = Cfg()
+        config.set_value('commit_interval', ["v1", "v7"])
+        config.set_value('directory', tdir)
 
         mstderr = StringIO.StringIO()
 
-        rval = execute_cmds(None, Config, None, None, mstderr)
+        rval = execute_cmds(config, None, None, mstderr)
 
-        assert(rval==False)
-        assert(mstderr.getvalue()=="+++ ERROR: Problem reading in "
+        assert(rval == False)
+        assert(mstderr.getvalue() == "+++ ERROR: Problem reading in "
                "the continuum: '[  40]: Based on the config '['v1', 'v7']' "
                "a repository is needed - but there is none'")

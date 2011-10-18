@@ -14,7 +14,7 @@ import json
 import os
 
 from rmtoo.lib.configuration.Cfg import Cfg
-from rmtoo.lib.configuration.CfgEx import CfgEx
+from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 class TestConfiguration(unittest.TestCase):
@@ -23,12 +23,12 @@ class TestConfiguration(unittest.TestCase):
         '''Checks the empty configuration with different types of parameters'''
         config = Cfg()
 
-        self.failUnlessRaises(CfgEx, config.get_value, "k")
-        self.failUnlessRaises(CfgEx, config.get_value, "k.i")
-        self.failUnlessRaises(CfgEx, config.get_value, "k.i.j")
-        self.failUnlessRaises(CfgEx, config.get_value, ['k'])
-        self.failUnlessRaises(CfgEx, config.get_value, ['k', 'i'])
-        self.failUnlessRaises(CfgEx, config.get_value, ['k', 'i', 'j'])
+        self.failUnlessRaises(RMTException, config.get_value, "k")
+        self.failUnlessRaises(RMTException, config.get_value, "k.i")
+        self.failUnlessRaises(RMTException, config.get_value, "k.i.j")
+        self.failUnlessRaises(RMTException, config.get_value, ['k'])
+        self.failUnlessRaises(RMTException, config.get_value, ['k', 'i'])
+        self.failUnlessRaises(RMTException, config.get_value, ['k', 'i', 'j'])
 
     def test_json_str(self):
         '''Checks JSON string handling of the configuration class'''

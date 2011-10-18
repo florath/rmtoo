@@ -57,18 +57,18 @@ class MemLog:
     # called with a list
     @staticmethod
     def create_ml(l):
-        llen=len(l)
-        assert(llen>=3)
-        assert(llen<=5)
+        llen = len(l)
+        assert(llen >= 3)
+        assert(llen <= 5)
 
         ml = MemLog(l[0], l[1], l[2])
 
-        if llen>3:
+        if llen > 3:
             ml.efile = l[3]
         else:
             ml.efile = None
 
-        if llen>4:
+        if llen > 4:
             ml.eline = l[4]
         else:
             ml.eline = None
@@ -82,38 +82,38 @@ class MemLog:
         # This implies IMHO to move the levels to a sperate class.
         r.append(self.level)
         r.append(self.msg)
-        if self.efile!=None:
+        if self.efile != None:
             r.append(self.efile)
-            if self.eline!=None:
+            if self.eline != None:
                 r.append(self.eline)
         else:
-            if self.eline!=None:
+            if self.eline != None:
                 r.append(None)
                 r.append(self.eline)
         return r
 
     def write_log(self, fd):
-        if self.level==self.error:
+        if self.level == self.error:
             fd.write("+++ Error:")
-        elif self.level==self.warning:
+        elif self.level == self.warning:
             fd.write("+++ Warning:")
 
         fd.write("%3d:" % self.lid)
 
-        if self.efile!=None:
+        if self.efile != None:
             fd.write("%s:" % self.efile)
-        if self.eline!=None:
+        if self.eline != None:
             fd.write("%s:" % self.eline)
-        
+
         fd.write("%s" % self.msg)
         fd.write("\n")
 
     def __eq__(self, other):
-        return self.lid==other.lid \
-            and self.level==other.level \
-            and self.efile==other.efile \
-            and self.eline==other.eline \
-            and self.msg==other.msg
+        return self.lid == other.lid \
+            and self.level == other.level \
+            and self.efile == other.efile \
+            and self.eline == other.eline \
+            and self.msg == other.msg
 
 # This is an in memory log message storage.
 # It is mainly used when reading in old / historic requirments. When
@@ -147,11 +147,11 @@ class MemLogStore(object):
 
     # Construct log message from exception
     def error_from_rmte(self, rmte):
-        self.logs.append(MemLog(rmte.get_id(), MemLog.error, 
-                                rmte.get_msg(), rmte.get_efile(), 
+        self.logs.append(MemLog(rmte.get_id(), MemLog.error,
+                                rmte.get_msg(), rmte.get_efile(),
                                 rmte.get_eline()))
 
-    # Method for creating a fully new blown set of log messages:
+    # Method for creating a fully new blown set_value of log messages:
     # usable for e.g. test cases.
     @staticmethod
     def create_mls(ll):
@@ -171,7 +171,7 @@ class MemLogStore(object):
     # For comparison (also mostly used in test-cases) the eq operator
     # must be defined.
     def __eq__(self, other):
-        return self.logs==other.logs
+        return self.logs == other.logs
 
     def mls(self):
         return self

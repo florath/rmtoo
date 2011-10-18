@@ -14,8 +14,8 @@ class ReqInventedBy(ReqTagGeneric):
     tag = "Invented by"
     ltype = set(["reqtag", "ctstag"])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         # This tag (Invented by) is mandatory
@@ -23,7 +23,7 @@ class ReqInventedBy(ReqTagGeneric):
 
         t = req[self.tag].get_content()
         # This must be one of the inventors
-        if t not in self.config.inventors:
+        if t not in self.config.get_value('requirements.inventors'):
             raise RMTException(6, "Invalid invented by '%s'. Must be one "
                                "of the inventors '%s'" %
                                (t, self.config.inventors), rid)

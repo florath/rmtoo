@@ -21,7 +21,7 @@ class TestRequirement:
         sio = StringIO.StringIO("DTag: content1\n"
                                 "DTag: content2\n")
         try:
-            req = Requirement(sio, 1, MemLogStore(), None, None, TestConfig())
+            req = Requirement(sio, 1, MemLogStore(), None, TestConfig())
             assert(False)
         except RMTException, rmte:
-            assert(rmte.get_id()==81)
+            assert(rmte.get_id() == 81)

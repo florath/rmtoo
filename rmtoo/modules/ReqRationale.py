@@ -15,9 +15,9 @@ class ReqRationale(ReqTagGeneric):
     tag = "Rationale"
     ltype = set(["reqtag", "ctstag"])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         return self.handle_optional_tag(req)
-    
+

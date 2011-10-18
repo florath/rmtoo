@@ -21,46 +21,46 @@ class TestReqStatus:
 
     def test_positive_01(self):
         "Requirement Tag Status - tag given 'not done'"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "not done")
 
-        rt = ReqStatus(opts, config)
+        rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        assert(name=="Status")
+        assert(name == "Status")
         assert(isinstance(value, RequirementStatusNotDone))
 
     def test_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "finished")
 
-        rt = ReqStatus(opts, config)
+        rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        assert(name=="Status")
+        assert(name == "Status")
         assert(isinstance(value, RequirementStatusFinished))
-        assert(value.get_person()==None)
-        assert(value.get_duration()==None)
+        assert(value.get_person() == None)
+        assert(value.get_duration() == None)
 
     def test_negative_01(self):
         "Requirement Tag Status - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqStatus(opts, config)
+        rt = ReqStatus(config)
         try:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==16)
+            assert(rmte.id() == 16)
 
     def test_negative_02(self):
         "Requirement Tag Status - invalid tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "dasjibtedjarnich")
 
-        rt = ReqStatus(opts, config)
+        rt = ReqStatus(config)
         try:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==91)
+            assert(rmte.id() == 91)
 

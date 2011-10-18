@@ -34,9 +34,9 @@ class Requirement(Digraph.Node, BaseRMObject):
     rt_design_decision = 3
     rt_requirement = 4
 
-    def __init__(self, fd, rid, mls, mods, opts, config):
+    def __init__(self, fd, rid, mls, mods, config):
         Digraph.Node.__init__(self, rid)
-        BaseRMObject.__init__(self, "reqtag", fd, rid, mls, mods, opts, 
+        BaseRMObject.__init__(self, "reqtag", fd, rid, mls, mods,
                               config, "requirements")
 
 ### Looks that these functions are not used at all
@@ -61,7 +61,7 @@ class Requirement(Digraph.Node, BaseRMObject):
     # Returns the EfE units or 0 if not available.
     def get_efe_or_0(self):
         efe = self.get_value("Effort estimation")
-        if efe==None:
+        if efe == None:
             return 0
         return efe
 
@@ -72,11 +72,11 @@ class Requirement(Digraph.Node, BaseRMObject):
     def write_analytics_result(self, mstderr):
         for k, v in sorted(self.analytics.items(),
                            key=operator.itemgetter(0)):
-            if v[0]<0:
+            if v[0] < 0:
                 mstderr.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
                               % (k, self.id, v[0]))
                 for l in v[1]:
-                    mstderr.write("+++ Error:Analytics:%s:%s:%s\n" % 
+                    mstderr.write("+++ Error:Analytics:%s:%s:%s\n" %
                                   (k, self.id, l))
 
     # The following functions are declared internal because they are
@@ -121,4 +121,4 @@ class Requirement(Digraph.Node, BaseRMObject):
         for o in self.incoming:
             incoming.append(old2new[o])
         self.incoming = incoming
-        
+

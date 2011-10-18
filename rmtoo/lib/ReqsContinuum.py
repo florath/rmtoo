@@ -24,9 +24,8 @@ class ReqsContinuum:
 
     commit_bulk_size = 10
 
-    def __init__(self, mods, opts, config):
+    def __init__(self, mods, config):
         self.mods = mods
-        self.opts = opts
         self.config = config
 
         # This is the list of all requirements sets - ordered by time.
@@ -52,11 +51,13 @@ class ReqsContinuum:
     def repo_access_needed(self):
         # Only if FILES:FILES is specified, there is no need to access
         # the repo.
-        return self.config.reqs_spec["commit_interval"]!=["FILES", "FILES"]
+        return self.config.reqs_spec["commit_interval"] != ["FILES", "FILES"]
 
     def init_continuum(self):
-        start_vers = self.config.reqs_spec["commit_interval"][0]
-        end_vers = self.config.reqs_spec["commit_interval"][1]
+        start_vers = self.config.get_value(
+            'requirements.input.commit_interval.begin')
+        end_vers = self.config.get_value(
+            'requirements.input.commit_interval.end')
 
         # Should the repo be accessed?
         if self.repo_access_needed():
@@ -68,14 +69,14 @@ class ReqsContinuum:
                         "commit_interval"])
 
         # Maybe add also the FILES:
-        if end_vers=="FILES":
+        if end_vers == "FILES":
             self.create_continuum_from_file()
         # Maybe add also some old versions
-        if start_vers!="FILES":
+        if start_vers != "FILES":
             # When there is FILES given as last parameter - get
             # everything from start_vers upto HEAD
             end_repo = end_vers
-            if end_vers=="FILES":
+            if end_vers == "FILES":
                 end_repo = "HEAD"
             self.create_continuum_from_vcs(start_vers, end_repo)
 

@@ -23,13 +23,13 @@ class ReqEffortEst(ReqTagGeneric):
 
     valid_values = [0, 1, 2, 3, 5, 8, 13, 21, 34]
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
     	# This is optional
         tag, value = self.handle_optional_tag(req)
-        if value==None:
+        if value == None:
             return tag, value
 
         v = int(value.get_content())

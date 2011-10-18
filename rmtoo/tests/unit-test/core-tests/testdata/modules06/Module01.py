@@ -13,7 +13,7 @@ from rmtoo.lib.RMTException import RMTException
 class Module01(Digraph.Node):
     depends_on = []
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "Module01")
 
     def type(self):

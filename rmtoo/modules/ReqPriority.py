@@ -23,8 +23,8 @@ class ReqPriority(ReqTagGeneric):
     tag = "Priority"
     ltype = set(["reqtag", ])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
@@ -41,12 +41,12 @@ class ReqPriority(ReqTagGeneric):
         priority_done = []
         for l in lop:
             p = l.split(":", 1)
-            if len(p)!=2 or len(p[1])==0:
+            if len(p) != 2 or len(p[1]) == 0:
                 raise RMTException(12, "%s: faulty priority declaration '%s'"
                                    % (rid, l))
             # p[0] is the stakeholder
             # p[1] is the given priority
-            if p[0] not in self.config.stakeholders:
+            if p[0] not in self.config.get_value('stakeholders'):
                 raise RMTException(13, "%s: stakeholder '%s' not known"
                                    % (rid, p[0]))
             if p[0] in priority_done:
@@ -55,15 +55,15 @@ class ReqPriority(ReqTagGeneric):
             # Convert it to a float - so it's easier to compare.
             f = float(p[1])
             # Check if in valid range [0..10]
-            if f<0 or f>10:
+            if f < 0 or f > 10:
                 raise RMTException(15, "%s: invalid priority '%f' - must "
                                    "be between 0 and 10" % (rid, f))
             # Compute new sum...
-            priority_sum += f/10
+            priority_sum += f / 10
             # ... and increase the stakeholders count.
             num_stakeholders += 1
             # Flag stakeholder that he voted already
             priority_done.append(p[0])
 
         del req[self.tag]
-        return "Factor", priority_sum/float(num_stakeholders)
+        return "Factor", priority_sum / float(num_stakeholders)

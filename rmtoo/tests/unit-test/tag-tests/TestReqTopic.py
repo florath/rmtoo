@@ -19,21 +19,21 @@ class TestReqTopic:
 
     def test_positive_01(self):
         "Requirement Tag Topic - tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Topic"] = RecordEntry("Topic", "This is something")
 
-        rt = ReqTopic(opts, config)
+        rt = ReqTopic(config)
         name, value = rt.rewrite("Topic-test", req)
-        assert(name=="Topic")
-        assert(value=="This is something")
+        assert(name == "Topic")
+        assert(value == "This is something")
 
     def test_negative_01(self):
         "Requirement Tag Topic - no Topic set"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqTopic(opts, config)
+        rt = ReqTopic(config)
         try:
             name, value = rt.rewrite("Topic-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==9)
+            assert(rmte.id() == 9)

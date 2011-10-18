@@ -23,8 +23,8 @@ class ReqClass(ReqTagGeneric):
     tag = "Class"
     ltype = set(["reqtag", ])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         # This tag (Class) is mandatory optional

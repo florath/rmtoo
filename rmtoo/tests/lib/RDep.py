@@ -16,15 +16,15 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 class ReqSet(Digraph, MemLogStore):
 
     def __init__(self, d=None):
-        Digraph.__init__(self, d, 
-                         lambda nname: Requirement(None, nname, None, 
-                                                   None, None, None))
+        Digraph.__init__(self, d,
+                         lambda nname: Requirement(None, nname, None,
+                                                   None, None))
         MemLogStore.__init__(self)
 
 # Create a set of parameters for the test-cases
 def create_parameters(d=None):
     tconfig = TestConfig()
-    return {}, tconfig, ReqSet(d)
+    return tconfig, ReqSet(d)
 
 # This is a test (minimalistic) requirement
 class TestReq(Digraph.Node):

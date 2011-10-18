@@ -16,9 +16,8 @@ class RDepSolvedBy(Digraph.Node):
     depends_on = []
     tag = "Solved by"
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "RDepSolvedBy")
-        self.opts = opts
         self.config = config
 
     def type(self):
@@ -34,7 +33,7 @@ class RDepSolvedBy(Digraph.Node):
             rr.graph_depends_on = None
             # This is the master!
             # Check if there is already another master:
-            if reqset.graph_master_node!=None:
+            if reqset.graph_master_node != None:
                 reqset.error(76, "Another master is already there. "
                              "There can only be one.", rr.id)
                 return False
@@ -48,7 +47,7 @@ class RDepSolvedBy(Digraph.Node):
 
         t = rr.brmo[self.tag].get_content()
         # If available, it must not empty
-        if len(t)==0:
+        if len(t) == 0:
             reqset.error(77, "'Solved by' field has len 0", rr.id)
             return False
 
@@ -61,7 +60,7 @@ class RDepSolvedBy(Digraph.Node):
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
-            if ts==rr.id:
+            if ts == rr.id:
                 reqset.error(75, "'Solved by' points to the "
                              "requirement itself", rr.id)
                 return False
@@ -91,7 +90,7 @@ class RDepSolvedBy(Digraph.Node):
             if not self.rewrite_one_req(v, reqset):
                 everythings_fine = False
         # Double check if one was found
-        if reqset.graph_master_node==None:
+        if reqset.graph_master_node == None:
             reqset.error(78, "no master requirement found")
             return False
         return everythings_fine

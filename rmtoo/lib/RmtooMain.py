@@ -47,11 +47,11 @@ def parse_cmd_line_opts(args):
 
     return options
 
-def execute_cmds(opts, config, mods, mstdout, mstderr):
+def execute_cmds(config, mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     try:
-        rc = ReqsContinuum(mods, opts, config)
+        rc = ReqsContinuum(mods, config)
         reqs = rc.continuum_latest()
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
@@ -103,9 +103,8 @@ def execute_cmds(opts, config, mods, mstdout, mstderr):
     return True
 
 def main_impl(args, mstdout, mstderr):
-    opts, config, mods = MainHelper.main_setup(args, mstdout, mstderr,
-                                               parse_cmd_line_opts)
-    return execute_cmds(opts, config, mods, mstdout, mstderr)
+    config, mods = MainHelper.main_setup(args, mstdout, mstderr)
+    return execute_cmds(config, mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     '''The main entry function

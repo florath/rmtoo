@@ -27,10 +27,10 @@ class TestOutputLaTeX2:
     def test_positive_01(self):
         "LaTeX output: check config"
 
-        mconfig = { "req_attributes": ["Id", "Priority",]}
+        mconfig = { "req_attributes": ["Id", "Priority", ]}
 
         l = latex2([None, None, mconfig])
-        assert(l.config==mconfig)
+        assert(l.config == mconfig)
 
     def test_neg_01(self):
         "LaTeX output: check invalid tag in topic"
@@ -51,9 +51,9 @@ class TestOutputLaTeX2:
         fd = StringIO.StringIO()
 
         mconfig = { "req_attributes": ["Status", "Class", "DoesNotExists"]}
-        
+
         l2 = latex2([None, None, mconfig])
-        req = Requirement(None, "TestReq", None, None, None, None)
+        req = Requirement(None, "TestReq", None, None, None)
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")
         req.values["Description"] = RecordEntry("Description", "my desc")
@@ -64,7 +64,7 @@ class TestOutputLaTeX2:
         ce3set = CE3Set()
         ce3 = CE3()
         ce3set.insert("TestReq", ce3)
-               
+
         try:
             l2.output_requirement(fd, req, 2, ce3set)
             assert(False)

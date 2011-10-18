@@ -55,9 +55,9 @@ class CE3:
 
     # Try to unite all given ce3s into the local ce3
     def unite(self, oce3s):
-        okeys = set()
+        okeys = set_value()
         for o in oce3s:
-            okeys = okeys.union(set(o.get_keys()))
+            okeys = okeys.union(set_value(o.get_keys()))
  
         for k in okeys:
             # Is the key locally available?

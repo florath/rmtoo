@@ -16,8 +16,8 @@ class ReqDescription(ReqTagGeneric):
     tag = "Description"
     ltype = set(["reqtag", "ctstag"])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
         # This tag (Description) is mandatory
@@ -30,10 +30,10 @@ class ReqDescription(ReqTagGeneric):
         # in requirements (like 'or' or 'and')
         # ToDo: Check for words which must appear in a requirement,
         # like 'have to' or 'must'.
-        if len(t.get_content())>1024:
+        if len(t.get_content()) > 1024:
             raise RMTException(3, "%s: Description is much too long: "
                                "%d characters" % (rid, len(t.get_content())))
-        if len(t.get_content())>255:
+        if len(t.get_content()) > 255:
             print("+++ WARNING %s: Description is too long: %d characters"
                   % (rid, len(t.get_content())))
             print("+++          Please consider split up this requirement")
@@ -41,4 +41,4 @@ class ReqDescription(ReqTagGeneric):
         del req[self.tag]
 
         return self.tag, t
-            
+

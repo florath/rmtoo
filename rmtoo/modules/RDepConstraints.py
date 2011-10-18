@@ -19,15 +19,14 @@ from rmtoo.lib.RMTException import RMTException
 
 class RDepConstraints(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
-    
-    def __init__(self, opts, config):
+
+    def __init__(self, config):
         Digraph.Node.__init__(self, "RDepConstraints")
-        self.opts = opts
         self.config = config
 
     def type(self):
         return set(["reqdeps", ])
-    
+
     def set_modules(self, mods):
         self.mods = mods
 
@@ -35,7 +34,7 @@ class RDepConstraints(Digraph.Node):
     @staticmethod
     def get_ctr_name(s):
         i = s.find("(")
-        if i==-1:
+        if i == -1:
             print("+++ Error: no '(' in constraints")
             print("ASSERT %s" % s)
             # Throw: does not contain (
@@ -54,7 +53,7 @@ class RDepConstraints(Digraph.Node):
         for k, v in reqset.reqs.items():
             ce3 = CE3()
             cstrnts = v.get_value("Constraints")
-            if cstrnts!=None:
+            if cstrnts != None:
                 sval = json.loads(cstrnts.get_content())
                 cs = {}
                 for s in sval:

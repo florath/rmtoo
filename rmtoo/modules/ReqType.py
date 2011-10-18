@@ -29,8 +29,8 @@ class ReqType(ReqTagGeneric):
         [ "requirement", Requirement.rt_requirement ],
         ]
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
         # Precompute once for all the rewrites
         self.type_keys = []
@@ -40,7 +40,7 @@ class ReqType(ReqTagGeneric):
     # Find a type fromt the above list.
     def find_type(self, tag):
         for t in self.types:
-            if tag==t[0]:
+            if tag == t[0]:
                 return t
         return None
 
@@ -50,7 +50,7 @@ class ReqType(ReqTagGeneric):
 
         t = req[self.tag].get_content()
         rt = self.find_type(t)
-        if rt==None:
+        if rt == None:
             raise RMTException(19, "%s: invalid type field '%s': "
                                    "must be one of '%s'" %
                                (rid, t, self.type_keys))

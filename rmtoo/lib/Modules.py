@@ -34,23 +34,22 @@ class Modules(Digraph):
         # access as well as for module name handling.
         # The local directory must be handled in a special way
         # (because there is no way to ".".join("."))
-        if directory==".":
+        if directory == ".":
             dir_components = []
         else:
             dir_components = directory.split("/")
             # When using an absolute path, the first component is
             # empty though! Remove this and prepend a / for the next
             # one. 
-            if len(dir_components)>0 and dir_components[0]=="":
+            if len(dir_components) > 0 and dir_components[0] == "":
                 dir_components[0] = "/"
         return dir_components
 
     # Read in the modules directory
-    def __init__(self, directory, opts, config,
-                 add_dir_components = ["rmtoo", "modules"],
-                 mod_components = ["rmtoo", "modules"]):
+    def __init__(self, directory, config,
+                 add_dir_components=["rmtoo", "modules"],
+                 mod_components=["rmtoo", "modules"]):
         Digraph.__init__(self)
-        self.opts = opts
         self.config = config
 
         # The different types of tags
@@ -82,14 +81,13 @@ class Modules(Digraph):
             mc.append(modulename)
 
             # Import module
-            #print("Loading module '%s' from '%s'" %
-            #      (modulename, ".".join(mod_components)))
+            print("Loading module '%s' from '%s'" %
+                  (modulename, ".".join(mod_components)))
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 
             # Create object from the module
-            o = eval("module.%s(self.opts, self.config)"
-                     % modulename)
+            o = eval("module.%s(self.config)" % modulename)
             # Query the object itself which type it is
             types = o.type()
             # Add the objects to the appropriate directory
@@ -123,7 +121,7 @@ class Modules(Digraph):
                                        "'%s' - which does not exists"
                                        % (mod_name, n))
                 self.create_edge(mod, self.tagtypes["reqdeps"][n])
-    
+
     # This does check if there is a directed circle (e.g. an strongly
     # connected component) in the modules graph.
     def check_for_circles(self):

@@ -10,12 +10,16 @@
 #
 
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class TestTxtIOConfig:
 
     def test_pos_01(self):
         "TxtIOConfig: check new max line length setting"
-        config = {"max_line_length": 77}
-        tic = TxtIOConfig(config)
+        config = Cfg()
+        config.set_value(['input', 'txtfile', 'requirement',
+                          'max_line_length'], 77)
 
-        assert(tic.get_max_line_length()==77)
+        tic = TxtIOConfig(config, 'requirement')
+
+        assert(tic.get_max_line_length() == 77)

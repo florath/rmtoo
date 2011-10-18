@@ -19,20 +19,20 @@ class TestReqRationale:
 
     def test_positive_01(self):
         "Requirement Tag Rationale - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqRationale(opts, config)
+        rt = ReqRationale(config)
         name, value = rt.rewrite("Rationale-test", req)
-        assert(name=="Rationale")
-        assert(value==None)
+        assert(name == "Rationale")
+        assert(value == None)
 
     def test_positive_02(self):
         "Requirement Tag Rationale - Rationale set"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req = {"Rationale": RecordEntry("Rationale", "something")}
 
-        rt = ReqRationale(opts, config)
+        rt = ReqRationale(config)
         name, value = rt.rewrite("Rationale-test", req)
-        assert(name=="Rationale")
-        assert(value.get_content()=="something")
+        assert(name == "Rationale")
+        assert(value.get_content() == "something")
 

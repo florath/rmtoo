@@ -13,25 +13,25 @@ class MyTag(ReqTagGeneric):
     tag = "mytag"
     ltype = set(["reqtag", ])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
-    
+
 class TestGenericTag:
 
     def test_positive_01(self):
         "Generic Tag: construction"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
 
     def test_positive_02(self):
         "Generic Tag: type()"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
         t = mt.type()
-        assert(t==set(["reqtag", ]))
+        assert(t == set(["reqtag", ]))
 
     def test_positive_03(self):
         "Generic Tag: mandatory tag"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
 
         rid = "Generic-Test-Id"
         r = {"mytag": "some value"}
@@ -40,27 +40,27 @@ class TestGenericTag:
 
     def test_positive_04(self):
         "Generic Tag: optional tag (available)"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
 
         r = {"mytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        assert(tag=="mytag")
-        assert(v=="some value")
+        assert(tag == "mytag")
+        assert(v == "some value")
 
     def test_positive_05(self):
         "Generic Tag: optional tag (not available)"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
 
         r = {"notmytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        assert(tag=="mytag")
-        assert(v==None)
+        assert(tag == "mytag")
+        assert(v == None)
 
     def test_negative_01(self):
         "Generic Tag: mandatory tag not available"
-        mt = MyTag(None, None)
+        mt = MyTag(None)
 
         rid = "Generic-Test-Id"
         r = {"notmytag": "some value"}
@@ -69,5 +69,5 @@ class TestGenericTag:
             mt.check_mandatory_tag(rid, r, eid)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==112)
+            assert(rmte.id() == 112)
 

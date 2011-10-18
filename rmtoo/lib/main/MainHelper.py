@@ -13,6 +13,7 @@ import os
 
 from rmtoo.lib.ConfigUtils import ConfigUtils
 from rmtoo.lib.Modules import Modules
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class MainHelper:
 
@@ -30,8 +31,15 @@ class MainHelper:
         return config
 
     @staticmethod
-    def main_setup(args, mstdout, mstderr, parse_cmd_line_opts):
-        opts = parse_cmd_line_opts(args)
-        config = MainHelper.load_config(opts)
-        mods = Modules(opts.modules_directory, opts, config)
-        return opts, config, mods
+    def main_setup(args, mstdout, mstderr):
+        config = Cfg()
+        config.merge_cmd_line_params(args)
+        config.evaluate()
+
+        moddirs = config.get_value("global.modules.directories")
+        if len(moddirs) != 1:
+            # TODO Handle multiple module directories.
+            assert(False)
+
+        mods = Modules(moddirs[0], config)
+        return config, mods

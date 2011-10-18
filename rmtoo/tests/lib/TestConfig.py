@@ -1,19 +1,20 @@
-#
-# rmtoo
-#    Requirement Management Toolset
-#
-# Common methods for handling test config
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
-from rmtoo.lib.ConfigUtils import ConfigUtils
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Common methods for handling test configuration.
+   
+ (c) 2011 by flonatel GmhH & Co. KG
 
-class TestConfig:
+ For licensing details see COPYING
+'''
+
+from rmtoo.lib.configuration.Cfg import Cfg
+
+class TestConfig(Cfg):
 
     def __init__(self):
-        ConfigUtils.set_defaults(self)
+        Cfg.__init__(self)
 
     def set_solved_by(self):
-        self.reqs_spec["dependency_notation"] = "Solved by"
+        self.set_value('requirements.dependency_notation', "Solved by")

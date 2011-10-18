@@ -8,7 +8,7 @@
 #
 
 class Module01:
-    def __init__(self, opts, config):
+    def __init__(self, config):
         pass
 
     def type(self):

@@ -21,15 +21,15 @@ class TMods:
         return [1, 2, 3]
 
 class TBRMObj(BaseRMObject):
-    
+
     def __init__(self):
         sfd = StringIO.StringIO()
         tc = TestConfig()
-        tc.txtio = {"tobjs": TxtIOConfig()}
+        tc.set_value('input.txtfile.whatsoever.max_line_length', 80)
         tm = TMods()
         tm.tagtypes = {"mytag": {"keyA": TMods()}}
         self.mls = MemLogStore()
-        BaseRMObject.__init__(self, "mytag", sfd, "MRid", self.mls, tm, None, 
+        BaseRMObject.__init__(self, "mytag", sfd, "MRid", self.mls, tm, None,
                               tc, "tobjs")
 
 class TestBaseRMObject:
@@ -39,5 +39,5 @@ class TestBaseRMObject:
 
         tbrmo = TBRMObj()
 
-        assert(tbrmo.mls.to_list()==
+        assert(tbrmo.mls.to_list() ==
                [[90, 50, 'Wrong module type [mytag] not in [[1, 2, 3]]']])

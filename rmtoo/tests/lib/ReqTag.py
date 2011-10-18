@@ -8,9 +8,8 @@
 # For licencing details see COPYING
 #
 
-class TestConfig:
-    pass
+from rmtoo.lib.configuration.Cfg import Cfg
 
 def create_parameters():
-    return {}, TestConfig(), {}
+    return Cfg(), {}
 

@@ -12,7 +12,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 class Module01(Digraph.Node):
     depends_on = []
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "Module01")
 
     def type(self):
@@ -21,5 +21,5 @@ class Module01(Digraph.Node):
     def set_modules(self, mods):
         pass
 
-    def rewrite(self,reqset):
+    def rewrite(self, reqset):
         return True

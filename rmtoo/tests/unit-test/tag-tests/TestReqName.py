@@ -17,22 +17,22 @@ class TestReqName:
 
     def test_positive_01(self):
         "Requirement Tag Name - tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Name"] = "This is something"
 
-        rt = ReqName(opts, config)
+        rt = ReqName(config)
         name, value = rt.rewrite("Name-test", req)
-        assert(name=="Name")
-        assert(value=="This is something")
+        assert(name == "Name")
+        assert(value == "This is something")
 
     def test_negative_01(self):
         "Requirement Tag Name - no Name set"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqName(opts, config)
+        rt = ReqName(config)
         try:
             name, value = rt.rewrite("Name-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==37)
+            assert(rmte.id() == 37)
 

@@ -1,8 +1,12 @@
+
+# TODO: REMOVE
+# DEPRECATED! REMOVE THIS!
+
 #
 # rmtoo
 #   Free and Open Source Requirements Management Tool
 #
-# This class defines a method to set configuration parameters (which
+# This class defines a method to set_value configuration parameters (which
 # might be not available) to their default values.  This is seen as
 # the better way than every class implements it's own default parameter
 # handling:
@@ -42,19 +46,6 @@ class ConfigUtils:
         return {}
 
     @staticmethod
-    def set_defaults_parser(config):
-        config.txtio = {
-            "constraints": TxtIOConfig(
-                ConfigUtils.use_or_empty(config, "constraints")),
-            "requirements": TxtIOConfig(
-                ConfigUtils.use_or_empty(config, "requirements")),
-            "topics": TxtIOConfig(
-                ConfigUtils.use_or_empty(config, "topics")), }
-        # Remove the used things (to be sure that all use the same config)
-        if hasattr(config, "parser"):
-            del(config.parser)
-
-    @staticmethod
     def set_defaults_constraints(config):
         if not hasattr(config, "constraints_specs"):
             config.constraints_specs = {}
@@ -66,9 +57,7 @@ class ConfigUtils:
     @staticmethod
     def set_defaults(config):
         ConfigUtils.set_defaults_reqs_spec(config)
-        ConfigUtils.set_defaults_parser(config)
         ConfigUtils.set_defaults_constraints(config)
-
 
     #####
 

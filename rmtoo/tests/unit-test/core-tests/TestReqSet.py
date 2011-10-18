@@ -27,31 +27,31 @@ class TestReqSet:
         "Requirement contains a tag where no handler exists"
 
         mods = Modules(os.path.join(mod_base_dir, "modules08"),
-                       {}, {}, [], mods_list("modules08", mod_base_dir))
+                       {}, [], mods_list("modules08", mod_base_dir))
 
         sio = StringIO.StringIO("Hubbel: bubbel")
-        req = Requirement(sio, "hubbel", None, mods, None, TestConfig())
+        req = Requirement(sio, "hubbel", None, mods, TestConfig())
 
-        reqs = RequirementSet(mods, None, None)
+        reqs = RequirementSet(mods, None)
         reqs.add_req(req)
         reqs.handle_modules()
 
-        assert(reqs.mls()==MemLogStore.create_mls(
+        assert(reqs.mls() == MemLogStore.create_mls(
                 [[57, MemLog.error, "No tag handler found for tag(s) "
                   "'['Hubbel']' - Hint: typo in tag(s)?", 'hubbel'],
                  [56, MemLog.error, "There were errors encountered during "
-                  "parsing and checking - can't continue"] ] ))
+                  "parsing and checking - can't continue"] ]))
 
     def test_positive_02(self):
         "Requirement contains a tag where no handler exists - multiple tags"
 
         mods = Modules(os.path.join(mod_base_dir, "modules08"),
-                       {}, {}, [], mods_list("modules08", mod_base_dir))
+                       {}, [], mods_list("modules08", mod_base_dir))
 
         sio = StringIO.StringIO("Hubbel: bubbel\nSiebel: do")
-        req = Requirement(sio, "InvalidTagReq", None, mods, None, TestConfig())
+        req = Requirement(sio, "InvalidTagReq", None, mods, TestConfig())
 
-        reqs = RequirementSet(mods, None, None)
+        reqs = RequirementSet(mods, None)
         reqs.add_req(req)
         reqs.handle_modules()
 
@@ -59,9 +59,9 @@ class TestReqSet:
         #reqs.write_log(o)
         #print("HHHHHHHHHHH %s" % o.getvalue())
 
-        assert(reqs.mls()==MemLogStore.create_mls(
+        assert(reqs.mls() == MemLogStore.create_mls(
                 [[57, MemLog.error, "No tag handler found for tag(s) "
-                  "'['Siebel', 'Hubbel']' - Hint: typo in tag(s)?", 
-                  'InvalidTagReq'], 
+                  "'['Siebel', 'Hubbel']' - Hint: typo in tag(s)?",
+                  'InvalidTagReq'],
                  [56, MemLog.error, "There were errors encountered during "
-                  "parsing and checking - can't continue"]] ))
+                  "parsing and checking - can't continue"]]))

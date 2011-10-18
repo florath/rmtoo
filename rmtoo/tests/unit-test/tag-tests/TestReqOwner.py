@@ -19,37 +19,38 @@ class TestReqOwner:
 
     def test_positive_01(self):
         "Requirement Tag Owner - tag given"
-        opts, config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config, req = create_parameters()
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Owner"] = RecordEntry("Owner", "marketing")
 
-        rt = ReqOwner(opts, config)
+        rt = ReqOwner(config)
         name, value = rt.rewrite("Owner-test", req)
-        assert(name=="Owner")
-        assert(value=="marketing")
+        assert(name == "Owner")
+        assert(value == "marketing")
 
     def test_negative_01(self):
         "Requirement Tag Owner - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
 
-        rt = ReqOwner(opts, config)
+        rt = ReqOwner(config)
         try:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==10)
+            assert(rmte.id() == 10)
 
     def test_negative_02(self):
         "Requirement Tag Owner - invalid tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
         req["Owner"] = RecordEntry("Owner", "SomethingDifferent")
 
-        rt = ReqOwner(opts, config)
+        rt = ReqOwner(config)
         try:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==11)
+            assert(rmte.id() == 11)
 

@@ -15,8 +15,8 @@ class ReqCE3(ReqTagGeneric):
     tag = "CE3"
     ltype = set(["ctstag", ])
 
-    def __init__(self, opts, config):
-        ReqTagGeneric.__init__(self, opts, config)
+    def __init__(self, config):
+        ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
     	# This is optional

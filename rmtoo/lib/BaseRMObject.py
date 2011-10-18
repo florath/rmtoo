@@ -14,6 +14,7 @@
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 class BaseRMObject:
 
@@ -22,7 +23,7 @@ class BaseRMObject:
     er_fine = 0
     er_error = 1
 
-    def internal_init(self, tbhtags, rid, mls, mods, opts, config, type_str):
+    def internal_init(self, tbhtags, rid, mls, mods, config, type_str):
         # This is the name of the tags which will be handled by the
         # module input. 
         self.tbhtags = tbhtags
@@ -35,7 +36,6 @@ class BaseRMObject:
         self.id = rid
         self.mls = mls
         self.mods = mods
-        self.opts = opts
         self.config = config
         self.type_str = type_str
 
@@ -44,14 +44,13 @@ class BaseRMObject:
 
         self.state = self.er_fine
 
-    def __init__(self, tbhtags, fd, rid, mls, mods, opts, config,
-                 type_str):
-        self.internal_init(tbhtags, rid, mls, mods, opts, config, type_str)
-        if fd!=None:
+    def __init__(self, tbhtags, fd, rid, mls, mods, config, type_str):
+        self.internal_init(tbhtags, rid, mls, mods, config, type_str)
+        if fd != None:
             self.input(fd)
-    
+
     def ok(self):
-        return self.state==self.er_fine
+        return self.state == self.er_fine
 
     def get_id(self):
         return self.id
@@ -64,15 +63,16 @@ class BaseRMObject:
 
     def is_val_av_and_not_null(self, key):
         return key in self.values \
-            and self.get_value(key)!=None
+            and self.get_value(key) != None
 
     def set_value(self, key, value):
         self.values[key] = value
 
     def input(self, fd):
         # Read it in from the file (Syntactic input)
-        self.record = TxtRecord.from_fd(fd, self.id,
-                                 self.config.txtio[self.type_str])
+        txtio = TxtIOConfig(self.config, self.type_str)
+
+        self.record = TxtRecord.from_fd(fd, self.id, txtio)
         brmo = self.record.get_dict()
         # This 'brmo' is always valid - if there is a problem, an exception 
         # is raised.

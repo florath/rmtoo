@@ -20,34 +20,34 @@ class TestReqInventedOn:
 
     def test_positive_01(self):
         "Requirement Tag Invented on - tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Invented on"] = RecordEntry("Invented on", "2010-03-08")
 
-        rt = ReqInventedOn(opts, config)
+        rt = ReqInventedOn(config)
         name, value = rt.rewrite("InventedOn-test", req)
-        assert(name=="Invented on")
-        assert(value==datetime.date(2010, 3, 8))
+        assert(name == "Invented on")
+        assert(value == datetime.date(2010, 3, 8))
 
     def test_negative_01(self):
         "Requirement Tag Invented on - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqInventedOn(opts, config)
+        rt = ReqInventedOn(config)
         try:
             name, value = rt.rewrite("InventedOn-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==7)
+            assert(rmte.id() == 7)
 
     def test_negative_02(self):
         "Requirement Tag Invented on - invalid tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req["Invented on"] = RecordEntry("Invented on", "2010a-09-01")
 
-        rt = ReqInventedOn(opts, config)
+        rt = ReqInventedOn(config)
         try:
             name, value = rt.rewrite("InventedOn-test", req)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==8)
+            assert(rmte.id() == 8)
 

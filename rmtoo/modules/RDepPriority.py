@@ -21,14 +21,13 @@ class RDepPriority(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
                   "RDepOneComponent", "RDepSolvedBy"]
 
-    def __init__(self, opts, config):
+    def __init__(self, config):
         Digraph.Node.__init__(self, "RDepPriority")
-        self.opts = opts
         self.config = config
 
     def type(self):
         return set(["reqdeps", ])
-    
+
     def set_modules(self, mods):
         self.mods = mods
 

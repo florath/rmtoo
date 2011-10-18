@@ -17,20 +17,20 @@ class TestReqHistory:
 
     def test_positive_01(self):
         "Requirement Tag History - no tag given"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
 
-        rt = ReqHistory(opts, config)
+        rt = ReqHistory(config)
         name, value = rt.rewrite("History-test", req)
-        assert(name=="History")
-        assert(value==None)
+        assert(name == "History")
+        assert(value == None)
 
     def test_positive_02(self):
         "Requirement Tag History - History set"
-        opts, config, req = create_parameters()
+        config, req = create_parameters()
         req = {"History": "something"}
 
-        rt = ReqHistory(opts, config)
+        rt = ReqHistory(config)
         name, value = rt.rewrite("History-test", req)
-        assert(name=="History")
-        assert(value=="something")
+        assert(name == "History")
+        assert(value == "something")
 
