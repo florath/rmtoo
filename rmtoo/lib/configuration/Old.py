@@ -47,14 +47,26 @@ class Old:
         '''Converts the old output_spec to the new output configuration.'''
         for output_spec in output_specs:
             topic = output_spec[1][0]
+            if output_spec[0] == 'html':
+                cfg.append_list([topic, 'output', 'html'],
+                                {'output_directory': output_spec[1][1],
+                                 'header': output_spec[1][2],
+                                 'footer': output_spec[1][3]})
+                continue
             if output_spec[0] == 'prios':
-                pval = { 'output_filename': output_spec[1][1] }
+                pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
                     pval['start_date'] = output_spec[1][2]
                 cfg.append_list([topic, 'output', 'prios'], pval)
                 continue
+            if output_spec[0] in ['graph', 'graph2', 'stats_reqs_cnt',
+                                  'latex2', 'xml_ganttproject_2',
+                                  'oopricing1']:
+                cfg.append_list([topic, 'output', output_spec[0]],
+                                {'output_filename': output_spec[1][1]})
+                continue
             print("OS [%s]" % output_spec)
-        assert(False)
+            assert(False)
 
     @staticmethod
     def internal_convert_to_new(cfg, old_config):

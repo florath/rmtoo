@@ -55,10 +55,10 @@ class TxtRecord(Record):
     # Remove the last empty line - which might be a relict from the split.
     def maybe_remove_last_empty_line(self, sl):
         sl_len = len(sl)
-        if sl_len==0:
+        if sl_len == 0:
             return
-        if len(sl[sl_len-1])==0:
-            del(sl[sl_len-1])
+        if len(sl[sl_len - 1]) == 0:
+            del(sl[sl_len - 1])
         return
 
     # Check if the given lines are too long (or not)
@@ -67,7 +67,7 @@ class TxtRecord(Record):
         lineno = 0
         for l in sl:
             lineno += 1
-            if len(l)>max_line_length:
+            if len(l) > max_line_length:
                 self.error(80, "line too long: is [%d], "
                            "max allowed [%d]" % (len(l), max_line_length),
                            rid, lineno)
@@ -89,7 +89,7 @@ class TxtRecord(Record):
         if not success:
             self.set_unusable()
             return
-        
+
         for i in rp:
             self.append(TxtRecordEntry(i))
         return

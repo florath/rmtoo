@@ -19,10 +19,10 @@ class TestTopic:
         "Topic: (internal) check if Name tag exists"
         dg = Digraph()
 
-        topic = Topic(None, None, dg, TestConfig())
+        topic = Topic(None, None, dg, TestConfig(), None)
         try:
             topic.extract_name()
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==62)
+            assert(rmte.id() == 62)
 

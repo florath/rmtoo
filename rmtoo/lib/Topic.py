@@ -24,7 +24,7 @@ import os
 
 class Topic(Digraph.Node):
 
-    def __init__(self, tdir, tname, dg, pconfig, tlevel=0, 
+    def __init__(self, tdir, tname, dg, pconfig, config_type, tlevel=0,
                  tsuper=None):
         Digraph.Node.__init__(self, tname)
         self.dir = tdir
@@ -32,6 +32,7 @@ class Topic(Digraph.Node):
         # appropriate topic.
         self.digraph = dg
         self.parser_config = pconfig
+        self.config_type = config_type
         # Identiation level of this topic
         self.level = tlevel
         self.super = tsuper
@@ -44,7 +45,7 @@ class Topic(Digraph.Node):
         self.topic_name = None
 
         # This must only be done if there is a directory given
-        if self.dir!=None:
+        if self.dir != None:
             self.read()
             self.extract_name()
         else:
@@ -57,7 +58,7 @@ class Topic(Digraph.Node):
             if nt.get_tag() == "Name":
                 self.topic_name = nt.get_content()
                 del(nt)
-                return 
+                return
         raise RMTException(62, "Mandatory tag 'Name' not given in topic",
                            self.name)
 
@@ -65,7 +66,7 @@ class Topic(Digraph.Node):
     def cmad(self, reqscont, ofile, tname):
         for req in self.reqs:
             # Add all the included requirements
-            ofile.write(" %s.req" % 
+            ofile.write(" %s.req" %
                          os.path.join(reqscont.config.reqs_spec["directory"],
                                       req.name))
         # Add all the subtopics
@@ -76,13 +77,14 @@ class Topic(Digraph.Node):
     def read(self):
         self.digraph.add_node(self)
         fd = file(os.path.join(self.dir, self.name + ".tic"))
-        self.t = TxtRecord.from_fd(fd, self.name, 
+        self.t = TxtRecord.from_fd(fd, self.name,
                                    self.parser_config)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
-            if tag.get_tag()=="SubTopic":
+            if tag.get_tag() == "SubTopic":
                 ntopic = Topic(self.dir, tag.get_content(), self.digraph,
-                               self.parser_config, self.level+1, self)
+                               self.parser_config, "topics",
+                               self.level + 1, self)
                 #self.outgoing.append(ntopic)
                 Digraph.create_edge(self, ntopic)
                 #self.outgoing.append(ntopic)

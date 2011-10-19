@@ -36,7 +36,7 @@ class TestOutputLaTeX2:
         "LaTeX output: check invalid tag in topic"
 
         fd = StringIO.StringIO()
-        topic = Topic(None, "TName", None, None)
+        topic = Topic(None, "TName", None, None, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         l2 = latex2([None, None])
         try:

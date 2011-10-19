@@ -53,7 +53,6 @@ class Cfg:
            the existing configuration.'''
         if jstr.startswith("json:"):
             jstr = jstr[5:]
-        print("STR [%s]" % jstr)
         jdict = json.loads(jstr)
         if type(jdict) != DictType:
             raise CfgEx("Given JSON string encodes no dictionary.")
@@ -192,13 +191,18 @@ class Cfg:
         assert(type(ldict) == DictType)
         assert(len(key) > 0)
 
+        # Only use the given empty value for the last value in the
+        # key-chain.  All others must be dictionaries.
+        if key[0] not in ldict:
+            if len(key) > 1:
+                ldict[key[0]] = {}
+            else:
+                ldict[key[0]] = empty_val
+
         if len(key) == 1:
             # Really insert the value (if not there).
             change_func(ldict, key[0])
             return
-
-        if key[0] not in ldict:
-            ldict[key[0]] = empty_val
 
         Cfg.internal_change(ldict[key[0]], key[1:], empty_val, change_func)
 
@@ -208,8 +212,8 @@ class Cfg:
            If the key has already a value (i.e. exists)
            a CfgEx is raised.'''
         def assign_value(ldict, key):
-            if key in ldict:
-                raise CfgEx("(Sub-)Key [%s] exists." % key)
+#            if key in ldict:
+#                raise CfgEx("(Sub-)Key [%s] exists." % key)
             ldict[key] = value
 
         Cfg.internal_change(ldict, key, None, assign_value)

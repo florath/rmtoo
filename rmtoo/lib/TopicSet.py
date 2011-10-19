@@ -31,21 +31,21 @@ import traceback
 # topic and all subtopics.
 
 class TopicSet(Digraph, MemLogStore):
-    
+
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
     def __init__(self, all_reqs, name, tparam, config):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
-        assert(len(tparam)==2)
+        assert(len(tparam) == 2)
         self.name = name
         self.topic_dir = tparam[0]
         self.master_topic = tparam[1]
         self.config = config
         self.read_topics(self.topic_dir, self.master_topic)
 
-        if all_reqs!=None:
+        if all_reqs != None:
             self.reqset = self.reqs_limit(all_reqs)
 
     def create_makefile_name(self, topicn):
@@ -72,7 +72,7 @@ class TopicSet(Digraph, MemLogStore):
     # - to differentiate between the non-existance of a topic vs a
     # topic which is not a children of the currently chosen topic.
     def read_all_topic_names(self, tdir):
-        self.all_topic_names = set_value()
+        self.all_topic_names = set()
         for f in os.listdir(tdir):
             # Ignore Emacs Backup Files
             if f.endswith(".tic~"):
@@ -83,7 +83,7 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
-        Topic(tdir, initial_topic, self, self.config.txtio["topics"])
+        Topic(tdir, initial_topic, self, self.config, "topics")
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct
@@ -94,7 +94,7 @@ class TopicSet(Digraph, MemLogStore):
         self.build_named_nodes()
         for req in reqset.nodes:
             if req.is_value_available("Topic") \
-                    and req.get_value("Topic")!=None:
+                    and req.get_value("Topic") != None:
                 # A referenced topic must exists!
                 ref_topic = req.get_value("Topic")
                 assert(ref_topic in self.named_nodes)
@@ -106,7 +106,7 @@ class TopicSet(Digraph, MemLogStore):
         topic_name_list = self.named_nodes.keys()
 
         # Create the new RequirementSet
-        r = RequirementSet(reqset.mods, reqset.opts, reqset.config)
+        r = RequirementSet(reqset.mods, reqset.config)
 
         # Copy over the requirements themselves:
         # Here the incoming and outgoing requirements are the still the
@@ -149,15 +149,15 @@ class TopicSet(Digraph, MemLogStore):
         # which is not needed at this point.
         # Therefore the algorithms is called directly from here.
         components = connected_components(r)
-        if components.len()>1:
+        if components.len() > 1:
             reqset.info(67, "The resulting graph is not connected. "
                         "Found components: [%s]" % components.as_string())
 
         # Run through all the requirements and check, if there are
         # requirements which has no incoming.
         for _, req in r.reqs.iteritems():
-            if len(req.outgoing)==0 and \
-                    req.get_value("Type")!=Requirement.rt_master_requirement:
+            if len(req.outgoing) == 0 and \
+                    req.get_value("Type") != Requirement.rt_master_requirement:
                 print("+++ Info:%s: no outgoing edges" % req.name)
 
         return r

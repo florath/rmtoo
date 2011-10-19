@@ -11,24 +11,27 @@
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 class TestParse:
 
     def test_positive_01(self):
         "TopicSet - constructor with only one element"
         try:
-            topicset = TopicSet(None, "bkdkd", ["ahah"],
-                                TestConfig().txtio["topics"])
+            tioconfig = TxtIOConfig()
+            topicset = TopicSet(None, "bkdkd", ["ahah"], tioconfig);
+#                                TestConfig().txtio["topics"])
             assert(False)
         except AssertionError, ae:
             pass
 
     def test_positive_02(self):
         "TopicSet - valid"
+        tioconfig = TxtIOConfig()
         topicset = TopicSet(
             None, "test-name01",
             ["tests/unit-test/topic-tests/testdata/topicset01",
-             "t01"], TestConfig())
+             "t01"], tioconfig)
 
     def test_positive_03(self):
         "TopicSet - valid with empty requirement set"
@@ -43,7 +46,8 @@ class TestParse:
 
         rs = ReqSet()
 
+        tioconfig = TxtIOConfig()
         topicset = TopicSet(
             rs, "test-name02",
             ["tests/unit-test/topic-tests/testdata/topicset01",
-             "t01"], TestConfig())
+             "t01"], tioconfig)
