@@ -19,8 +19,8 @@ class TopicHandler:
         self.setup_topics(reqs)
 
     def setup_topics(self, reqs):
-        for k, v in self.config.topic_specs.iteritems():
-            self.topics[k] = TopicSet(reqs, k, v, self.config)
+        for k in self.config.get_value('topics').keys():
+            self.topics[k] = TopicSet(reqs, self.config, k, 'topics.' + k)
 
     def get(self, k):
         return self.topics[k]

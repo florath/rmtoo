@@ -26,6 +26,7 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.lib.MemLogStore import MemLogStore
 
 import traceback
+from lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 # The TopicSet does contain the RequirementSet which is limited to the
 # topic and all subtopics.
@@ -35,13 +36,12 @@ class TopicSet(Digraph, MemLogStore):
     # The 'tparam' must be a list:
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
-    def __init__(self, all_reqs, name, tparam, config):
+    def __init__(self, all_reqs, config, name, config_prefix_str):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
-        assert(len(tparam) == 2)
         self.name = name
-        self.topic_dir = tparam[0]
-        self.master_topic = tparam[1]
+        self.topic_dir = config.get_value(config_prefix_str + '.directory')
+        self.master_topic = config.get_value(config_prefix_str + '.name')
         self.config = config
         self.read_topics(self.topic_dir, self.master_topic)
 
@@ -83,7 +83,8 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
-        Topic(tdir, initial_topic, self, self.config, "topics")
+        txtioconfig = TxtIOConfig(self.config, "topics")
+        Topic(tdir, initial_topic, self, txtioconfig)
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct

@@ -14,6 +14,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 import os
+from lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 # Each topic has a level - which indicates the identation of the text
 # element. 
@@ -24,16 +25,16 @@ import os
 
 class Topic(Digraph.Node):
 
-    def __init__(self, tdir, tname, dg, pconfig, config_type, tlevel=0,
+    def __init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
         Digraph.Node.__init__(self, tname)
         self.dir = tdir
         # Master map is needed for deciping requirements into the
         # appropriate topic.
         self.digraph = dg
-        self.parser_config = pconfig
-        self.config_type = config_type
-        # Identiation level of this topic
+        self.txtioconfig = txtioconfig
+        self.cfg = cfg
+        # Identation level of this topic
         self.level = tlevel
         self.super = tsuper
         # This is a list of requirements which contain to this topic.
@@ -51,6 +52,8 @@ class Topic(Digraph.Node):
         else:
             # In this case the tag list is (initally) empty
             self.t = []
+
+        self.init_output_handler()
 
     # Extract the name from the list (it's mandatory!)
     def extract_name(self):
@@ -77,14 +80,12 @@ class Topic(Digraph.Node):
     def read(self):
         self.digraph.add_node(self)
         fd = file(os.path.join(self.dir, self.name + ".tic"))
-        self.t = TxtRecord.from_fd(fd, self.name,
-                                   self.parser_config)
+        self.t = TxtRecord.from_fd(fd, self.name, self.txtioconfig)
         for tag in self.t:
             # If the topic has subtopics, read them also in.
             if tag.get_tag() == "SubTopic":
                 ntopic = Topic(self.dir, tag.get_content(), self.digraph,
-                               self.parser_config, "topics",
-                               self.level + 1, self)
+                               self.txtioconfig, self.level + 1, self)
                 #self.outgoing.append(ntopic)
                 Digraph.create_edge(self, ntopic)
                 #self.outgoing.append(ntopic)
@@ -96,3 +97,14 @@ class Topic(Digraph.Node):
     # Returns the name of the game
     def get_name(self):
         return self.topic_name
+
+    def init_output_handler(self):
+        print("TODO init_output_handler")
+        # It is possible for one topic to have different output methods.
+        # Even each output method can be called multiple times.
+        # The data structure used is:
+        # { map of different output methods: 
+        #   [ list of different parameter sets for the different parameter
+        #     sets ] }
+        self.output_handler = []
+#        for outmeth, params in self.cfg.get_values()

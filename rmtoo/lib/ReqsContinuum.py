@@ -51,7 +51,10 @@ class ReqsContinuum:
     def repo_access_needed(self):
         # Only if FILES:FILES is specified, there is no need to access
         # the repo.
-        return self.config.reqs_spec["commit_interval"] != ["FILES", "FILES"]
+        return self.config.get_value(
+                    'requirements.input.commit_interval.begin') != 'FILES' \
+                    or self.config.get_value(
+                    'requirements.input.commit_interval.end') != 'FILES'
 
     def init_continuum(self):
         start_vers = self.config.get_value(
@@ -83,9 +86,9 @@ class ReqsContinuum:
     # This method sets up the repository and splits out the repository
     # dir from the requirements dir.
     def create_repo(self):
-        directory = self.config.reqs_spec["directory"]
+        directory = self.config.get_value("requirements.input.directory")
         # When the directory is not absolute, convert it to an
-        # absolute path that it can be comparted to the outcome of the
+        # absolute path that it can be compared to the outcome of the
         # git.Repo. 
         if not os.path.isabs(directory):
             directory = os.path.abspath(directory)

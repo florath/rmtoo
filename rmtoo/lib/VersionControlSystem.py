@@ -58,7 +58,7 @@ class VCSGit:
     # found. 
     def set_directories(self, directory):
         self.repo_base_dir = self.repo.git_dir[:-4]
-        
+
         if not directory.startswith(self.repo_base_dir):
             raise RMTException(28, "Cannot split up the given "
                                    "directory name")
@@ -78,7 +78,7 @@ class VCSGit:
         self.rh_one_commit(continuum_storage, self.repo.commit(start_vers))
 
     def rh_one_commit(self, cs, ci):
-        rs = RequirementSet(cs.mods, cs.opts, cs.config)
+        rs = RequirementSet(cs.mods, cs.config)
         rs.set_version_id(ci.hexsha)
         try:
             files = ci.tree[self.reqs_subdir].blobs
@@ -101,23 +101,23 @@ class VCSGit:
         for f in files:
             # Only files which end in .req are used
             m = re.match("^.*\.req$", f.name)
-            if m==None:
+            if m == None:
                 continue
 
             rid = f.name[:-4]
             req = Requirement(f.data_stream, rid, rs,
-                              cs.mods, cs.opts, cs.config)
+                              cs.mods, cs.config)
             if req.ok():
                 rs.add_req(req)
             else:
                 rs.not_usable()
         # Modules must only be handled when there are some requirements.
-        if len(rs.reqs)>0:
+        if len(rs.reqs) > 0:
             rs.handle_modules()
         # XXX IS here some return value needed?
-                   
+
 class VersionControlSystem:
-    
+
     # This is the the 'virtual' constructor:
     # It will check all available VCS systems and returns the correct
     # one. 
