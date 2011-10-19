@@ -53,8 +53,6 @@ class Topic(Digraph.Node):
             # In this case the tag list is (initally) empty
             self.t = []
 
-        self.init_output_handler()
-
     # Extract the name from the list (it's mandatory!)
     def extract_name(self):
         for nt in self.t:
@@ -85,7 +83,8 @@ class Topic(Digraph.Node):
             # If the topic has subtopics, read them also in.
             if tag.get_tag() == "SubTopic":
                 ntopic = Topic(self.dir, tag.get_content(), self.digraph,
-                               self.txtioconfig, self.level + 1, self)
+                               self.txtioconfig, self.cfg, self.level + 1,
+                               self)
                 #self.outgoing.append(ntopic)
                 Digraph.create_edge(self, ntopic)
                 #self.outgoing.append(ntopic)
@@ -98,13 +97,3 @@ class Topic(Digraph.Node):
     def get_name(self):
         return self.topic_name
 
-    def init_output_handler(self):
-        print("TODO init_output_handler")
-        # It is possible for one topic to have different output methods.
-        # Even each output method can be called multiple times.
-        # The data structure used is:
-        # { map of different output methods: 
-        #   [ list of different parameter sets for the different parameter
-        #     sets ] }
-        self.output_handler = []
-#        for outmeth, params in self.cfg.get_values()

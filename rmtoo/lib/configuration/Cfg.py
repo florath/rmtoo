@@ -28,16 +28,30 @@ class Cfg:
 
     Stores all the values from different sources into one data container
     which is a dictionary.
+    
+    Each part of a Cfg is again a Cfg - except the last step where it is
+    a value.
 
     Has some special access methods like get_value("key.subkey.subsubkey")
     to simplify configuration access.
     '''
 
-    def __init__(self):
+    def __init__(self, initial_values=None):
         '''Constructs an empty configuration
            This can be filled later on with the different merge
            methods.'''
         self.config = {}
+        if initial_values != None:
+            self.init_initial_values(initial_values)
+
+    def init_initial_values(self, initial_values):
+        '''Initializes the initial values.
+           Depending on the type of the given value, the initial
+           values are set.'''
+        if type(initial_values == DictType):
+            self.merge_dictionary(initial_values)
+            return
+        assert(False)
 
     @staticmethod
     def new_by_json_str(jstr):
@@ -167,7 +181,12 @@ class Cfg:
         # If the type is a string, this must first be parsed.
         if type(key) == StringType:
             key = self.internal_parse_key_string(key)
-        return Cfg.internal_get_value(key, self.config)
+        rval = Cfg.internal_get_value(key, self.config)
+        # This is the tricky part: With this construct each
+        # sub-configuration is again a configuration.
+        if type(rval) == DictType:
+            return Cfg(rval)
+        return rval
 
     def get_value(self, key):
         '''Returns the value of the given key.
@@ -228,7 +247,7 @@ class Cfg:
     @staticmethod
     def internal_append_list(ldict, key, value):
         '''Appends the value to the list at key.
-           If key is unset a new list is created.'''
+           If key is not available a new list is created.'''
         def append_value(ldict, key):
             ldict[key].append(value)
 
@@ -241,3 +260,10 @@ class Cfg:
             key = self.internal_parse_key_string(key)
         Cfg.internal_append_list(self.config, key, value)
 
+    def get_dict(self):
+        '''Returns the dictionary which holds all the values.
+           This is needed for the usage of handling easy access
+           to the configuration parameters.
+           You should really knowing what you are doing when using
+           this method.'''
+        return self.config

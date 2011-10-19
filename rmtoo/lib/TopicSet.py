@@ -42,11 +42,14 @@ class TopicSet(Digraph, MemLogStore):
         self.name = name
         self.topic_dir = config.get_value(config_prefix_str + '.directory')
         self.master_topic = config.get_value(config_prefix_str + '.name')
-        self.config = config
+        self.cfg = config
         self.read_topics(self.topic_dir, self.master_topic)
 
         if all_reqs != None:
             self.reqset = self.reqs_limit(all_reqs)
+
+        self.output_handler = []
+        self.init_output_handler()
 
     def create_makefile_name(self, topicn):
         return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
@@ -83,8 +86,8 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
-        txtioconfig = TxtIOConfig(self.config, "topics")
-        Topic(tdir, initial_topic, self, txtioconfig)
+        txtioconfig = TxtIOConfig(self.cfg, "topics")
+        Topic(tdir, initial_topic, self, txtioconfig, self.cfg)
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct
@@ -162,3 +165,17 @@ class TopicSet(Digraph, MemLogStore):
                 print("+++ Info:%s: no outgoing edges" % req.name)
 
         return r
+
+    def init_output_handler(self):
+        print("TODO init_output_handler")
+        # It is possible for one topic to have different output methods.
+        # Even each output method can be called multiple times.
+        # The data structure used is:
+        # { map of different output methods: 
+        #   [ list of different parameter sets for the different parameter
+        #     sets ] }
+        ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
+        for outmeth, params in ohconfig.get_dict().iteritems():
+            print("OMETH [%s] [%s]" % (outmeth, params))
+        assert(False)
+
