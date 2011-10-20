@@ -24,6 +24,8 @@ from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.ConnectedComponents import connected_components
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
+from rmtoo.lib.configuration.Cfg import Cfg
 
 import traceback
 from lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -176,6 +178,9 @@ class TopicSet(Digraph, MemLogStore):
         #     sets ] }
         ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
         for outmeth, params in ohconfig.get_dict().iteritems():
+            for param in params:
+                self.output_handler.append(
+                    TopicSetOutputHandler(self.cfg, outmeth, param))
             print("OMETH [%s] [%s]" % (outmeth, params))
         assert(False)
 

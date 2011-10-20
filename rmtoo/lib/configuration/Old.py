@@ -56,7 +56,8 @@ class Old:
             if output_spec[0] == 'prios':
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
-                    pval['start_date'] = output_spec[1][2]
+                    pval['start_date'] = output_spec[1][2]['start_date']
+                print("INTERNAL CONVERT PRIO [%s]" % pval)
                 cfg.append_list(['topics', topic, 'output', 'prios'], pval)
                 continue
             if output_spec[0] in ['graph', 'graph2', 'stats_reqs_cnt',

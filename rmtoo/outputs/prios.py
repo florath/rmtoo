@@ -27,11 +27,14 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
 from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
 from rmtoo.lib.StdParams import StdParams
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class prios:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
+    def __init__(self, params):
+        self.cfg = Cfg(params)
+        print("prios params[%s]" % params)
+        self.topic_name = self.cfg.get_value(')param[0]
         self.output_filename = param[1]
         StdParams.parse(self, param)
 
@@ -57,7 +60,7 @@ class prios:
 
         for tr in self.topic_set.reqset.nodes:
             try:
-                status = tr.get_status() 
+                status = tr.get_status()
                 if isinstance(status, RequirementStatusNotDone):
                     rclass = tr.values["Class"]
                     if isinstance(rclass, ClassTypeImplementable):
@@ -79,7 +82,7 @@ class prios:
     def output_reqset(self, reqset):
         prios_impl, prios_detail, prios_selected, \
             prios_assigned, prios_finished  \
-            = self.get_reqs_impl_detail()
+ = self.get_reqs_impl_detail()
 
         # Sort them after prio
         sprios_impl = sorted(prios_impl, key=operator.itemgetter(0, 1),
@@ -99,7 +102,7 @@ class prios:
         f = file(self.output_filename, "w")
 
         def get_efe(tr):
-            if tr.get_value("Effort estimation")!=None:
+            if tr.get_value("Effort estimation") != None:
                 return str(tr.get_value("Effort estimation"))
             else:
                 return " "
@@ -112,18 +115,18 @@ class prios:
             f.write("\\textbf{Prio} & \\textbf{Chap} & "
                     "\\textbf{Requirement Id} & \\textbf{EfE} & "
                     "\\textbf{Sum} \\\ \hline\endhead\n")
-            s=0
+            s = 0
             for p in l:
-                if reqset.reqs[p[1]].get_value("Effort estimation")!=None:
-                    efest=reqset.reqs[p[1]].get_value("Effort estimation")
-                    s+=efest
-                    efest_str=str(efest)
+                if reqset.reqs[p[1]].get_value("Effort estimation") != None:
+                    efest = reqset.reqs[p[1]].get_value("Effort estimation")
+                    s += efest
+                    efest_str = str(efest)
                 else:
-                    efest_str=" "
+                    efest_str = " "
 
                 f.write("%4.2f & \\ref{%s} & \\nameref{%s} & %s & %s "
                         "\\\ \hline\n"
-                        % (p[0]*10, p[1], p[1], efest_str, s))
+                        % (p[0] * 10, p[1], p[1], efest_str, s))
             f.write("\end{longtable}")
 
         def output_assigned_table(name, l):
@@ -136,7 +139,7 @@ class prios:
                 status = tr.get_status()
                 f.write("%4.2f & \\ref{%s} & \\nameref{%s} & %s & %s & %s "
                         "\\\ \hline\n"
-                        % (tr.get_prio()*10, tr.get_id(), tr.get_id(),
+                        % (tr.get_prio() * 10, tr.get_id(), tr.get_id(),
                            get_efe(tr), status.get_person(),
                            status.get_date_str()))
             f.write("\end{longtable}")
@@ -154,18 +157,18 @@ class prios:
                 status = tr.get_status()
                 rel = "\\ "
                 dur = status.get_duration()
-                if dur==None:
+                if dur == None:
                     durs = "\\ "
                 else:
                     durs = str(dur)
-                if tr.get_value("Effort estimation")!=None:
+                if tr.get_value("Effort estimation") != None:
                     efe = tr.get_value("Effort estimation")
-                    if dur!=None and dur!=0.0:
+                    if dur != None and dur != 0.0:
                         rel = "%4.2f" % (efe / float(dur))
                 person = status.get_person()
-                if person==None:
+                if person == None:
                     person = "\\ "
-                
+
                 f.write("\\ref{%s} & \\nameref{%s} & %s & %s & %s & "
                         "%s & %s \\\ \hline\n"
                         % (tr.get_id(), tr.get_id(),
@@ -174,72 +177,72 @@ class prios:
             f.write("\end{longtable}")
             f.write("}")
 
-        def output_statistics(name, simpl, sselected, sdetail, 
+        def output_statistics(name, simpl, sselected, sdetail,
                               sassigned, sfinished):
             f.write("\section{%s}\n" % name)
             f.write("\\begin{longtable}{rrl}\n")
             f.write("Start date & %s & \\\ \n" % format_date(self.start_date))
-            
+
             # Compute the opens
-            sum_open=0
+            sum_open = 0
             for sp in [simpl, sselected]:
                 for p in sp:
                     sum_open += reqset.reqs[p[1]].get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned
-            sum_assigned=0
+            sum_assigned = 0
             for tr in sassigned:
                 sum_assigned += tr.get_efe_or_0()
             f.write("Assigned & %d & EfE units \\\ \n" % sum_assigned)
 
             # Compute the finished
-            sum_finished=0
+            sum_finished = 0
             for tr in sfinished:
                 sum_finished += tr.get_efe_or_0()
             f.write("Finished & %d & EfE units \\\ \n" % sum_finished)
 
             # Compute the finished where a time is given
-            sum_finished_with_duration=0
+            sum_finished_with_duration = 0
             for tr in sfinished:
-                if tr.get_status().get_duration()!=None:
+                if tr.get_status().get_duration() != None:
                     sum_finished_with_duration += tr.get_efe_or_0()
-            f.write("Finished (duration given) & %d & EfE units \\\ \n" % 
+            f.write("Finished (duration given) & %d & EfE units \\\ \n" %
                     sum_finished_with_duration)
 
             # Compute the finished where a time is given
-            sum_duration=0
+            sum_duration = 0
             for tr in sfinished:
                 dur = tr.get_status().get_duration()
-                if dur!=None:
+                if dur != None:
                     sum_duration += dur
             f.write(" & %d & hours \\\ \n" % sum_duration)
 
             # The Relation and the Estimated End Date can only be computed
             # When the duration is not 0.
-            if sum_duration!=0:
+            if sum_duration != 0:
                 # Relation
                 rel = sum_finished_with_duration / float(sum_duration)
                 f.write("Relation & %4.2f & EfE units / hour \\\ \n" % rel)
-            
+
                 hours_to_do = sum_open / rel
-                f.write("Estimated Not done & %4.2f & hours \\\ \n" 
+                f.write("Estimated Not done & %4.2f & hours \\\ \n"
                         % (hours_to_do))
 
                 # Estimated End Date
 
-                rv = Statistics.get_units(self.topic_set.reqset, 
+                rv = Statistics.get_units(self.topic_set.reqset,
                                           self.start_date, self.end_date)
                 x = list(i for i in xrange(0, len(rv)))
-                y = list(x[0]+x[1] for x in rv)
+                y = list(x[0] + x[1] for x in rv)
 
                 gradient, intercept, r_value, p_value, std_err \
-                    = stats.linregress(x,y)
+ = stats.linregress(x, y)
 
-                if gradient>=0.0:
+                if gradient >= 0.0:
                     f.write("Estimated End date & unpredictable & \\\ \n")
                 else:
-                    d = intercept / - gradient
+                    d = intercept / -gradient
                     end_date = self.start_date + datetime.timedelta(d)
                     f.write("Estimated End date & %s & \\\ \n" % end_date)
 
@@ -252,7 +255,7 @@ class prios:
         output_prio_table("Requirements Elaboration List", sprios_detail)
         output_finished_table("Finished", sprios_finished)
         output_statistics("Statistics", sprios_impl, sprios_selected,
-                          sprios_detail, sprios_assigned, sprios_finished) 
+                          sprios_detail, sprios_assigned, sprios_finished)
 
 
         f.close()
