@@ -50,7 +50,7 @@ class TopicSet(Digraph, MemLogStore):
         if all_reqs != None:
             self.reqset = self.reqs_limit(all_reqs)
 
-        self.output_handler = []
+        self.output_handlers = []
         self.init_output_handler()
 
     def create_makefile_name(self, topicn):
@@ -178,7 +178,10 @@ class TopicSet(Digraph, MemLogStore):
         ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
         for outmeth, params in ohconfig.get_dict().iteritems():
             for param in params:
-                self.output_handler.append(
-                    TopicSetOutputHandler(self.cfg, outmeth, param))
+                self.output_handlers.append(
+                    TopicSetOutputHandler(self.cfg, outmeth, param, self))
             print("OMETH [%s] [%s]" % (outmeth, params))
 
+    def output(self, rc):
+        for output_handler in self.output_handlers:
+            output_handler.output(rc)

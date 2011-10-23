@@ -18,7 +18,8 @@ from rmtoo.lib.configuration.Cfg import Cfg
 
 class html:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         cfg = Cfg(params)
         self.output_dir = cfg.get_value('output_directory')
         self.html_header_filename = cfg.get_value('header')

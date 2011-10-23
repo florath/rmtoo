@@ -29,7 +29,8 @@ class latex2:
         "paragraph",
         "subparagraph" ]
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.filename = params['output_filename']
         self.config = params
         if 'req_attributes' not in self.config:

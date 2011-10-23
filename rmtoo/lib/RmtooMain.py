@@ -97,7 +97,7 @@ def execute_cmds(config, mods, mstdout, mstderr):
             return False
 
     # Output everything
-    ohandler.output(rc)
+    topics.output(rc)
 
     return True
 

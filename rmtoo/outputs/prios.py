@@ -31,7 +31,8 @@ from rmtoo.lib.configuration.Cfg import Cfg
 
 class prios:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.cfg = Cfg(params)
         StdParams.parse(self, params)
 

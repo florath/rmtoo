@@ -25,7 +25,8 @@ DEPS_HEADER_LEN = 6
 
 class oopricing1:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.output_filename = params['output_filename']
         self.doc_styles = {}
 

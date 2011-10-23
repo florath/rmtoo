@@ -11,7 +11,8 @@ import time
 
 class stats_reqs_cnt:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.output_filename = params['output_filename']
 
     # Create Makefile Dependencies

@@ -48,9 +48,10 @@ class Cfg:
         '''Initializes the initial values.
            Depending on the type of the given value, the initial
            values are set.'''
-        if type(initial_values == DictType):
+        if type(initial_values) == DictType:
             self.merge_dictionary(initial_values)
             return
+        print("INITIAL VALUES: [%s]" % initial_values)
         assert(False)
 
     @staticmethod

@@ -10,12 +10,10 @@
 # file. 
 
 class version1:
-    def __init__(self, param):
+    def __init__(self, topic_set, param):
+        self.topic_set = topic_set
         self.topic_name = param[0]
         self.filename = param[1]
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

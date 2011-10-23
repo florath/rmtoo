@@ -29,12 +29,10 @@ class tlp1:
             self.next_int += 1
             return oi
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.topic_name = params[0]
         self.filename = params[1]
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -57,7 +55,7 @@ class tlp1:
         self.write_labels(fd, i2im)
         self.write_footer(fd)
         fd.close()
-        
+
     # Details
     def write_header(self, fd):
         fd.write('(tlp "2.0"\n')
@@ -75,7 +73,7 @@ class tlp1:
         e = 0
         for r in sorted(reqset.reqs.itervalues(), key=lambda r: r.id):
             ei = i2im.get(r.id)
-            for o in sorted(r.outgoing, key = lambda t: t.name):
+            for o in sorted(r.outgoing, key=lambda t: t.name):
                 ej = i2im.get(o.id)
                 fd.write("(edge %d %d %d)\n" % (e, ei, ej))
                 e += 1
@@ -84,7 +82,7 @@ class tlp1:
         fd.write('(property  0 string "viewLabel"\n')
         fd.write('(default "" "" )')
 
-        for k,v in sorted(i2im.imapping.items()):
+        for k, v in sorted(i2im.imapping.items()):
             fd.write('(node %d "%s")\n' % (k, v))
         fd.write(")\n")
 

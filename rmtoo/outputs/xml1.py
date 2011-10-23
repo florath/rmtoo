@@ -13,7 +13,8 @@ from rmtoo.lib.Requirement import Requirement
 
 class xml1:
 
-    def __init__(self, param):
+    def __init__(self, topic_set, param):
+        self.topic_set = topic_set
         self.output_filename = param[0]
 
     def set_topics(self, topics):
@@ -37,14 +38,14 @@ class xml1:
             tm = doc.createElement(self.name2xmltag(t))
             req_xml.appendChild(tm)
 
-            if req.tags[t]!=None:
+            if req.tags[t] != None:
                 tn = doc.createTextNode(str(req.tags[t]))
             tm.appendChild(tn)
 
         if "Status" in req.tags:
             tm = doc.createElement("status")
             req_xml.appendChild(tm)
-            if req.tags["Status"]==Requirement.st_not_done:
+            if req.tags["Status"] == Requirement.st_not_done:
                 tn = doc.createTextNode("not done")
             else:
                 tn = doc.createTextNode("finished")
@@ -53,13 +54,13 @@ class xml1:
         if "Type" in req.tags:
             tm = doc.createElement("type")
             req_xml.appendChild(tm)
-            if req.tags["Type"]==Requirement.rt_master_requirement:
+            if req.tags["Type"] == Requirement.rt_master_requirement:
                 tn = doc.createTextNode("master requirement")
-            elif req.tags["Type"]==Requirement.rt_initial_requirement:
+            elif req.tags["Type"] == Requirement.rt_initial_requirement:
                 tn = doc.createTextNode("initial requirement")
-            elif req.tags["Type"]==Requirement.rt_design_decision:
+            elif req.tags["Type"] == Requirement.rt_design_decision:
                 tn = doc.createTextNode("design decision")
-            elif req.tags["Type"]==Requirement.rt_requirement:
+            elif req.tags["Type"] == Requirement.rt_requirement:
                 tn = doc.createTextNode("requirement")
             else:
                 assert(False)
@@ -68,9 +69,9 @@ class xml1:
         if "Class" in req.tags:
             tm = doc.createElement("class")
             req_xml.appendChild(tm)
-            if req.tags["Class"]==Requirement.ct_implementable:
+            if req.tags["Class"] == Requirement.ct_implementable:
                 tn = doc.createTextNode("implementable")
-            elif req.tags["Class"]==Requirement.ct_selected:
+            elif req.tags["Class"] == Requirement.ct_selected:
                 tn = doc.createTextNode("selected")
             else:
                 tn = doc.createTextNode("detailable")

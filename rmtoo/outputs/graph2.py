@@ -16,7 +16,8 @@ from rmtoo.outputs.graph import graph
 
 class graph2:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         self.output_filename = params['output_filename']
 
     def set_topics(self, topics):

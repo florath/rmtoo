@@ -29,3 +29,7 @@ class TopicHandler:
     def write_log(self, mstderr):
         for k, v in self.topics.iteritems():
             v.write_log(mstderr)
+
+    def output(self, rc):
+        for k, v in self.topics.iteritems():
+            v.output(rc)

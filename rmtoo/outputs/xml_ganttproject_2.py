@@ -29,7 +29,8 @@ from rmtoo.lib.configuration.Cfg import Cfg
 
 class xml_ganttproject_2:
 
-    def __init__(self, params):
+    def __init__(self, topic_set, params):
+        self.topic_set = topic_set
         cfg = Cfg(params)
         self.output_filename = cfg.get_value('output_filename')
         self.effort_factor = cfg.get_value_default('effort_factor', 1)
