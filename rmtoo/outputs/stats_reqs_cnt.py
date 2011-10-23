@@ -11,12 +11,8 @@ import time
 
 class stats_reqs_cnt:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_filename = param[1]
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
+    def __init__(self, params):
+        self.output_filename = params['output_filename']
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -31,7 +27,7 @@ class stats_reqs_cnt:
         for cid in reqscont.continuum_order:
             rs = reqscont.continuum[cid]
             ofile.write("%s %d\n" %
-                        (time.strftime("%Y-%m-%d_%H:%M:%S", 
+                        (time.strftime("%Y-%m-%d_%H:%M:%S",
                                        time.localtime(rs.timestamp())),
                          rs.reqs_count()))
 

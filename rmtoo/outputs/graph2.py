@@ -16,13 +16,12 @@ from rmtoo.outputs.graph import graph
 
 class graph2:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_filename = param[1]
+    def __init__(self, params):
+        self.output_filename = params['output_filename']
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
-  
+
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
@@ -41,7 +40,7 @@ class graph2:
         # Subgraphs
         self.output_topic(g, self.topic_set.get_master())
         # Edges
-        for r in sorted(self.topic_set.reqset.nodes, key = lambda r: r.id):
+        for r in sorted(self.topic_set.reqset.nodes, key=lambda r: r.id):
             self.output_req(r, g)
         g.write("}")
         g.close()
@@ -55,14 +54,14 @@ class graph2:
                       ' label="Topic: %s";\n' % (ident, topic.name, topic.name))
 
         # Write out the sub-sub-graphs
-        for t in sorted(topic.outgoing, key = lambda t: t.name):
+        for t in sorted(topic.outgoing, key=lambda t: t.name):
             self.output_topic(dotfile, t)
-        for req in sorted(topic.reqs, key = lambda r: r.id):
+        for req in sorted(topic.reqs, key=lambda r: r.id):
             dotfile.write('%s"%s" [%s];\n'
                           % (ident, req.name, graph.node_attributes(req)))
         dotfile.write('%s}\n' % ident)
 
     # This writes out the edges
     def output_req(self, req, dotfile):
-        for d in sorted(req.outgoing, key = lambda r: r.id):
+        for d in sorted(req.outgoing, key=lambda r: r.id):
             dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))

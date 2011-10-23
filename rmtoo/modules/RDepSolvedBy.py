@@ -78,7 +78,10 @@ class RDepSolvedBy(Digraph.Node):
         return True
 
     def rewrite(self, reqset):
-        if self.tag not in self.config.reqs_spec["dependency_notation"]:
+        # Solved by: is (historically) seen the default.
+        if self.tag not in \
+           self.config.get_value_default(
+                'requirements.input.dependency_notation', set(["Solved by", ])):
             return True
 
         # Run through all the requirements and look for the 'Solved

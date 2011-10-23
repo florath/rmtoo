@@ -92,8 +92,7 @@ class Requirement(Digraph.Node, BaseRMObject):
     # requirements. 
     def internal_copy_phase1(self, topic_name_list):
         # Create the new Requirement itself.
-        r = Requirement(None, self.id, self.mls, self.mods,
-                        self.opts, self.config)
+        r = Requirement(None, self.id, self.mls, self.mods, self.config)
         r.otags = self.otags
         r.values = self.values
 

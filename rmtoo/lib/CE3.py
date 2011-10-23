@@ -25,7 +25,7 @@ class CE3:
     def eval(self, cs, class_name, cstr_call):
         v = cs.get_value("CE3")
 
-        if v==None:
+        if v == None:
             return
 
         s = ""
@@ -55,10 +55,10 @@ class CE3:
 
     # Try to unite all given ce3s into the local ce3
     def unite(self, oce3s):
-        okeys = set_value()
+        okeys = set()
         for o in oce3s:
-            okeys = okeys.union(set_value(o.get_keys()))
- 
+            okeys = okeys.union(set(o.get_keys()))
+
         for k in okeys:
             # Is the key locally available?
             mobj = None
@@ -70,18 +70,18 @@ class CE3:
             for o in oce3s:
                 if o.has_key(k):
                     lobj.append(o.get_value(k))
-            
+
             # For the execution one object is needed
             eobj = mobj
-            if mobj==None:
+            if mobj == None:
                 eobj = lobj[0]
                 ### lobj.add(eobj)
 
             ro = eobj.unite(mobj, lobj)
 
-            if ro!=None:
+            if ro != None:
                 # There is a new constraint for the local key
-                assert(mobj==None)
+                assert(mobj == None)
                 self.set_value(k, ro)
 
-                
+

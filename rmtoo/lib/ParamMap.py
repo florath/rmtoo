@@ -11,6 +11,8 @@
 
 # This class handles the extraction of parameters from the parameter map.
 
+# TODO Is this still used or can this be removed?
+
 class ParamMap:
 
     @staticmethod

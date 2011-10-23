@@ -25,11 +25,10 @@ DEPS_HEADER_LEN = 6
 
 class oopricing1:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_filename = param[1]
+    def __init__(self, params):
+        self.output_filename = params['output_filename']
         self.doc_styles = {}
-        
+
         self.setup_coord_lookup()
 
     # Because at some points a requirement will be rendered in a row
@@ -42,19 +41,19 @@ class oopricing1:
     # need for more requirements, this can be easily extended.
     def setup_coord_lookup(self):
         alpha = 'abcdefghijklmnopqrstuvwxyz'.upper()
-        pairs = [''.join((x,y)) for x in alpha \
+        pairs = [''.join((x, y)) for x in alpha \
                      for y in [''] + [z for z in alpha]]
         self.sscoords = sorted(pairs, key=len)
 
     # Standard output module function
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
-  
+
     # Create Makefile Dependencies:
     # One output file only
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-        
+
     # Note that the 'reqscont' is used for the structure of the graph
     # (topological sort) and the topic set is used to chose the used
     # requirements. 
@@ -138,7 +137,7 @@ class oopricing1:
         tr = odf.table.TableRow()
         for req in sreqs:
             tc = odf.table.TableCell()
-            if len(req.outgoing)>0:
+            if len(req.outgoing) > 0:
                 # By default, the chosen is the first one.
                 p = odf.text.P(text=req.outgoing[0].id)
                 tc.addElement(p)
@@ -171,12 +170,12 @@ class oopricing1:
     # which makes it easier to handle the output.
     def create_result_sheet(self, calcdoc, sreqs):
         sheet = odf.table.Table(name="Results", protected="true")
-        i=0
+        i = 0
         for req in sreqs:
             tr = odf.table.TableRow()
             self.create_result_one_req(tr, req, i)
             sheet.addElement(tr)
-            i+=1
+            i += 1
         calcdoc.spreadsheet.addElement(sheet)
 
     #################################################################
@@ -235,12 +234,12 @@ class oopricing1:
     # specified. 
     @staticmethod
     def create_text_cell(table_row, text, style=None):
-        if style!=None:
+        if style != None:
             tc = odf.table.TableCell(stylename=style)
         else:
             tc = odf.table.TableCell()
 
-        if text!=None:
+        if text != None:
             p = odf.text.P(text=text)
             tc.addElement(p)
         table_row.addElement(tc)
@@ -419,7 +418,7 @@ class oopricing1:
         # Table header line 1
         tr = odf.table.TableRow()
         for h in ["Id", "Name", "Compliant", "Costs for requirement",
-                  None, None, None, "Dependent from", 
+                  None, None, None, "Dependent from",
                   "Costs of dependent", None, None,
                   "Overall sum", None, None, "Supplier", "Comment"]:
             self.create_text_cell(tr, h, self.doc_styles["tc-bold-blue"])
@@ -427,19 +426,19 @@ class oopricing1:
         # Table header line 2
         tr = odf.table.TableRow()
         for h in [None, None, None, "dayrate",
-                  "#days", "material", "sum", None, 
+                  "#days", "material", "sum", None,
                   "rate", "material", "sum",
                   "rate", "material", "sum", None, None]:
             self.create_text_cell(tr, h, self.doc_styles["tc-bold-blue"])
         sheet.addElement(tr)
 
     def create_costs_content(self, sheet, sreqs):
-        i=0
+        i = 0
         for req in sreqs:
             tr = odf.table.TableRow()
             self.create_costs_content_req(tr, req, i)
             sheet.addElement(tr)
-            i+=1
+            i += 1
 
     def create_costs_content_req(self, tr, req, i):
         choi = i + DEPS_HEADER_LEN
@@ -453,7 +452,7 @@ class oopricing1:
                               zindex="0",
                               x="0.0in",
                               y="0.0in",
-                              endcelladdress="Costs.C%d" % (choi+1),
+                              endcelladdress="Costs.C%d" % (choi + 1),
                               endx="0.75in",
                               endy="0.0in")
         tc.addElement(dc)
@@ -470,12 +469,12 @@ class oopricing1:
         # Dependent on Chooser
         tc = odf.table.TableCell()
         # Do not do this for first cell.
-        if len(req.outgoing)>0:
+        if len(req.outgoing) > 0:
             dc = odf.draw.Control(control="lbdependentfrom%s" % req.name,
                                   zindex="0",
                                   x="0.0in",
                                   y="0.0in",
-                                  endcelladdress="Costs.H%d" % (choi+1),
+                                  endcelladdress="Costs.H%d" % (choi + 1),
                                   endx="1.2in",
                                   endy="0.0in")
             tc.addElement(dc)
@@ -484,12 +483,12 @@ class oopricing1:
         # dependet rate and material
         # Do not do this for first cell.
         for sname in ["SumRate", "SumMat"]:
-            if len(req.incoming)>0:
+            if len(req.incoming) > 0:
                 tc = odf.table.TableCell(
                     valuetype="currency", currency="EUR",
                     formula="oooc:=SUM([%s.%s2:%s.%s%d])" \
                         % (sname, self.sscoords[i], sname, self.sscoords[i],
-                           (1+len(req.incoming))))
+                           (1 + len(req.incoming))))
                 tr.addElement(tc)
             else:
                 self.create_empty_currency_cell_ro(tr)
@@ -531,24 +530,24 @@ class oopricing1:
         # number of outgoing requirements.
         # This flags if there is something found with the current
         # index.
-        i=0
+        i = 0
         while True:
             tr = odf.table.TableRow()
-            index_used=False
+            index_used = False
             for req in sreqs:
-                if len(req.outgoing)>i:
+                if len(req.outgoing) > i:
                     tc = odf.table.TableCell()
                     p = odf.text.P(text=req.outgoing[i].name)
                     tc.addElement(p)
                     tr.addElement(tc)
-                    index_used=True
+                    index_used = True
                 else:
                     tc = odf.table.TableCell()
                     tr.addElement(tc)
             sheet.addElement(tr)
             if not index_used:
                 break
-            i+=1
+            i += 1
 
 
     ### Functions handling sums
@@ -558,12 +557,12 @@ class oopricing1:
         sheet = odf.table.Table(name=name, protected="true")
         self.create_reqs_ids_row(sheet, sreqs)
 
-        i=0
+        i = 0
         while True:
             tr = odf.table.TableRow()
-            index_used=False
+            index_used = False
             for req in sreqs:
-                if len(req.incoming)>i:
+                if len(req.incoming) > i:
                     # This is somewhat complicated:
                     # If on the Costs sheet one direction is chosen,
                     # it is written to the deps sheet (row 3).
@@ -577,19 +576,19 @@ class oopricing1:
                         formula='oooc:=IF([Deps.%s3]="%s";[Costs.%s%d];0)' %
                         (self.sscoords[self.sreqs_index[req.incoming[i]]],
                          req.name, colname,
-                         self.sreqs_index[req.incoming[i]]+DEPS_HEADER_LEN))
+                         self.sreqs_index[req.incoming[i]] + DEPS_HEADER_LEN))
                     tr.addElement(tc)
-                    index_used=True
+                    index_used = True
                 else:
                     tc = odf.table.TableCell()
                     tr.addElement(tc)
             sheet.addElement(tr)
             if not index_used:
                 break
-            i+=1
+            i += 1
 
         calcdoc.spreadsheet.addElement(sheet)
-        
+
 
     ### Functions handling forms
     def create_form(self, calcdoc, sreqs):
@@ -605,7 +604,7 @@ class oopricing1:
             href="")
 
         # Listboxes for compliant
-        i=0
+        i = 0
         for req in sreqs:
             lb = odf.form.Listbox(
                 id="lbcompliant%s" % req.name,
@@ -635,16 +634,16 @@ class oopricing1:
             lb.addElement(lbproperties)
 
             form.addElement(lb)
-            i+=1
+            i += 1
 
         # Listboxes for dependent from
-        i=0
+        i = 0
         for req in sreqs:
             # When there is only one entry in the list, there is no
             # need to have a dropdown list.
-            ddown="yes"
-            if len(req.outgoing)<=1:
-                ddown="no"
+            ddown = "yes"
+            if len(req.outgoing) <= 1:
+                ddown = "no"
 
             lb = odf.form.Listbox(
                 id="lbdependentfrom%s" % req.name,
@@ -656,7 +655,7 @@ class oopricing1:
                 name="ListBox Dependet From %s" % req.name,
                 size="3",
                 sourcecellrange="Deps.%s5:Deps.%s%d" % (
-                    self.sscoords[i], self.sscoords[i], len(req.outgoing)+4)
+                    self.sscoords[i], self.sscoords[i], len(req.outgoing) + 4)
                 )
             lbproperties = odf.form.Properties()
             lbprop = odf.form.Property(
@@ -675,7 +674,7 @@ class oopricing1:
             # When there is only one dependent requirement, it makes
             # no sense to have something which can be changed.
             # Therefore this should be readonly then.
-            if len(req.outgoing)<=1:
+            if len(req.outgoing) <= 1:
                 lstprop = odf.form.Property(
                     propertyname="ReadOnly",
                     valuetype="boolean",
@@ -685,7 +684,7 @@ class oopricing1:
             lb.addElement(lbproperties)
 
             form.addElement(lb)
-            i+=1
+            i += 1
 
         forms.addElement(form)
         calcdoc.addElement(forms)
@@ -696,28 +695,28 @@ class oopricing1:
         self.create_text_cell(tr, req.name)
         # 2 Compliance
         tc = odf.table.TableCell(
-            valuetype="string", 
+            valuetype="string",
             formula="oooc:=[Deps.%s2]" % self.sscoords[i])
         tr.addElement(tc)
         # Prices
         for r in ["D", "E", "F"]:
             tc = odf.table.TableCell(
-                valuetype="string", 
-                formula="oooc:=[Costs.%s%d]" % (r, i+DEPS_HEADER_LEN))
+                valuetype="string",
+                formula="oooc:=[Costs.%s%d]" % (r, i + DEPS_HEADER_LEN))
             tr.addElement(tc)
         # Dependent from
         tc = odf.table.TableCell(
-            valuetype="string", 
+            valuetype="string",
             formula="oooc:=[Deps.%s3]" % self.sscoords[i])
         tr.addElement(tc)
         # Supplier
         tc = odf.table.TableCell(
-            valuetype="string", 
-            formula="oooc:=[Costs.O%d]" % (i+DEPS_HEADER_LEN))
+            valuetype="string",
+            formula="oooc:=[Costs.O%d]" % (i + DEPS_HEADER_LEN))
         tr.addElement(tc)
         # Comment
         tc = odf.table.TableCell(
-            valuetype="string", 
-            formula="oooc:=[Costs.P%d]" % (i+DEPS_HEADER_LEN))
+            valuetype="string",
+            formula="oooc:=[Costs.P%d]" % (i + DEPS_HEADER_LEN))
         tr.addElement(tc)
 

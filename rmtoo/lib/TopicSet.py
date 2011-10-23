@@ -169,7 +169,6 @@ class TopicSet(Digraph, MemLogStore):
         return r
 
     def init_output_handler(self):
-        print("TODO init_output_handler")
         # It is possible for one topic to have different output methods.
         # Even each output method can be called multiple times.
         # The data structure used is:
@@ -182,5 +181,4 @@ class TopicSet(Digraph, MemLogStore):
                 self.output_handler.append(
                     TopicSetOutputHandler(self.cfg, outmeth, param))
             print("OMETH [%s] [%s]" % (outmeth, params))
-        assert(False)
 

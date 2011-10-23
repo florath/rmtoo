@@ -85,6 +85,14 @@ class Old:
                           list(reqs_spec['dependency_notation']))
 
     @staticmethod
+    def internal_convert_analytics(cfg, analytics_specs):
+        '''Converts the old analytics spec to the new requirements
+           specification.
+           This means that the analytics is set to an empty dictionary,
+           because the old values are not needed any more.'''
+        cfg.set_value('processing.analytics', {})
+
+    @staticmethod
     def internal_convert_to_new(cfg, old_config):
         '''Converts the old given old_config object to the new configuration
            using a dictionary.'''
@@ -97,6 +105,9 @@ class Old:
         if hasattr(old_config, 'stakeholders'):
             cfg.set_value('requirements.stakeholders', old_config.stakeholders)
             old_config_dir.remove('stakeholders')
+        if hasattr(old_config, 'inventors'):
+            cfg.set_value('requirements.inventors', old_config.inventors)
+            old_config_dir.remove('inventors')
         # Topic specs must be done before the output_spec, because the
         # output specs will be inserted into the  topic specs.
         if hasattr(old_config, 'topic_specs'):
@@ -108,6 +119,9 @@ class Old:
         if hasattr(old_config, 'reqs_spec'):
             Old.internal_convert_reqs(cfg, old_config.reqs_spec)
             old_config_dir.remove('reqs_spec')
+        if hasattr(old_config, 'analytics_specs'):
+            Old.internal_convert_analytics(cfg, old_config.analytics_specs)
+            old_config_dir.remove('analytics_specs')
         print("Old Config: Not converted attributes: [%s]" % old_config_dir)
 
     @staticmethod

@@ -64,11 +64,10 @@ def execute_cmds(config, mods, mstdout, mstderr):
     # before the OutputHandler itself - because different output
     # handler may reference the same Topic.
     topics = TopicHandler(config, reqs)
-    ohandler = OutputHandler(config, topics)
 
     # When only the dependencies are needed, output them to the given
     # file. 
-    if opts.create_makefile_dependencies != None:
+    if config.get_bool('actions.create_makefile_dependencies', False):
         ofile = file(opts.create_makefile_dependencies, "w")
         # Write out the REQS=
         rc.cmad_write_reqs_list(ofile)

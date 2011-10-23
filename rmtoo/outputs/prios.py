@@ -33,13 +33,7 @@ class prios:
 
     def __init__(self, params):
         self.cfg = Cfg(params)
-        print("prios params[%s]" % params)
-        self.topic_name = self.cfg.get_value(')param[0]
-        self.output_filename = param[1]
-        StdParams.parse(self, param)
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
+        StdParams.parse(self, params)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

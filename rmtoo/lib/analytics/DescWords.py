@@ -40,7 +40,7 @@ class DescWords:
         [ re.compile(" may "), 10, "Usage of the word 'may'"],
         [ re.compile(" maybe "), -50, "Usage of the word 'maybe'"],
         [ re.compile(" might "), 10, "Usage of the word 'might'"],
-        [ re.compile(" must "),  25, "Usage of the word 'must'"],
+        [ re.compile(" must "), 25, "Usage of the word 'must'"],
         [ re.compile(" or "), -15, "Usage of the word 'or'"],
         [ re.compile(" perhaps "), -100, "Usage of the word 'perhaps'"],
         [ re.compile(" should "), 15, "Usage of the word 'should'"],
@@ -66,11 +66,13 @@ class DescWords:
 
     @staticmethod
     def get_lang(config):
-        if "default_language" in config.reqs_spec:
-            if config.reqs_spec["default_language"] in DescWords.words:
-                return DescWords.words[config.reqs_spec["default_language"]]
-            else:
-                return None
+        def_lang = config.get_value_default(
+                'requirements.input.default_language', 'en_GB')
+
+        if def_lang in DescWords.words:
+            return DescWords.words[def_lang]
+        else:
+            return None
         return DescWords.words["en_GB"]
 
     @staticmethod
@@ -82,9 +84,9 @@ class DescWords:
         for wre, wlvl, wdsc in lwords:
             plain_txt = LaTeXMarkup.replace_txt(text).strip()
             fal = len(wre.findall(plain_txt))
-            if fal>0:
-                level += fal*wlvl
-                log.append("%+4d:%d*%d: %s" % (fal*wlvl, fal, wlvl, wdsc))
+            if fal > 0:
+                level += fal * wlvl
+                log.append("%+4d:%d*%d: %s" % (fal * wlvl, fal, wlvl, wdsc))
                 # Note the result of this test in the requirement itself.
         return [level, log]
 
@@ -93,7 +95,7 @@ class DescWords:
         # Try to get the correct language
         lwords = DescWords.get_lang(config)
         # If language is not available, this analytics make no sense.
-        if lwords==None:
+        if lwords == None:
             return True
 
         ok = True
@@ -101,7 +103,7 @@ class DescWords:
             ares = DescWords.analyse(
                 lwords, req.get_value("Description").get_content())
             req.analytics["DescWords"] = ares
-            if ares[0]<0:
+            if ares[0] < 0:
                 ok = False
-            
+
         return ok

@@ -24,13 +24,15 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.configuration.Cfg import Cfg
+
 
 class xml_ganttproject_2:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_filename = param[1]
-        self.effot_factor = param[2]
+    def __init__(self, params):
+        cfg = Cfg(params)
+        self.output_filename = cfg.get_value('output_filename')
+        self.effort_factor = cfg.get_value_default('effort_factor', 1)
         self.req_ids = {}
         self.next_id = 1
 
@@ -47,7 +49,7 @@ class xml_ganttproject_2:
             return self.req_ids[name]
         self.req_ids[name] = self.next_id
         self.next_id += 1
-        return self.req_ids[name] 
+        return self.req_ids[name]
 
     def output_req(self, req, reqset, doc, sobj):
         # There is the need for a unique numeric id
@@ -58,9 +60,9 @@ class xml_ganttproject_2:
             # The Effort Estimation is only rounded: ganntproject can
             # only handle integers as duration
             xml_task.setAttribute(
-                "duration", 
+                "duration",
                 str(int(req.get_value("Effort estimation")
-                        *self.effot_factor+1)))
+                        * self.effort_factor + 1)))
 
         # The Status (a la complete) must be given in percent.
         # Currently rmtoo supports only two states: not done (~0) or
@@ -79,7 +81,7 @@ class xml_ganttproject_2:
         notes = "== Description ==\n"
         notes += LaTeXMarkup.replace_txt(req.get_value("Description")
                                          .get_content())
-        
+
         if req.is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
             notes += LaTeXMarkup.replace_txt(
@@ -94,7 +96,7 @@ class xml_ganttproject_2:
         xml_text = doc.createCDATASection(notes)
         xml_note.appendChild(xml_text)
         xml_task.appendChild(xml_note)
-            
+
         # Dependencies
         for node in req.outgoing:
             xml_depend = doc.createElement("depend")
@@ -122,10 +124,10 @@ class xml_ganttproject_2:
                     "TOPIC-" + topic.name)))
 
         # Run through all the requirements and output them
-        for req in sorted(topic.reqs, key = lambda r: r.id):
+        for req in sorted(topic.reqs, key=lambda r: r.id):
             self.output_req(req, reqset, doc, xml_task)
         # After this have a look at the (sub-)topics
-        for st in sorted(topic.outgoing, key = lambda t: t.name):
+        for st in sorted(topic.outgoing, key=lambda t: t.name):
             self.output_topic(st, reqset, doc, xml_task)
 
         # Add the xml_task to the current document
@@ -147,7 +149,7 @@ class xml_ganttproject_2:
             xml_tpd.setAttribute("property-id", s[0])
             xml_tpd.setAttribute("width", str(s[1]))
             xml_taskdisplaycolumns.appendChild(xml_tpd)
-        
+
         # Output all the 'tasks' (i.e. requirements)
         self.output_reqset(reqscont.continuum_latest(), doc, xml_project)
 

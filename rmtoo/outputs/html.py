@@ -14,22 +14,16 @@ import time
 
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class html:
 
-    def __init__(self, param):
-        self.topic_name = param[0]
-        self.output_dir = param[1]
-        self.html_header_filename = None
-        self.html_footer_filename = None
-        if len(param)>2:
-            self.html_header_filename = param[2]
-        if len(param)>3:
-            self.html_footer_filename = param[3]
+    def __init__(self, params):
+        cfg = Cfg(params)
+        self.output_dir = cfg.get_value('output_directory')
+        self.html_header_filename = cfg.get_value('header')
+        self.html_footer_filename = cfg.get_value('footer')
         self.read_html_arts()
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     # Basic idea: each HTML file is dependend of the approriate topic
@@ -56,11 +50,11 @@ class html:
         ofile.write("\n")
 
     def read_html_arts(self):
-        if self.html_header_filename!=None:
+        if self.html_header_filename != None:
             fd = file(self.html_header_filename, "r")
             self.html_header = fd.read()
             fd.close()
-        if self.html_footer_filename!=None:
+        if self.html_footer_filename != None:
             fd = file(self.html_footer_filename, "r")
             self.html_footer = fd.read()
             fd.close()
@@ -114,8 +108,8 @@ class html:
 
             if tag == "Name":
                 # The Name itself depends on the level.
-                fd.write("<h%d>%s</h%d>\n" % (topic.level+1, val,
-                                              topic.level+1))
+                fd.write("<h%d>%s</h%d>\n" % (topic.level + 1, val,
+                                              topic.level + 1))
                 continue
 
             if tag == "SubTopic":
@@ -125,7 +119,7 @@ class html:
 
                 rtopic = topic.find_outgoing(val)
                 # A link to the other file.
-                fd.write('<li><a href="%s.html">%s</a></li>\n' % 
+                fd.write('<li><a href="%s.html">%s</a></li>\n' %
                          (val, rtopic.get_name()))
                 self.output_html_topic(rtopic)
                 continue
@@ -147,48 +141,48 @@ class html:
 
     def output_requirements(self, fd, topic):
         # Output must be sorted - to be comparable
-        for req in sorted(topic.reqs, key = lambda r: r.id):
+        for req in sorted(topic.reqs, key=lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1)
 
     def output_requirement(self, fd, req, level):
         fd.write("\n<!- REQ '%s' -->\n" % req.id)
-        fd.write('<h%d><a name="%s">%s</a></h%d>\n' % 
-                 (level+1, req.id, req.get_value("Name").get_content(), 
-                  level+1))
+        fd.write('<h%d><a name="%s">%s</a></h%d>\n' %
+                 (level + 1, req.id, req.get_value("Name").get_content(),
+                  level + 1))
         fd.write("<dl>")
 
         fd.write('<dt><span class="dlt_description">Description</span>'
-                 '</dt><dd><span class="dlv_description">%s</span></dd>' % 
+                 '</dt><dd><span class="dlv_description">%s</span></dd>' %
                   LaTeXMarkup.replace_html(req.get_value("Description")
                                            .get_content()))
 
         if req.is_value_available("Rationale") \
-                and req.get_value("Rationale")!=None:
+                and req.get_value("Rationale") != None:
             fd.write('<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
                      LaTeXMarkup.replace_html_par(req.get_value("Rationale").
                                                   get_content()))
 
-        if req.is_value_available("Note") and req.get_value("Note")!=None:
+        if req.is_value_available("Note") and req.get_value("Note") != None:
             fd.write('<dt><span class="dlt_note">Note</span></dt>'
-                     '<dd><span class="dlv_note">%s</span></dd>' 
+                     '<dd><span class="dlv_note">%s</span></dd>'
                      % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.outgoing)>0:
+        if len(req.outgoing) > 0:
             # Create links to the corresponding labels.
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on"')
             is_first = True
-            for d in sorted(req.outgoing, key = lambda r: r.id):
+            for d in sorted(req.outgoing, key=lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
-                is_first=False
-                fd.write('<a href="%s.html#%s">%s</a>' % 
+                is_first = False
+                fd.write('<a href="%s.html#%s">%s</a>' %
                          (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
-        if len(req.incoming)>0:
+        if len(req.incoming) > 0:
             # Create links to the corresponding dependency nodes.
             fd.write('<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
@@ -196,8 +190,8 @@ class html:
             for d in sorted(req.incoming, key=lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
-                is_first=False
-                fd.write('<a href="%s.html#%s">%s</a>' % 
+                is_first = False
+                fd.write('<a href="%s.html#%s">%s</a>' %
                          (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
@@ -218,7 +212,7 @@ class html:
                  '<dd><span class="dlv_status">%s</span></dd>'
                  '<dt><span class="dlt_class">Class</span></dt>'
                  '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.id, req.get_value("Priority")*10, 
+                 % (req.id, req.get_value("Priority") * 10,
                     req.get_value("Owner"),
                     req.get_value("Invented on").strftime("%Y-%m-%d"),
                     req.get_value("Invented by"), status, clstr))

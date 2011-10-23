@@ -267,3 +267,13 @@ class Cfg:
            You should really knowing what you are doing when using
            this method.'''
         return self.config
+
+    def get_bool(self, key, default_value):
+        '''Returns the value of the key - converted to a boolean.
+           If key does not exists, the default value is returned.'''
+        try:
+            return self.get_raw(key) in ['True', 'true', 'on', '1',
+                                         'Yes', 'yes']
+        except CfgEx:
+            return default_value
+

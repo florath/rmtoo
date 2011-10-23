@@ -17,7 +17,7 @@ from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.RMTException import RMTException
 
 class latex2:
-    default_config = { "req_attributes": 
+    default_config = { "req_attributes":
                        ["Id", "Priority", "Owner", "Invented on",
                         "Invented by", "Status", "Class"] }
 
@@ -30,11 +30,17 @@ class latex2:
         "subparagraph" ]
 
     def __init__(self, params):
-        self.topic_name = params[0]
-        self.filename = params[1]
-        self.config = latex2.default_config
-        if len(params)>2:
-            self.config = params[2]
+        self.filename = params['output_filename']
+        self.config = params
+        if 'req_attributes' not in self.config:
+            self.config['req_attributes'] = \
+                ["Id", "Priority", "Owner", "Invented on",
+                        "Invented by", "Status", "Class"]
+
+        # TODO Default configuration
+#        self.config = latex2.default_config
+#        if len(params) > 2:
+#            self.config = params[2]
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)
@@ -43,7 +49,7 @@ class latex2:
     def strescape(string):
         r = ""
         for s in string:
-            if ord(s)>=32 and ord(s)<127:
+            if ord(s) >= 32 and ord(s) < 127:
                 r += s
             else:
                 r += "%02x" % ord(s)
@@ -109,16 +115,16 @@ class latex2:
                   "topic file" % tag)
 
     def output_requirements(self, fd, topic, ce3set):
-        for req in sorted(topic.reqs, key = lambda r: r.id):
+        for req in sorted(topic.reqs, key=lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1, ce3set)
 
     def output_requirement(self, fd, req, level, ce3set):
         fd.write("%% REQ '%s'\n" % req.id)
 
-        fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n" 
-                 % (self.level_names[level], 
+        fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
+                 % (self.level_names[level],
                     req.get_value("Name").get_content(),
-                    latex2.strescape(req.id), 
+                    latex2.strescape(req.id),
                     req.get_value("Description").get_content()))
 
         if req.is_val_av_and_not_null("Rationale"):
@@ -126,34 +132,34 @@ class latex2:
                      % req.get_value("Rationale").get_content())
 
         if req.is_val_av_and_not_null("Note"):
-            fd.write("\n\\textbf{Note:} %s\n" 
+            fd.write("\n\\textbf{Note:} %s\n"
                      % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.outgoing)>0:
+        if len(req.outgoing) > 0:
             # Create links to the corresponding labels.
             fd.write("\n\\textbf{Depends on:} ")
-            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" % 
-                                (latex2.strescape(d.id), 
-                                 latex2.strescape(d.id)) 
-                                for d in sorted(req.outgoing, 
-                                                key = lambda r: r.id)]))
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
+                                (latex2.strescape(d.id),
+                                 latex2.strescape(d.id))
+                                for d in sorted(req.outgoing,
+                                                key=lambda r: r.id)]))
             fd.write("\n")
 
-        if len(req.incoming)>0:
+        if len(req.incoming) > 0:
             # Create links to the corresponding dependency nodes.
             fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
-            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %  
-                                (latex2.strescape(d.id), 
-                                 latex2.strescape(d.id)) 
+            fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
+                                (latex2.strescape(d.id),
+                                 latex2.strescape(d.id))
                                 for d in sorted(req.incoming,
                                                 key=lambda r: r.id)]))
             fd.write("\n")
 
 
         cnstrt = ce3set.get(req.get_id())
-        if cnstrt!=None and cnstrt.len()>0:
+        if cnstrt != None and cnstrt.len() > 0:
         #if req.is_val_av_and_not_null("Constraints"):
             fd.write("\n\\textbf{Constraints:} ")
 
@@ -166,10 +172,10 @@ class latex2:
                 rs = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                        % (refid, refid)
                 description = v.description()
-                if description!=None:
+                if description != None:
                     rs += " [" + description + "] "
                 cs.append(rs)
-                    
+
             fd.write(", ".join(cs))
             fd.write("\n")
 
@@ -179,38 +185,38 @@ class latex2:
         fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n")
 
         # Put mostly three things in a line.
-        i=0
+        i = 0
         for rattr in self.config["req_attributes"]:
-            if rattr=="Id":
+            if rattr == "Id":
                 fd.write("\\textbf{Id:} & %s " % req.id)
-            elif rattr=="Priority":
-                fd.write("\\textbf{Priority:} & %4.2f " 
-                         % (req.get_value("Priority")*10))
-            elif rattr=="Owner":
+            elif rattr == "Priority":
+                fd.write("\\textbf{Priority:} & %4.2f "
+                         % (req.get_value("Priority") * 10))
+            elif rattr == "Owner":
                 fd.write("\\textbf{Owner:} & %s" % req.get_value("Owner"))
-            elif rattr=="Invented on":
-                fd.write("\\textbf{Invented on:} & %s " 
+            elif rattr == "Invented on":
+                fd.write("\\textbf{Invented on:} & %s "
                          % req.get_value("Invented on").strftime("%Y-%m-%d"))
-            elif rattr=="Invented by":
-                fd.write("\\textbf{Invented by:} & %s " 
+            elif rattr == "Invented by":
+                fd.write("\\textbf{Invented by:} & %s "
                          % req.get_value("Invented by"))
-            elif rattr=="Status":
+            elif rattr == "Status":
                 fd.write("\\textbf{Status:} & %s " % status)
-            elif rattr=="Class":
+            elif rattr == "Class":
                 fd.write("\\textbf{Class:} & %s " % clstr)
             else:
                 # This only happens when a wrong configuration is supllied.
                 raise RMTException(85, "Wrong latex2 output configuration "
                                    "supplied: unknown tag [%s]" % rattr)
-            i+=1
-            if i==3:
-                i=0
+            i += 1
+            if i == 3:
+                i = 0
                 fd.write("\\\ \n")
             else:
                 fd.write(" & ")
-        while i<2:
+        while i < 2:
             fd.write("& & ")
-            i+=1
+            i += 1
 
         fd.write("\end{tabular}\end{center} }\n\n")
 
@@ -218,7 +224,7 @@ class latex2:
 
         #print("AC %s" % self.constraints)
 
-        if len(constraints)>0:
+        if len(constraints) > 0:
             fd.write("\\%s{Constraints}\n" % self.level_names[0])
             for cname, cnstrt in sorted(constraints.iteritems()):
                 self.output_latex_one_constraint(fd, cname, cnstrt)
@@ -227,9 +233,9 @@ class latex2:
         cname = latex2.strescape(cname)
         fd.write("%% CONSTRAINT '%s'\n" % cname)
 
-        fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n" 
+        fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n"
                  % (self.level_names[1],
-                    cnstrt.get_value("Name").get_content(), 
+                    cnstrt.get_value("Name").get_content(),
                     cname, cnstrt.get_value("Description").get_content()))
 
         if cnstrt.is_val_av_and_not_null("Rationale"):
@@ -237,8 +243,8 @@ class latex2:
                      % cnstrt.get_value("Rationale").get_content())
 
         if cnstrt.is_val_av_and_not_null("Note"):
-            fd.write("\n\\textbf{Note:} %s\n" 
+            fd.write("\n\\textbf{Note:} %s\n"
                      % cnstrt.get_value("Note").get_content())
 
-                
-        
+
+

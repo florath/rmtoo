@@ -46,7 +46,7 @@ class ReqPriority(ReqTagGeneric):
                                    % (rid, l))
             # p[0] is the stakeholder
             # p[1] is the given priority
-            if p[0] not in self.config.get_value('stakeholders'):
+            if p[0] not in self.config.get_value('requirements.stakeholders'):
                 raise RMTException(13, "%s: stakeholder '%s' not known"
                                    % (rid, p[0]))
             if p[0] in priority_done:
