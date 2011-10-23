@@ -28,7 +28,7 @@ from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.configuration.Cfg import Cfg
 
 import traceback
-from lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 # The TopicSet does contain the RequirementSet which is limited to the
 # topic and all subtopics.
@@ -176,7 +176,9 @@ class TopicSet(Digraph, MemLogStore):
         #   [ list of different parameter sets for the different parameter
         #     sets ] }
         ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
+        print("CONFIG [%s]" % self.cfg.config)
         for outmeth, params in ohconfig.get_dict().iteritems():
+            print("BEFORE OMETH [%s] [%s]" % (outmeth, params))
             for param in params:
                 self.output_handlers.append(
                     TopicSetOutputHandler(self.cfg, outmeth, param, self))

@@ -53,5 +53,4 @@ class RDepPriority(Digraph.Node):
 
         # Start at the root (master) node and evaluate all nodes
         # there.
-        print("WHY GMN [%s]" % dir(reqset))
         handle_priorization(reqset.graph_master_node, 1.0)

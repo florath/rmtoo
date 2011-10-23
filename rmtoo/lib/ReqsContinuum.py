@@ -112,9 +112,9 @@ class ReqsContinuum:
         self.repo.read_history(self, start_vers, end_vers)
 
     def create_continuum_from_file(self):
-        rs = RequirementSet(self.mods, self.opts, self.config)
+        rs = RequirementSet(self.mods, self.config)
         rs.read_from_filesystem(
-            unicode(self.config.reqs_spec["directory"], "utf-8"))
+            unicode(self.config.get_value('requirements.input.directory'), "utf-8"))
         self.continuum_add("FILES", rs)
 
 

@@ -14,7 +14,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 import os
-from lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 # Each topic has a level - which indicates the identation of the text
 # element. 

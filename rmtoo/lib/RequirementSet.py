@@ -75,7 +75,7 @@ class RequirementSet(Digraph, MemLogStore):
             return False
 
         everythings_fine = self.read_constraints(
-            self.config.constraints_specs["search_dirs"])
+            self.config.get_value('constraints.search_dirs'))
         if not everythings_fine:
             self.error(86, "There were errors in the requirment set - "
                        "in the constraints")

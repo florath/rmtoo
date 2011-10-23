@@ -14,6 +14,7 @@ import os
 from rmtoo.lib.ConfigUtils import ConfigUtils
 from rmtoo.lib.Modules import Modules
 from rmtoo.lib.configuration.Cfg import Cfg
+from rmtoo.lib.configuration.DefaultValues import DefaultValues
 
 class MainHelper:
 
@@ -33,6 +34,7 @@ class MainHelper:
     @staticmethod
     def main_setup(args, mstdout, mstderr):
         config = Cfg()
+        DefaultValues.set_default_values(config)
         config.merge_cmd_line_params(args)
         config.evaluate()
 
