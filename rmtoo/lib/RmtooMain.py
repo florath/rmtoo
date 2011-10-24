@@ -92,8 +92,11 @@ def execute_cmds(config, mods, mstdout, mstderr):
     # The requirements are syntactically correct now: therefore it is
     # possible to do some analytics on them
     if not Analytics.run(config, reqs, topics):
+        print("Problems with analytics")
         reqs.write_log(mstderr)
         reqs.write_analytics_result(mstderr)
+
+        print("PAS [%s]" % config.get_value('processing.analytics.stop_on_errors'))
 
         if config.get_bool('processing.analytics.stop_on_errors', True):
             print("Stop because of config stop_on_errors.")

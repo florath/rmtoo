@@ -280,7 +280,7 @@ class Cfg:
            If key does not exists, the default value is returned.'''
         try:
             return self.get_raw(key) in ['True', 'true', 'on', '1',
-                                         'Yes', 'yes']
+                                         'Yes', 'yes', True]
         except CfgEx:
             return default_value
 

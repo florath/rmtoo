@@ -53,11 +53,13 @@ class Old:
                                  'header': output_spec[1][2],
                                  'footer': output_spec[1][3]})
                 continue
-            if output_spec[0] in ['prios']:
+            if output_spec[0] in ['prios', 'stats_sprint_burndown1']:
                 print("PRIOS OUTPUTSPEC [%s]" % output_spec)
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
                     pval['start_date'] = output_spec[1][2]['start_date']
+                    if 'end_date' in output_spec[1][2]:
+                        pval['end_date'] = output_spec[1][2]['end_date']
                 print("INTERNAL CONVERT PRIO [%s]" % pval)
                 cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
                 continue
@@ -107,6 +109,8 @@ class Old:
         if 'stop_on_errors' in analytics_specs:
             cfg.set_value('processing.analytics.stop_on_errors',
                           analytics_specs['stop_on_errors'])
+            print("interncvl_convert_analytics [%s]" %
+                  cfg.get_value('processing.analytics.stop_on_errors'))
 
     @staticmethod
     def internal_convert_to_new(cfg, old_config):

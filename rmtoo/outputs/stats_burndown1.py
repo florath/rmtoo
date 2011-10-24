@@ -17,11 +17,10 @@ from rmtoo.lib.StdParams import StdParams
 
 class stats_burndown1:
 
-    def __init__(self, topic_set, param):
+    def __init__(self, topic_set, params):
         self.topic_set = topic_set
-        self.topic_name = param[0]
-        self.output_filename = param[1]
-        StdParams.parse(self, param)
+        self.output_filename = params['output_filename']
+        StdParams.parse(self, params)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

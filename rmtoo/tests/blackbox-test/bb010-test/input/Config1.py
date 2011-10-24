@@ -22,15 +22,15 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
-          ["prios", 
-           ["ts_common", result_is + "/reqsprios.tex", 
+        [
+          ["prios",
+           ["ts_common", result_is + "/reqsprios.tex",
             { "start_date": "2011-04-01",
               "end_date": "2011-05-10"} ]],
 
@@ -40,27 +40,27 @@ class Config:
           ["graph2",
            ["ts_common", result_is + "/req-graph2.dot"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", result_is + "/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             result_is + "/html", basedir + "input/header.html",
             basedir + "input/footer.html"]],
 
           ["xml_ganttproject_2",
            ["ts_common", result_is + "/gantt2.xml", 1]],
 
-          ["oopricing1", 
+          ["oopricing1",
            ["ts_common", result_is + "/reqspricing"]],
 
           ["stats_burndown1",
            ["ts_common", result_is + "/stats_burndown.csv",
-            { "start_date": "2011-04-01" } ]],
+            '2011-04-01' ]],
 
           ["stats_sprint_burndown1",
-           ["ts_common", result_is + "/stats_sprint_burndown.csv", 
+           ["ts_common", result_is + "/stats_sprint_burndown.csv",
             { "start_date": "2011-04-01",
               "end_date": "2011-05-10"} ]],
-           
+
         ]
