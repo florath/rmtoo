@@ -10,7 +10,6 @@
 '''
 
 from optparse import OptionParser
-from rmtoo.lib.configuration.CfgEx import CfgEx
 
 class CmdLineParams:
     '''Utility class for handling the old style command line

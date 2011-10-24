@@ -9,6 +9,11 @@
  For licensing details see COPYING
 '''
 
+# The import IS needed - because of the 'exec' command.
+# (Please note that this class is deprecated and will
+# vanish in near future.) 
+#@PydevCodeAnalysisIgnore
+# pylint: disable=W0611
 import os
 
 class Old:
@@ -27,7 +32,9 @@ class Old:
         print("OLD CONFIG FILE [%s]" % old_config_file)
         old_config_fd = file(old_config_file, "r")
         conf_file = old_config_fd.read()
+        # pylint: disable=W0122
         exec(conf_file)
+        # pylint: disable=E0602
         config = Config()
 #        ConfigUtils.set_defaults(config)
 #        ConfigUtils.check(config)
@@ -61,7 +68,8 @@ class Old:
                     if 'end_date' in output_spec[1][2]:
                         pval['end_date'] = output_spec[1][2]['end_date']
                 print("INTERNAL CONVERT PRIO [%s]" % pval)
-                cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
+                cfg.append_list(['topics', topic, 'output',
+                                 output_spec[0]], pval)
                 continue
             if output_spec[0] in ['stats_burndown1']:
                 print("SBD OUTPUTSPEC [%s]" % output_spec)
@@ -70,7 +78,8 @@ class Old:
                     # The third element of this is just the date...
                     pval['start_date'] = output_spec[1][2]
                 print("INTERNAL CONVERT PRIO [%s]" % pval)
-                cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
+                cfg.append_list(['topics', topic, 'output',
+                                 output_spec[0]], pval)
                 continue
             if output_spec[0] in ['graph', 'graph2', 'stats_reqs_cnt',
                                   'latex2',
@@ -109,10 +118,8 @@ class Old:
                           set(reqs_spec['dependency_notation']))
         else:
             # The default is only 'Solved by'.
-            print("Using default Depends on relationship.")
             cfg.set_value('requirements.input.dependency_notation',
                           set(['Depends on', ]))
-            print("DEP ON 22 [%s]" % cfg.get_value('requirements.input.dependency_notation'))
 
     @staticmethod
     def internal_convert_analytics(cfg, analytics_specs):
@@ -121,8 +128,6 @@ class Old:
         if 'stop_on_errors' in analytics_specs:
             cfg.set_value('processing.analytics.stop_on_errors',
                           analytics_specs['stop_on_errors'])
-            print("interncvl_convert_analytics [%s]" %
-                  cfg.get_value('processing.analytics.stop_on_errors'))
 
     @staticmethod
     def internal_convert_constraints(cfg, constraints_specs):

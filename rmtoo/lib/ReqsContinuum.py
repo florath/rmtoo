@@ -14,6 +14,11 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.VersionControlSystem import VCSException, VersionControlSystem
 
 #
+# TODO: The following is not correct any more.
+#  Do not use RequirementSet any more.
+#  Instead use the TopicHandler here.
+#
+
 # The Continuum holds all the RequirementSets from the history,
 # i.e. all which are known to git.  It also holds the current
 # available (possible not checked in) pointer to the appropriate files

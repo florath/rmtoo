@@ -20,6 +20,7 @@ from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
 from rmtoo.lib.configuration.Old import Old
+from rmtoo.lib.configuration.InternalCfg import InternalCfg
 from rmtoo.lib.RMTException import RMTException
 
 class Cfg:
@@ -152,37 +153,13 @@ class Cfg:
         self.internal_evaluate_old_config()
         self.internal_evaluate_json()
 
-    @staticmethod
-    def internal_parse_key_string(key):
-        '''Parses the given string and splits it up for using with
-           the configuration dictionary'''
-        return key.split('.')
-
-    @staticmethod
-    def internal_get_value(key, ldict):
-        '''Returns the key from the given dictionary.
-           If this is not the last part of the key, this method
-           is called recursively.'''
-        assert(type(ldict) == DictType)
-        assert(len(key) > 0)
-        if key[0] not in ldict:
-            raise CfgEx("(Sub-)Key [%s] not found." % key[0])
-        val = ldict[key[0]]
-        # No more keys to go for.
-        if len(key) == 1:
-            return val
-        if type(val) != DictType:
-            raise CfgEx("(Sub-)Type of configuration for key [%s] not a "
-                        "dictionary " % key[0])
-        return Cfg.internal_get_value(key[1:], val)
-
     def get_raw(self, key):
         '''Returns the value of the given key.
            If the key is not found a CfgEx is raised.'''
         # If the type is a string, this must first be parsed.
         if type(key) == StringType:
-            key = self.internal_parse_key_string(key)
-        rval = Cfg.internal_get_value(key, self.config)
+            key = InternalCfg.parse_key_string(key)
+        rval = InternalCfg.get_value(key, self.config)
         # This is the tricky part: With this construct each
         # sub-configuration is again a configuration.
         if type(rval) == DictType:
@@ -212,60 +189,19 @@ class Cfg:
         except CfgEx:
             return default_value
 
-    @staticmethod
-    def internal_change(ldict, key, empty_val, change_func):
-        assert(type(ldict) == DictType)
-        assert(len(key) > 0)
-
-        # Only use the given empty value for the last value in the
-        # key-chain.  All others must be dictionaries.
-        if key[0] not in ldict:
-            if len(key) > 1:
-                ldict[key[0]] = {}
-            else:
-                ldict[key[0]] = empty_val
-
-        if len(key) == 1:
-            # Really insert the value (if not there).
-            change_func(ldict, key[0])
-            return
-
-        Cfg.internal_change(ldict[key[0]], key[1:], empty_val, change_func)
-
-    @staticmethod
-    def internal_set(ldict, key, value):
-        '''Sets the value for the appropriate key.
-           If the key has already a value (i.e. exists)
-           a CfgEx is raised.'''
-        def assign_value(ldict, key):
-#            if key in ldict:
-#                raise CfgEx("(Sub-)Key [%s] exists." % key)
-            ldict[key] = value
-
-        Cfg.internal_change(ldict, key, None, assign_value)
-
     def set_value(self, key, value):
         '''Sets the value. If the key is already there a CfgEx is
            raised.'''
         if type(key) == StringType:
-            key = self.internal_parse_key_string(key)
-        Cfg.internal_set(self.config, key, value)
-
-    @staticmethod
-    def internal_append_list(ldict, key, value):
-        '''Appends the value to the list at key.
-           If key is not available a new list is created.'''
-        def append_value(ldict, key):
-            ldict[key].append(value)
-
-        Cfg.internal_change(ldict, key, [], append_value)
+            key = InternalCfg.parse_key_string(key)
+        InternalCfg.set_value(self.config, key, value)
 
     def append_list(self, key, value):
         '''Appends value to existing list under key.
            If key does not exists, a new list is created.'''
         if type(key) == StringType:
-            key = self.internal_parse_key_string(key)
-        Cfg.internal_append_list(self.config, key, value)
+            key = InternalCfg.parse_key_string(key)
+        InternalCfg.append_list(self.config, key, value)
 
     def get_dict(self):
         '''Returns the dictionary which holds all the values.
