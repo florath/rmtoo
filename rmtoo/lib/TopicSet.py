@@ -72,6 +72,9 @@ class TopicSet(Digraph, MemLogStore):
             # Topic object itself.
             t.cmad(reqscont, ofile, self.name)
             ofile.write("\n")
+        # NEW: Also all the dependend things must be called.
+        for output_handler in self.output_handlers:
+            output_handler.cmad(reqscont, ofile)
 
     # Read in all the topics to decide whether the topic exists or not
     # - to differentiate between the non-existance of a topic vs a

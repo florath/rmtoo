@@ -195,8 +195,14 @@ class Cfg:
         try:
             return self.get_raw(key)
         except CfgEx:
+            print("MAND NF [%s]" % self.config)
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found" % key)
+
+    def get_value_wo_throw(self, key):
+        '''Returns the value of the given key.
+           If key is not found None is returned.'''
+        return self.get_value_default(key, None)
 
     def get_value_default(self, key, default_value):
         '''Return the value of the key from the configuration.
@@ -275,6 +281,14 @@ class Cfg:
         try:
             return self.get_raw(key) in ['True', 'true', 'on', '1',
                                          'Yes', 'yes']
+        except CfgEx:
+            return default_value
+
+    def get_integer(self, key, default_value):
+        '''Returns the value of the key - converted to an integet.
+           If key does not exists, the default value is returned.'''
+        try:
+            return int(self.get_raw(key))
         except CfgEx:
             return default_value
 

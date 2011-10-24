@@ -33,3 +33,7 @@ class TopicHandler:
     def output(self, rc):
         for k, v in self.topics.iteritems():
             v.output(rc)
+
+    def create_makefile_dependencies(self, ofile, rc):
+        for k, v in self.topics.iteritems():
+            v.cmad(rc, ofile)

@@ -12,6 +12,7 @@ from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class TestParse:
 
@@ -19,19 +20,28 @@ class TestParse:
         "TopicSet - constructor with only one element"
         try:
             tioconfig = TxtIOConfig()
-            topicset = TopicSet(None, "bkdkd", ["ahah"], tioconfig);
-#                                TestConfig().txtio["topics"])
+            cfg = Cfg()
+            cfg.set_value('ahah.directory',
+                          'tests/unit-test/topic-tests/testdata/topicset01')
+            cfg.set_value('ahah.name', 't01')
+            cfg.set_value('topics.bkdkd.output', {})
+            topicset = TopicSet(None, cfg, "bkdkd", "ahah")
             assert(False)
         except AssertionError, ae:
             pass
 
     def test_positive_02(self):
         "TopicSet - valid"
+        cfg = Cfg()
+        cfg.set_value('hahaha.directory',
+                      'tests/unit-test/topic-tests/testdata/topicset01')
+        cfg.set_value('hahaha.name', 't01')
+        cfg.set_value('topics.test-name01.output', {})
         tioconfig = TxtIOConfig()
         topicset = TopicSet(
-            None, "test-name01",
-            ["tests/unit-test/topic-tests/testdata/topicset01",
-             "t01"], tioconfig)
+            None, cfg, "test-name01", "hahaha")
+#            ["tests/unit-test/topic-tests/testdata/topicset01",
+#             "t01"], tioconfig)
 
     def test_positive_03(self):
         "TopicSet - valid with empty requirement set"
@@ -47,7 +57,12 @@ class TestParse:
         rs = ReqSet()
 
         tioconfig = TxtIOConfig()
+        cfg = Cfg()
+        cfg.set_value('huhuhu.directory',
+                      'tests/unit-test/topic-tests/testdata/topicset01')
+        cfg.set_value('huhuhu.name', 't01')
+        cfg.set_value('topics.test-name02.output', {})
         topicset = TopicSet(
-            rs, "test-name02",
-            ["tests/unit-test/topic-tests/testdata/topicset01",
-             "t01"], tioconfig)
+            rs, cfg, "test-name02", "huhuhu")
+#            ["tests/unit-test/topic-tests/testdata/topicset01",
+#             "t01"], tioconfig)

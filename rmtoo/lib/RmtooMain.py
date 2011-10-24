@@ -66,13 +66,17 @@ def execute_cmds(config, mods, mstdout, mstderr):
     topics = TopicHandler(config, reqs)
 
     # When only the dependencies are needed, output them to the given
-    # file. 
-    if config.get_bool('actions.create_makefile_dependencies', False):
-        ofile = file(opts.create_makefile_dependencies, "w")
+    # file.
+    print("CONFIG CMAD [%s]" % config.config)
+
+    cmad_filename = config.get_value_wo_throw(
+                       'actions.create_makefile_dependencies')
+    if cmad_filename != None:
+        ofile = file(cmad_filename, "w")
         # Write out the REQS=
         rc.cmad_write_reqs_list(ofile)
         # Write out the rest
-        ohandler.create_makefile_dependencies(ofile, rc)
+        topics.create_makefile_dependencies(ofile, rc)
         ofile.close()
         return True
 
@@ -91,12 +95,12 @@ def execute_cmds(config, mods, mstdout, mstderr):
         reqs.write_log(mstderr)
         reqs.write_analytics_result(mstderr)
 
-        if hasattr(config, 'analytics_specs') \
-                and 'stop_on_errors' in config.analytics_specs \
-                and config.analytics_specs['stop_on_errors']:
+        if config.get_bool('processing.analytics.stop_on_errors', True):
+            print("Stop because of config stop_on_errors.")
             return False
 
     # Output everything
+    print("Output topics.")
     topics.output(rc)
 
     return True

@@ -12,7 +12,7 @@ class Config:
     reqs_spec = \
         {
            "directory": basedir + "input/reqs",
-           "commit_interval": ["v10", 
+           "commit_interval": ["v10",
                                "c35f8e918ab1d05ab3e2ba0be52a3f4092035663"],
            #["138be32f1985aec694934263f02e47292deaac91", "FILES"]
            #["v8", "FILES"]
@@ -26,15 +26,15 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
-          ["prios", 
-           ["ts_common", result_is + "/reqsprios.tex", 
+        [
+          ["prios",
+           ["ts_common", result_is + "/reqsprios.tex",
             {"start_date": "2011-04-26"} ]],
 
           ["graph",
@@ -43,20 +43,20 @@ class Config:
           ["graph2",
            ["ts_common", result_is + "/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", result_is + "/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", result_is + "/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             result_is + "/html", basedir + "input/header.html",
             basedir + "input/footer.html"]],
 
           ["xml_ganttproject_2",
            ["ts_common", result_is + "/gantt2.xml", 1]],
 
-          ["oopricing1", 
+          ["oopricing1",
            ["ts_common", result_is + "/reqspricing"]],
         ]

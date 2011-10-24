@@ -100,14 +100,14 @@ class RDepDependsOn(Digraph.Node):
         return True
 
     def rewrite(self, reqset):
-        if "Depends on" not in \
-            self.config.get_value_default(
-                    'requirements.dependency_notation', set()):
+        conf_dependency_notation = \
+            self.config.get_value('requirements.input.dependency_notation')
+        print("DEP ON [%s]" % conf_dependency_notation)
+        if "Depends on" not in conf_dependency_notation:
             return True
 
         # Check if the "Solved by" is also available in the config
-        also_solved_by = "Solved by" in \
-            self.config.reqs_spec["dependency_notation"]
+        also_solved_by = "Solved by" in conf_dependency_notation
 
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)

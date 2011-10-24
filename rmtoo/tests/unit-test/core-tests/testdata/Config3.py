@@ -12,7 +12,7 @@ class Config:
     reqs_spec = \
         {
            "directory": "doc/requirements",
-           "commit_interval": 
+           "commit_interval":
            # This is used for all-day work:
            ["FILES", "FILES"],
            # This is used for releases (epoch -> HEAD)
@@ -28,7 +28,7 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
@@ -40,9 +40,10 @@ class Config:
         }
 
     output_specs = \
-        [ 
-          ["prios", 
-           ["ts_common", "artifacts/reqsprios.tex", "2011-04-25"]],
+        [
+          ["prios",
+           ["ts_common", "artifacts/reqsprios.tex",
+            {"start_date": "2011-04-25" }]],
 
           ["graph",
            ["ts_common", "artifacts/req-graph1.dot"]],
@@ -50,14 +51,14 @@ class Config:
           ["graph2",
            ["ts_common", "artifacts/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", "artifacts/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "artifacts//reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "artifacts/html", "doc/html/header.html",
             "doc/html/footer.html"]],
 
@@ -72,7 +73,7 @@ class Config:
 
           ["stats_burndown1",
            ["ts_common", "artifacts/stats_burndown.csv", "2011-04-25"]],
-           
+
         ]
 
     output_specs2 = \

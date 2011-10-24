@@ -61,11 +61,11 @@ class latex2:
         ofile.write("REQS_LATEX2=%s\n" % self.filename)
         reqset = reqscont.continuum_latest()
         # For each requirement get the dependency correct
+        reqs_directory = reqscont.config.get_value('requirements.input.directory')
         ofile.write("%s: " % self.filename)
         for r in reqset.reqs:
             ofile.write("%s/%s.req "
-                        % (reqscont.config.reqs_spec["directory"],
-                           reqset.reqs[r].id))
+                        % (reqs_directory, reqset.reqs[r].id))
         ofile.write("\n\t${CALL_RMTOO}\n")
 
     # The real output

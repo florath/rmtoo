@@ -53,16 +53,26 @@ class Old:
                                  'header': output_spec[1][2],
                                  'footer': output_spec[1][3]})
                 continue
-            if output_spec[0] == 'prios':
+            if output_spec[0] in ['prios']:
+                print("PRIOS OUTPUTSPEC [%s]" % output_spec)
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
                     pval['start_date'] = output_spec[1][2]['start_date']
                 print("INTERNAL CONVERT PRIO [%s]" % pval)
-                cfg.append_list(['topics', topic, 'output', 'prios'], pval)
+                cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
+                continue
+            if output_spec[0] in ['stats_burndown1']:
+                print("SBD OUTPUTSPEC [%s]" % output_spec)
+                pval = {'output_filename': output_spec[1][1] }
+                if len(output_spec[1]) > 2:
+                    # The third element of this is just the date...
+                    pval['start_date'] = output_spec[1][2]
+                print("INTERNAL CONVERT PRIO [%s]" % pval)
+                cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
                 continue
             if output_spec[0] in ['graph', 'graph2', 'stats_reqs_cnt',
                                   'latex2', 'xml_ganttproject_2',
-                                  'oopricing1']:
+                                  'oopricing1', 'version1', 'tlp1']:
                 cfg.append_list(['topics', topic, 'output', output_spec[0]],
                                 {'output_filename': output_spec[1][1]})
                 continue
@@ -82,15 +92,21 @@ class Old:
                       reqs_spec['default_language'])
         if 'dependency_notation' in reqs_spec:
             cfg.set_value('requirements.input.dependency_notation',
-                          list(reqs_spec['dependency_notation']))
+                          set(reqs_spec['dependency_notation']))
+        else:
+            # The default is only 'Solved by'.
+            print("Using default Depends on relationship.")
+            cfg.set_value('requirements.input.dependency_notation',
+                          set(['Depends on', ]))
+            print("DEP ON 22 [%s]" % cfg.get_value('requirements.input.dependency_notation'))
 
     @staticmethod
     def internal_convert_analytics(cfg, analytics_specs):
         '''Converts the old analytics spec to the new requirements
-           specification.
-           This means that the analytics is set to an empty dictionary,
-           because the old values are not needed any more.'''
-        cfg.set_value('processing.analytics', {})
+           specification.'''
+        if 'stop_on_errors' in analytics_specs:
+            cfg.set_value('processing.analytics.stop_on_errors',
+                          analytics_specs['stop_on_errors'])
 
     @staticmethod
     def internal_convert_to_new(cfg, old_config):

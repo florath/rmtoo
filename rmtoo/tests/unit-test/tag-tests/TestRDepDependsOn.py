@@ -20,6 +20,7 @@ class TestRDepDependsOn:
     def test_positive_01(self):
         "Two node one edge digraph B -> A"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -39,6 +40,7 @@ class TestRDepDependsOn:
     def test_positive_02(self):
         "Three node one edge digraph B -> A, C -> A and C -> B"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -64,6 +66,7 @@ class TestRDepDependsOn:
     def test_negative_01(self):
         "Master requirement with Depends on field"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -77,6 +80,7 @@ class TestRDepDependsOn:
     def test_negative_02(self):
         "Two nodes as master requirement"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -93,6 +97,7 @@ class TestRDepDependsOn:
     def test_negative_03(self):
         "Normal requirement has no 'Depends on'"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -109,6 +114,7 @@ class TestRDepDependsOn:
     def test_negative_04(self):
         "Normal requirement has empty 'Depends on'"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -125,6 +131,7 @@ class TestRDepDependsOn:
     def test_negative_05(self):
         "'Depends on' points to a non existing requirement"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},
@@ -141,6 +148,7 @@ class TestRDepDependsOn:
     def test_negative_06(self):
         "Set without any master requirement"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_requirement},
@@ -157,6 +165,7 @@ class TestRDepDependsOn:
     def test_negative_07(self):
         "'Depends on' points to same requirement"
         config, reqset = create_parameters()
+        config.set_depends_on()
         reqset.reqs = {
             "A": TestReq("A",
                          {"Type": Requirement.rt_master_requirement},

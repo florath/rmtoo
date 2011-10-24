@@ -44,3 +44,7 @@ class TopicSetOutputHandler:
     def output(self, rc):
         '''Calls the output.'''
         return self.output_module.output(rc)
+
+    def cmad(self, reqscont, ofile):
+        '''Calls the creation of makefile dependency.'''
+        return self.output_module.cmad(reqscont, ofile)

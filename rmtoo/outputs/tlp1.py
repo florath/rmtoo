@@ -31,8 +31,7 @@ class tlp1:
 
     def __init__(self, topic_set, params):
         self.topic_set = topic_set
-        self.topic_name = params[0]
-        self.filename = params[1]
+        self.filename = params['output_filename']
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

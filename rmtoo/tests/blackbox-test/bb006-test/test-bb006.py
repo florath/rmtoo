@@ -25,12 +25,16 @@ class TestBB006:
 
         mout, merr = prepare_result_is_dir()
         main(["-f", mdir + "/input/Config1.py", "-m", "..", "-c",
-              os.path.join(os.environ["rmtoo_test_dir"], "makefile_deps")], 
+              os.path.join(os.environ["rmtoo_test_dir"], "makefile_deps")],
              mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")
         missing_files, additional_files, diffs = compare_results(mdir)
-        assert(len(missing_files)==0)
-        assert(len(additional_files)==0)
-        assert(len(diffs)==0)
+        assert(len(missing_files) == 0)
+        assert(len(additional_files) == 0)
+
+        if len(diffs) != 0:
+            print("DIFFS [%s]" % diffs)
+
+        assert(len(diffs) == 0)
         delete_result_is_dir()

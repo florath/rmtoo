@@ -31,9 +31,6 @@ class html:
     # file plus the header and the footer.
     # Each html file depends on it's topic file
     def cmad(self, reqscont, ofile):
-        # Emit the dependencies for the topic
-        self.topic_set.cmad(reqscont, ofile)
-
         reqset = reqscont.continuum_latest()
 
         # Dependencies of every single topic html page

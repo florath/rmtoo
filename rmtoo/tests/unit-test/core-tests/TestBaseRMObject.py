@@ -29,7 +29,7 @@ class TBRMObj(BaseRMObject):
         tm = TMods()
         tm.tagtypes = {"mytag": {"keyA": TMods()}}
         self.mls = MemLogStore()
-        BaseRMObject.__init__(self, "mytag", sfd, "MRid", self.mls, tm, None,
+        BaseRMObject.__init__(self, "mytag", sfd, "MRid", self.mls, tm,
                               tc, "tobjs")
 
 class TestBaseRMObject:

@@ -24,7 +24,9 @@ class Analytics:
         ok = True
 
         for ana in HotSpot, DescWords, ReqTopicCohe, TopicCohe:
+            print("Calling analytics [%s]" % ana)
             if not ana.run(config, reqs, topics):
+                print(" --- result is False")
                 ok = False
 
         return ok

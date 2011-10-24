@@ -9,14 +9,18 @@
 #
 
 from rmtoo.lib.analytics.DescWords import DescWords
+from rmtoo.lib.configuration.Cfg import Cfg
 
-class TestConfig1:
+class TestConfig1(Cfg):
 
-    reqs_spec = {}
+    def __init__(self):
+        Cfg.__init__(self)
 
-class TestConfig2:
+class TestConfig2(Cfg):
 
-    reqs_spec = { "default_language": "kl_EL"}
+    def __init__(self):
+        Cfg.__init__(self)
+        self.set_value('requirements.input.default_language', 'kl_EL')
 
 class TestDescWords:
 
@@ -26,8 +30,8 @@ class TestDescWords:
         tc = TestConfig1()
         lwords = DescWords.get_lang(tc)
         level, log = DescWords.analyse(lwords, "Me and You, You and Me")
-        assert(level==-30)
-        assert(log==[" -20:2*-10: Usage of the word 'and'"])
+        assert(level == -30)
+        assert(log == [" -20:2*-10: Usage of the word 'and'"])
 
 
     def test_neg_01(self):
@@ -35,11 +39,11 @@ class TestDescWords:
 
         tc = TestConfig2()
         lwords = DescWords.get_lang(tc)
-        assert(lwords==None)
+        assert(lwords == None)
 
     def test_neg_02(self):
         "DescWords: get non existing language spec using run function"
 
         tc = TestConfig2()
         r = DescWords.run(tc, None, None)
-        assert(r==True)
+        assert(r == True)

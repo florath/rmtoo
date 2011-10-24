@@ -65,11 +65,11 @@ class Topic(Digraph.Node):
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile, tname):
+        reqs_dir = reqscont.config.get_value('requirements.input.directory')
         for req in self.reqs:
             # Add all the included requirements
             ofile.write(" %s.req" %
-                         os.path.join(reqscont.config.reqs_spec["directory"],
-                                      req.name))
+                         os.path.join(reqs_dir, req.name))
         # Add all the subtopics
         for n in self.outgoing:
             ofile.write(" ${TOPIC_%s_%s_DEPS}" % (tname, n.name))

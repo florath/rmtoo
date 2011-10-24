@@ -27,9 +27,10 @@ class TestOutputLaTeX2:
     def test_positive_01(self):
         "LaTeX output: check config"
 
-        mconfig = { "req_attributes": ["Id", "Priority", ]}
+        mconfig = { "req_attributes": ["Id", "Priority", ],
+                    "output_filename": "/please/ignore/me"}
 
-        l = latex2([None, None, mconfig])
+        l = latex2(None, mconfig)
         assert(l.config == mconfig)
 
     def test_neg_01(self):
@@ -38,7 +39,8 @@ class TestOutputLaTeX2:
         fd = StringIO.StringIO()
         topic = Topic(None, "TName", None, None, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
-        l2 = latex2([None, None])
+        mconfig = {"output_filename": "/please/ignore/me"}
+        l2 = latex2(None, mconfig)
         try:
             l2.output_latex_topic(fd, topic, None)
             assert(False)
@@ -50,9 +52,10 @@ class TestOutputLaTeX2:
 
         fd = StringIO.StringIO()
 
-        mconfig = { "req_attributes": ["Status", "Class", "DoesNotExists"]}
+        mconfig = { "req_attributes": ["Status", "Class", "DoesNotExists"],
+                    "output_filename": "/please/ignore/me"}
 
-        l2 = latex2([None, None, mconfig])
+        l2 = latex2(None, mconfig)
         req = Requirement(None, "TestReq", None, None, None)
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")

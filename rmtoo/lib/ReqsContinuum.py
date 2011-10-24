@@ -117,12 +117,11 @@ class ReqsContinuum:
             unicode(self.config.get_value('requirements.input.directory'), "utf-8"))
         self.continuum_add("FILES", rs)
 
-
     # The cmad for the requirments set
     def cmad_write_reqs_list(self, ofile):
         # Write out the list
+        reqs_dir = self.config.get_value('requirements.input.directory')
         ofile.write("REQS=")
         for r in self.continuum_latest().reqs:
-            ofile.write("%s.req " % os.path.join(
-                    self.config.reqs_spec["directory"], r))
+            ofile.write("%s.req " % os.path.join(reqs_dir, r))
         ofile.write("\n")
