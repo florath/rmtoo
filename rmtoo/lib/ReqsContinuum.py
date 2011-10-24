@@ -66,10 +66,9 @@ class ReqsContinuum:
         if self.repo_access_needed():
             # Have a look, if there is a repo in the given directory.
             if not self.create_repo():
-                raise RMTException(40, "Based on the config '%s' a "
+                raise RMTException(40, "Based on the config a "
                                    "repository is needed - but there is "
-                                   "none" % self.config.reqs_spec[
-                        "commit_interval"])
+                                   "none")
 
         # Maybe add also the FILES:
         if end_vers == "FILES":

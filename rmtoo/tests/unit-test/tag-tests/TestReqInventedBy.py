@@ -44,7 +44,8 @@ class TestReqInventedBy:
     def test_negative_02(self):
         "Requirement Tag Invented by - invalid tag given"
         config, req = create_parameters()
-        config.inventors = ["meinereiner", "keinerseiner"]
+        config.set_value('requirements.inventors',
+                         ["meinereiner", "keinerseiner"])
         req["Invented by"] = RecordEntry("Invented by", "MeinNameIstHase")
 
         rt = ReqInventedBy(config)

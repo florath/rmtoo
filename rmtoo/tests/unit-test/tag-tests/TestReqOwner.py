@@ -44,7 +44,8 @@ class TestReqOwner:
     def test_negative_02(self):
         "Requirement Tag Owner - invalid tag given"
         config, req = create_parameters()
-        config.stakeholders = ["marketing", "security"]
+        config.set_value('requirements.stakeholders',
+                         ["marketing", "security"])
         req["Owner"] = RecordEntry("Owner", "SomethingDifferent")
 
         rt = ReqOwner(config)
@@ -52,5 +53,6 @@ class TestReqOwner:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
+            print("SKDJFHSDJKFH [%s]" % rmte.id())
             assert(rmte.id() == 11)
 

@@ -25,8 +25,9 @@ class TestReqsCont:
             tdir = tempfile.mkdtemp(prefix="rmtoo-tst-ctnt-")
 
             config = Cfg()
-            config.set_value('commit_interval', ["v1", "v7"])
-            config.set_value('directory', tdir)
+            config.set_value('requirements.input.commit_interval.begin', 'v1')
+            config.set_value('requirements.input.commit_interval.end', 'v7')
+            config.set_value('requirements.input.directory', tdir)
 
             ReqsContinuum(None, config)
             assert(False)
@@ -41,14 +42,16 @@ class TestReqsCont:
         tdir = tempfile.mkdtemp(prefix="rmtoo-tst-ctnt-")
 
         config = Cfg()
-        config.set_value('commit_interval', ["v1", "v7"])
-        config.set_value('directory', tdir)
+        config.set_value('requirements.input.commit_interval.begin', 'v1')
+        config.set_value('requirements.input.commit_interval.end', 'v7')
+        config.set_value('requirements.input.directory', tdir)
 
         mstderr = StringIO.StringIO()
 
         rval = execute_cmds(config, None, None, mstderr)
 
         assert(rval == False)
+        print("ERROR IS [%s]" % mstderr.getvalue())
         assert(mstderr.getvalue() == "+++ ERROR: Problem reading in "
-               "the continuum: '[  40]: Based on the config '['v1', 'v7']' "
+               "the continuum: '[  40]: Based on the config "
                "a repository is needed - but there is none'")

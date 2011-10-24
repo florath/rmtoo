@@ -26,7 +26,7 @@ class ReqInventedBy(ReqTagGeneric):
         if t not in self.config.get_value('requirements.inventors'):
             raise RMTException(6, "Invalid invented by '%s'. Must be one "
                                "of the inventors '%s'" %
-                               (t, self.config.inventors), rid)
+                               (t, self.config.get_value('requirements.inventors')), rid)
 
         del req[self.tag]
         return self.tag, t

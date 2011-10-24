@@ -1,6 +1,8 @@
 User visible changes
 --------------------
 
+Redesign and rewrote of configuration.
+
 Added estimation to burndown diagram.
 
 The requirements dependency graph nodes may now also contain the EfEUs
