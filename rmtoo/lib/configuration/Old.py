@@ -73,11 +73,23 @@ class Old:
                 cfg.append_list(['topics', topic, 'output', output_spec[0]], pval)
                 continue
             if output_spec[0] in ['graph', 'graph2', 'stats_reqs_cnt',
-                                  'latex2', 'xml_ganttproject_2',
+                                  'latex2',
                                   'oopricing1', 'version1', 'tlp1']:
+                ospec = {}
+                if len(output_spec[1]) > 2:
+                    ospec = output_spec[1][2]
+                ospec['output_filename'] = output_spec[1][1]
                 cfg.append_list(['topics', topic, 'output', output_spec[0]],
-                                {'output_filename': output_spec[1][1]})
+                                ospec)
                 continue
+            if output_spec[0] in ['xml_ganttproject_2', ]:
+                ospec = {'output_filename': output_spec[1][1]}
+                if len(output_spec[1]) > 2:
+                    ospec['effort_factor'] = output_spec[1][2]
+                cfg.append_list(['topics', topic, 'output', output_spec[0]],
+                                ospec)
+                continue
+
             print("OS [%s]" % output_spec)
             assert(False)
 
@@ -105,12 +117,18 @@ class Old:
     @staticmethod
     def internal_convert_analytics(cfg, analytics_specs):
         '''Converts the old analytics spec to the new requirements
-           specification.'''
+           configuration.'''
         if 'stop_on_errors' in analytics_specs:
             cfg.set_value('processing.analytics.stop_on_errors',
                           analytics_specs['stop_on_errors'])
             print("interncvl_convert_analytics [%s]" %
                   cfg.get_value('processing.analytics.stop_on_errors'))
+
+    @staticmethod
+    def internal_convert_constraints(cfg, constraints_specs):
+        '''Converts the old constraints spec to the new requirements
+           configuration.'''
+        cfg.set_value('constraints', constraints_specs)
 
     @staticmethod
     def internal_convert_to_new(cfg, old_config):
@@ -142,6 +160,9 @@ class Old:
         if hasattr(old_config, 'analytics_specs'):
             Old.internal_convert_analytics(cfg, old_config.analytics_specs)
             old_config_dir.remove('analytics_specs')
+        if hasattr(old_config, 'constraints_specs'):
+            Old.internal_convert_constraints(cfg, old_config.constraints_specs)
+            old_config_dir.remove('constraints_specs')
         print("Old Config: Not converted attributes: [%s]" % old_config_dir)
 
     @staticmethod

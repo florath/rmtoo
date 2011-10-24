@@ -140,8 +140,7 @@ class RequirementSet(Digraph, MemLogStore):
                 continue
             rid = f[:-4]
             fd = codecs.open(os.path.join(directory, f), "r", "utf-8")
-            cnstrnt = Constraint(fd, rid, self, self.mods,
-                                 self.opts, self.config)
+            cnstrnt = Constraint(fd, rid, self, self.mods, self.config)
             if cnstrnt.ok():
                 # Store in the map, so that it is easy to access the
                 # node by id.

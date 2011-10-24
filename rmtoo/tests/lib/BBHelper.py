@@ -180,6 +180,9 @@ def unify_output_dir(filename):
 def check_result(result, missing_files, additional_files, diffs):
     assert(result == True)
     assert(len(missing_files) == 0)
+
+    if len(additional_files) != 0:
+        print("ADDITIONAL FILES [%s]" % additional_files)
     assert(len(additional_files) == 0)
 
     if len(diffs) != 0:

@@ -20,6 +20,7 @@ class graph:
 
     def __init__(self, topic_set, params):
         self.topic_set = topic_set
+        print("GRAPH PARAMS [%s]" % params)
         self.output_filename = params['output_filename']
         # TODO Default class handling
 #        self.config = graph.default_config
