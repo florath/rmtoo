@@ -27,3 +27,5 @@ Internal Changes
 
 Moved collecting of files from Makefile to setup.py (thanks to
 Vytautas Astrauskas <vastrauskas@gmail.com>). 
+
+Refactoring of LogMem and other internal logging classes.
