@@ -27,7 +27,6 @@ class StdParams:
            and returned.  If name is not in params, the default_value
            is returned.'''
         if name in params:
-            print("INTERNAL_PARSE_DATE [%s]" % params)
             return parse_date(name, params[name])
         return default_value
 

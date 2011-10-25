@@ -81,8 +81,8 @@ class Modules(Digraph):
             mc.append(modulename)
 
             # Import module
-            print("Loading module '%s' from '%s'" %
-                  (modulename, ".".join(mod_components)))
+            #print("Loading module '%s' from '%s'" %
+            #      (modulename, ".".join(mod_components)))
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 

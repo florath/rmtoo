@@ -179,13 +179,10 @@ class TopicSet(Digraph, MemLogStore):
         #   [ list of different parameter sets for the different parameter
         #     sets ] }
         ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
-        print("CONFIG [%s]" % self.cfg.config)
         for outmeth, params in ohconfig.get_dict().iteritems():
-            print("BEFORE OMETH [%s] [%s]" % (outmeth, params))
             for param in params:
                 self.output_handlers.append(
                     TopicSetOutputHandler(self.cfg, outmeth, param, self))
-            print("OMETH [%s] [%s]" % (outmeth, params))
 
     def output(self, rc):
         for output_handler in self.output_handlers:

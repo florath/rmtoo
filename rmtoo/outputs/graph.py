@@ -20,12 +20,7 @@ class graph:
 
     def __init__(self, topic_set, params):
         self.topic_set = topic_set
-        print("GRAPH PARAMS [%s]" % params)
         self.output_filename = params['output_filename']
-        # TODO Default class handling
-#        self.config = graph.default_config
-#        if len(params)>2:
-#            self.config = params[2]
         self.config = params
         if 'node_attributes' not in self.config:
             self.config['node_attributes'] = \

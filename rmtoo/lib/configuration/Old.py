@@ -29,7 +29,6 @@ class Old:
     def load_config(old_config_file):
         '''Load old config file'''
         # 'execfile' does not work here.
-        print("OLD CONFIG FILE [%s]" % old_config_file)
         old_config_fd = file(old_config_file, "r")
         conf_file = old_config_fd.read()
         # pylint: disable=W0122
@@ -61,23 +60,19 @@ class Old:
                                  'footer': output_spec[1][3]})
                 continue
             if output_spec[0] in ['prios', 'stats_sprint_burndown1']:
-                print("PRIOS OUTPUTSPEC [%s]" % output_spec)
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
                     pval['start_date'] = output_spec[1][2]['start_date']
                     if 'end_date' in output_spec[1][2]:
                         pval['end_date'] = output_spec[1][2]['end_date']
-                print("INTERNAL CONVERT PRIO [%s]" % pval)
                 cfg.append_list(['topics', topic, 'output',
                                  output_spec[0]], pval)
                 continue
             if output_spec[0] in ['stats_burndown1']:
-                print("SBD OUTPUTSPEC [%s]" % output_spec)
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
                     # The third element of this is just the date...
                     pval['start_date'] = output_spec[1][2]
-                print("INTERNAL CONVERT PRIO [%s]" % pval)
                 cfg.append_list(['topics', topic, 'output',
                                  output_spec[0]], pval)
                 continue
@@ -99,7 +94,6 @@ class Old:
                                 ospec)
                 continue
 
-            print("OS [%s]" % output_spec)
             assert(False)
 
     @staticmethod

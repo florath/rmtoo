@@ -102,7 +102,6 @@ class RDepDependsOn(Digraph.Node):
     def rewrite(self, reqset):
         conf_dependency_notation = \
             self.config.get_value('requirements.input.dependency_notation')
-        print("DEP ON [%s]" % conf_dependency_notation)
         if "Depends on" not in conf_dependency_notation:
             return True
 

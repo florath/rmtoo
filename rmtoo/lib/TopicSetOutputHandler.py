@@ -27,7 +27,6 @@ class TopicSetOutputHandler:
         output_path = ".".join(output_path_parts)
 
         # Load the module
-        print("OUTPUT PATH [%s]" % output_path)
         return __import__(output_path, globals(), locals(), output_path)
 
     def internal_create_output_module(self, topic_set):
@@ -37,7 +36,6 @@ class TopicSetOutputHandler:
         cstrt = eval("output_module.%s" % self.name)
 
         # Call the constructor to get an object.
-        print("CSTS NAME [%s]" % self.name)
         obj = cstrt(topic_set, self.param_cfg)
         return obj
 

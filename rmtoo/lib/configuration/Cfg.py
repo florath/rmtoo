@@ -171,7 +171,6 @@ class Cfg:
         try:
             return self.get_raw(key)
         except CfgEx:
-            print("MAND NF [%s]" % self.config)
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found" % key)
 
