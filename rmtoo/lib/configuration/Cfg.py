@@ -52,7 +52,6 @@ class Cfg:
         if type(initial_values) == DictType:
             self.merge_dictionary(initial_values)
             return
-        print("INITIAL VALUES: [%s]" % initial_values)
         assert(False)
 
     @staticmethod

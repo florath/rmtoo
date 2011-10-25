@@ -9,9 +9,14 @@
  For licensing details see COPYING
 '''
 
-# TODO: Better way is to have simple classes handling the config
-# (and the default values)
+from rmtoo.lib.Constraints import Constraints
+
+# pylint: disable=R0903
 class DefaultValues:
+    '''This calls all the appropriate functions to set the 
+       default values.
+       Instead of merging in here everything, the information
+       is placed where it should be.'''
 
     def __init__(self):
         '''Hidden constructor for utility class.'''
@@ -19,5 +24,6 @@ class DefaultValues:
 
     @staticmethod
     def set_default_values(cfg):
-        cfg.set_value('constraints.search_dirs',
-                      ['/usr/share/pyshared/rmtoo/collection/constraints'])
+        '''Calls the appropriate functions to set the default
+           configuration values.'''
+        Constraints.set_default_values(cfg)

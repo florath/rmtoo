@@ -12,6 +12,11 @@
 class Constraints:
 
     @staticmethod
+    def set_default_values(cfg):
+        cfg.set_value('constraints.search_dirs',
+                      ['/usr/share/pyshared/rmtoo/collection/constraints'])
+
+    @staticmethod
     def collect(topic_set):
         t = topic_set.get_master()
         cnsts = {}
@@ -20,7 +25,7 @@ class Constraints:
         # up.
         def collect_constraints_rec(topic):
             for req in topic.reqs:
-                if req.values["Constraints"]!=None:
+                if req.values["Constraints"] != None:
                     for k, v in req.values["Constraints"].items():
                         cnsts[k] = v
 
@@ -29,5 +34,5 @@ class Constraints:
 
         collect_constraints_rec(t)
         return cnsts
-        
+
 
