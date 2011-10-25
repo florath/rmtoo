@@ -41,30 +41,27 @@ class MemLogStore(object):
         for l in self.logs:
             l.write_log(file_descriptor)
 
-    # Convenience functions
-    def debug(self, lid, msg, efile=None, eline=None):
+    def internal_log(self, lid, level, msg, efile=None, eline=None):
         if efile == None and eline == None:
-            self.logs.append(MemLog(lid, LogLevel.debug(), msg))
+            self.logs.append(MemLog(lid, level, msg))
         else:
-            self.logs.append(MemLogFile(lid, LogLevel.debug(), msg, efile, eline))
+            self.logs.append(MemLogFile(lid, level, msg, efile, eline))
+
+    # Convenience functions
+    def trace(self, lid, msg, efile=None, eline=None):
+        self.internal_log(lid, LogLevel.trace(), msg, efile, eline)
+
+    def debug(self, lid, msg, efile=None, eline=None):
+        self.internal_log(lid, LogLevel.debug(), msg, efile, eline)
 
     def info(self, lid, msg, efile=None, eline=None):
-        if efile == None and eline == None:
-            self.logs.append(MemLog(lid, LogLevel.info(), msg))
-        else:
-            self.logs.append(MemLogFile(lid, LogLevel.info(), msg, efile, eline))
+        self.internal_log(lid, LogLevel.info(), msg, efile, eline)
 
     def warning(self, lid, msg, efile=None, eline=None):
-        if efile == None and eline == None:
-            self.logs.append(MemLog(lid, LogLevel.warning(), msg))
-        else:
-            self.logs.append(MemLogFile(lid, LogLevel.warning(), msg, efile, eline))
+        self.internal_log(lid, LogLevel.warning(), msg, efile, eline)
 
     def error(self, lid, msg, efile=None, eline=None):
-        if efile == None and eline == None:
-            self.logs.append(MemLog(lid, LogLevel.error(), msg))
-        else:
-            self.logs.append(MemLogFile(lid, LogLevel.error(), msg, efile, eline))
+        self.internal_log(lid, LogLevel.error(), msg, efile, eline)
 
     # Construct log message from exception
     def error_from_rmte(self, rmte):

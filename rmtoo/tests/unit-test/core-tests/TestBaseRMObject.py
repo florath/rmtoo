@@ -39,7 +39,5 @@ class TestBaseRMObject:
 
         tbrmo = TBRMObj()
 
-        print("U!U!U!U [%s]" % tbrmo.mls.to_list())
-
         assert(tbrmo.mls.to_list() ==
                [[90, 'error', 'Wrong module type [mytag] not in [[1, 2, 3]]']])

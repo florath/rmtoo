@@ -24,77 +24,112 @@
 import copy
 from xml.dom.minidom import parse, parseString
 
-def xmlequals(a, b, xpath, trace_equals=False):
-
-    # Check for the type
-    if a.nodeType != b.nodeType:
+def xml_check_type(xml_doc_a, xml_doc_b, xpath, _):
+    '''Check for the type.'''
+    if xml_doc_a.nodeType != xml_doc_b.nodeType:
         return False, "Node types differ [%s] != [%s] at [%s]" % \
-            (a.nodeType, b.nodeType, xpath)
+            (xml_doc_a.nodeType, xml_doc_b.nodeType, xpath)
+    return None, None
 
-    # Check for Text content
-    if a.nodeType == a.TEXT_NODE or a.nodeType == a.CDATA_SECTION_NODE:
-        if a.data != b.data:
+def xml_check_text_content(xml_doc_a, xml_doc_b, xpath, _):
+    '''Check for Text content.'''
+    if xml_doc_a.nodeType == xml_doc_a.TEXT_NODE \
+       or xml_doc_a.nodeType == xml_doc_a.CDATA_SECTION_NODE:
+        if xml_doc_a.data != xml_doc_b.data:
             return False, "Text Node data differs [%s] != [%s] at [%s]" % \
-                (a.data, b.data, xpath)
+                (xml_doc_a.data, xml_doc_b.data, xpath)
         else:
             return True, None
+    return None, None
 
-    # Check for the name
-    if a.tagName != b.tagName:
+def xml_check_name(xml_doc_a, xml_doc_b, xpath, _):
+    '''Check for the name.'''
+    print("CHECKNAME [%s]" % xml_doc_a)
+    if xml_doc_a.tagName != xml_doc_b.tagName:
         return False, "Tag names differ [%s] != [%s] at [%s]" % \
-            (a.tagName, b.tagName, xpath)
+            (xml_doc_a.tagName, xml_doc_b.tagName, xpath)
+    return None, None
 
-    # Check for the attibutes
-    a_attr_sorted = sorted(a.attributes.items())
-    b_attr_sorted = sorted(b.attributes.items())
+def xml_check_attributes(xml_doc_a, xml_doc_b, xpath, _):
+    '''Check for the attributes.'''
+    a_attr_sorted = sorted(xml_doc_a.attributes.items())
+    b_attr_sorted = sorted(xml_doc_b.attributes.items())
     if a_attr_sorted != b_attr_sorted:
         return False, "Attributes for tag [%s] " \
             "differ: [%s] != [%s] at [%s]" % \
-            (a.tagName, a_attr_sorted, b_attr_sorted, xpath)
+            (xml_doc_a.tagName, a_attr_sorted, b_attr_sorted, xpath)
+    return None, None
 
-    if len(a.childNodes) != len(b.childNodes):
+def xml_check_child_count(xml_doc_a, xml_doc_b, xpath, _):
+    '''Checks if both nodes contain the same number of child nodes.'''
+    if len(xml_doc_a.childNodes) != len(xml_doc_b.childNodes):
         return False, "Number of child nodes differs " \
             "[%s] != [%s] at [%s]" % \
-            (len(a.childNodes), len(b.childNodes), xpath)
+            (len(xml_doc_a.childNodes), len(xml_doc_b.childNodes), xpath)
+    return None, None
 
-    # Create a shallow copy of b's children (and remove nodes which
-    # are seen as equal)
-    bcn = copy.copy(b.childNodes)
+def xml_check_children(xml_doc_a, xml_doc_b, xpath, mem_log_store):
+    '''Create a shallow copy of b's children (and remove nodes which
+       are seen as equal).'''
+    bcn = copy.copy(xml_doc_b.childNodes)
 
     # Iterate through the child nodes of 'a' ...
-    for ac in a.childNodes:
-        if trace_equals:
-            print("xmlcmp trace: comparing child node [%s]" % ac)
+    for a_children in xml_doc_a.childNodes:
+        if mem_log_store != None:
+            mem_log_store.trace(97,
+                "xmlcmp: comparing child node [%s]" % a_children)
         # ... check if there is the same one in 'b'
         found_ac = False
-        for bc in bcn:
-            r, s = xmlequals(ac, bc, xpath + "/" + a.tagName)
-            if r:
-                # ac and bc are equal: remove bc from bcn and skip to
-                # the next ac
-                bcn.remove(bc)
+        for b_children in bcn:
+            result, err_msg = xmlequals(a_children, b_children,
+                                        xpath + "/" + xml_doc_a.tagName)
+            if result:
+                # a_children and b_children are equal: remove b_children 
+                # from bcn and skip to the next a_children
+                bcn.remove(b_children)
                 found_ac = True
-                if trace_equals:
-                    print("[%s] xmlcmp trace: found equal subtrees [%s]" \
-                          % (xpath, ac))
-                    print("[%s] xmlcmp trace: remaining elements [%s]" \
+                if mem_log_store != None:
+                    mem_log_store.trace(98,
+                        "[%s] xmlcmp: found equal subtrees [%s]" \
+                              % (xpath, a_children))
+                    mem_log_store.trace(99,
+                        "[%s] xmlcmp: remaining elements [%s]" \
                           % (xpath, bcn))
                 break
         if not found_ac:
             return False, "Child node [%s] not found at [%s] - " \
-                "last error was [%s]" % (ac, xpath, s)
+                "last error was [%s]" % (a_children, xpath, err_msg)
 
     assert(len(bcn) == 0)
-
     return True, None
 
-def xmlcmp_files(f1, f2, trace_equals=False):
-    d1 = parse(f1)
-    d2 = parse(f2)
-    return xmlequals(d1.documentElement, d2.documentElement, "", trace_equals)
+def xmlequals(xml_doc_a, xml_doc_b, xpath, mem_log_store=None):
+    '''Calls the different xml_check helper functions.
+       Returns True, None if xml document a and b are the same, 
+       Returns False and an error message if they differ.'''
+    for check_func in [xml_check_type, xml_check_text_content,
+                       xml_check_name, xml_check_attributes,
+                       xml_check_child_count, xml_check_children]:
+        print("CF [%s]" % check_func)
+        result, err_msg = check_func(xml_doc_a, xml_doc_b, xpath, mem_log_store)
+        print("CF RES [%s]" % result)
+        if result == False or result == True:
+            assert(result != None)
+            return result, err_msg
+        assert(result == None)
+    return True, None
 
-def xmlcmp_strings(s1, s2, trace_equals=False):
-    d1 = parseString(s1)
-    d2 = parseString(s2)
-    return xmlequals(d1.documentElement, d2.documentElement, "", trace_equals)
+def xmlcmp_files(file1, file2, mem_log_store=None):
+    '''Compares two xml files.'''
+    doc1 = parse(file1)
+    doc2 = parse(file2)
+    return xmlequals(doc1.documentElement, doc2.documentElement,
+                     "", mem_log_store)
+
+def xmlcmp_strings(str1, str2, mem_log_store=None):
+    '''Compares two xml string.'''
+    doc1 = parseString(str1)
+    doc2 = parseString(str2)
+    return xmlequals(doc1.documentElement, doc2.documentElement,
+                     "", mem_log_store)
 
