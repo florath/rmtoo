@@ -23,7 +23,7 @@
 # The first can easily be represented by a dictionary, the second by a
 # list.
 
-from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.RMTException import RMTException
 
 class Record(MemLogStore, list):
@@ -40,7 +40,7 @@ class Record(MemLogStore, list):
 
     def set_comment(self, comment):
         self.comment = comment
-    
+
     def is_usable(self):
         return self.lis_usable
 
@@ -58,7 +58,7 @@ class Record(MemLogStore, list):
     # The dict which is returned here must be seen as read only.
     # The data is only valid until the underlaying list is changed.
     def get_dict(self):
-        if self.ldict==None:
+        if self.ldict == None:
             self.convert_to_dict()
         return self.ldict
 
@@ -73,7 +73,7 @@ class Record(MemLogStore, list):
         if self.ldict != None:
             self.ldict[o.get_tag()] = o
         list.append(self, o)
-    
+
     # Delete an item
     def __delitem__(self, index):
         self.ldict = None
@@ -82,7 +82,7 @@ class Record(MemLogStore, list):
     # Remove the first occurance of value with the given tag
     def remove(self, v):
         for l in self:
-            if l.get_tag()==v:
+            if l.get_tag() == v:
                 list.remove(self, l)
                 return
         return
@@ -91,15 +91,15 @@ class Record(MemLogStore, list):
     # ValueError.
     def set_content(self, k, c):
         for l in self:
-            if l.get_tag()==k:
+            if l.get_tag() == k:
                 l.set_content(c)
                 return
         raise ValueError()
- 
+
     # Checks if the given tag is available
     def is_tag_available(self, tag):
         for i in self:
-            if tag==i.get_tag():
+            if tag == i.get_tag():
                 return True;
         return False
 

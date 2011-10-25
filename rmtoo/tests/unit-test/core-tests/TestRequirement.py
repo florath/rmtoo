@@ -10,7 +10,7 @@ import StringIO
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestRequirement:

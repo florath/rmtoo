@@ -9,7 +9,7 @@
 import os
 import StringIO
 from rmtoo.lib.Modules import Modules
-from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RMTException import RMTException

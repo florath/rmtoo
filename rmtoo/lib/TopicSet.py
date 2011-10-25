@@ -23,7 +23,7 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.ConnectedComponents import connected_components
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
-from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.configuration.Cfg import Cfg
 

@@ -14,7 +14,9 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.MemLogStore import MemLogStore, MemLog
+from rmtoo.lib.logging.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLog import MemLog
+from rmtoo.lib.logging.LogLevel import LogLevel
 
 class TestRecordTxt2:
 
@@ -34,7 +36,7 @@ class TestRecordTxt2:
 
         assert(txt_doc.is_usable() == False)
         assert(txt_doc.to_list() ==
-               [[79, MemLog.error,
+               [[79, LogLevel.error(),
                  'Expected tag line not found', 'Rubbish', 1]])
 
     def test_neg_02(self):
@@ -43,7 +45,7 @@ class TestRecordTxt2:
         txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
         assert(txt_doc.is_usable() == False)
         assert(txt_doc.to_list() ==
-               [[79, MemLog.error,
+               [[79, LogLevel.error(),
                  'Expected tag line not found', 'Rubbish', 1]])
 
     def test_neg_03(self):
@@ -53,7 +55,7 @@ class TestRecordTxt2:
                                         TxtIOConfig())
         assert(txt_doc.is_usable() == False)
         assert(txt_doc.to_list() ==
-               [[79, MemLog.error,
+               [[79, LogLevel.error(),
                  'Expected tag line not found', 'Rubbish', 1]])
 
     def test_neg_04(self):
@@ -66,7 +68,7 @@ class TestRecordTxt2:
 
         assert(txt_doc.is_usable() == False)
         assert(txt_doc.to_list() ==
-               [[80, MemLog.error, 'line too long: is [18], max allowed [7]',
+               [[80, LogLevel.error(), 'line too long: is [18], max allowed [7]',
                  'TooLong', 1]])
 
     def test_neg_05(self):
@@ -86,7 +88,7 @@ good: but too long
                                         "TooLong", tioconfig)
 
         assert(txt_doc.is_usable() == False)
-        assert([[80, MemLog.error, 'line too long: is [18], max allowed [7]',
+        assert([[80, LogLevel.error(), 'line too long: is [18], max allowed [7]',
                   'TooLong', 6]] == txt_doc.to_list())
 
     def test_neg_06(self):
@@ -113,15 +115,15 @@ d:
 
         assert(txt_doc.is_usable() == False)
         assert(txt_doc.to_list() ==
-               [[80, MemLog.error, 'line too long: is [18], max allowed [7]',
+               [[80, LogLevel.error(), 'line too long: is [18], max allowed [7]',
                  'TooLong', 6],
-                [80, MemLog.error, 'line too long: is [23], max allowed [7]',
+                [80, LogLevel.error(), 'line too long: is [23], max allowed [7]',
                  'TooLong', 9],
-                [80, MemLog.error, 'line too long: is [8], max allowed [7]',
+                [80, LogLevel.error(), 'line too long: is [8], max allowed [7]',
                  'TooLong', 10],
-                [80, MemLog.error, 'line too long: is [9], max allowed [7]',
+                [80, LogLevel.error(), 'line too long: is [9], max allowed [7]',
                  'TooLong', 12],
-                [80, MemLog.info, TxtParser.comment_in_req, 'TooLong', 11]])
+                [80, LogLevel.info(), TxtParser.comment_in_req, 'TooLong', 11]])
 
 
     def test_neg_07(self):
@@ -154,13 +156,13 @@ t4: uuuu
         assert(txt_doc.is_usable() == True)
 
         assert(txt_doc.to_list() ==
-               [[80, MemLog.info, TxtParser.comment_in_req,
+               [[80, LogLevel.info(), TxtParser.comment_in_req,
                  'CommentsEverywhere', 5],
-                [80, MemLog.info, TxtParser.comment_in_req,
+                [80, LogLevel.info(), TxtParser.comment_in_req,
                  'CommentsEverywhere', 9],
-                [80, MemLog.info, TxtParser.comment_in_req,
+                [80, LogLevel.info(), TxtParser.comment_in_req,
                  'CommentsEverywhere', 13],
-                [80, MemLog.info, TxtParser.comment_in_req,
+                [80, LogLevel.info(), TxtParser.comment_in_req,
                  'CommentsEverywhere', 19]])
 
     def test_neg_08(self):

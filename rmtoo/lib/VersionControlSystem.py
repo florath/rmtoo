@@ -34,7 +34,8 @@ import re
 import StringIO
 
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.MemLogStore import MemLog
+from rmtoo.lib.logging.MemLog import MemLog
+from rmtoo.lib.logging.LogLevel import LogLevel
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 
@@ -85,7 +86,8 @@ class VCSGit:
         except KeyError, ke:
             # This means, that at this point of time the directory was
             # not available.
-            rs.log(46, MemLog.error, "Path '%s' not available" %
+            # TODO: Why not rs.error()????
+            rs.log(46, LogLevel.error(), "Path '%s' not available" %
                    self.reqs_subdir)
             rs.not_usable()
             return

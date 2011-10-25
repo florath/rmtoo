@@ -15,7 +15,9 @@ import StringIO
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Modules import Modules
 from rmtoo.lib.Requirement import Requirement
-from rmtoo.lib.MemLogStore import MemLogStore, MemLog
+from rmtoo.lib.logging.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLog import MemLog
+from rmtoo.lib.logging.LogLevel import LogLevel
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 
@@ -37,9 +39,9 @@ class TestReqSet:
         reqs.handle_modules()
 
         assert(reqs.mls() == MemLogStore.create_mls(
-                [[57, MemLog.error, "No tag handler found for tag(s) "
+                [[57, LogLevel.error(), "No tag handler found for tag(s) "
                   "'['Hubbel']' - Hint: typo in tag(s)?", 'hubbel'],
-                 [56, MemLog.error, "There were errors encountered during "
+                 [56, LogLevel.error(), "There were errors encountered during "
                   "parsing and checking - can't continue"] ]))
 
     def test_positive_02(self):
@@ -60,8 +62,8 @@ class TestReqSet:
         #print("HHHHHHHHHHH %s" % o.getvalue())
 
         assert(reqs.mls() == MemLogStore.create_mls(
-                [[57, MemLog.error, "No tag handler found for tag(s) "
+                [[57, LogLevel.error(), "No tag handler found for tag(s) "
                   "'['Siebel', 'Hubbel']' - Hint: typo in tag(s)?",
                   'InvalidTagReq'],
-                 [56, MemLog.error, "There were errors encountered during "
+                 [56, LogLevel.error(), "There were errors encountered during "
                   "parsing and checking - can't continue"]]))

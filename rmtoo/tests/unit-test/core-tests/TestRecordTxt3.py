@@ -17,7 +17,6 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.MemLogStore import MemLogStore, MemLog
 
 tc1i = """Name: rmtoo
 Type: master requirement
@@ -46,12 +45,12 @@ class TestRecordTxt3:
         o = StringIO.StringIO()
         txt_doc.write_log(o)
 
-        assert(d["Rationale"].get_content() == 
+        assert(d["Rationale"].get_content() ==
                "The world needs a good, usable and free "
                "Requirements Management Tool.\par It looks "
                "that there are no such programs out.\par But: it's complex! ")
 
-        assert(len(txt_doc)==11)
-        assert(txt_doc.get_comment()=="")
+        assert(len(txt_doc) == 11)
+        assert(txt_doc.get_comment() == "")
 
 

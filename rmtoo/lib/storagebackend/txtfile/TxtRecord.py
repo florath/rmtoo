@@ -15,7 +15,6 @@
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
-from rmtoo.lib.MemLogStore import MemLogStore
 
 class TxtRecord(Record):
 

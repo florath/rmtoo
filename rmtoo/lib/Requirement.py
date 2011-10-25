@@ -15,7 +15,6 @@ import operator
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.MemLogStore import MemLogStore
 from rmtoo.lib.BaseRMObject import BaseRMObject
 
 import sys

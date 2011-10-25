@@ -13,8 +13,10 @@ from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.modules.RDepSolvedBy import RDepSolvedBy
 from rmtoo.lib.Requirement import Requirement
-from rmtoo.lib.MemLogStore import MemLogStore, MemLog
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from rmtoo.lib.logging.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLog import MemLog
+from rmtoo.lib.logging.LogLevel import LogLevel
 
 class TestRDepSolvedBy:
 
@@ -34,7 +36,7 @@ class TestRDepSolvedBy:
         status = rdep.rewrite(reqset)
         assert(status == False)
         assert(reqset.mls() == MemLogStore.create_mls(
-                [ [76, MemLog.error, "Another master is already there. "
+                [ [76, LogLevel.error(), "Another master is already there. "
                    "There can only be one.", "B"] ]))
 
     def test_negative_02(self):
@@ -54,7 +56,7 @@ class TestRDepSolvedBy:
 
         assert(status == False)
         assert(reqset.mls() == MemLogStore.create_mls(
-                [ [77, MemLog.error, "'Solved by' field has len 0", "B"] ]))
+                [ [77, LogLevel.error(), "'Solved by' field has len 0", "B"] ]))
 
     def test_negative_03(self):
         "'Solved by' points to a non existing requirement"
@@ -73,7 +75,7 @@ class TestRDepSolvedBy:
 
         assert(status == False)
         assert(reqset.mls() == MemLogStore.create_mls(
-                [[74, MemLog.error, "'Solved by' points to a non-existing "
+                [[74, LogLevel.error(), "'Solved by' points to a non-existing "
                   "requirement 'C'", "B" ], ]))
 
     def test_negative_04(self):
@@ -93,7 +95,7 @@ class TestRDepSolvedBy:
 
         assert(status == False)
         assert(reqset.mls() == MemLogStore.create_mls(
-                [[75, MemLog.error, "'Solved by' points to the requirement "
+                [[75, LogLevel.error(), "'Solved by' points to the requirement "
                   "itself", "B" ], ]))
 
     def test_negative_05(self):
@@ -113,4 +115,4 @@ class TestRDepSolvedBy:
 
         assert(status == False)
         assert(reqset.mls() == MemLogStore.create_mls(
-                [[78, MemLog.error, "no master requirement found"], ]))
+                [[78, LogLevel.error(), "no master requirement found"], ]))

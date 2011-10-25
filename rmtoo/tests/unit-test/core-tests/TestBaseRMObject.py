@@ -10,7 +10,7 @@
 #
 
 import StringIO
-from rmtoo.lib.MemLogStore import MemLogStore
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.tests.lib.TestConfig import TestConfig
@@ -39,5 +39,7 @@ class TestBaseRMObject:
 
         tbrmo = TBRMObj()
 
+        print("U!U!U!U [%s]" % tbrmo.mls.to_list())
+
         assert(tbrmo.mls.to_list() ==
-               [[90, 50, 'Wrong module type [mytag] not in [[1, 2, 3]]']])
+               [[90, 'error', 'Wrong module type [mytag] not in [[1, 2, 3]]']])
