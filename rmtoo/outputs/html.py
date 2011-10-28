@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# HTML output class
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ HTML output class.
+ 
+ (c) 2011 by flonatel
+
+ For licensing details see COPYING
+'''
 
 import os
 import time
@@ -170,7 +170,7 @@ class html:
         if len(req.outgoing) > 0:
             # Create links to the corresponding labels.
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
-                     '</span></dt><dd><span class="dlv_depends_on"')
+                     '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
             for d in sorted(req.outgoing, key=lambda r: r.id):
                 if not is_first:

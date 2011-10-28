@@ -28,17 +28,19 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v20
 ===
+o Document: Understanding that all requirements need at least one edge
+  solved it for me. 
+  -> rmtoo general overview man page.
 o Bug fixes! 
   - Estimation diagram (should be fixed - check it)
   - Time zone problem when running test cases
   - Sort 'Depends on' to get test cases running
-  - 
 o Man page: 
   + graph
   + graph2
   + EfEU
 o Update Presentations
-o Fixe asserts from 'RequirementStatus.py'
+o Fix asserts from 'RequirementStatus.py'
 
 v21
 ===
