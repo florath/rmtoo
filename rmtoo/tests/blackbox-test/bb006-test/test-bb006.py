@@ -11,7 +11,7 @@ import os
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir, extract_container_files, \
-    unify_output_dir
+    unify_output_dir, check_result
 
 mdir = "tests/blackbox-test/bb006-test"
 
@@ -30,11 +30,5 @@ class TestBB006:
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")
         missing_files, additional_files, diffs = compare_results(mdir)
-        assert(len(missing_files) == 0)
-        assert(len(additional_files) == 0)
-
-        if len(diffs) != 0:
-            print("DIFFS [%s]" % diffs)
-
-        assert(len(diffs) == 0)
+        check_result(True, missing_files, additional_files, diffs)
         delete_result_is_dir()

@@ -8,11 +8,12 @@
 #
 
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, cleanup_std_log, delete_result_is_dir
+from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
+    compare_results, cleanup_std_log, delete_result_is_dir, check_result
 
 mdir = "tests/blackbox-test/bb003-test"
 
-class TestBB001:
+class TestBB003:
 
     def test_pos_001(self):
         "Pulp Fiction's Mr Wulf in English"
@@ -25,11 +26,5 @@ class TestBB001:
              exitfun=myexit)
         cleanup_std_log(mout, merr)
         missing_files, additional_files, diffs = compare_results(mdir)
-        assert(len(missing_files)==0)
-        if len(additional_files)!=0:
-            print("ADDITIONAL_FILES '%s'" % additional_files)
-        assert(len(additional_files)==0)
-        if len(diffs)!=0:
-            print("DIFFS '%s'" % diffs)
-        assert(len(diffs)==0)
+        check_result(True, missing_files, additional_files, diffs)
         delete_result_is_dir()
