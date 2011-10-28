@@ -55,7 +55,6 @@ class TopicCohe:
         # Step though all the topics and do the analytics there -
         # not only on the configured ones.
 
-        print("TOPICS [%s] " % topic_handler)
         ok = True
         for topic_name, topic_set in topic_handler.topics.iteritems():
 

@@ -44,7 +44,6 @@ def xml_check_text_content(xml_doc_a, xml_doc_b, xpath, _):
 
 def xml_check_name(xml_doc_a, xml_doc_b, xpath, _):
     '''Check for the name.'''
-    print("CHECKNAME [%s]" % xml_doc_a)
     if xml_doc_a.tagName != xml_doc_b.tagName:
         return False, "Tag names differ [%s] != [%s] at [%s]" % \
             (xml_doc_a.tagName, xml_doc_b.tagName, xpath)
@@ -110,9 +109,7 @@ def xmlequals(xml_doc_a, xml_doc_b, xpath, mem_log_store=None):
     for check_func in [xml_check_type, xml_check_text_content,
                        xml_check_name, xml_check_attributes,
                        xml_check_child_count, xml_check_children]:
-        print("CF [%s]" % check_func)
         result, err_msg = check_func(xml_doc_a, xml_doc_b, xpath, mem_log_store)
-        print("CF RES [%s]" % result)
         if result == False or result == True:
             assert(result != None)
             return result, err_msg

@@ -41,6 +41,7 @@ class MemLogStore(object):
         for l in self.logs:
             l.write_log(file_descriptor)
 
+    # TODO Duplicate of log()
     def internal_log(self, lid, level, msg, efile=None, eline=None):
         if efile == None and eline == None:
             self.logs.append(MemLog(lid, level, msg))

@@ -22,6 +22,10 @@ Added Reame files for Windows and Mac to tar ball.
 
 Updated dependency of python for debian package.
 
+Fixed bug #3429326: backlink to parent requirement [thanks to 
+Espen Solbu ( takilara ) ]
+
+
 Internal Changes
 ----------------
 

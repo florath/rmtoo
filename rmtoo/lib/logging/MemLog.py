@@ -59,18 +59,6 @@ class MemLog:
         self.write_log_suffix(file_descriptor)
 
     def __eq__(self, other):
-        print("MemLog.__eq__ [%s] [%s]" %
-              (self.lid,
-               self.__class__ == other.__class__ \
-               and self.lid == other.lid \
-               and self.level == other.level \
-               and self.msg == other.msg))
-        print("eq1 [%s]" % (self.__class__ == other.__class__))
-        print("eq2 [%s]" % (self.lid == other.lid))
-        print("eq3 [%s]" % (self.level == other.level))
-        print("eq4 [%s]" % (self.msg == other.msg))
-
-
         return self.__class__ == other.__class__ \
             and self.lid == other.lid \
             and self.level == other.level \
