@@ -109,11 +109,11 @@ class Old:
                       reqs_spec['default_language'])
         if 'dependency_notation' in reqs_spec:
             cfg.set_value('requirements.input.dependency_notation',
-                          set(reqs_spec['dependency_notation']))
+                          list(reqs_spec['dependency_notation']))
         else:
             # The default is only 'Solved by'.
             cfg.set_value('requirements.input.dependency_notation',
-                          set(['Depends on', ]))
+                          ['Depends on', ])
 
     @staticmethod
     def internal_convert_analytics(cfg, analytics_specs):

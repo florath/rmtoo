@@ -10,8 +10,12 @@
 '''
 
 class CfgEx(Exception):
+    '''Configuration Exception.
+       Thrown in case of an invalid configuration.'''
 
+    # pylint: disable=W0231
     def __init__(self, value):
+        '''Standard exception constructor.'''
         self.value = value
 
     def __str__(self):

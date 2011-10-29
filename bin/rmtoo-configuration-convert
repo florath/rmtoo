@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Configuration Converter.
+ 
+ (c) 2011 by flonatel
+
+ For licensing details see COPYING
+'''
+
+import sys
+from rmtoo.lib.main.ConfigurationConvert import main
+
+if __name__=="__main__":
+    main(sys.argv[1:], sys.stdout, sys.stderr)
