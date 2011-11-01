@@ -126,7 +126,7 @@ class Cfg:
             # Nothing to do: JSON entries not available
             pass
 
-    def internal_evaluate_old_config(self):
+    def internal_evaluate_old_config(self, log_store):
         '''Looks if the old configuration file handling must be applied -
            and if so applies it.'''
         try:
@@ -139,17 +139,17 @@ class Cfg:
             if self.config['configuration'] == {}:
                 del(self.config['configuration'])
 
-            Old.convert_to_new(self, old_config_file)
+            Old.convert_to_new(self, old_config_file, log_store)
         except RMTException:
-            # Nothing to do: old config file not specified
+            # Nothing to do: old configuration file not specified
             pass
 
-    def evaluate(self):
+    def evaluate(self, log_store):
         '''Evaluates the configuration.
            This does two things:
            o Read in the 'old' configuration
            o Read in the new configuration'''
-        self.internal_evaluate_old_config()
+        self.internal_evaluate_old_config(log_store)
         self.internal_evaluate_json()
 
     def get_raw(self, key):

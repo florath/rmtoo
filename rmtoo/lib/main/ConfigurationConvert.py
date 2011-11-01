@@ -11,8 +11,14 @@
 
 import json
 from rmtoo.lib.main.MainHelper import MainHelper
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 
 def main(args, mstdout, mstderr):
-    config = MainHelper.main_setup_config(args)
-
-    print(json.dumps(config.config, sort_keys=True, indent=4))
+    '''Converts the configuration.
+       Reads in the given and (pretty) prints the configuration
+       to mstdout.'''
+    log_store = MemLogStore()
+    config = MainHelper.main_setup_config(args, log_store)
+    log_store.write_log(mstderr)
+    mstdout.write(json.dumps(config.config, sort_keys=True, indent=4))
+    mstdout.write("\n")
