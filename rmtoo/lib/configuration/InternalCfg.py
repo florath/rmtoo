@@ -9,7 +9,7 @@
 
  For licensing details see COPYING
 '''
-from types import DictType
+from types import DictType, StringType, UnicodeType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 
 class InternalCfg:
@@ -18,6 +18,15 @@ class InternalCfg:
     def __init__(self):
         '''Hide utility class constructor.'''
         assert(False)
+
+    @staticmethod
+    def convert_key(key):
+        '''If the key is a string, it is converted to the internally
+           used list of strings.
+           The original string is split at '.'.'''
+        if type(key) in [StringType, UnicodeType]:
+            return InternalCfg.parse_key_string(key)
+        return key
 
     @staticmethod
     def parse_key_string(key):

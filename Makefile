@@ -13,7 +13,8 @@ force:
 #
 # This is the way the rmtoo must be called.
 #
-CALL_RMTOO=./bin/rmtoo -m . -f doc/requirements/Config3.py
+CONFIG_FILE=file://doc/Config1.json
+CALL_RMTOO=./bin/rmtoo -m . -j ${CONFIG_FILE}
 
 #
 # Dependency handling
@@ -25,7 +26,7 @@ all_html: ${OUTPUT_HTML}
 
 # And how to make the dependencies
 artifacts/.rmtoo_dependencies:
-	./bin/rmtoo -m . -f doc/requirements/Config3.py \
+	./bin/rmtoo -m . -j ${CONFIG_FILE} \
 		--create-makefile-dependencies=artifacts/.rmtoo_dependencies
 
 artifacts/req-graph1.png: artifacts/req-graph1.dot

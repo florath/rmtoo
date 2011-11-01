@@ -10,10 +10,9 @@
 # file. 
 
 class version1:
-    def __init__(self, topic_set, param):
+    def __init__(self, topic_set, params):
         self.topic_set = topic_set
-        self.topic_name = param[0]
-        self.filename = param[1]
+        self.filename = params['output_filename']
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -25,5 +24,4 @@ class version1:
         f = file(self.filename, "w")
         f.write("%s\n" % reqscont.continuum_latest_id())
         f.close()
-
 

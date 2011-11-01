@@ -121,7 +121,9 @@ class RequirementSet(Digraph, MemLogStore):
     def read_constraints(self, directories):
         everythings_fine = True
         for da in directories:
-            d = unicode(da, "utf-8")
+            # TODO: Check if this is really unicode
+            # d = unicode(da, "utf-8")
+            d = da
             if not os.path.isdir(d):
                 print("+++ WARN: skipping non-existant constraint "
                       "directory [%s]" % d)

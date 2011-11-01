@@ -15,7 +15,7 @@
 '''
 import json
 
-from types import StringType, DictType
+from types import DictType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
@@ -155,9 +155,7 @@ class Cfg:
     def get_raw(self, key):
         '''Returns the value of the given key.
            If the key is not found a CfgEx is raised.'''
-        # If the type is a string, this must first be parsed.
-        if type(key) == StringType:
-            key = InternalCfg.parse_key_string(key)
+        key = InternalCfg.convert_key(key)
         rval = InternalCfg.get_value(key, self.config)
         # This is the tricky part: With this construct each
         # sub-configuration is again a configuration.
@@ -170,9 +168,11 @@ class Cfg:
            If key is not found a RMTException is thrown.'''
         try:
             return self.get_raw(key)
-        except CfgEx:
+        except CfgEx, cex:
+            print("CONFIG [%s]" % self.config)
             raise RMTException(96, "Mandatory configuration parameter "
-                               "[%s] not found" % key)
+                               "[%s] not found. (Root cause: [%s])"
+                               % (key, cex))
 
     def get_value_wo_throw(self, key):
         '''Returns the value of the given key.
@@ -190,15 +190,13 @@ class Cfg:
     def set_value(self, key, value):
         '''Sets the value. If the key is already there a CfgEx is
            raised.'''
-        if type(key) == StringType:
-            key = InternalCfg.parse_key_string(key)
+        key = InternalCfg.convert_key(key)
         InternalCfg.set_value(self.config, key, value)
 
     def append_list(self, key, value):
         '''Appends value to existing list under key.
            If key does not exists, a new list is created.'''
-        if type(key) == StringType:
-            key = InternalCfg.parse_key_string(key)
+        key = InternalCfg.convert_key(key)
         InternalCfg.append_list(self.config, key, value)
 
     def get_dict(self):
@@ -219,10 +217,9 @@ class Cfg:
             return default_value
 
     def get_integer(self, key, default_value):
-        '''Returns the value of the key - converted to an integet.
+        '''Returns the value of the key - converted to an integer.
            If key does not exists, the default value is returned.'''
         try:
             return int(self.get_raw(key))
         except CfgEx:
             return default_value
-
