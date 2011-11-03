@@ -121,10 +121,10 @@ class ReqsContinuum:
         print("UNICODE???? [%s]" % self.config.get_value('requirements.input.directory'))
         # TODO: Check if this is really unicode (already)
         # TODO: Add a test case.
-#        rs.read_from_filesystem(
-#            unicode(self.config.get_value('requirements.input.directory'), "utf-8"))
         rs.read_from_filesystem(
-                self.config.get_value('requirements.input.directory'))
+            unicode(self.config.get_value('requirements.input.directory'), "utf-8"))
+#        rs.read_from_filesystem(
+#                self.config.get_value('requirements.input.directory'))
         self.continuum_add("FILES", rs)
 
     # The cmad for the requirments set

@@ -177,8 +177,7 @@ def unify_output_dir(filename):
     fd.write(d)
     fd.close()
 
-def check_result(result, missing_files, additional_files, diffs):
-    assert(result == True)
+def check_result(missing_files, additional_files, diffs):
     assert(len(missing_files) == 0)
 
     if len(additional_files) != 0:
@@ -189,4 +188,7 @@ def check_result(result, missing_files, additional_files, diffs):
         print("DIFFS [%s]" % diffs)
     assert(len(diffs) == 0)
 
+def check_file_results(mdir):
+    missing_files, additional_files, diffs = compare_results(mdir)
+    check_result(missing_files, additional_files, diffs)
 

@@ -10,7 +10,7 @@ import os
 
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
-    cleanup_std_log, delete_result_is_dir, extract_container_files, check_result
+    cleanup_std_log, delete_result_is_dir, extract_container_files
 
 mdir = "tests/blackbox-test/bb010-test"
 

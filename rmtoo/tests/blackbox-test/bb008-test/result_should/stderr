@@ -1,3 +1,4 @@
++++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
 +++ Error: 37:A1:Does not contain the tag 'Name'
 +++ Error: 41:A1:semantic error occured in module 'ReqName'
 +++ Error:  2:A1:Does not contain the tag 'Description'

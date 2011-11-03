@@ -1,3 +1,4 @@
++++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
 +++ Debug: 65:A1:Skipping requirement because not in topic
 +++ Debug: 65:A1:Skipping requirement because not in topic
 +++ Error:Analytics:DescWords:A1:result is '-10'

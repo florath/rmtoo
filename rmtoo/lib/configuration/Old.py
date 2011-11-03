@@ -162,8 +162,9 @@ class Old:
         if hasattr(old_config, 'constraints_specs'):
             Old.internal_convert_constraints(cfg, old_config.constraints_specs)
             old_config_dir.remove('constraints_specs')
-        log_store.warning(100, "Old Configuration: "
-                          "Not converted attributes: [%s]" % old_config_dir)
+        if len(old_config_dir) > 0:
+            log_store.warning(100, "Old Configuration: "
+                    "Not converted attributes: [%s]" % old_config_dir)
 
     @staticmethod
     def convert_to_new(cfg, old_config_file, log_store):

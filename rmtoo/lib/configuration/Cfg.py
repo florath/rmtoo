@@ -169,7 +169,6 @@ class Cfg:
         try:
             return self.get_raw(key)
         except CfgEx, cex:
-            print("CONFIG [%s]" % self.config)
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found. (Root cause: [%s])"
                                % (key, cex))

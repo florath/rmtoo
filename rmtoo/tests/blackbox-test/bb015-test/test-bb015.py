@@ -12,7 +12,8 @@ import shutil
 
 from rmtoo.lib.main.NormalizeDependencies import main, main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
-    cleanup_std_log, delete_result_is_dir, extract_container_files, tmp_dir
+    cleanup_std_log, delete_result_is_dir, extract_container_files, tmp_dir, \
+    check_file_results
 
 mdir = "tests/blackbox-test/bb015-test"
 
@@ -30,20 +31,14 @@ class TestBB015:
         #print("TD %s" % td)
 
         # Copy requirements to tmp dir
-        destdir = os.path.join(td, "reqs") 
+        destdir = os.path.join(td, "reqs")
         shutil.copytree("%s/input/reqs" % mdir, destdir,
-                        ignore=shutil.ignore_patterns('*~', ))
+                        ignore=shutil.ignore_patterns('*~',))
 
         # Call the converter
         main(["-f", os.path.join(mdir, "input", "Config2.py"),
               "-m", "..", destdir], mout, merr, main_impl, myexit)
-
-        assert(self.rval==0)
-
+        assert(self.rval == 0)
         cleanup_std_log(mout, merr)
-        missing_files, additional_files, diffs = compare_results(mdir)
-        assert(len(missing_files)==0)
-        assert(len(additional_files)==0)
-        assert(len(diffs)==0)
-
+        check_file_results(mdir)
         delete_result_is_dir()

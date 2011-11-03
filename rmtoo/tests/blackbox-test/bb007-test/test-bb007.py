@@ -11,7 +11,7 @@ import os
 from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir, extract_container_files, \
-    unify_output_dir
+    unify_output_dir, check_file_results
 
 mdir = "tests/blackbox-test/bb007-test"
 
@@ -24,9 +24,5 @@ class TestBB007:
         result = main_impl(["-f", mdir + "/input/Config1.py", "-m", ".."],
                            mout, merr)
         cleanup_std_log(mout, merr)
-        missing_files, additional_files, diffs = compare_results(mdir)
-        assert(result==False)
-        assert(len(missing_files)==0)
-        assert(len(additional_files)==0)
-        assert(len(diffs)==0)
+        check_file_results(mdir)
         delete_result_is_dir()

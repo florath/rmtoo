@@ -12,10 +12,13 @@
 import unittest
 import json
 import os
+import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
+from rmtoo.lib.logging.MemLogStore import MemLogStore
+from rmtoo.lib.logging.LogLevel import LogLevel
 
 class TestConfiguration(unittest.TestCase):
 
@@ -53,6 +56,8 @@ class TestConfiguration(unittest.TestCase):
 
     def test_json_init_add_new_cmd_line_params(self):
         '''Init Cfg with JSON and adds parameters with command line options'''
+        log_store = MemLogStore()
+
         # Create two JSON files.
         tmpdir = create_tmp_dir()
         jsonfile1 = os.path.join(tmpdir, "config1.json")
@@ -70,17 +75,30 @@ class TestConfiguration(unittest.TestCase):
                                       '-j', '{"m": {"q": 100}}',
                                       '-j', 'file://' + jsonfile2])
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        config.evaluate()
+        config.evaluate(log_store)
         self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
         self.failUnlessEqual(11, config.get_value("m.w"))
+        self.failUnlessEqual(MemLogStore.create_mls([]), log_store)
 
     def test_json_init_add_old_cmd_line_params(self):
         '''Init Cfg with old config and adds parameters with command line options'''
+        log_store = MemLogStore()
+
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
         config.merge_cmd_line_params(['-f', 'tests/unit-test/core-tests/'
                                       'testdata/Config3.py'])
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        config.evaluate()
+        config.evaluate(log_store)
         self.failUnlessEqual(['development', 'management', 'users', 'customers'],
                              config.get_value("requirements.stakeholders"))
+        print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
+        log_store.write_log(sys.stdout)
+
+## TODO:+ + +Warning:100:Old Configuration: Not converted attributes: [['output_specs2']]
+
+        print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+        self.failUnlessEqual(MemLogStore.create_mls([[
+            100, LogLevel.warning(),
+            "Old Configuration: Not converted attributes: [['output_specs2']]"]]),
+                             log_store)
