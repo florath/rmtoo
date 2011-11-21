@@ -1,0 +1,72 @@
+.\" 
+.\" Man page for rmtoo-configuration-convert
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2011 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-configuration-convert 1 2011-11-21 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-configuration-convert \- requirements management tool: convert configuration version 1 to version 2
+.SH SYNOPSIS
+.B rmtoo-configuration-convert
+.B \-f
+.I cfgfile
+.B [\-h]
+.B [\-m
+.I moduledir]
+.B [\-j
+.I JSON file / construct]
+.SH DESCRIPTION
+This tools converts an old configuration into a new one.
+Additionally it is possible to add / overwrite values with the new
+JSON mechanism.
+.P
+The new configuration is printed out on stdout.
+.P
+.B Note:
+Typically there is the need to edit the newly generated file
+and change some (default) values.
+.SH OPTIONS
+.TP
+\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
+The old configuration file.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display a short usage help.
+.TP
+\fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
+The directory where the rmtoo modules can be found.  When the program
+was installed by standard system routines (e.g. as a deb or a rpm
+package) this option is not necessary.  When using rmtoo from the
+repository or from a release tar ball this must point to the main
+directory.
+.TP
+\fB\-j\fR \fIfile://json_file\fR, \fB\-j\fR \fjson_expression\fR
+.SH RETURN
+.B rmtoo-configuration-convert
+returns 0 when all commands are successfully completed and a value not
+equal 0 when there was a problem.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2011 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+
+
