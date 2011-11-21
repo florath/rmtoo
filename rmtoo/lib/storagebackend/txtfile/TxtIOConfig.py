@@ -11,7 +11,6 @@
 #
 
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.configuration.CfgEx import CfgEx
 
 class TxtIOConfig:
 

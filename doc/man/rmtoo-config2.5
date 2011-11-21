@@ -1,0 +1,316 @@
+.\" 
+.\" Man page for rmtoo configuration version 2
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-config 5 2011-11-19 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-config \- requirements management tool configuration file version 2
+.SH DESCRIPTION
+.B rmtoo
+needs some information to work, like input directories and which
+artifacts should be created.  This information is stored in one or
+more configuratio files.
+.P
+The format of the configuration files is
+.B JSON.
+.SH HISTORY
+This is the second version of the configuration file format.  This has
+some major advantages over the first version: changing the format to
+JSON enables the possibility to use other programing languages than
+python to be used - esspecially with a possible future GUI in mind.
+Also the new format provides more flexibility: it is now possible to
+output two different documents of the same type (e.g. LaTeX documents)
+for the same topic set in only one rmtoo call.
+.SH EXAMPLE
+The following example is the configuration file for the 
+.B rmtoo
+requirements management tool.
+.P
+In the example, three different sets of documents (output artifacts)
+will be created: one document set containing prios, graph, stats,
+latex2 and html e.g. for internal use is called \fIall_topics\fR.  One
+document for marketing which contains the latex2 document and the
+requirements dependency graph called \fImarketing_topic\fR.  One
+document for a customer which uses a separate set of requirements.
+This is called \fIcustomer_topic\fR.
+.sp
+.RS
+.nf
+{
+    "constraints": {
+        "search_dirs": [
+            "rmtoo/collection/constraints"
+        ]
+    }, 
+    "global": {
+        "modules": {
+            "directories": [
+                "."
+            ]
+        }
+    }, 
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "commit_interval": {
+                "begin": "FILES", 
+                "end": "FILES"
+            }, 
+            "default_language": "en_GB", 
+            "dependency_notation": [
+                "Solved by"
+            ], 
+            "directory": "doc/requirements",
+	    "txtfile": { "reqtag": { "max_line_length": 80 } }
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    }, 
+    "topics": {
+        "all_topics": {
+            "directory": "doc/topics", 
+            "name": "ReqsDocument", 
+            "output": {
+                "graph": [
+                    {
+                        "output_filename": "artifacts/req-graph1.dot"
+                    }
+                ], 
+                "html": [
+                    {
+                        "footer": "doc/html/footer.html", 
+                        "header": "doc/html/header.html", 
+                        "output_directory": "artifacts/html"
+                    }
+                ], 
+                "latex2": [
+                    {
+                        "output_filename": "artifacts//reqtopics.tex"
+                    }
+                ], 
+                "prios": [
+                    {
+                        "output_filename": "artifacts/reqsprios.tex", 
+                        "start_date": "2011-04-25"
+                    }
+                ], 
+                "stats_reqs_cnt": [
+                    {
+                        "output_filename": "artifacts/stats_reqs_cnt.csv"
+                    }
+                ], 
+            }
+        "marketing_topics": {
+            "directory": "doc/topics", 
+            "name": "ReqsDocument", 
+            "output": {
+                "graph": [
+                    {
+                        "output_filename": "artifacts/req-graph1-marketing.dot"
+                    }
+                ], 
+                "latex2": [
+                    {
+                        "output_filename": "artifacts/reqtopics-marketing.tex"
+                    }
+                ], 
+            }
+        "customer_topics": {
+            "directory": "doc/customer_topics", 
+            "name": "InitialReq", 
+            "output": {
+                "latex2": [
+                    {
+                        "output_filename": "artifacts/reqtopics-customer.tex"
+                    }
+                ], 
+            }
+        }
+    }
+}
+
+.SH DETAILS
+The file must contain a map (dictionary) as the top level element.
+Valid keys for the top level map are: \fIconstraints\fR, \fIglobal\fR,
+\fIprocessing\fR, \fIrequirements\fR, \fItopics\fR.
+
+.SS constraints
+The only available entry in the \fIconstraints\fR map is
+\fIsearch_dirs\fR.  The value is a list of directories where
+constraints definitions are searched.
+
+.SS global
+The only available entry in the \fIglobal\fR map is
+\fImodules\fR.  The only available entry in the \fImodules\fR map is
+\fIdirectories\fR.  The value must be a list of directories where
+modules are searched.
+
+.SS processing
+The only available entry in the \fIprocessing\fR map is
+\fIanalytics\fR.  The only available entry in the \fIanalytics\fR map is
+\fIstop_on_errors\fR.  The value must be a boolean which reflects if
+\fBrmtoo\fR should stop on errors or not.
+
+.SS requirements
+There are three possible values in the \fIrequirements\fR map:
+\fIinput\fR, \fIinventors\fR and \fIstakeholders\fR.  Please see
+chapter \fBREQUIREMENTS DETAILS\fR.
+
+.SS topics
+The configuration parameter \fItopics\fR is a map.  The key is the
+name with which the entry can be referenced.  For a description about
+the details, please see chapter \fBTOPICS DETAILS\fR.
+
+.SH REQUIREMENTS DETAILS
+.SS input
+The input section defines properties of the requirement input format
+handling.  Possible values are \fIcommit_interval\fR,
+\fIdefault_language\fR, \fIdependency_notation\fR, \fIdirectory\fR 
+or \fItxtfile\fR.
+
+.B commit_interval
+The commit_interval map has two entries: the \fIbegin\fR and the
+\fIend\fR. The values are either git version numbers (md5 sums) or
+tag names. The given interval is used during the run of \fBrmtoo\fR
+and everything e.g. statistics in based (only) on this interval.
+Mostly all operations are done on the second entry.  Additional to the
+git version strings, the special string \fIFILES\fR can be used.  This
+references to the local stored files.
+.P
+When both elements are the same, only this unique version is used.
+When using only files (e.g. during requirements elaboration) an entry
+like ["FILES", "FILES"] makes sense here: then only the locally stored
+files are used.
+.P
+An entry like ["v9", "HEAD"] specifies all checked in files (ignoring
+possible changes of local files) beginning from the tag v9 up to the
+HEAD of git.
+
+.B default_language 
+The paramter \fIdefault_language\fR specifies the language in 
+which the requirements are written.  This must be a standard language
+specifier like \fIen_GB\fR or \fIde_DE\fR. Please consult the 
+\fBrmtoo-analytics-descwords(7)\fR man page for the list of available
+languages. 
+
+.B dependency_notation
+The parameter \fIdependency_notation\fR determines the way
+dependencies are specified.  There are two ways how requirements can
+be specified: \fIDepends on\fR and \fISolved by\fR.  The last one is
+the preferred way of specifying dependencies - but the first is the
+old and default one.  Therefore it is recommended to set the value to
+\fISolved by\fR only.
+
+.B directory
+This is the definition of the set of requirements \fBrmtoo\fR uses.
+It is a dictionary: the entry named \fIdirectory\fR is the name of the
+directory where all the requirements can be found.
+
+.B txtfile
+This defines limitations while parsing the text file. By default for
+all different types of input, the maximum length of a line is 80.  To
+change this, add the type (e.g. 'reqtag' for requirments or 'ctstag'
+for constraints).  This map can contain the entry
+\fImax_line_length\fR which can be set to the new maximum line length.
+
+.SS inventors
+This must be a list of string specifying inventors.  Inventors can
+invent a requirement. Tags: \fIInvented by\fR.
+
+.SS stakeholders
+This must be a list of strings specifying the stakeholders.
+Stakeholders can own a and prioritize a requirement.  Tags:
+\fIOwner\fR and \fIPriority\fR.
+
+.SH TOPICS DETAILS
+The topics contain one or more entries: the key is the name of the
+appropriate entry.  The value is a map which can contain the following
+entries: \fIdirectory\fR, \fIname\fR or \fIoutput\fR.
+
+.B directory
+The directory where the topic structure is defined.
+
+.B name
+The name of the entry node of the topic. It is possible to use the
+same directory but another entry name for additional topic
+specifications.  This makes it possible to easily use a sub-topic for
+a complete set of output documents.
+
+.B output
+The output specification. Please consult the section \fBOUTPUT\fR for
+more details.
+
+.SH OUTPUT
+The output which 
+.B rmtoo
+writes out for one topic in different formats must be specified with
+the help of the \fIoutput\fR variable.  The key describes the artifact to
+output, the value is specific to the chosen output parameter.
+.SS graph
+When this option is specified a requirements dependency graph is
+written.  Please see \fBrmtoo-art-req-dep-graph(1)\fR for more
+details.
+.SS graph2
+This is similar to the graph - but additionally groups the output
+requirements within the same topic as a cluster.  Please see
+\fBrmtoo-art-req-dep-graph2(1)\fR for more details.
+.SS latex2
+When \fIlatex2\fR is specified as output,
+.B rmtoo
+outputs a LaTeX document as output.  For a detailed description about
+the needed parameters and a detailed description, see
+\fBrmtoo-art-latex2(1)\fR. 
+.SS oopricing1
+This is a pricing module with ODF output.  It can be used for
+commercial bidding. See \fBrmtoo-art-oopricing1\fR for further
+details. 
+.SS prios
+This outputs a small LaTeX formatted artifact which includes the
+priority list and the requirements elaboration list.  For more details
+consult \fBrmtoo-art-prio-lists(1)\fR.
+.SS stats_reqs_cnt
+When using \fIgit\fR as the underlying revision control system it is
+possible to create a history of the number of requirements.  See
+\fBrmtoo-art-reqs-history-cnt(1)\fR for more details.
+.SS version1
+The version1 output writes the currently used version from the version
+control system to a file.  This can then be used by other output
+documents. 
+.SS xml1
+This outputs the requirements as an xml file. See \fBrmtoo-art-xml1(1)\fR 
+for details.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation. 
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later

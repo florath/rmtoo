@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-html 1 2010-07-23 "User Commands" "Requirements Management"
+.TH rmtoo-art-html 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-html \- requirements management tool: html artifact
 .SH DESCRIPTION
@@ -70,18 +70,13 @@ dlt_description
 The tag (key) of mostly all requirements keys can be defined. Example:
 dlv_description 
 .SH CONFIGURATION
-To configure HTML output, a pair in the Config class must be added.
-The first field must set to \fIhtml\fR.
-.P
-The second parameter is a list which contains four elements:
+To configure HTML output, three mandatory fields are needed:
 .TP
-name (reference) to a set of topics.
+\fBoutput_directory\fR output directory of the HTML files.
 .TP
-output directory of the HTML files.
+\fBheader\fR HTML header file name.
 .TP
-HTML header file name.
-.TP
-HTML footer file name.
+\fBfooter\fR HTML footer file name.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 

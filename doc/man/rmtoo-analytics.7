@@ -49,14 +49,12 @@ The analytics modules are called after the requirements and topics are
 read in and parsed.  It is configurable if \fBrmtoo\fR should stop if
 it finds problems or not.
 .SH CONFIGURATION
-The \fIanalytics_specs\fR section is responsible for handling the
+The \fIanalytics\fR configuration entry is responsible for handling the
 analytics modules.  It is a dictionary.
 .P
-All analytic modules work on one set on requirements - which is
-specified in the \fIreqs_spec\fR section (see \fBrmtoo-config(5)\fR
-for more details).  All analytic modules also work on one set of
-topics.  The used topic set must be the value of the key
-\fItopics\fR.
+All analytic modules work on one all topic sets (see
+\fBrmtoo-config(5)\fR for more details).  All analytic modules also
+work on one set of topics.  
 .P
 The configuration key \fIstop_on_errors\fR specifies if \fBrmtoo\fR
 should stop when a possible problem was detected.
@@ -68,10 +66,11 @@ Example specification section:
 .sp
 .RS
 .nf
-    analytics_specs = { 
-           "stop_on_errors": False,
-           "topics": "ts_common",
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
         }
+    }
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 

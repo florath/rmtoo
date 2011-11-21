@@ -16,32 +16,43 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 1 2010-03-21 "User Commands" "Requirements Management"
+.TH rmtoo 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH SYNOPSIS
 .B rmtoo
-.B \-f
-.I cfgfile
 .B [\-h]
-.B [\-m
-.I moduledir]
-.B [-c
-.I makefile_deps]
+.B \-j
+.I file://cfgfile
+.B [\-j 
+.I file://cfgfile]
+.B [\-j
+.I cfgoption]
 .SH DESCRIPTION
 The
 .B rmtoo
 is a requirment management tool.  It understand long and short command
 line options.  For a detailed functional description see rmtoo(7).
+
 .SH OPTIONS
-.TP
-\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
-The directory with the requirements files.
 .TP
 \fB\-h\fR, \fB\-\-help\fR
 Display a short usage help.
+.TP
+\fB\-j\fR \fIfile://json_file\fR, \fB\-j\fR \fIjson_expr\fR
+Any number of JSON configuration files or JSON expression.  The
+evaluation will be from left to right.  Duplicated values are
+overwritten. 
+
+.SH DEPRECATED OPTIONS
+The following options do still exists because of compatibility
+reasons.  They should not used in new projects.
+.B These options will be supported only until 31. 12. 2012.
+.TP
+\fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
+The directory with the requirements files.
 .TP
 \fB\-m\fR \fIMODULES_DIRECTORY\fR, \fB\-\-modules-directory\fR=\fIMODULES_DIRECTORY\fR
 The directory where the rmtoo modules can be found.  When the program
@@ -59,6 +70,7 @@ dependencies. When called with this option,
 only creates the dependency file.  The dependency depends also from
 the config file: when changing output artifacts of curse the
 dependencies change.
+
 .SH ENVIRONMENT
 When using the packages (e.g. deb) the system environment must be set up
 in the way that
