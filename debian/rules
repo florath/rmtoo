@@ -59,7 +59,7 @@ binary-indep: build install
 	install doc/requirements/*.req debian/rmtoo/usr/share/doc/rmtoo/requirements
 
 	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/html
-	install doc/html/reqs/*.html debian/rmtoo/usr/share/doc/rmtoo/html
+	install artifacts/html/*.html debian/rmtoo/usr/share/doc/rmtoo/html
 
 	mkdir -p debian/rmtoo/usr/share/doc/rmtoo/contrib
 	install --mode=644 contrib/gnuplot_stats_reqs_cnt.inc debian/rmtoo/usr/share/doc/rmtoo/contrib

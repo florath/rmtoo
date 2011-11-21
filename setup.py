@@ -84,5 +84,5 @@ setup(name=package, version=version,
       platforms="all",
       scripts=["bin/rmtoo", "bin/rmtoo-normalize-dependencies",
                "bin/rmtoo-configuration-convert",
-               "rmtoo-pricing-graph"],
+               "bin/rmtoo-pricing-graph"],
      )
