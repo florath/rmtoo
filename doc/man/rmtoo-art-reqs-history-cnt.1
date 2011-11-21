@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-reqs-history-cnt 1 2010-10-06 "User Commands" "Requirements Management"
+.TH rmtoo-art-reqs-history-cnt 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-reqs-history-cnt \- requirements management tool: requirement 
 history count
@@ -36,23 +36,25 @@ With the help of the requirements history count module it is possible
 to visualize the evolution of the requirements count.
 .SH CONFIGURATION
 The configuration for this output module goes (as all other output
-module's configuration) in the \fBoutput_specs\fR section of the
-Config file. 
+module's configuration) in the \fBoutput\fR section of the
+configuration. 
 .P
-The first element (the key) must be \fIstats_reqs_cnt\fR.  This must be
-followed by a pair (list of two elements).  The first element is the
-name of the to be used topic set, the second the filename where the
-output is written to.
+The key must be \fIstats_reqs_cnt\fR.  This must be
+followed by a map containing one entry:
+.P
+.B output_filename
+The filename where the output is written to.
 .P
 Example
 .sp
 .RS
 .nf
-    output_specs = \
-        [
-          ["stats_reqs_cnt", 
-           ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
+        "stats_reqs_cnt": [
+            {
+                "output_filename": "artifacts/stats_reqs_cnt.csv"
+            }
         ]
+
 .SH POSTPROCESSING
 The resulting file is a tabulator separated file. The first entry is
 the point of time, the second the number of requirements.
@@ -66,7 +68,7 @@ and how to use gnuplot to convert the input file to a graph.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 
 

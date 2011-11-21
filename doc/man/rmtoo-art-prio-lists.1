@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-prio-lists 1 2011-05-25 "User Commands" "Requirements Management"
+.TH rmtoo-art-prio-lists 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-prio-lists \- requirements management tool: priority lists.
 .SH DESCRIPTION
@@ -52,19 +52,15 @@ Therefore it is very easy to get information like: it will take N
 effort points to finish work on all most important things (level 10
 requirements). 
 .SH CONFIGURATION
-The first field (i.e. the name) must be set to \fIprios\fR.  A list
-of two or three parameters must follow.
+The name must be set to \fIprios\fR.  The following parameters
+must be available:
 .P
-The first parameter is the name of the topic set which is used to get
-the information.
-.P
-The second parameter is the name of the file where the priority lists
+.B output_filename 
+The parameter is the name of the file where the priority lists
 will be stored.
 .P
-The third parameter must be a map. The map might contain the following
-entries: 
-.TP
-\fBstart_date\fR The date when the project starts. The format must be
+.B start_date
+The date when the project starts. The format must be
 YYYY-MM-DD. If this is not specified, yesterday is assumed.
 .P 
 .SH "SEE ALSO"
@@ -73,7 +69,7 @@ YYYY-MM-DD. If this is not specified, yesterday is assumed.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 
 

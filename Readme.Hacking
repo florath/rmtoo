@@ -1,6 +1,40 @@
 
 This file is not completed now - any might be in future.
 
+* Development Environment
+
+** Tools
+
+*** Mandatory
+    There are some mandatory tools to do development for rmtoo:
+    Debian 6: $ apt-get install make graphviz texlive-latex-extra
+
+** Eclipse
+   For development of the source code, eclipse is used.
+   This has some advantages about the emacs / vi approach - especially
+   automated style and lint checking.
+
+*** OpenJDK
+    Install the openjdk to use for eclipse - only JRE is needed.
+    Debian 6: $ apt-get install openjdk-6-jre
+
+*** Eclipse
+    Goto http://www.eclipse.org/ and install latest version.
+    Be sure to use the non Java, non C++ version.
+
+*** PyDev
+    Goto http://pydev.org and install the latest version.
+
+*** PyLint
+    Install pylint
+    Debian 6: $ apt-get install pylint
+    In Eclipse goto: Preferences -> PyDev -> PyLint and enable pylint.
+
+*** PyUnit
+    In Eclipse goto: Preferences -> PyUnit and choose Nose Test runner.
+
+
+
 * Testing
 
 ** Comparing XML

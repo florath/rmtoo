@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-stats-burndown1 1 2011-05-02 "User Commands" "Requirements Management"
+.TH rmtoo-art-stats-burndown1 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-stats-burndown1 \- requirements management tool: Burndown diagram
 .SH DESCRIPTION
@@ -34,22 +34,26 @@ of the Effort Estimation.  Please consult \fBrmtoo-req-format(5)\fR
 section \fIKEY 'Effort estimation'\fR for details about this units.
 .SH CONFIGURATION
 The configuration for this output module goes (as all other output
-module's configuration) in the \fBoutput_specs\fR section of the
-Config file. 
+module's configuration) in the \fBoutput\fR section of the
+configuration. The following parameters must be included in the map: 
 .P
-The first element (the key) must be \fIstats_burndown1\fR.  This must be
-followed by a list of three elements.  The first element is the
-name of the to be used topic set, the second the basename of the
-output file (without the suffix), the third the start of the project.
+.B output_filename 
+The parameter is the name of the file where the priority lists
+will be stored.
 .P
+.B start_date
+The date when the project starts. The format must be
+YYYY-MM-DD. If this is not specified, yesterday is assumed.
+.P 
 Example
 .sp
 .RS
 .nf
-    output_specs = \
-        [
-          ["stats_burndown1", 
-           ["ts_common", "reqspricing", "2011-04-01"]],
+        "stats_burndown1": [
+            {
+                "output_filename": "artifacts/stats_burndown.csv", 
+                "start_date": "2011-04-25"
+            }
         ]
 
 .SH "SEE ALSO"

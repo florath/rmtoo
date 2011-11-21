@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-req-dep-graph 1 2010-09-23 "User Commands" "Requirements Management"
+.TH rmtoo-art-req-dep-graph 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-req-dep-graph \- requirements management tool: requirement dependency graph
 .SH DESCRIPTION
@@ -33,17 +33,19 @@ graph in a format which can
 be read in by graphviz tools like \fIdot\fR.
 .SH CONFIGURATION
 The configuration for this output module goes (as all other output
-module's configuration) in the \fBoutput_specs\fR section of the
-Config file. 
+module's configuration) in the \fBoutput\fR section of the
+configuration. 
 .P
-The first element (the key) must be \fIgraph\fR.  This must be
-followed by a list of two or three elements.  The first element is the
-name of the to be used topic set, the second the filename where the
-output is written to, the third parameter is optional and contains a
-map of output fine tuning.
+The first key must be \fIgraph\fR.  The following parameters are
+allowed in the including map:
 .P
-When the key \fInode_attributes\fR exists, the value must be a list of
-all information which is included in the graph. The following values
+.B output_filename
+The filename where the output is written to.
+.P
+.B node_attributes
+(This is optional!) When the key \fInode_attributes\fR exists, the
+value must be a list of all information which is included in the
+graph. The following values 
 might be used:
 .TP
 \fBType\fR If this is included in the list, depending on the type the
@@ -69,13 +71,14 @@ Example
 .sp
 .RS
 .nf
-    output_specs = \
-        [
-          ["graph", 
-           ["ts_common", "req-graph1.dot", 
-	    { "node_attributes": 
-		["Type", "Status", "Class", "Topic", "Priority", ] } ]],
-        ]
+   "graph": [
+      {
+          "output_filename": "artifacts/req-graph1.dot"
+          "node_attributes": 
+              ["Type", "Status", "Class", "Topic", "Priority", ]
+      }
+   ]
+
 .SH POSTPROCESSING
 The resulting dot file can be converted with the following command to
 a png: \fIdot -Tpng -o req-graph1.png req-graph1.dot\fR.  Please
@@ -93,7 +96,7 @@ which is provided in the tar ball.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 
 

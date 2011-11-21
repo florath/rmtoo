@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-version1 1 2010-09-09 "User Commands" "Requirements Management"
+.TH rmtoo-art-version1 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-version1 \- requirements management tool: version1 artifact
 .SH DESCRIPTION
@@ -32,21 +32,19 @@ version.
 The version id itself is taken from the underlaying version control
 system.  Different version control system have different version ids.
 .SH CONFIGURATION
-The first field (i.e. the name must be set to \fIversion1\fR.  A list
-of two parameters must follow.
+The name must be set to \fIversion1\fR.  The following 
+parameters must be included in the map:  
 .P
-The first parameter is the name of the topic set which is used to get
-the version information.
-.P
-The second parameter is the name of the file where the version
-information will be stored.
+.B output_filename 
+The parameter is the name of the file where the version information
+will be stored.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 
 

@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-oopricing 1 2010-08-14 "User Commands" "Requirements Management"
+.TH rmtoo-art-oopricing 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-oopricing \- requirements management tool: pricing table in
 ODF format 
@@ -64,23 +64,21 @@ additional modules for supporting the evaluation.  Please consult
 \fBrmtoo.7\fR for a full list of available and planned modules.
 .SH CONFIGURATION
 The configuration for this output module goes (as all other output
-module's configuration) in the \fBoutput_specs\fR section of the
-Config file. 
+module's configuration) in the \fBoutput\fR section of the
+configuration file. 
 .P
 The first element (the key) must be \fIoopricing1\fR.  This must be
-followed by a pair (list of two elements).  The first element is the
-name of the to be used topic set, the second the basename of the
-output file (without the suffix).
+followed by \fIoutput_filename\fR (without the suffix).
 .P
 Example
 .sp
 .RS
 .nf
-    output_specs = \
-        [
-          ["oopricing1", 
-           ["ts_common", "reqspricing"]],
-        ]
+        "oopricing1": [
+            {
+                "output_filename": "artifacts/reqspricing"
+            }
+        ], 
 
 .SH LIMITATIONS
 Currently the output module can handle at maximum 702 requirements
@@ -94,7 +92,7 @@ Some old OpenOffice versions (e.g. 2.X) limit the number of rows
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
 
 

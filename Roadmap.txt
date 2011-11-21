@@ -28,20 +28,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v20
 ===
-o Check man pages:
-  rmtoo-art-latex2.1
-  rmtoo-art-oopricing.1
-  rmtoo-art-prio-lists.1
-  rmtoo-art-req-dep-graph.1
-  rmtoo-art-req-dep-graph2.1
-  rmtoo-art-reqs-history-cnt.1
-  rmtoo-art-stats-burndown1.1
-  rmtoo-art-stats-sprint-burndown1.1
-  rmtoo-art-tlp1.1
-  rmtoo-art-version1.1
-  rmtoo-art-xml1.1
-  rmtoo-art-xml-ganttproject1.1
-  rmtoo-art-xml-ganttproject2.1
 o Add man page:
   rmtoo-configuration-convert
 o Template project adapt to new config

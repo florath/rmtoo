@@ -16,9 +16,9 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (sf@flonatel.org)
+.\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-art-latex2 1 2010-07-26 "User Commands" "Requirements Management"
+.TH rmtoo-art-latex2 1 2011-11-21 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo-art-latex2 \- requirements management tool: latex2 artifact
 .SH DESCRIPTION
@@ -37,10 +37,11 @@ Text from the topic is directly copied into the document.
 At the moment there is no possibility to configure the LaTeX output
 itself.
 .SH CONFIGURATION
-The key in the Config class must be \fIlatex2\fR.
+The key in the output configuration must be \fIlatex2\fR.
 .P
-The list of values must be a pair of a reference to the used topic and
-a file name where the LaTeX output will be stored.
+There must be a value for the key \fIoutput_filename\fR inside the
+output configuration which names the file where the LaTeX output will
+be stored. 
 .SH USAGE
 Typically the LaTeX file in included with \fIinclude\fR or \fIinput\fR
 directly from the master LaTeX document.  Please consult the file
