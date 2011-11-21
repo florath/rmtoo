@@ -26,23 +26,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v20
-===
-o Template project adapt to new config
-o Document: Understanding that all requirements need at least one edge
-  solved it for me. 
-  -> rmtoo general overview man page.
-o Bug fixes! 
-  - Estimation diagram (should be fixed - check it)
-  - Time zone problem when running test cases
-  - Sort 'Depends on' to get test cases running
-o Man page: 
-  + graph
-  + graph2
-  + EfEU
-o Update Presentations
-o Fix asserts from 'RequirementStatus.py'
-
 v21
 ===
 o Remove RequirementsSet
@@ -51,6 +34,16 @@ o Improve git history:
   o Update to a new version
   o Read only the files which are needed
     (delayed read in?!?)
+o Document: Understanding that all requirements need at least one edge
+  solved it for me. 
+  -> rmtoo general overview man page.
+o Bug fixes! 
+  - Time zone problem when running test cases
+o Man page: 
+  + graph
+  + graph2
+  + EfEU
+o Fix asserts from 'RequirementStatus.py'
 
 v22
 ===
