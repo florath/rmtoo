@@ -62,7 +62,10 @@ class Old:
             if output_spec[0] in ['prios', 'stats_sprint_burndown1']:
                 pval = {'output_filename': output_spec[1][1] }
                 if len(output_spec[1]) > 2:
-                    pval['start_date'] = output_spec[1][2]['start_date']
+                    if 'start_date' in output_spec[1][2]:
+                        pval['start_date'] = output_spec[1][2]['start_date']
+                    else:
+                        pval['start_date'] = output_spec[1][2]
                     if 'end_date' in output_spec[1][2]:
                         pval['end_date'] = output_spec[1][2]['end_date']
                 cfg.append_list(['topics', topic, 'output',

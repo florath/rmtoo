@@ -28,8 +28,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v20
 ===
-o Add man page:
-  rmtoo-configuration-convert
 o Template project adapt to new config
 o Document: Understanding that all requirements need at least one edge
   solved it for me. 

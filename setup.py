@@ -82,5 +82,7 @@ setup(name=package, version=version,
 
       license="GPL V3",
       platforms="all",
-      scripts=["bin/rmtoo", "bin/rmtoo-normalize-dependencies"],
+      scripts=["bin/rmtoo", "bin/rmtoo-normalize-dependencies",
+               "bin/rmtoo-configuration-convert",
+               "rmtoo-pricing-graph"],
      )

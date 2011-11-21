@@ -8,6 +8,7 @@
 #
 
 import os
+from types import StringType
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -118,11 +119,14 @@ class ReqsContinuum:
     def create_continuum_from_file(self):
         rs = RequirementSet(self.mods, self.config)
 
-        print("UNICODE???? [%s]" % self.config.get_value('requirements.input.directory'))
+        #print("UNICODE???? [%s]" % self.config.get_value('requirements.input.directory'))
         # TODO: Check if this is really unicode (already)
         # TODO: Add a test case.
-        rs.read_from_filesystem(
-            unicode(self.config.get_value('requirements.input.directory'), "utf-8"))
+        req_input_dir = self.config.get_value('requirements.input.directory')
+        if type(req_input_dir) == StringType:
+            req_input_dir = unicode(req_input_dir, "utf-8")
+        rs.read_from_filesystem(req_input_dir)
+
 #        rs.read_from_filesystem(
 #                self.config.get_value('requirements.input.directory'))
         self.continuum_add("FILES", rs)

@@ -17,10 +17,10 @@ force:
 # You can override the default Config.py file by setting
 # the RMTOO_CONFIG variable from the command line.
 # ie:
-#      make RMTOO_CONFIG=YourConfig.py
+#      make RMTOO_CONFIG=YourConfig.json
 #
-RMTOO_CONFIG=Config.py
-CALL_RMTOO=${RMTOO_CALL} -f ${RMTOO_CONFIG}
+RMTOO_CONFIG=Config.json
+CALL_RMTOO=${RMTOO_CALL} -j file://${RMTOO_CONFIG}
 
 #
 # Dependency handling
