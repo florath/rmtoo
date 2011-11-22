@@ -17,12 +17,14 @@ import sys
 from optparse import OptionParser
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.TopicHandler import TopicSetCollection
+from rmtoo.lib.TopicSetCollection import TopicSetCollection
+from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
 
 #deprecated
+# TODO: remove.
 def parse_cmd_line_opts(args):
     parser = OptionParser()
     parser.add_option("-f", "--file-config", dest="config_file",
@@ -51,19 +53,16 @@ def execute_cmds(config, mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     try:
-        rc = ReqsContinuum(mods, config)
-        reqs = rc.continuum_latest()
+        topic_continuum = TopicContinuum(mods, config)
+        latest_topicsc = topic_continuum.continuum_latest()
+        
+        # TODO: Remove:
+#        rc = ReqsContinuum(mods, config)
+#        reqs = rc.continuum_latest()
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
                       % rmte)
         return False
-
-    # Setup the OutputHandler
-    # Note: this can be more than one!
-    # For the topic based output also all the Topics are needed -
-    # before the OutputHandler itself - because different output
-    # handler may reference the same Topic.
-    topics = TopicSetCollection(config, reqs)
 
     # When only the dependencies are needed, output them to the given
     # file.
@@ -73,32 +72,32 @@ def execute_cmds(config, mods, mstdout, mstderr):
     if cmad_filename != None:
         ofile = file(cmad_filename, "w")
         # Write out the REQS=
-        rc.cmad_write_reqs_list(ofile)
+        latest_topicsc.cmad_write_reqs_list(ofile)
         # Write out the rest
-        topics.create_makefile_dependencies(ofile, rc)
+        latest_topicsc.create_makefile_dependencies(ofile)
         ofile.close()
         return True
 
     # Print out all logs (from all kinds of objects)
-    reqs.write_log(mstderr)
-    topics.write_log(mstderr)
+    topic_continuum.write_log(mstderr)
     # If there is a problem with the last requirement set included in
     # the requirements continuum and stop processing. (Note the logs
     # were already written out).
-    if not reqs.is_usable():
+    if not topic_continuum.is_usable():
         return False
 
     # The requirements are syntactically correct now: therefore it is
-    # possible to do some analytics on them
-    if not Analytics.run(config, reqs, topics):
-        reqs.write_log(mstderr)
-        reqs.write_analytics_result(mstderr)
+    # possible to do some analytics on them.
+    # Note that analytics are only run on the latest version.
+    if not Analytics.run(config, latest_topicsc):
+        latest_topicsc.write_log(mstderr)
+        latest_topicsc.write_analytics_result(mstderr)
 
         if config.get_bool('processing.analytics.stop_on_errors', True):
             return False
 
     # Output everything
-    topics.output(rc)
+    topic_continuum.output()
 
     return True
 

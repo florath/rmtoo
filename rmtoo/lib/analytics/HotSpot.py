@@ -15,9 +15,26 @@ class HotSpot:
     max_outgoing = 4
     
     @staticmethod
-    def run(config, reqs, topics):
+    def run(config, latest_topicsc):
+        ok = True  
+        for _, topic_set in latest_topicsc.get_topic_sets().iteritems():
+            if not HotSpot.topic_set_check(topic_set):
+                ok = False          
+        return ok
+            
+        
+    @staticmethod
+    def topic_set_check(topic_set):
         ok = True
-        for _, req in reqs.reqs.iteritems():
+        for topic in topic_set.nodes:
+            if not HotSpot.requirements_check(topic.reqs):
+                ok = False
+        return ok
+
+    @staticmethod
+    def requirements_check(reqs):
+        ok = True
+        for req in reqs:
             if len(req.incoming)>HotSpot.max_incoming:
                 req.analytics["HotSpot"] = \
                     [-10, ["Number of incoming links is too high: %d" % 

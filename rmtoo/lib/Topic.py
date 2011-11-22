@@ -53,6 +53,9 @@ class Topic(Digraph.Node):
             # In this case the tag list is (initally) empty
             self.t = []
 
+    def __str__(self):
+        return "name [" + self.name + "]"
+
     # Extract the name from the list (it's mandatory!)
     def extract_name(self):
         for nt in self.t:

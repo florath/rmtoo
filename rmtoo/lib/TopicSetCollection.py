@@ -16,10 +16,11 @@ from rmtoo.lib.TopicSet import TopicSet
 
 class TopicSetCollection:
 
-    def __init__(self, config, reqs):
+    def __init__(self, config):
         self.config = config
         self.topic_sets = {}
-        self.setup_topic_sets(reqs)
+        ### TODO: Check it out
+        ### self.setup_topic_sets(reqs)
 
     def setup_topic_sets(self, reqs):
         for k in self.config.get_value('topics').get_dict().keys():
@@ -28,6 +29,9 @@ class TopicSetCollection:
 
     def get(self, k):
         return self.topic_sets[k]
+    
+    def get_topic_sets(self):
+        return self.topic_sets
 
     # Write out all logs for all existing Topic Sets.
     def write_log(self, mstderr):
@@ -41,3 +45,9 @@ class TopicSetCollection:
     def create_makefile_dependencies(self, ofile, rc):
         for k, v in self.topic_sets.iteritems():
             v.cmad(rc, ofile)
+
+    def read_from_filesystem(self, req_input_dir):
+        '''Read all the needed (and configured) TopicSets into memory.'''
+        for k in self.config.get_value('topics').get_dict().keys():
+            self.topic_sets[k] = \
+                TopicSet(self.config, k, 'topics.' + k, req_input_dir)
