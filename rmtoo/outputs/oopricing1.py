@@ -80,6 +80,9 @@ class oopricing1:
             return sreqs_index
 
         # The topological sort is needed.
+        print("***** TODO OOÜRICING OUTPUT")
+        return
+
         sreqs = topological_sort(self.topic_set.reqset)
 
         # Create the row / column index of each requirement

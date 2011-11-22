@@ -26,6 +26,10 @@ from rmtoo.lib.VersionControlSystem import VCSException, VersionControlSystem
 # in the file system.
 #
 
+### DEPRECATED!
+### THIS SHOULD NOT USED.
+### INSTEAD USE THE TOPIC_SET AND TOPIC_CONTINUUM.
+
 class ReqsContinuum:
 
     commit_bulk_size = 10

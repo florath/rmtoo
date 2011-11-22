@@ -27,7 +27,8 @@ class stats_burndown1:
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
     def output(self, reqscont):
-        rv = Statistics.get_units(self.topic_set.reqset,
-                                  self.start_date, self.end_date)
-        Statistics.output_stat_files(self.output_filename, self.start_date, rv)
+        print("***** TODO STATS BURNDOWN OUTPUT")
+#        rv = Statistics.get_units(self.topic_set.reqset,
+#                                  self.start_date, self.end_date)
+#        Statistics.output_stat_files(self.output_filename, self.start_date, rv)
 

@@ -1,33 +1,26 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# TopicSet
-#
-#  Collection of all topics.
-#  Note that the TopicSet is a tree where the leaves are 
-#  orders - i.e. it is not possible to put them into a set_value.
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Collection of topics.
+  Note that the TopicSet is a tree where the leaves are 
+  orders - i.e. it is not possible to put them into a set_value.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.ConnectedComponents import connected_components
-from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
-from rmtoo.lib.configuration.Cfg import Cfg
-
-import traceback
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 # The TopicSet does contain the RequirementSet which is limited to the
@@ -48,7 +41,7 @@ class TopicSet(Digraph, MemLogStore):
         self.read_topics(self.topic_dir, self.master_topic)
 
         if all_reqs != None:
-            self.reqset = self.reqs_limit(all_reqs)
+            self.mReqset = self.reqs_limit(all_reqs)
 
         self.output_handlers = []
         self.init_output_handler()

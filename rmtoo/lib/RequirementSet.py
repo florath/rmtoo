@@ -26,6 +26,10 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 # This class handles a whole set of requirments.
 # These set must be enclosed, i.e. all references must be resolvable.
 
+### DEPRECATED!
+### THIS SHOULD NOT USED.
+### INSTEAD USE THE TOPIC_SET AND TOPIC_CONTINUUM.
+
 class RequirementSet(Digraph, MemLogStore):
 
     er_fine = 0

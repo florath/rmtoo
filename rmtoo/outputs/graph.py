@@ -41,9 +41,10 @@ class graph:
         g = file(self.output_filename, "w")
         g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-        # Only output the nodes which are connected to the chosen topic. 
-        for r in sorted(self.topic_set.reqset.nodes, key=lambda r: r.id):
-            self.output_req(r, g)
+        # Only output the nodes which are connected to the chosen topic.
+        print("****TODO OUTPUT GRAPH")
+#        for r in sorted(self.topic_set.reqset.nodes, key=lambda r: r.id):
+#            self.output_req(r, g)
 
         # Print out a node with the version number:
         g.write('ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'

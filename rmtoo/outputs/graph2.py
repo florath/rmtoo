@@ -41,8 +41,9 @@ class graph2:
         # Subgraphs
         self.output_topic(g, self.topic_set.get_master())
         # Edges
-        for r in sorted(self.topic_set.reqset.nodes, key=lambda r: r.id):
-            self.output_req(r, g)
+        print("***** TODO GRAPH2 OUTPUT")
+#        for r in sorted(self.topic_set.reqset.nodes, key=lambda r: r.id):
+#            self.output_req(r, g)
         g.write("}")
         g.close()
 

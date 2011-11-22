@@ -17,7 +17,7 @@ import sys
 from optparse import OptionParser
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.TopicHandler import TopicHandler
+from rmtoo.lib.TopicHandler import TopicSetCollection
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
@@ -63,7 +63,7 @@ def execute_cmds(config, mods, mstdout, mstderr):
     # For the topic based output also all the Topics are needed -
     # before the OutputHandler itself - because different output
     # handler may reference the same Topic.
-    topics = TopicHandler(config, reqs)
+    topics = TopicSetCollection(config, reqs)
 
     # When only the dependencies are needed, output them to the given
     # file.

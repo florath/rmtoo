@@ -62,9 +62,10 @@ class TopicCohe:
             # There is only the need to count either the incoming or
             # outgoing.
             # Use the requirements from the topic here.
-            for req in topic_set.reqset.nodes:
-                TopicCohe.count(tcnt, topic_set, req.get_value("Topic"),
-                                req.incoming)
+            print("***** TODO: count TopicCohe")
+#            for req in topic_set.reqset.nodes:
+#                TopicCohe.count(tcnt, topic_set, req.get_value("Topic"),
+#                                req.incoming)
 
             for k, t in tcnt.iteritems():
                 if t[0] <= t[1]:
