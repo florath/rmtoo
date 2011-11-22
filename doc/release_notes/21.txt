@@ -1,0 +1,7 @@
+User visible changes
+--------------------
+
+Internal Changes
+----------------
+
+Updated gitpython library from 0.3.0-beta2 to 0.3.2.RC1.
