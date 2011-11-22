@@ -91,12 +91,18 @@ class DescWords:
         return [level, log]
 
     @staticmethod
-    def run(config, reqs, topics):
+    def run(config, latest_topicsc):
         # Try to get the correct language
         lwords = DescWords.get_lang(config)
         # If language is not available, this analytics make no sense.
         if lwords == None:
             return True
+        DescWords.run_topic_set_collection(latest_topicsc)
+
+    @staticmethod
+    def run_topic_set_collection(latest_topicsc):
+
+
 
         ok = True
         for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
