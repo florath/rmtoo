@@ -1,24 +1,28 @@
 #
 # -*- coding: utf-8 -*-
 #
-# Analytics: Description Words
-#
-#  The Description is the critical part of the requirement. This
-#  module checks for some good and bad words and tries a heuristic to
-#  get an idea about bad requirement descriptions.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  The Description is the critical part of the requirement. This
+  module checks for some good and bad words and tries a heuristic to
+  get an idea about bad requirement descriptions.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import re
 
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.analytics.Base import Base
+from rmtoo.lib.analytics.Result import Result
 
-class DescWords:
+class DescWords(Base):
 
-    # This is the assesment of each word (better regular expression).
+    # This is the assessment of each word (better regular expression).
     # If the regular expression matches, the value is added.
     # If the resulting number is lower than a given limit, an error is
     # assumed. 
@@ -64,6 +68,11 @@ class DescWords:
     words = { "en_GB": words_en_GB,
               "de_DE": words_de_DE, }
 
+    def __init__(self, config):
+        '''Sets up the DescWord object for use.'''
+        Base.__init__(self, config)
+        self.lwords = DescWords.get_lang(config)
+
     @staticmethod
     def get_lang(config):
         def_lang = config.get_value_default(
@@ -76,7 +85,8 @@ class DescWords:
         return DescWords.words["en_GB"]
 
     @staticmethod
-    def analyse(lwords, text):
+    def analyse(lname, lwords, text):
+        print("ANALYSE: [%s]" % text)
         # Must be at least some positive things to get this
         # positive. (An empty description is a bad one.)
         level = -10
@@ -88,28 +98,13 @@ class DescWords:
                 level += fal * wlvl
                 log.append("%+4d:%d*%d: %s" % (fal * wlvl, fal, wlvl, wdsc))
                 # Note the result of this test in the requirement itself.
-        return [level, log]
+        # TODO: Use Object for this!
+        return Result('DescWords', lname, level, log)
 
-    @staticmethod
-    def run(config, latest_topicsc):
-        # Try to get the correct language
-        lwords = DescWords.get_lang(config)
-        # If language is not available, this analytics make no sense.
-        if lwords == None:
-            return True
-        DescWords.run_topic_set_collection(latest_topicsc)
-
-    @staticmethod
-    def run_topic_set_collection(latest_topicsc):
-
-
-
-        ok = True
-        for req in sorted(reqs.reqs.values(), key=lambda r: r.id):
-            ares = DescWords.analyse(
-                lwords, req.get_value("Description").get_content())
-            req.analytics["DescWords"] = ares
-            if ares[0] < 0:
-                ok = False
-
-        return ok
+    def check_requirement(self, lname, req):
+        print("DescWords called")
+        ares = DescWords.analyse(lname,
+                 self.lwords, req.get_value("Description").get_content())
+        # TODO: How to store the result?
+        #req.analytics["DescWords"] = ares
+        return ares.get_value() >= 0

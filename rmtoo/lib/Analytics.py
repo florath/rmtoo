@@ -24,13 +24,18 @@ class Analytics:
     # The argument to the analytics modules is the (latest) set of
     # requirements.  (It makes sense only to check them.)
     @staticmethod
-    def run(config, latest_topicsc):
+    def run(config, topicsc):
         '''The argument to the analytics modules is the (latest) set of
            requirements.  (It makes sense only to check them.)'''
-        ok = True
+        eval_result = True
+        findings = []
 
-        for ana in HotSpot, DescWords, ReqTopicCohe, TopicCohe:
-            if not ana.run(config, latest_topicsc):
-                ok = False
+        for ana_class in HotSpot, DescWords, ReqTopicCohe, TopicCohe:
+            ana_obj = ana_class(config)
+            check_result, lfindings = ana_obj.check(topicsc)
+            findings.extend(lfindings)
+            print("FINDINGS UNTIL NOW [%s]" % findings)
+            if not check_result:
+                eval_result = False
 
-        return ok
+        return eval_result, findings

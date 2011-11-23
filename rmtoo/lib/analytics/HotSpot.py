@@ -1,50 +1,38 @@
-#
-# Analytics: HotSpot
-#
-#  Sometimes there are so called 'Requirements Hotspots'.  These are
-#  requirements which have too many links.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Sometimes there are so called 'Requirements Hotspots'.  These are
+  requirements which have too many links.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
 
-class HotSpot:
+ For licensing details see COPYING
+'''
+
+from rmtoo.lib.analytics.Base import Base
+from rmtoo.lib.analytics.Result import Result
+
+class HotSpot(Base):
 
     max_incoming = 7
     max_outgoing = 4
-    
-    @staticmethod
-    def run(config, latest_topicsc):
-        ok = True  
-        for _, topic_set in latest_topicsc.get_topic_sets().iteritems():
-            if not HotSpot.topic_set_check(topic_set):
-                ok = False          
-        return ok
-            
-        
-    @staticmethod
-    def topic_set_check(topic_set):
-        ok = True
-        for topic in topic_set.nodes:
-            if not HotSpot.requirements_check(topic.reqs):
-                ok = False
-        return ok
 
-    @staticmethod
-    def requirements_check(reqs):
-        ok = True
-        for req in reqs:
-            if len(req.incoming)>HotSpot.max_incoming:
-                req.analytics["HotSpot"] = \
-                    [-10, ["Number of incoming links is too high: %d" % 
-                      len(req.incoming)]]
-                ok = False
-               
-            if len(req.outgoing)>HotSpot.max_outgoing:
-                req.analytics["HotSpot"] = \
-                    [-10, ["Number of outgoing links is too high: %d" % 
-                      len(req.outgoing)]]
-                ok = False
+    def check_requirement(self, lname, req):
+        eval_result = True
+        findings = []
+        if len(req.incoming) > HotSpot.max_incoming:
+            findings.append(
+                Result("HotSpot", lname, -10,
+                    ["Number of incoming links is too high: %d" %
+                       len(req.incoming)]))
+            eval_result = False
 
-        return ok
+        if len(req.outgoing) > HotSpot.max_outgoing:
+            findings.append(
+                Result("HotSpot", lname, -10,
+                 ["Number of outgoing links is too high: %d" %
+                    len(req.outgoing)]))
+            eval_result = False
+
+        return eval_result, findings
