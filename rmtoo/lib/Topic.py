@@ -1,20 +1,22 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Topic
-#  This holds one topic - and all subtopics of this topic
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Topic
+   This holds one topic - and all subtopics of this topic
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
+
+import os
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
-import os
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.logging.EventLogging import tracer
 
 # Each topic has a level - which indicates the identation of the text
 # element. 
@@ -27,6 +29,7 @@ class Topic(Digraph.Node):
 
     def __init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
+        tracer.info("called: directory [%s] name [%s]" % (tdir, tname))
         Digraph.Node.__init__(self, tname)
         self.dir = tdir
         # Master map is needed for deciping requirements into the
@@ -34,7 +37,7 @@ class Topic(Digraph.Node):
         self.digraph = dg
         self.txtioconfig = txtioconfig
         self.cfg = cfg
-        # Identation level of this topic
+        # Idendation level of this topic
         self.level = tlevel
         self.super = tsuper
         # This is a list of requirements which contain to this topic.

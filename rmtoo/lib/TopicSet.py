@@ -24,14 +24,10 @@ from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
 
-# The TopicSet does contain the RequirementSet which is limited to the
-# topic and all subtopics.
-
 class TopicSet(Digraph, MemLogStore):
+    '''A Collection of Topics.
+       With other words: a hirarchy of requirements.'''
 
-    # The 'tparam' must be a list:
-    #  tparam[0]: topic directory
-    #  tparam[1]: Initial / Master topic
     def __init__(self, config, name, config_prefix_str, req_input_dir):
         tracer.info("name [%s] config_prefix [%s] req_input_dir [%s]"
                     % (name, config_prefix_str, req_input_dir))
@@ -88,6 +84,10 @@ class TopicSet(Digraph, MemLogStore):
             self.all_topic_names.add(f[:-4])
 
     def read_topics(self, tdir, initial_topic):
+        '''Read all topics from the given directory starting
+           with the initial topic.'''
+        tracer.debug("called: directory [%s] initial topic [%s]"
+                     % (tdir, initial_topic))
         txtioconfig = TxtIOConfig(self.cfg, "topics")
         Topic(tdir, initial_topic, self, txtioconfig, self.cfg)
         self.read_all_topic_names(tdir)

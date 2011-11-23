@@ -28,6 +28,12 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v21
 ===
+o To convert from the old notation
+    requirement -> topic
+  to the new notation
+    topic -> requirement list
+  there is the need to use RequirementSet?!?!
+  What to do?
 o Remove RequirementsSet
 o Clean up Git-History repeating (read also the topics from git)
 o Improve git history:
