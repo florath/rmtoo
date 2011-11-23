@@ -12,6 +12,8 @@
  For licensing details see COPYING
 '''
 
+import logging
+from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.TopicSet import TopicSet
 
 class TopicSetCollection:
@@ -48,6 +50,8 @@ class TopicSetCollection:
 
     def read_from_filesystem(self, req_input_dir):
         '''Read all the needed (and configured) TopicSets into memory.'''
+        tracer.debug("called: req_input_dir [%s]" % req_input_dir)
         for k in self.config.get_value('topics').get_dict().keys():
+            tracer.debug("create TopicSet [" + k + "]")
             self.topic_sets[k] = \
                 TopicSet(self.config, k, 'topics.' + k, req_input_dir)

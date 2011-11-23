@@ -22,6 +22,7 @@ from rmtoo.lib.digraph.ConnectedComponents import connected_components
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.logging.EventLogging import tracer
 
 # The TopicSet does contain the RequirementSet which is limited to the
 # topic and all subtopics.
@@ -32,6 +33,8 @@ class TopicSet(Digraph, MemLogStore):
     #  tparam[0]: topic directory
     #  tparam[1]: Initial / Master topic
     def __init__(self, config, name, config_prefix_str, req_input_dir):
+        tracer.info("name [%s] config_prefix [%s] req_input_dir [%s]"
+                    % (name, config_prefix_str, req_input_dir))
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         self.name = name

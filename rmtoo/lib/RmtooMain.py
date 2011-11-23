@@ -22,6 +22,7 @@ from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
+from rmtoo.lib.logging.EventLogging import init_logging
 
 #deprecated
 # TODO: remove.
@@ -102,6 +103,7 @@ def execute_cmds(config, mods, mstdout, mstderr):
     return True
 
 def main_impl(args, mstdout, mstderr):
+#    init_logging()
     config, mods = MainHelper.main_setup(args, mstdout, mstderr)
     return execute_cmds(config, mods, mstdout, mstderr)
 
