@@ -17,12 +17,11 @@ import sys
 from optparse import OptionParser
 from rmtoo.lib.ReqsContinuum import ReqsContinuum
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.TopicSetCollection import TopicSetCollection
+from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
-from rmtoo.lib.logging.EventLogging import init_logging
 
 #deprecated
 # TODO: remove.
@@ -54,9 +53,9 @@ def execute_cmds(config, mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     try:
-        topic_continuum = TopicContinuum(mods, config)
-        latest_topicsc = topic_continuum.continuum_latest()
-        
+        topic_continuum_set = TopicContinuumSet(mods, config)
+        latest_topicsc = topic_continuum_set.continuum_latest()
+
         # TODO: Remove:
 #        rc = ReqsContinuum(mods, config)
 #        reqs = rc.continuum_latest()
