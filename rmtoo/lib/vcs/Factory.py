@@ -1,0 +1,29 @@
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Factory for different input types.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
+
+from rmtoo.lib.vcs.Git import Git 
+from rmtoo.lib.vcs.FileSystem import FileSystem 
+from rmtoo.lib.logging.EventLogging import tracer
+
+class Factory:
+    
+    known_input_types = \
+        { "git": Git,
+          "filesystem": FileSystem }
+    
+    @staticmethod
+    def create(input_method, input_config):
+        '''Create new input handler from given parameters.'''
+        tracer.info("called: name [%s]" % input_method)
+        if input_method not in Factory.known_input_types:
+            assert False
+            
+        return Factory.known_input_types[input_method](input_config)

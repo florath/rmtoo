@@ -12,7 +12,7 @@ from types import StringType
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.VersionControlSystem import VCSException, VersionControlSystem
+from rmtoo.lib.VersionControlSystem import VersionControlSystem
 
 #
 # TODO: The following is not correct any more.

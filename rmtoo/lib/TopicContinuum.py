@@ -14,6 +14,7 @@
 
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.TopicSet import TopicSet
+from rmtoo.lib.vcs.Factory import Factory
 
 class TopicContinuum:
     '''A TopicContinuum holds different (historic) versions
@@ -25,14 +26,23 @@ class TopicContinuum:
         self.topic_sets = {}
         # This is the list of all version control system ids.
         # Those ids are sorted by time.
-        # The newest versions is the first one - sorted backwards.
+        # The oldest versions is the first one - sorted.
         # Note: this does not contain any other data, only the ids.
         # To access the data, use some construct like:
-        #   self.continuum[self.vcs_ids[0]]
+        #   self.topic_sets[self.vcs_ids[n]]
         self.vcs_ids = []
-        ### TODO: Check it out
+        self.internal_read_topic_sets(ts_config)
+
+    def internal_read_topic_sets(self, ts_config):
+        '''Reads in all the topic sets from the specified sources.'''
+        tracer.debug("called")
+        for source in ts_config['sources']:
+            input_handler = Factory.create(source[0], source[1])
+            # TODO: Collect result
+            input_handler.read()
         assert False
-        ### self.setup_topic_sets(reqs)
+        
+    ### EVERYTHING BENEATH IN DEPRECATED
 
     def deprecared_internal_continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''

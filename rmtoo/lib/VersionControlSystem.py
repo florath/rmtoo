@@ -12,23 +12,6 @@
 # For licencing details see COPYING
 #
 
-import os
-import sys
-
-# To find the correct version of git-python (and friends) [the rmtoo
-# local version must be used], the sys.path is scanned and when a
-# sp/rmtoo/contrib is found, this is included (prepended) to sys.path.
-# This can be removed once the git-pyhton is removed.
-# (Calling this durint the main does not help - because this might
-# already been loaded.) 
-# Note that this is a hack which will be removed when the API 
-# to the git-python is stable.
-for sp in sys.path:
-    rc = os.path.join(sp, 'rmtoo/contrib')
-    if os.path.exists(rc):
-        sys.path.insert(0, rc)
-        break
-import git
 
 import re
 import StringIO
@@ -39,10 +22,6 @@ from rmtoo.lib.logging.LogLevel import LogLevel
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 
-class VCSException(Exception):
-
-    def __init__(self, msg):
-        self.msg = msg
 
 class VCSGit:
 
@@ -53,20 +32,6 @@ class VCSGit:
             raise VCSException("Error opening git repository: %s"
                                % ie)
         self.set_directories(directory)
-
-    # Some variables are needed to access the files themself.
-    # Especially the different subdirs where the requirements can be
-    # found. 
-    def set_directories(self, directory):
-        self.repo_base_dir = self.repo.git_dir[:-4]
-
-        if not directory.startswith(self.repo_base_dir):
-            raise RMTException(28, "Cannot split up the given "
-                                   "directory name")
-
-        self.reqs_subdir = directory[len(self.repo_base_dir):]
-        # NEEDED?
-        #self.reqs_subdir_parts = self.reqs_subdir.split("/")
 
     # This reads in the history of all sequirments sets including
     # start_vers end end_vers.
@@ -119,11 +84,4 @@ class VCSGit:
         # XXX IS here some return value needed?
 
 class VersionControlSystem:
-
-    # This is the the 'virtual' constructor:
-    # It will check all available VCS systems and returns the correct
-    # one. 
-    # Note: At the moment only the VCSGit is available.
-    @staticmethod
-    def create(directory):
-        return VCSGit(directory)
+    pass

@@ -13,7 +13,7 @@
 
 import os
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.VersionControlSystem import VCSException, VersionControlSystem
+from rmtoo.lib.VersionControlSystem import VersionControlSystem
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
