@@ -18,15 +18,10 @@
     }, 
     "requirements": {
         "input": {
-            "commit_interval": {
-                "begin": "FILES", 
-                "end": "FILES"
-            }, 
             "default_language": "en_GB", 
             "dependency_notation": [
                 "Solved by"
-            ], 
-            "directory": "doc/requirements"
+            ]
         }, 
         "inventors": [
             "flonatel"
@@ -40,8 +35,30 @@
     }, 
     "topics": {
         "ts_common": {
-            "directory": "doc/topics", 
-            "name": "ReqsDocument", 
+	    "sources": [
+		[
+		    "git", {
+		        "start_vers": "v7", 
+			"end_vers": "v11", 
+			"requirements_dir": "doc/requirements",
+			"topics_dir": "doc/topics",
+			"topic_root_node": "ReqsDocument" }
+		],
+		[
+		    "git", {
+		        "start_vers": "v13", 
+			"end_vers": "v17", 
+			"requirements_dir": "doc/requirements",
+			"topics_dir": "doc/topics",
+			"topic_root_node": "ReqsDocument" }
+		],
+	        [
+		    "filesystem", {
+		        "requirements_dir": "doc/requirements",
+			"topics_dir": "doc/topics",
+			"topic_root_node": "ReqsDocument" }
+		] 
+	    ],
             "output": {
                 "graph": [
                     {

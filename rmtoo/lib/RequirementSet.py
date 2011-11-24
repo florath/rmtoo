@@ -1,13 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# RequirementSet
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Collection of topics.
+  Note that the TopicSet is a tree where the leaves are 
+  orders - i.e. it is not possible to put them into a set_value.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 import re
@@ -22,22 +24,27 @@ from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
-
-# This class handles a whole set of requirments.
-# These set must be enclosed, i.e. all references must be resolvable.
-
-### DEPRECATED!
-### THIS SHOULD NOT USED.
-### INSTEAD USE THE TOPIC_SET AND TOPIC_CONTINUUM.
+from rmtoo.lib.logging.EventLogging import tracer
 
 class RequirementSet(Digraph, MemLogStore):
+    '''A RequirementSet holds one DAG (directed acyclic graph)
+       of requirements.'''
 
-    er_fine = 0
-    er_error = 1
-
-    def __init__(self, mods, config):
+    def __init__(self, config):
+        '''Constructs a RequirementSet.
+           This does not read everything in: please
+           use the appropriate method to do so.'''
+        tracer.info("called")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
+        self.config = config
+
+    # EVERYTHING BENEATH IS DEPRECATED!
+
+    deprecated__er_fine = 0
+    deprecated__er_error = 1
+
+    def deprecated__init__(self, mods, config):
         self.reqs = {}
         self.mods = mods
         # The requirement set is only (fully) usable, when everything
@@ -50,7 +57,7 @@ class RequirementSet(Digraph, MemLogStore):
         self.analytics = {}
         self.constraints = {}
 
-    def handle_modules(self):
+    def deprecated_handle_modules(self):
         # Dependencies can be done, if all requirements are successfully
         # read in.
         self.handle_modules_reqdeps()
@@ -71,7 +78,7 @@ class RequirementSet(Digraph, MemLogStore):
     # Read the whole requirement set from files stored in the
     # filesystem (which is typically the latest version when a repo is
     # available). 
-    def read_from_filesystem(self, directory):
+    def deprecated_read_from_filesystem(self, directory):
         everythings_fine = self.read(directory)
         if not everythings_fine:
             self.error(44, "There were errors in the requirment set")
@@ -89,7 +96,7 @@ class RequirementSet(Digraph, MemLogStore):
         return self.handle_modules()
 
     # Add requirement: this is needed when reading from VCS.
-    def add_req(self, req):
+    def deprecated_add_req(self, req):
         # Store in the map, so that it is easy to access the
         # node by id.
         self.reqs[req.id] = req
@@ -97,7 +104,7 @@ class RequirementSet(Digraph, MemLogStore):
         # access to the digraph algorithms.
         self.nodes.append(req)
 
-    def read(self, directory):
+    def deprecated_read(self, directory):
         everythings_fine = True
         files = os.listdir(directory)
         for f in files:
@@ -122,7 +129,7 @@ class RequirementSet(Digraph, MemLogStore):
 
     # This is mostly a copy of the read - but changed at at least some
     # major points. 
-    def read_constraints(self, directories):
+    def deprecated_read_constraints(self, directories):
         everythings_fine = True
         for da in directories:
             # TODO: Check if this is really unicode
@@ -137,7 +144,7 @@ class RequirementSet(Digraph, MemLogStore):
                 everythings_fine = False
         return everythings_fine
 
-    def read_constraints_one_dir(self, directory):
+    def deprecated_read_constraints_one_dir(self, directory):
         everythings_fine = True
         files = os.listdir(directory)
         for f in files:
@@ -160,7 +167,7 @@ class RequirementSet(Digraph, MemLogStore):
     # This is mostly the same functionallaty of similar method of the
     # class Requirement - but with one major difference: for this
     # implementation stop if an error occured.
-    def handle_modules_reqdeps(self):
+    def deprecated_handle_modules_reqdeps(self):
         for module in self.mods.reqdeps_sorted:
             state = module.rewrite(self)
             if state == False:
@@ -170,7 +177,7 @@ class RequirementSet(Digraph, MemLogStore):
                 # algorithms rely on the correct run from others.
                 return
 
-    def check_left_tags(self):
+    def deprecated_check_left_tags(self):
         alls_fine = True
         for r in self.reqs:
             rr = self.reqs[r]
@@ -183,24 +190,24 @@ class RequirementSet(Digraph, MemLogStore):
     # Return the timestamp of the whole Requirment Set.
     # This is the current time for FILES and the checkin point of time
     # for files from the repo.
-    def timestamp(self):
+    def deprecated_timestamp(self):
         return self.ts
 
     # Return the number of requirments in this RequirementSet.  This
     # is e.g. needed for statistics.
-    def reqs_count(self):
+    def deprecated_reqs_count(self):
         return len(self.reqs)
 
-    def not_usable(self):
+    def deprecated_not_usable(self):
         self.state = self.er_error
 
-    def is_usable(self):
+    def deprecated_is_usable(self):
         return self.state == self.er_fine
 
-    def set_version_id(self, vid):
+    def deprecated_set_version_id(self, vid):
         self.version_id = vid
 
-    def own_write_analytics_result(self, mstderr):
+    def deprecated_own_write_analytics_result(self, mstderr):
         for k, v in sorted(self.analytics.items(),
                            key=operator.itemgetter(0)):
             if v[0] < 0:
@@ -210,12 +217,12 @@ class RequirementSet(Digraph, MemLogStore):
                     mstderr.write("+++ Error:Analytics:%s:%s\n" % (k, l))
 
     # Write out the analytics results.
-    def write_analytics_result(self, mstderr):
+    def deprecated_write_analytics_result(self, mstderr):
         self.own_write_analytics_result(mstderr)
         for req in sorted(self.reqs.values(), key=lambda r: r.id):
             req.write_analytics_result(mstderr)
 
-    def normalize_dependencies(self):
+    def deprecated_normalize_dependencies(self):
         for r in self.reqs.itervalues():
             # Remove the old 'Depends on'
             r.record.remove("Depends on")
@@ -245,7 +252,7 @@ class RequirementSet(Digraph, MemLogStore):
                         "Added by rmtoo-normalize-dependencies"))
         return True
 
-    def write_to_filesystem(self, directory):
+    def deprecated_write_to_filesystem(self, directory):
         for r in self.reqs.itervalues():
             fd = file(directory + "/" + r.id + ".req", "w")
             r.record.write_fd(fd)

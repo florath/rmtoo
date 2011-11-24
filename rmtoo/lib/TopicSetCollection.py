@@ -12,17 +12,33 @@
  For licensing details see COPYING
 '''
 
-import logging
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.TopicSet import TopicSet
 
 class TopicSetCollection:
+    '''A TopicSetCollection holds different (historic) versions
+       of TopicSets.'''
 
-    def __init__(self, config):
+    def __init__(self, ts_name, config, ts_config):
+        tracer.info("called: name [%s]" % ts_name)
         self.config = config
         self.topic_sets = {}
+        # This is the list of all version control system ids.
+        # Those ids are sorted by time.
+        # The newest versions is the first one - sorted backwards.
+        # Note: this does not contain any other data, only the ids.
+        # To access the data, use some construct like:
+        #   self.continuum[self.vcs_ids[0]]
+        self.vcs_ids = []
         ### TODO: Check it out
+        assert False
         ### self.setup_topic_sets(reqs)
+
+    def internal_continuum_add(self, cid, topic_set_collection):
+        '''Add one to the end of the continuum container.'''
+        self.vcs_ids.append(cid)
+        self.continuum[cid] = topic_set_collection
+
 
     def setup_topic_sets(self, reqs):
         for k in self.config.get_value('topics').get_dict().keys():
@@ -31,7 +47,7 @@ class TopicSetCollection:
 
     def get(self, k):
         return self.topic_sets[k]
-    
+
     def get_topic_sets(self):
         return self.topic_sets
 

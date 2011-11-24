@@ -26,18 +26,32 @@ from rmtoo.lib.logging.EventLogging import tracer
 
 class TopicSet(Digraph, MemLogStore):
     '''A Collection of Topics.
-       With other words: a hirarchy of requirements.'''
+       With other words: a hierarchy of requirements.'''
+
+    def internal_init_requirements(self):
+        '''Read in all the requirements and store them
+           for later use.'''
+        # First: read in all the requirements.
+        self.complete_requirement_set = RequirementSet(self.config)
+        # Second: read in all the topics.
+        self.read_topics(self.topic_dir, self.master_topic)
+        # Third: restrict requirements to those which are 
+        #    needed in the topic.
+        self.requirement_set = self.restrict_requirements_set()
 
     def __init__(self, config, name, config_prefix_str, req_input_dir):
         tracer.info("name [%s] config_prefix [%s] req_input_dir [%s]"
                     % (name, config_prefix_str, req_input_dir))
         Digraph.__init__(self)
         MemLogStore.__init__(self)
+        # The name of the TopicSet.
         self.name = name
+        # The directory where all topics are stored.
         self.topic_dir = config.get_value(config_prefix_str + '.directory')
+        # The master (i.e. the initial) topic.
         self.master_topic = config.get_value(config_prefix_str + '.name')
-        self.cfg = config
-        self.read_topics(self.topic_dir, self.master_topic)
+        self.config = config
+        self.internal_init_requirements()
 
 # TODO: is this needed????
 #        if all_reqs != None:
@@ -88,8 +102,8 @@ class TopicSet(Digraph, MemLogStore):
            with the initial topic.'''
         tracer.debug("called: directory [%s] initial topic [%s]"
                      % (tdir, initial_topic))
-        txtioconfig = TxtIOConfig(self.cfg, "topics")
-        Topic(tdir, initial_topic, self, txtioconfig, self.cfg)
+        txtioconfig = TxtIOConfig(self.config, "topics")
+        Topic(tdir, initial_topic, self, txtioconfig, self.config)
         self.read_all_topic_names(tdir)
 
     # Resolve the 'Topic' tag of the requirement to the correct
@@ -175,11 +189,11 @@ class TopicSet(Digraph, MemLogStore):
         # { map of different output methods: 
         #   [ list of different parameter sets for the different parameter
         #     sets ] }
-        ohconfig = self.cfg.get_value(['topics', self.name, 'output'])
+        ohconfig = self.config.get_value(['topics', self.name, 'output'])
         for outmeth, params in ohconfig.get_dict().iteritems():
             for param in params:
                 self.output_handlers.append(
-                    TopicSetOutputHandler(self.cfg, outmeth, param, self))
+                    TopicSetOutputHandler(self.config, outmeth, param, self))
 
     def output(self, rc):
         for output_handler in self.output_handlers:
