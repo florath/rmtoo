@@ -29,6 +29,7 @@ for sp in sys.path:
 import git
 
 import re
+from types import ListType, StringType, UnicodeType
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
@@ -39,77 +40,105 @@ from rmtoo.lib.RMTException import RMTException
 class Git(Interface):
     '''Handles a git repository.'''
 
+    # TODO: Needed?
     class Commit:
         '''Encapsulates a git commit.'''
         pass
 
-    def __init__(self, config):
-        tracer.info("called")
-        cfg = Cfg(config)
-        self.start_vers = cfg.get_value("start_vers")
-        self.end_vers = cfg.get_value("end_vers")
-        # When the directory is not absolute, convert it to an
-        # absolute path that it can be compared to the outcome of the
-        # git.Repo. 
-        self.requirements_dirs = \
-            self.internal_abs_path(cfg.get_value("requirements_dirs"))
-        self.topics_dirs = \
-            self.internal_abs_path(cfg.get_value("topics_dirs"))
-        self.topic_root_node = cfg.get_value("topic_root_node")
-
-        tracer.debug("start version [%s] end version [%s] "
-                     "requirements dirs [%s] topics dirs [%s] "
-                     "topic root node [%s]"
-                     % (self.start_vers, self.end_vers,
-                        self.requirements_dirs, self.topics_dirs,
-                        self.topic_root_node))
-        self.current_commit = None
-        self.internal_setup_repo()
-
     @staticmethod
-    def internal_abs_path(directory):
+    def __check_list_of_strings(name, tbc):
+        '''Checks if the given variable is a list of strings.'''
+        if type(tbc)!=ListType:
+            raise RMTException(103, "Configuration error: [%s] configuration "
+                               "must be a list" % name)
+            
+        if len(tbc)==0:
+            raise RMTException(105, "Configuration error: [%s] configuration "
+                               "must be a non empty list" % name)
+        
+        for string in tbc:
+            if type(string) not in [StringType, UnicodeType]:
+                raise RMTException(104, "Configuration error: [%s].[%s] "
+                                   " configuration must be a string" 
+                                   % (name, string))
+            
+    @staticmethod
+    def __abs_path(directory):
         '''Convert the given directory path into an absolute path.'''
         if not os.path.isabs(directory):
             return os.path.abspath(directory)
         return directory
 
-    def internal_setup_repo(self):
-        '''Sets up the repository.
-           This also checks, if the requirements and topics are in the
-           same directory.'''
+    def __check_if_dir_is_in_repo(self, directory):
+        '''Checks if all the directories are the in repository.
+           The absolute path is computed if the path is relative and
+           then compared to the repository base directory.'''
+        tracer.debug("called: directory [%s]" % directory)
+        if self.__repo_base_dir==None:
+            self.__setup_repo(directory)
+        if not directory.startswith(self.__repo_base_dir):
+            raise RMTException(28, "directory [%s] not in repository")
+        
+    def __cut_off_repo_dir(self, directory):
+        '''Cuts off the repository directory from the directory.'''
+        # +1: cut off the '/' also.
+        len_repo_base_dir = len(self.__repo_base_dir) + 1
+        return directory[len_repo_base_dir:]
+        
+    def __setup_directories(self, cfg):
+        '''Cleans up and unifies the directories.'''
+        tracer.debug("called")
+        for dir_type in ["requirements", "topics", "constraints"]:
+            dirs = map(self.__abs_path, cfg.get_value(dir_type + "_dirs"))
+            self.__check_list_of_strings(dir_type, dirs)
+            
+            new_directories = []
+            for directory in dirs:
+                self.__check_if_dir_is_in_repo(directory)
+                new_directories.append(self.__cut_off_repo_dir(directory))
+            self.__dirs[dir_type] = new_directories
+            
+        for dir_type, directory in self.__dirs.iteritems():
+            tracer.debug("[%s] directories [%s]" % (dir_type, directory))
 
-#### TODO: Do this for many directories!!!
-        assert False
+    def __setup_repo(self, directory):
+        '''Sets up the repository.'''
+        tracer.debug("called")
 
-        self.repo = git.Repo(self.requirements_dir)
-        self.repo_base_dir = self.repo.git_dir[:-4]
-        len_repo_base_dir = len(self.repo_base_dir)
+        # Get one sample directory and create the repository from this.
+        # Check all if they are in the same repository.
+        # Note: because every directory list must contain at least one
+        #  directory, use just one.
+        tracer.debug("using [%s] as sample directory" % directory)
+        self.__repo = git.Repo(directory)
+        # :-4: cut off the '/.git'.
+        self.__repo_base_dir = self.__repo.git_dir[:-5]
+        tracer.debug("repository base directory [%s]" % self.__repo_base_dir)
 
-        # Check that the topic directory has the same base.
-        topic_repo = git.Repo(self.topics_dir)
-        if self.repo_base_dir != topic_repo.git_dir[:-4]:
-            raise RMTException(101,
-                "requirements dir [%s] and topic dir [%s] not " \
-                "in the same repository." \
-                % (self.requirements_dir, self.topics_dir))
+    def __init__(self, config):
+        tracer.info("called")
+        cfg = Cfg(config)
+        self.__start_vers = cfg.get_value("start_vers")
+        self.__end_vers = cfg.get_value("end_vers")
+        self.__topic_root_node = cfg.get_value("topic_root_node")
+        tracer.debug("start version [%s] end version [%s] "
+                     "topic root node [%s]"
+                     % (self.__start_vers, self.__end_vers,
+                        self.__topic_root_node))
 
-        if not self.requirements_dir.startswith(self.repo_base_dir):
-            raise RMTException(28, "Cannot split up the given "
-                                   "requirements directory name")
-        self.requirements_subdir = self.requirements_dir[len_repo_base_dir:]
+        self.__current_commit = None
 
-        if not self.topics_dir.startswith(self.repo_base_dir):
-            raise RMTException(102, "Cannot split up the given "
-                                    "topics directory name")
-        self.topics_subdir = self.topics_dir[len_repo_base_dir:]
-
-        tracer.debug("requirements subdir [%s] topic subdir [%s]" %
-                     (self.requirements_subdir, self.topics_subdir))
+        # When the directory is not absolute, convert it to an
+        # absolute path that it can be compared to the outcome of the
+        # git.Repo. 
+        self.__dirs = {}
+        self.__repo_base_dir = None
+        self.__setup_directories(cfg)
 
     def get_commits(self):
         '''Return an iterator for all the commits.'''
-        return self.repo.iter_commits(
-                    self.start_vers + ".." + self.end_vers)
+        return self.__repo.iter_commits(
+                    self.__start_vers + ".." + self.__end_vers)
 
     def set_commit(self, commit):
         '''For all upcomig read accesses the given commit

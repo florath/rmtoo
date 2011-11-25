@@ -38,6 +38,7 @@ class TopicSet(Digraph, MemLogStore):
         print("HANDLE CACHING!")
         self.complete_requirement_set = \
             RequirementSet(config, input_handler)
+        assert False
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

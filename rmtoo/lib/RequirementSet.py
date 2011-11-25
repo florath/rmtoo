@@ -39,10 +39,12 @@ class RequirementSet(Digraph, MemLogStore):
         MemLogStore.__init__(self)
         self.config = config
 
-        self.internal_read_requirements(input_handler)
+        self.__read_requirements(input_handler)
 
-    def internal_read_requirements(self, input_handler):
+    def __read_requirements(self, input_handler):
         '''Reads in all the requirements from the input_handler.'''
+        # TODO: Need: info about the directories to read.
+        assert False
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

@@ -33,7 +33,7 @@ class TopicContinuum:
         self.vcs_ids = []
         self.internal_read_topic_sets(ts_config)
 
-    def internal_read_commits(self, input_handler, commits):
+    def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
            the input_handler.'''
         tracer.debug("called")
@@ -51,7 +51,7 @@ class TopicContinuum:
         for source in ts_config['sources']:
             input_handler = Factory.create(source[0], source[1])
             commits = input_handler.get_commits()
-            self.internal_read_commits(input_handler, commits)
+            self.__read_commits(input_handler, commits)
         assert False
 
     def internal_continuum_add(self, cid, topic_set_collection):
