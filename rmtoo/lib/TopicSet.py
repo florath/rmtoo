@@ -28,18 +28,29 @@ class TopicSet(Digraph, MemLogStore):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
-    def internal_init_requirements(self):
+    def __init__(self, config, input_handler):
+        '''Read in all the dependent topics and the requirements.'''
+        tracer.info("called")
+        self.config = config
+        self.input_handler = input_handler
+
+        # First: read in all the requirements.
+        print("HANDLE CACHING!")
+        self.complete_requirement_set = \
+            RequirementSet(config, input_handler)
+
+#### EVERYTHING BENEATH THIS IS DEPRECATED!!!
+
+    def DEPRECATED_internal_init_requirements(self):
         '''Read in all the requirements and store them
            for later use.'''
-        # First: read in all the requirements.
-        self.complete_requirement_set = RequirementSet(self.config)
         # Second: read in all the topics.
         self.read_topics(self.topic_dir, self.master_topic)
         # Third: restrict requirements to those which are 
         #    needed in the topic.
         self.requirement_set = self.restrict_requirements_set()
 
-    def __init__(self, config, name, config_prefix_str, req_input_dir):
+    def DEPRECATED___init__(self, config, name, config_prefix_str, req_input_dir):
         tracer.info("name [%s] config_prefix [%s] req_input_dir [%s]"
                     % (name, config_prefix_str, req_input_dir))
         Digraph.__init__(self)
@@ -60,14 +71,14 @@ class TopicSet(Digraph, MemLogStore):
         self.output_handlers = []
         self.init_output_handler()
 
-    def create_makefile_name(self, topicn):
+    def DEPRECATED_create_makefile_name(self, topicn):
         return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
 
-    def get_master(self):
+    def DEPRECATED_get_master(self):
         return self.get_named_node(self.master_topic)
 
     # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
+    def DEPRECATED_cmad(self, reqscont, ofile):
         # Because the variables must be defined before they can be
         # accessed, the topological sort is needed here.
         tsort = topological_sort(self)
@@ -86,7 +97,7 @@ class TopicSet(Digraph, MemLogStore):
     # Read in all the topics to decide whether the topic exists or not
     # - to differentiate between the non-existance of a topic vs a
     # topic which is not a children of the currently chosen topic.
-    def read_all_topic_names(self, tdir):
+    def DEPRECATED_read_all_topic_names(self, tdir):
         self.all_topic_names = set()
         for f in os.listdir(tdir):
             # Ignore Emacs Backup Files
@@ -97,7 +108,7 @@ class TopicSet(Digraph, MemLogStore):
                 continue
             self.all_topic_names.add(f[:-4])
 
-    def read_topics(self, tdir, initial_topic):
+    def DEPRECATED_read_topics(self, tdir, initial_topic):
         '''Read all topics from the given directory starting
            with the initial topic.'''
         tracer.debug("called: directory [%s] initial topic [%s]"
@@ -108,7 +119,7 @@ class TopicSet(Digraph, MemLogStore):
 
     # Resolve the 'Topic' tag of the requirement to the correct
     # topic. 
-    def internal_depict(self, reqset):
+    def DEPRECATED_internal_depict(self, reqset):
         # The named_node dictionary must exists before it is possible
         # to access it. 
         self.build_named_nodes()
@@ -120,7 +131,7 @@ class TopicSet(Digraph, MemLogStore):
                 assert(ref_topic in self.named_nodes)
                 self.named_nodes[ref_topic].add_req(req)
 
-    def reqs_limit(self, reqset):
+    def DEPRECATED_reqs_limit(self, reqset):
         # Get a list of all topic names.
         self.build_named_nodes()
         topic_name_list = self.named_nodes.keys()
@@ -182,7 +193,7 @@ class TopicSet(Digraph, MemLogStore):
 
         return r
 
-    def init_output_handler(self):
+    def DEPRECATED_init_output_handler(self):
         # It is possible for one topic to have different output methods.
         # Even each output method can be called multiple times.
         # The data structure used is:
@@ -195,6 +206,6 @@ class TopicSet(Digraph, MemLogStore):
                 self.output_handlers.append(
                     TopicSetOutputHandler(self.config, outmeth, param, self))
 
-    def output(self, rc):
+    def DEPRECATED_output(self, rc):
         for output_handler in self.output_handlers:
             output_handler.output(rc)

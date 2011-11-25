@@ -1,9 +1,4 @@
 {
-    "constraints": {
-        "search_dirs": [
-            "rmtoo/collection/constraints"
-        ]
-    }, 
     "global": {
         "modules": {
             "directories": [
@@ -40,23 +35,26 @@
 		    "git", {
 		        "start_vers": "v7", 
 			"end_vers": "v11", 
-			"requirements_dir": "doc/requirements",
-			"topics_dir": "doc/topics",
-			"topic_root_node": "ReqsDocument" }
+			"requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics" ],
+			"topic_root_node": "doc/topic/ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 		[
 		    "git", {
 		        "start_vers": "v13", 
 			"end_vers": "v17", 
-			"requirements_dir": "doc/requirements",
-			"topics_dir": "doc/topics",
-			"topic_root_node": "ReqsDocument" }
+			"requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics"] ,
+			"topic_root_node": "doc/topics/ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 	        [
 		    "filesystem", {
-		        "requirements_dir": "doc/requirements",
-			"topics_dir": "doc/topics",
-			"topic_root_node": "ReqsDocument" }
+		        "requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics" ],
+			"topic_root_node": "doc/topics/ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		] 
 	    ],
             "output": {

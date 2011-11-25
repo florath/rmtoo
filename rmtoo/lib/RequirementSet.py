@@ -30,7 +30,7 @@ class RequirementSet(Digraph, MemLogStore):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
-    def __init__(self, config):
+    def __init__(self, config, input_handler):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
@@ -38,6 +38,11 @@ class RequirementSet(Digraph, MemLogStore):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         self.config = config
+
+        self.internal_read_requirements(input_handler)
+
+    def internal_read_requirements(self, input_handler):
+        '''Reads in all the requirements from the input_handler.'''
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

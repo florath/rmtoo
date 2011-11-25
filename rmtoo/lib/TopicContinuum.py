@@ -33,22 +33,33 @@ class TopicContinuum:
         self.vcs_ids = []
         self.internal_read_topic_sets(ts_config)
 
+    def internal_read_commits(self, input_handler, commits):
+        '''Creates a TopicSet for each commit with the help of
+           the input_handler.'''
+        tracer.debug("called")
+        for commit in commits:
+            input_handler.set_commit(commit)
+            print("HOW TO HANDLE CACHEING?????? in the input_handler obj?")
+            print(dir(commit))
+            self.internal_continuum_add(
+                    commit.hexsha,
+                    TopicSet(self.config, input_handler))
+
     def internal_read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''
         tracer.debug("called")
         for source in ts_config['sources']:
             input_handler = Factory.create(source[0], source[1])
-            # TODO: Collect result
-            input_handler.read()
+            commits = input_handler.get_commits()
+            self.internal_read_commits(input_handler, commits)
         assert False
-        
-    ### EVERYTHING BENEATH IN DEPRECATED
 
-    def deprecared_internal_continuum_add(self, cid, topic_set_collection):
+    def internal_continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''
         self.vcs_ids.append(cid)
-        self.continuum[cid] = topic_set_collection
+        self.topic_sets[cid] = topic_set_collection
 
+    ### EVERYTHING BENEATH IN DEPRECATED
 
     def deprecared_setup_topic_sets(self, reqs):
         for k in self.config.get_value('topics').get_dict().keys():
