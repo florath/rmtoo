@@ -63,7 +63,7 @@
 
   The following sections assume, that you are using Linux.  Please
   refer to the appropriate Readme file for your operating system for
-  more information. 
+  more information if you do not use Linux.
 
 ** Dependencies
    To use rmtoo, other software packages must be installed.
@@ -109,7 +109,7 @@
    
 ** First Project
    Change to a directory where you want to create the new project.
-   $ cp -r /usr/share/doc/rmtoo/template_project MyNewProject
+   $ cp -r /usr/share/doc/rmtoo/examples/template_project MyNewProject
    $ cd MyNewProject
    $ source ./setenv.sh DEB
    $ make
