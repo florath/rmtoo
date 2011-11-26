@@ -1,0 +1,9 @@
+User visible changes
+--------------------
+
+Fixed / rewrote Readme.txt file: the old tutorial was broken.
+
+
+Internal Changes
+----------------
+
