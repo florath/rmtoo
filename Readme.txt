@@ -13,7 +13,6 @@
   This Readme gives a short overview over the available online
   documentation for rmtoo.
 
-
 * Content
 
   This file contains the following chapters:
@@ -67,7 +66,6 @@
   more information. 
 
 ** Dependencies
-
    To use rmtoo, other software packages must be installed.
 
    rmtoo is written in python.  At least version 2.6 of python is
@@ -198,6 +196,9 @@
 
 ** Readme-Windows.txt
    Hints for Windows users.
+
+** Readme-RmtooOnRmtoo.txt
+   Run rmtoo to get the documentation for rmtoo itself.
 
 ** Readme-GitPython.txt
    Some note about the (internal) use of GitPython.
