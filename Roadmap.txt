@@ -26,10 +26,12 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v21
+v22
 ===
 o Unify Interface filesystem and VCS
 o Add multiple versions history
+o If possible:
+  Add GUI for creating and modifying a configuration.
 
 o Clean up Git-History repeating (read also the topics from git)
 o Improve git history:
@@ -47,13 +49,13 @@ o Man page:
   + EfEU
 o Fix asserts from 'RequirementStatus.py'
 
-v22
+v23
 ===
 o Check Web-Site for user features / bugs
   - Fix (small) bugs
   - Add feature request requirements
 
-v23
+v24
 ===
 o Add to FAQ: max level of topic inclusion.
 o Add changes to presentation
