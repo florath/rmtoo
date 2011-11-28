@@ -159,6 +159,7 @@ class Git(Interface):
     def __get_vcs_id_tree(self, tree, dir_split):
         '''Checks if the directory is available.
            If so, the unique id is returned.'''
+        # TODO: Method too long: split up
         tracer.debug("called: directory [%s]" % dir_split)
         if len(dir_split) > 1:
             subtree = self.__get_subtree(tree, dir_split[0])
@@ -175,7 +176,6 @@ class Git(Interface):
             if subtree == None:
                 # TODO: Throw exception
                 assert False
-            # TODO: Cleanup
             bort = subtree.hexsha
         tracer.debug("found object id [%s]" % bort)
         return bort
@@ -187,7 +187,6 @@ class Git(Interface):
         for directory in self.__dirs[dir_type]:
             dir_split = directory.split("/")
             result.extend(self.__get_vcs_id_tree(commit.tree, dir_split))
-        assert False
         return result
 
     def UNUSED_get_file_names(self, commit, dir_type):
