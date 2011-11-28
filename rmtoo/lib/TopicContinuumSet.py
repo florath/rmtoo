@@ -40,7 +40,7 @@ class TopicContinuumSet(MemLogStore):
         # partially) constructed element is usable.
         self.m_is_usable = True
 
-        self.internal_init_continuum_set()
+        self.__init_continuum_set()
 
     def deprecated_internal_get_interval(self):
         '''Returns the configured interval [start, end].'''
@@ -116,7 +116,7 @@ class TopicContinuumSet(MemLogStore):
                 end_repo = "HEAD"
             self.internal_create_continuum_from_vcs(start_vers, end_repo)
 
-    def internal_init_continuum_set(self):
+    def __init_continuum_set(self):
         '''Initialize the continuum:
            Check the configuration for the appropriate interval parameters
            and read in the TopicSetCollections.'''

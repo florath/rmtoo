@@ -30,7 +30,7 @@ class RequirementSet(Digraph, MemLogStore):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
-    def __init__(self, config, input_handler):
+    def __init__(self, config, input_handler, commit):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
@@ -39,10 +39,21 @@ class RequirementSet(Digraph, MemLogStore):
         MemLogStore.__init__(self)
         self.config = config
 
-        self.__read_requirements(input_handler)
+        self.__read_requirements(input_handler, commit)
 
-    def __read_requirements(self, input_handler):
+    def __read_requirements(self, input_handler, commit):
         '''Reads in all the requirements from the input_handler.'''
+        req_map = {}
+
+        filenames = input_handler.get_file_names(commit, "requirements")
+        print("FILENAMES [%s]" % filenames)
+        assert False
+
+        for req_file in input_handler.get_fds(commit, "requirements"):
+            req = Requirement(req_file)
+            req_map[req.get_id()] = req
+
+        print("REQUIREMENTS: [%s]" % req_map)
         # TODO: Need: info about the directories to read.
         assert False
 

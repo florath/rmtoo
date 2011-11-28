@@ -28,16 +28,17 @@ class TopicSet(Digraph, MemLogStore):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
-    def __init__(self, config, input_handler):
+    def __init__(self, config, input_handler, commit):
         '''Read in all the dependent topics and the requirements.'''
         tracer.info("called")
         self.config = config
         self.input_handler = input_handler
+        self.commit = commit
 
         # First: read in all the requirements.
         print("HANDLE CACHING!")
         self.complete_requirement_set = \
-            RequirementSet(config, input_handler)
+            RequirementSet(config, input_handler, commit)
         assert False
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!

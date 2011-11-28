@@ -15,6 +15,7 @@
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
+from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 class TopicContinuum:
     '''A TopicContinuum holds different (historic) versions
@@ -31,21 +32,26 @@ class TopicContinuum:
         # To access the data, use some construct like:
         #   self.topic_sets[self.vcs_ids[n]]
         self.vcs_ids = []
-        self.internal_read_topic_sets(ts_config)
+        self.__topic_sets_cache = ObjectCache(TopicSet)
+        self.__read_topic_sets(ts_config)
 
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
            the input_handler.'''
         tracer.debug("called")
         for commit in commits:
-            input_handler.set_commit(commit)
-            print("HOW TO HANDLE CACHEING?????? in the input_handler obj?")
-            print(dir(commit))
-            self.internal_continuum_add(
+            topic_set_vcs_id = input_handler.get_vcs_id(commit, "topics")
+            topic_set = self.__topic_sets_cache.get(topic_set_vcs_id)
+            if topic_set == None:
+                tracer.debug("TopicSet with ID [%s] not in cache"
+                             % topic_set_vcs_id)
+                topic_set = TopicSet(self.config, input_handler, commit)
+                self.__topic_sets_cache.add(topic_set_vcs_id, topic_set)
+            self.__continuum_add(
                     commit.hexsha,
-                    TopicSet(self.config, input_handler))
+                    TopicSet(self.config, input_handler, commit))
 
-    def internal_read_topic_sets(self, ts_config):
+    def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''
         tracer.debug("called")
         for source in ts_config['sources']:
@@ -54,7 +60,7 @@ class TopicContinuum:
             self.__read_commits(input_handler, commits)
         assert False
 
-    def internal_continuum_add(self, cid, topic_set_collection):
+    def __continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''
         self.vcs_ids.append(cid)
         self.topic_sets[cid] = topic_set_collection

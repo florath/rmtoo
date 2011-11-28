@@ -17,7 +17,7 @@ import sys
 # local version must be used], the sys.path is scanned and when a
 # sp/rmtoo/contrib is found, this is included (prepended) to sys.path.
 # This can be removed once the git-pyhton is removed.
-# (Calling this durint the main does not help - because this might
+# (Calling this during the main does not help - because this might
 # already been loaded.) 
 # Note that this is a hack which will be removed when the API 
 # to the git-python is stable.
@@ -48,20 +48,20 @@ class Git(Interface):
     @staticmethod
     def __check_list_of_strings(name, tbc):
         '''Checks if the given variable is a list of strings.'''
-        if type(tbc)!=ListType:
+        if type(tbc) != ListType:
             raise RMTException(103, "Configuration error: [%s] configuration "
                                "must be a list" % name)
-            
-        if len(tbc)==0:
+
+        if len(tbc) == 0:
             raise RMTException(105, "Configuration error: [%s] configuration "
                                "must be a non empty list" % name)
-        
+
         for string in tbc:
             if type(string) not in [StringType, UnicodeType]:
                 raise RMTException(104, "Configuration error: [%s].[%s] "
-                                   " configuration must be a string" 
+                                   " configuration must be a string"
                                    % (name, string))
-            
+
     @staticmethod
     def __abs_path(directory):
         '''Convert the given directory path into an absolute path.'''
@@ -74,30 +74,30 @@ class Git(Interface):
            The absolute path is computed if the path is relative and
            then compared to the repository base directory.'''
         tracer.debug("called: directory [%s]" % directory)
-        if self.__repo_base_dir==None:
+        if self.__repo_base_dir == None:
             self.__setup_repo(directory)
         if not directory.startswith(self.__repo_base_dir):
             raise RMTException(28, "directory [%s] not in repository")
-        
+
     def __cut_off_repo_dir(self, directory):
         '''Cuts off the repository directory from the directory.'''
         # +1: cut off the '/' also.
         len_repo_base_dir = len(self.__repo_base_dir) + 1
         return directory[len_repo_base_dir:]
-        
+
     def __setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
         for dir_type in ["requirements", "topics", "constraints"]:
             dirs = map(self.__abs_path, cfg.get_value(dir_type + "_dirs"))
             self.__check_list_of_strings(dir_type, dirs)
-            
+
             new_directories = []
             for directory in dirs:
                 self.__check_if_dir_is_in_repo(directory)
                 new_directories.append(self.__cut_off_repo_dir(directory))
             self.__dirs[dir_type] = new_directories
-            
+
         for dir_type, directory in self.__dirs.iteritems():
             tracer.debug("[%s] directories [%s]" % (dir_type, directory))
 
@@ -126,13 +126,12 @@ class Git(Interface):
                      % (self.__start_vers, self.__end_vers,
                         self.__topic_root_node))
 
-        self.__current_commit = None
-
         # When the directory is not absolute, convert it to an
         # absolute path that it can be compared to the outcome of the
         # git.Repo. 
         self.__dirs = {}
         self.__repo_base_dir = None
+        self.__repo = None
         self.__setup_directories(cfg)
 
     def get_commits(self):
@@ -140,10 +139,64 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    def set_commit(self, commit):
-        '''For all upcomig read accesses the given commit
-           will be used.'''
-        self.current_commit = commit
+    def __get_subblob_id(self, tree, name):
+        '''Return the blob of the tree with the given name.
+           If name is not available, None is returned.'''
+        tracer.debug("called: name [%s]" % name)
+        for blob in tree.blobs:
+            if blob.name == name:
+                return blob.hexsha
+        return None
+
+    def __get_subtree(self, tree, name):
+        '''Return the subtree of the tree with the given name.
+           If the name is not available, None is returned.'''
+        for subtree in tree.trees:
+            if subtree.name == name:
+                return subtree
+        return None
+
+    def __get_vcs_id_tree(self, tree, dir_split):
+        '''Checks if the directory is available.
+           If so, the unique id is returned.'''
+        tracer.debug("called: directory [%s]" % dir_split)
+        if len(dir_split) > 1:
+            subtree = self.__get_subtree(tree, dir_split[0])
+            if subtree == None:
+                # TODO: Throw exception
+                assert False
+            return self.__get_vcs_id_tree(subtree, dir_split[1:])
+
+        bort = self.__get_subblob_id(tree, dir_split[0])
+        if bort == None:
+            tracer.debug("no blob with name [%s] found; trying tree" %
+                         dir_split[0])
+            subtree = self.__get_subtree(tree, dir_split[0])
+            if subtree == None:
+                # TODO: Throw exception
+                assert False
+            # TODO: Cleanup
+            bort = subtree.hexsha
+        tracer.debug("found object id [%s]" % bort)
+        return bort
+
+    def get_vcs_id(self, commit, dir_type):
+        '''Return the vcs id from the base dirs of the given dir_type.'''
+        tracer.debug("called: directory type [%s]" % dir_type)
+        result = []
+        for directory in self.__dirs[dir_type]:
+            dir_split = directory.split("/")
+            result.extend(self.__get_vcs_id_tree(commit.tree, dir_split))
+        assert False
+        return result
+
+    def UNUSED_get_file_names(self, commit, dir_type):
+        '''Return all filenames and unique IDs of the given commit and of the
+           given directory type.'''
+        result = {}
+        for directory in self.__dirs[dir_type]:
+            iresult = self.__get_file_names_from_tree(commit, directory,)
+        assert False
 
     def UNUSED_internal_read_file(self, path, blob, creator):
         '''Read file from given blob'''
