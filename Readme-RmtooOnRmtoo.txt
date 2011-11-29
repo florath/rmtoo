@@ -1,6 +1,6 @@
 
-Installation Manual
-===================
+RmtooOnRmtoo
+============
 
 There is no need to compile rmtoo.
 

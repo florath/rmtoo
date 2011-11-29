@@ -1,10 +1,12 @@
 gpl-3.0.txt
-Readme.txt
-Readme.Hacking
+Readme-GitPython.txt
+Readme-Hacking.txt
 Readme-OS-X.txt
+Readme-Overview.txt
+Readme-RmtooOnRmtoo.txt
+Readme.txt
 Readme-Windows.txt
 RequirementVsConstraint.txt
-Install.txt
 Roadmap.txt
 COPYING
 artifacts/req-graph1.png
