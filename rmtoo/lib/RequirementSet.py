@@ -47,7 +47,11 @@ class RequirementSet(Digraph, MemLogStore):
         req_map = {}
 
         filenames = input_handler.get_file_names(commit, "requirements")
-        print("FILENAMES [%s]" % filenames)
+
+        for filename in filenames:
+            vcs_id = input_handler.get_vcs_id(commit, filename)
+            # TODO: handle vcs_id
+
         assert False
 
         for req_file in input_handler.get_fds(commit, "requirements"):

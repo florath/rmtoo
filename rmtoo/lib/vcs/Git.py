@@ -139,15 +139,6 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    def UNUSED__get_subblob_id(self, tree, name):
-        '''Return the blob of the tree with the given name.
-           If name is not available, None is returned.'''
-        tracer.debug("called: name [%s]" % name)
-        for blob in tree.blobs:
-            if blob.name == name:
-                return blob.hexsha
-        return None
-
     def UNUSED__get_subtree(self, tree, name):
         '''Return the subtree of the tree with the given name.
            If the name is not available, None is returned.'''
@@ -180,15 +171,15 @@ class Git(Interface):
         tracer.debug("found object id [%s]" % bort)
         return bort
 
-    def get_vcs_id_with_type(self, commit, dir_type):
-        '''Return the vcs id from the base directories of the given dir_type.'''
-        tracer.debug("called: directory type [%s]" % dir_type)
-        result = []
-        for directory in self.__dirs[dir_type]:
-            dir_split = directory.split("/")
-            ltree = self.__get_tree(commit.tree, dir_split)
-            result.append(ltree.hexsha)
-        return result
+    def __get_blob_direct(self, tree, name):
+        '''Return the blob of the tree with the given name.
+           If name is not available, an exception is thrown.'''
+        tracer.debug("called: name [%s]" % name)
+        for blob in tree.blobs:
+            if blob.name == name:
+                return blob
+        raise RMTException(109, "blob entry [%s] not found in tree."
+                           % name)
 
     def __get_tree_direct(self, base_tree, directory):
         '''Return the tree of the given directory.
@@ -219,6 +210,26 @@ class Git(Interface):
         result = []
         for blob in ltree.blobs:
             result.append(os.path.join(directory, blob.name))
+        return result
+
+    def __get_vcs_id_filename_split(self, commit, filename_split):
+        '''Returns the vcs id of the given split filename.'''
+        ltree = self.__get_tree(commit.tree, filename_split[:-1])
+        return self.__get_blob_direct(ltree, filename_split[-1]).hexsha
+
+    def get_vcs_id(self, commit, filename):
+        '''Returns the vcs id of the given filename.'''
+        filename_split = filename.split("/")
+        return self.__get_vcs_id_filename_split(commit, filename_split)
+
+    def get_vcs_id_with_type(self, commit, dir_type):
+        '''Return the vcs id from the base directories of the given dir_type.'''
+        tracer.debug("called: directory type [%s]" % dir_type)
+        result = []
+        for directory in self.__dirs[dir_type]:
+            dir_split = directory.split("/")
+            ltree = self.__get_tree(commit.tree, dir_split)
+            result.append(ltree.hexsha)
         return result
 
     def get_file_names(self, commit, dir_type):
