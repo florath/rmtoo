@@ -139,7 +139,7 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    def __get_subblob_id(self, tree, name):
+    def UNUSED__get_subblob_id(self, tree, name):
         '''Return the blob of the tree with the given name.
            If name is not available, None is returned.'''
         tracer.debug("called: name [%s]" % name)
@@ -148,7 +148,7 @@ class Git(Interface):
                 return blob.hexsha
         return None
 
-    def __get_subtree(self, tree, name):
+    def UNUSED__get_subtree(self, tree, name):
         '''Return the subtree of the tree with the given name.
            If the name is not available, None is returned.'''
         for subtree in tree.trees:
@@ -156,7 +156,7 @@ class Git(Interface):
                 return subtree
         return None
 
-    def __get_vcs_id_tree(self, tree, dir_split):
+    def UNUSED__get_vcs_id_tree(self, tree, dir_split):
         '''Checks if the directory is available.
            If so, the unique id is returned.'''
         # TODO: Method too long: split up
@@ -181,16 +181,13 @@ class Git(Interface):
         return bort
 
     def get_vcs_id_with_type(self, commit, dir_type):
-        '''Return the vcs id from the base dirs of the given dir_type.'''
-        
-        # TODO: Refactor this using __get_tree
-        assert False
-        
+        '''Return the vcs id from the base directories of the given dir_type.'''
         tracer.debug("called: directory type [%s]" % dir_type)
         result = []
         for directory in self.__dirs[dir_type]:
             dir_split = directory.split("/")
-            result.append(self.__get_vcs_id_tree(commit.tree, dir_split))
+            ltree = self.__get_tree(commit.tree, dir_split)
+            result.append(ltree.hexsha)
         return result
 
     def __get_tree_direct(self, base_tree, directory):
@@ -207,7 +204,7 @@ class Git(Interface):
         '''Returns the tree starting from the base_tree walking down
            the path of dir_split.'''
         tree = self.__get_tree_direct(base_tree, dir_split[0])
-        if len(dir_split)>1:
+        if len(dir_split) > 1:
             return self.__get_tree(tree, dir_split[1:])
         return tree
 
@@ -215,10 +212,10 @@ class Git(Interface):
         '''Returns all the file names (i.e. the blob names) 
            recursive starting with the given directory.'''
         tracer.debug("called: directory [%s]" % directory)
-        
+
         dir_split = directory.split("/")
         ltree = self.__get_tree(tree, dir_split)
-                
+
         result = []
         for blob in ltree.blobs:
             result.append(os.path.join(directory, blob.name))
