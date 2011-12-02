@@ -186,7 +186,7 @@ class Git(Interface):
         result = []
         for directory in self.__dirs[dir_type]:
             dir_split = directory.split("/")
-            result.extend(self.__get_vcs_id_tree(commit.tree, dir_split))
+            result.append(self.__get_vcs_id_tree(commit.tree, dir_split))
         return result
 
     def UNUSED_get_file_names(self, commit, dir_type):

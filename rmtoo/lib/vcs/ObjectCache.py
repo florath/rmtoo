@@ -11,6 +11,7 @@
 '''
 
 from types import ListType
+from rmtoo.lib.logging.EventLogging import tracer
 
 class ObjectCache:
 
@@ -22,9 +23,11 @@ class ObjectCache:
     @staticmethod
     def __create_hashable(oid):
         '''If the oid is a list, the oid is converted into a string.'''
+        tracer.debug("called: oid [%s]" % oid)
         if type(oid) == ListType:
             print("LIST TYPE")
             if len(oid) == 1:
+                print("LIST TYPE LEN 1")
                 return oid[0]
             return '-'.join(oid)
         return oid
@@ -33,6 +36,7 @@ class ObjectCache:
         '''Tries to receive an object with the given id.
            If found, the object is returned, if not found
            None is returned.'''
+        tracer.debug("called: oid [%s]" % oid)
         loid = self.__create_hashable(oid)
         print("LOID %s" % loid)
         if self.__objects.has_key(loid):

@@ -41,6 +41,7 @@ class TopicContinuum:
         tracer.debug("called")
         for commit in commits:
             topic_set_vcs_id = input_handler.get_vcs_id(commit, "topics")
+            tracer.debug("next oid [%s]" % topic_set_vcs_id)
             topic_set = self.__topic_sets_cache.get(topic_set_vcs_id)
             if topic_set == None:
                 tracer.debug("TopicSet with ID [%s] not in cache"
