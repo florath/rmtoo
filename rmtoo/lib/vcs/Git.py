@@ -180,8 +180,12 @@ class Git(Interface):
         tracer.debug("found object id [%s]" % bort)
         return bort
 
-    def get_vcs_id(self, commit, dir_type):
+    def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the vcs id from the base dirs of the given dir_type.'''
+        
+        # TODO: Refactor this using __get_tree
+        assert False
+        
         tracer.debug("called: directory type [%s]" % dir_type)
         result = []
         for directory in self.__dirs[dir_type]:
@@ -189,13 +193,45 @@ class Git(Interface):
             result.append(self.__get_vcs_id_tree(commit.tree, dir_split))
         return result
 
-    def UNUSED_get_file_names(self, commit, dir_type):
-        '''Return all filenames and unique IDs of the given commit and of the
+    def __get_tree_direct(self, base_tree, directory):
+        '''Return the tree of the given directory.
+           This does not walk down the directory structure.
+           It just checks the current hierarchy.'''
+        for tree in base_tree.trees:
+            if tree.name == directory:
+                return tree
+        raise RMTException(108, "directory entry [%s] not found in tree."
+                           % directory)
+
+    def __get_tree(self, base_tree, dir_split):
+        '''Returns the tree starting from the base_tree walking down
+           the path of dir_split.'''
+        tree = self.__get_tree_direct(base_tree, dir_split[0])
+        if len(dir_split)>1:
+            return self.__get_tree(tree, dir_split[1:])
+        return tree
+
+    def __get_file_names_from_tree(self, tree, directory):
+        '''Returns all the file names (i.e. the blob names) 
+           recursive starting with the given directory.'''
+        tracer.debug("called: directory [%s]" % directory)
+        
+        dir_split = directory.split("/")
+        ltree = self.__get_tree(tree, dir_split)
+                
+        result = []
+        for blob in ltree.blobs:
+            result.append(os.path.join(directory, blob.name))
+        return result
+
+    def get_file_names(self, commit, dir_type):
+        '''Return all filenames of the given commit and of the
            given directory type.'''
-        result = {}
+        result = []
         for directory in self.__dirs[dir_type]:
-            iresult = self.__get_file_names_from_tree(commit, directory,)
-        assert False
+            result.extend(self.__get_file_names_from_tree(
+                                    commit.tree, directory))
+        return result
 
     def UNUSED_internal_read_file(self, path, blob, creator):
         '''Read file from given blob'''

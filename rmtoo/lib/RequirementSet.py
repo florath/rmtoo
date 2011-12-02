@@ -30,14 +30,15 @@ class RequirementSet(Digraph, MemLogStore):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
-    def __init__(self, config, input_handler, commit):
+    def __init__(self, config, input_handler, commit, object_cache):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
         tracer.info("called")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
-        self.config = config
+        self.__config = config
+        self.__object_cache = object_cache
 
         self.__read_requirements(input_handler, commit)
 

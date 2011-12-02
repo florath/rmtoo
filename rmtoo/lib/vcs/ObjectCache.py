@@ -12,12 +12,15 @@
 
 from types import ListType
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.RMTException import RMTException
 
 class ObjectCache:
+    '''Stores objects from different types under a unique id.
+       Each class has a separate store: it is possible to 
+       have the same id for multiple objects of different types.'''
 
-    def __init__(self, object_type):
+    def __init__(self):
         '''Creates a cache for the given object_type.'''
-        self.__object_type = object_type
         self.__objects = {}
 
     @staticmethod
@@ -25,20 +28,34 @@ class ObjectCache:
         '''If the oid is a list, the oid is converted into a string.'''
         tracer.debug("called: oid [%s]" % oid)
         if type(oid) == ListType:
-            print("LIST TYPE")
             if len(oid) == 1:
-                print("LIST TYPE LEN 1")
                 return oid[0]
             return '-'.join(oid)
         return oid
 
-    def get(self, oid):
+    def get(self, object_type, oid):
         '''Tries to receive an object with the given id.
            If found, the object is returned, if not found
            None is returned.'''
         tracer.debug("called: oid [%s]" % oid)
         loid = self.__create_hashable(oid)
-        print("LOID %s" % loid)
-        if self.__objects.has_key(loid):
-            return self.__objects[loid]
+        
+        if self.__objects.has_key(object_type) \
+            and self.__objects[object_type].has_key(loid):
+            return self.__objects[object_type][loid]
         return None
+
+    def add(self, oid, obj):
+        '''Adds the given object to the cache using the given object id.
+           Checks of the object is of the correct type and if
+           the object is already in the cache.'''
+        tracer.debug("adding object with oid [%s]" % oid)
+        
+        object_type = type(object)
+        if not self.__objects.has_key(object_type):
+            self.__objects[object_type] = {} 
+        
+        if oid in self.__objects[object_type]:
+            raise RMTException(106, "object with oid [%s] already in cache."
+                               % oid)
+        self.__objects[object_type][oid] = obj

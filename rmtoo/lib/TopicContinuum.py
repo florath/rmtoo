@@ -21,7 +21,7 @@ class TopicContinuum:
     '''A TopicContinuum holds different (historic) versions
        of TopicSets.'''
 
-    def __init__(self, ts_name, config, ts_config):
+    def __init__(self, ts_name, config, ts_config, object_cache):
         tracer.info("called: name [%s]" % ts_name)
         self.config = config
         self.topic_sets = {}
@@ -32,7 +32,7 @@ class TopicContinuum:
         # To access the data, use some construct like:
         #   self.topic_sets[self.vcs_ids[n]]
         self.vcs_ids = []
-        self.__topic_sets_cache = ObjectCache(TopicSet)
+        self.__object_cache = object_cache
         self.__read_topic_sets(ts_config)
 
     def __read_commits(self, input_handler, commits):
@@ -40,14 +40,16 @@ class TopicContinuum:
            the input_handler.'''
         tracer.debug("called")
         for commit in commits:
-            topic_set_vcs_id = input_handler.get_vcs_id(commit, "topics")
-            tracer.debug("next oid [%s]" % topic_set_vcs_id)
-            topic_set = self.__topic_sets_cache.get(topic_set_vcs_id)
+            topic_set_vcs_id = \
+                input_handler.get_vcs_id_with_type(commit, "topics")
+            tracer.debug("read topics with oid [%s]" % topic_set_vcs_id)
+            topic_set = self.__object_cache.get(TopicSet, topic_set_vcs_id)
             if topic_set == None:
                 tracer.debug("TopicSet with ID [%s] not in cache"
                              % topic_set_vcs_id)
-                topic_set = TopicSet(self.config, input_handler, commit)
-                self.__topic_sets_cache.add(topic_set_vcs_id, topic_set)
+                topic_set = TopicSet(self.config, input_handler, commit,
+                                     self.__object_cache)
+                self.__object_cache.add(topic_set_vcs_id, topic_set)
             self.__continuum_add(
                     commit.hexsha,
                     TopicSet(self.config, input_handler, commit))
@@ -67,6 +69,12 @@ class TopicContinuum:
         self.topic_sets[cid] = topic_set_collection
 
     ### EVERYTHING BENEATH IN DEPRECATED
+
+    def continuum_latest(self):
+        '''Return the latest version of the continuum.'''
+        # The latest version is entry 0
+        assert len(self.__vcs_ids) > 0
+        return self.__continuum[self.__vcs_ids[0]]
 
     def deprecared_setup_topic_sets(self, reqs):
         for k in self.config.get_value('topics').get_dict().keys():

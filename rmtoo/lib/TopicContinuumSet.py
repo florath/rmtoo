@@ -17,6 +17,7 @@ from rmtoo.lib.VersionControlSystem import VersionControlSystem
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 class TopicContinuumSet(MemLogStore):
     '''Class holding all the available TopicSetCollections
@@ -26,21 +27,51 @@ class TopicContinuumSet(MemLogStore):
         '''Sets up a TopicContinuum for use.'''
         tracer.info("called")
         MemLogStore.__init__(self)
-        self.mods = mods
-        self.config = config
+        self.__mods = mods
+        self.__config = config
 
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
-        self.continuum = {}
+        self.__continuum = {}
         # The VCS repository.
         # If this is None - there is no repository available.
-        self.deprecated_repo = None
+        self.__deprecated_repo = None
         # Because the construction / evaluation should continue even in
         # error cases, a flag is available to check if the (possible only
         # partially) constructed element is usable.
-        self.m_is_usable = True
+        self.__is_usable = True
+        # Store objects with IDs also in the cache - so that they can be reused.
+        self.__object_cache = ObjectCache()
 
         self.__init_continuum_set()
+
+    def __init_continuum_set(self):
+        '''Initialize the continuum:
+           Check the configuration for the appropriate interval parameters
+           and read in the TopicSetCollections.'''
+        tracer.debug("called")
+        # Step through all the available topic sets.
+        for ts_name, ts_config in \
+            self.__config.get_value("topics").get_dict().iteritems():
+            self.__continuum[ts_name] = \
+                TopicContinuum(ts_name, self.__config, ts_config,
+                               self.__object_cache)
+
+        assert False
+
+        sources = self.config()
+
+
+        versint = self.internal_get_interval()
+        self.internal_check_repo(versint)
+        self.internal_read_continuum(versint)
+
+    def is_usable(self):
+        '''Returns True iff the object is really usable, i.e.
+           if there was no problem during construction.'''
+        return self.__is_usable
+
+# Everything below in DEPRECATED
 
     def deprecated_internal_get_interval(self):
         '''Returns the configured interval [start, end].'''
@@ -116,33 +147,3 @@ class TopicContinuumSet(MemLogStore):
                 end_repo = "HEAD"
             self.internal_create_continuum_from_vcs(start_vers, end_repo)
 
-    def __init_continuum_set(self):
-        '''Initialize the continuum:
-           Check the configuration for the appropriate interval parameters
-           and read in the TopicSetCollections.'''
-        tracer.debug("called")
-        # Step through all the available topic sets.
-        for ts_name, ts_config in \
-            self.config.get_value("topics").get_dict().iteritems():
-            self.continuum[ts_name] = \
-                TopicContinuum(ts_name, self.config, ts_config)
-
-        assert False
-
-        sources = self.config()
-
-
-        versint = self.internal_get_interval()
-        self.internal_check_repo(versint)
-        self.internal_read_continuum(versint)
-
-    def continuum_latest(self):
-        '''Return the latest version of the continuum.'''
-        # The latest version is entry 0
-        assert len(self.vcs_ids) > 0
-        return self.continuum[self.vcs_ids[0]]
-
-    def is_usable(self):
-        '''Returns True iff the object is really usable, i.e.
-           if there was no problem during construction.'''
-        return self.m_is_usable
