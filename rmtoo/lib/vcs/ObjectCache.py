@@ -14,12 +14,6 @@ from types import ListType
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.RMTException import RMTException
 
-# TODO: Statistics!
-# self.__stats_cnt_objects
-# self.__stats_cnt_object_types
-# self.__stats_cnt_access
-# self.__stats_cnt_found
-
 class ObjectCache:
     '''Stores objects from different types under a unique id.
        Each class has a separate store: it is possible to 
@@ -33,7 +27,7 @@ class ObjectCache:
         self.__stats_cnt_get = 0
         self.__stats_cnt_get_found = 0
 
-    def __del__(self):
+    def log_stats(self):
         '''Prints out the usage statistics.'''
         tracer.info("usage statistics: objects [%d] object types [%d] "
                     "called get [%d] called get (found) [%d]"
@@ -54,7 +48,7 @@ class ObjectCache:
         '''Tries to receive an object with the given id.
            If found, the object is returned, if not found
            None is returned.'''
-        tracer.debug("called: oid [%s]" % oid)
+        tracer.debug("called: object type [%s] oid [%s]" % (object_type, oid))
         self.__stats_cnt_get += 1
 
         if self.__objects.has_key(object_type) \
@@ -67,7 +61,8 @@ class ObjectCache:
         '''Adds the given object to the cache using the given object id.
            Checks of the object is of the correct type and if
            the object is already in the cache.'''
-        tracer.debug("adding object with oid [%s]" % oid)
+        tracer.debug("adding object with object type [%s] oid [%s]"
+                     % (object_type, oid))
 
         if not self.__objects.has_key(object_type):
             self.__stats_cnt_object_types += 1

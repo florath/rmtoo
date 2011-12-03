@@ -60,7 +60,7 @@ class RequirementSet(Digraph, MemLogStore):
             # Handle caching.
             vcs_id = input_handler.get_vcs_id(commit, filename)
             rid = filename[:-4]
-            req = self.__object_cache.get(Requirement, vcs_id)
+            req = self.__object_cache.get("Requirement", vcs_id)
 
             if req != None:
                 # Double check the id
@@ -70,9 +70,8 @@ class RequirementSet(Digraph, MemLogStore):
             else:
                 fd = input_handler.get_fd(commit, filename)
                 req = Requirement(fd, rid, self, self.__input_mods, self.__config)
-                if req.ok():
-                    # Add the requirement to the cache.
-                    self.__object_cache.add(vcs_id, Requirement, req)
+                # Add the requirement to the cache.
+                self.__object_cache.add(vcs_id, "Requirement", req)
 
             if req.ok():
                 # Store in the map, so that it is easy to access the

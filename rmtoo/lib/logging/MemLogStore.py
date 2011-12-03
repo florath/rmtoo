@@ -92,8 +92,10 @@ class MemLogStore(object):
 
     # For comparison (also mostly used in test-cases) the eq operator
     # must be defined.
-    def __eq__(self, other):
-        return self.logs == other.logs
+    # TODO: DO NOT USE THIS, BECAUSE THEN ALL CHECKS FOR NONE
+    #   DOES NOT WORK
+#    def __eq__(self, other):
+#        return self.logs == other.logs
 
     def mls(self):
         return self

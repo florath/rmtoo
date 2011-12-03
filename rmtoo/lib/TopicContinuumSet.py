@@ -45,6 +45,8 @@ class TopicContinuumSet(MemLogStore):
 
         self.__init_continuum_set()
 
+        self.__object_cache.log_stats()
+
     def __init_continuum_set(self):
         '''Initialize the continuum:
            Check the configuration for the appropriate interval parameters

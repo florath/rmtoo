@@ -44,13 +44,15 @@ class TopicContinuum:
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
             tracer.debug("read topics with oid [%s]" % topic_set_vcs_id)
-            topic_set = self.__object_cache.get(TopicSet, topic_set_vcs_id)
+            topic_set = self.__object_cache.get("TopicSet", topic_set_vcs_id)
+
             if topic_set == None:
                 tracer.debug("TopicSet with ID [%s] not in cache"
                              % topic_set_vcs_id)
                 topic_set = TopicSet(self.config, input_handler, commit,
                                      self.__object_cache, self.__input_mods)
-                self.__object_cache.add(topic_set_vcs_id, TopicSet, topic_set)
+                self.__object_cache.add(topic_set_vcs_id,
+                                        "TopicSet", topic_set)
             self.__continuum_add(topic_set_vcs_id, topic_set)
 
     def __read_topic_sets(self, ts_config):
