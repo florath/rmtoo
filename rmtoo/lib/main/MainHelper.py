@@ -9,7 +9,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.Modules import Modules
+from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.configuration.DefaultValues import DefaultValues
 from rmtoo.lib.logging.MemLogStore import MemLogStore
@@ -35,6 +35,6 @@ class MainHelper:
             # TODO Handle multiple module directories.
             assert(False)
 
-        mods = Modules(moddirs[0], config)
+        mods = InputModules(moddirs[0], config)
         log_store.write_log(mstderr)
         return config, mods

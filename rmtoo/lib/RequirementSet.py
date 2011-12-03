@@ -30,7 +30,7 @@ class RequirementSet(Digraph, MemLogStore):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
-    def __init__(self, config, input_handler, commit, object_cache):
+    def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
@@ -39,19 +39,23 @@ class RequirementSet(Digraph, MemLogStore):
         MemLogStore.__init__(self)
         self.__config = config
         self.__object_cache = object_cache
+        self.__input_mods = input_mods
+
+        # TODO: is this the structure that is needed?
+        self.__requirements = {}
 
         self.__read_requirements(input_handler, commit)
 
     def __read_requirements(self, input_handler, commit):
         '''Reads in all the requirements from the input_handler.'''
-        req_map = {}
-
+        tracer.debug("called")
         filenames = input_handler.get_file_names(commit, "requirements")
 
         for filename in filenames:
             # Check for correct filename
             m = re.match("^.*\.req$", filename)
             if m == None:
+                tracer.info("skipping file [%s]" % filename)
                 continue
             # Handle caching.
             vcs_id = input_handler.get_vcs_id(commit, filename)
@@ -65,34 +69,22 @@ class RequirementSet(Digraph, MemLogStore):
                     assert False
             else:
                 fd = input_handler.get_fd(commit, filename)
-                req = Requirement(fd, rid, self, self.mods, self.config)
+                req = Requirement(fd, rid, self, self.__input_mods, self.__config)
+                if req.ok():
+                    # Add the requirement to the cache.
+                    self.__object_cache.add(vcs_id, Requirement, req)
 
             if req.ok():
                 # Store in the map, so that it is easy to access the
                 # node by id.
-                self.reqs[req.id] = req
+                self.__requirements[req.get_id()] = req
                 # Also store it in the digraph's node list for simple
                 # access to the digraph algorithms.
-                self.nodes.append(req)
+                # TODO: self.nodes.append(req)
             else:
                 self.error(45, "could not be parsed", req.id)
                 everythings_fine = False
 
-
-            assert False
-
-            vcs_id = input_handler.get_vcs_id(commit, filename)
-            # TODO: handle vcs_id
-
-        assert False
-
-        for req_file in input_handler.get_fds(commit, "requirements"):
-            req = Requirement(req_file)
-            req_map[req.get_id()] = req
-
-        print("REQUIREMENTS: [%s]" % req_map)
-        # TODO: Need: info about the directories to read.
-        assert False
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

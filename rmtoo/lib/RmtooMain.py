@@ -49,11 +49,11 @@ def parse_cmd_line_opts(args):
 
     return options
 
-def execute_cmds(config, mods, mstdout, mstderr):
+def execute_cmds(config, input_mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     try:
-        topic_continuum_set = TopicContinuumSet(mods, config)
+        topic_continuum_set = TopicContinuumSet(input_mods, config)
         latest_topicsc = topic_continuum_set.continuum_latest()
 
         # TODO: Remove:
@@ -103,8 +103,8 @@ def execute_cmds(config, mods, mstdout, mstderr):
 
 def main_impl(args, mstdout, mstderr):
 #    init_logging()
-    config, mods = MainHelper.main_setup(args, mstdout, mstderr)
-    return execute_cmds(config, mods, mstdout, mstderr)
+    config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
+    return execute_cmds(config, input_mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     '''The main entry function

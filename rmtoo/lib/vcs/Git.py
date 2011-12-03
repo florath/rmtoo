@@ -33,7 +33,7 @@ from types import ListType, StringType, UnicodeType
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
-from rmtoo.lib.vcs.VCSException import VCSException
+from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.RMTException import RMTException
 
@@ -236,7 +236,7 @@ class Git(Interface):
             dir_split = directory.split("/")
             ltree = self.__get_tree(commit.tree, dir_split)
             result.append(ltree.hexsha)
-        return result
+        return ObjectCache.create_hashable(result)
 
     def get_file_names(self, commit, dir_type):
         '''Return all filenames of the given commit and of the

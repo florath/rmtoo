@@ -41,7 +41,7 @@ class ObjectCache:
                        self.__stats_cnt_get, self.__stats_cnt_get_found))
 
     @staticmethod
-    def __create_hashable(oid):
+    def create_hashable(oid):
         '''If the oid is a list, the oid is converted into a string.'''
         tracer.debug("called: oid [%s]" % oid)
         if type(oid) == ListType:
@@ -56,26 +56,25 @@ class ObjectCache:
            None is returned.'''
         tracer.debug("called: oid [%s]" % oid)
         self.__stats_cnt_get += 1
-        loid = self.__create_hashable(oid)
 
         if self.__objects.has_key(object_type) \
-            and self.__objects[object_type].has_key(loid):
+            and self.__objects[object_type].has_key(oid):
             self.__stats_cnt_get_found += 1
-            return self.__objects[object_type][loid]
+            return self.__objects[object_type][oid]
         return None
 
-    def add(self, oid, obj):
+    def add(self, oid, object_type, obj):
         '''Adds the given object to the cache using the given object id.
            Checks of the object is of the correct type and if
            the object is already in the cache.'''
         tracer.debug("adding object with oid [%s]" % oid)
 
-        object_type = type(object)
         if not self.__objects.has_key(object_type):
             self.__stats_cnt_object_types += 1
             self.__objects[object_type] = {}
 
         if oid in self.__objects[object_type]:
+            assert False
             raise RMTException(106, "object with oid [%s] already in cache."
                                % oid)
         self.__stats_cnt_objects += 1

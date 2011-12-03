@@ -1,14 +1,16 @@
-#
-# Requirement Management Toolset
-#  class Modules
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  InputModules
+   This handles all the different input modules.
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
-import re
 import copy
 
 from rmtoo.lib.digraph.StronglyConnectedComponents \
@@ -20,20 +22,20 @@ from rmtoo.lib.digraph.TopologicalSort \
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 
-#
-# The modules class is also a digraph for the reqdeps modules which
-# are the modules which can depend on each other.
-# Therefore all the nodes (i.e. modules) must also be stored in the
-# Digraph.nodes list.
-#
-class Modules(Digraph):
+# TODO: refactor: e.g. privatize
+
+class InputModules(Digraph):
+    '''The modules class is also a digraph for the reqdeps modules which 
+       are the modules which can depend on each other.
+       Therefore all the nodes (i.e. modules) must also be stored in the
+       Digraph.nodes list.'''
 
     @staticmethod
     def split_directory(directory):
-        # Work with directory components: this is used for directory
-        # access as well as for module name handling.
-        # The local directory must be handled in a special way
-        # (because there is no way to ".".join("."))
+        '''Work with directory components: this is used for directory
+           access as well as for module name handling.
+           The local directory must be handled in a special way
+           (because there is no way to ".".join("."))'''
         if directory == ".":
             dir_components = []
         else:
@@ -45,15 +47,16 @@ class Modules(Digraph):
                 dir_components[0] = "/"
         return dir_components
 
-    # Read in the modules directory
     def __init__(self, directory, config,
-                 add_dir_components=["rmtoo", "modules"],
-                 mod_components=["rmtoo", "modules"]):
+                 add_dir_components=["rmtoo", "inputs"],
+                 mod_components=["rmtoo", "inputs"]):
+        '''Read in the modules directory.'''
         Digraph.__init__(self)
         self.config = config
 
         # The different types of tags
         self.tagtypes = {}
+        # TODO: add symbolic constants for this
         self.tagtypes["reqtag"] = {}
         self.tagtypes["reqdeps"] = {}
         self.tagtypes["ctstag"] = {}
@@ -65,6 +68,7 @@ class Modules(Digraph):
         self.load(dir_components, mod_components)
 
     def load(self, dir_components, mod_components):
+        '''Load the modules.'''
         for filename in sorted(os.listdir(os.path.join(*dir_components))):
             if not filename.endswith(".py"):
                 continue
@@ -110,9 +114,9 @@ class Modules(Digraph):
         # And if this succeeds, do the topological sort.
         self.topological_sort()
 
-    # Precondition: the depends_on must be set.
-    # The method connect all the nodes based on this value.
     def connect_nodes(self):
+        '''Precondition: the depends_on must be set.
+           The method connect all the nodes based on this value.'''
         for mod_name, mod in self.tagtypes["reqdeps"].items():
             for n in mod.depends_on:
                 # Connect in both directions
@@ -122,9 +126,9 @@ class Modules(Digraph):
                                        % (mod_name, n))
                 self.create_edge(mod, self.tagtypes["reqdeps"][n])
 
-    # This does check if there is a directed circle (e.g. an strongly
-    # connected component) in the modules graph.
     def check_for_circles(self):
+        '''This does check if there is a directed circle (e.g. an strongly
+           connected component) in the modules graph.'''
         scc = strongly_connected_components(self)
         if check_for_strongly_connected_components(scc):
             raise RMTException(26, "There is a strongly connected "
@@ -132,5 +136,5 @@ class Modules(Digraph):
                                % scc)
 
     def topological_sort(self):
-        # Do a topoligical sort on the reqdeps modules.
+        '''Do a topoligical sort on the reqdeps modules.'''
         self.reqdeps_sorted = topological_sort(self)

@@ -28,13 +28,14 @@ class TopicSet(Digraph, MemLogStore):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
-    def __init__(self, config, input_handler, commit, object_cache):
+    def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Read in all the dependent topics and the requirements.'''
         tracer.info("called")
         self.__config = config
         self.__input_handler = input_handler
         self.__commit = commit
         self.__object_cache = object_cache
+        self.__input_mods = input_mods
 
         # First: read in all the requirements.
         self.__complete_requirement_set = None
@@ -47,11 +48,12 @@ class TopicSet(Digraph, MemLogStore):
             self.__input_handler.get_vcs_id_with_type(
                             self.__commit, "requirements")
         req_set = self.__object_cache.get(RequirementSet, req_set_vcs_id)
-        if req_set==None:
-            req_set = RequirementSet(self.__config, self.__input_handler, 
-                                     self.__commit, self.__object_cache)
+        if req_set == None:
+            req_set = RequirementSet(self.__config, self.__input_handler,
+                                     self.__commit, self.__object_cache,
+                                     self.__input_mods)
+            self.__object_cache.add(req_set_vcs_id, RequirementSet, req_set)
         self.__complete_requirement_set = req_set
-        assert False
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

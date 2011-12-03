@@ -21,7 +21,7 @@ class TopicContinuum:
     '''A TopicContinuum holds different (historic) versions
        of TopicSets.'''
 
-    def __init__(self, ts_name, config, ts_config, object_cache):
+    def __init__(self, ts_name, config, ts_config, object_cache, input_mods):
         tracer.info("called: name [%s]" % ts_name)
         self.config = config
         self.topic_sets = {}
@@ -33,6 +33,7 @@ class TopicContinuum:
         #   self.topic_sets[self.vcs_ids[n]]
         self.vcs_ids = []
         self.__object_cache = object_cache
+        self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
 
     def __read_commits(self, input_handler, commits):
@@ -48,11 +49,9 @@ class TopicContinuum:
                 tracer.debug("TopicSet with ID [%s] not in cache"
                              % topic_set_vcs_id)
                 topic_set = TopicSet(self.config, input_handler, commit,
-                                     self.__object_cache)
-                self.__object_cache.add(topic_set_vcs_id, topic_set)
-            self.__continuum_add(
-                    commit.hexsha,
-                    TopicSet(self.config, input_handler, commit))
+                                     self.__object_cache, self.__input_mods)
+                self.__object_cache.add(topic_set_vcs_id, TopicSet, topic_set)
+            self.__continuum_add(topic_set_vcs_id, topic_set)
 
     def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''

@@ -23,11 +23,11 @@ class TopicContinuumSet(MemLogStore):
     '''Class holding all the available TopicSetCollections
        of the past and possible the current.'''
 
-    def __init__(self, mods, config):
+    def __init__(self, input_mods, config):
         '''Sets up a TopicContinuum for use.'''
         tracer.info("called")
         MemLogStore.__init__(self)
-        self.__mods = mods
+        self.__input_mods = input_mods
         self.__config = config
 
         # This dictionary holds all the TopicSetCollections
@@ -55,7 +55,7 @@ class TopicContinuumSet(MemLogStore):
             self.__config.get_value("topics").get_dict().iteritems():
             self.__continuum[ts_name] = \
                 TopicContinuum(ts_name, self.__config, ts_config,
-                               self.__object_cache)
+                               self.__object_cache, self.__input_mods)
 
         assert False
 
