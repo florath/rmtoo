@@ -49,6 +49,38 @@ class RequirementSet(Digraph, MemLogStore):
         filenames = input_handler.get_file_names(commit, "requirements")
 
         for filename in filenames:
+            # Check for correct filename
+            m = re.match("^.*\.req$", filename)
+            if m == None:
+                continue
+            # Handle caching.
+            vcs_id = input_handler.get_vcs_id(commit, filename)
+            rid = filename[:-4]
+            req = self.__object_cache.get(Requirement, vcs_id)
+
+            if req != None:
+                # Double check the id
+                if req.get_id() != rid:
+                    # TODO: exception
+                    assert False
+            else:
+                fd = input_handler.get_fd(commit, filename)
+                req = Requirement(fd, rid, self, self.mods, self.config)
+
+            if req.ok():
+                # Store in the map, so that it is easy to access the
+                # node by id.
+                self.reqs[req.id] = req
+                # Also store it in the digraph's node list for simple
+                # access to the digraph algorithms.
+                self.nodes.append(req)
+            else:
+                self.error(45, "could not be parsed", req.id)
+                everythings_fine = False
+
+
+            assert False
+
             vcs_id = input_handler.get_vcs_id(commit, filename)
             # TODO: handle vcs_id
 

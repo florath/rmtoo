@@ -37,6 +37,9 @@ from rmtoo.lib.vcs.VCSException import VCSException
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.RMTException import RMTException
 
+# TODO: clean up things!!!
+# use common functions.
+
 class Git(Interface):
     '''Handles a git repository.'''
 
@@ -212,19 +215,22 @@ class Git(Interface):
             result.append(os.path.join(directory, blob.name))
         return result
 
-    def __get_vcs_id_filename_split(self, commit, filename_split):
-        '''Returns the vcs id of the given split filename.'''
+    def __get_blob_with_filename_split(self, commit, filename_split):
+        '''Returns the blob for the given filename.'''
         ltree = self.__get_tree(commit.tree, filename_split[:-1])
-        return self.__get_blob_direct(ltree, filename_split[-1]).hexsha
+        return self.__get_blob_direct(ltree, filename_split[-1])
 
     def get_vcs_id(self, commit, filename):
         '''Returns the vcs id of the given filename.'''
+        tracer.debug("called: commit [%s] filename [%s]"
+                     % (commit, filename))
         filename_split = filename.split("/")
-        return self.__get_vcs_id_filename_split(commit, filename_split)
+        return self.__get_blob_with_filename_split(commit, filename_split).hexsha
 
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the vcs id from the base directories of the given dir_type.'''
-        tracer.debug("called: directory type [%s]" % dir_type)
+        tracer.debug("called: commit [%s] directory type [%s]"
+                     % (commit, dir_type))
         result = []
         for directory in self.__dirs[dir_type]:
             dir_split = directory.split("/")
@@ -235,11 +241,21 @@ class Git(Interface):
     def get_file_names(self, commit, dir_type):
         '''Return all filenames of the given commit and of the
            given directory type.'''
+        tracer.debug("called: commit [%s] directory type [%s]"
+                     % (commit, dir_type))
         result = []
         for directory in self.__dirs[dir_type]:
             result.extend(self.__get_file_names_from_tree(
                                     commit.tree, directory))
         return result
+
+    def get_fd(self, commit, filename):
+        '''Return the file descriptor to read in filename from
+           the given commit.'''
+        tracer.debug("called: commit [%s] filename [%s]"
+                     % (commit, filename))
+        filename_split = filename.split("/")
+        return self.__get_blob_with_filename_split(commit, filename_split).data_stream
 
     def UNUSED_internal_read_file(self, path, blob, creator):
         '''Read file from given blob'''
