@@ -51,6 +51,8 @@ class RequirementSet(Digraph, MemLogStore):
         tracer.debug("called")
         filenames = input_handler.get_file_names(commit, "requirements")
 
+        print("FILENAMES [%s]" % filenames)
+
         for filename in filenames:
             # Check for correct filename
             m = re.match("^.*\.req$", filename)
@@ -60,6 +62,8 @@ class RequirementSet(Digraph, MemLogStore):
             # Handle caching.
             vcs_id = input_handler.get_vcs_id(commit, filename)
             rid = filename[:-4]
+            print("RID [%s]" % rid)
+            assert False
             req = self.__object_cache.get("Requirement", vcs_id)
 
             if req != None:

@@ -28,7 +28,6 @@ for sp in sys.path:
         break
 import git
 
-import re
 from types import ListType, StringType, UnicodeType
 
 from rmtoo.lib.configuration.Cfg import Cfg
@@ -37,19 +36,11 @@ from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.RMTException import RMTException
 
-# TODO: clean up things!!!
-# use common functions.
-
 # TODO: use sub-directories for requirements and topics
 #   (adapt the RID)
 
 class Git(Interface):
     '''Handles a git repository.'''
-
-    # TODO: Needed?
-    class Commit:
-        '''Encapsulates a git commit.'''
-        pass
 
     @staticmethod
     def __check_list_of_strings(name, tbc):
@@ -145,38 +136,6 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    def UNUSED__get_subtree(self, tree, name):
-        '''Return the subtree of the tree with the given name.
-           If the name is not available, None is returned.'''
-        for subtree in tree.trees:
-            if subtree.name == name:
-                return subtree
-        return None
-
-    def UNUSED__get_vcs_id_tree(self, tree, dir_split):
-        '''Checks if the directory is available.
-           If so, the unique id is returned.'''
-        # TODO: Method too long: split up
-        tracer.debug("called: directory [%s]" % dir_split)
-        if len(dir_split) > 1:
-            subtree = self.__get_subtree(tree, dir_split[0])
-            if subtree == None:
-                # TODO: Throw exception
-                assert False
-            return self.__get_vcs_id_tree(subtree, dir_split[1:])
-
-        bort = self.__get_subblob_id(tree, dir_split[0])
-        if bort == None:
-            tracer.debug("no blob with name [%s] found; trying tree" %
-                         dir_split[0])
-            subtree = self.__get_subtree(tree, dir_split[0])
-            if subtree == None:
-                # TODO: Throw exception
-                assert False
-            bort = subtree.hexsha
-        tracer.debug("found object id [%s]" % bort)
-        return bort
-
     def __get_blob_direct(self, tree, name):
         '''Return the blob of the tree with the given name.
            If name is not available, an exception is thrown.'''
@@ -248,6 +207,10 @@ class Git(Interface):
                      % (commit, dir_type))
         result = []
         for directory in self.__dirs[dir_type]:
+            # TODO: Do something like return a list of pairs
+            #  1. element: pathname
+            #  2. element: rid (pathname without the __dirs[dir_type] part
+            assert False
             result.extend(self.__get_file_names_from_tree(
                                     commit.tree, directory))
         return result
@@ -258,57 +221,8 @@ class Git(Interface):
         tracer.debug("called: commit [%s] filename [%s]"
                      % (commit, filename))
         filename_split = filename.split("/")
-        return self.__get_blob_with_filename_split(commit, filename_split).data_stream
-
-    def UNUSED_internal_read_file(self, path, blob, creator):
-        '''Read file from given blob'''
-        tracer.debug("called: path [%s] name [%s]" % (path, blob.name))
-        if not creator.check_filename(blob.name):
-            tracer.debug("ignoring file [%s]" % blob.name)
-            return
-        creator.create(blob)
-
-        assert False
-
-    def UNUSED_internal_read_tree(self, path, tree, creator):
-        '''Read the tree.  The tree has the name 'path'.'''
-        tracer.debug("path [%s]" % path)
-        for entry in tree.blobs:
-            self.internal_read_file(path, entry, creator)
-        for entry in tree.trees:
-            lpath = path
-            lpath.append(entry.name)
-            self.internal_read_tree(lpath, entry, creator)
-
-    def UNUSED_internal_read_commit(self, commit):
-        '''Reads in one commit - which the given index - from the git.'''
-        tracer.debug("read commit [%s]" % commit)
-
-        class TopicCreator:
-
-            @staticmethod
-            def check_filename(filename):
-                tracer.debug("filename [%s]" % filename)
-                return re.match("^.*\.tic$", filename) != None
-
-            @staticmethod
-            def create(blob):
-                tracer.debug("create [%s]" % blob.name)
-                assert False
-
-        self.internal_read_tree([], commit.tree[self.topics_subdir],
-                                TopicCreator)
-
-#        try:
-#            tree = commit.tree[self.topics_subdir]
-#            print("TREE: [%s]" % tree)
-#            print("TREE: [%s]" % dir(tree))
-#            print("TREE: [%s]" % tree.list_traverse())
-#        except KeyError, ke:
-#            # This means, that at this point of time the directory was
-#            # not available.
-#            assert False
-#            
+        return self.__get_blob_with_filename_split(
+                        commit, filename_split).data_stream
 
     def read(self):
         '''Read in the TopicSets from git.'''
