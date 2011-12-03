@@ -40,6 +40,9 @@ from rmtoo.lib.RMTException import RMTException
 # TODO: clean up things!!!
 # use common functions.
 
+# TODO: use sub-directories for requirements and topics
+#   (adapt the RID)
+
 class Git(Interface):
     '''Handles a git repository.'''
 
@@ -191,8 +194,8 @@ class Git(Interface):
         for tree in base_tree.trees:
             if tree.name == directory:
                 return tree
-        raise RMTException(108, "directory entry [%s] not found in tree."
-                           % directory)
+        raise RMTException(108, "directory entry [%s] not found in tree "
+                           "[%s]." % (directory, base_tree.name))
 
     def __get_tree(self, base_tree, dir_split):
         '''Returns the tree starting from the base_tree walking down

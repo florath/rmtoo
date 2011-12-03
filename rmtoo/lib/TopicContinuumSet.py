@@ -42,9 +42,7 @@ class TopicContinuumSet(MemLogStore):
         self.__is_usable = True
         # Store objects with IDs also in the cache - so that they can be reused.
         self.__object_cache = ObjectCache()
-
         self.__init_continuum_set()
-
         self.__object_cache.log_stats()
 
     def __init_continuum_set(self):

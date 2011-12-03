@@ -54,6 +54,7 @@ class TopicContinuum:
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
             self.__continuum_add(topic_set_vcs_id, topic_set)
+        self.__object_cache.log_stats()
 
     def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''

@@ -33,7 +33,7 @@
 	    "sources": [
 		[
 		    "git", {
-		        "start_vers": "v7", 
+		        "start_vers": "v9", 
 			"end_vers": "v11", 
 			"requirements_dirs": [ "doc/requirements" ],
 			"topics_dirs": [ "doc/topics" ],
