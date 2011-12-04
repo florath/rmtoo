@@ -33,9 +33,9 @@ class Requirement(Digraph.Node, BaseRMObject):
     rt_design_decision = 3
     rt_requirement = 4
 
-    def __init__(self, fd, rid, mls, mods, config):
+    def __init__(self, content, rid, mls, mods, config):
         Digraph.Node.__init__(self, rid)
-        BaseRMObject.__init__(self, "reqtag", fd, rid, mls, mods,
+        BaseRMObject.__init__(self, "reqtag", content, rid, mls, mods,
                               config, "requirements")
 
 ### Looks that these functions are not used at all

@@ -59,9 +59,7 @@ class RequirementSet(Digraph, MemLogStore):
                 continue
             # Handle caching.
             vcs_id = fileinfo.get_vcs_id()
-            rid = fileinfo.get_filename_id_part()[:-4]
-            print("RID [%s]" % rid)
-            assert False
+            rid = fileinfo.get_filename_sub_part()[:-4]
             req = self.__object_cache.get("Requirement", vcs_id)
 
             if req != None:
@@ -70,8 +68,8 @@ class RequirementSet(Digraph, MemLogStore):
                     # TODO: exception
                     assert False
             else:
-                fd = input_handler.get_fd(commit, filename)
-                req = Requirement(fd, rid, self, self.__input_mods, self.__config)
+                file_content = fileinfo.get_content()
+                req = Requirement(file_content, rid, self, self.__input_mods, self.__config)
                 # Add the requirement to the cache.
                 self.__object_cache.add(vcs_id, "Requirement", req)
 

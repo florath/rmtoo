@@ -30,7 +30,6 @@ import git
 
 import copy
 
-from types import ListType, StringType, UnicodeType
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
@@ -38,28 +37,8 @@ from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.RMTException import RMTException
 
-# TODO: use sub-directories for requirements and topics
-#   (adapt the RID)
-
 class Git(Interface):
     '''Handles a git repository.'''
-
-    @staticmethod
-    def __check_list_of_strings(name, tbc):
-        '''Checks if the given variable is a list of strings.'''
-        if type(tbc) != ListType:
-            raise RMTException(103, "Configuration error: [%s] configuration "
-                               "must be a list" % name)
-
-        if len(tbc) == 0:
-            raise RMTException(105, "Configuration error: [%s] configuration "
-                               "must be a non empty list" % name)
-
-        for string in tbc:
-            if type(string) not in [StringType, UnicodeType]:
-                raise RMTException(104, "Configuration error: [%s].[%s] "
-                                   " configuration must be a string"
-                                   % (name, string))
 
     @staticmethod
     def __abs_path(directory):
@@ -89,7 +68,7 @@ class Git(Interface):
         tracer.debug("called")
         for dir_type in ["requirements", "topics", "constraints"]:
             dirs = map(self.__abs_path, cfg.get_value(dir_type + "_dirs"))
-            self.__check_list_of_strings(dir_type, dirs)
+            self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
             for directory in dirs:
@@ -138,7 +117,7 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    class FileInfo:
+    class FileInfo(Interface.FileInfo):
         '''Holds information about a file in a repository.
            Typical information are filename, vcs_id.'''
 
@@ -162,15 +141,18 @@ class Git(Interface):
             '''Returns the filename.'''
             return self.__filename
 
-    def UNUSED__get_blob_direct(self, tree, name):
-        '''Return the blob of the tree with the given name.
-           If name is not available, an exception is thrown.'''
-        tracer.debug("called: name [%s]" % name)
-        for blob in tree.blobs:
-            if blob.name == name:
-                return blob
-        raise RMTException(109, "blob entry [%s] not found in tree."
-                           % name)
+        def get_vcs_id(self):
+            '''Returns the vcs id of this file.'''
+            return self.__blob.hexsha
+
+        def get_filename_sub_part(self):
+            '''Return the part of the filename which is beneath the 
+               base directory.'''
+            return os.path.join(self.__sub_dirname, self.__blob.name)
+
+        def get_content(self):
+            '''Returns the file content.'''
+            return self.__blob.data_stream.read()
 
     def __get_tree_direct(self, base_tree, directory):
         '''Return the tree of the given directory.
@@ -211,18 +193,6 @@ class Git(Interface):
         ltree = self.__get_tree(tree, base_dir_split)
         return self.__get_file_infos_from_tree_rec(ltree, base_dir_split, [])
 
-    def UNUSED__get_blob_with_filename_split(self, commit, filename_split):
-        '''Returns the blob for the given filename.'''
-        ltree = self.__get_tree(commit.tree, filename_split[:-1])
-        return self.__get_blob_direct(ltree, filename_split[-1])
-
-    def UNUSED_get_vcs_id(self, commit, filename):
-        '''Returns the vcs id of the given filename.'''
-        tracer.debug("called: commit [%s] filename [%s]"
-                     % (commit, filename))
-        filename_split = filename.split("/")
-        return self.__get_blob_with_filename_split(commit, filename_split).hexsha
-
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the vcs id from the base directories of the given dir_type.'''
         tracer.debug("called: commit [%s] directory type [%s]"
@@ -245,22 +215,3 @@ class Git(Interface):
                                     commit.tree, directory))
         return result
 
-    def UNUSED_get_fd(self, commit, filename):
-        '''Return the file descriptor to read in filename from
-           the given commit.'''
-        tracer.debug("called: commit [%s] filename [%s]"
-                     % (commit, filename))
-        filename_split = filename.split("/")
-        return self.__get_blob_with_filename_split(
-                        commit, filename_split).data_stream
-
-    def read(self):
-        '''Read in the TopicSets from git.'''
-        assert False
-        # Do the whole history.
-        for commit in self.repo.iter_commits(
-                        self.start_vers + ".." + self.end_vers):
-            self.internal_read_commit(commit)
-
-
-        assert False

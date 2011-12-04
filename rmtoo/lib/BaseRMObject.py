@@ -44,10 +44,10 @@ class BaseRMObject:
 
         self.state = self.er_fine
 
-    def __init__(self, tbhtags, fd, rid, mls, mods, config, type_str):
+    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str):
         self.internal_init(tbhtags, rid, mls, mods, config, type_str)
-        if fd != None:
-            self.input(fd)
+        if content != None:
+            self.input(content)
 
     def ok(self):
         return self.state == self.er_fine
@@ -68,11 +68,11 @@ class BaseRMObject:
     def set_value(self, key, value):
         self.values[key] = value
 
-    def input(self, fd):
+    def input(self, content):
         # Read it in from the file (Syntactic input)
         txtio = TxtIOConfig(self.config, self.type_str)
 
-        self.record = TxtRecord.from_fd(fd, self.id, txtio)
+        self.record = TxtRecord.from_string(content, self.id, txtio)
         brmo = self.record.get_dict()
         # This 'brmo' is always valid - if there is a problem, an exception 
         # is raised.
