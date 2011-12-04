@@ -49,19 +49,17 @@ class RequirementSet(Digraph, MemLogStore):
     def __read_requirements(self, input_handler, commit):
         '''Reads in all the requirements from the input_handler.'''
         tracer.debug("called")
-        filenames = input_handler.get_file_names(commit, "requirements")
+        fileinfos = input_handler.get_file_infos(commit, "requirements")
 
-        print("FILENAMES [%s]" % filenames)
-
-        for filename in filenames:
+        for fileinfo in fileinfos:
             # Check for correct filename
-            m = re.match("^.*\.req$", filename)
+            m = re.match("^.*\.req$", fileinfo.get_filename())
             if m == None:
-                tracer.info("skipping file [%s]" % filename)
+                tracer.info("skipping file [%s]" % fileinfo.get_filename())
                 continue
             # Handle caching.
-            vcs_id = input_handler.get_vcs_id(commit, filename)
-            rid = filename[:-4]
+            vcs_id = fileinfo.get_vcs_id()
+            rid = fileinfo.get_filename_id_part()[:-4]
             print("RID [%s]" % rid)
             assert False
             req = self.__object_cache.get("Requirement", vcs_id)

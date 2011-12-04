@@ -28,6 +28,8 @@ for sp in sys.path:
         break
 import git
 
+import copy
+
 from types import ListType, StringType, UnicodeType
 
 from rmtoo.lib.configuration.Cfg import Cfg
@@ -136,7 +138,31 @@ class Git(Interface):
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 
-    def __get_blob_direct(self, tree, name):
+    class FileInfo:
+        '''Holds information about a file in a repository.
+           Typical information are filename, vcs_id.'''
+
+        def __init__(self, base_dir, sub_dir, blob):
+            self.__base_dir = base_dir
+            self.__blob = blob
+            self.__sub_dir = sub_dir
+
+            self.__base_dirname = os.path.join(*self.__base_dir)
+            self.__sub_dirname = ""
+            if len(self.__sub_dir) > 0:
+                self.__sub_dirname = os.path.join(*self.__sub_dir)
+            tracer.debug("base [%s] sub [%s] name [%s]" %
+                         (self.__base_dirname, self.__sub_dirname,
+                          self.__blob.name))
+            self.__filename = os.path.join(
+                            self.__base_dirname, self.__sub_dirname,
+                            self.__blob.name)
+
+        def get_filename(self):
+            '''Returns the filename.'''
+            return self.__filename
+
+    def UNUSED__get_blob_direct(self, tree, name):
         '''Return the blob of the tree with the given name.
            If name is not available, an exception is thrown.'''
         tracer.debug("called: name [%s]" % name)
@@ -164,25 +190,33 @@ class Git(Interface):
             return self.__get_tree(tree, dir_split[1:])
         return tree
 
-    def __get_file_names_from_tree(self, tree, directory):
-        '''Returns all the file names (i.e. the blob names) 
-           recursive starting with the given directory.'''
-        tracer.debug("called: directory [%s]" % directory)
-
-        dir_split = directory.split("/")
-        ltree = self.__get_tree(tree, dir_split)
-
+    def __get_file_infos_from_tree_rec(self, tree, base_dir, sub_dir):
+        '''Returns recursively all file infos.'''
+        tracer.info("called: base [%s] sub [%s]" % (base_dir, sub_dir))
         result = []
-        for blob in ltree.blobs:
-            result.append(os.path.join(directory, blob.name))
+        for blob in tree.blobs:
+            result.append(Git.FileInfo(base_dir, sub_dir, blob))
+        for stree in tree.trees:
+            sub_sub_dir = copy.deepcopy(sub_dir)
+            sub_sub_dir.append(stree.name)
+            result.extend(self.__get_file_infos_from_tree_rec(
+                            stree, base_dir, sub_sub_dir))
         return result
 
-    def __get_blob_with_filename_split(self, commit, filename_split):
+    def __get_file_infos_from_tree(self, tree, base_dir):
+        '''Returns all the file infos recursive starting with 
+           the given directory.'''
+        tracer.info("called: base [%s]" % base_dir)
+        base_dir_split = base_dir.split("/")
+        ltree = self.__get_tree(tree, base_dir_split)
+        return self.__get_file_infos_from_tree_rec(ltree, base_dir_split, [])
+
+    def UNUSED__get_blob_with_filename_split(self, commit, filename_split):
         '''Returns the blob for the given filename.'''
         ltree = self.__get_tree(commit.tree, filename_split[:-1])
         return self.__get_blob_direct(ltree, filename_split[-1])
 
-    def get_vcs_id(self, commit, filename):
+    def UNUSED_get_vcs_id(self, commit, filename):
         '''Returns the vcs id of the given filename.'''
         tracer.debug("called: commit [%s] filename [%s]"
                      % (commit, filename))
@@ -200,22 +234,18 @@ class Git(Interface):
             result.append(ltree.hexsha)
         return ObjectCache.create_hashable(result)
 
-    def get_file_names(self, commit, dir_type):
-        '''Return all filenames of the given commit and of the
+    def get_file_infos(self, commit, dir_type):
+        '''Return all fileinfos of the given commit and of the
            given directory type.'''
         tracer.debug("called: commit [%s] directory type [%s]"
                      % (commit, dir_type))
         result = []
         for directory in self.__dirs[dir_type]:
-            # TODO: Do something like return a list of pairs
-            #  1. element: pathname
-            #  2. element: rid (pathname without the __dirs[dir_type] part
-            assert False
-            result.extend(self.__get_file_names_from_tree(
+            result.extend(self.__get_file_infos_from_tree(
                                     commit.tree, directory))
         return result
 
-    def get_fd(self, commit, filename):
+    def UNUSED_get_fd(self, commit, filename):
         '''Return the file descriptor to read in filename from
            the given commit.'''
         tracer.debug("called: commit [%s] filename [%s]"
