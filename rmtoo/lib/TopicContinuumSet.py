@@ -35,9 +35,6 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
         self.__continuum = {}
-        # The VCS repository.
-        # If this is None - there is no repository available.
-        self.__deprecated_repo = None
         # Store objects with IDs also in the cache - so that they can be reused.
         self.__object_cache = ObjectCache()
         self.__init_continuum_set()

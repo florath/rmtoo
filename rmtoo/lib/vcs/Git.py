@@ -216,3 +216,15 @@ class Git(Interface):
                                     commit.tree, directory))
         return result
 
+    def get_topic_base_fileinfo(self, commit):
+        '''Return the base filename for the topics.'''
+        assert False
+        for directory in self.__dirs["topics"]:
+            blob = self.__get_blob(commit, directory, self.__topic_root_node):
+            if blob != None:
+                return os.path.join(directory, blob.name)
+        raise RMTException(111, "topic base file not found")
+
+    # TODO: needed
+    def get_file_info(self, commit, filename):
+        assert False

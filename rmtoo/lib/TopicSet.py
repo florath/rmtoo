@@ -44,6 +44,11 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         # First: read in all the requirements.
         self.__complete_requirement_set = None
         self.__read_requirement_set()
+        # Second: read in all the topics.
+        self.__read_topics()
+        # Third: restrict requirements to those which are 
+        #    needed in the topic.
+        self.__requirement_set = self.restrict_requirements_set()
 
     def __read_requirement_set(self):
         '''Reads in the requirement set.
@@ -61,16 +66,25 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
             self._adapt_usablility(req_set)
         self.__complete_requirement_set = req_set
 
+    def __read_topics(self):
+        '''Read in the topics for this topic set.
+           Also topics are handled by the object cache.
+           Note that the algorithm has a basic difference to the one
+           used to read in the requirements.
+           This one known the base topic and therefore all dependent 
+           sub-topics - the algorithm reading in the requirements
+           just takes all the available files.'''
+        tracer.debug("called")
+
+        topic_base = self.__input_handler.get_topic_base_fileinfo()
+        tracer.debug("topic base [%s]" % topic_base)
+        assert False
+
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 
     def DEPRECATED_internal_init_requirements(self):
         '''Read in all the requirements and store them
            for later use.'''
-        # Second: read in all the topics.
-        self.read_topics(self.topic_dir, self.master_topic)
-        # Third: restrict requirements to those which are 
-        #    needed in the topic.
-        self.requirement_set = self.restrict_requirements_set()
 
     def DEPRECATED___init__(self, config, name, config_prefix_str, req_input_dir):
         tracer.info("name [%s] config_prefix [%s] req_input_dir [%s]"
