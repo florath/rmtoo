@@ -54,7 +54,9 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     # are correct.
     try:
         topic_continuum_set = TopicContinuumSet(input_mods, config)
-        latest_topicsc = topic_continuum_set.continuum_latest()
+
+        # The problem: there is no 'latest' one: it is a set...
+#        latest_topicsc = topic_continuum_set.continuum_latest()
 
         # TODO: Remove:
 #        rc = ReqsContinuum(mods, config)
@@ -62,6 +64,15 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
                       % rmte)
+        return False
+
+    # Print out all logs (from all kinds of objects)
+    topic_continuum_set.write_log(mstderr)
+    # If there is a problem with the last requirement set included in
+    # the requirements continuum and stop processing. (Note the logs
+    # were already written out).
+    if not topic_continuum_set.is_usable():
+        mstderr.write("+++ ERROR: topic continuum set is not usable.")
         return False
 
     # When only the dependencies are needed, output them to the given
@@ -77,14 +88,6 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
         latest_topicsc.create_makefile_dependencies(ofile)
         ofile.close()
         return True
-
-    # Print out all logs (from all kinds of objects)
-    topic_continuum.write_log(mstderr)
-    # If there is a problem with the last requirement set included in
-    # the requirements continuum and stop processing. (Note the logs
-    # were already written out).
-    if not topic_continuum.is_usable():
-        return False
 
     # The requirements are syntactically correct now: therefore it is
     # possible to do some analytics on them.
