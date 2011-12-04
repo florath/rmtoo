@@ -9,10 +9,14 @@
  For licensing details see COPYING
 '''
 
+import os
+import stat
+
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
+from rmtoo.lib.RMTException import RMTException
 
 class FileSystem(Interface):
     '''Implementation of the input interface for files in the file system.
@@ -59,30 +63,59 @@ class FileSystem(Interface):
            Information are filename, vcs_id and a method to
            access the file's content.'''
 
+        def __init__(self, base_dir, sub_dir):
+            '''Creates a file system file info object.'''
+            self.__base_dir = base_dir
+            self.__sub_dir = sub_dir
+            self.__filename = os.path.join(self.__base_dir, self.__sub_dir)
+
         def get_filename(self):
             '''Returns the filename.'''
-            assert False
+            return self.__filename
 
         def get_vcs_id(self):
-            '''Returns the vcs id of this file.'''
-            assert False
+            '''Returns the vcs id of this file.
+               For this filesystem implementation this is the same as the
+               filename.'''
+            return self.__filename
 
         def get_filename_sub_part(self):
             '''Return the part of the filename which is beneath the 
                base directory.'''
-            assert False
+            return self.__sub_dir
 
         def get_content(self):
             '''Returns the file content.'''
-            assert False
+            fd = file(self.__filename, "r")
+            content = fd.read()
+            fd.close()
+            return content
+
+    def __get_file_infos_from_dir_rec(self, base_dir, sub_dir):
+        '''Recursively collect all file infos from given base directory.'''
+        tracer.debug("called: base [%s] sub [%s]" % (base_dir, sub_dir))
+        directory = os.path.join(base_dir, sub_dir)
+        result = []
+        for dentry in os.listdir(directory):
+            pathname = os.path.join(directory, dentry)
+            mode = os.stat(pathname).st_mode
+            if stat.S_ISDIR(mode):
+                # It's a directory, recurse into it
+                result.extend(self.__get_file_infos_from_dir_rec(
+                            base_dir, os.path.join(sub_dir, dentry)))
+            elif stat.S_ISREG(mode):
+                # It's a file, call the callback function
+                sub_filename = os.path.join(sub_dir, dentry)
+                result.append(FileSystem.FileInfo(base_dir, sub_filename))
+            else:
+                raise RMTException(110, "Invalid directory entry type for [%s]"
+                                   % os.path.join(pathname, dentry))
+        return result
 
     def __get_file_infos_from_dir(self, directory):
         '''Return all the fileinfos from the given directory.'''
-        assert False
-        os.listdir(path)
-        os.stat(path + sub)
-        if stat.is_file() - - - -
-        if stat.is_dir()...
+        tracer.debug("called: directory [%s]" % directory)
+        return self.__get_file_infos_from_dir_rec(directory, "")
 
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
