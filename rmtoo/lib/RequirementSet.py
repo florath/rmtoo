@@ -25,8 +25,9 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.UsableFlag import UsableFlag
 
-class RequirementSet(Digraph, MemLogStore):
+class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
@@ -37,6 +38,7 @@ class RequirementSet(Digraph, MemLogStore):
         tracer.info("called")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
+        UsableFlag.__init__(self)
         self.__config = config
         self.__object_cache = object_cache
         self.__input_mods = input_mods
@@ -73,7 +75,9 @@ class RequirementSet(Digraph, MemLogStore):
                 # Add the requirement to the cache.
                 self.__object_cache.add(vcs_id, "Requirement", req)
 
-            if req.ok():
+            self._adapt_usablility(req)
+
+            if req.is_usable():
                 # Store in the map, so that it is easy to access the
                 # node by id.
                 self.__requirements[req.get_id()] = req
@@ -82,8 +86,6 @@ class RequirementSet(Digraph, MemLogStore):
                 # TODO: self.nodes.append(req)
             else:
                 self.error(45, "could not be parsed", req.id)
-                everythings_fine = False
-
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

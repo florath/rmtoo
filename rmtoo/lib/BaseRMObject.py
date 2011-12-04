@@ -15,13 +15,9 @@
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.UsableFlag import UsableFlag
 
-class BaseRMObject:
-
-    # Error Status of Requirement
-    # (i.e. is the requirment usable?)
-    er_fine = 0
-    er_error = 1
+class BaseRMObject(UsableFlag):
 
     def internal_init(self, tbhtags, rid, mls, mods, config, type_str):
         # This is the name of the tags which will be handled by the
@@ -42,15 +38,11 @@ class BaseRMObject:
         # The analytic modules store the results in this map:
         self.analytics = {}
 
-        self.state = self.er_fine
-
     def __init__(self, tbhtags, content, rid, mls, mods, config, type_str):
+        UsableFlag.__init__(self)
         self.internal_init(tbhtags, rid, mls, mods, config, type_str)
         if content != None:
             self.input(content)
-
-    def ok(self):
-        return self.state == self.er_fine
 
     def get_id(self):
         return self.id
@@ -103,7 +95,7 @@ class BaseRMObject:
                 if key in self.values:
                     self.mls.error(54, "tag '%s' already defined" %
                           (key), self.id)
-                    self.state = self.er_error
+                    self._set_not_usable()
                     # Also continue to get possible further error
                     # messages.
                 self.values[key] = value
@@ -114,6 +106,6 @@ class BaseRMObject:
                 self.mls.error(41, "semantic error occured in "
                                "module '%s'" % modkey, self.id)
                 #print("+++ root cause is: '%s'" % rmte)
-                self.state = self.er_error
+                self._set_not_usable()
                 # Continue (do not return immeditely) to get also
                 # possible other errors.

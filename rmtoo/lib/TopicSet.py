@@ -23,14 +23,18 @@ from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.UsableFlag import UsableFlag
 
-class TopicSet(Digraph, MemLogStore):
+class TopicSet(Digraph, MemLogStore, UsableFlag):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
     def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Read in all the dependent topics and the requirements.'''
         tracer.info("called")
+        Digraph.__init__(self)
+        MemLogStore.__init__(self)
+        UsableFlag.__init__(self)
         self.__config = config
         self.__input_handler = input_handler
         self.__commit = commit
@@ -54,6 +58,7 @@ class TopicSet(Digraph, MemLogStore):
                                      self.__input_mods)
             self.__object_cache.add(req_set_vcs_id,
                                     "RequirementSet", req_set)
+            self._adapt_usablility(req_set)
         self.__complete_requirement_set = req_set
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!

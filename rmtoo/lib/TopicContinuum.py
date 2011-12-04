@@ -13,15 +13,17 @@
 '''
 
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
-class TopicContinuum:
+class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
        of TopicSets.'''
 
     def __init__(self, ts_name, config, ts_config, object_cache, input_mods):
+        UsableFlag.__init__(self)
         tracer.info("called: name [%s]" % ts_name)
         self.config = config
         self.topic_sets = {}
@@ -53,6 +55,7 @@ class TopicContinuum:
                                      self.__object_cache, self.__input_mods)
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
+                self._adapt_usablility(topic_set)
             self.__continuum_add(topic_set_vcs_id, topic_set)
         # TODO: Long term: maybe remove this.
         self.__object_cache.log_stats()
@@ -64,7 +67,6 @@ class TopicContinuum:
             input_handler = Factory.create(source[0], source[1])
             commits = input_handler.get_commits()
             self.__read_commits(input_handler, commits)
-        assert False
 
     def __continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''
