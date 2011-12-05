@@ -58,6 +58,10 @@ class Interface:
             '''Returns the file content.'''
             assert False
 
+        @abc.abstractmethod
+        def __str__(self):
+            '''Returns the string representation.'''
+            assert False
     @abc.abstractmethod
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the

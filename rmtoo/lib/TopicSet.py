@@ -79,6 +79,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         topic_base = self.__input_handler.get_topic_base_fileinfo(self.__commit)
         tracer.debug("topic base [%s]" % topic_base)
         assert False
+        topic = Topic()
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

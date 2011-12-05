@@ -131,12 +131,16 @@ class Git(Interface):
             self.__sub_dirname = ""
             if len(self.__sub_dir) > 0:
                 self.__sub_dirname = os.path.join(*self.__sub_dir)
-            tracer.debug("base [%s] sub [%s] name [%s]" %
-                         (self.__base_dirname, self.__sub_dirname,
-                          self.__blob.name))
+            tracer.debug(self)
             self.__filename = os.path.join(
                             self.__base_dirname, self.__sub_dirname,
                             self.__blob.name)
+
+        def __str__(self):
+            '''Returns the string representation.'''
+            return "base [%s] sub [%s] name [%s]" % \
+                (self.__base_dirname, self.__sub_dirname,
+                 self.__blob.name)
 
         def get_filename(self):
             '''Returns the filename.'''
@@ -237,7 +241,7 @@ class Git(Interface):
         if len(sub_path_split) > 1:
             full_path.extend(sub_path_split[:-1])
         ltree = self.__get_tree(commit.tree, full_path)
-        return self.__get_blob_direct(ltree, sub_path_split[0])
+        return self.__get_blob_direct(ltree, sub_path_split[-1])
 
     def get_topic_base_fileinfo(self, commit):
         '''Return the base filename for the topics.'''
@@ -247,8 +251,9 @@ class Git(Interface):
             blob = self.__get_blob(commit, directory,
                                    self.__topic_root_node + '.tic')
             if blob != None:
-                return Git.FileInfo(directory, os.path.dirname(
-                                        self.__topic_root_node), blob)
+                dir_split = directory.split("/")
+                sub_split = os.path.dirname(self.__topic_root_node).split("/")
+                return Git.FileInfo(dir_split, sub_split, blob)
         raise RMTException(111, "topic base file not found")
 
     # TODO: needed
