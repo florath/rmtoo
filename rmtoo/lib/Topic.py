@@ -18,16 +18,36 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
 
-# Each topic has a level - which indicates the identation of the text
-# element. 
-# Each topic does link to it's super-topic.  This is the way to detect
-# cycles. 
-# This needs to be a digraph node, to handle dependencies within the
-# topics - e.g. handling of makefile dependencies.
-
 class Topic(Digraph.Node):
+    '''Each topic has a level - which indicates the identation of the text
+       element. 
+       Each topic does link to it's super-topic.  This is the way to detect
+       cycles. 
+       This needs to be a digraph node, to handle dependencies within the
+       topics - e.g. handling of makefile dependencies.'''
+    
+    def __read(self, tname, input_handler, commit, file_info):
+        '''Read in the topic and create all the tags.'''
+        self.__tags = TxtRecord.from_string(file_info.get_content(),
+                                           tname, input_handler.get_txt_io_config())
+        for tag in self.__tags:
+            # If the topic has subtopics, read them also in.
+            if tag.get_tag() == "SubTopic":
+                lfile_info = input_handler.get_file_info_with_type(
+                            commit, "topics", tag.get_content() + ".tic")
+                ntopic = Topic(self.__digraph, self.__config, input_handler,
+                               commit, lfile_info)
+                Digraph.create_edge(self, ntopic)
+    
+    def __init__(self, digraph, config, input_handler, commit, file_info):
+        tname = file_info.get_filename_sub_part()
+        Digraph.Node.__init__(self, tname)
+        self.__config = config
+        tracer.info("called: name [%s]" % tname)
+        self.__digraph = digraph
+        self.__read(tname, input_handler, commit, file_info)
 
-    def __init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
+    def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
         tracer.info("called: directory [%s] name [%s]" % (tdir, tname))
         Digraph.Node.__init__(self, tname)
@@ -56,11 +76,11 @@ class Topic(Digraph.Node):
             # In this case the tag list is (initally) empty
             self.t = []
 
-    def __str__(self):
+    def UNUSED___str__(self):
         return "name [" + self.name + "]"
 
     # Extract the name from the list (it's mandatory!)
-    def extract_name(self):
+    def UNUSED_extract_name(self):
         for nt in self.t:
             if nt.get_tag() == "Name":
                 self.topic_name = nt.get_content()
@@ -70,7 +90,7 @@ class Topic(Digraph.Node):
                            self.name)
 
     # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile, tname):
+    def UNUSED_cmad(self, reqscont, ofile, tname):
         reqs_dir = reqscont.config.get_value('requirements.input.directory')
         for req in self.reqs:
             # Add all the included requirements
@@ -81,7 +101,7 @@ class Topic(Digraph.Node):
             ofile.write(" ${TOPIC_%s_%s_DEPS}" % (tname, n.name))
 
     # Read in a specific topic
-    def read(self):
+    def UNUSED_read(self):
         self.digraph.add_node(self)
         fd = file(os.path.join(self.dir, self.name + ".tic"))
         self.t = TxtRecord.from_fd(fd, self.name, self.txtioconfig)
@@ -96,10 +116,10 @@ class Topic(Digraph.Node):
                 #self.outgoing.append(ntopic)
         fd.close()
 
-    def add_req(self, req):
+    def UNUSED_add_req(self, req):
         self.reqs.append(req)
 
     # Returns the name of the game
-    def get_name(self):
+    def UNUSED_get_name(self):
         return self.topic_name
 

@@ -42,8 +42,9 @@ class FileSystem(Interface):
             tracer.debug("[%s] directories [%s]" % (dir_type, directory))
 
     def __init__(self, config):
-        tracer.info("called")
         cfg = Cfg(config)
+        Interface.__init__(self, cfg)
+        tracer.info("called")
         self.__topic_root_node = cfg.get_value("topic_root_node")
         self.__dirs = {}
         self.__setup_directories(cfg)

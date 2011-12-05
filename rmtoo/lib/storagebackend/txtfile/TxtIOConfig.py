@@ -15,23 +15,20 @@ from rmtoo.lib.RMTException import RMTException
 class TxtIOConfig:
 
     def __init__(self, config=None, type_str=""):
-        self.init_default()
+        self.__max_line_length = 80
         if config != None:
-            self.init_overwrite(config, type_str)
-
-    def init_default(self):
-        self.max_line_length = 80
+            self.__init_overwrite(config, type_str)
 
     def get_max_line_length(self):
-        return self.max_line_length
+        return self.__max_line_length
 
-    def init_overwrite(self, config, type_str):
+    def __init_overwrite(self, config, type_str):
         '''Overwrite the existing default parameters with parameters
            from the configuration.'''
-        self.max_line_length = config.get_integer(
-            ['input', 'txtfile', type_str, 'max_line_length'], 80)
-        if self.max_line_length < 0:
-            raise RMTException(72, "input.txtfile.%s.max_line_length is "
-                               "negative [%s]" % (type_str, v))
+        self.__max_line_length = config.get_integer(
+                                'max_input_line_length', 80)
+        if self.__max_line_length < 0:
+            raise RMTException(72, "max_input_line_length for type [%s] is "
+                        "negative [%s]" % (type_str, self.__max_line_length))
 
 

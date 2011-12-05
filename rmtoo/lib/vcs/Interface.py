@@ -13,11 +13,19 @@
 import abc
 from types import ListType, StringType, UnicodeType
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 
 class Interface:
     '''Defines the interface for input fontends like
        VCS or filesystem.'''
     __metaclass__ = abc.ABCMeta
+    
+    def __init__(self, config):
+        self._config = config
+        self._txt_io_config = TxtIOConfig(config)
+        
+    def get_txt_io_config(self):
+        return self._txt_io_config
 
     @abc.abstractmethod
     def get_commits(self):
@@ -62,6 +70,7 @@ class Interface:
         def __str__(self):
             '''Returns the string representation.'''
             assert False
+            
     @abc.abstractmethod
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the

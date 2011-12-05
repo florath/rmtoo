@@ -96,6 +96,7 @@ class Git(Interface):
     def __init__(self, config):
         tracer.info("called")
         cfg = Cfg(config)
+        Interface.__init__(self, cfg)
         self.__start_vers = cfg.get_value("start_vers")
         self.__end_vers = cfg.get_value("end_vers")
         self.__topic_root_node = cfg.get_value("topic_root_node")
@@ -243,19 +244,22 @@ class Git(Interface):
         ltree = self.__get_tree(commit.tree, full_path)
         return self.__get_blob_direct(ltree, sub_path_split[-1])
 
-    def get_topic_base_fileinfo(self, commit):
-        '''Return the base filename for the topics.'''
-        tracer.debug("called")
-        for directory in self.__dirs["topics"]:
+    def get_file_info_with_type(self, commit, file_type, filename):
+        '''Returns the FileInfo object for the given filename.'''
+        tracer.debug("called: commit [%s] file type [%s] filename [%s]" 
+                     % (commit, file_type, filename)) 
+        for directory in self.__dirs[file_type]:
             tracer.debug("searching in directory [%s]" % directory)
-            blob = self.__get_blob(commit, directory,
-                                   self.__topic_root_node + '.tic')
+            blob = self.__get_blob(commit, directory, filename)
             if blob != None:
                 dir_split = directory.split("/")
-                sub_split = os.path.dirname(self.__topic_root_node).split("/")
+                sub_split = os.path.dirname(filename).split("/")
                 return Git.FileInfo(dir_split, sub_split, blob)
-        raise RMTException(111, "topic base file not found")
+        raise RMTException(111, "file [%s] in [%s] base file not found"
+                           % (filename, file_type))
 
-    # TODO: needed
-    def get_file_info(self, commit, filename):
-        assert False
+    def get_topic_base_file_info(self, commit):
+        '''Return the base filename for the topics.'''
+        tracer.debug("called")
+        return self.get_file_info_with_type(
+                        commit, "topics", self.__topic_root_node + '.tic')

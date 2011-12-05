@@ -45,7 +45,8 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         self.__complete_requirement_set = None
         self.__read_requirement_set()
         # Second: read in all the topics.
-        self.__read_topics()
+        # Stored here is the initial node of the topic digraph.
+        self.__topic = self.__read_topics()
         # Third: restrict requirements to those which are 
         #    needed in the topic.
         self.__requirement_set = self.restrict_requirements_set()
@@ -76,10 +77,10 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
            just takes all the available files.'''
         tracer.debug("called")
 
-        topic_base = self.__input_handler.get_topic_base_fileinfo(self.__commit)
+        topic_base = self.__input_handler.get_topic_base_file_info(self.__commit)
         tracer.debug("topic base [%s]" % topic_base)
-        assert False
-        topic = Topic()
+        return Topic(self, self.__config, self.__input_handler, 
+                     self.__commit, topic_base)
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 
