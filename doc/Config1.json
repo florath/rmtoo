@@ -37,7 +37,7 @@
 			"end_vers": "v11", 
 			"requirements_dirs": [ "doc/requirements" ],
 			"topics_dirs": [ "doc/topics" ],
-			"topic_root_node": "doc/topic/ReqsDocument",
+			"topic_root_node": "ReqsDocument",
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 		[
@@ -46,14 +46,14 @@
 			"end_vers": "v17", 
 			"requirements_dirs": [ "doc/requirements" ],
 			"topics_dirs": [ "doc/topics"] ,
-			"topic_root_node": "doc/topics/ReqsDocument",
+			"topic_root_node": "ReqsDocument",
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 	        [
 		    "filesystem", {
 		        "requirements_dirs": [ "doc/requirements" ],
 			"topics_dirs": [ "doc/topics" ],
-			"topic_root_node": "doc/topics/ReqsDocument",
+			"topic_root_node": "ReqsDocument",
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		] 
 	    ],

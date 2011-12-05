@@ -76,7 +76,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
            just takes all the available files.'''
         tracer.debug("called")
 
-        topic_base = self.__input_handler.get_topic_base_fileinfo()
+        topic_base = self.__input_handler.get_topic_base_fileinfo(self.__commit)
         tracer.debug("topic base [%s]" % topic_base)
         assert False
 

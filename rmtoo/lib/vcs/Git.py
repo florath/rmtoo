@@ -162,6 +162,7 @@ class Git(Interface):
         for tree in base_tree.trees:
             if tree.name == directory:
                 return tree
+        assert False
         raise RMTException(108, "directory entry [%s] not found in tree "
                            "[%s]." % (directory, base_tree.name))
 
@@ -216,13 +217,38 @@ class Git(Interface):
                                     commit.tree, directory))
         return result
 
+    def __get_blob_direct(self, base_tree, filename):
+        '''Return the tree of the given file (blob).
+           This does not walk down the directory structure.
+           It just checks the current hierarchy.'''
+        for blob in base_tree.blobs:
+            if blob.name == filename:
+                return blob
+        return None
+
+    def __get_blob(self, commit, base_dir, sub_path):
+        '''Returns the blob from the give base directory and path.
+           If the file (blob) is not available, a None is returned.
+           If the directory is not available / accessable an exception
+           is thrown.'''
+        assert len(sub_path) > 0
+        full_path = base_dir.split("/")
+        sub_path_split = sub_path.split("/")
+        if len(sub_path_split) > 1:
+            full_path.extend(sub_path_split[:-1])
+        ltree = self.__get_tree(commit.tree, full_path)
+        return self.__get_blob_direct(ltree, sub_path_split[0])
+
     def get_topic_base_fileinfo(self, commit):
         '''Return the base filename for the topics.'''
-        assert False
+        tracer.debug("called")
         for directory in self.__dirs["topics"]:
-            blob = self.__get_blob(commit, directory, self.__topic_root_node):
+            tracer.debug("searching in directory [%s]" % directory)
+            blob = self.__get_blob(commit, directory,
+                                   self.__topic_root_node + '.tic')
             if blob != None:
-                return os.path.join(directory, blob.name)
+                return Git.FileInfo(directory, os.path.dirname(
+                                        self.__topic_root_node), blob)
         raise RMTException(111, "topic base file not found")
 
     # TODO: needed
