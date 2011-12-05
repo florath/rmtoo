@@ -57,8 +57,6 @@ class TopicContinuum(UsableFlag):
                                         "TopicSet", topic_set)
                 self._adapt_usablility(topic_set)
             self.__continuum_add(topic_set_vcs_id, topic_set)
-        # TODO: Long term: maybe remove this.
-        self.__object_cache.log_stats()
 
     def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''
