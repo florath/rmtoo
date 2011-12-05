@@ -56,6 +56,18 @@ class Topic(Digraph.Node):
         for topic in self.outgoing:
             result = result.union(topic.get_topic_names_flattened())
         return result
+    
+    def execute(self, executor):
+        '''Execute the parts which are needed for TopicsContinuum.'''
+        tracer.debug("calling pre [%s]" % self.name)
+        executor.topic_pre(self)
+        tracer.info("calling sub [%s]" % self.name)
+        for subtopic in self.outgoing:
+            subtopic.execute(executor)
+        tracer.info("calling post [%s]" % self.name)
+        executor.topic_post(self)
+        tracer.info("finished [%s]" % self.name)
+        
 
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):

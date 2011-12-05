@@ -89,6 +89,18 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         return self.__complete_requirement_set \
             .restrict_to_topics(available_topics)
 
+    def execute(self, executor):
+        '''Execute the parts which are needed for TopicsSet.'''
+        tracer.info("calling pre")
+        executor.topics_set_pre(self)
+        tracer.info("calling sub topic")
+        self.__topic.execute(executor)
+        tracer.info("calling sub requirement set")
+        self.__requirement_set.execute(executor)
+        tracer.info("calling post")
+        executor.topics_set_post(self)
+        tracer.info("finished")
+
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

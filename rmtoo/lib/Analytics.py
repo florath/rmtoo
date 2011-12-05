@@ -13,13 +13,14 @@ from rmtoo.lib.analytics.HotSpot import HotSpot
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
+from rmtoo.lib.Executor import Executor
 
-class Analytics:
+class Analytics(Executor):
     '''Collection class which calls the other analytics modules.'''
 
     def __init__(self):
         '''Hide the constructor for the utility class.'''
-        assert False
+        pass
 
     # The argument to the analytics modules is the (latest) set of
     # requirements.  (It makes sense only to check them.)

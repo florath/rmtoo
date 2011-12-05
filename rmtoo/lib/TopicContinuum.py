@@ -24,16 +24,17 @@ class TopicContinuum(UsableFlag):
 
     def __init__(self, ts_name, config, ts_config, object_cache, input_mods):
         UsableFlag.__init__(self)
-        tracer.info("called: name [%s]" % ts_name)
-        self.config = config
-        self.topic_sets = {}
+        self.__name = ts_name
+        tracer.info("called: name [%s]" % self.__name)
+        self.__config = config
+        self.__topic_sets = {}
         # This is the list of all version control system ids.
         # Those ids are sorted by time.
         # The oldest versions is the first one - sorted.
         # Note: this does not contain any other data, only the ids.
         # To access the data, use some construct like:
-        #   self.topic_sets[self.vcs_ids[n]]
-        self.vcs_ids = []
+        #   self.__topic_sets[self.__vcs_ids[n]]
+        self.__vcs_ids = []
         self.__object_cache = object_cache
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
@@ -51,7 +52,7 @@ class TopicContinuum(UsableFlag):
             if topic_set == None:
                 tracer.debug("TopicSet with ID [%s] not in cache"
                              % topic_set_vcs_id)
-                topic_set = TopicSet(self.config, input_handler, commit,
+                topic_set = TopicSet(self.__config, input_handler, commit,
                                      self.__object_cache, self.__input_mods)
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
@@ -70,8 +71,19 @@ class TopicContinuum(UsableFlag):
 
     def __continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''
-        self.vcs_ids.append(cid)
-        self.topic_sets[cid] = topic_set_collection
+        self.__vcs_ids.append(cid)
+        self.__topic_sets[cid] = topic_set_collection
+        
+    def execute(self, executor):
+        '''Execute the parts which are needed for TopicsContinuum.'''
+        tracer.info("calling pre [%s]" % self.__name)
+        executor.topics_continuum_pre(self)
+        tracer.info("calling sub [%s]" % self.__name)
+        for continuum in self.__topic_sets.values():
+            continuum.execute(executor)
+        tracer.info("calling post [%s]" % self.__name)
+        executor.topics_continuum_post(self)
+        tracer.info("finished [%s]" % self.__name)
 
     ### EVERYTHING BENEATH IN DEPRECATED
 

@@ -52,3 +52,15 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
                                self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
             self._adapt_usablility(topic_cont)
+            
+    def execute(self, executor):
+        '''Execute the parts which are needed for TopicsContinuumSet.'''
+        tracer.info("calling pre")
+        executor.topics_continuum_set_pre(self)
+        tracer.info("calling sub")
+        for continuum in self.__continuum.values():
+            continuum.execute(executor)
+        tracer.info("calling post")
+        executor.topics_continuum_set_post(self)
+        tracer.info("finished")
+        

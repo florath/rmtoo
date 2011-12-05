@@ -1,16 +1,16 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-#  This is the main function - it is called from the 'rmtoo'
-#  executable directly. 
-#  It is stored here (in a separate file) for (black-box) testing
-#  proposes. 
-#
-# (c) 2010-2011 by flonatel
-#
-# For licensing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  This is the main function - it is called from the 'rmtoo'
+  executable directly. 
+  It is stored here (in a separate file) for (black-box) testing
+  proposes. 
+   
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import sys
 
@@ -23,44 +23,13 @@ from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.main.MainHelper import MainHelper
 
-#deprecated
-# TODO: remove.
-def parse_cmd_line_opts(args):
-    parser = OptionParser()
-    parser.add_option("-f", "--file-config", dest="config_file",
-                  help="Configuration file")
-    parser.add_option("-m", "--modules-directory", dest="modules_directory",
-                  help="Directory with modules")
-    parser.add_option("-c", "--create-makefile-dependencies",
-                      dest="create_makefile_dependencies",
-                      help="Create makefile dependencies")
-
-    (options, args) = parser.parse_args(args=args)
-
-    if options.modules_directory == None:
-        # If there is no modules directory given, use the pyshared one.
-        options.modules_directory = "/usr/share/pyshared"
-
-    if options.config_file == None:
-        raise RMTException(60, "no config_file option is specified")
-
-    if len(args) > 0:
-        raise RMTException(61, "too many arguments")
-
-    return options
-
 def execute_cmds(config, input_mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
+    # Please note: there is no 'ONE' latest continuum any more
+    #  - but a list.
     try:
         topic_continuum_set = TopicContinuumSet(input_mods, config)
-
-        # The problem: there is no 'latest' one: it is a set...
-#        latest_topicsc = topic_continuum_set.continuum_latest()
-
-        # TODO: Remove:
-#        rc = ReqsContinuum(mods, config)
-#        reqs = rc.continuum_latest()
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
                       % rmte)
@@ -92,6 +61,8 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     # The requirements are syntactically correct now: therefore it is
     # possible to do some analytics on them.
     # Note that analytics are only run on the latest version.
+    topic_continuum_set.execute(Analytics())
+    
     if not Analytics.run(config, latest_topicsc):
         latest_topicsc.write_log(mstderr)
         latest_topicsc.write_analytics_result(mstderr)
@@ -105,7 +76,6 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     return True
 
 def main_impl(args, mstdout, mstderr):
-#    init_logging()
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
