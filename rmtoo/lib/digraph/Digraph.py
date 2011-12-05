@@ -79,7 +79,7 @@ class Digraph:
 
     # Adds a new node to the graph
     def add_node(self, a):
-        # Check if the node which the same name is already there.
+        # Check if the node with the same name already exists.
         for n in self.nodes:
             if n.name==a.name:
                 raise RMTException(39, "Node with name '%s' already exists"

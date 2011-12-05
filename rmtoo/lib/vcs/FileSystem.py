@@ -92,6 +92,10 @@ class FileSystem(Interface):
             fd.close()
             return content
 
+        def __str__(self):
+            '''Returns the string representation.'''
+            return "base [%s] sub [%s]" % (self.__base_dir, self._sub_dir)
+
     def __get_file_infos_from_dir_rec(self, base_dir, sub_dir):
         '''Recursively collect all file infos from given base directory.'''
         tracer.debug("called: base [%s] sub [%s]" % (base_dir, sub_dir))

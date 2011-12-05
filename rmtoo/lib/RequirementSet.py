@@ -87,6 +87,18 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             else:
                 self.error(45, "could not be parsed", req.id)
 
+    def restrict_to_topics(self, topic_set):
+        '''Restrict the list (dictionary) of requirements to the given
+           topic set - i.e. only requirements are returned which belong to
+           one of the topics in the topic set.'''
+        restricted_reqs = []
+        for req in self.__requirements.values():
+            if req.get_topic() in topic_set:
+                restricted_reqs.append(req)
+        # TODO: This might be changed to a complete RequirementsSet object
+        return restricted_reqs
+        
+
     # EVERYTHING BENEATH IS DEPRECATED!
 
     deprecated__er_fine = 0

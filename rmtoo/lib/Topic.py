@@ -37,15 +37,25 @@ class Topic(Digraph.Node):
                             commit, "topics", tag.get_content() + ".tic")
                 ntopic = Topic(self.__digraph, self.__config, input_handler,
                                commit, lfile_info)
+                self.__digraph.add_node(ntopic)
                 Digraph.create_edge(self, ntopic)
     
     def __init__(self, digraph, config, input_handler, commit, file_info):
-        tname = file_info.get_filename_sub_part()
+        tname = file_info.get_filename_sub_part()[:-4]
         Digraph.Node.__init__(self, tname)
         self.__config = config
         tracer.info("called: name [%s]" % tname)
         self.__digraph = digraph
         self.__read(tname, input_handler, commit, file_info)
+
+    def get_topic_names_flattened(self):
+        '''Returns all the names of the complete topic hirarchy in one set.'''
+        tracer.debug("called: name [%s]" % self.name) 
+        result = set()
+        result.add(self.name)
+        for topic in self.outgoing:
+            result = result.union(topic.get_topic_names_flattened())
+        return result
 
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):

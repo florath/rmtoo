@@ -56,6 +56,9 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def get_status(self):
         return self.values["Status"]
+    
+    def get_topic(self):
+        return self.values["Topic"]
 
     # Returns the EfE units or 0 if not available.
     def get_efe_or_0(self):

@@ -49,7 +49,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         self.__topic = self.__read_topics()
         # Third: restrict requirements to those which are 
         #    needed in the topic.
-        self.__requirement_set = self.restrict_requirements_set()
+        self.__requirement_set = self.__restrict_requirements_set()
 
     def __read_requirement_set(self):
         '''Reads in the requirement set.
@@ -81,6 +81,14 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("topic base [%s]" % topic_base)
         return Topic(self, self.__config, self.__input_handler, 
                      self.__commit, topic_base)
+               
+    def __restrict_requirements_set(self):
+        '''Restricts all the available requirements (as stored in the 
+           RequirementsSet variable) to the topics.'''
+        available_topics = self.__topic.get_topic_names_flattened()
+        return self.__complete_requirement_set \
+            .restrict_to_topics(available_topics)
+
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 
