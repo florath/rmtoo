@@ -10,13 +10,15 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
 
-class HotSpot(Base):
+class HotSpot:
 
     max_incoming = 7
     max_outgoing = 4
+
+    def __init__(self, config):
+        pass
 
     def check_requirement(self, lname, req):
         eval_result = True

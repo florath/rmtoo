@@ -23,14 +23,11 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 class Requirement(Digraph.Node, BaseRMObject):
-    
+
     def execute(self, executor):
         '''Execute the parts which are needed for Requirement.'''
         tracer.debug("called: name [%s]" % self.name)
         executor.requirement(self)
-        # TODO: Evaluate result
-        # TODO: hanlde logging
-        assert False
 
     # Requirment Type
     # Each requirement has exactly one type.
@@ -65,7 +62,7 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def get_status(self):
         return self.values["Status"]
-    
+
     def get_topic(self):
         return self.values["Topic"]
 

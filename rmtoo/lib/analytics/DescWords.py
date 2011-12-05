@@ -17,7 +17,6 @@
 import re
 
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
-from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
 
 class DescWords:
@@ -70,7 +69,6 @@ class DescWords:
 
     def __init__(self, config):
         '''Sets up the DescWord object for use.'''
-#        Base.__init__(self, config)
         self.lwords = DescWords.get_lang(config)
 
     @staticmethod
@@ -86,7 +84,7 @@ class DescWords:
 
     @staticmethod
     def analyse(lname, lwords, text):
-#        print("ANALYSE: [%s]" % text)
+        # print("ANALYSE: [%s]" % text)
         # Must be at least some positive things to get this
         # positive. (An empty description is a bad one.)
         level = -10
@@ -98,13 +96,12 @@ class DescWords:
                 level += fal * wlvl
                 log.append("%+4d:%d*%d: %s" % (fal * wlvl, fal, wlvl, wdsc))
                 # Note the result of this test in the requirement itself.
-        # TODO: Use Object for this!
         return Result('DescWords', lname, level, log)
 
     def check_requirement(self, lname, req):
-        print("DescWords called")
-        ares = DescWords.analyse(lname,
+        '''Checks all the requirements.
+           If the result is positive, it is good.'''
+        #print("DescWords called")
+        result = DescWords.analyse(lname,
                  self.lwords, req.get_value("Description").get_content())
-        # TODO: How to store the result?
-        #req.analytics["DescWords"] = ares
-        return ares.get_value() >= 0
+        return result.get_value() >= 0, result

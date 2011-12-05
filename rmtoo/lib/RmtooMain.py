@@ -63,7 +63,8 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     # Note that analytics are only run on the latest version.
     analytics = Analytics(config)
     topic_continuum_set.execute(analytics)
-    
+    analytics.write_analytics_result(mstderr)
+
     if not Analytics.run(config, latest_topicsc):
         latest_topicsc.write_log(mstderr)
         latest_topicsc.write_analytics_result(mstderr)
