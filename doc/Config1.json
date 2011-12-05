@@ -32,7 +32,7 @@
         "ts_common": {
 	    "sources": [
 		[
-		    "git", {
+		    "ignore:git", {
 		        "start_vers": "v9", 
 			"end_vers": "v11", 
 			"requirements_dirs": [ "doc/requirements" ],
@@ -41,7 +41,7 @@
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 		[
-		    "git", {
+		    "ignore:git", {
 		        "start_vers": "v13", 
 			"end_vers": "v17", 
 			"requirements_dirs": [ "doc/requirements" ],

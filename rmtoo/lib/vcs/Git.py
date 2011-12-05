@@ -258,8 +258,3 @@ class Git(Interface):
         raise RMTException(111, "file [%s] in [%s] base file not found"
                            % (filename, file_type))
 
-    def get_topic_base_file_info(self, commit):
-        '''Return the base filename for the topics.'''
-        tracer.debug("called")
-        return self.get_file_info_with_type(
-                        commit, "topics", self.__topic_root_node + '.tic')

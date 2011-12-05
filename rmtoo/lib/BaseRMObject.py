@@ -16,6 +16,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.UsableFlag import UsableFlag
+from rmtoo.lib.logging.EventLogging import tracer
 
 class BaseRMObject(UsableFlag):
 
@@ -83,8 +84,8 @@ class BaseRMObject(UsableFlag):
     def handle_modules_tag(self, reqs):
         for modkey, module in self.mods.tagtypes[self.tbhtags].items():
             try:
-                #print("handle_modules_tag [%s] [%s] [%s] [%s]" 
-                #      % (modkey, module, self.tbhtags, module.type()))
+                tracer.debug("handle modules tag modkey [%s] tagtype [%s]" 
+                      % (modkey, self.tbhtags))
                 if self.tbhtags not in module.type():
                     self.mls.error(90, "Wrong module type [%s] not in [%s]" %
                                    (self.tbhtags, module.type()))
@@ -93,19 +94,22 @@ class BaseRMObject(UsableFlag):
                 # Check if there is already a key with the current key
                 # in the map.
                 if key in self.values:
-                    self.mls.error(54, "tag '%s' already defined" %
+                    self.mls.error(54, "tag [%s] already defined" %
                           (key), self.id)
+                    tracer.error("tag [%s] already defined" % key)
                     self._set_not_usable()
                     # Also continue to get possible further error
                     # messages.
                 self.values[key] = value
             except RMTException, rmte:
-                # Some sematic error occured: do not interpret key or
+                # Some semantic error occurred: do not interpret key or
                 # value.
                 self.mls.error_from_rmte(rmte)
-                self.mls.error(41, "semantic error occured in "
-                               "module '%s'" % modkey, self.id)
-                #print("+++ root cause is: '%s'" % rmte)
+                self.mls.error(41, "semantic error occurred in "
+                               "module [%s]" % modkey, self.id)
+                tracer.error("semantic error occurred: root cause [%s]" % rmte)
                 self._set_not_usable()
-                # Continue (do not return immeditely) to get also
+                # Continue (do not return immediately) to get also
                 # possible other errors.
+
+        tracer.debug("handled modules tags finished")

@@ -65,6 +65,8 @@ class TopicContinuum(UsableFlag):
         tracer.debug("called")
         for source in ts_config['sources']:
             input_handler = Factory.create(source[0], source[1])
+            if input_handler==None:
+                continue
             commits = input_handler.get_commits()
             self.__read_commits(input_handler, commits)
 

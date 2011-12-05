@@ -14,6 +14,7 @@ import abc
 from types import ListType, StringType, UnicodeType
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.logging.EventLogging import tracer
 
 class Interface:
     '''Defines the interface for input fontends like
@@ -23,9 +24,16 @@ class Interface:
     def __init__(self, config):
         self._config = config
         self._txt_io_config = TxtIOConfig(config)
+        self._topic_root_node = config.get_value("topic_root_node")
         
     def get_txt_io_config(self):
         return self._txt_io_config
+
+    def get_topic_base_file_info(self, commit):
+        '''Return the base filename for the topics.'''
+        tracer.debug("called")
+        return self.get_file_info_with_type(
+                        commit, "topics", self._topic_root_node + '.tic')
 
     @abc.abstractmethod
     def get_commits(self):
@@ -77,6 +85,11 @@ class Interface:
            given directory type.'''
         assert commit
         assert dir_type
+        assert False
+    
+    @abc.abstractmethod        
+    def get_file_info_with_type(self, commit, file_type, filename):
+        '''Returns the FileInfo object for the given filename.'''
         assert False
 
     # Common helper methods

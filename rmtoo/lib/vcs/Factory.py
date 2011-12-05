@@ -23,6 +23,11 @@ class Factory:
     def create(input_method, input_config):
         '''Create new input handler from given parameters.'''
         tracer.info("called: name [%s]" % input_method)
+        
+        if input_method.startswith("ignore:"):
+            tracer.info("ignoring factory entry")
+            return None
+        
         if input_method not in Factory.known_input_types:
             assert False
             

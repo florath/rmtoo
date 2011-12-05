@@ -94,7 +94,7 @@ class FileSystem(Interface):
 
         def __str__(self):
             '''Returns the string representation.'''
-            return "base [%s] sub [%s]" % (self.__base_dir, self._sub_dir)
+            return "base [%s] sub [%s]" % (self.__base_dir, self.__sub_dir)
 
     def __get_file_infos_from_dir_rec(self, base_dir, sub_dir):
         '''Recursively collect all file infos from given base directory.'''
@@ -131,3 +131,18 @@ class FileSystem(Interface):
         for directory in self.__dirs[dir_type]:
             result.extend(self.__get_file_infos_from_dir(directory))
         return result
+
+    def get_file_info_with_type(self, commit, file_type, filename):
+        '''Returns the FileInfo object for the given filename.'''
+        assert commit == None
+        tracer.debug("called: file type [%s] filename [%s]" 
+                     % (file_type, filename))
+        for directory in self.__dirs[file_type]:
+            tracer.debug("searching in directory [%s]" % directory)            
+            full_path = os.path.join(directory, filename)
+            if os.path.exists(full_path):
+                return FileSystem.FileInfo(directory, filename)
+        raise RMTException(112, "file [%s] in [%s] base file not found"
+                           % (filename, file_type))
+
+    

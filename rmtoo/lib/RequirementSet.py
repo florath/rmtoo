@@ -55,8 +55,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
 
         for fileinfo in fileinfos:
             # Check for correct filename
-            m = fileinfo.get_filename().endswith(".req")
-            if m == None:
+            if not fileinfo.get_filename().endswith(".req"):
                 tracer.info("skipping file [%s]" % fileinfo.get_filename())
                 continue
             # Handle caching.
