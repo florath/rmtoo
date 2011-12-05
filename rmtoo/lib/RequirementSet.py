@@ -31,7 +31,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
-    def __init__(self, config, input_handler, commit, object_cache, input_mods):
+    def __init__(self, config):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
@@ -40,15 +40,18 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self.__config = config
-        self.__object_cache = object_cache
-        self.__input_mods = input_mods
-
         # TODO: is this the structure that is needed?
         self.__requirements = {}
 
-        self.__read_requirements(input_handler, commit)
+# TODO: handle this (remove this???)
+#    def __init__(self, config, input_handler, commit, object_cache, input_mods):
+#        self.__object_cache = object_cache
+#        self.__input_mods = input_mods
+#
+#        self.__read_requirements(input_handler, commit)
 
-    def __read_requirements(self, input_handler, commit):
+    def read_requirements(self, input_handler, commit, input_mods, 
+                          object_cache):
         '''Reads in all the requirements from the input_handler.'''
         tracer.debug("called")
         fileinfos = input_handler.get_file_infos(commit, "requirements")
@@ -61,7 +64,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # Handle caching.
             vcs_id = fileinfo.get_vcs_id()
             rid = fileinfo.get_filename_sub_part()[:-4]
-            req = self.__object_cache.get("Requirement", vcs_id)
+            req = object_cache.get("Requirement", vcs_id)
 
             if req != None:
                 # Double check the id
@@ -70,33 +73,47 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                     assert False
             else:
                 file_content = fileinfo.get_content()
-                req = Requirement(file_content, rid, self, self.__input_mods, self.__config)
+                req = Requirement(file_content, rid, self, input_mods, self.__config)
                 # Add the requirement to the cache.
-                self.__object_cache.add(vcs_id, "Requirement", req)
+                object_cache.add(vcs_id, "Requirement", req)
 
             self._adapt_usablility(req)
 
             if req.is_usable():
                 # Store in the map, so that it is easy to access the
                 # node by id.
-                self.__requirements[req.get_id()] = req
+                self.__add_requirement(req)
                 # Also store it in the digraph's node list for simple
                 # access to the digraph algorithms.
                 # TODO: self.nodes.append(req)
             else:
                 self.error(45, "could not be parsed", req.id)
 
+    def __add_requirement(self, req):
+        '''Add requirement to the internal container.'''
+        self.__requirements[req.get_id()] = req
+
     def restrict_to_topics(self, topic_set):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
            one of the topics in the topic set.'''
-        restricted_reqs = []
+        restricted_reqs = RequirementSet(self.__config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
-                restricted_reqs.append(req)
-        # TODO: This might be changed to a complete RequirementsSet object
+                restricted_reqs.__add_requirement(req)
         return restricted_reqs
-        
+
+    def execute(self, executor):
+        '''Execute the parts which are needed for RequirementSet.'''
+        tracer.debug("calling pre")
+        executor.requirement_set_pre(self)
+        tracer.debug("calling sub requirement set")
+        for requirement in self.__requirements.values():
+            requirement.execute(executor)
+        tracer.debug("calling post")
+        executor.requirement_set_post(self)
+        tracer.debug("finished")
+
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

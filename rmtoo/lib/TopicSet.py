@@ -59,9 +59,9 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
                             self.__commit, "requirements")
         req_set = self.__object_cache.get("RequirementSet", req_set_vcs_id)
         if req_set == None:
-            req_set = RequirementSet(self.__config, self.__input_handler,
-                                     self.__commit, self.__object_cache,
-                                     self.__input_mods)
+            req_set = RequirementSet(self.__config)
+            req_set.read_requirements(self.__input_handler, self.__commit, 
+                                      self.__input_mods, self.__object_cache)
             self.__object_cache.add(req_set_vcs_id,
                                     "RequirementSet", req_set)
             self._adapt_usablility(req_set)

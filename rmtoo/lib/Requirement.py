@@ -16,12 +16,21 @@ import operator
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.BaseRMObject import BaseRMObject
+from rmtoo.lib.logging.EventLogging import tracer
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 class Requirement(Digraph.Node, BaseRMObject):
+    
+    def execute(self, executor):
+        '''Execute the parts which are needed for Requirement.'''
+        tracer.debug("called: name [%s]" % self.name)
+        executor.requirement(self)
+        # TODO: Evaluate result
+        # TODO: hanlde logging
+        assert False
 
     # Requirment Type
     # Each requirement has exactly one type.

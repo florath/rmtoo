@@ -20,7 +20,7 @@ from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
 
-class DescWords(Base):
+class DescWords:
 
     # This is the assessment of each word (better regular expression).
     # If the regular expression matches, the value is added.
@@ -70,7 +70,7 @@ class DescWords(Base):
 
     def __init__(self, config):
         '''Sets up the DescWord object for use.'''
-        Base.__init__(self, config)
+#        Base.__init__(self, config)
         self.lwords = DescWords.get_lang(config)
 
     @staticmethod
@@ -86,7 +86,7 @@ class DescWords(Base):
 
     @staticmethod
     def analyse(lname, lwords, text):
-        print("ANALYSE: [%s]" % text)
+#        print("ANALYSE: [%s]" % text)
         # Must be at least some positive things to get this
         # positive. (An empty description is a bad one.)
         level = -10

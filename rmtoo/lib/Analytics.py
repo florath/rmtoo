@@ -18,9 +18,13 @@ from rmtoo.lib.Executor import Executor
 class Analytics(Executor):
     '''Collection class which calls the other analytics modules.'''
 
-    def __init__(self):
+    def __init__(self, config):
         '''Hide the constructor for the utility class.'''
-        pass
+        self.__desc_words = DescWords(config)
+
+    def requirement(self, requirement):
+        '''This is call in the Requirement phase.'''
+        self.__desc_words.check_requirement("lname", requirement)
 
     # The argument to the analytics modules is the (latest) set of
     # requirements.  (It makes sense only to check them.)

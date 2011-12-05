@@ -32,11 +32,11 @@ class Executor:
         '''This is call in the TopicsContinuum post-phase.'''
         return
 
-    def topics_set_pre(self, topics_continuum):
+    def topics_set_pre(self, topics_set):
         '''This is call in the TopicsSet pre-phase.'''
         return
     
-    def topics_set_post(self, topics_continuum):
+    def topics_set_post(self, topics_set):
         '''This is call in the TopicsSet post-phase.'''
         return
 
@@ -46,4 +46,16 @@ class Executor:
     
     def topic_post(self, topic):
         '''This is call in the Topic post-phase.'''
+        return
+
+    def requirement_set_pre(self, requirements_set):
+        '''This is call in the RequirementSet pre-phase.'''
+        return
+    
+    def requirement_set_post(self, requirements_set):
+        '''This is call in the RequirementSet post-phase.'''
+        return
+
+    def requirement(self, requirement):
+        '''This is call in the Requirement phase.'''
         return

@@ -14,6 +14,10 @@
 
 import abc
 
+# TODO: DEPRECATED OLD WAY
+# USE Executor instead: this will do exactly the things which are needed
+#  at the correct position.
+
 class Base:
     '''Base class for all analytics checks.
        This class provides the basic methods and infrastructure
