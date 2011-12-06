@@ -60,7 +60,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         req_set = self.__object_cache.get("RequirementSet", req_set_vcs_id)
         if req_set == None:
             req_set = RequirementSet(self.__config)
-            req_set.read_requirements(self.__input_handler, self.__commit, 
+            req_set.read_requirements(self.__input_handler, self.__commit,
                                       self.__input_mods, self.__object_cache)
             self.__object_cache.add(req_set_vcs_id,
                                     "RequirementSet", req_set)
@@ -79,13 +79,17 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
 
         topic_base = self.__input_handler.get_topic_base_file_info(self.__commit)
         tracer.debug("topic base [%s]" % topic_base)
-        return Topic(self, self.__config, self.__input_handler, 
+        return Topic(self, self.__config, self.__input_handler,
                      self.__commit, topic_base)
-               
+
     def __restrict_requirements_set(self):
         '''Restricts all the available requirements (as stored in the 
            RequirementsSet variable) to the topics.'''
         available_topics = self.__topic.get_topic_names_flattened()
+        # TODO: Build up the complete digraph (also)
+        #  This is needed for the different output modules
+        #  as well as for the analytics
+        assert False
         return self.__complete_requirement_set \
             .restrict_to_topics(available_topics)
 

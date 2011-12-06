@@ -104,4 +104,4 @@ class DescWords:
         #print("DescWords called")
         result = DescWords.analyse(lname,
                  self.lwords, req.get_value("Description").get_content())
-        return result.get_value() >= 0, result
+        return result.get_value() >= 0, [result]

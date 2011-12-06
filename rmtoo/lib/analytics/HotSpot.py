@@ -21,20 +21,20 @@ class HotSpot:
         pass
 
     def check_requirement(self, lname, req):
-        eval_result = True
+        success = True
         findings = []
         if len(req.incoming) > HotSpot.max_incoming:
             findings.append(
                 Result("HotSpot", lname, -10,
                     ["Number of incoming links is too high: %d" %
                        len(req.incoming)]))
-            eval_result = False
+            success = False
 
         if len(req.outgoing) > HotSpot.max_outgoing:
             findings.append(
                 Result("HotSpot", lname, -10,
                  ["Number of outgoing links is too high: %d" %
                     len(req.outgoing)]))
-            eval_result = False
+            success = False
 
-        return eval_result, findings
+        return success, findings

@@ -21,18 +21,32 @@ class Analytics(Executor):
 
     def __init__(self, config):
         '''Hide the constructor for the utility class.'''
+        self.__config = config
         self.__desc_words = DescWords(config)
         self.__hot_spot = HotSpot(config)
+        # The req topics cohe is counted in the following way:
+        # 1) topic_set_pre: values are set to 0
+        # 2) topic_pre: values are updated
+        # 3) topic_set_post: values are evaluated
+        self.__topic_cohe = None
         # The results of the different analytics modules are collected
         # here.
         self.__results = []
         # If one result of one module failed, success is set to False. 
         self.__success = True
 
+    def topics_set_pre(self, topics_set):
+        '''This is call in the TopicsSet pre-phase.'''
+        self.__req_topic_cohe = ReqTopicCohe(self.__config)
+
+    def topics_set_post(self, topics_set):
+        '''This is call in the TopicsSet post-phase.'''
+        # TODO: evaluate req_topic_cohe
+        assert False
+
     def requirement(self, requirement):
         '''This is call in the Requirement phase.'''
         tracer.debug("called: name [%s]" % requirement.get_id())
-        # TODO: Where to sum up things?
 
         for ana_module in [self.__desc_words, self.__hot_spot]:
             success, findings = ana_module.check_requirement(
@@ -40,7 +54,10 @@ class Analytics(Executor):
             if not success:
                 self.__success = False
             print("FINDINGS %s" % findings)
-            self.__results.append(findings)
+            self.__results.extend(findings)
+
+        # For the ReqTopicCohe only the values are updated
+        self.__topic_cohe.update_values(requirement)
 
     def write_analytics_result(self, mstderr):
         '''Writes all the results to the given stream.'''
