@@ -43,51 +43,88 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         # TODO: is this the structure that is needed?
         self.__requirements = {}
 
-# TODO: handle this (remove this???)
-#    def __init__(self, config, input_handler, commit, object_cache, input_mods):
-#        self.__object_cache = object_cache
-#        self.__input_mods = input_mods
-#
-#        self.__read_requirements(input_handler, commit)
+    def __read_one_requirement(self, fileinfo, input_mods, object_cache):
+        '''Read in one requirement from the file info.'''
+        # Check for correct filename
+        if not fileinfo.get_filename().endswith(".req"):
+            tracer.info("skipping file [%s]" % fileinfo.get_filename())
+            return
+        # Handle caching.
+        vcs_id = fileinfo.get_vcs_id()
+        rid = fileinfo.get_filename_sub_part()[:-4]
+        req = object_cache.get("Requirement", vcs_id)
 
-    def read_requirements(self, input_handler, commit, input_mods, 
+        if req == None:
+            file_content = fileinfo.get_content()
+            req = Requirement(file_content, rid, self, input_mods,
+                              self.__config)
+            # Add the requirement to the cache.
+            object_cache.add(vcs_id, "Requirement", req)
+
+        self._adapt_usablility(req)
+
+        if req.is_usable():
+            # Store in the map, so that it is easy to access the
+            # node by id.
+            self.__add_requirement(req)
+            # Also store it in the digraph's node list for simple
+            # access to the digraph algorithms.
+            # TODO: self.nodes.append(req) ?
+        else:
+            self.error(45, "could not be parsed", req.id)
+
+    def __read_all_requirements(self, input_handler, commit, input_mods,
+                                object_cache):
+        '''Read in all the requirements from the input handler.'''
+        fileinfos = input_handler.get_file_infos(commit, "requirements")
+        for fileinfo in fileinfos:
+            self.__read_one_requirement(fileinfo, input_mods, object_cache)
+
+    def __handle_modules_reqdeps(self, input_mods):
+        '''This is mostly the same functionality of similar method of the
+           class Requirement - but with one major difference: for this
+           implementation stop if an error occurred.'''
+        for module in input_mods.reqdeps_sorted:
+            state = module.rewrite(self)
+            if state == False:
+                # Some semantic error occurred.
+                self._set_not_usable()
+                # Do not continue - return immediately, because some
+                # algorithms rely on the correct run from others.
+                return
+
+    def __handle_modules(self, input_mods):
+        '''Handle all modules which are executed on the 
+           requirement set level.'''
+        # Dependencies can be done, if all requirements are successfully
+        # read in.
+        self.__handle_modules_reqdeps(input_mods)
+        # If there was an error, the state flag is set:
+        if not self.is_usable():
+            self.error(43, "there was a problem handling the "
+                       "requirement set modules")
+            return False
+
+        # The must no be left
+        if not self.check_left_tags():
+            self.error(56, "There were errors encountered during parsing "
+                       "and checking - can't continue")
+            return False
+
+        return True
+
+    def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
         '''Reads in all the requirements from the input_handler.'''
         tracer.debug("called")
-        fileinfos = input_handler.get_file_infos(commit, "requirements")
+        self.__read_all_requirements(input_handler, commit, input_mods,
+                                     object_cache)
+        self.__handle_modules(input_mods)
+        assert False
 
-        for fileinfo in fileinfos:
-            # Check for correct filename
-            if not fileinfo.get_filename().endswith(".req"):
-                tracer.info("skipping file [%s]" % fileinfo.get_filename())
-                continue
-            # Handle caching.
-            vcs_id = fileinfo.get_vcs_id()
-            rid = fileinfo.get_filename_sub_part()[:-4]
-            req = object_cache.get("Requirement", vcs_id)
 
-            if req != None:
-                # Double check the id
-                if req.get_id() != rid:
-                    # TODO: exception
-                    assert False
-            else:
-                file_content = fileinfo.get_content()
-                req = Requirement(file_content, rid, self, input_mods, self.__config)
-                # Add the requirement to the cache.
-                object_cache.add(vcs_id, "Requirement", req)
-
-            self._adapt_usablility(req)
-
-            if req.is_usable():
-                # Store in the map, so that it is easy to access the
-                # node by id.
-                self.__add_requirement(req)
-                # Also store it in the digraph's node list for simple
-                # access to the digraph algorithms.
-                # TODO: self.nodes.append(req)
-            else:
-                self.error(45, "could not be parsed", req.id)
+        # TODO: reenable handle_modules(_reqdeps)
+        assert False
 
     def __add_requirement(self, req):
         '''Add requirement to the internal container.'''
@@ -132,24 +169,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         # The analytic modules store the results in this map:
         self.analytics = {}
         self.constraints = {}
-
-    def deprecated_handle_modules(self):
-        # Dependencies can be done, if all requirements are successfully
-        # read in.
-        self.handle_modules_reqdeps()
-        # If there was an error, the state flag is set:
-        if self.state != self.er_fine:
-            self.error(43, "there was a problem handling the "
-                       "requirement set modules")
-            return False
-
-        # The must no be left
-        if not self.check_left_tags():
-            self.error(56, "There were errors encountered during parsing "
-                       "and checking - can't continue")
-            return False
-
-        return True
 
     # Read the whole requirement set from files stored in the
     # filesystem (which is typically the latest version when a repo is
@@ -240,18 +259,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.ts = time.time()
         return everythings_fine
 
-    # This is mostly the same functionallaty of similar method of the
-    # class Requirement - but with one major difference: for this
-    # implementation stop if an error occured.
-    def deprecated_handle_modules_reqdeps(self):
-        for module in self.mods.reqdeps_sorted:
-            state = module.rewrite(self)
-            if state == False:
-                # Some sematic error occured.
-                self.state = self.er_error
-                # Do not continue - return immediately, because some
-                # algorithms rely on the correct run from others.
-                return
 
     def deprecated_check_left_tags(self):
         alls_fine = True
