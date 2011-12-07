@@ -83,9 +83,6 @@ class RDepSolvedBy(Digraph.Node):
            self.config.get_value_default(
                 'requirements.input.dependency_notation', set(["Solved by", ])):
             return True
-
-        assert False
-        # TODO: implement
         return reqset.resolve_solved_by()
 
         # Run through all the requirements and look for the 'Solved

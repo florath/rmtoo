@@ -150,6 +150,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("calling post")
         executor.requirement_set_post(self)
         tracer.debug("finished")
+        
+    def resolve_solved_by(self):
+        '''Step through the internal list of collected requirements and
+           evaluate the 'Solved by'.  This is done by creating the
+           appropriate digraph nodes.'''
+        assert False
 
 
     # EVERYTHING BENEATH IS DEPRECATED!
