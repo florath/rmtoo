@@ -18,6 +18,7 @@ import time
 import codecs
 import operator
 import StringIO
+import json
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraint import Constraint
@@ -26,6 +27,8 @@ from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
+from rmtoo.lib.CE3Set import CE3Set
+from rmtoo.lib.RMTException import RMTException
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -189,8 +192,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         del req.brmo["Solved by"]
         return True
 
-        assert False
-
     def resolve_solved_by(self):
         '''Step through the internal list of collected requirements and
            evaluate the 'Solved by'.  This is done by creating the
@@ -201,9 +202,46 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
                 success = False
-        assert False
         return success
-
+    
+    def __create_local_ce3s(self):
+        '''Create the local Constraint Execution Environments
+           and evaluate the given statements.
+           This method does two things:
+           - evaluating the constraints in the CE3
+           - Resetting the 'Constraints' entry in the requirement
+           (instead of the TextRecord a map of name to constraint
+            object is stored).'''
+        ce3set = CE3Set()
+        for req_name, req in self.__requirements.items():
+            ce3 = CE3()
+            cstrnts = req.get_value("Constraints")
+            if cstrnts != None:
+                sval = json.loads(cstrnts.get_content())
+                cs = {}
+                for s in sval:
+                    ctr_name = self.get_ctr_name(s)
+                    if not ctr_name in reqset.constraints:
+                        raise RMTException(88, "Constraint [%s] does not "
+                                           "exists" % ctr_name)
+                    rcs = reqset.constraints[ctr_name]
+                    ce3.eval(rcs, ctr_name, s)
+                    cs[ctr_name] = rcs
+                req.set_value("Constraints", cs)
+            # Store the fresh create CE3 into the ce3set
+            ce3set.insert(req_name, ce3)
+        return ce3set
+    
+    
+    def resolve_ce3(self):
+        '''Handle the Constraint Execution Environments for this
+           requirement set.'''
+        # The first step is to create local Constraint Execution Environments
+        self.__create_local_ce3s()
+        # Evaluate all the CE3 in topological order
+        self.__unite_ce3s(ce3set)
+        # Store all the CE3s for possible later evaluation
+        assert False
 
 
     # EVERYTHING BENEATH IS DEPRECATED!
