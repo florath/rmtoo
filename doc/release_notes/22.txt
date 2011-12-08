@@ -1,6 +1,14 @@
 User visible changes
 --------------------
 
+Drop concept of one master requirement.
+(This concept maked it impossible to include complete projects into
+other projects: in this case there were some master requirements.)
+
+Added (optional) logging of current actions / events. 
+This makes it much easier for the user and also the support to find
+problems. 
+
 Internal Changes
 ----------------
 

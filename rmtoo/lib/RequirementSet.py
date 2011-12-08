@@ -150,12 +150,60 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("calling post")
         executor.requirement_set_post(self)
         tracer.debug("finished")
-        
+
+    def __resolve_solved_by_one_req(self, req):
+        '''Resolve the 'Solved by' for one requirement.'''
+        # It is a 'normal' case when there is no 'Solved by' (until now).
+        if "Solved by" not in req.brmo:
+            return True
+
+        content = req.brmo["Solved by"].get_content()
+        # If available, it must not empty
+        if len(content) == 0:
+            self.error(77, "'Solved by' field has length 0", req.id)
+            return False
+
+        # Step through the list
+        dep_list = content.split()
+        for dep in dep_list:
+            if dep not in self.__requirements:
+                self.error(74, "'Solved by' points to a "
+                           "non-existing requirement '%s'" % dep, req.get_id())
+                return False
+            # It is not allowed to have self-references: it does not
+            # make any sense, that a requirement references itself.
+            if dep == req.id:
+                self.error(75, "'Solved by' points to the "
+                           "requirement itself", req.id)
+                return False
+
+            # Mark down the depends on...
+            dep_req = self.__requirements[dep]
+            # This is exactly the other way as used in the 'Depends on'
+            req.incoming.append(dep_req)
+            # ... and also the other direction: in the pointed node
+            # mark that the current node points to this.
+            dep_req.outgoing.append(req)
+
+        # Delete the original tag
+        del req.brmo["Solved by"]
+        return True
+
+        assert False
+
     def resolve_solved_by(self):
         '''Step through the internal list of collected requirements and
            evaluate the 'Solved by'.  This is done by creating the
            appropriate digraph nodes.'''
+        # Run through all the requirements and look for the 'Solved
+        # by'
+        success = True
+        for req in self.__requirements.values():
+            if not self.__resolve_solved_by_one_req(req):
+                success = False
         assert False
+        return success
+
 
 
     # EVERYTHING BENEATH IS DEPRECATED!
