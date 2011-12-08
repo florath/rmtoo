@@ -28,7 +28,9 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.CE3Set import CE3Set
+from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.digraph.TopologicalSort import topological_sort
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -203,7 +205,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             if not self.__resolve_solved_by_one_req(req):
                 success = False
         return success
-    
+
     def __create_local_ce3s(self):
         '''Create the local Constraint Execution Environments
            and evaluate the given statements.
@@ -212,7 +214,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            - Resetting the 'Constraints' entry in the requirement
            (instead of the TextRecord a map of name to constraint
             object is stored).'''
-        ce3set = CE3Set()
+        tracer.debug("called")
+        self.__ce3set = CE3Set()
         for req_name, req in self.__requirements.items():
             ce3 = CE3()
             cstrnts = req.get_value("Constraints")
@@ -229,20 +232,29 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                     cs[ctr_name] = rcs
                 req.set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
-            ce3set.insert(req_name, ce3)
-        return ce3set
-    
-    
+            self.__ce3set.insert(req_name, ce3)
+
+    def __unite_ce3s(self):
+        '''Execute the unification of the CE3s:
+           From the list of all incoming nodes and the value of the 
+           current node compute the new value of the current node
+           The ce3s must be executed in topological order.'''
+        ce3tsort = topological_sort(self)
+        for r in ce3tsort:
+            # Have a look for incoming nodes
+            ince3s = []
+            for i in r.outgoing:
+                ince3s.append(self.__ce3set.get(i.get_id()))
+            lce3 = self.__ce3set.get(r.get_id())
+            lce3.unite(ince3s)
+
     def resolve_ce3(self):
         '''Handle the Constraint Execution Environments for this
            requirement set.'''
         # The first step is to create local Constraint Execution Environments
         self.__create_local_ce3s()
         # Evaluate all the CE3 in topological order
-        self.__unite_ce3s(ce3set)
-        # Store all the CE3s for possible later evaluation
-        assert False
-
+        self.__unite_ce3s()
 
     # EVERYTHING BENEATH IS DEPRECATED!
 
