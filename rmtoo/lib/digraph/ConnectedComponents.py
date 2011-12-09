@@ -34,11 +34,13 @@ class CC_Components:
         self.cs.append(set([n]))
 
     def find(self, n):
+        print("find [%s]" % n.name)
         c = 0
         for i in self.cs:
             if n in i:
                 return c, i
             c += 1
+        assert False
         # Node not found
         raise RMTException(68, "Node [%s] not found" % n)
 
@@ -59,6 +61,7 @@ def connected_components(dg):
     components = CC_Components()
 
     for n in dg.nodes:
+        print("Node [%s]" % n.name)
         # Each node itself is a separate component
         components.add_component(n)
 

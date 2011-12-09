@@ -158,6 +158,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
 
     def __resolve_solved_by_one_req(self, req):
         '''Resolve the 'Solved by' for one requirement.'''
+        tracer.debug("called: requirement id [%s]" % req.get_id())
         # It is a 'normal' case when there is no 'Solved by' (until now).
         if "Solved by" not in req.brmo:
             return True
@@ -168,8 +169,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             self.error(77, "'Solved by' field has length 0", req.id)
             return False
 
+        # Add node to digraph
+        self.add_node(req)
+
         # Step through the list
         dep_list = content.split()
+        tracer.debug("dependent list [%s]" % dep_list)
         for dep in dep_list:
             if dep not in self.__requirements:
                 self.error(74, "'Solved by' points to a "
@@ -185,10 +190,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # Mark down the depends on...
             dep_req = self.__requirements[dep]
             # This is exactly the other way as used in the 'Depends on'
-            req.incoming.append(dep_req)
-            # ... and also the other direction: in the pointed node
-            # mark that the current node points to this.
-            dep_req.outgoing.append(req)
+            Digraph.create_edge(dep_req, req)
 
         # Delete the original tag
         del req.brmo["Solved by"]
@@ -198,12 +200,14 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Step through the internal list of collected requirements and
            evaluate the 'Solved by'.  This is done by creating the
            appropriate digraph nodes.'''
+        tracer.debug("called")
         # Run through all the requirements and look for the 'Solved
         # by'
         success = True
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
                 success = False
+        print("rsb DG [%s]" % self.output_to_dict())
         return success
 
     def __create_local_ce3s(self):

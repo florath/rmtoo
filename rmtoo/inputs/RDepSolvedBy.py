@@ -31,5 +31,6 @@ class RDepSolvedBy(Digraph.Node):
         if self.tag not in \
            self.config.get_value_default(
                 'requirements.input.dependency_notation', set(["Solved by", ])):
+            assert False
             return True
         return reqset.resolve_solved_by()
