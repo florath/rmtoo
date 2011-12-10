@@ -99,22 +99,36 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 # algorithms rely on the correct run from others.
                 return
 
+    def __all_tags_handled(self):
+        '''Returns true iff all the different tags are handled.'''
+        all_handled = True
+        for req in self.nodes:
+            if len(req.brmo) > 0:
+                self.error(57, "No tag handler found for tag(s) '%s' "
+                           "- Hint: typo in tag(s)?" % req.brmo.keys(),
+                           req.get_id())
+                all_handled = False
+        return all_handled
+
     def __handle_modules(self, input_mods):
         '''Handle all modules which are executed on the 
            requirement set level.'''
+        tracer.debug("Called.")
         # Dependencies can be done, if all requirements are successfully
         # read in.
         self.__handle_modules_reqdeps(input_mods)
         # If there was an error, the state flag is set:
+        tracer.debug("Check usability.")
         if not self.is_usable():
             self.error(43, "there was a problem handling the "
                        "requirement set modules")
             return False
 
         # The must no be left
-        if not self.check_left_tags():
+        tracer.debug("Check all handled.")
+        if not self.__all_tags_handled():
             self.error(56, "There were errors encountered during parsing "
-                       "and checking - can't continue")
+                       "and checking - can't continue.")
             return False
 
         return True
@@ -382,16 +396,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.ts = time.time()
         return everythings_fine
 
-
-    def deprecated_check_left_tags(self):
-        alls_fine = True
-        for r in self.reqs:
-            rr = self.reqs[r]
-            if len(rr.brmo) > 0:
-                self.error(57, "No tag handler found for tag(s) '%s' "
-                           "- Hint: typo in tag(s)?" % rr.brmo.keys(), rr.id)
-                alls_fine = False
-        return alls_fine
 
     # Return the timestamp of the whole Requirment Set.
     # This is the current time for FILES and the checkin point of time
