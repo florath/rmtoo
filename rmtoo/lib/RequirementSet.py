@@ -287,6 +287,14 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Returns the number of requirements.'''
         return len(self.__requirements)
 
+    def get_all_requirement_ids(self):
+        '''Return all requirement ids of the requirement set.'''
+        return self.__requirements.keys()
+
+    def get_requirement(self, rid):
+        '''Return the requirement with the given id.'''
+        return self.__requirements[rid]
+
     # EVERYTHING BENEATH IS DEPRECATED!
 
     deprecated__er_fine = 0

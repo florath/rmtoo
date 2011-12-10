@@ -101,6 +101,10 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         executor.topics_set_post(self)
         tracer.info("Finished.")
 
+    def get_requirement_set(self):
+        '''Returns the requirement set for the whole topic set.'''
+        return self.__requirement_set
+
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

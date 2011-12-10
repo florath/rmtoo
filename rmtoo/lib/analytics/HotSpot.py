@@ -22,7 +22,6 @@ class HotSpot(Base):
         Base.__init__(self)
 
     def requirement(self, req):
-        success = True
         if len(req.incoming) > HotSpot.max_incoming:
             self.add_result(
                 Result("HotSpot", req.get_id(), -10,

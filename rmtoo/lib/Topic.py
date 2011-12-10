@@ -56,6 +56,7 @@ class Topic(Digraph.Node):
         self.__config = config
         tracer.info("Called: name [%s]." % tname)
         self.__digraph = digraph
+        self.__requirements = None
         self.__read(tname, input_handler, commit, file_info, req_set)
 
     def get_topic_names_flattened(self):
@@ -78,6 +79,9 @@ class Topic(Digraph.Node):
         executor.topic_post(self)
         tracer.info("Finished [%s]." % self.name)
 
+    def get_requirement_set(self):
+        '''Returns the requirement set for this topic.'''
+        return self.__requirements
 
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):

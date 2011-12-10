@@ -21,7 +21,7 @@ class Analytics:
     @staticmethod
     def execute(config, topic_continuum_set, mstderr):
         success = True
-        for analytic_type in [DescWords, HotSpot, ReqTopicCohe]:
+        for analytic_type in [DescWords, HotSpot, ReqTopicCohe, TopicCohe]:
             analytics = analytic_type(config)
             topic_continuum_set.execute(analytics)
             analytics.write_result(mstderr)
