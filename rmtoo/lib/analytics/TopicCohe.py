@@ -9,10 +9,20 @@
  For licensing details see COPYING
 '''
 
-class TopicCohe:
+from rmtoo.lib.analytics.Base import Base
+from rmtoo.lib.analytics.Result import Result
+
+class TopicCohe(Base):
 
     def __init__(self, config):
         '''Sets up the TopicCohe object for use.'''
+        Base.__init__(self)
+        self.__req2topics = {}
+#        self.__tcnt = {}
+
+    def topic_pre(self, topic):
+        '''Collect the relation between requirement and topic.'''
+        #for req in topic.
         pass
 
     @staticmethod
@@ -68,9 +78,11 @@ class TopicCohe:
             # outgoing.
             # Use the requirements from the topic here.
             print("***** TODO: count TopicCohe")
-#            for req in topic_set.reqset.nodes:
-#                TopicCohe.count(tcnt, topic_set, req.get_value("Topic"),
-#                                req.incoming)
+            assert False
+            # Correct:?????
+            for req in topic_set.reqset.nodes:
+                TopicCohe.count(tcnt, topic_set, req.get_value("Topic"),
+                                req.incoming)
 
             for k, t in tcnt.iteritems():
                 if t[0] <= t[1]:

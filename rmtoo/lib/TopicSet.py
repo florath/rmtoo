@@ -75,12 +75,12 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
            This one known the base topic and therefore all dependent 
            sub-topics - the algorithm reading in the requirements
            just takes all the available files.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
 
         topic_base = self.__input_handler.get_topic_base_file_info(self.__commit)
-        tracer.debug("topic base [%s]" % topic_base)
+        tracer.debug("Topic base [%s]." % topic_base)
         return Topic(self, self.__config, self.__input_handler,
-                     self.__commit, topic_base)
+                     self.__commit, topic_base, self.__complete_requirement_set)
 
     def __restrict_requirements_set(self):
         '''Restricts all the available requirements (as stored in the 

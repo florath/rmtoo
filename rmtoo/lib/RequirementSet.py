@@ -46,7 +46,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         UsableFlag.__init__(self)
         self.__config = config
         self.__master_nodes = None
-        # TODO: is this the structure that is needed?
         self.__requirements = {}
 
     def __read_one_requirement(self, fileinfo, input_mods, object_cache):
@@ -283,6 +282,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_master_nodes(self):
         '''Return the available master nodes.'''
         return self.__master_nodes
+
+    def get_requirements_cnt(self):
+        '''Returns the number of requirements.'''
+        return len(self.__requirements)
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

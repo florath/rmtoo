@@ -19,14 +19,14 @@ from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
 
 class Topic(Digraph.Node):
-    '''Each topic has a level - which indicates the identation of the text
+    '''Each topic has a level - which indicates the idendation of the text
        element. 
        Each topic does link to it's super-topic.  This is the way to detect
        cycles. 
        This needs to be a digraph node, to handle dependencies within the
        topics - e.g. handling of makefile dependencies.'''
-    
-    def __read(self, tname, input_handler, commit, file_info):
+
+    def __read(self, tname, input_handler, commit, file_info, req_set):
         '''Read in the topic and create all the tags.'''
         self.__tags = TxtRecord.from_string(file_info.get_content(),
                                            tname, input_handler.get_txt_io_config())
@@ -36,38 +36,48 @@ class Topic(Digraph.Node):
                 lfile_info = input_handler.get_file_info_with_type(
                             commit, "topics", tag.get_content() + ".tic")
                 ntopic = Topic(self.__digraph, self.__config, input_handler,
-                               commit, lfile_info)
+                               commit, lfile_info, req_set)
                 self.__digraph.add_node(ntopic)
                 Digraph.create_edge(self, ntopic)
-    
-    def __init__(self, digraph, config, input_handler, commit, file_info):
+            elif tag.get_tag() == "IncludeRequirements":
+                if tag.get_content() != "full":
+                    raise RMTException(113, "IncludeRequirements value not "
+                                       "supported [%s]" % tag.get_content(),
+                           self.name)
+                self.__requirements = req_set.restrict_to_topics(tname)
+                tracer.debug("Found [%d] requirements for topic [%s]."
+                             % (self.__requirements.get_requirements_cnt(),
+                                tname))
+
+    def __init__(self, digraph, config, input_handler, commit, file_info,
+                 req_set):
         tname = file_info.get_filename_sub_part()[:-4]
         Digraph.Node.__init__(self, tname)
         self.__config = config
-        tracer.info("called: name [%s]" % tname)
+        tracer.info("Called: name [%s]." % tname)
         self.__digraph = digraph
-        self.__read(tname, input_handler, commit, file_info)
+        self.__read(tname, input_handler, commit, file_info, req_set)
 
     def get_topic_names_flattened(self):
         '''Returns all the names of the complete topic hirarchy in one set.'''
-        tracer.debug("called: name [%s]" % self.name) 
+        tracer.debug("Called: name [%s]." % self.name)
         result = set()
         result.add(self.name)
         for topic in self.outgoing:
             result = result.union(topic.get_topic_names_flattened())
         return result
-    
+
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuum.'''
-        tracer.debug("calling pre [%s]" % self.name)
+        tracer.debug("Calling pre [%s]." % self.name)
         executor.topic_pre(self)
-        tracer.info("calling sub [%s]" % self.name)
+        tracer.info("Calling sub [%s]." % self.name)
         for subtopic in self.outgoing:
             subtopic.execute(executor)
-        tracer.info("calling post [%s]" % self.name)
+        tracer.info("Calling post [%s]." % self.name)
         executor.topic_post(self)
-        tracer.info("finished [%s]" % self.name)
-        
+        tracer.info("Finished [%s]." % self.name)
+
 
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
