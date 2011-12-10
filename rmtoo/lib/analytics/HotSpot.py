@@ -11,30 +11,29 @@
 '''
 
 from rmtoo.lib.analytics.Result import Result
+from rmtoo.lib.analytics.Base import Base
 
-class HotSpot:
+class HotSpot(Base):
 
     max_incoming = 7
     max_outgoing = 4
 
     def __init__(self, config):
-        pass
+        Base.__init__(self)
 
-    def check_requirement(self, lname, req):
+    def requirement(self, req):
         success = True
-        findings = []
         if len(req.incoming) > HotSpot.max_incoming:
-            findings.append(
-                Result("HotSpot", lname, -10,
+            self.add_result(
+                Result("HotSpot", req.get_id(), -10,
                     ["Number of incoming links is too high: %d" %
                        len(req.incoming)]))
-            success = False
+            self.set_failed()
 
         if len(req.outgoing) > HotSpot.max_outgoing:
-            findings.append(
-                Result("HotSpot", lname, -10,
+            self.add_result(
+                Result("HotSpot", req.get_id(), -10,
                  ["Number of outgoing links is too high: %d" %
                     len(req.outgoing)]))
-            success = False
+            self.set_failed()
 
-        return success, findings
