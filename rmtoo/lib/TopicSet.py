@@ -86,24 +86,20 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         '''Restricts all the available requirements (as stored in the 
            RequirementsSet variable) to the topics.'''
         available_topics = self.__topic.get_topic_names_flattened()
-        # TODO: Build up the complete digraph (also)
-        #  This is needed for the different output modules
-        #  as well as for the analytics
-        assert False
         return self.__complete_requirement_set \
             .restrict_to_topics(available_topics)
 
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsSet.'''
-        tracer.info("calling pre")
+        tracer.info("Calling pre.")
         executor.topics_set_pre(self)
-        tracer.info("calling sub topic")
+        tracer.info("Calling sub topic.")
         self.__topic.execute(executor)
-        tracer.info("calling sub requirement set")
+        tracer.info("Calling sub requirement set.")
         self.__requirement_set.execute(executor)
-        tracer.info("calling post")
+        tracer.info("Calling post.")
         executor.topics_set_post(self)
-        tracer.info("finished")
+        tracer.info("Finished.")
 
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!

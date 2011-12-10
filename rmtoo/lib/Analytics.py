@@ -28,7 +28,7 @@ class Analytics(Executor):
         # 1) topic_set_pre: values are set to 0
         # 2) topic_pre: values are updated
         # 3) topic_set_post: values are evaluated
-        self.__topic_cohe = None
+        self.__req_topic_cohe = None
         # The results of the different analytics modules are collected
         # here.
         self.__results = []
@@ -57,7 +57,7 @@ class Analytics(Executor):
             self.__results.extend(findings)
 
         # For the ReqTopicCohe only the values are updated
-        self.__topic_cohe.update_values(requirement)
+        self.__req_topic_cohe.update_values(requirement)
 
     def write_analytics_result(self, mstderr):
         '''Writes all the results to the given stream.'''
