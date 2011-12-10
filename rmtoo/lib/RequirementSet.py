@@ -159,6 +159,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def __resolve_solved_by_one_req(self, req):
         '''Resolve the 'Solved by' for one requirement.'''
         tracer.debug("called: requirement id [%s]" % req.get_id())
+
+        # Add node to digraph
+        self.add_node(req)
+
         # It is a 'normal' case when there is no 'Solved by' (until now).
         if "Solved by" not in req.brmo:
             return True
@@ -168,9 +172,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         if len(content) == 0:
             self.error(77, "'Solved by' field has length 0", req.id)
             return False
-
-        # Add node to digraph
-        self.add_node(req)
 
         # Step through the list
         dep_list = content.split()
@@ -207,7 +208,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
                 success = False
-        print("rsb DG [%s]" % self.output_to_dict())
         return success
 
     def __create_local_ce3s(self):
