@@ -18,8 +18,9 @@ import re
 
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.analytics.Result import Result
+from rmtoo.lib.analytics.Base import Base
 
-class DescWords:
+class DescWords(Base):
 
     # This is the assessment of each word (better regular expression).
     # If the regular expression matches, the value is added.
@@ -69,6 +70,7 @@ class DescWords:
 
     def __init__(self, config):
         '''Sets up the DescWord object for use.'''
+        Base.__init__(self)
         self.lwords = DescWords.get_lang(config)
 
     @staticmethod
@@ -98,10 +100,12 @@ class DescWords:
                 # Note the result of this test in the requirement itself.
         return Result('DescWords', lname, level, log)
 
-    def check_requirement(self, lname, req):
+    def requirement(self, requirement):
         '''Checks all the requirements.
            If the result is positive, it is good.'''
-        #print("DescWords called")
-        result = DescWords.analyse(lname,
-                 self.lwords, req.get_value("Description").get_content())
-        return result.get_value() >= 0, [result]
+        result = DescWords.analyse(requirement.get_id(),
+                 self.lwords,
+                 requirement.get_value("Description").get_content())
+        if result.get_value() < 0:
+            self.set_failed()
+        self.add_result(result)

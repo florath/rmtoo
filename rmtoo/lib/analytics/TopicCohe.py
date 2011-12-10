@@ -1,14 +1,19 @@
-#
-# Analytics: TopicCohe
-#
-#  Coherence of one topic.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Coherence of one topic.
+
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 class TopicCohe:
+
+    def __init__(self, config):
+        '''Sets up the TopicCohe object for use.'''
+        pass
 
     @staticmethod
     def add_releation(tcnt, topic, ltopic):

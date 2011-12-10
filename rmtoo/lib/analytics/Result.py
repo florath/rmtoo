@@ -21,6 +21,17 @@ class Result:
     def get_value(self):
         return self.__analytics_value
 
+    def write_error(self, mfd):
+        '''Write out an error - if the result is an error.'''
+        if self.__analytics_value >= 0:
+            return
+        mfd.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
+                  % (self.__analytics_name, self.__object_path_name,
+                     self.__analytics_value))
+        for msg in self.__message_list:
+            mfd.write("+++ Error:Analytics:%s:%s:%s\n" %
+                      (self.__analytics_name, self.__object_path_name, msg))
+
     # TODO: Better output
     def __str__(self):
         return "analytics name [%s] object path [%s] value [%d] "\

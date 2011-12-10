@@ -61,9 +61,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     # The requirements are syntactically correct now: therefore it is
     # possible to do some analytics on them.
     # Note that analytics are only run on the latest version.
-    analytics = Analytics(config)
-    topic_continuum_set.execute(analytics)
-    analytics.write_analytics_result(mstderr)
+    Analytics.execute(config, topic_continuum_set, mstderr)
 
     if not Analytics.run(config, latest_topicsc):
         latest_topicsc.write_log(mstderr)

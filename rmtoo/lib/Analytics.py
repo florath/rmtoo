@@ -13,16 +13,24 @@ from rmtoo.lib.analytics.HotSpot import HotSpot
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
-from rmtoo.lib.Executor import Executor
 from rmtoo.lib.logging.EventLogging import tracer
 
-class Analytics(Executor):
+class Analytics:
     '''Collection class which calls the other analytics modules.'''
+
+    @staticmethod
+    def execute(config, topic_continuum_set, mstderr):
+        success = True
+        for analytic_type in [DescWords, HotSpot, ReqTopicCohe]:
+            analytics = analytic_type(config)
+            topic_continuum_set.execute(analytics)
+            analytics.write_result(mstderr)
+            if not analytics.get_success():
+                success = False
 
     def __init__(self, config):
         '''Hide the constructor for the utility class.'''
         self.__config = config
-        self.__desc_words = DescWords(config)
         self.__hot_spot = HotSpot(config)
         self.__req_topic_cohe = ReqTopicCohe(config)
         # The req topics cohe is counted in the following way:
@@ -38,11 +46,15 @@ class Analytics(Executor):
 
     def topics_set_pre(self, topics_set):
         '''This is call in the TopicsSet pre-phase.'''
-        pass
+        self.__topic_cohe = TopicCohe(self.__config)
 
     def topics_set_post(self, topics_set):
         '''This is call in the TopicsSet post-phase.'''
-        # TODO: evaluate _topic_cohe
+        # TODO: evaluate self.__topic_cohe
+        assert False
+
+    def topic_post(self, topic):
+        '''This is call in the Topic post-phase.'''
         assert False
 
     def requirement(self, requirement):
