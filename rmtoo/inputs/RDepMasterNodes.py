@@ -1,0 +1,29 @@
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Computes all the different master nodes.
+   
+ (c) 2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
+
+from rmtoo.lib.digraph.Digraph import Digraph
+
+class RDepMasterNodes(Digraph.Node):
+    depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
+                  "RDepOneComponent", "RDepSolvedBy"]
+
+    def __init__(self, config):
+        Digraph.Node.__init__(self, "RDepMasterNodes")
+        self.config = config
+
+    def type(self):
+        return set(["reqdeps", ])
+
+    def set_modules(self, mods):
+        self.mods = mods
+
+    def rewrite(self, reqset):
+        return reqset.find_master_nodes()

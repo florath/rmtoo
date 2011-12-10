@@ -45,6 +45,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self.__config = config
+        self.__master_nodes = None
         # TODO: is this the structure that is needed?
         self.__requirements = {}
 
@@ -259,6 +260,20 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__create_local_ce3s()
         # Evaluate all the CE3 in topological order
         self.__unite_ce3s()
+
+    def find_master_nodes(self):
+        '''Find all the available master nodes and stored them in
+           a class field.'''
+        self.__master_nodes = set()
+        for req in self.nodes:
+            if len(req.outgoing) == 0:
+                tracer.debug("Found master nodes [%s]" % req.get_id())
+                self.__master_nodes.add(req)
+        tracer.info("Found [%d] master nodes" % len(self.__master_nodes))
+
+    def get_master_nodes(self):
+        '''Return the available master nodes.'''
+        return self.__master_nodes
 
     # EVERYTHING BENEATH IS DEPRECATED!
 

@@ -19,7 +19,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 #
 class RDepPriority(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
-                  "RDepOneComponent", "RDepSolvedBy"]
+                  "RDepOneComponent", "RDepSolvedBy", "RDepMasterNodes"]
 
     def __init__(self, config):
         Digraph.Node.__init__(self, "RDepPriority")
@@ -53,4 +53,5 @@ class RDepPriority(Digraph.Node):
 
         # Start at the root (master) node and evaluate all nodes
         # there.
-        handle_priorization(reqset.graph_master_node, 1.0)
+        for req in reqset.get_master_nodes():
+            handle_priorization(req, 1.0)
