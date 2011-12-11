@@ -7,7 +7,7 @@
   This can be used for the analyse module, as well as for the different
   output modules.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

@@ -7,7 +7,7 @@
   TopicSets handled.
   This object handles the collection of TopicSets. 
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -37,9 +37,7 @@ class TopicContinuum(UsableFlag):
         self.__object_cache = object_cache
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
-        # TODO: Read in the output spec??
-        # OR: Store the ts_config for later use.
-        assert False
+        self.__ts_config = ts_config
 
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
@@ -86,6 +84,9 @@ class TopicContinuum(UsableFlag):
         tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)
         tracer.info("Finished [%s]." % self.__name)
+
+    def get_output_config(self):
+        return self.__ts_config["output"]
 
     ### EVERYTHING BENEATH IN DEPRECATED
 
