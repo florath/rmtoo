@@ -4,7 +4,7 @@
    
   Heuristics to check the quality of the requirements. 
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -13,7 +13,6 @@ from rmtoo.lib.analytics.HotSpot import HotSpot
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
-from rmtoo.lib.logging.EventLogging import tracer
 
 class Analytics:
     '''Collection class which calls the other analytics modules.'''

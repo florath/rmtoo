@@ -16,7 +16,6 @@ from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
-from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -25,7 +24,7 @@ class TopicContinuum(UsableFlag):
     def __init__(self, ts_name, config, ts_config, object_cache, input_mods):
         UsableFlag.__init__(self)
         self.__name = ts_name
-        tracer.info("called: name [%s]" % self.__name)
+        tracer.info("Called: name [%s]." % self.__name)
         self.__config = config
         self.__topic_sets = {}
         # This is the list of all version control system ids.
@@ -38,6 +37,9 @@ class TopicContinuum(UsableFlag):
         self.__object_cache = object_cache
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
+        # TODO: Read in the output spec??
+        # OR: Store the ts_config for later use.
+        assert False
 
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
@@ -46,11 +48,11 @@ class TopicContinuum(UsableFlag):
         for commit in commits:
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
-            tracer.debug("read topics with oid [%s]" % topic_set_vcs_id)
+            tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
             topic_set = self.__object_cache.get("TopicSet", topic_set_vcs_id)
 
             if topic_set == None:
-                tracer.debug("TopicSet with ID [%s] not in cache"
+                tracer.debug("TopicSet with ID [%s] not in cache."
                              % topic_set_vcs_id)
                 topic_set = TopicSet(self.__config, input_handler, commit,
                                      self.__object_cache, self.__input_mods)
@@ -61,10 +63,10 @@ class TopicContinuum(UsableFlag):
 
     def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         for source in ts_config['sources']:
             input_handler = Factory.create(source[0], source[1])
-            if input_handler==None:
+            if input_handler == None:
                 continue
             commits = input_handler.get_commits()
             self.__read_commits(input_handler, commits)
@@ -73,17 +75,17 @@ class TopicContinuum(UsableFlag):
         '''Add one to the end of the continuum container.'''
         self.__vcs_ids.append(cid)
         self.__topic_sets[cid] = topic_set_collection
-        
+
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuum.'''
-        tracer.info("calling pre [%s]" % self.__name)
+        tracer.info("Calling pre [%s]." % self.__name)
         executor.topics_continuum_pre(self)
-        tracer.info("calling sub [%s]" % self.__name)
+        tracer.info("Calling sub [%s]." % self.__name)
         for continuum in self.__topic_sets.values():
             continuum.execute(executor)
-        tracer.info("calling post [%s]" % self.__name)
+        tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)
-        tracer.info("finished [%s]" % self.__name)
+        tracer.info("Finished [%s]." % self.__name)
 
     ### EVERYTHING BENEATH IN DEPRECATED
 

@@ -21,6 +21,7 @@ from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
+from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
 
 def execute_cmds(config, input_mods, mstdout, mstderr):
@@ -66,8 +67,8 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
             return False
 
     # Output everything
-    topic_continuum.output()
-
+    Output.execute(config, topic_continuum_set, mstderr)
+    assert False
     return True
 
 def main_impl(args, mstdout, mstderr):

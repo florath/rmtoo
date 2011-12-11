@@ -11,9 +11,6 @@
  For licensing details see COPYING
 '''
 
-import os
-from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.VersionControlSystem import VersionControlSystem
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
@@ -52,7 +49,7 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
                                self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
             self._adapt_usablility(topic_cont)
-            
+
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
         tracer.info("calling pre")
@@ -63,4 +60,4 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         tracer.info("calling post")
         executor.topics_continuum_set_post(self)
         tracer.info("finished")
-        
+

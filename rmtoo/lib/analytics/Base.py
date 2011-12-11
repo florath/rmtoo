@@ -37,6 +37,6 @@ class Base(Executor):
         self.__results.append(result)
 
     def write_result(self, mfd):
-        '''Write the result to the given file descriptior.'''
+        '''Write the result to the given file descriptor.'''
         for result in self.__results:
             result.write_error(mfd)
