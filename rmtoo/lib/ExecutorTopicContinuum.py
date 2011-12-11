@@ -38,11 +38,11 @@ class ExecutorTopicContinuum:
         '''This is call in the Topic post-phase.'''
         return
 
-    def requirement_set_pre(self, requirements_set):
+    def requirement_set_pre(self, requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         return
 
-    def requirement_set_post(self, requirements_set):
+    def requirement_set_post(self, requirement_set):
         '''This is call in the RequirementSet post-phase.'''
         return
 

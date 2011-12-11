@@ -34,9 +34,7 @@ class Output(Executor):
         '''Creates the module object.'''
         output_module = self.__load_output_module(output_name)
         # Create the constructor object
-        cstrt = eval("output_module.%s" % output_name)
-        # Call the constructor to get an object.
-        return cstrt()
+        return eval("output_module.%s" % output_name)
 
     def topics_continuum_pre(self, topic_continuum):
         '''This is call in the TopicsContinuum pre-phase.'''
@@ -46,7 +44,11 @@ class Output(Executor):
 
         for oconfig_name, oconfig in output_config.iteritems():
             print("NAME %s  Inhalt %s " % (oconfig_name, oconfig))
-            output_module = self.__create_output_module(oconfig_name)
+            output_module_cstr = self.__create_output_module(oconfig_name)
+            for cfg in oconfig:
+                output_obj = output_module_cstr(cfg)
+                topic_continuum.execute(output_obj)
+
         assert False
 
     @staticmethod

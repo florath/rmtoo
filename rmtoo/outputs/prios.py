@@ -1,19 +1,22 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-#  prios output class
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Output handler prios.
+  
+ (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 ###
 ### ToDo:
 ###  Store the whole requirements instead of some other date in
 ###  the different lists.
 ###
+
+from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 import datetime
 import operator
@@ -26,59 +29,50 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
 from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
-from rmtoo.lib.StdParams import StdParams
+from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.configuration.Cfg import Cfg
 
-class prios:
+class prios(StdOutputParams, ExecutorTopicContinuum):
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.cfg = Cfg(params)
-        StdParams.parse(self, params)
+    def __init__(self, oconfig):
+        '''Create a prios output object.'''
+        StdOutputParams.__init__(self, oconfig)
+        tracer.debug("Called.")
 
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest())
-
-    def get_reqs_impl_detail(self):
-        # This is mostly done at this level - because they must be
-        # sorted.
+    def __get_reqs_impl_detail(self, requirement_set):
+        '''Return the implementation details of the requirements.'''
         prios_impl = []
         prios_detail = []
         prios_selected = []
         prios_assigned = []
         prios_finished = []
 
-        print("***** TODO: OUTPUT PRIOS")
-#        for tr in self.topic_set.reqset.nodes:
-#            try:
-#                status = tr.get_status()
-#                if isinstance(status, RequirementStatusNotDone):
-#                    rclass = tr.values["Class"]
-#                    if isinstance(rclass, ClassTypeImplementable):
-#                        prios_impl.append([tr.get_prio(), tr.id])
-#                    elif isinstance(rclass, ClassTypeSelected):
-#                        prios_selected.append([tr.get_prio(), tr.id])
-#                    else:
-#                        prios_detail.append([tr.get_prio(), tr.id])
-#                elif isinstance(status, RequirementStatusAssigned):
-#                    prios_assigned.append(tr)
-#                elif isinstance(status, RequirementStatusFinished):
-#                    prios_finished.append(tr)
-#            except KeyError, ke:
-#                raise RMTException(35, "%s: KeyError: %s" % (tr.id, ke))
+        for tr in requirement_set.nodes:
+            try:
+                status = tr.get_status()
+                if isinstance(status, RequirementStatusNotDone):
+                    rclass = tr.values["Class"]
+                    if isinstance(rclass, ClassTypeImplementable):
+                        prios_impl.append([tr.get_prio(), tr.id])
+                    elif isinstance(rclass, ClassTypeSelected):
+                        prios_selected.append([tr.get_prio(), tr.id])
+                    else:
+                        prios_detail.append([tr.get_prio(), tr.id])
+                elif isinstance(status, RequirementStatusAssigned):
+                    prios_assigned.append(tr)
+                elif isinstance(status, RequirementStatusFinished):
+                    prios_finished.append(tr)
+            except KeyError, ke:
+                raise RMTException(35, "%s: KeyError: %s" % (tr.id, ke))
 
         return prios_impl, prios_detail, prios_selected, \
             prios_assigned, prios_finished
 
-    def output_reqset(self, reqset):
+    def requirement_set_pre(self, requirement_set):
+        '''This is call in the RequirementSet pre-phase.'''
         prios_impl, prios_detail, prios_selected, \
-            prios_assigned, prios_finished  \
- = self.get_reqs_impl_detail()
+            prios_assigned, prios_finished = \
+            self.__get_reqs_impl_detail(requirement_set)
 
         # Sort them after prio
         sprios_impl = sorted(prios_impl, key=operator.itemgetter(0, 1),
@@ -95,7 +89,7 @@ class prios:
             reverse=False)
 
         # Write everything to a file.
-        f = file(self.output_filename, "w")
+        f = file(self._output_filename, "w")
 
         def get_efe(tr):
             if tr.get_value("Effort estimation") != None:
@@ -113,8 +107,8 @@ class prios:
                     "\\textbf{Sum} \\\ \hline\endhead\n")
             s = 0
             for p in l:
-                if reqset.reqs[p[1]].get_value("Effort estimation") != None:
-                    efest = reqset.reqs[p[1]].get_value("Effort estimation")
+                if requirement_set.reqs[p[1]].get_value("Effort estimation") != None:
+                    efest = requirement_set.reqs[p[1]].get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)
                 else:
@@ -177,13 +171,13 @@ class prios:
                               sassigned, sfinished):
             f.write("\section{%s}\n" % name)
             f.write("\\begin{longtable}{rrl}\n")
-            f.write("Start date & %s & \\\ \n" % format_date(self.start_date))
+            f.write("Start date & %s & \\\ \n" % format_date(self._start_date))
 
             # Compute the opens
             sum_open = 0
             for sp in [simpl, sselected]:
                 for p in sp:
-                    sum_open += reqset.reqs[p[1]].get_efe_or_0()
+                    sum_open += requirement_set.reqs[p[1]].get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned
@@ -227,19 +221,19 @@ class prios:
 
                 # Estimated End Date
 
-                rv = Statistics.get_units(self.topic_set.reqset,
-                                          self.start_date, self.end_date)
+                rv = Statistics.get_units(requirement_set,
+                                          self._start_date, self._end_date)
                 x = list(i for i in xrange(0, len(rv)))
                 y = list(x[0] + x[1] for x in rv)
 
-                gradient, intercept, r_value, p_value, std_err \
- = stats.linregress(x, y)
+                gradient, intercept, r_value, p_value, std_err = \
+                     stats.linregress(x, y)
 
                 if gradient >= 0.0:
                     f.write("Estimated End date & unpredictable & \\\ \n")
                 else:
                     d = intercept / -gradient
-                    end_date = self.start_date + datetime.timedelta(d)
+                    end_date = self._start_date + datetime.timedelta(d)
                     f.write("Estimated End date & %s & \\\ \n" % end_date)
 
             f.write("\end{longtable}")
@@ -252,6 +246,20 @@ class prios:
         output_finished_table("Finished", sprios_finished)
         output_statistics("Statistics", sprios_impl, sprios_selected,
                           sprios_detail, sprios_assigned, sprios_finished)
-
-
         f.close()
+
+
+# TODO: EVERYTHING BENEATH IS DEPRECATED!!!
+
+#        self.topic_set = topic_set
+#        self.cfg = Cfg(params)
+#        StdParams.parse(self, params)
+
+    # Create Makefile Dependencies
+    def DEPRECATED_cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+
+    def DEPRECATED_output(self, reqscont):
+        # Currently just pass this to the RequirementSet
+        self.output_reqset(reqscont.continuum_latest())
+

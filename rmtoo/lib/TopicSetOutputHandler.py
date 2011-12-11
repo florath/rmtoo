@@ -15,11 +15,12 @@ class TopicSetOutputHandler:
 
     def __init__(self, cfg, name, param_cfg, topic_set):
         '''Create an object with the given parameters.'''
+        # TODO: remove
+        assert False
         self.cfg = cfg
         self.name = name
         self.param_cfg = param_cfg
         self.output_module = self.internal_create_output_module(topic_set)
-
 
 
     def output(self, rc):

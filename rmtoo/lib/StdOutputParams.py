@@ -4,7 +4,7 @@
    
  Handling of standard parameters for output parameter handling.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -12,17 +12,22 @@
 import datetime
 from rmtoo.lib.DateUtils import parse_date
 
-class StdParams:
+class StdOutputParams:
     '''Handles the standard output parameters and sets the values
        in the self object provided.'''
 
-    @staticmethod
-    def internal_parse_output_filename(this, params):
+    def __init__(self, config):
+        '''Constructs the standard output parameters based on the
+           provided config.'''
+        self.__config = config
+        self.__parse()
+
+    def __parse_output_filename(self):
         '''Sets the output filename.'''
-        this.output_filename = params['output_filename']
+        self._output_filename = self.__config['output_filename']
 
     @staticmethod
-    def internal_parse_date(params, name, default_value):
+    def __parse_date(params, name, default_value):
         '''If name is in params, the value is converted to a date
            and returned.  If name is not in params, the default_value
            is returned.'''
@@ -30,18 +35,15 @@ class StdParams:
             return parse_date(name, params[name])
         return default_value
 
-    @staticmethod
-    def internal_parse_start_and_end_date(this, params):
+    def __parse_start_and_end_date(self):
         '''Extracts the start and the end date from the params.'''
         today = datetime.date.today()
         yesterday = today - datetime.timedelta(1)
-        this.start_date = StdParams.internal_parse_date(
-                    params, 'start_date', yesterday)
-        this.end_date = StdParams.internal_parse_date(
-                    params, 'end_date', today)
+        self._start_date = self.__parse_date(
+                                self.__config, 'start_date', yesterday)
+        self._end_date = self.__parse_date(self.__config, 'end_date', today)
 
-    @staticmethod
-    def parse(this, params):
+    def __parse(self):
         '''Parses the standard parameters.'''
-        StdParams.internal_parse_output_filename(this, params)
-        StdParams.internal_parse_start_and_end_date(this, params)
+        self.__parse_output_filename()
+        self.__parse_start_and_end_date()
