@@ -1,0 +1,93 @@
+{
+    "constraints": {
+        "search_dirs": [
+            "/usr/share/pyshared/rmtoo/collection/constraints"
+        ]
+    }, 
+    "global": {
+        "modules": {
+            "directories": [
+                "/usr/share/pyshared"
+            ]
+        }
+    }, 
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "commit_interval": {
+                "begin": "v10", 
+                "end": "c35f8e918ab1d05ab3e2ba0be52a3f4092035663"
+            }, 
+            "default_language": "en_GB", 
+            "dependency_notation": [
+                "Depends on"
+            ], 
+            "directory": "${GET:basedir}/input/reqs"
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    }, 
+    "topics": {
+        "ts_common": {
+            "directory": "${GET:basedir}/input/topics", 
+            "name": "ReqsDocument", 
+            "output": {
+                "graph": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/req-graph1.dot"
+                    }
+                ], 
+                "graph2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/req-graph2.dot"
+                    }
+                ], 
+                "html": [
+                    {
+                        "footer": "${GET:basedir}/input/footer.html", 
+                        "header": "${GET:basedir}/input/header.html", 
+                        "output_directory": "${ENV:rmtoo_test_dir}/html"
+                    }
+                ], 
+                "latex2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqtopics.tex"
+                    }
+                ], 
+                "oopricing1": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqspricing"
+                    }
+                ], 
+                "prios": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqsprios.tex", 
+                        "start_date": "2011-04-26"
+                    }
+                ], 
+                "stats_reqs_cnt": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"
+                    }
+                ], 
+                "xml_ganttproject_2": [
+                    {
+                        "effort_factor": 1, 
+                        "output_filename": "${ENV:rmtoo_test_dir}/gantt2.xml"
+                    }
+                ]
+            }
+        }
+    }
+}
