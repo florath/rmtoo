@@ -102,3 +102,24 @@ class TestConfiguration(unittest.TestCase):
             100, LogLevel.warning(),
             "Old Configuration: Not converted attributes: [['output_specs2']]"]]),
                              log_store)
+
+    def test_dollar_replacement_environment_variables(self):
+        '''Check if the $ replacement works with environment variables.'''
+        log_store = MemLogStore()
+        os.environ["huho"] = "ThereIsSomeVal"
+        config = Cfg.new_by_json_str('{"k": "${ENV:huho}"}')
+        val = config.get_rvalue("k")
+        os.environ["huho"] = ""
+        self.failUnlessEqual("ThereIsSomeVal", val,
+                             "k is not ThereIsSomeVal")
+
+    def test_dollar_replacement_configuration_variables(self):
+        '''Check if the $ replacement works with configuration variables.'''
+        log_store = MemLogStore()
+        config = Cfg.new_by_json_str(
+            '{"k": "${huho}", "huho": "ThereIsSomeVal"}')
+        self.failUnlessEqual("ThereIsSomeVal", config.get_rvalue("k"),
+                             "k is not ThereIsSomeVal")
+
+
+

@@ -13,6 +13,7 @@
 
  For licensing details see COPYING
 '''
+import os
 import json
 
 from types import DictType
@@ -60,10 +61,10 @@ class Cfg:
            string.  The string must be a valid JSON structure.
            This is a static factory method.'''
         config = Cfg()
-        config.__merge_json_str(jstr)
+        config.merge_json_str(jstr)
         return config
 
-    def __merge_json_str(self, jstr):
+    def merge_json_str(self, jstr):
         '''Adds all the values from the given JSON string to
            the existing configuration.'''
         if jstr.startswith("json:"):
@@ -102,7 +103,7 @@ class Cfg:
         '''Depending on the JSON URL the low level method to
            merge the configuration is called.'''
         if json_url.startswith("json:"):
-            self.__merge_json_str(json_url)
+            self.merge_json_str(json_url)
         elif json_url.startswith("file:"):
             self.__merge_json_file(json_url)
 
@@ -172,6 +173,49 @@ class Cfg:
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found. (Root cause: [%s])"
                                % (key, cex))
+
+    @staticmethod
+    def __replace_env(estr):
+        '''Resolves the environment variable and returns it.'''
+        try:
+            return os.environ[estr]
+        except KeyError:
+            # If not there, use original string.
+            return estr
+
+    def __replace_key(self, key):
+        '''Resolves the key and returns is.'''
+        return self.get_value(key)
+
+    def __replace(self, cstr):
+        '''Looks if the given string exists as variable.
+           If so, returns the resolved string.'''
+        if cstr.startswith("ENV:"):
+            return self.__replace_env(cstr[4:])
+        return self.__replace_key(cstr)
+
+    def __dollar_replace(self, cstr):
+        '''Replaces all occurrences of ${} with the appropriate value.'''
+        while True:
+            print("CSTR [%s]" % cstr)
+            dstart = cstr.find("${")
+            if dstart == -1:
+                # No ${} any more...
+                return cstr
+            dend = cstr.find("}", dstart + 2)
+            if dend == -1:
+                # No }: no way to replace things
+                return cstr
+            vname = cstr[dstart + 2:dend]
+            rep = self.__replace(vname)
+            cstr = cstr[:dstart] + rep + cstr[dend + 1:]
+
+    def get_rvalue(self, key):
+        '''Returns the real value of the given key.
+           If found the value is interpreted as string - 
+           and the ${} replacement takes place.
+           If key is not found a RMTException is thrown.'''
+        return self.__dollar_replace(self.get_value(key))
 
     def get_value_wo_throw(self, key):
         '''Returns the value of the given key.
