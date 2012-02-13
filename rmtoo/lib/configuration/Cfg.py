@@ -9,7 +9,7 @@
  History: this is a new implementation of the old Configuration 
  and command line parameter handling. 
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011-2012 by flonatel GmhH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -43,14 +43,14 @@ class Cfg:
            methods.'''
         self.config = {}
         if initial_values != None:
-            self.init_initial_values(initial_values)
+            self.__init_initial_values(initial_values)
 
-    def init_initial_values(self, initial_values):
+    def __init_initial_values(self, initial_values):
         '''Initializes the initial values.
            Depending on the type of the given value, the initial
            values are set.'''
         if type(initial_values) == DictType:
-            self.merge_dictionary(initial_values)
+            self.__merge_dictionary(initial_values)
             return
         assert(False)
 
@@ -60,10 +60,10 @@ class Cfg:
            string.  The string must be a valid JSON structure.
            This is a static factory method.'''
         config = Cfg()
-        config.merge_json_str(jstr)
+        config.__merge_json_str(jstr)
         return config
 
-    def merge_json_str(self, jstr):
+    def __merge_json_str(self, jstr):
         '''Adds all the values from the given JSON string to
            the existing configuration.'''
         if jstr.startswith("json:"):
@@ -71,9 +71,9 @@ class Cfg:
         jdict = json.loads(jstr)
         if type(jdict) != DictType:
             raise CfgEx("Given JSON string encodes no dictionary.")
-        self.merge_dictionary(jdict)
+        self.__merge_dictionary(jdict)
 
-    def merge_json_file(self, jfile):
+    def __merge_json_file(self, jfile):
         '''Adds all the values from the given JSON file to
            the existing configuration.'''
         if jfile.startswith("file://"):
@@ -83,9 +83,9 @@ class Cfg:
         jfd.close()
         if type(jdict) != DictType:
             raise CfgEx("Given JSON string encodes no dictionary.")
-        self.merge_dictionary(jdict)
+        self.__merge_dictionary(jdict)
 
-    def merge_dictionary(self, ldict):
+    def __merge_dictionary(self, ldict):
         '''Merges the contents of the local dictionary into the 
            existing one.
            If a value already exists, it is overwritten'''
@@ -96,23 +96,23 @@ class Cfg:
            existing configuration.'''
         ldicts = CmdLineParams.create_dicts(args)
         for ldict in ldicts:
-            self.merge_dictionary(ldict)
+            self.__merge_dictionary(ldict)
 
-    def internal_merge_json_url(self, json_url):
+    def __merge_json_url(self, json_url):
         '''Depending on the JSON URL the low level method to
            merge the configuration is called.'''
         if json_url.startswith("json:"):
-            self.merge_json_str(json_url)
+            self.__merge_json_str(json_url)
         elif json_url.startswith("file:"):
-            self.merge_json_file(json_url)
+            self.__merge_json_file(json_url)
 
-    def internal_evaluate_json_once(self, json_config):
+    def __evaluate_json_once(self, json_config):
         '''Evaluates the given json configuration and merges it
            into the current configuration.'''
         for jcfg in json_config:
-            self.internal_merge_json_url(jcfg)
+            self.__merge_json_url(jcfg)
 
-    def internal_evaluate_json(self):
+    def __evaluate_json(self):
         '''As long as there are JSON parameters, handle them.'''
         try:
             while True:
@@ -121,12 +121,12 @@ class Cfg:
                 # is possible that during the evaluation additional
                 # entries will appear.
                 del(self.config['configuration']['json'])
-                self.internal_evaluate_json_once(json_config)
+                self.__evaluate_json_once(json_config)
         except RMTException:
             # Nothing to do: JSON entries not available
             pass
 
-    def internal_evaluate_old_config(self, log_store):
+    def __evaluate_old_config(self, log_store):
         '''Looks if the old configuration file handling must be applied -
            and if so applies it.'''
         try:
@@ -149,8 +149,8 @@ class Cfg:
            This does two things:
            o Read in the 'old' configuration
            o Read in the new configuration'''
-        self.internal_evaluate_old_config(log_store)
-        self.internal_evaluate_json()
+        self.__evaluate_old_config(log_store)
+        self.__evaluate_json()
 
     def get_raw(self, key):
         '''Returns the value of the given key.
