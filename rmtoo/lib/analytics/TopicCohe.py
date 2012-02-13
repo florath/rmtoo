@@ -30,7 +30,7 @@ class TopicCohe(Base):
     def topic_pre(self, topic):
         '''Collect the relation between requirement and topic.'''
         req_set = topic.get_requirement_set()
-        if req_set == None:
+        if None == req_set:
             return
         for req_id in req_set.get_all_requirement_ids():
             self.__add_req2topic(req_id, topic)

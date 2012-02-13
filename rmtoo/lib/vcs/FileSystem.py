@@ -4,7 +4,7 @@
    
   Implementation of the VCS interface for the local file system.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011-2012 by flonatel GmhH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -30,7 +30,7 @@ class FileSystem(Interface):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
         for dir_type in ["requirements", "topics", "constraints"]:
-            dirs = cfg.get_value(dir_type + "_dirs")
+            dirs = cfg.get_rvalue(dir_type + "_dirs")
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
@@ -45,7 +45,7 @@ class FileSystem(Interface):
         cfg = Cfg(config)
         Interface.__init__(self, cfg)
         tracer.info("called")
-        self.__topic_root_node = cfg.get_value("topic_root_node")
+        self.__topic_root_node = cfg.get_rvalue("topic_root_node")
         self.__dirs = {}
         self.__setup_directories(cfg)
 
@@ -135,14 +135,14 @@ class FileSystem(Interface):
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
         assert commit == None
-        tracer.debug("called: file type [%s] filename [%s]" 
+        tracer.debug("called: file type [%s] filename [%s]"
                      % (file_type, filename))
         for directory in self.__dirs[file_type]:
-            tracer.debug("searching in directory [%s]" % directory)            
+            tracer.debug("searching in directory [%s]" % directory)
             full_path = os.path.join(directory, filename)
             if os.path.exists(full_path):
                 return FileSystem.FileInfo(directory, filename)
         raise RMTException(112, "file [%s] in [%s] base file not found"
                            % (filename, file_type))
 
-    
+

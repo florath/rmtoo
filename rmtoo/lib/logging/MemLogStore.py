@@ -94,8 +94,8 @@ class MemLogStore(object):
     # must be defined.
     # TODO: DO NOT USE THIS, BECAUSE THEN ALL CHECKS FOR NONE
     #   DOES NOT WORK
-#    def __eq__(self, other):
-#        return self.logs == other.logs
+    def __eq__(self, other):
+        return type(self) == type(other) and self.logs == other.logs
 
     def mls(self):
         return self

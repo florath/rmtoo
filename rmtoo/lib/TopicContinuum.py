@@ -57,7 +57,9 @@ class TopicContinuum(UsableFlag):
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
                 self._adapt_usablility(topic_set)
+            tracer.debug("Add topic set [%s]" % topic_set_vcs_id)
             self.__continuum_add(topic_set_vcs_id, topic_set)
+            tracer.debug("Finished.")
 
     def __read_topic_sets(self, ts_config):
         '''Reads in all the topic sets from the specified sources.'''
@@ -68,6 +70,7 @@ class TopicContinuum(UsableFlag):
                 continue
             commits = input_handler.get_commits()
             self.__read_commits(input_handler, commits)
+        tracer.debug("Finished.")
 
     def __continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''

@@ -1,4 +1,6 @@
 {
+    "basedir": "tests/blackbox-test/bb001-test",
+
     "constraints": {
         "search_dirs": [
             "/usr/share/pyshared/rmtoo/collection/constraints"
@@ -7,7 +9,7 @@
     "global": {
         "modules": {
             "directories": [
-                "/usr/share/pyshared"
+                ".."
             ]
         }
     }, 
@@ -18,15 +20,10 @@
     }, 
     "requirements": {
         "input": {
-            "commit_interval": {
-                "begin": "v10", 
-                "end": "c35f8e918ab1d05ab3e2ba0be52a3f4092035663"
-            }, 
             "default_language": "en_GB", 
             "dependency_notation": [
                 "Depends on"
-            ], 
-            "directory": "${GET:basedir}/input/reqs"
+            ]
         }, 
         "inventors": [
             "flonatel"
@@ -40,8 +37,19 @@
     }, 
     "topics": {
         "ts_common": {
-            "directory": "${GET:basedir}/input/topics", 
+            "directory": "${ENV:basedir}/input/topics", 
             "name": "ReqsDocument", 
+	    "sources": [
+		[
+		    "git", {
+		        "start_vers": "v10", 
+			"end_vers": "c35f8e918ab1d05ab3e2ba0be52a3f4092035663", 
+			"requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:basedir}/input/topics"] ,
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+		]
+	    ],
             "output": {
                 "graph": [
                     {
@@ -55,8 +63,8 @@
                 ], 
                 "html": [
                     {
-                        "footer": "${GET:basedir}/input/footer.html", 
-                        "header": "${GET:basedir}/input/header.html", 
+                        "footer": "${ENV:basedir}/input/footer.html", 
+                        "header": "${ENV:basedir}/input/header.html", 
                         "output_directory": "${ENV:rmtoo_test_dir}/html"
                     }
                 ], 

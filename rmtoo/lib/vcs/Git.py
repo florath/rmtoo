@@ -67,7 +67,7 @@ class Git(Interface):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
         for dir_type in ["requirements", "topics", "constraints"]:
-            dirs = map(self.__abs_path, cfg.get_value(dir_type + "_dirs"))
+            dirs = map(self.__abs_path, cfg.get_rvalue(dir_type + "_dirs"))
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
@@ -97,9 +97,9 @@ class Git(Interface):
         tracer.info("called")
         cfg = Cfg(config)
         Interface.__init__(self, cfg)
-        self.__start_vers = cfg.get_value("start_vers")
-        self.__end_vers = cfg.get_value("end_vers")
-        self.__topic_root_node = cfg.get_value("topic_root_node")
+        self.__start_vers = cfg.get_rvalue("start_vers")
+        self.__end_vers = cfg.get_rvalue("end_vers")
+        self.__topic_root_node = cfg.get_rvalue("topic_root_node")
         tracer.debug("start version [%s] end version [%s] "
                      "topic root node [%s]"
                      % (self.__start_vers, self.__end_vers,
@@ -246,8 +246,8 @@ class Git(Interface):
 
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
-        tracer.debug("called: commit [%s] file type [%s] filename [%s]" 
-                     % (commit, file_type, filename)) 
+        tracer.debug("called: commit [%s] file type [%s] filename [%s]"
+                     % (commit, file_type, filename))
         for directory in self.__dirs[file_type]:
             tracer.debug("searching in directory [%s]" % directory)
             blob = self.__get_blob(commit, directory, filename)

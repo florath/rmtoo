@@ -12,6 +12,7 @@
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.logging.EventLogging import tracer
 
 class RDepConstraints(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
@@ -41,5 +42,7 @@ class RDepConstraints(Digraph.Node):
     # The constrains value gets a dictionary from the name of the
     # constraints to the object.
     def rewrite(self, reqset):
+        tracer.debug("Called.")
         reqset.resolve_ce3()
+        tracer.debug("Finished.")
         return True

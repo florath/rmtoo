@@ -48,8 +48,13 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__master_nodes = None
         self.__requirements = {}
 
+    def __str__(self):
+        return "Master nodes [%s]  Requirements [%s]" % \
+            (self.__master_nodes, self.__requirements)
+
     def __read_one_requirement(self, fileinfo, input_mods, object_cache):
         '''Read in one requirement from the file info.'''
+        tracer.debug("Called.")
         # Check for correct filename
         if not fileinfo.get_filename().endswith(".req"):
             tracer.info("skipping file [%s]" % fileinfo.get_filename())
@@ -58,6 +63,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         vcs_id = fileinfo.get_vcs_id()
         rid = fileinfo.get_filename_sub_part()[:-4]
         req = object_cache.get("Requirement", vcs_id)
+        tracer.info("Reading requirement [%s]" % rid)
 
         if req == None:
             file_content = fileinfo.get_content()
@@ -77,13 +83,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # TODO: self.nodes.append(req) ?
         else:
             self.error(45, "could not be parsed", req.id)
+        tracer.debug("Finished.")
 
     def __read_all_requirements(self, input_handler, commit, input_mods,
                                 object_cache):
         '''Read in all the requirements from the input handler.'''
+        tracer.debug("Called.");
         fileinfos = input_handler.get_file_infos(commit, "requirements")
         for fileinfo in fileinfos:
             self.__read_one_requirement(fileinfo, input_mods, object_cache)
+        tracer.debug("Finished.");
 
     def __handle_modules_reqdeps(self, input_mods):
         '''This is mostly the same functionality of similar method of the
@@ -135,13 +144,15 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
         '''Reads in all the requirements from the input_handler.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
         self.__handle_modules(input_mods)
+        tracer.debug("Finished.")
 
     def __add_requirement(self, req):
         '''Add requirement to the internal container.'''
+        tracer.debug("Add requirement [%s]" % req.get_id())
         self.__requirements[req.get_id()] = req
 
     def restrict_to_topics(self, topic_set):
@@ -167,7 +178,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
 
     def __resolve_solved_by_one_req(self, req):
         '''Resolve the 'Solved by' for one requirement.'''
-        tracer.debug("called: requirement id [%s]" % req.get_id())
+        tracer.debug("Called: requirement id [%s]." % req.get_id())
 
         # Add node to digraph
         self.add_node(req)
@@ -210,13 +221,87 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Step through the internal list of collected requirements and
            evaluate the 'Solved by'.  This is done by creating the
            appropriate digraph nodes.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         # Run through all the requirements and look for the 'Solved
         # by'
         success = True
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
                 success = False
+        tracer.debug("Finished; success [%s]." % success)
+        return success
+
+    def __resolve_depends_on_one_req(self, req, also_solved_by):
+        tracer.debug("Called.")
+        # Add node to digraph
+        self.add_node(req)
+
+        if req.get_value("Type") == Requirement.rt_master_requirement:
+            # There must no 'Depends on'
+            if "Depends on" in req.brmo:
+                print("+++ ERROR %s: initial requirement has "
+                      "Depends on field." % (req.id))
+                return False
+            # It self does not have any depends on nodes
+            req.graph_depends_on = None
+            # This is the master!
+            return True
+
+        # For all other requirements types there must be a 'Depends on'
+        if "Depends on" not in req.brmo:
+            if also_solved_by:
+                # Skip handling this requirement
+                return True
+            print("+++ ERROR %s: non-initial requirement has "
+                  "no 'Depends on' field." % (req.id))
+            return False
+
+        t = req.brmo["Depends on"]
+
+        # If available, it must not empty
+        if len(t.get_content()) == 0:
+            print("+++ ERROR %s: 'Depends on' field has len 0" %
+                  (req.id))
+            return False
+
+        # Step through the list
+        tl = t.get_content().split()
+        for ts in tl:
+            if ts not in self.get_all_requirement_ids():
+                self.error(47, "'Depends on' points to a "
+                             "non-existing requirement '%s'" % ts, req.id)
+                return False
+            # It is not allowed to have self-references: it does not
+            # make any sense, that a requirement references itself.
+            if ts == req.id:
+                self.error(59, "'Depends on' points to the "
+                      "requirement itself", req.id)
+                return False
+
+            # Mark down the depends on...
+            dep_req = self.__requirements[ts]
+            # This is exactly the other way as used in the 'Depends on'
+            tracer.debug("Add edge [%s] -> [%s]" %
+                         (dep_req.get_id(), req.get_id()))
+            Digraph.create_edge(dep_req, req)
+
+        # Copy and delete the original tag
+        ## XXX Not neede any more? req.tags["Depends on"] = t.split()
+        del req.brmo["Depends on"]
+        return True
+
+    def resolve_depends_on(self, also_solved_by):
+        '''Step through the internal list of collected requirements and
+           evaluate the 'Depends on'.  This is done by creating the 
+           appropriate digraph node.'''
+        tracer.debug("Called.")
+        # Run through all the requirements and look for the 'Depend
+        # on' (depending on the type of the requirement)
+        success = True
+        for req in self.__requirements.values():
+            if not self.__resolve_depends_on_one_req(req, also_solved_by):
+                success = False
+        tracer.debug("Finished; success [%s]." % success)
         return success
 
     def __create_local_ce3s(self):
@@ -227,7 +312,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            - Resetting the 'Constraints' entry in the requirement
            (instead of the TextRecord a map of name to constraint
             object is stored).'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         self.__ce3set = CE3Set()
         for req_name, req in self.__requirements.items():
             ce3 = CE3()
@@ -246,6 +331,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 req.set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
             self.__ce3set.insert(req_name, ce3)
+        tracer.debug("Finished.")
 
     def __unite_ce3s(self):
         '''Execute the unification of the CE3s:
@@ -264,10 +350,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def resolve_ce3(self):
         '''Handle the Constraint Execution Environments for this
            requirement set.'''
+        tracer.debug("Called.")
         # The first step is to create local Constraint Execution Environments
         self.__create_local_ce3s()
         # Evaluate all the CE3 in topological order
         self.__unite_ce3s()
+        tracer.debug("Finished.")
 
     def find_master_nodes(self):
         '''Find all the available master nodes and stored them in

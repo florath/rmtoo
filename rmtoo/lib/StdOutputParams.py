@@ -11,6 +11,7 @@
 
 import datetime
 from rmtoo.lib.DateUtils import parse_date
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class StdOutputParams:
     '''Handles the standard output parameters and sets the values
@@ -24,7 +25,7 @@ class StdOutputParams:
 
     def __parse_output_filename(self):
         '''Sets the output filename.'''
-        self._output_filename = self.__config['output_filename']
+        self._output_filename = Cfg(self.__config).get_rvalue('output_filename')
 
     @staticmethod
     def __parse_date(params, name, default_value):

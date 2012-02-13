@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# The straight forward way to define dependencies.
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ The straight forward way to define dependencies.
+ 
+ (c) 2010-2011 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.digraph.Digraph import Digraph
 
@@ -30,6 +30,5 @@ class RDepSolvedBy(Digraph.Node):
         if self.tag not in \
            self.config.get_value_default(
                 'requirements.input.dependency_notation', set(["Solved by", ])):
-            assert False
             return True
         return reqset.resolve_solved_by()

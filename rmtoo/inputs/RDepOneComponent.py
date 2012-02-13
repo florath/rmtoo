@@ -32,11 +32,12 @@ class RDepOneComponent(Digraph.Node):
     # component.  If not an error is printed including all the found
     # components.
     def rewrite(self, reqset):
-        tracer.debug("called")
+        tracer.debug("Called.")
         components = connected_components(reqset)
 
         if components.len() == 1:
             # Everything is ok: graph is connected
+            tracer.debug("Finished.")
             return True
 
         raise RMTException(

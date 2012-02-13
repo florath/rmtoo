@@ -16,7 +16,7 @@
 import os
 import json
 
-from types import DictType
+from types import DictType, ListType, StringType, UnicodeType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
@@ -194,10 +194,9 @@ class Cfg:
             return self.__replace_env(cstr[4:])
         return self.__replace_key(cstr)
 
-    def __dollar_replace(self, cstr):
+    def __dollar_replace_string(self, cstr):
         '''Replaces all occurrences of ${} with the appropriate value.'''
         while True:
-            print("CSTR [%s]" % cstr)
             dstart = cstr.find("${")
             if dstart == -1:
                 # No ${} any more...
@@ -209,6 +208,23 @@ class Cfg:
             vname = cstr[dstart + 2:dend]
             rep = self.__replace(vname)
             cstr = cstr[:dstart] + rep + cstr[dend + 1:]
+
+    def __dollar_replace_list(self, value):
+        '''Replaces all occurrences of ${} for list.'''
+        res = []
+        for vstr in value:
+            res.append(self.__dollar_replace_string(vstr))
+        return res
+
+    def __dollar_replace(self, value):
+        '''Replaces all occurrences of ${} for different types.'''
+        if type(value) in [StringType, UnicodeType]:
+            return self.__dollar_replace_string(value)
+        if type(value) == ListType:
+            return self.__dollar_replace_list(value)
+        # Never reached: unknown type
+        print("Never reached: [%s]" % type(value))
+        assert False
 
     def get_rvalue(self, key):
         '''Returns the real value of the given key.
