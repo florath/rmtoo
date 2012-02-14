@@ -173,7 +173,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("calling pre")
         executor.requirement_set_pre(self)
         tracer.debug("calling sub requirement set")
-        for requirement in self.__requirements.values():
+        for requirement in executor.requirement_set_sort(
+                            self.__requirements.values()):
             requirement.execute(executor)
         tracer.debug("calling post")
         executor.requirement_set_post(self)

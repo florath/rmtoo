@@ -73,7 +73,7 @@ class Topic(Digraph.Node):
         tracer.debug("Calling pre [%s]." % self.name)
         executor.topic_pre(self)
         tracer.info("Calling sub [%s]." % self.name)
-        for subtopic in self.outgoing:
+        for subtopic in executor.topic_sort(self.outgoing):
             subtopic.execute(executor)
         tracer.info("Calling post [%s]." % self.name)
         executor.topic_post(self)

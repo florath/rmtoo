@@ -83,7 +83,8 @@ class TopicContinuum(UsableFlag):
         tracer.info("Calling pre [%s]." % self.__name)
         executor.topics_continuum_pre(self)
         tracer.info("Calling sub [%s]." % self.__name)
-        for continuum in self.__topic_sets.values():
+        for continuum in executor.topics_continuum_sort(
+                            self.__topic_sets.values()):
             continuum.execute(executor)
         tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)
@@ -91,6 +92,9 @@ class TopicContinuum(UsableFlag):
 
     def get_output_config(self):
         return self.__ts_config["output"]
+
+    def __str__(self):
+        return "TopicContinuum [%s]" % self.__name
 
     ### EVERYTHING BENEATH IN DEPRECATED
 

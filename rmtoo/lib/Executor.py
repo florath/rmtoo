@@ -22,6 +22,10 @@ class Executor(ExecutorTopicContinuum):
         '''This is call in the TopicsContinuumSet pre-phase.'''
         return
 
+    def topics_continuum_sort(self, list_to_sort):
+        '''Sorts the list of topic continuums.'''
+        return list_to_sort
+
     def topics_continuum_set_post(self, topics_continuum_set):
         '''This is call in the TopicsContinuumSet post-phase.'''
         return

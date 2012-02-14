@@ -26,8 +26,9 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def execute(self, executor):
         '''Execute the parts which are needed for Requirement.'''
-        tracer.debug("called: name [%s]" % self.name)
+        tracer.debug("Called: name [%s]." % self.name)
         executor.requirement(self)
+        tracer.debug("Finished: name [%s]." % self.name)
 
     # Requirment Type
     # Each requirement has exactly one type.
