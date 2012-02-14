@@ -16,15 +16,20 @@ import logging
 tracer = None
 
 def init_logging():
-    
+
     global tracer
 
     tracer = logging.getLogger("rmtoo-trace")
     tracer.setLevel(logging.DEBUG)
+    tracer.propagate = False
+
+    # Create a file handle
+    tracer_fh = logging.FileHandler('/tmp/rmtoo.log')
+    tracer_fh.setLevel(logging.DEBUG)
 
     # create console handler and set level to debug
     tracer_ch = logging.StreamHandler()
-    tracer_ch.setLevel(logging.DEBUG)
+    tracer_ch.setLevel(logging.INFO)
 
     # create formatter
     formatter = logging.Formatter(
@@ -33,8 +38,10 @@ def init_logging():
 
     # add formatter to ch
     tracer_ch.setFormatter(formatter)
+    tracer_fh.setFormatter(formatter)
 
     # add ch to logger
+    tracer.addHandler(tracer_fh)
     tracer.addHandler(tracer_ch)
- 
+
     tracer.info("rmtoo tracer system enabled")
