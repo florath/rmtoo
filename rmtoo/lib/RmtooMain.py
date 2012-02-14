@@ -68,7 +68,6 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
 
     # Output everything
     Output.execute(config, topic_continuum_set, mstderr)
-    assert False
     return True
 
 def main_impl(args, mstdout, mstderr):

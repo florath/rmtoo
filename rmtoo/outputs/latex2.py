@@ -1,13 +1,13 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-# LaTeX output class version 2
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ LaTeX output class version 2.
+  
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 import time
@@ -15,8 +15,11 @@ import time
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.logging.EventLogging import tracer
 
-class latex2:
+class latex2(StdOutputParams, ExecutorTopicContinuum):
     default_config = { "req_attributes":
                        ["Id", "Priority", "Owner", "Invented on",
                         "Invented by", "Status", "Class"] }
@@ -29,19 +32,18 @@ class latex2:
         "paragraph",
         "subparagraph" ]
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.filename = params['output_filename']
-        self.config = params
-        if 'req_attributes' not in self.config:
-            self.config['req_attributes'] = \
-                ["Id", "Priority", "Owner", "Invented on",
-                        "Invented by", "Status", "Class"]
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
 
-        # TODO Default configuration
-#        self.config = latex2.default_config
-#        if len(params) > 2:
-#            self.config = params[2]
+        if not self._config.is_available('req_attributes'):
+            self._config.set_value('req_attributes',
+                ["Id", "Priority", "Owner", "Invented on",
+                        "Invented by", "Status", "Class"])
+
+
+### TODO: Ueberlegen
 
     def set_topics(self, topics):
         self.topic_set = topics.get(self.topic_name)

@@ -15,16 +15,21 @@ import time
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.configuration.Cfg import Cfg
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.logging.EventLogging import tracer
 
-class html:
+class html(ExecutorTopicContinuum):
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        cfg = Cfg(params)
-        self.output_dir = cfg.get_value('output_directory')
-        self.html_header_filename = cfg.get_value('header')
-        self.html_footer_filename = cfg.get_value('footer')
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        self._config = Cfg(oconfig)
+        self.__output_directory = self._config.get_rvalue('output_directory')
+        self.html_header_filename = self._config.get_rvalue('header')
+        self.html_footer_filename = self._config.get_rvalue('footer')
         self.read_html_arts()
+
+# TODO: Ueberlegen!
 
     # Create Makefile Dependencies
     # Basic idea: each HTML file is dependend of the approriate topic

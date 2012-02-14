@@ -2,31 +2,31 @@
  rmtoo
    Free and Open Source Requirements Management Tool
    
- Output handler prios.
+ Output handler graph.
   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusAssigned, RequirementStatusFinished
+    RequirementStatusAssigned
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
-    ClassTypeDetailable, ClassTypeSelected
+    ClassTypeSelected
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
 
 class graph(StdOutputParams, ExecutorTopicContinuum):
-    default_config = { "node_attributes":
-                       ["Type", "Status", "Class", "Topic", "Priority", ] }
+#    default_config = { "node_attributes":
+#                       ["Type", "Status", "Class", "Topic", "Priority", ] }
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
 
-        if self._config.get_value_wo_throw('node_attributes') == None:
+        if not self._config.is_available('node_attributes'):
             self._config.set_value('node_attributes',
                 ["Type", "Status", "Class", "Topic", "Priority", ])
 
@@ -55,7 +55,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         g.close()
 
     @staticmethod
-    def node_attributes(req, config=default_config):
+    def node_attributes(req, config): #=default_config):
 
         def get_conf_attr(attr):
             return config.is_available("node_attributes") \

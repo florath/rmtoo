@@ -1,23 +1,24 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-#  xml ganttproject2 output class
-#
-# This is a second version of xml ganttproject output.
-# This must be seen as alpha software, because there are some base
-# problems which might make the use of this output module sensless:
-# * How to sort things? ganttproject has a fixed order of tasks. The
-#   requirements for rmtoo are unsorted.
-# * Where to get the start date from?
-# * Sub-tasks are done in the way, that each (sub-)topic opens up a
-#   new level.  The last (innermost) level are the requirements of the
-#   appropriate (sub)-topic.
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  xml ganttproject2 output class
+
+ This is a second version of xml ganttproject output.
+ This must be seen as alpha software, because there are some base
+ problems which might make the use of this output module sensless:
+ * How to sort things? ganttproject has a fixed order of tasks. The
+   requirements for rmtoo are unsorted.
+ * Where to get the start date from?
+ * Sub-tasks are done in the way, that each (sub-)topic opens up a
+   new level.  The last (innermost) level are the requirements of the
+   appropriate (sub)-topic.
+ Output handler graph.
+  
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
@@ -25,24 +26,19 @@ from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.configuration.Cfg import Cfg
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.logging.EventLogging import tracer
 
+class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
 
-class xml_ganttproject_2:
-
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        cfg = Cfg(params)
-        self.output_filename = cfg.get_value('output_filename')
-        self.effort_factor = cfg.get_value_default('effort_factor', 1)
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
+        self.effort_factor = self._config.get_value_default('effort_factor', 1)
         self.req_ids = {}
         self.next_id = 1
-
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
 
     # Get an id: if the req is not there a new id will be generated.
     def get_req_id(self, name):
@@ -51,6 +47,8 @@ class xml_ganttproject_2:
         self.req_ids[name] = self.next_id
         self.next_id += 1
         return self.req_ids[name]
+
+# TODO: Ueberarbeiten!
 
     def output_req(self, req, reqset, doc, sobj):
         # There is the need for a unique numeric id
@@ -157,4 +155,12 @@ class xml_ganttproject_2:
         fd = file(self.output_filename, "w")
         fd.write(doc.toprettyxml())
         fd.close()
+
+# TODO Deprecated
+    # Create Makefile Dependencies
+    def cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+
+    def set_topics(self, topics):
+        self.topic_set = topics.get(self.topic_name)
 

@@ -48,8 +48,7 @@ class Output(Executor):
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)
                 topic_continuum.execute(output_obj)
-
-        assert False
+        tracer.debug("Finished.")
 
     @staticmethod
     def execute(config, topic_continuum_set, mstderr):
