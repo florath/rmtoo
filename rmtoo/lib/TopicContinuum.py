@@ -25,7 +25,7 @@ class TopicContinuum(UsableFlag):
         UsableFlag.__init__(self)
         self.__name = ts_name
         tracer.info("Called: name [%s]." % self.__name)
-        self.__config = config
+        self._config = config
         self.__topic_sets = {}
         # This is the list of all version control system ids.
         # Those ids are sorted by time.
@@ -38,6 +38,7 @@ class TopicContinuum(UsableFlag):
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
         self.__ts_config = ts_config
+        tracer.debug("Finished; topic set count [%d]" % len(self.__topic_sets))
 
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
@@ -52,7 +53,7 @@ class TopicContinuum(UsableFlag):
             if topic_set == None:
                 tracer.debug("TopicSet with ID [%s] not in cache."
                              % topic_set_vcs_id)
-                topic_set = TopicSet(self.__config, input_handler, commit,
+                topic_set = TopicSet(self._config, input_handler, commit,
                                      self.__object_cache, self.__input_mods)
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)

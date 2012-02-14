@@ -20,24 +20,22 @@ from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 import datetime
 import operator
-import time
 from scipy import stats
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
-    ClassTypeDetailable, ClassTypeSelected
+    ClassTypeSelected
 from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
 from rmtoo.lib.StdOutputParams import StdOutputParams
-from rmtoo.lib.configuration.Cfg import Cfg
 
 class prios(StdOutputParams, ExecutorTopicContinuum):
 
     def __init__(self, oconfig):
         '''Create a prios output object.'''
-        StdOutputParams.__init__(self, oconfig)
         tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
 
     def __get_reqs_impl_detail(self, requirement_set):
         '''Return the implementation details of the requirements.'''
@@ -97,7 +95,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum):
             else:
                 return " "
 
-        # Local function which outputs one set of requirments.
+        # Local function which outputs one set of requirements.
         def output_prio_table(name, l):
             # XXX This must be configurable
             f.write("\section{%s}\n" % name)
@@ -107,8 +105,10 @@ class prios(StdOutputParams, ExecutorTopicContinuum):
                     "\\textbf{Sum} \\\ \hline\endhead\n")
             s = 0
             for p in l:
-                if requirement_set.reqs[p[1]].get_value("Effort estimation") != None:
-                    efest = requirement_set.reqs[p[1]].get_value("Effort estimation")
+                if requirement_set.get_requirement(p[1]).\
+                    get_value("Effort estimation") != None:
+                    efest = requirement_set.get_requirement(p[1]).\
+                        get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)
                 else:
@@ -177,7 +177,8 @@ class prios(StdOutputParams, ExecutorTopicContinuum):
             sum_open = 0
             for sp in [simpl, sselected]:
                 for p in sp:
-                    sum_open += requirement_set.reqs[p[1]].get_efe_or_0()
+                    sum_open += requirement_set.get_requirement(p[1]).\
+                        get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned

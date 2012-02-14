@@ -44,7 +44,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
-        self.__config = config
+        self._config = config
         self.__master_nodes = None
         self.__requirements = {}
 
@@ -68,7 +68,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         if req == None:
             file_content = fileinfo.get_content()
             req = Requirement(file_content, rid, self, input_mods,
-                              self.__config)
+                              self._config)
             # Add the requirement to the cache.
             object_cache.add(vcs_id, "Requirement", req)
 
@@ -159,10 +159,13 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
            one of the topics in the topic set.'''
-        restricted_reqs = RequirementSet(self.__config)
+        restricted_reqs = RequirementSet(self._config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
+                # Add to the internal map
                 restricted_reqs.__add_requirement(req)
+                # Add to the common digraph structure
+                restricted_reqs.add_node(req)
         return restricted_reqs
 
     def execute(self, executor):

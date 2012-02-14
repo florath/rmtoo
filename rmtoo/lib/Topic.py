@@ -35,7 +35,7 @@ class Topic(Digraph.Node):
             if tag.get_tag() == "SubTopic":
                 lfile_info = input_handler.get_file_info_with_type(
                             commit, "topics", tag.get_content() + ".tic")
-                ntopic = Topic(self.__digraph, self.__config, input_handler,
+                ntopic = Topic(self.__digraph, self._config, input_handler,
                                commit, lfile_info, req_set)
                 self.__digraph.add_node(ntopic)
                 Digraph.create_edge(self, ntopic)
@@ -53,7 +53,7 @@ class Topic(Digraph.Node):
                  req_set):
         tname = file_info.get_filename_sub_part()[:-4]
         Digraph.Node.__init__(self, tname)
-        self.__config = config
+        self._config = config
         tracer.info("Called: name [%s]." % tname)
         self.__digraph = digraph
         self.__requirements = None

@@ -27,7 +27,7 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self.__input_mods = input_mods
-        self.__config = config
+        self._config = config
 
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
@@ -36,19 +36,21 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         self.__object_cache = ObjectCache()
         self.__init_continuum_set()
         self.__object_cache.log_stats()
+        tracer.debug("Finished.")
 
     def __init_continuum_set(self):
         '''Initialize the continuum:
            Check the configuration for the appropriate interval parameters
            and read in the TopicContinuum.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         # Step through all the available topic sets.
         for ts_name, ts_config in \
-            self.__config.get_value("topics").get_dict().iteritems():
-            topic_cont = TopicContinuum(ts_name, self.__config, ts_config,
+            self._config.get_value("topics").get_dict().iteritems():
+            topic_cont = TopicContinuum(ts_name, self._config, ts_config,
                                self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
             self._adapt_usablility(topic_cont)
+        tracer.debug("Finished; count [%d]" % len(self.__continuum))
 
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuumSet.'''

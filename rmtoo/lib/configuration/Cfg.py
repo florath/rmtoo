@@ -282,3 +282,7 @@ class Cfg:
             return int(self.get_raw(key))
         except CfgEx:
             return default_value
+
+    def is_available(self, key):
+        '''Returns true if the given key is available in the configuration.'''
+        return self.get_value_wo_throw(key) != None

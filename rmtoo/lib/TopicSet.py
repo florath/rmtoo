@@ -31,11 +31,11 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
 
     def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Read in all the dependent topics and the requirements.'''
-        tracer.info("called")
+        tracer.info("Called.")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
-        self.__config = config
+        self._config = config
         self.__input_handler = input_handler
         self.__commit = commit
         self.__object_cache = object_cache
@@ -50,6 +50,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         # Third: restrict requirements to those which are 
         #    needed in the topic.
         self.__requirement_set = self.__restrict_requirements_set()
+        tracer.debug("Finished.")
 
     def __read_requirement_set(self):
         '''Reads in the requirement set.
@@ -59,7 +60,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
                             self.__commit, "requirements")
         req_set = self.__object_cache.get("RequirementSet", req_set_vcs_id)
         if req_set == None:
-            req_set = RequirementSet(self.__config)
+            req_set = RequirementSet(self._config)
             req_set.read_requirements(self.__input_handler, self.__commit,
                                       self.__input_mods, self.__object_cache)
             self.__object_cache.add(req_set_vcs_id,
@@ -79,7 +80,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
 
         topic_base = self.__input_handler.get_topic_base_file_info(self.__commit)
         tracer.debug("Topic base [%s]." % topic_base)
-        return Topic(self, self.__config, self.__input_handler,
+        return Topic(self, self._config, self.__input_handler,
                      self.__commit, topic_base, self.__complete_requirement_set)
 
     def __restrict_requirements_set(self):
