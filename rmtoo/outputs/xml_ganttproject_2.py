@@ -48,6 +48,18 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         self.next_id += 1
         return self.req_ids[name]
 
+    def topics_continuum_pre(self, topics_continuum):
+        '''Do the preprocessing: create the empty document.'''
+        # Create the minidom document
+        self.__xml_doc = Document()
+
+    def topics_continuum_post(self, topics_continuum):
+        '''Do the postprocessing: create the file.'''
+        self.__fd = file(self._output_filename, "w")
+        self.__fd.write(self.__xml_doc.toprettyxml())
+        self.__fd.close()
+
+
 # TODO: Ueberarbeiten!
 
     def output_req(self, req, reqset, doc, sobj):
