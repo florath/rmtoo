@@ -9,6 +9,9 @@
 #
 
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.logging.EventLogging import tracer
 
 # imports from python-odf
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -23,28 +26,38 @@ import odf.dc
 
 DEPS_HEADER_LEN = 6
 
-class oopricing1:
+class oopricing1(StdOutputParams, ExecutorTopicContinuum):
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.output_filename = params['output_filename']
-        self.doc_styles = {}
-
-        self.setup_coord_lookup()
-
-    # Because at some points a requirement will be rendered in a row
-    # and at some other points as a column, there is the need to
-    # access the used cell addresses from integers.
-    # This function creates a map to easily acces the column name by
-    # the column index: 0->A, 1->B, ..., 26->Z, 27->AA, ...
-    # Note: This currently limits the number of requirements which can
-    # be handled with this output module to about 700. If there is a
-    # need for more requirements, this can be easily extended.
-    def setup_coord_lookup(self):
+    def __setup_coord_lookup(self):
+        '''Because at some points a requirement will be rendered in a row
+           and at some other points as a column, there is the need to
+           access the used cell addresses from integers.
+           This function creates a map to easily acces the column name by
+           the column index: 0->A, 1->B, ..., 26->Z, 27->AA, ...
+           Note: This currently limits the number of requirements which can
+           be handled with this output module to about 700. If there is a
+           need for more requirements, this can be easily extended.'''
         alpha = 'abcdefghijklmnopqrstuvwxyz'.upper()
         pairs = [''.join((x, y)) for x in alpha \
                      for y in [''] + [z for z in alpha]]
-        self.sscoords = sorted(pairs, key=len)
+        self.__sscoords = sorted(pairs, key=len)
+
+    def __init__(self, oconfig):
+        '''Create a oopricing output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
+        self.doc_styles = {}
+        self.__setup_coord_lookup()
+
+    def topics_set_pre(self, topics_set):
+        '''Document setup.'''
+        self.__calcdoc = OpenDocumentSpreadsheet()
+
+    def topics_set_post(self, topics_set):
+        '''Document storage.'''
+        self.__calcdoc.save(self._output_filename, True)
+
+## TODO
 
     # Standard output module function
     def set_topics(self, topics):

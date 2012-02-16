@@ -83,6 +83,10 @@ class Topic(Digraph.Node):
         '''Returns the requirement set for this topic.'''
         return self.__requirements
 
+    def get_tags(self):
+        '''Returns the list of tags.'''
+        return self.__tags
+
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
         tracer.info("called: directory [%s] name [%s]" % (tdir, tname))

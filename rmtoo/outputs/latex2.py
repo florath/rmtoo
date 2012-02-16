@@ -42,6 +42,19 @@ class latex2(StdOutputParams, ExecutorTopicContinuum):
                 ["Id", "Priority", "Owner", "Invented on",
                         "Invented by", "Status", "Class"])
 
+    def topics_set_pre(self, topics_set):
+        '''Prepare the output file.'''
+        self.__fd = file(self._output_filename, "w")
+
+        # The TopicSet itself needs no output.
+        # TODO:
+#        self.output_latex_topic(fd, topic_set.get_master(), ce3set)
+#        constraints = Constraints.collect(topic_set)
+#        self.output_latex_constraints(fd, topic_set, constraints)
+
+    def topics_set_post(self, topics_set):
+        '''Clean up file.'''
+        self.__fd.close()
 
 ### TODO: Ueberlegen
 
@@ -81,6 +94,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum):
         # Call the topic to write out everything
         self.output_latex_topic_set(self.topic_set, reqset.ce3set)
 
+# DONE!
     def output_latex_topic_set(self, topic_set, ce3set):
         fd = file(self.filename, "w")
         # The TopicSet itself needs no output.

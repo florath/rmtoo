@@ -1,19 +1,36 @@
-#
-# stats_reqs_cnt output class
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Requirement statistics.
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
-import re
+ For licensing details see COPYING
+'''
+
 import time
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.logging.EventLogging import tracer
 
-class stats_reqs_cnt:
+class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.output_filename = params['output_filename']
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
+        tracer.debug("Finished.")
+
+# TODO: is the the correct level?
+    def topics_continuum_pre(self, topics_continuum):
+        '''Prepare file.'''
+        self.__ofile = file(self._output_filename, "w")
+
+    def topics_continuum_post(self, topics_continuum):
+        '''Cleanup file.'''
+        self.__ofile.close()
+
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

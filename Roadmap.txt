@@ -26,6 +26,13 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
+TODO
+====
+o What should happen if the output module only supports one
+  version - but many are specified?
+  Take the last?
+  How to implement this with Executor?
+
 v22
 ===
 o Unify Interface filesystem and VCS

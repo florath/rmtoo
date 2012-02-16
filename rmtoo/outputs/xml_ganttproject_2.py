@@ -53,6 +53,19 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         # Create the minidom document
         self.__xml_doc = Document()
 
+        self.__xml_project = self.__xml_doc.createElement("project")
+        self.__xml_doc.appendChild(self.__xml_project)
+
+        # This is needed: if not given, on the left side there is
+        # nothing displayed. 
+        xml_taskdisplaycolumns = self.__xml_doc.createElement("taskdisplaycolumns")
+        self.__xml_project.appendChild(xml_taskdisplaycolumns)
+        for s in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
+            xml_tpd = self.__xml_doc.createElement("displaycolumn")
+            xml_tpd.setAttribute("property-id", s[0])
+            xml_tpd.setAttribute("width", str(s[1]))
+            xml_taskdisplaycolumns.appendChild(xml_tpd)
+
     def topics_continuum_post(self, topics_continuum):
         '''Do the postprocessing: create the file.'''
         self.__fd = file(self._output_filename, "w")
@@ -144,6 +157,8 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         # Add the xml_task to the current document
         sobj.appendChild(xml_task)
 
+
+### DONE!
     def output(self, reqscont):
         # Create the minidom document
         doc = Document()

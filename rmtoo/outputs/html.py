@@ -29,6 +29,36 @@ class html(ExecutorTopicContinuum):
         self.html_footer_filename = self._config.get_rvalue('footer')
         self.read_html_arts()
 
+    def __ouput_html_topic_mkdirs(self):
+        '''If not already there, create the directory.'''
+        try:
+            os.makedirs(self.__output_directory)
+        except OSError, ose:
+            # It's ok if already there
+            pass
+
+    def __ouput_html_topic_open_output_file(self, name):
+        '''Each Topic will be stored in an seperate html file.'''
+        fd = file(os.path.join(self.__output_directory, name + ".html"),
+                  "w")
+        return fd
+
+    def topics_set_pre(self, topics_set):
+        '''Do all the file and directory preparation.'''
+        self.__ouput_html_topic_mkdirs()
+
+    def topic_pre(self, topic):
+        '''Output one topic.
+           This method is called once for each topic and subtopic.'''
+        tracer.debug("Called: topic name [%s]." % topic.name)
+        fd = self.__ouput_html_topic_open_output_file(topic.name)
+        self.output_html_topic_write_header(fd)
+#        self.output_html_topic_output_content(fd, topic)
+        self.output_html_topic_write_footer(fd)
+        fd.close()
+        tracer.debug("Finished: topic name [%s]" % topic.name)
+
+
 # TODO: Ueberlegen!
 
     # Create Makefile Dependencies
@@ -73,35 +103,13 @@ class html(ExecutorTopicContinuum):
         # Call the topic to write out everything
         self.output_html_topic(self.topic_set.get_master())
 
-    def output_html_topic(self, topic):
-        self.ouput_html_topic_mkdirs()
-        fd = self.ouput_html_topic_open_output_file(topic.name)
-        self.output_html_topic_write_header(fd)
-        self.output_html_topic_output_content(fd, topic)
-        self.output_html_topic_write_footer(fd)
-        fd.close()
-
-    def ouput_html_topic_mkdirs(self):
-        # If not already there, create the directory.
-        try:
-            os.makedirs(self.output_dir)
-        except OSError, ose:
-            # It's ok if already there
-            pass
-
-    def ouput_html_topic_open_output_file(self, name):
-        # Each Topic will be stored in an seperate html file.
-        fd = file(os.path.join(self.output_dir, name + ".html"),
-                  "w")
-        return fd
-
     def output_html_topic_write_header(self, fd):
         fd.write(self.html_header)
 
     def output_html_topic_output_content(self, fd, topic):
         # Subtopics go in a ul
         ul_open = False
-        for t in topic.t:
+        for t in topic.get_tags():
             tag = t.get_tag()
             val = t.get_content()
 
