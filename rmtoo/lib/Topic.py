@@ -73,8 +73,28 @@ class Topic(Digraph.Node):
         tracer.debug("Calling pre [%s]." % self.name)
         executor.topic_pre(self)
         tracer.info("Calling sub [%s]." % self.name)
-        for subtopic in executor.topic_sort(self.outgoing):
-            subtopic.execute(executor)
+        for tag in self.__tags:
+            rtag = tag.get_tag()
+            if rtag == "Name":
+                executor.topic_name(tag.get_content())
+                continue
+            if rtag == "SubTopic":
+                subtopic = self.__digraph.find(tag.get_content())
+                assert subtopic != None
+                subtopic.execute(executor)
+                continue
+            if rtag == "IncludeRequirements":
+                self.__requirements.execute(executor)
+                continue
+
+            print("UNHANDLED TAG [%s] [%s]" % (tag.get_tag(), tag.get_content()))
+            assert False
+
+
+#        assert False
+
+#        for subtopic in executor.topic_sort(self.outgoing):
+#            subtopic.execute(executor)
         tracer.info("Calling post [%s]." % self.name)
         executor.topic_post(self)
         tracer.info("Finished [%s]." % self.name)

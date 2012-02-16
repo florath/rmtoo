@@ -16,10 +16,12 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class graph(StdOutputParams, ExecutorTopicContinuum):
-#    default_config = { "node_attributes":
-#                       ["Type", "Status", "Class", "Topic", "Priority", ] }
+    default_config = Cfg.new_by_json_str(
+            """json:{"node_attributes":
+               ["Type", "Status", "Class", "Topic", "Priority" ] }""")
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
@@ -54,8 +56,9 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         g.write("}")
         g.close()
 
+# TODO: currently the =default_config is needed for graph2
     @staticmethod
-    def node_attributes(req, config): #=default_config):
+    def node_attributes(req, config=default_config):
 
         def get_conf_attr(attr):
             return config.is_available("node_attributes") \

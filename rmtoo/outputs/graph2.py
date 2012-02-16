@@ -17,6 +17,7 @@ from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
+# TODO: Cleanup 'indent'
 class graph2(StdOutputParams, ExecutorTopicContinuum):
 
     def __init__(self, oconfig):
@@ -27,43 +28,61 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
 
     def topics_continuum_pre(self, topics_continuum):
         '''This is the first thing which is called.'''
+        tracer.debug("Called.")
         self.__output_file = file(self._output_filename, "w")
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
+        self.__level = 0
+        tracer.debug("Finished.")
 
-    def topic_set_pre(self, topic_set):
-        '''This is call in the Topic pre-phase.'''
-        # Subgraphs
-        self.output_topic(self.__output_file, topic_set.get_master())
-
-    def requirement_set_pre(self, requirement_set):
-        # Edges
-        for r in sorted(requirement_set.nodes, key=lambda r: r.id):
-            self.output_req(r, self.__output_file)
+    def topics_continuum_post(self, topics_continuum):
+        '''Finish major entry and close file.'''
+        tracer.debug("Called.")
         self.__output_file.write("}")
         self.__output_file.close()
+        tracer.debug("Finished.")
 
-    # This writes out all the subgraphs and nodes
-    def output_topic(self, dotfile, topic):
-        ident = "          "[0:topic.level]
+    def topics_set_pre(self, topic):
+        '''This writes out all the subgraphs and nodes.'''
+        ident = "          "[0:self.__level]
+        self.__level += 1
         # The _GRAPH_ is there to differentiate between topics and
-        # possible equally named requiremnts. 
-        dotfile.write('%ssubgraph cluster_GRAPH_%s {\n'
-                      ' label="Topic: %s";\n' % (ident, topic.name, topic.name))
+        # possible equally named requirements. 
+        self.__output_file.write('%ssubgraph cluster_GRAPH_%s {\n'
+            ' label="Topic: %s";\n' % (ident, topic.name, topic.name))
 
         # Write out the sub-sub-graphs
-        for t in sorted(topic.outgoing, key=lambda t: t.name):
-            self.output_topic(dotfile, t)
-        for req in sorted(topic.reqs, key=lambda r: r.id):
-            dotfile.write('%s"%s" [%s];\n'
-                          % (ident, req.name, graph.node_attributes(req)))
-        dotfile.write('%s}\n' % ident)
+#        for t in sorted(topic.outgoing, key=lambda t: t.name):
+#            self.output_topic(dotfile, t)
+#        for req in sorted(topic.reqs, key=lambda r: r.id):
+#            dotfile.write('%s"%s" [%s];\n'
+#                          % (ident, req.name, graph.node_attributes(req)))
 
-    # This writes out the edges
-    def output_req(self, req, dotfile):
-        for d in sorted(req.outgoing, key=lambda r: r.id):
-            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))
+    def topics_set_post(self, topic):
+        '''Write header to file.'''
+        ident = "          "[0:self.__level]
+        self.__output_file.write('%s}\n' % ident)
+        self.__level -= 1
+
+    def requirement(self, requirement):
+        '''Output one node.'''
+        ident = "          "[0:self.__level]
+        self.__output_file.write('%s"%s" [%s];\n'
+                      % (ident, requirement.name,
+                         graph.node_attributes(requirement)))
+
+
+
+#    def requirement_set_pre(self, requirement_set):
+#        # Edges
+#        for r in sorted(requirement_set.nodes, key=lambda r: r.id):
+#            self.output_req(r, self.__output_file)
+#
+#    # This writes out the edges
+#    def output_req(self, req, dotfile):
+#        for d in sorted(req.outgoing, key=lambda r: r.id):
+#            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))
 
 ### Deprecated
     def set_topics(self, topics):
