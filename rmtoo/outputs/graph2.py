@@ -17,53 +17,68 @@ from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
-# TODO: Cleanup 'indent'
+# pylint: disable=C0103
 class graph2(StdOutputParams, ExecutorTopicContinuum):
+    '''The output class handling graph2.
+       graph2 is a requirements dependency graph which has additional
+       clusters for each topic.'''
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
         self.__output_file = None
+        self.__ident = ""
+        self.__level = 0
 
-    def topics_continuum_pre(self, topics_continuum):
+    def __set_indent(self):
+        '''Set the ident.'''
+        self.__ident = "             "[0:self.__level]
+
+    def __inc_indent_level(self):
+        '''Increases the indent level by one.'''
+        self.__level += 1
+        self.__set_indent()
+
+    def __dec_indent_level(self):
+        '''Decreases the indent level by one.'''
+        self.__level -= 1
+        self.__set_indent()
+
+    def topics_continuum_sort(self, continuum):
+        '''Because graph2 can only one topic continuum,
+           the latest (newest) is used.'''
+        return [ continuum[-1] ]
+
+    def topics_set_pre(self, _):
         '''This is the first thing which is called.'''
         tracer.debug("Called.")
         self.__output_file = file(self._output_filename, "w")
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-        self.__level = 0
         tracer.debug("Finished.")
 
-    def topics_continuum_post(self, topics_continuum):
+    def topics_set_post(self, _):
         '''Finish major entry and close file.'''
         tracer.debug("Called.")
-        self.__output_file.write("}")
+        self.__output_file.write("}\n")
         self.__output_file.close()
         tracer.debug("Finished.")
 
-    def topics_set_pre(self, topic):
+    def topic_pre(self, topic):
         '''This writes out all the subgraphs and nodes.'''
-        ident = "          "[0:self.__level]
-        self.__level += 1
         # The _GRAPH_ is there to differentiate between topics and
         # possible equally named requirements. 
         self.__output_file.write('%ssubgraph cluster_GRAPH_%s {\n'
-            ' label="Topic: %s";\n' % (ident, topic.name, topic.name))
+            '%s label="Topic: %s";\n'
+            % (self.__ident, topic.name, self.__ident, topic.name))
+        self.__inc_indent_level()
 
-        # Write out the sub-sub-graphs
-#        for t in sorted(topic.outgoing, key=lambda t: t.name):
-#            self.output_topic(dotfile, t)
-#        for req in sorted(topic.reqs, key=lambda r: r.id):
-#            dotfile.write('%s"%s" [%s];\n'
-#                          % (ident, req.name, graph.node_attributes(req)))
-
-    def topics_set_post(self, topic):
+    def topic_post(self, _):
         '''Write header to file.'''
-        ident = "          "[0:self.__level]
-        self.__output_file.write('%s}\n' % ident)
-        self.__level -= 1
+        self.__output_file.write('%s}\n' % self.__ident)
+        self.__dec_indent_level()
 
     def requirement(self, requirement):
         '''Output one node.'''
@@ -72,21 +87,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
                       % (ident, requirement.name,
                          graph.node_attributes(requirement)))
 
-
-
-#    def requirement_set_pre(self, requirement_set):
-#        # Edges
-#        for r in sorted(requirement_set.nodes, key=lambda r: r.id):
-#            self.output_req(r, self.__output_file)
-#
-#    # This writes out the edges
-#    def output_req(self, req, dotfile):
-#        for d in sorted(req.outgoing, key=lambda r: r.id):
-#            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))
-
 ### Deprecated
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

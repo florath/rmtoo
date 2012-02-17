@@ -5,6 +5,7 @@
   Collection of collection of collection of topics.
   The continuum holds all the different versions of TopicSetCollections
   from the whole time of being.
+  The key to access this is the 'name' under 'topic' (in the configuration).
    
  (c) 2011 by flonatel GmhH & Co. KG
 

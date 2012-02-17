@@ -5,9 +5,13 @@
   Collection of collection of topics.
   In each run of rmtoo it is possible to have many different
   TopicSets handled.
-  This object handles the collection of TopicSets. 
+  This object handles the collection of TopicSets.
+  A TopicContinuum has a name - which is configured directly under
+  the 'topic' tag.
+  The top level access of this are the different version numbers
+  of the topic sets.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -83,9 +87,9 @@ class TopicContinuum(UsableFlag):
         tracer.info("Calling pre [%s]." % self.__name)
         executor.topics_continuum_pre(self)
         tracer.info("Calling sub [%s]." % self.__name)
-        for continuum in executor.topics_continuum_sort(
+        for topic_set in executor.topics_continuum_sort(
                             self.__topic_sets.values()):
-            continuum.execute(executor)
+            topic_set.execute(executor)
         tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)
         tracer.info("Finished [%s]." % self.__name)
