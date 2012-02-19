@@ -4,7 +4,7 @@
    
  HTML output class.
  
- (c) 2011 by flonatel
+ (c) 2011-2012 by flonatel
 
  For licensing details see COPYING
 '''
@@ -22,8 +22,11 @@ class html(ExecutorTopicContinuum):
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
-        tracer.debug("Called.")
+        tracer.debug("Called: html ouput module constructed.")
         self._config = Cfg(oconfig)
+        self.__fd_stack = []
+        # Take care about the openess of the ul.
+        self.__ul_open_stack = []
         self.__output_directory = self._config.get_rvalue('output_directory')
         self.html_header_filename = self._config.get_rvalue('header')
         self.html_footer_filename = self._config.get_rvalue('footer')
@@ -37,27 +40,64 @@ class html(ExecutorTopicContinuum):
             # It's ok if already there
             pass
 
-    def __ouput_html_topic_open_output_file(self, name):
-        '''Each Topic will be stored in an seperate html file.'''
+    def __ouput_html_topic_open_output_file(self, name, mode):
+        '''Each Topic will be stored in an separate html file.'''
         fd = file(os.path.join(self.__output_directory, name + ".html"),
-                  "w")
+                  mode)
         return fd
+
+    def topics_continuum_sort(self, continuum):
+        '''Because html can only cope with one topic continuum,
+           the latest (newest) is used.'''
+        return [ continuum[-1] ]
 
     def topics_set_pre(self, topics_set):
         '''Do all the file and directory preparation.'''
         self.__ouput_html_topic_mkdirs()
 
+    def __output_html_topic_write_header(self, fd):
+        '''Write the html header.'''
+        fd.write(self.html_header)
+
     def topic_pre(self, topic):
         '''Output one topic.
            This method is called once for each topic and subtopic.'''
         tracer.debug("Called: topic name [%s]." % topic.name)
-        fd = self.__ouput_html_topic_open_output_file(topic.name)
-        self.output_html_topic_write_header(fd)
+        fd = self.__ouput_html_topic_open_output_file(topic.name, "w")
+        self.__output_html_topic_write_header(fd)
+        self.__fd_stack.append(fd)
+        self.__ul_open_stack.append(False)
 #        self.output_html_topic_output_content(fd, topic)
+
+    def topic_post(self, topic):
+        '''Write out the footer and do clean ups.'''
+        fd = self.__fd_stack.pop()
+        self.__ul_open_stack.pop()
         self.output_html_topic_write_footer(fd)
         fd.close()
         tracer.debug("Finished: topic name [%s]" % topic.name)
 
+    def topic_name(self, name):
+        '''Set the name.'''
+        fd = self.__fd_stack[-1]
+        level = len(self.__fd_stack)
+        fd.write("<h%d>%s</h%d>\n" % (level, name, level))
+
+    def topic_sub_pre(self, subtopic):
+        '''Prepares a new subtopic output.'''
+        fd = self.__fd_stack[-1]
+        if not self.__ul_open_stack[-1]:
+            fd.write('<span class="subtopiclist"><ul>')
+            self.__ul_open_stack[-1] = True
+        fd.write('<li><a href="%s.html">%s</a></li>\n' %
+                 (subtopic.get_topic_name(), subtopic.get_id()))
+
+    def topic_sub_post(self, subtopic):
+        '''Write the header for subtopic.'''
+        if self.__ul_open_stack[-1]:
+            fd = self.__fd_stack[-1]
+            fd.write("</ul></span>")
+            self.__ul_open_stack[-1] = False
 
 # TODO: Ueberlegen!
 
@@ -102,9 +142,6 @@ class html(ExecutorTopicContinuum):
     def output_reqset(self, reqset):
         # Call the topic to write out everything
         self.output_html_topic(self.topic_set.get_master())
-
-    def output_html_topic_write_header(self, fd):
-        fd.write(self.html_header)
 
     def output_html_topic_output_content(self, fd, topic):
         # Subtopics go in a ul

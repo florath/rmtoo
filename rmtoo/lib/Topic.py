@@ -5,7 +5,7 @@
   Topic
    This holds one topic - and all subtopics of this topic
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2012 by flonatel GmhH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -39,6 +39,11 @@ class Topic(Digraph.Node):
                                commit, lfile_info, req_set)
                 self.__digraph.add_node(ntopic)
                 Digraph.create_edge(self, ntopic)
+            elif tag.get_tag() == "Name":
+                if self.__topic_name != None:
+                    # TODO: Multiple Names
+                    assert(False)
+                self.__topic_name = tag.get_content()
             elif tag.get_tag() == "IncludeRequirements":
                 if tag.get_content() != "full":
                     raise RMTException(113, "IncludeRequirements value not "
@@ -52,7 +57,10 @@ class Topic(Digraph.Node):
     def __init__(self, digraph, config, input_handler, commit, file_info,
                  req_set):
         tname = file_info.get_filename_sub_part()[:-4]
+        # The 'name' in the digraph node is the ID
         Digraph.Node.__init__(self, tname)
+        # This is the name of the topic (short description)
+        self.__topic_name = None
         self._config = config
         tracer.info("Called: name [%s]." % tname)
         self.__digraph = digraph
@@ -81,7 +89,9 @@ class Topic(Digraph.Node):
             if rtag == "SubTopic":
                 subtopic = self.__digraph.find(tag.get_content())
                 assert subtopic != None
+                executor.topic_sub_pre(subtopic)
                 subtopic.execute(executor)
+                executor.topic_sub_post(subtopic)
                 continue
             if rtag == "IncludeRequirements":
                 self.__requirements.execute(executor)
@@ -106,6 +116,16 @@ class Topic(Digraph.Node):
     def get_tags(self):
         '''Returns the list of tags.'''
         return self.__tags
+
+    def get_topic_name(self):
+        '''Returns the name (short description) of the topic.
+           Note: This is NOT the id of the topic.'''
+        return self.__topic_name
+
+    def get_id(self):
+        '''Returns the topic id.
+           Note: This is NOT the short description - a la 'Name'.'''
+        return self.name
 
     def UNUSED__init__(self, tdir, tname, dg, txtioconfig, cfg, tlevel=0,
                  tsuper=None):
