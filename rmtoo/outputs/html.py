@@ -99,6 +99,89 @@ class html(ExecutorTopicContinuum):
             fd.write("</ul></span>")
             self.__ul_open_stack[-1] = False
 
+    def requirement(self, req):
+        '''Output one requirement.'''
+        fd = self.__fd_stack[-1]
+        level = len(self.__fd_stack)
+
+        fd.write("\n<!- REQ '%s' -->\n" % req.id)
+        fd.write('<h%d><a name="%s">%s</a></h%d>\n' %
+                 (level + 1, req.id, req.get_value("Name").get_content(),
+                  level + 1))
+        fd.write("<dl>")
+
+        fd.write('<dt><span class="dlt_description">Description</span>'
+                 '</dt><dd><span class="dlv_description">%s</span></dd>' %
+                  LaTeXMarkup.replace_html(req.get_value("Description")
+                                           .get_content()))
+
+        if req.is_value_available("Rationale") \
+                and req.get_value("Rationale") != None:
+            fd.write('<dt><span class="dlt_rationale">Rationale</span>'
+                     '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
+                     LaTeXMarkup.replace_html_par(req.get_value("Rationale").
+                                                  get_content()))
+
+        if req.is_value_available("Note") and req.get_value("Note") != None:
+            fd.write('<dt><span class="dlt_note">Note</span></dt>'
+                     '<dd><span class="dlv_note">%s</span></dd>'
+                     % req.get_value("Note").get_content())
+
+        # Only output the depends on when there are fields for output.
+        if len(req.outgoing) > 0:
+            # Create links to the corresponding labels.
+            fd.write('<dt><span class="dlt_depends_on">Depends on:'
+                     '</span></dt><dd><span class="dlv_depends_on">')
+            is_first = True
+            for d in sorted(req.outgoing, key=lambda r: r.id):
+                if not is_first:
+                    fd.write(", ")
+                is_first = False
+                fd.write('<a href="%s.html#%s">%s</a>' %
+                         (d.get_value("Topic"), d.id, d.id))
+            fd.write("</span></dd>")
+
+        if len(req.incoming) > 0:
+            # Create links to the corresponding dependency nodes.
+            fd.write('<dt><span class="dlt_dependent">Dependent'
+                     '</span></dt><dd><span class="dlv_dependent">')
+            is_first = True
+            for d in sorted(req.incoming, key=lambda r: r.id):
+                if not is_first:
+                    fd.write(", ")
+                is_first = False
+                fd.write('<a href="%s.html#%s">%s</a>' %
+                         (d.get_value("Topic"), d.id, d.id))
+            fd.write("</span></dd>")
+
+        status = req.get_value("Status").get_output_string()
+        clstr = req.get_value("Class").get_output_string()
+
+        fd.write('<dt><span class="dlt_id">Id</span></dt>'
+                 '<dd><span class="dlv_id">%s</span></dd>'
+                 '<dt><span class="dlt_priority">Priority</span></dt>'
+                 '<dd><span class="dlv_priority">%4.2f</span></dd>'
+                 '<dt><span class="dlt_owner">Owner</span></dt>'
+                 '<dd><span class="dlv_owner">%s</span></dd>'
+                 '<dt><span class="dlt_invented_on">Invented on</span></dt>'
+                 '<dd><span class="dlv_invented_on">%s</span></dd>'
+                 '<dt><span class="dlt_invented_by">Invented by</span></dt>'
+                 '<dd><span class="dlv_invented_by">%s</span></dd>'
+                 '<dt><span class="dlt_status">Status</span></dt>'
+                 '<dd><span class="dlv_status">%s</span></dd>'
+                 '<dt><span class="dlt_class">Class</span></dt>'
+                 '<dd><span class="dlv_class">%s</span></dd>'
+                 % (req.id, req.get_value("Priority") * 10,
+                    req.get_value("Owner"),
+                    req.get_value("Invented on").strftime("%Y-%m-%d"),
+                    req.get_value("Invented by"), status, clstr))
+        fd.write("</dl>")
+
+        # Mark the end of the requirment - then it is possible to add
+        # some ruler here
+        fd.write('<div class="requirment_end"> </div>')
+
+
 # TODO: Ueberlegen!
 
     # Create Makefile Dependencies
@@ -192,80 +275,3 @@ class html(ExecutorTopicContinuum):
         for req in sorted(topic.reqs, key=lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1)
 
-    def output_requirement(self, fd, req, level):
-        fd.write("\n<!- REQ '%s' -->\n" % req.id)
-        fd.write('<h%d><a name="%s">%s</a></h%d>\n' %
-                 (level + 1, req.id, req.get_value("Name").get_content(),
-                  level + 1))
-        fd.write("<dl>")
-
-        fd.write('<dt><span class="dlt_description">Description</span>'
-                 '</dt><dd><span class="dlv_description">%s</span></dd>' %
-                  LaTeXMarkup.replace_html(req.get_value("Description")
-                                           .get_content()))
-
-        if req.is_value_available("Rationale") \
-                and req.get_value("Rationale") != None:
-            fd.write('<dt><span class="dlt_rationale">Rationale</span>'
-                     '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.get_value("Rationale").
-                                                  get_content()))
-
-        if req.is_value_available("Note") and req.get_value("Note") != None:
-            fd.write('<dt><span class="dlt_note">Note</span></dt>'
-                     '<dd><span class="dlv_note">%s</span></dd>'
-                     % req.get_value("Note").get_content())
-
-        # Only output the depends on when there are fields for output.
-        if len(req.outgoing) > 0:
-            # Create links to the corresponding labels.
-            fd.write('<dt><span class="dlt_depends_on">Depends on:'
-                     '</span></dt><dd><span class="dlv_depends_on">')
-            is_first = True
-            for d in sorted(req.outgoing, key=lambda r: r.id):
-                if not is_first:
-                    fd.write(", ")
-                is_first = False
-                fd.write('<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
-            fd.write("</span></dd>")
-
-        if len(req.incoming) > 0:
-            # Create links to the corresponding dependency nodes.
-            fd.write('<dt><span class="dlt_dependent">Dependent'
-                     '</span></dt><dd><span class="dlv_dependent">')
-            is_first = True
-            for d in sorted(req.incoming, key=lambda r: r.id):
-                if not is_first:
-                    fd.write(", ")
-                is_first = False
-                fd.write('<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
-            fd.write("</span></dd>")
-
-        status = req.get_value("Status").get_output_string()
-        clstr = req.get_value("Class").get_output_string()
-
-        fd.write('<dt><span class="dlt_id">Id</span></dt>'
-                 '<dd><span class="dlv_id">%s</span></dd>'
-                 '<dt><span class="dlt_priority">Priority</span></dt>'
-                 '<dd><span class="dlv_priority">%4.2f</span></dd>'
-                 '<dt><span class="dlt_owner">Owner</span></dt>'
-                 '<dd><span class="dlv_owner">%s</span></dd>'
-                 '<dt><span class="dlt_invented_on">Invented on</span></dt>'
-                 '<dd><span class="dlv_invented_on">%s</span></dd>'
-                 '<dt><span class="dlt_invented_by">Invented by</span></dt>'
-                 '<dd><span class="dlv_invented_by">%s</span></dd>'
-                 '<dt><span class="dlt_status">Status</span></dt>'
-                 '<dd><span class="dlv_status">%s</span></dd>'
-                 '<dt><span class="dlt_class">Class</span></dt>'
-                 '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.id, req.get_value("Priority") * 10,
-                    req.get_value("Owner"),
-                    req.get_value("Invented on").strftime("%Y-%m-%d"),
-                    req.get_value("Invented by"), status, clstr))
-        fd.write("</dl>")
-
-        # Mark the end of the requirment - then it is possible to add
-        # some ruler here
-        fd.write('<div class="requirment_end"> </div>')
