@@ -30,6 +30,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file = None
         self.__ident = ""
         self.__level = 0
+        self.__req_dep_graph = ""
 
     def __set_indent(self):
         '''Set the ident.'''
@@ -62,6 +63,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
     def topics_set_post(self, _):
         '''Finish major entry and close file.'''
         tracer.debug("Called.")
+        self.__output_file.write(self.__req_dep_graph)
         self.__output_file.write("}\n")
         self.__output_file.close()
         tracer.debug("Finished.")
@@ -79,13 +81,21 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         '''Write header to file.'''
         self.__output_file.write('%s}\n' % self.__ident)
         self.__dec_indent_level()
+        
+    def requirement_set_sort(self, list_to_sort):
+        '''Set the order of the requirements.'''
+        return sorted(list_to_sort, key=lambda t: t.name)            
 
     def requirement(self, requirement):
-        '''Output one node.'''
+        '''Output one requirement - and collect information about the 
+           requirement's coherence.'''
         ident = "          "[0:self.__level]
         self.__output_file.write('%s"%s" [%s];\n'
                       % (ident, requirement.name,
                          graph.node_attributes(requirement)))
+        
+        for d in sorted(requirement.incoming, key=lambda r: r.id):
+            self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
 
 ### Deprecated
 

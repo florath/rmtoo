@@ -150,8 +150,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
         self.__handle_modules(input_mods)
-        self.__timestamp = input_handler.get_timestamp(commit)
-        tracer.debug("Finished; timestamp [%d]" % self.__timestamp)
+        tracer.debug("Finished.")
 
     def __add_requirement(self, req):
         '''Add requirement to the internal container.'''
