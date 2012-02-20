@@ -47,7 +47,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-        
+                
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)

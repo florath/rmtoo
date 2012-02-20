@@ -39,6 +39,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         self.effort_factor = self._config.get_value_default('effort_factor', 1)
         self.req_ids = {}
         self.next_id = 1
+        self.__xml_obj_stack = []
 
     # Get an id: if the req is not there a new id will be generated.
     def get_req_id(self, name):
@@ -66,18 +67,39 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
             xml_tpd.setAttribute("width", str(s[1]))
             xml_taskdisplaycolumns.appendChild(xml_tpd)
 
+    def topics_continuum_sort(self, vcs_ids, topic_sets):
+        '''Because gantt2 can only one topic continuum,
+           the latest (newest) is used.'''
+        return [ topic_sets[vcs_ids[-1]] ]
+
     def topics_continuum_post(self, topics_continuum):
         '''Do the postprocessing: create the file.'''
         self.__fd = file(self._output_filename, "w")
         self.__fd.write(self.__xml_doc.toprettyxml())
         self.__fd.close()
 
+    def topic_pre(self, topic):
+        '''This is called in the Topic pre-phase.'''
+        xml_task = self.__xml_doc.createElement("task")
+        xml_task.setAttribute("name", topic.name)
+        xml_task.setAttribute("id", str(self.get_req_id(
+                    "TOPIC-" + topic.name)))
+        self.__xml_obj_stack.append(xml_task)
 
-# TODO: Ueberarbeiten!
+    def topic_post(self, topic):
+        '''This is called in the Topic post-phase.'''
+        # Add the xml_task to the current document
+        xml_task = self.__xml_obj_stack.pop()
+        self.__xml_project.appendChild(xml_task)
 
-    def output_req(self, req, reqset, doc, sobj):
+    def requirement_set_sort(self, list_to_sort):
+        '''Sort by id.'''
+        return sorted(list_to_sort, key=lambda r: r.id)
+
+    def requirement(self, req):
+        '''Output the given requirement.'''
         # There is the need for a unique numeric id
-        xml_task = doc.createElement("task")
+        xml_task = self.__xml_doc.createElement("task")
         xml_task.setAttribute("name", req.id)
         xml_task.setAttribute("id", str(self.get_req_id(req.id)))
         if req.is_val_av_and_not_null("Effort estimation"):
@@ -116,14 +138,14 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
             notes += LaTeXMarkup.replace_txt(req.get_value("Note")
                                              .get_content())
 
-        xml_note = doc.createElement("notes")
-        xml_text = doc.createCDATASection(notes)
+        xml_note = self.__xml_doc.createElement("notes")
+        xml_text = self.__xml_doc.createCDATASection(notes)
         xml_note.appendChild(xml_text)
         xml_task.appendChild(xml_note)
 
         # Dependencies
-        for node in req.outgoing:
-            xml_depend = doc.createElement("depend")
+        for node in req.incoming:
+            xml_depend = self.__xml_doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.id)))
             # There are some default attrs
             xml_depend.setAttribute("type", "2")
@@ -131,7 +153,9 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
             xml_depend.setAttribute("hardness", "Strong")
             xml_task.appendChild(xml_depend)
 
-        sobj.appendChild(xml_task)
+        self.__xml_obj_stack[-1].appendChild(xml_task)
+
+# TODO: Ueberarbeiten!
 
     # Run through all the topics
     # (Deep first search / output)
