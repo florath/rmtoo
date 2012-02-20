@@ -60,7 +60,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file.write(
                 'ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'
                 % self.__used_vcs_id)
-        self.__output_file.write("}")
+        self.__output_file.write("}\n")
         self.__output_file.close()
         
     def requirement(self, requirement):
@@ -69,7 +69,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
                       (requirement.get_id(), 
                        self.node_attributes(requirement, self._config)))
 
-        for d in requirement.outgoing:
+        for d in requirement.incoming:
             self.__output_file.write('"%s" -> "%s";\n' % 
                                      (requirement.get_id(), d.id))
 
