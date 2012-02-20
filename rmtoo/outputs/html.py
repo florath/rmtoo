@@ -83,6 +83,12 @@ class html(ExecutorTopicContinuum):
         level = len(self.__fd_stack)
         fd.write("<h%d>%s</h%d>\n" % (level, name, level))
 
+    def topic_text(self, text):
+        '''Called when there is text to be outputted.'''
+        fd = self.__fd_stack[-1]
+        fd.write('<p><span class="fltext">%s</span></p>\n'
+                 % LaTeXMarkup.replace_html(text))
+
     def topic_sub_pre(self, subtopic):
         '''Prepares a new subtopic output.'''
         fd = self.__fd_stack[-1]
@@ -98,6 +104,10 @@ class html(ExecutorTopicContinuum):
             fd = self.__fd_stack[-1]
             fd.write("</ul></span>")
             self.__ul_open_stack[-1] = False
+
+    def requirement_set_sort(self, list_to_sort):
+        '''Sort by id.'''
+        return sorted(list_to_sort, key=lambda r: r.id)
 
     def requirement(self, req):
         '''Output one requirement.'''
@@ -128,12 +138,12 @@ class html(ExecutorTopicContinuum):
                      % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.outgoing) > 0:
+        if len(req.incoming) > 0:
             # Create links to the corresponding labels.
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
-            for d in sorted(req.outgoing, key=lambda r: r.id):
+            for d in sorted(req.incoming, key=lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
                 is_first = False
@@ -141,12 +151,12 @@ class html(ExecutorTopicContinuum):
                          (d.get_value("Topic"), d.id, d.id))
             fd.write("</span></dd>")
 
-        if len(req.incoming) > 0:
+        if len(req.outgoing) > 0:
             # Create links to the corresponding dependency nodes.
             fd.write('<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in sorted(req.incoming, key=lambda r: r.id):
+            for d in sorted(req.outgoing, key=lambda r: r.id):
                 if not is_first:
                     fd.write(", ")
                 is_first = False

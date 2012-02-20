@@ -17,6 +17,7 @@ from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.configuration.Cfg import Cfg
+from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 
 class graph(StdOutputParams, ExecutorTopicContinuum):
     default_config = Cfg.new_by_json_str(
@@ -38,7 +39,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         self.__used_vcs_id = vcs_ids[-1]
         return [ topic_sets[vcs_ids[-1]] ]
 
-    def requirement_set_pre(self, requirement_set):
+    def topics_set_pre(self, requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
         # Initialize the graph output
@@ -46,15 +47,12 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-        # Only output the nodes which are connected to the chosen topic.
-        print("**** OUTPUT GRAPH [%s]" % requirement_set.get_all_requirement_ids())
-        print("****TODO OUTPUT GRAPH [%s]" % requirement_set.nodes)
         
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
 
-    def requirement_set_post(self, requirement_set):
+    def topics_set_post(self, requirement_set):
         '''Write footer - close file.'''
         # Print out a node with the version number:
         self.__output_file.write(
