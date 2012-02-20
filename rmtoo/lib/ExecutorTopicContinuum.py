@@ -18,9 +18,16 @@ class ExecutorTopicContinuum:
            will be used.'''
         return
 
-    def topics_continuum_sort(self, list_to_sort):
-        '''Sort the list of contimuums.'''
-        return list_to_sort
+    def topics_continuum_sort(self, vcs_ids, topic_sets):
+        '''Sort the list of continuums.
+           The vcs_ids are the ids in chronological order.
+           The topic_sets is a dictionary where the id is the key.
+           The default implementation here takes all topic sets in
+           the chronological order.'''
+        res = []
+        for vcs_id in vcs_ids:
+            res.append(topic_sets[vcs_id])
+        return res
 
     def topics_continuum_post(self, topics_continuum):
         '''This is called in the TopicsContinuum post-phase.'''

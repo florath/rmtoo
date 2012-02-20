@@ -45,11 +45,11 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         self.__level -= 1
         self.__set_indent()
 
-    def topics_continuum_sort(self, continuum):
+    def topics_continuum_sort(self, vcs_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
-           the latest (newest) is used.'''
-        return [ continuum[-1] ]
-
+           the latest (newest) is used.'''       
+        return [ topic_sets[vcs_ids[-1]] ]
+    
     def topics_set_pre(self, _):
         '''This is the first thing which is called.'''
         tracer.debug("Called.")

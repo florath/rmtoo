@@ -86,9 +86,9 @@ class TopicContinuum(UsableFlag):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.info("Calling pre [%s]." % self.__name)
         executor.topics_continuum_pre(self)
-        tracer.info("Calling sub [%s]." % self.__name)
+        tracer.info("Calling sub [%s]." % self.__name)       
         for topic_set in executor.topics_continuum_sort(
-                            self.__topic_sets.values()):
+                                 self.__vcs_ids, self.__topic_sets):
             topic_set.execute(executor)
         tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)

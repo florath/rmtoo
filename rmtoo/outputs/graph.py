@@ -32,29 +32,46 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
             self._config.set_value('node_attributes',
                 ["Type", "Status", "Class", "Topic", "Priority", ])
 
+    def topics_continuum_sort(self, vcs_ids, topic_sets):
+        '''Because graph2 can only one topic continuum,
+           the latest (newest) is used.'''
+        self.__used_vcs_id = vcs_ids[-1]
+        return [ topic_sets[vcs_ids[-1]] ]
+
     def requirement_set_pre(self, requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
         # Initialize the graph output
-        g = file(self._output_filename, "w")
-        g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
+        self.__output_file = file(self._output_filename, "w")
+        self.__output_file.write(
+                "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
         # Only output the nodes which are connected to the chosen topic.
         print("**** OUTPUT GRAPH [%s]" % requirement_set.get_all_requirement_ids())
         print("****TODO OUTPUT GRAPH [%s]" % requirement_set.nodes)
+        
+    def requirement_set_sort(self, list_to_sort):
+        '''Sort by id.'''
+        return sorted(list_to_sort, key=lambda r: r.id)
 
-        # This must be called here - the Executor does not support sorting.
-        for r in sorted(requirement_set.nodes, key=lambda r: r.id):
-            self.output_req(r, g)
-
+    def requirement_set_post(self, requirement_set):
+        '''Write footer - close file.'''
         # Print out a node with the version number:
-        g.write('ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'
-                # TODO: how to get the correct id?
-                "Das Ist Aber sekltsa")
-#                % (reqscont.continuum_latest_id()))
+        self.__output_file.write(
+                'ReqVersion [shape=plaintext label="ReqVersion\\n%s"]\n'
+                % self.__used_vcs_id)
+        self.__output_file.write("}")
+        self.__output_file.close()
+        
+    def requirement(self, requirement):
+        '''Output the given requirement.'''
+        self.__output_file.write('"%s" [%s];\n' %
+                      (requirement.get_id(), 
+                       self.node_attributes(requirement, self._config)))
 
-        g.write("}")
-        g.close()
+        for d in requirement.outgoing:
+            self.__output_file.write('"%s" -> "%s";\n' % 
+                                     (requirement.get_id(), d.id))
 
 # TODO: currently the =default_config is needed for graph2
     @staticmethod
@@ -102,13 +119,6 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
                 nodeparam.append("shape=box")
 
         return ",".join(nodeparam)
-
-    def output_req(self, req, dotfile):
-        dotfile.write('"%s" [%s];\n' %
-                      (req.id, self.node_attributes(req, self._config)))
-
-        for d in req.outgoing:
-            dotfile.write('"%s" -> "%s";\n' % (req.id, d.id))
 
 ### TODO: below is deprecated
 

@@ -58,7 +58,7 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         tracer.info("calling pre")
         executor.topics_continuum_set_pre(self)
         tracer.info("calling sub")
-        for continuum in executor.topics_continuum_sort(
+        for continuum in executor.topics_continuum_set_sort(
                                 self.__continuum.values()):
             continuum.execute(executor)
         tracer.info("calling post")
