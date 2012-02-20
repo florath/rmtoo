@@ -45,6 +45,10 @@ class ExecutorTopicContinuum:
     def topic_name(self, name):
         '''Called when the Name tag appears in the topic.'''
         return
+    
+    def topic_text(self, text):
+        '''Called when there is text to be outputted.'''
+        return
 
     def topic_sub_pre(self, subtopic):
         '''Called when before the subtopic is called.'''

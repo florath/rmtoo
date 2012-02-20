@@ -19,7 +19,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
 
 class Topic(Digraph.Node):
-    '''Each topic has a level - which indicates the idendation of the text
+    '''Each topic has a level - which indicates the identation of the text
        element. 
        Each topic does link to it's super-topic.  This is the way to detect
        cycles. 
@@ -95,6 +95,9 @@ class Topic(Digraph.Node):
                 continue
             if rtag == "IncludeRequirements":
                 self.__requirements.execute(executor)
+                continue
+            if rtag == "Text":
+                executor.topic_text(tag.get_content())
                 continue
 
             print("UNHANDLED TAG [%s] [%s]" % (tag.get_tag(), tag.get_content()))

@@ -47,6 +47,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self._config = config
         self.__master_nodes = None
         self.__requirements = {}
+        self.__ce3set = None
 
     def __str__(self):
         return "Master nodes [%s]  Requirements [%s]" % \
@@ -386,6 +387,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_requirement(self, rid):
         '''Return the requirement with the given id.'''
         return self.__requirements[rid]
+    
+    def get_ce3set(self):
+        '''Return the ce3 set which belongs to this requirement set.'''
+        return self.__ce3set
 
     # EVERYTHING BENEATH IS DEPRECATED!
 
