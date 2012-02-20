@@ -37,7 +37,7 @@ class Interface:
 
     @abc.abstractmethod
     def get_commits(self):
-        '''Return an iterator for all available commits.'''
+        '''Return an iterator for the given commit.'''
         assert False
 
     @abc.abstractmethod
@@ -45,6 +45,14 @@ class Interface:
         '''Return the vcs id from the base directories of the given dir_type.'''
         assert commit
         assert dir_type
+        assert False
+        
+    @abc.abstractmethod
+    def get_timestamp(self, commit):
+        '''Returns the timestamp of the set of requirements.
+           This is, e.g. for files 'now()', for commits the date of the
+           commit.'''
+        assert commit
         assert False
 
     class FileInfo:

@@ -118,6 +118,10 @@ class Git(Interface):
         # TODO: check if the order is correct!
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
+        
+    def get_timestamp(self, commit):
+        '''Return the commit time.'''
+        return commit.authored_date
 
     class FileInfo(Interface.FileInfo):
         '''Holds information about a file in a repository.

@@ -11,6 +11,7 @@
 
 import os
 import stat
+import time
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
@@ -58,6 +59,10 @@ class FileSystem(Interface):
         assert commit == None
         tracer.debug("called: directory type [%s]" % dir_type)
         return ObjectCache.create_hashable(self.__dirs[dir_type])
+    
+    def get_timestamp(self, commit):
+        '''Return the file time: this is the current time.'''
+        return time.time()
 
     class FileInfo(Interface.FileInfo):
         '''Holds information about a file in a repository.

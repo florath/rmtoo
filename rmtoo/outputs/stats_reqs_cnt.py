@@ -22,7 +22,6 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
         StdOutputParams.__init__(self, oconfig)
         tracer.debug("Finished.")
 
-# TODO: is the the correct level?
     def topics_continuum_pre(self, topics_continuum):
         '''Prepare file.'''
         self.__ofile = file(self._output_filename, "w")
@@ -31,6 +30,15 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
         '''Cleanup file.'''
         self.__ofile.close()
 
+    def topics_set_pre(self, rset):
+        '''Output the data for this topics set.'''
+        self.__ofile.write("%s %d\n" %
+            (time.strftime("%Y-%m-%d_%H:%M:%S",
+             time.localtime(rset.get_complete_requirement_set_timestamp())),
+             rset.get_complete_requirement_set_count()))
+
+
+# deprecated
 
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):

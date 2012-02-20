@@ -106,6 +106,17 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         '''Returns the requirement set for the whole topic set.'''
         return self.__requirement_set
 
+    def get_complete_requirement_set_timestamp(self):
+        '''Return the timestamp of the whole Requirement Set.
+           This is the current time for FILES and the checkin point of time
+           for files from the repo.'''
+        return self.__input_handler.get_timestamp(self.__commit)
+
+    def get_complete_requirement_set_count(self):
+        '''Return the number of requirments in this RequirementSet.  This
+           is e.g. needed for statistics.'''
+        return self.__complete_requirement_set.get_requirements_cnt()
+
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

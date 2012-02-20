@@ -40,7 +40,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
-        tracer.info("called")
+        tracer.info("Called.")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
@@ -48,6 +48,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__master_nodes = None
         self.__requirements = {}
         self.__ce3set = None
+        tracer.debug("Finished.")
 
     def __str__(self):
         return "Master nodes [%s]  Requirements [%s]" % \
@@ -149,7 +150,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
         self.__handle_modules(input_mods)
-        tracer.debug("Finished.")
+        self.__timestamp = input_handler.get_timestamp(commit)
+        tracer.debug("Finished; timestamp [%d]" % self.__timestamp)
 
     def __add_requirement(self, req):
         '''Add requirement to the internal container.'''
@@ -391,7 +393,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
         return self.__ce3set
-
+    
     # EVERYTHING BENEATH IS DEPRECATED!
 
     deprecated__er_fine = 0
@@ -499,17 +501,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.ts = time.time()
         return everythings_fine
 
-
-    # Return the timestamp of the whole Requirment Set.
-    # This is the current time for FILES and the checkin point of time
-    # for files from the repo.
-    def deprecated_timestamp(self):
-        return self.ts
-
-    # Return the number of requirments in this RequirementSet.  This
-    # is e.g. needed for statistics.
-    def deprecated_reqs_count(self):
-        return len(self.reqs)
 
     def deprecated_not_usable(self):
         self.state = self.er_error

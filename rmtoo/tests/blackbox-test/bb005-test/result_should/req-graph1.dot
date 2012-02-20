@@ -3,5 +3,5 @@ rankdir=BT;
 mclimit=10.0;
 nslimit=10.0;ranksep=1;
 "A1" [fontcolor=red,label="A1\n[10.00]"];
-ReqVersion [shape=plaintext label="ReqVersion\nFILES"]
+ReqVersion [shape=plaintext label="ReqVersion\ntests/blackbox-test/bb005-test/input/topics"]
 }
