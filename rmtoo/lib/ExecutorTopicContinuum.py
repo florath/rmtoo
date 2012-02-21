@@ -18,15 +18,16 @@ class ExecutorTopicContinuum:
            will be used.'''
         return
 
-    def topics_continuum_sort(self, vcs_ids, topic_sets):
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Sort the list of continuums.
+           The commits are the commits in chronological order.
            The vcs_ids are the ids in chronological order.
            The topic_sets is a dictionary where the id is the key.
            The default implementation here takes all topic sets in
            the chronological order.'''
         res = []
-        for vcs_id in vcs_ids:
-            res.append(topic_sets[vcs_id])
+        for vcs_id in vcs_commit_ids:
+            res.append(topic_sets[vcs_id.get_commit()])
         return res
 
     def topics_continuum_post(self, topics_continuum):

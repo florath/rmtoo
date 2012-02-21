@@ -46,10 +46,10 @@ class html(ExecutorTopicContinuum):
                   mode)
         return fd
 
-    def topics_continuum_sort(self, vcs_ids, topic_sets):
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''       
-        return [ topic_sets[vcs_ids[-1]] ]
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def topics_set_pre(self, topics_set):
         '''Do all the file and directory preparation.'''

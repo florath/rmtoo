@@ -33,14 +33,11 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
             self._config.set_value('node_attributes',
                 ["Type", "Status", "Class", "Topic", "Priority", ])
 
-    def topics_continuum_sort(self, vcs_ids, topic_sets):
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
-        print("SORT [%s]" % vcs_ids)
-        for s in vcs_ids:
-            print(" SORTED TOPIC SET [%s]" % topic_sets[s])
-        self.__used_vcs_id = vcs_ids[-1]
-        return [ topic_sets[vcs_ids[-1]] ]
+        self.__used_vcs_id = vcs_commit_ids[-1]
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def topics_set_pre(self, requirement_set):
         '''This is call in the RequirementSet pre-phase.'''

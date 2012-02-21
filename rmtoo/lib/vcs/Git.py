@@ -115,7 +115,6 @@ class Git(Interface):
 
     def get_commits(self):
         '''Return an iterator for all the commits.'''
-        # TODO: check if the order is correct!
         return self.__repo.iter_commits(
                     self.__start_vers + ".." + self.__end_vers)
 

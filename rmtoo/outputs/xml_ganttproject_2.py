@@ -67,10 +67,10 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
             xml_tpd.setAttribute("width", str(s[1]))
             xml_taskdisplaycolumns.appendChild(xml_tpd)
 
-    def topics_continuum_sort(self, vcs_ids, topic_sets):
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because gantt2 can only one topic continuum,
            the latest (newest) is used.'''
-        return [ topic_sets[vcs_ids[-1]] ]
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def topics_continuum_post(self, topics_continuum):
         '''Do the postprocessing: create the file.'''

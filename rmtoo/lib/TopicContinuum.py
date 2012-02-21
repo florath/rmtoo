@@ -20,6 +20,8 @@ from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
+from rmtoo.lib.TopicSetWCI import TopicSetWCI
+from rmtoo.lib.vcs.CommitInfo import CommitInfo
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -33,11 +35,14 @@ class TopicContinuum(UsableFlag):
         self.__topic_sets = {}
         # This is the list of all version control system ids.
         # Those ids are sorted by time.
+        # The first is the vcs id of the (sub-)element,
+        # The second is the commit.
         # The oldest versions is the first one - sorted.
         # Note: this does not contain any other data, only the ids.
         # To access the data, use some construct like:
-        #   self.__topic_sets[self.__vcs_ids[n]]
-        self.__vcs_ids = []
+        #   self.__topic_sets[self.__vcs_commit_ids[n].get_commit()]
+        # 
+        self.__vcs_commit_ids = []
         self.__object_cache = object_cache
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
@@ -48,7 +53,7 @@ class TopicContinuum(UsableFlag):
         '''Creates a TopicSet for each commit with the help of
            the input_handler.'''
         tracer.debug("called")
-        for commit in commits:
+        for commit in commits:            
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
             tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
@@ -62,8 +67,11 @@ class TopicContinuum(UsableFlag):
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
                 self._adapt_usablility(topic_set)
+            
+            commit_info = CommitInfo(input_handler, commit, topic_set_vcs_id)
+            tswci = TopicSetWCI(topic_set, commit_info)             
             tracer.debug("Add topic set [%s]" % topic_set_vcs_id)
-            self.__continuum_add(topic_set_vcs_id, topic_set)
+            self.__continuum_add(commit_info, tswci)
             tracer.debug("Finished.")
 
     def __read_topic_sets(self, ts_config):
@@ -77,10 +85,10 @@ class TopicContinuum(UsableFlag):
             self.__read_commits(input_handler, commits)
         tracer.debug("Finished.")
 
-    def __continuum_add(self, cid, topic_set_collection):
+    def __continuum_add(self, commit_info, topic_set_wci):
         '''Add one to the end of the continuum container.'''
-        self.__vcs_ids.insert(0, cid)
-        self.__topic_sets[cid] = topic_set_collection
+        self.__vcs_commit_ids.insert(0, commit_info)
+        self.__topic_sets[commit_info.get_commit()] = topic_set_wci
 
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuum.'''
@@ -88,7 +96,7 @@ class TopicContinuum(UsableFlag):
         executor.topics_continuum_pre(self)
         tracer.info("Calling sub [%s]." % self.__name)
         for topic_set in executor.topics_continuum_sort(
-                                 self.__vcs_ids, self.__topic_sets):
+                self.__vcs_commit_ids, self.__topic_sets):
             topic_set.execute(executor)
         tracer.info("Calling post [%s]." % self.__name)
         executor.topics_continuum_post(self)
@@ -96,6 +104,10 @@ class TopicContinuum(UsableFlag):
 
     def get_output_config(self):
         return self.__ts_config["output"]
+    
+    def get_vcs_commit_ids(self):
+        '''Returns the vcs_commit_ids.'''
+        return self.__vcs_commit_ids
 
     def __str__(self):
         return "TopicContinuum [%s]" % self.__name

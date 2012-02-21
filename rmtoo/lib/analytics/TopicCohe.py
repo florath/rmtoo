@@ -64,7 +64,8 @@ class TopicCohe(Base):
     def topics_set_post(self, topic_set):
         '''This is call in the TopicsSet post-phase.'''
         for req_id in self.__req2topics.keys():
-            req_a = topic_set.get_requirement_set().get_requirement(req_id)
+            req_a = topic_set.get_topic_set().get_requirement_set().\
+                       get_requirement(req_id)
             for req_b in req_a.incoming:
                 self.__eval_link(req_a, req_b)
 

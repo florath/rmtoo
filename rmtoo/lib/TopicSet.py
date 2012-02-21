@@ -31,7 +31,8 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
 
     def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Read in all the dependent topics and the requirements.'''
-        tracer.info("Called.")
+        tracer.info("Called; commit timestamp [%s]" 
+                    % input_handler.get_timestamp(commit))
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)
@@ -90,33 +91,18 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         return self.__complete_requirement_set \
             .restrict_to_topics(available_topics)
 
-    def execute(self, executor):
-        '''Execute the parts which are needed for TopicsSet.'''
-        tracer.info("Calling pre.")
-        executor.topics_set_pre(self)
-        tracer.info("Calling sub topic.")
-        self.__topic.execute(executor)
-#        tracer.info("Calling sub requirement set.")
-#        self.__requirement_set.execute(executor)
-        tracer.info("Calling post.")
-        executor.topics_set_post(self)
-        tracer.info("Finished.")
-
     def get_requirement_set(self):
         '''Returns the requirement set for the whole topic set.'''
         return self.__requirement_set
-
-    def get_complete_requirement_set_timestamp(self):
-        '''Return the timestamp of the whole Requirement Set.
-           This is the current time for FILES and the checkin point of time
-           for files from the repo.'''
-        return self.__input_handler.get_timestamp(self.__commit)
 
     def get_complete_requirement_set_count(self):
         '''Return the number of requirments in this RequirementSet.  This
            is e.g. needed for statistics.'''
         return self.__complete_requirement_set.get_requirements_cnt()
 
+    def execute(self, executor):
+        '''Execute the parts which are needed for TopicsSet.'''
+        self.__topic.execute(executor)
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

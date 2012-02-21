@@ -25,18 +25,17 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
     def topics_continuum_pre(self, topics_continuum):
         '''Prepare file.'''
         self.__ofile = file(self._output_filename, "w")
-
+        
     def topics_continuum_post(self, topics_continuum):
         '''Cleanup file.'''
         self.__ofile.close()
 
-    def topics_set_pre(self, rset):
+    def topics_set_pre(self, tset):
         '''Output the data for this topics set.'''
         self.__ofile.write("%s %d\n" %
             (time.strftime("%Y-%m-%d_%H:%M:%S",
-             time.localtime(rset.get_complete_requirement_set_timestamp())),
-             rset.get_complete_requirement_set_count()))
-
+             time.localtime(tset.get_commit_info().get_timestamp())),
+             tset.get_topic_set().get_complete_requirement_set_count()))
 
 # deprecated
 
