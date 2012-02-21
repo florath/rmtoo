@@ -52,8 +52,9 @@ class TopicContinuum(UsableFlag):
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
            the input_handler.'''
-        tracer.debug("called")
-        for commit in commits:            
+        tracer.debug("Called.")
+        for commit in commits:
+            tracer.debug("Handling commit [%s]" % commit)            
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
             tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
