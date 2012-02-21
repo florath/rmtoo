@@ -48,9 +48,9 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
 
     def topics_continuum_sort(self, vcs_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
-           the latest (newest) is used.'''       
+           the latest (newest) is used.'''
         return [ topic_sets[vcs_ids[-1]] ]
-    
+
     def topics_set_pre(self, _):
         '''This is the first thing which is called.'''
         tracer.debug("Called.")
@@ -81,10 +81,10 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         '''Write header to file.'''
         self.__output_file.write('%s}\n' % self.__ident)
         self.__dec_indent_level()
-        
+
     def requirement_set_sort(self, list_to_sort):
         '''Set the order of the requirements.'''
-        return sorted(list_to_sort, key=lambda t: t.name)            
+        return sorted(list_to_sort, key=lambda t: t.name)
 
     def requirement(self, requirement):
         '''Output one requirement - and collect information about the 
@@ -93,7 +93,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file.write('%s"%s" [%s];\n'
                       % (ident, requirement.name,
                          graph.node_attributes(requirement)))
-        
+
         for d in sorted(requirement.incoming, key=lambda r: r.id):
             self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
 

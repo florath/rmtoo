@@ -36,6 +36,9 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
     def topics_continuum_sort(self, vcs_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
+        print("SORT [%s]" % vcs_ids)
+        for s in vcs_ids:
+            print(" SORTED TOPIC SET [%s]" % topic_sets[s])
         self.__used_vcs_id = vcs_ids[-1]
         return [ topic_sets[vcs_ids[-1]] ]
 
@@ -47,7 +50,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
-                
+
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
@@ -60,15 +63,15 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
                 % self.__used_vcs_id)
         self.__output_file.write("}\n")
         self.__output_file.close()
-        
+
     def requirement(self, requirement):
         '''Output the given requirement.'''
         self.__output_file.write('"%s" [%s];\n' %
-                      (requirement.get_id(), 
+                      (requirement.get_id(),
                        self.node_attributes(requirement, self._config)))
 
         for d in requirement.incoming:
-            self.__output_file.write('"%s" -> "%s";\n' % 
+            self.__output_file.write('"%s" -> "%s";\n' %
                                      (requirement.get_id(), d.id))
 
 # TODO: currently the =default_config is needed for graph2

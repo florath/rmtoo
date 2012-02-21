@@ -79,14 +79,14 @@ class TopicContinuum(UsableFlag):
 
     def __continuum_add(self, cid, topic_set_collection):
         '''Add one to the end of the continuum container.'''
-        self.__vcs_ids.append(cid)
+        self.__vcs_ids.insert(0, cid)
         self.__topic_sets[cid] = topic_set_collection
 
     def execute(self, executor):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.info("Calling pre [%s]." % self.__name)
         executor.topics_continuum_pre(self)
-        tracer.info("Calling sub [%s]." % self.__name)       
+        tracer.info("Calling sub [%s]." % self.__name)
         for topic_set in executor.topics_continuum_sort(
                                  self.__vcs_ids, self.__topic_sets):
             topic_set.execute(executor)
