@@ -39,6 +39,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         self.effort_factor = self._config.get_value_default('effort_factor', 1)
         self.req_ids = {}
         self.next_id = 1
+        self.__xml_doc = None
         self.__xml_obj_stack = []
 
     # Get an id: if the req is not there a new id will be generated.
@@ -54,18 +55,19 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         # Create the minidom document
         self.__xml_doc = Document()
 
-        self.__xml_project = self.__xml_doc.createElement("project")
-        self.__xml_doc.appendChild(self.__xml_project)
+        xml_project = self.__xml_doc.createElement("project")
+        self.__xml_doc.appendChild(xml_project)
 
         # This is needed: if not given, on the left side there is
         # nothing displayed. 
         xml_taskdisplaycolumns = self.__xml_doc.createElement("taskdisplaycolumns")
-        self.__xml_project.appendChild(xml_taskdisplaycolumns)
+        xml_project.appendChild(xml_taskdisplaycolumns)
         for s in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
             xml_tpd = self.__xml_doc.createElement("displaycolumn")
             xml_tpd.setAttribute("property-id", s[0])
             xml_tpd.setAttribute("width", str(s[1]))
             xml_taskdisplaycolumns.appendChild(xml_tpd)
+        self.__xml_obj_stack.append(xml_project)
 
     def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because gantt2 can only one topic continuum,
@@ -74,6 +76,11 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
 
     def topics_continuum_post(self, topics_continuum):
         '''Do the postprocessing: create the file.'''
+        # Close the (hopefully) last open
+        assert len(self.__xml_obj_stack) == 1
+        self.__xml_doc.appendChild(self.__xml_obj_stack[0])
+
+        # Write it out.        
         self.__fd = file(self._output_filename, "w")
         self.__fd.write(self.__xml_doc.toprettyxml())
         self.__fd.close()
@@ -85,12 +92,16 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         xml_task.setAttribute("id", str(self.get_req_id(
                     "TOPIC-" + topic.name)))
         self.__xml_obj_stack.append(xml_task)
+        tracer.debug("Finished; xml document stack length [%s]" %
+                     len(self.__xml_obj_stack))
 
     def topic_post(self, topic):
         '''This is called in the Topic post-phase.'''
         # Add the xml_task to the current document
         xml_task = self.__xml_obj_stack.pop()
-        self.__xml_project.appendChild(xml_task)
+        self.__xml_obj_stack[-1].appendChild(xml_task)
+        tracer.debug("Finished; xml document stack length [%s]" %
+                     len(self.__xml_obj_stack))
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
