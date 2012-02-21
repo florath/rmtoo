@@ -34,3 +34,9 @@ class CommitInfo:
     def get_timestamp(self):
         '''Returns the timestamp of the commit.'''
         return self.__timestamp
+    
+    def __str__(self):
+        '''Convert to string.
+           This is used e.g. when the version of something is
+           written into a document.'''
+        return "Commit [%s] VCS Id [%s]" % (self.__commit, self.__vcs_id)
