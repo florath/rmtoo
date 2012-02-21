@@ -18,30 +18,27 @@
     }, 
     "requirements": {
         "input": {
-            "default_language": "en_GB", 
+            "default_language": "de_DE", 
             "dependency_notation": [
                 "Depends on"
             ]
         }, 
         "inventors": [
-            "flonatel"
+            "VincentAndJules", 
+            "Wulf"
         ], 
         "stakeholders": [
-            "development", 
-            "management", 
-            "users", 
-            "customers"
+            "executive"
         ]
     }, 
     "topics": {
         "ts_common": {
-            "directory": "${ENV:basedir}/input/topics", 
  	    "sources": [
 	        [
 		    "filesystem", {
 		        "requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
 			"topics_dirs": [ "${ENV:basedir}/input/topics" ],
-			"topic_root_node": "ReqsDocument",
+			"topic_root_node": "PulpFiction",
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		]
 	    ],
@@ -71,12 +68,18 @@
                 "prios": [
                     {
                         "output_filename": "${ENV:rmtoo_test_dir}/reqsprios.tex", 
-                        "start_date": "2011-05-11"
+                        "start_date": "2011-05-10"
                     }
                 ], 
-                "stats_reqs_cnt": [
+                "tlp1": [
                     {
-                        "output_filename": "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqsgraph.tlp"
+                    }
+                ], 
+                "xml_ganttproject_2": [
+                    {
+                        "effort_factor": 1, 
+                        "output_filename": "${ENV:rmtoo_test_dir}/gantt2.xml"
                     }
                 ]
             }

@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+import os
 
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
@@ -23,9 +24,10 @@ class TestBB004:
         def myexit(n):
             pass
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main(["-f", mdir + "/input/Config2.py", "-m", ".."], mout, merr,
-             exitfun=myexit)
+        main(["-j", "file://" + mdir + "/input/Config.json"], 
+             mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
         delete_result_is_dir()

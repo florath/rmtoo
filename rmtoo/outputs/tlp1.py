@@ -1,17 +1,21 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# LaTeX output class version 2
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ tlp1 output class.
+ 
+ (c) 2011-2012 by flonatel
+
+ For licensing details see COPYING
+'''
 
 import time
 
-class tlp1:
+from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+
+class tlp1(StdOutputParams, ExecutorTopicContinuum):
 
     class Id2IntMapper:
 
@@ -29,28 +33,24 @@ class tlp1:
             self.next_int += 1
             return oi
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.filename = params['output_filename']
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
 
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.filename))
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+        '''Because tlp1 can only one topic continuum,
+           the latest (newest) is used.'''       
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    # The real output
-    # Note that currently the 'reqscont' is not used in case of topics
-    # based output.
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest())
-
-    def output_reqset(self, reqset):
-        fd = file(self.filename, "w")
-        reqs_count = reqset.reqs_count()
+    def requirement_set_pre(self, requirement_set):
+        '''This is called in the RequirementSet pre-phase.'''
+        fd = file(self._output_filename, "w")
+        reqs_count = requirement_set.get_requirements_cnt()
         i2im = tlp1.Id2IntMapper()
         self.write_header(fd)
         self.write_node_ids(fd, reqs_count)
-        self.write_edges(fd, reqset, i2im)
+        self.write_edges(fd, requirement_set, i2im)
         self.write_labels(fd, i2im)
         self.write_footer(fd)
         fd.close()
@@ -70,7 +70,8 @@ class tlp1:
 
     def write_edges(self, fd, reqset, i2im):
         e = 0
-        for r in sorted(reqset.reqs.itervalues(), key=lambda r: r.id):
+        for rid in sorted(reqset.get_all_requirement_ids()):
+            r = reqset.get_requirement(rid)
             ei = i2im.get(r.id)
             for o in sorted(r.outgoing, key=lambda t: t.name):
                 ej = i2im.get(o.id)
@@ -87,3 +88,17 @@ class tlp1:
 
     def write_footer(self, fd):
         fd.write(")\n")
+
+# TODO
+
+    # Create Makefile Dependencies
+    def cmad(self, reqscont, ofile):
+        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.filename))
+
+    # The real output
+    # Note that currently the 'reqscont' is not used in case of topics
+    # based output.
+    def output(self, reqscont):
+        # Currently just pass this to the RequirementSet
+        self.output_reqset(reqscont.continuum_latest())
+
