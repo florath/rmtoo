@@ -73,7 +73,7 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum):
         for rid in sorted(reqset.get_all_requirement_ids()):
             r = reqset.get_requirement(rid)
             ei = i2im.get(r.id)
-            for o in sorted(r.outgoing, key=lambda t: t.name):
+            for o in sorted(r.incoming, key=lambda t: t.name):
                 ej = i2im.get(o.id)
                 fd.write("(edge %d %d %d)\n" % (e, ei, ej))
                 e += 1

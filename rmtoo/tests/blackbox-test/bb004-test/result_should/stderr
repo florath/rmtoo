@@ -1,4 +1,3 @@
-+++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
 +++ Error:Analytics:DescWords:CleanUpSeats:result is '-10'
 +++ Error:Analytics:DescWords:CleanUpVicentAndJules:result is '-20'
 +++ Error:Analytics:DescWords:CleanUpVicentAndJules: -10:1*-10: Usage of the word 'und'

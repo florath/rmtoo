@@ -100,6 +100,10 @@ class DescWords(Base):
                 # Note the result of this test in the requirement itself.
         return Result('DescWords', lname, level, log)
 
+    def requirement_set_sort(self, list_to_sort):
+        '''Sort by id.'''
+        return sorted(list_to_sort, key=lambda r: r.id)
+
     def requirement(self, requirement):
         '''Checks all the requirements.
            If the result is positive, it is good.'''
