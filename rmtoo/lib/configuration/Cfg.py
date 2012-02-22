@@ -216,7 +216,7 @@ class Cfg:
             res.append(self.__dollar_replace_string(vstr))
         return res
 
-    def __dollar_replace(self, value):
+    def dollar_replace(self, value):
         '''Replaces all occurrences of ${} for different types.'''
         if type(value) in [StringType, UnicodeType]:
             return self.__dollar_replace_string(value)
@@ -231,7 +231,7 @@ class Cfg:
            If found the value is interpreted as string - 
            and the ${} replacement takes place.
            If key is not found a RMTException is thrown.'''
-        return self.__dollar_replace(self.get_value(key))
+        return self.dollar_replace(self.get_value(key))
 
     def get_value_wo_throw(self, key):
         '''Returns the value of the given key.

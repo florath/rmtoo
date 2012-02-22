@@ -1,10 +1,13 @@
-#
-# Blackbox rmtoo tests
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Blackbox rmtoo test
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
@@ -23,9 +26,11 @@ class TestBB006:
         def myexit(n):
             pass
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main(["-f", mdir + "/input/Config1.py", "-m", "..", "-c",
-              os.path.join(os.environ["rmtoo_test_dir"], "makefile_deps")],
+        main(["-j", "file://" + mdir + "/input/Config.json",
+              "-j", '''json:{"actions": {"create_makefile_dependencies":
+                 "${ENV:rmtoo_test_dir}/makefile_deps"}}'''],          
              mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")

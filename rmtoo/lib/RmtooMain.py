@@ -50,8 +50,12 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
 
     cmad_filename = config.get_value_wo_throw(
                        'actions.create_makefile_dependencies')
+    print("Config [%s]" % config.get_dict())
+    print("FN [%s]" % cmad_filename)
     if cmad_filename != None:
-        ofile = file(cmad_filename, "w")
+        cmad_rfilename = config.dollar_replace(cmad_filename)
+        print("FN [%s]" % cmad_rfilename)
+        ofile = file(cmad_rfilename, "w")
         # Write out the REQS=
         latest_topicsc.cmad_write_reqs_list(ofile)
         # Write out the rest
