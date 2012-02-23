@@ -12,6 +12,7 @@
 '''
 
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.FuncCall import FuncCall
 
 class TopicSetWCI:
     '''Class for storing topic set and it's commit info.
@@ -32,12 +33,12 @@ class TopicSetWCI:
         '''Returns the commit info.'''
         return self.__commit_info
         
-    def execute(self, executor):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
         tracer.info("Calling pre.")
-        executor.topics_set_pre(self)
+        FuncCall.pcall(executor, func_prefix + "topics_set_pre", self)
         tracer.info("Calling sub topic.")
-        self.__topic_set.execute(executor)
+        self.__topic_set.execute(executor, func_prefix)
         tracer.info("Calling post.")
-        executor.topics_set_post(self)
+        FuncCall.pcall(executor, func_prefix + "topics_set_post", self)
         tracer.info("Finished.")

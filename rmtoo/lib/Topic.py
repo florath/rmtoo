@@ -17,6 +17,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.FuncCall import FuncCall
 
 class Topic(Digraph.Node):
     '''Each topic has a level - which indicates the identation of the text
@@ -76,40 +77,39 @@ class Topic(Digraph.Node):
             result = result.union(topic.get_topic_names_flattened())
         return result
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.debug("Calling pre [%s]." % self.name)
-        executor.topic_pre(self)
+        FuncCall.pcall(executor, func_prefix + "topic_pre", self)
         tracer.info("Calling sub [%s]." % self.name)
         for tag in self.__tags:
             rtag = tag.get_tag()
             if rtag == "Name":
-                executor.topic_name(tag.get_content())
+                FuncCall.pcall(executor, func_prefix + "topic_name",
+                               tag.get_content())
                 continue
             if rtag == "SubTopic":
                 subtopic = self.__digraph.find(tag.get_content())
                 assert subtopic != None
-                executor.topic_sub_pre(subtopic)
-                subtopic.execute(executor)
-                executor.topic_sub_post(subtopic)
+                FuncCall.pcall(executor, func_prefix + "topic_sub_pre",
+                               subtopic)
+                subtopic.execute(executor, func_prefix)
+                FuncCall.pcall(executor, func_prefix + "topic_sub_post",
+                               subtopic)
                 continue
             if rtag == "IncludeRequirements":
-                self.__requirements.execute(executor)
+                self.__requirements.execute(executor, func_prefix)
                 continue
             if rtag == "Text":
-                executor.topic_text(tag.get_content())
+                FuncCall.pcall(executor, func_prefix + "topic_text",
+                               tag.get_content())
                 continue
 
             print("UNHANDLED TAG [%s] [%s]" % (tag.get_tag(), tag.get_content()))
             assert False
 
-
-#        assert False
-
-#        for subtopic in executor.topic_sort(self.outgoing):
-#            subtopic.execute(executor)
         tracer.info("Calling post [%s]." % self.name)
-        executor.topic_post(self)
+        FuncCall.pcall(executor, func_prefix + "topic_post", self)
         tracer.info("Finished [%s]." % self.name)
 
     def get_requirement_set(self):

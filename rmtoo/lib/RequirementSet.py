@@ -31,6 +31,7 @@ from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
+from rmtoo.lib.FuncCall import FuncCall
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -170,16 +171,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 restricted_reqs.add_node(req)
         return restricted_reqs
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for RequirementSet.'''
         tracer.debug("calling pre")
-        executor.requirement_set_pre(self)
+        FuncCall.pcall(executor, func_prefix + "requirement_set_pre", self)
         tracer.debug("calling sub requirement set")
         for requirement in executor.requirement_set_sort(
                             self.__requirements.values()):
-            requirement.execute(executor)
+            requirement.execute(executor, func_prefix)
         tracer.debug("calling post")
-        executor.requirement_set_post(self)
+        FuncCall.pcall(executor, func_prefix + "requirement_set_post", self)
         tracer.debug("finished")
 
     def __resolve_solved_by_one_req(self, req):

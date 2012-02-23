@@ -22,6 +22,7 @@ from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
 from rmtoo.lib.TopicSetWCI import TopicSetWCI
 from rmtoo.lib.vcs.CommitInfo import CommitInfo
+from rmtoo.lib.FuncCall import FuncCall
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -91,16 +92,16 @@ class TopicContinuum(UsableFlag):
         self.__vcs_commit_ids.insert(0, commit_info)
         self.__topic_sets[commit_info.get_commit()] = topic_set_wci
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix = ""):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.info("Calling pre [%s]." % self.__name)
-        executor.topics_continuum_pre(self)
+        FuncCall.pcall(executor, func_prefix + "topics_continuum_pre", self)
         tracer.info("Calling sub [%s]." % self.__name)
         for topic_set in executor.topics_continuum_sort(
                 self.__vcs_commit_ids, self.__topic_sets):
-            topic_set.execute(executor)
+            topic_set.execute(executor, func_prefix)
         tracer.info("Calling post [%s]." % self.__name)
-        executor.topics_continuum_post(self)
+        FuncCall.pcall(executor, func_prefix + "topics_continuum_post", self)
         tracer.info("Finished [%s]." % self.__name)
 
     def get_output_config(self):

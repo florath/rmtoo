@@ -4,7 +4,7 @@
    
   Heuristics to check the quality of the requirements. 
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

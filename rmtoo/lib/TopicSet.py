@@ -24,6 +24,7 @@ from rmtoo.lib.TopicSetOutputHandler import TopicSetOutputHandler
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
+from rmtoo.lib.FuncCall import FuncCall
 
 class TopicSet(Digraph, MemLogStore, UsableFlag):
     '''A Collection of Topics.
@@ -100,9 +101,9 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
            is e.g. needed for statistics.'''
         return self.__complete_requirement_set.get_requirements_cnt()
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
-        self.__topic.execute(executor)
+        self.__topic.execute(executor, func_prefix)
 
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 

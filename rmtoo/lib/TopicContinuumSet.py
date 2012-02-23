@@ -17,6 +17,7 @@ from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.UsableFlag import UsableFlag
+from rmtoo.lib.FuncCall import FuncCall
 
 class TopicContinuumSet(MemLogStore, UsableFlag):
     '''Class holding all the available TopicSetCollections
@@ -53,15 +54,15 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
             self._adapt_usablility(topic_cont)
         tracer.debug("Finished; count [%d]" % len(self.__continuum))
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix = ""):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
         tracer.info("calling pre")
-        executor.topics_continuum_set_pre(self)
+        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
         tracer.info("calling sub")
         for continuum in executor.topics_continuum_set_sort(
                                 self.__continuum.values()):
-            continuum.execute(executor)
+            continuum.execute(executor, func_prefix)
         tracer.info("calling post")
-        executor.topics_continuum_set_post(self)
+        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
         tracer.info("finished")
 

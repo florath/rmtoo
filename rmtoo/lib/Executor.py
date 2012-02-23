@@ -4,10 +4,10 @@
    
   Base class for handling different executions on different levels
   of the rmtoo data.
-  This can be used for the analyse module, as well as for the different
+  This can be used for the analyze module, as well as for the different
   output modules.
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

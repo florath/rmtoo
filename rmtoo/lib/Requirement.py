@@ -17,6 +17,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.FuncCall import FuncCall
 
 import sys
 reload(sys)
@@ -24,13 +25,13 @@ sys.setdefaultencoding('utf-8')
 
 class Requirement(Digraph.Node, BaseRMObject):
 
-    def execute(self, executor):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for Requirement.'''
         tracer.debug("Called: name [%s]." % self.name)
-        executor.requirement(self)
+        FuncCall.pcall(executor, func_prefix + "requirement", self)
         tracer.debug("Finished: name [%s]." % self.name)
 
-    # Requirment Type
+    # Requirement Type
     # Each requirement has exactly one type.
     # The class ReqType sets this from the contents of the file.
     # Note: There can only be one (master requirement)
