@@ -22,6 +22,7 @@ from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 from rmtoo.lib.main.MainHelper import MainHelper
 
 def execute_cmds(config, input_mods, mstdout, mstderr):
@@ -55,12 +56,8 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     if cmad_filename != None:
         cmad_rfilename = config.dollar_replace(cmad_filename)
         print("FN [%s]" % cmad_rfilename)
-        ofile = file(cmad_rfilename, "w")
-        # Write out the REQS=
-        latest_topicsc.cmad_write_reqs_list(ofile)
-        # Write out the rest
-        latest_topicsc.create_makefile_dependencies(ofile)
-        ofile.close()
+        cmad_obj = CreateMakeDependencies(cmad_rfilename)
+        CreateMakeDependencies.call(topic_continuum_set, cmad_obj)
         return True
 
     # The requirements are syntactically correct now: therefore it is
