@@ -35,10 +35,10 @@ class TopicSetWCI:
         
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
-        tracer.info("Calling pre.")
+        tracer.debug("Calling pre.")
         FuncCall.pcall(executor, func_prefix + "topics_set_pre", self)
-        tracer.info("Calling sub topic.")
+        tracer.debug("Calling sub topic.")
         self.__topic_set.execute(executor, func_prefix)
-        tracer.info("Calling post.")
+        tracer.debug("Calling post.")
         FuncCall.pcall(executor, func_prefix + "topics_set_post", self)
-        tracer.info("Finished.")
+        tracer.debug("Finished.")

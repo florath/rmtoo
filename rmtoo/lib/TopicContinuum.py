@@ -92,17 +92,17 @@ class TopicContinuum(UsableFlag):
         self.__vcs_commit_ids.insert(0, commit_info)
         self.__topic_sets[commit_info.get_commit()] = topic_set_wci
 
-    def execute(self, executor, func_prefix=""):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuum.'''
-        tracer.info("Calling pre [%s]." % self.__name)
+        tracer.debug("Calling pre [%s]." % self.__name)
         FuncCall.pcall(executor, func_prefix + "topics_continuum_pre", self)
-        tracer.info("Calling sub [%s]." % self.__name)
+        tracer.debug("Calling sub [%s]." % self.__name)
         for topic_set in executor.topics_continuum_sort(
                 self.__vcs_commit_ids, self.__topic_sets):
             topic_set.execute(executor, func_prefix)
-        tracer.info("Calling post [%s]." % self.__name)
+        tracer.debug("Calling post [%s]." % self.__name)
         FuncCall.pcall(executor, func_prefix + "topics_continuum_post", self)
-        tracer.info("Finished [%s]." % self.__name)
+        tracer.debug("Finished [%s]." % self.__name)
 
     def get_output_config(self):
         return self.__ts_config["output"]

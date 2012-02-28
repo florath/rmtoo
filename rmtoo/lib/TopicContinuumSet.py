@@ -30,10 +30,6 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         UsableFlag.__init__(self)
         self.__input_mods = input_mods
         self._config = config
-
-        print("config [%s]" % config.get_dict())
-        assert False
-
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
         self.__continuum = {}
@@ -57,15 +53,15 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
             self._adapt_usablility(topic_cont)
         tracer.debug("Finished; count [%d]" % len(self.__continuum))
 
-    def execute(self, executor, func_prefix=""):
+    def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
-        tracer.info("calling pre")
+        tracer.debug("Calling pre.")
         FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
-        tracer.info("calling sub")
+        tracer.debug("Calling sub.")
         for continuum in executor.topics_continuum_set_sort(
                                 self.__continuum.values()):
             continuum.execute(executor, func_prefix)
-        tracer.info("calling post")
+        tracer.debug("Calling Post")
         FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
-        tracer.info("finished")
+        tracer.debug("Finished.")
 

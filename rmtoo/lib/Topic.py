@@ -81,7 +81,7 @@ class Topic(Digraph.Node):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.debug("Calling pre [%s]." % self.name)
         FuncCall.pcall(executor, func_prefix + "topic_pre", self)
-        tracer.info("Calling sub [%s]." % self.name)
+        tracer.debug("Calling sub [%s]." % self.name)
         for tag in self.__tags:
             rtag = tag.get_tag()
             if rtag == "Name":
@@ -108,9 +108,9 @@ class Topic(Digraph.Node):
             print("UNHANDLED TAG [%s] [%s]" % (tag.get_tag(), tag.get_content()))
             assert False
 
-        tracer.info("Calling post [%s]." % self.name)
+        tracer.debug("Calling post [%s]." % self.name)
         FuncCall.pcall(executor, func_prefix + "topic_post", self)
-        tracer.info("Finished [%s]." % self.name)
+        tracer.debug("Finished [%s]." % self.name)
 
     def get_requirement_set(self):
         '''Returns the requirement set for this topic.'''

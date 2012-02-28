@@ -9,6 +9,8 @@
  For licensing details see COPYING
 '''
 
+from rmtoo.lib.logging.EventLogging import tracer
+
 class FuncCall:
     
     def __init__(self):
@@ -20,7 +22,10 @@ class FuncCall:
         '''Possible CALL a method.
            Call the method with the method_name on the given object
            with the given arguments - if the method exists.'''
+        tracer.debug("pcall: trying to call [%s]" % method_name)
         if not hasattr(obj, method_name):
+            tracer.debug("pcall: method [%s] does not exist." % method_name)
             # No way to call the method.
             return
+        tracer.debug("pcall: calling method [%s]" % method_name)
         return getattr(obj, method_name)(*args)

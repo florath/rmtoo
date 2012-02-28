@@ -41,7 +41,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Constructs a RequirementSet.
            This does not read everything in: please
            use the appropriate method to do so.'''
-        tracer.info("Called.")
+        tracer.debug("Called.")
         Digraph.__init__(self)
         MemLogStore.__init__(self)
         UsableFlag.__init__(self)

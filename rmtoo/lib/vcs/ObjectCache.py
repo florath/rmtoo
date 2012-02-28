@@ -29,10 +29,12 @@ class ObjectCache:
 
     def log_stats(self):
         '''Prints out the usage statistics.'''
-        tracer.info("usage statistics: objects [%d] object types [%d] "
-                    "called get [%d] called get (found) [%d]"
+        tracer.info("Usage statistics: objects [%d] object types [%d] "
+                    "get called [%d] get called (cached found) [%d] "
+                    "cache hit ratio [%4.3f]."
                     % (self.__stats_cnt_objects, self.__stats_cnt_object_types,
-                       self.__stats_cnt_get, self.__stats_cnt_get_found))
+                       self.__stats_cnt_get, self.__stats_cnt_get_found,
+                       float(self.__stats_cnt_get_found) / self.__stats_cnt_get))
 
     @staticmethod
     def create_hashable(oid):

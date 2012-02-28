@@ -249,6 +249,10 @@ class prios(StdOutputParams, ExecutorTopicContinuum):
                           sprios_detail, sprios_assigned, sprios_finished)
         f.close()
 
+    def init_cmad_(self, cmad_file):
+        '''This is called when the cmad should be written.'''
+        tracer.debug("Called.")
+        self.__cmad_file = cmad_file
 
 # TODO: EVERYTHING BENEATH IS DEPRECATED!!!
 

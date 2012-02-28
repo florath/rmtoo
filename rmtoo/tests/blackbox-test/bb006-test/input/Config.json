@@ -38,7 +38,7 @@
 	    "sources": [
 		[
 		    "git", {
-		        "start_vers": "v13", 
+		        "start_vers": "v20", 
 			"end_vers": "HEAD", 
 			"requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
 			"topics_dirs": [ "${ENV:basedir}/input/topics"] ,

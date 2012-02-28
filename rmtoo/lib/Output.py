@@ -4,20 +4,22 @@
    
   Output class.
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.Executor import Executor
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.FuncCall import FuncCall
 
 class Output(Executor):
-    '''Handles the different outputs.'''
+    '''Handle different outputs.'''
 
     def __init__(self, config):
         '''Creates the output module handler.'''
-        pass
+        tracer.debug("Called.")
+        self.__config = config
 
     @staticmethod
     def __load_output_module(output_name):
@@ -36,9 +38,9 @@ class Output(Executor):
         # Create the constructor object
         return eval("output_module.%s" % output_name)
 
-    def topics_continuum_pre(self, topic_continuum):
-        '''This is call in the TopicsContinuum pre-phase.'''
-        tracer.info("Called.")
+    def __common_topics_continuum_pre(self, topic_continuum, special):
+        '''Common method used by cmad_ and normal callback.'''
+        tracer.debug("Called.")
         output_config = topic_continuum.get_output_config()
         print("OUTPUT CONFIG %s" % output_config)
 
@@ -47,8 +49,33 @@ class Output(Executor):
             output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)
-                topic_continuum.execute(output_obj)
+                if special != None:
+                    FuncCall.pcall(output_obj, "init_" + special,
+                                   self.__cmad_file)
+                topic_continuum.execute(output_obj, special)
         tracer.debug("Finished.")
+
+    def topics_continuum_pre(self, topic_continuum):
+        '''This is called in the TopicsContinuum pre-phase.'''
+        tracer.debug("Called.")
+        return self.__common_topics_continuum_pre(topic_continuum, None)
+        
+    def cmad_topics_continuum_set_pre(self, topic_continuum_set):
+        '''Initialized the global cmad.'''
+        cmad_filename = self.__config.get_rvalue(
+                      'actions.create_makefile_dependencies')
+        self.__cmad_file = file(cmad_filename, "w")
+        
+    def cmad_topics_continuum_pre(self, topic_continuum):
+        '''Main entry point for creating make dependencies.'''
+        # This is a link to the topics_continuum pre
+        return self.__common_topics_continuum_pre(topic_continuum, "cmad_")
+        
+        
+    def cmad_topics_continuum_set_post(self, topic_continuum_set):
+        '''Cleans up the global cmad.'''
+        self.__cmad_file.close()
+    
 
     @staticmethod
     def execute(config, topic_continuum_set, mstderr, func_prefix):
