@@ -16,9 +16,10 @@ from rmtoo.outputs.graph import graph
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 # pylint: disable=C0103
-class graph2(StdOutputParams, ExecutorTopicContinuum):
+class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     '''The output class handling graph2.
        graph2 is a requirements dependency graph which has additional
        clusters for each topic.'''
@@ -27,6 +28,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
         self.__output_file = None
         self.__ident = ""
         self.__level = 0
@@ -97,8 +99,9 @@ class graph2(StdOutputParams, ExecutorTopicContinuum):
         for d in sorted(requirement.incoming, key=lambda r: r.id):
             self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
 
-### Deprecated
 
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)

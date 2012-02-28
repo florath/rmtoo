@@ -17,9 +17,9 @@ from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.configuration.Cfg import Cfg
-from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class graph(StdOutputParams, ExecutorTopicContinuum):
+class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     default_config = Cfg.new_by_json_str(
             """json:{"node_attributes":
                ["Type", "Status", "Class", "Topic", "Priority" ] }""")
@@ -28,6 +28,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
         '''Create a graph output object.'''
         tracer.info("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
 
         if not self._config.is_available('node_attributes'):
             self._config.set_value('node_attributes',
@@ -118,14 +119,8 @@ class graph(StdOutputParams, ExecutorTopicContinuum):
 
         return ",".join(nodeparam)
 
-### TODO: below is deprecated
-
-    # Create MAkefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    # Note that currently the 'reqscont' is not used in case of topics
-    # based output.
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest(), reqscont)
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)

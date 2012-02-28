@@ -17,13 +17,15 @@ from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class html(ExecutorTopicContinuum):
+class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
         tracer.debug("Called: html ouput module constructed.")
         self._config = Cfg(oconfig)
+        CreateMakeDependencies.__init__(self)
         self.__fd_stack = []
         # Take care about the openess of the ul.
         self.__ul_open_stack = []
@@ -191,6 +193,18 @@ class html(ExecutorTopicContinuum):
         # some ruler here
         fd.write('<div class="requirment_end"> </div>')
 
+    def cmad_topics_set_pre(self, topic_set):
+        '''Save the name.'''
+        self.__topic_set = topic_set
+
+    def cmad_topic_pre(self, topic):
+        '''Create makefile dependencies for given topic.'''
+        self._cmad_file.write("%s.html: %s %s ${%s}\n%s" %
+                              (os.path.join(self.__output_directory, topic.name),
+                               self.html_header_filename,
+                               self.html_footer_filename,
+                               self.__topic_set.create_makefile_name(topic.name)))
+        # TODO: more is needed! (see beneath)
 
 # TODO: Ueberlegen!
 

@@ -42,3 +42,7 @@ class TopicSetWCI:
         tracer.debug("Calling post.")
         FuncCall.pcall(executor, func_prefix + "topics_set_post", self)
         tracer.debug("Finished.")
+
+    def create_makefile_name(self, topicn):
+        return self.__topic_set.create_makefile_name(topicn)
+    

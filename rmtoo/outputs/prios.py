@@ -4,18 +4,19 @@
    
  Output handler prios.
   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 ###
-### ToDo:
+### TODO:
 ###  Store the whole requirements instead of some other date in
 ###  the different lists.
 ###
 
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 import datetime
@@ -29,13 +30,22 @@ from rmtoo.lib.ClassType import ClassTypeImplementable, \
 from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
 from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class prios(StdOutputParams, ExecutorTopicContinuum):
+class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a prios output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
+        self.__cmad_file = None
+
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+        '''Because graph2 can only one topic continuum,
+           the latest (newest) is used.'''
+        self.__used_vcs_id = vcs_commit_ids[-1]
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def __get_reqs_impl_detail(self, requirement_set):
         '''Return the implementation details of the requirements.'''
@@ -249,22 +259,9 @@ class prios(StdOutputParams, ExecutorTopicContinuum):
                           sprios_detail, sprios_assigned, sprios_finished)
         f.close()
 
-    def init_cmad_(self, cmad_file):
-        '''This is called when the cmad should be written.'''
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
-        self.__cmad_file = cmad_file
-
-# TODO: EVERYTHING BENEATH IS DEPRECATED!!!
-
-#        self.topic_set = topic_set
-#        self.cfg = Cfg(params)
-#        StdParams.parse(self, params)
-
-    # Create Makefile Dependencies
-    def DEPRECATED_cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    def DEPRECATED_output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest())
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)
 

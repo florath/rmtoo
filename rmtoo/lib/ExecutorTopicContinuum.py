@@ -5,7 +5,7 @@
   Base class for handling different executions in and
   beneath the TopicContinuum.
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

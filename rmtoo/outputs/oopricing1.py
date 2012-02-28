@@ -14,6 +14,7 @@ from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 # imports from python-odf
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -28,7 +29,8 @@ import odf.dc
 
 DEPS_HEADER_LEN = 6
 
-class oopricing1(StdOutputParams, ExecutorTopicContinuum):
+class oopricing1(StdOutputParams, ExecutorTopicContinuum,
+                 CreateMakeDependencies):
 
     def __setup_coord_lookup(self):
         '''Because at some points a requirement will be rendered in a row
@@ -48,6 +50,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum):
         '''Create a oopricing output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
         self.doc_styles = {}
         self.__used_vcs_id = None
         self.__setup_coord_lookup()
@@ -299,25 +302,11 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum):
         self.__create_constants_sheet()
         self.__create_result_sheet(sreqs)
       
-
-## TODO
-
-    # Standard output module function
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
-
-    # Create Makefile Dependencies:
-    # One output file only
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    # Note that the 'reqscont' is used for the structure of the graph
-    # (topological sort) and the topic set is used to chose the used
-    # requirements. 
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest(), reqscont)
-
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)
 
     #################################################################
     ### 2nd level functions

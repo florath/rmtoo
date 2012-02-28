@@ -105,6 +105,9 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         '''Execute the parts which are needed for TopicsSet.'''
         self.__topic.execute(executor, func_prefix)
 
+    def create_makefile_name(self, topicn):
+        return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
+
 #### EVERYTHING BENEATH THIS IS DEPRECATED!!!
 
     def DEPRECATED_internal_init_requirements(self):
@@ -132,8 +135,6 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         self.output_handlers = []
         self.init_output_handler()
 
-    def DEPRECATED_create_makefile_name(self, topicn):
-        return "TOPIC_%s_%s_DEPS" % (self.name, topicn)
 
     def DEPRECATED_get_master(self):
         return self.get_named_node(self.master_topic)
