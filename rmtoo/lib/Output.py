@@ -51,6 +51,6 @@ class Output(Executor):
         tracer.debug("Finished.")
 
     @staticmethod
-    def execute(config, topic_continuum_set, mstderr):
+    def execute(config, topic_continuum_set, mstderr, func_prefix):
         output = Output(config)
-        return topic_continuum_set.execute(output)
+        return topic_continuum_set.execute(output, func_prefix)

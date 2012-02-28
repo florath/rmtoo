@@ -55,7 +55,7 @@ class TopicContinuum(UsableFlag):
            the input_handler.'''
         tracer.debug("Called.")
         for commit in commits:
-            tracer.debug("Handling commit [%s]" % commit)            
+            tracer.debug("Handling commit [%s]" % commit)
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
             tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
@@ -69,9 +69,9 @@ class TopicContinuum(UsableFlag):
                 self.__object_cache.add(topic_set_vcs_id,
                                         "TopicSet", topic_set)
                 self._adapt_usablility(topic_set)
-            
+
             commit_info = CommitInfo(input_handler, commit, topic_set_vcs_id)
-            tswci = TopicSetWCI(topic_set, commit_info)             
+            tswci = TopicSetWCI(topic_set, commit_info)
             tracer.debug("Add topic set [%s]" % topic_set_vcs_id)
             self.__continuum_add(commit_info, tswci)
             tracer.debug("Finished.")
@@ -92,7 +92,7 @@ class TopicContinuum(UsableFlag):
         self.__vcs_commit_ids.insert(0, commit_info)
         self.__topic_sets[commit_info.get_commit()] = topic_set_wci
 
-    def execute(self, executor, func_prefix = ""):
+    def execute(self, executor, func_prefix=""):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.info("Calling pre [%s]." % self.__name)
         FuncCall.pcall(executor, func_prefix + "topics_continuum_pre", self)
@@ -106,7 +106,7 @@ class TopicContinuum(UsableFlag):
 
     def get_output_config(self):
         return self.__ts_config["output"]
-    
+
     def get_vcs_commit_ids(self):
         '''Returns the vcs_commit_ids.'''
         return self.__vcs_commit_ids

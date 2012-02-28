@@ -56,8 +56,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     if cmad_filename != None:
         cmad_rfilename = config.dollar_replace(cmad_filename)
         print("FN [%s]" % cmad_rfilename)
-        cmad_obj = CreateMakeDependencies(cmad_rfilename)
-        CreateMakeDependencies.call(topic_continuum_set, cmad_obj)
+        Output.execute(config, topic_continuum_set, mstderr, "cmad")
         return True
 
     # The requirements are syntactically correct now: therefore it is
@@ -68,7 +67,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
             return False
 
     # Output everything
-    Output.execute(config, topic_continuum_set, mstderr)
+    Output.execute(config, topic_continuum_set, mstderr, "")
     return True
 
 def main_impl(args, mstdout, mstderr):

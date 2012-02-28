@@ -31,6 +31,9 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         self.__input_mods = input_mods
         self._config = config
 
+        print("config [%s]" % config.get_dict())
+        assert False
+
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
         self.__continuum = {}
@@ -54,7 +57,7 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
             self._adapt_usablility(topic_cont)
         tracer.debug("Finished; count [%d]" % len(self.__continuum))
 
-    def execute(self, executor, func_prefix = ""):
+    def execute(self, executor, func_prefix=""):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
         tracer.info("calling pre")
         FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
