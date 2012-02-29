@@ -35,6 +35,5 @@ class UsableFlag:
 
     def _set_not_usable(self):
         '''The object is marked as not usable (any more).'''
-        tracer.info("Setting object to unusable")
-        assert False
+        tracer.info("Setting object to unusable.")
         self.__is_usable = False

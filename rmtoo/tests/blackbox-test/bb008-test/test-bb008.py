@@ -1,10 +1,13 @@
-#
-# Blackbox rmtoo tests
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Blackbox rmtoo test
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
@@ -20,9 +23,10 @@ class TestBB008:
     def test_pos(self):
         "BB Basic with one requirement - parse error"
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        result = main_impl(["-f", mdir + "/input/Config1.py", "-m", ".."],
-                           mout, merr)
+        result = main_impl(["-j", "file://" + mdir + "/input/Config.json"],
+              mout, merr)
         cleanup_std_log(mout, merr)
         assert(result == False)
         check_file_results(mdir)
