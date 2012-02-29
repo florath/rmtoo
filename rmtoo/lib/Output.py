@@ -49,7 +49,7 @@ class Output(Executor):
             output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)
-                if special != None:
+                if special != "":
                     FuncCall.pcall(output_obj, "init_" + special,
                                    self.__cmad_file)
                 topic_continuum.execute(output_obj, special)
@@ -58,7 +58,7 @@ class Output(Executor):
     def topics_continuum_pre(self, topic_continuum):
         '''This is called in the TopicsContinuum pre-phase.'''
         tracer.debug("Called.")
-        return self.__common_topics_continuum_pre(topic_continuum, None)
+        return self.__common_topics_continuum_pre(topic_continuum, "")
         
     def cmad_topics_continuum_set_pre(self, topic_continuum_set):
         '''Initialized the global cmad.'''
