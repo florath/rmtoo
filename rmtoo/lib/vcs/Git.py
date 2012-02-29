@@ -172,10 +172,6 @@ class Git(Interface):
             print("CHECKING DIR [%s] [%s]" % (tree, tree.name))
             if tree.name == directory:
                 return tree
-
-        print("directory entry [%s] not found in tree "
-                           "[%s]." % (directory, base_tree.name))
-        assert False
         raise RMTException(108, "directory entry [%s] not found in tree "
                            "[%s]." % (directory, base_tree.name))
 

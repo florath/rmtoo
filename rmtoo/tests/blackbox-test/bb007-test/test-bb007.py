@@ -1,10 +1,13 @@
-#
-# Blackbox rmtoo tests
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Blackbox rmtoo test
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
@@ -20,9 +23,10 @@ class TestBB007:
     def test_pos_001(self):
         "BB Basic with one requirement - check log output for typo in topic"
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        result = main_impl(["-f", mdir + "/input/Config1.py", "-m", ".."],
-                           mout, merr)
+        main_impl(["-j", "file://" + mdir + "/input/Config.json"], 
+                  mout, merr)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
         delete_result_is_dir()

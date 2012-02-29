@@ -32,7 +32,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     try:
         topic_continuum_set = TopicContinuumSet(input_mods, config)
     except RMTException, rmte:
-        mstderr.write("+++ ERROR: Problem reading in the continuum: '%s'"
+        mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
         return False
 
@@ -42,7 +42,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     # the requirements continuum and stop processing. (Note the logs
     # were already written out).
     if not topic_continuum_set.is_usable():
-        mstderr.write("+++ ERROR: topic continuum set is not usable.")
+        mstderr.write("+++ ERROR: topic continuum set is not usable.\n")
         return False
 
     # When only the dependencies are needed, output them to the given
