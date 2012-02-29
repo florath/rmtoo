@@ -13,8 +13,10 @@ import time
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
+class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
+                     CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
@@ -36,6 +38,12 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum):
             (time.strftime("%Y-%m-%d_%H:%M:%S",
              time.localtime(tset.get_commit_info().get_timestamp())),
              tset.get_topic_set().get_complete_requirement_set_count()))
+
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)
 
 # deprecated
 

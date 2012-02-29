@@ -56,7 +56,6 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
         cmad_rfilename = config.dollar_replace(cmad_filename)
         print("FN [%s]" % cmad_rfilename)
         Output.execute(config, topic_continuum_set, mstderr, "cmad_")
-        assert False
         return True
 
     # The requirements are syntactically correct now: therefore it is

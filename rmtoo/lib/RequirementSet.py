@@ -70,8 +70,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
 
         if req == None:
             file_content = fileinfo.get_content()
-            req = Requirement(file_content, rid, self, input_mods,
-                              self._config)
+            req = Requirement(file_content, rid, fileinfo.get_filename(),
+                              self, input_mods, self._config)
             # Add the requirement to the cache.
             object_cache.add(vcs_id, "Requirement", req)
 

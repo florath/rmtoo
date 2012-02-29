@@ -111,45 +111,9 @@ class TopicContinuum(UsableFlag):
         '''Returns the vcs_commit_ids.'''
         return self.__vcs_commit_ids
 
+    def get_name(self):
+        '''Return the name of the topic continuum.'''
+        return self.__name
+
     def __str__(self):
         return "TopicContinuum [%s]" % self.__name
-
-    ### EVERYTHING BENEATH IN DEPRECATED
-
-    def continuum_latest(self):
-        '''Return the latest version of the continuum.'''
-        # The latest version is entry 0
-        assert len(self.__vcs_ids) > 0
-        return self.__continuum[self.__vcs_ids[0]]
-
-    def deprecared_setup_topic_sets(self, reqs):
-        for k in self.config.get_value('topics').get_dict().keys():
-            self.topic_sets[k] = \
-                TopicSet(reqs, self.config, k, 'topics.' + k)
-
-    def deprecared_get(self, k):
-        return self.topic_sets[k]
-
-    def deprecared_get_topic_sets(self):
-        return self.topic_sets
-
-    # Write out all logs for all existing Topic Sets.
-    def deprecared_write_log(self, mstderr):
-        for k, v in self.topic_sets.iteritems():
-            v.write_log(mstderr)
-
-    def deprecared_output(self, rc):
-        for k, v in self.topic_sets.iteritems():
-            v.output(rc)
-
-    def deprecared_create_makefile_dependencies(self, ofile, rc):
-        for k, v in self.topic_sets.iteritems():
-            v.cmad(rc, ofile)
-
-    def deprecared_read_from_filesystem(self, req_input_dir):
-        '''Read all the needed (and configured) TopicSets into memory.'''
-        tracer.debug("called: req_input_dir [%s]" % req_input_dir)
-        for k in self.config.get_value('topics').get_dict().keys():
-            tracer.debug("create TopicSet [" + k + "]")
-            self.topic_sets[k] = \
-                TopicSet(self.config, k, 'topics.' + k, req_input_dir)

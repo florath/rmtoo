@@ -18,8 +18,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class latex2(StdOutputParams, ExecutorTopicContinuum):
+class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     default_config = { "req_attributes":
                        ["Id", "Priority", "Owner", "Invented on",
                         "Invented by", "Status", "Class"] }
@@ -183,7 +184,11 @@ class latex2(StdOutputParams, ExecutorTopicContinuum):
 
         self.__fd.write("\end{tabular}\end{center} }\n\n")
 
-
+    def cmad_topics_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+                                              self._output_filename)
 
 ### TODO: Ueberlegen
 

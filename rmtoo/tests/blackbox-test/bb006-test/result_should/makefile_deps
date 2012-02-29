@@ -1,6 +1,3 @@
-REQS=tests/blackbox-test/bb006-test/input/reqs/A1.req 
-TOPIC_ts_common_B1_DEPS: tests/blackbox-test/bb006-test/input/topics/B1.tic tests/blackbox-test/bb006-test/input/reqs/A1.req
-TOPIC_ts_common_ReqsDocument_DEPS: tests/blackbox-test/bb006-test/input/topics/ReqsDocument.tic ${TOPIC_ts_common_B1_DEPS}
 ===SYMBOLIC-OUTPUT-DIR===/reqsprios.tex: ${REQS}
 	${CALL_RMTOO}
 ===SYMBOLIC-OUTPUT-DIR===/req-graph1.dot: ${REQS}
@@ -13,9 +10,9 @@ TOPIC_ts_common_ReqsDocument_DEPS: tests/blackbox-test/bb006-test/input/topics/R
 	${CALL_RMTOO}
 ===SYMBOLIC-OUTPUT-DIR===/html/B1.html: tests/blackbox-test/bb006-test/input/header.html tests/blackbox-test/bb006-test/input/footer.html ${TOPIC_ts_common_B1_DEPS}
 	${CALL_RMTOO}
+REQS+=rmtoo/tests/blackbox-test/bb006-test/input/reqs/A1.req
 OUTPUT_HTML====SYMBOLIC-OUTPUT-DIR===/html/ReqsDocument.html ===SYMBOLIC-OUTPUT-DIR===/html/B1.html 
 ===SYMBOLIC-OUTPUT-DIR===/stats_reqs_cnt.csv: ${REQS}
 	${CALL_RMTOO}
-REQS_LATEX2====SYMBOLIC-OUTPUT-DIR===/reqtopics.tex
-===SYMBOLIC-OUTPUT-DIR===/reqtopics.tex: tests/blackbox-test/bb006-test/input/reqs/A1.req 
+===SYMBOLIC-OUTPUT-DIR===/reqtopics.tex: ${REQS}
 	${CALL_RMTOO}

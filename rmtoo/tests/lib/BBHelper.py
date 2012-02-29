@@ -170,6 +170,7 @@ def unify_output_dir(filename):
     c = fd.read()
     fd.close()
     # Replace
+      
     d = c.replace(os.environ["rmtoo_test_dir"],
                   "===SYMBOLIC-OUTPUT-DIR===")
     # Write out

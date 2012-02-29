@@ -64,18 +64,19 @@ class Output(Executor):
         '''Initialized the global cmad.'''
         cmad_filename = self.__config.get_rvalue(
                       'actions.create_makefile_dependencies')
+        tracer.debug("Opening cmad file [%s]" % cmad_filename)
         self.__cmad_file = file(cmad_filename, "w")
         
+    def cmad_topics_continuum_set_post(self, topic_continuum_set):
+        '''Cleans up the global cmad.'''
+        tracer.debug("Closing cmad file.")
+        self.__cmad_file.close()
+    
     def cmad_topics_continuum_pre(self, topic_continuum):
         '''Main entry point for creating make dependencies.'''
         # This is a link to the topics_continuum pre
         return self.__common_topics_continuum_pre(topic_continuum, "cmad_")
         
-        
-    def cmad_topics_continuum_set_post(self, topic_continuum_set):
-        '''Cleans up the global cmad.'''
-        self.__cmad_file.close()
-    
 
     @staticmethod
     def execute(config, topic_continuum_set, mstderr, func_prefix):

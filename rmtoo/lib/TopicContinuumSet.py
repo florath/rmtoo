@@ -62,6 +62,6 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
                                 self.__continuum.values()):
             continuum.execute(executor, func_prefix)
         tracer.debug("Calling Post")
-        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
+        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_post', self)
         tracer.debug("Finished.")
 

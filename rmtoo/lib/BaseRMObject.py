@@ -20,7 +20,8 @@ from rmtoo.lib.logging.EventLogging import tracer
 
 class BaseRMObject(UsableFlag):
 
-    def internal_init(self, tbhtags, rid, mls, mods, config, type_str):
+    def internal_init(self, tbhtags, rid, mls, mods, config, type_str,
+                      file_path):
         # This is the name of the tags which will be handled by the
         # module input. 
         self.tbhtags = tbhtags
@@ -35,13 +36,15 @@ class BaseRMObject(UsableFlag):
         self.mods = mods
         self.config = config
         self.type_str = type_str
+        self._file_path = file_path
 
         # The analytic modules store the results in this map:
         self.analytics = {}
 
-    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str):
+    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str,
+                 file_path):
         UsableFlag.__init__(self)
-        self.internal_init(tbhtags, rid, mls, mods, config, type_str)
+        self.internal_init(tbhtags, rid, mls, mods, config, type_str, file_path)
         if content != None:
             self.input(content)
 
@@ -50,6 +53,9 @@ class BaseRMObject(UsableFlag):
 
     def get_value(self, key):
         return self.values[key]
+    
+    def get_file_path(self):
+        return self._file_path
 
     def is_value_available(self, key):
         return key in self.values

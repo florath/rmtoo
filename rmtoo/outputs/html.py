@@ -27,6 +27,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         self._config = Cfg(oconfig)
         CreateMakeDependencies.__init__(self)
         self.__fd_stack = []
+        self.__topic_name_set = []
         # Take care about the openess of the ul.
         self.__ul_open_stack = []
         self.__output_directory = self._config.get_rvalue('output_directory')
@@ -193,18 +194,35 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         # some ruler here
         fd.write('<div class="requirment_end"> </div>')
 
+    def cmad_topics_continuum_pre(self, topics_continuum):
+        '''Save the name.'''
+        self.__tc_name = topics_continuum.get_name()
+
     def cmad_topics_set_pre(self, topic_set):
         '''Save the name.'''
         self.__topic_set = topic_set
 
+    def cmad_topics_set_post(self, topic_set):
+        '''Output symbol with all the HTMLs artifacts inside.'''
+        self._cmad_file.write("OUTPUT_HTML=")
+        for topic_name in self.__topic_name_set:
+            self._cmad_file.write("%s.html " % os.path.join(self.__output_directory, topic_name))
+        self._cmad_file.write("\n")
+
     def cmad_topic_pre(self, topic):
         '''Create makefile dependencies for given topic.'''
+        self.__topic_name_set.append(topic.name)
         self._cmad_file.write("%s.html: %s %s ${%s}\n%s" %
                               (os.path.join(self.__output_directory, topic.name),
                                self.html_header_filename,
                                self.html_footer_filename,
-                               self.__topic_set.create_makefile_name(topic.name)))
+                               self.__topic_set.create_makefile_name(self.__tc_name, topic.name),
+                               self._get_call_rmtoo_line()))
         # TODO: more is needed! (see beneath)
+        
+    def cmad_requirement(self, requirement):
+        '''Called on requirement level.'''
+        self._cmad_file.write("REQS+=%s\n" % requirement.get_file_path())
 
 # TODO: Ueberlegen!
 
