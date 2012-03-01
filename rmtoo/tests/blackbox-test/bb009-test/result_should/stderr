@@ -1,5 +1,4 @@
-+++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
-+++ Error:Analytics:TopicCohe:result is '-10'
-+++ Error:Analytics:TopicCohe:B1: Topic coherence inadequate: inner 0 / outer 0
-+++ Error:Analytics:DescWords:A1:result is '-10'
 +++ Error:Analytics:DescWords:B1:result is '-10'
++++ Error:Analytics:DescWords:A1:result is '-10'
++++ Error:Analytics:TopicCohe:B1:result is '-10'
++++ Error:Analytics:TopicCohe:B1:B1: Topic coherence inadequate: inner 0 / outer 0
