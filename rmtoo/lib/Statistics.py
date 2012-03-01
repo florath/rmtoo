@@ -36,24 +36,24 @@ class Statistics:
         for i in xrange(0, diff_in_days + 1):
             rv.append([0, 0, 0])
         return rv
-    
+
     @staticmethod
     def get_units_generic(rset, start_date, end_date, skip_requirement):
         # Run through the requirements and count the not done
         # depending on the date.
         rv = Statistics.prepare_result_vector(start_date, end_date)
 
-        for rid, req in rset.reqs.iteritems():
+        for rid, req in rset.get_requirements_iteritems():
             invented_on = req.get_value("Invented on")
 
             if start_date > invented_on:
                 invented_on = start_date
 
-            assert(end_date>=invented_on)
+            assert(end_date >= invented_on)
 
             status = req.get_status()
             efe = req.get_value("Effort estimation")
-            if efe==None:
+            if efe == None:
                 continue
 
             if skip_requirement(req):
@@ -63,7 +63,7 @@ class Statistics:
                 # Only count those which are implementable
                 rclass = req.get_value("Class")
                 if req.get_value("Class").is_implementable():
-                    Statistics.inc_stats(rv, start_date, 0, invented_on, 
+                    Statistics.inc_stats(rv, start_date, 0, invented_on,
                                          end_date, efe)
             elif isinstance(status, RequirementStatusAssigned):
                 assigned_date = status.get_date()
@@ -74,15 +74,15 @@ class Statistics:
                 adm1 = assigned_date - datetime.timedelta(1)
 
                 # Count from start_date until it was assigned as open:
-                Statistics.inc_stats(rv, start_date, 0, start_date, 
+                Statistics.inc_stats(rv, start_date, 0, start_date,
                                      adm1, efe)
                 # Count from assigned date until end_date as assigned
-                Statistics.inc_stats(rv, start_date, 1, assigned_date, 
+                Statistics.inc_stats(rv, start_date, 1, assigned_date,
                                      end_date, efe)
 
             elif isinstance(status, RequirementStatusFinished):
                 finished_date = status.get_date()
-                
+
                 if finished_date == None:
                     continue
 
@@ -92,10 +92,10 @@ class Statistics:
                 adm1 = finished_date - datetime.timedelta(1)
 
                 # Count from start_date until it was finished as open:
-                Statistics.inc_stats(rv, start_date, 0, start_date, 
+                Statistics.inc_stats(rv, start_date, 0, start_date,
                                      adm1, efe)
                 # Count from assigned date until end_date as assigned
-                Statistics.inc_stats(rv, start_date, 2, finished_date, 
+                Statistics.inc_stats(rv, start_date, 2, finished_date,
                                      end_date, efe)
         return rv
 
@@ -105,7 +105,7 @@ class Statistics:
         def skip_never(req):
             return False
 
-        return Statistics.get_units_generic(rset, start_date, 
+        return Statistics.get_units_generic(rset, start_date,
                                             end_date, skip_never)
 
     @staticmethod
@@ -124,8 +124,8 @@ class Statistics:
         iday = start_date
 
         for r in rv:
-            ofile.write("%s %d %d %d %d\n" 
-                        % (iday.isoformat(), r[0], r[1], r[2], r[0]+r[1]))
+            ofile.write("%s %d %d %d %d\n"
+                        % (iday.isoformat(), r[0], r[1], r[2], r[0] + r[1]))
             iday += one_day
 
         ofile.close()
@@ -133,22 +133,22 @@ class Statistics:
         # Estimation file
         eofile = file(filename + ".est", "w")
         x = list(i for i in xrange(0, len(rv)))
-        y = list(x[0]+x[1] for x in rv)
+        y = list(x[0] + x[1] for x in rv)
 
-        gradient, intercept, r_value, p_value, std_err = stats.linregress(x,y)
+        gradient, intercept, r_value, p_value, std_err = stats.linregress(x, y)
 
-        if gradient>=0.0:
+        if gradient >= 0.0:
             print("+++ WARN: gradient is positive [%d]: "
                   "you get more than you finished" % gradient)
             eofile.close()
             return
 
-        d = intercept / - gradient
+        d = intercept / -gradient
         end_date = start_date + datetime.timedelta(d)
 
         eofile.write("%s %d\n" % (start_date, intercept))
         eofile.write("%s 0\n" % end_date)
-        
+
         eofile.close()
-        
-        
+
+

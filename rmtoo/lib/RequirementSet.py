@@ -389,11 +389,15 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_requirement(self, rid):
         '''Return the requirement with the given id.'''
         return self.__requirements[rid]
-    
+
+    def get_requirements_iteritems(self):
+        '''Return the iteritems() iterator of all requirements.'''
+        return self.__requirements.iteritems()
+
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
         return self.__ce3set
-    
+
     # EVERYTHING BENEATH IS DEPRECATED!
 
     deprecated__er_fine = 0

@@ -4,20 +4,20 @@ mclimit=10.0;
 nslimit=10.0;ranksep=1;
 subgraph cluster_GRAPH_ReqsDocument {
  label="Topic: ReqsDocument";
-"Analytics" [label="Analytics\n[10.00]"];
-"AutomaticGeneration" [fontcolor=red,label="AutomaticGeneration\n[3.00]"];
-"DocManPage" [color=green,fontcolor=red,label="DocManPage\n[4.12]",shape=box];
-"DocSlides" [color=green,label="DocSlides\n[4.68]",shape=box];
-"Documentation" [fontcolor=red,label="Documentation\n[5.50]"];
-"Input" [fontcolor=red,label="Input\n[10.00]"];
-"Output" [fontcolor=blue,label="Output\n[10.00]",shape=box];
-"Processing" [fontcolor=red,label="Processing\n[10.00]",shape=octagon];
-"Simplicity" [fontcolor=red,label="Simplicity\n[9.00]"];
-"TestIntegration" [fontcolor=red,label="TestIntegration\n[10.00]",shape=box];
-"TestUnit" [fontcolor=red,label="TestUnit\n[10.00]"];
-"Testing" [fontcolor=red,label="Testing\n[10.00]"];
-"rmtoo" [fontcolor=red,label="rmtoo\n[10.00]"];
-}
+ "Analytics" [label="Analytics\n[10.00]"];
+ "AutomaticGeneration" [fontcolor=red,label="AutomaticGeneration\n[3.00]"];
+ "DocManPage" [color=green,fontcolor=red,label="DocManPage\n[7.50]",shape=box];
+ "DocSlides" [color=green,label="DocSlides\n[8.50]",shape=box];
+ "Documentation" [fontcolor=red,label="Documentation\n[4.68]"];
+ "Input" [fontcolor=red,label="Input\n[10.00]"];
+ "Output" [fontcolor=blue,label="Output\n[10.00]",shape=box];
+ "Processing" [fontcolor=red,label="Processing\n[10.00]",shape=octagon];
+ "Simplicity" [fontcolor=red,label="Simplicity\n[9.00]"];
+ "TestIntegration" [fontcolor=red,label="TestIntegration\n[10.00]",shape=box];
+ "TestUnit" [fontcolor=red,label="TestUnit\n[10.00]"];
+ "Testing" [fontcolor=red,label="Testing\n[10.00]"];
+ "rmtoo" [fontcolor=red,label="rmtoo\n[10.00]"];
+ }
 "Analytics" -> "Processing";
 "AutomaticGeneration" -> "Processing";
 "DocManPage" -> "Documentation";

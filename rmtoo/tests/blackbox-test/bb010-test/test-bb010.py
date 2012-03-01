@@ -1,10 +1,13 @@
-#
-# Blackbox rmtoo tests
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Blackbox rmtoo test
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
@@ -22,14 +25,19 @@ class TestBB010:
         def myexit(n):
             pass
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr,
-             exitfun=myexit)
+        main(["-j", "file://" + mdir + "/input/Config.json"],
+             mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         extract_container_files(["reqspricing.ods", ])
         missing_files, additional_files, diffs = compare_results(mdir)
 
         assert(len(missing_files) == 0)
+
+        if(len(additional_files) != 0):
+            print("Additional files [%s]" % additional_files)
+
         assert(len(additional_files) == 0)
 
         # There must be a diff - because the estimated end date 

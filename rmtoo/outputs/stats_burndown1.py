@@ -1,34 +1,40 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Burndown diagram
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ LaTeX output class version 2.
+  
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
-import datetime
+ For licensing details see COPYING
+'''
 
-from rmtoo.lib.DateUtils import parse_date
+
 from rmtoo.lib.Statistics import Statistics
-from rmtoo.lib.StdParams import StdParams
+from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
-class stats_burndown1:
+class stats_burndown1(StdOutputParams, ExecutorTopicContinuum):
 
-    def __init__(self, topic_set, params):
-        self.topic_set = topic_set
-        self.output_filename = params['output_filename']
-        StdParams.parse(self, params)
+    def __init__(self, oconfig):
+        '''Create a graph output object.'''
+        tracer.debug("Called.")
+        StdOutputParams.__init__(self, oconfig)
 
+# TODO: Adapt to new executor strcuture.
     # Create Makefile Dependencies
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
-    def output(self, reqscont):
-        print("***** TODO STATS BURNDOWN OUTPUT")
-#        rv = Statistics.get_units(self.topic_set.reqset,
-#                                  self.start_date, self.end_date)
-#        Statistics.output_stat_files(self.output_filename, self.start_date, rv)
+    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+        '''Because stats can only one topic continuum,
+           the latest (newest) is used.'''
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+
+    def requirement_set_pre(self, requirement_set):
+        '''Compute stats for each requirements set.'''
+        rv = Statistics.get_units(requirement_set,
+                                  self._start_date, self._end_date)
+        Statistics.output_stat_files(self._output_filename, self._start_date, rv)
 

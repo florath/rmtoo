@@ -44,4 +44,4 @@ def init_logging():
     tracer.addHandler(tracer_fh)
     tracer.addHandler(tracer_ch)
 
-    tracer.info("rmtoo tracer system enabled")
+    tracer.debug("rmtoo tracer system enabled")
