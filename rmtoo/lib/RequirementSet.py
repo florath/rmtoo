@@ -369,13 +369,14 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            a class field.'''
         self.__master_nodes = set()
         for req in self.nodes:
-            if len(req.outgoing) == 0:
+            if len(req.incoming) == 0:
                 tracer.debug("Found master nodes [%s]" % req.get_id())
                 self.__master_nodes.add(req)
         tracer.info("Found [%d] master nodes" % len(self.__master_nodes))
 
     def get_master_nodes(self):
         '''Return the available master nodes.'''
+        tracer.debug("Master nodes [%s]" % self.__master_nodes)
         return self.__master_nodes
 
     def get_requirements_cnt(self):

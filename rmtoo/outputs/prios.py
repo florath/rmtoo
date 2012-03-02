@@ -112,6 +112,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             f.write("\\textbf{Prio} & \\textbf{Chap} & "
                     "\\textbf{Requirement Id} & \\textbf{EfE} & "
                     "\\textbf{Sum} \\\ \hline\endhead\n")
+                       
             s = 0
             for p in l:
                 if requirement_set.get_requirement(p[1]).\

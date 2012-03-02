@@ -46,6 +46,13 @@ class Requirement(Digraph.Node, BaseRMObject):
         BaseRMObject.__init__(self, "reqtag", content, rid, mls, mods,
                               config, "requirements", file_path)
 
+    def get_prio(self):
+        return self.values["Priority"]
+    
+    def __str__(self):
+        '''Return the name/id of the requirement.'''
+        return "Requirement [%s]" % self.get_id()
+
 ### Looks that these functions are not used at all
 
     # Error is an error (no distinct syntax error)
@@ -56,8 +63,6 @@ class Requirement(Digraph.Node, BaseRMObject):
 #    def mark_sematic_error(self):
 #        self.state = self.er_error
 
-    def get_prio(self):
-        return self.values["Priority"]
 
 #    def is_open(self):
 #        return self.values["Status"] == self.st_not_done
