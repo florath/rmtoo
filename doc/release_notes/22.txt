@@ -3,13 +3,43 @@ User visible changes
 
 Drop concept of one master requirement.
 (This concept maked it impossible to include complete projects into
-other projects: in this case there were some master requirements.)
+other projects: in this case there would be more than one master
+requirement.) 
 
 Added (optional) logging of current actions / events. 
 This makes it much easier for the user and also the support to find
-problems. 
+problems.
+
+Added cache for reading objects from version control system.  This
+speeds up reading (especially projects with a long history)
+dramatically.
+
+Fixed priority computation for graph2.
+
+Adapted the configuration to the new object structure.
+NOTE: configuration prior to this version of rmtoo can not be used any
+more and must be rewritten.  There is a tools with supports you, but
+because of the restructuring it is not possible to do the whole
+process automatically.
+
+Fixed some problems with historic version handling directly from
+version control system. 
 
 Internal Changes
 ----------------
 
+Complete restructuring of objects - dropping old relicts of the 
+pre-topic phase.
+(now: TopicContinuumSet -> TopicContinuum -> TopicSet
+      -> Topic -> RequirementSet -> Requirement)
+This includes a complete rewrite of most parts of the source.
+
 Updated gitpython library from 0.3.0-beta2 to 0.3.2.RC1.
+
+Completely rewritten the interface to the version control system.
+From point of the interface there is no difference between files
+stored in the file system or in (some) version control system
+anymore.  This also makes it much easier adapt rmtoo to other version
+control systems like cvs.
+
+Cleaned up source code to implement the Python code style.
