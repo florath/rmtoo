@@ -12,6 +12,7 @@
 import datetime
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.configuration.Cfg import Cfg
+from rmtoo.lib.logging.EventLogging import tracer
 
 class StdOutputParams:
     '''Handles the standard output parameters and sets the values
@@ -43,7 +44,9 @@ class StdOutputParams:
         yesterday = today - datetime.timedelta(1)
         self._start_date = self.__parse_date(
                                 self._config, 'start_date', yesterday)
+        tracer.debug("Start date [%s]" % self._start_date)
         self._end_date = self.__parse_date(self._config, 'end_date', today)
+        tracer.debug("End date [%s]" % self._end_date)
 
     def __parse(self):
         '''Parses the standard parameters.'''

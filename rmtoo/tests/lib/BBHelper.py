@@ -179,6 +179,8 @@ def unify_output_dir(filename):
     fd.close()
 
 def check_result(missing_files, additional_files, diffs):
+    if len(missing_files) != 0:
+        print("MISSING FILES [%s]" % missing_files)
     assert(len(missing_files) == 0)
 
     if len(additional_files) != 0:
