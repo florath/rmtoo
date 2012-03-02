@@ -1,16 +1,16 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Unit test for RDepPriority
-#
-# (c) 2010-2011 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for RDepPriority
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.tests.lib.RDep import create_parameters
-from rmtoo.modules.RDepPriority import RDepPriority
+from rmtoo.inputs.RDepPriority import RDepPriority
 
 class TestRDepPriority:
 

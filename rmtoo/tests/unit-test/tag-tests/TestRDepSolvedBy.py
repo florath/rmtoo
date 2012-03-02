@@ -1,17 +1,17 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Unit test for RDepSolvedBy
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for RDepSolvedBy
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
-from rmtoo.modules.RDepSolvedBy import RDepSolvedBy
+from rmtoo.inputs.RDepSolvedBy import RDepSolvedBy
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.MemLogStore import MemLogStore

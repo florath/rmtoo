@@ -1,16 +1,18 @@
-#
-# Requirement Management Toolset
-#
-# Unit test for RDepNo Directed Digraph
-# (which finds strongly connected components)
-#
-# (c) 2010 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for RDepNo Directed Digraph
+  (which finds strongly connected components)
+
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.tests.lib.RDep import create_parameters
-from rmtoo.modules.RDepNoDirectedCircles import RDepNoDirectedCircles
+from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
 class TestRDepSCC:
 

@@ -1,15 +1,16 @@
-#
-# Requirement Management Toolset
-#
-#  Unit test for RequirementSet
-#
-# (c) 2010 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for RequirementSet
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.modules.RDepOneComponent import RDepOneComponent
+from rmtoo.inputs.RDepOneComponent import RDepOneComponent
 from rmtoo.lib.RMTException import RMTException
 
 class TestOutputOneComponent:

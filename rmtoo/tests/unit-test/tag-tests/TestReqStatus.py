@@ -1,15 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Unit test for ReqStatus
-#
-# (c) 2010-2011 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for ReqStatus
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
 
-from rmtoo.modules.ReqStatus import ReqStatus
+ For licensing details see COPYING
+'''
+
+from rmtoo.inputs.ReqStatus import ReqStatus
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters

@@ -1,16 +1,16 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Unit test for ReqInventedOn
-#
-# (c) 2010-2011 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for ReqInventedOn
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import datetime
-from rmtoo.modules.ReqInventedOn import ReqInventedOn
+from rmtoo.inputs.ReqInventedOn import ReqInventedOn
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters

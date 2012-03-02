@@ -1,14 +1,14 @@
-#
-# Requirement Management Toolset
-#
-# Unit test for ReqName
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for ReqName
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
 
-from rmtoo.modules.ReqName import ReqName
+ For licensing details see COPYING
+'''
+from rmtoo.inputs.ReqName import ReqName
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters

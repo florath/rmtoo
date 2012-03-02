@@ -1,15 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-#  Unit test for ReqTopic
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for ReqTopic
+   
+ (c) 2010-2012 by flonatel GmhH & Co. KG
 
-from rmtoo.modules.ReqTopic import ReqTopic
+ For licensing details see COPYING
+'''
+
+from rmtoo.inputs.ReqTopic import ReqTopic
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters

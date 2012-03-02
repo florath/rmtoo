@@ -18,7 +18,7 @@ class ReqSet(Digraph, MemLogStore):
     def __init__(self, d=None):
         Digraph.__init__(self, d,
                          lambda nname: Requirement(None, nname, None,
-                                                   None, None))
+                                                   None, None, None))
         MemLogStore.__init__(self)
 
 # Create a set of parameters for the test-cases
