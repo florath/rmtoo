@@ -1,14 +1,14 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-# Text IO Configuration
-#  This holds the configuration for the TxtIO class
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Text IO Configuration
+  This holds the configuration for the TxtIO class.
+   
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 

@@ -1,16 +1,16 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-# Text Record Input / Output class
-#
-# This is the parser and output module for the standard text file
-# format. 
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Text Record Input / Output class
+
+  This is the parser and output module for the standard text file
+  format. 
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
@@ -18,22 +18,22 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
 
 class TxtRecord(Record):
 
-    # PRIVATE constrcutor!
-    # Please use the from_xxx methods for creating objects of
-    # TxtRecord from client code
     def __init__(self, tioconfig):
+        '''PRIVATE constructor!
+           Please use the from_xxx methods for creating objects of
+           TxtRecord from client code.'''
         super(TxtRecord, self).__init__()
         self.tioconfig = tioconfig
 
     # There is the need to have something like 
     # is_usable
 
-    # Construct a TxtRecord from a given string
-    # rid is the Requirement ID
     @classmethod
-    def from_string(cls, s, rid, tioconfig):
+    def from_string(cls, in_str, rid, tioconfig):
+        '''Construct a TxtRecord from a given string.
+           rid is the Requirement ID.'''
         obj = cls(tioconfig)
-        obj.parse(s, rid)
+        obj.parse(in_str, rid)
         return obj
 
     # Construct a TxtRecord from a given file descriptior

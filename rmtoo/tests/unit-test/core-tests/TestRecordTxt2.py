@@ -1,14 +1,14 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Record Text Test Class: try to run through all the possible states
-# and error scenarios.
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Record Text Test Class: try to run through all the possible states
+  and error scenarios.
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
@@ -17,6 +17,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.LogLevel import LogLevel
+from rmtoo.lib.configuration.Cfg import Cfg
 
 class TestRecordTxt2:
 
@@ -61,8 +62,9 @@ class TestRecordTxt2:
     def test_neg_04(self):
         "TestRecordTxt2: long long line"
 
-        tioconfig = TxtIOConfig()
-        tioconfig.max_line_length = 7
+        cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
+
+        tioconfig = TxtIOConfig(cfg)
         txt_doc = TxtRecord.from_string("good: but too long",
                                         "TooLong", tioconfig)
 
@@ -74,8 +76,8 @@ class TestRecordTxt2:
     def test_neg_05(self):
         "TestRecordTxt2: long long line - check for lineno"
 
-        tioconfig = TxtIOConfig()
-        tioconfig.max_line_length = 7
+        cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
+        tioconfig = TxtIOConfig(cfg)
         txt_doc = TxtRecord.from_string("""# com
 ok: yes
  no
@@ -94,8 +96,8 @@ good: but too long
     def test_neg_06(self):
         "TestRecordTxt2: long long line - check for multiple errors"
 
-        tioconfig = TxtIOConfig()
-        tioconfig.max_line_length = 7
+        cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
+        tioconfig = TxtIOConfig(cfg)
         txt_doc = TxtRecord.from_string("""#1 com
 ok: yes
  no
