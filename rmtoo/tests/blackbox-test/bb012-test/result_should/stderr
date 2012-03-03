@@ -1,10 +1,2 @@
-+++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
-+++ Debug: 65:B1:Skipping requirement because not in topic
-+++ Info: 67:The resulting graph is not connected. Found components: [[set([u'A1']), set([u'C1'])]]
-+++ Debug: 65:B1:Skipping requirement because not in topic
-+++ Info: 67:The resulting graph is not connected. Found components: [[set([u'A1']), set([u'C1'])]]
-+++ Error:Analytics:DescWords:A1:result is '-10'
-+++ Error:Analytics:DescWords:B1:result is '-10'
-+++ Error:Analytics:ReqTopicCohe:B1:result is '-10'
-+++ Error:Analytics:ReqTopicCohe:B1:Requirement topic coherence inadequate: incoming 0/1, outgoing 0/1
 +++ Error:Analytics:DescWords:C1:result is '-10'
++++ Error:Analytics:DescWords:A1:result is '-10'
