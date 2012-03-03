@@ -33,16 +33,11 @@ class TestVCS(Interface):
 
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the vcs id from the base directories of the given dir_type.'''
-        assert commit
-        assert dir_type
-        assert False
+        return "TheStaticVcsId"
 
     def get_timestamp(self, commit):
-        '''Returns the timestamp of the set of requirements.
-           This is, e.g. for files 'now()', for commits the date of the
-           commit.'''
-        assert commit
-        assert False
+        '''Returns the current time.'''
+        return time.time()
 
     class FileInfo(Interface.FileInfo):
 
@@ -65,15 +60,13 @@ class TestVCS(Interface):
 
         def __str__(self):
             '''Returns the string representation.'''
-            assert False
+            return "NothingElse"
 
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
            given directory type.'''
-        assert commit
-        assert dir_type
-        assert False
+        return []
 
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
-        assert False
+        return TestVCS.FileInfo()

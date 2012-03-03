@@ -101,7 +101,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''This is mostly the same functionality of similar method of the
            class Requirement - but with one major difference: for this
            implementation stop if an error occurred.'''
-        for module in input_mods.reqdeps_sorted:
+        for module in input_mods.get_reqdeps_sorted():
             state = module.rewrite(self)
             if state == False:
                 # Some semantic error occurred.

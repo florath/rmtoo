@@ -138,3 +138,7 @@ class InputModules(Digraph):
     def topological_sort(self):
         '''Do a topoligical sort on the reqdeps modules.'''
         self.reqdeps_sorted = topological_sort(self)
+
+    def get_reqdeps_sorted(self):
+        '''Return the sorted requirements dependencies.'''
+        return self.reqdeps_sorted

@@ -39,7 +39,7 @@ class ObjectCache:
     @staticmethod
     def create_hashable(oid):
         '''If the oid is a list, the oid is converted into a string.'''
-        tracer.debug("called: oid [%s]" % oid)
+        tracer.debug("Called: oid [%s]." % oid)
         if type(oid) == ListType:
             if len(oid) == 1:
                 return oid[0]
