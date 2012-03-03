@@ -70,24 +70,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_name(self, name):
         '''Output the topic name.'''
         self.__fd.write("\\%s{%s}\n" % (self.level_names[self.__level], name))
-        
+
     def topic_text(self, text):
         '''Write out the given text.'''
         self.__fd.write("%s\n" % text)
-        
+
     def requirement_set_pre(self, rset):
         '''Prepare the requirements set output.'''
         self.__ce3set = rset.get_ce3set()
-        
+
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
-        
+
     def requirement(self, req):
         self.__fd.write("%% REQ '%s'\n" % req.id)
 
         self.__fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
-                 % (self.level_names[self.__level+1],
+                 % (self.level_names[self.__level + 1],
                     req.get_value("Name").get_content(),
                     latex2.strescape(req.id),
                     req.get_value("Description").get_content()))
@@ -126,9 +126,9 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt != None and cnstrt.len() > 0:
                 self.__fd.write("\n\\textbf{Constraints:} ")
-    
+
                 #cl = req.get_value("Constraints") # .split()
-    
+
                 cs = []
                 for k, v in sorted(cnstrt.get_values().iteritems()):
                     #name = v.get_value("Name").get_content()
@@ -139,7 +139,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     if description != None:
                         rs += " [" + description + "] "
                     cs.append(rs)
-    
+
                 self.__fd.write(", ".join(cs))
                 self.__fd.write("\n")
 
@@ -187,7 +187,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def cmad_topics_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
-        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
 
 ### TODO: Ueberlegen
@@ -257,6 +257,3 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         if cnstrt.is_val_av_and_not_null("Note"):
             fd.write("\n\\textbf{Note:} %s\n"
                      % cnstrt.get_value("Note").get_content())
-
-
-

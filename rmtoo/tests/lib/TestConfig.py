@@ -4,7 +4,7 @@
    
  Common methods for handling test configuration.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011-2012 by flonatel GmhH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -21,3 +21,6 @@ class TestConfig(Cfg):
 
     def set_depends_on(self):
         self.set_value('requirements.input.dependency_notation', "Depends on")
+
+    def set_output_cfg(self):
+        self.set_value("topic_root_node", "TopicRootNode")

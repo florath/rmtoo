@@ -63,7 +63,7 @@ class Topic(Digraph.Node):
         # This is the name of the topic (short description)
         self.__topic_name = None
         self._config = config
-        tracer.info("Called: name [%s]." % tname)
+        tracer.debug("Called: name [%s]." % tname)
         self.__digraph = digraph
         self.__requirements = None
         self.__read(tname, input_handler, commit, file_info, req_set)
@@ -105,8 +105,8 @@ class Topic(Digraph.Node):
                                tag.get_content())
                 continue
 
-            print("UNHANDLED TAG [%s] [%s]" % (tag.get_tag(), tag.get_content()))
-            assert False
+            raise RMTException(114, "Unknown tag in topic [%s]" % rtag,
+                               self.name)
 
         tracer.debug("Calling post [%s]." % self.name)
         FuncCall.pcall(executor, func_prefix + "topic_post", self)

@@ -4,7 +4,7 @@
    
   Factory for different input types.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -22,10 +22,10 @@ class Factory:
     @staticmethod
     def create(input_method, input_config):
         '''Create new input handler from given parameters.'''
-        tracer.info("called: name [%s]" % input_method)
+        tracer.info("Called: name [%s]." % input_method)
 
         if input_method.startswith("ignore:"):
-            tracer.info("ignoring factory entry")
+            tracer.info("Ignoring factory entry.")
             return None
 
         if input_method not in Factory.known_input_types:

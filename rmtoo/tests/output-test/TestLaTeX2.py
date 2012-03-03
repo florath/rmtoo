@@ -1,14 +1,15 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-# Unit test for RequirementSet
-#
-# (c) 2010-2011 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for Latex output
+  
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
+ For licensing details see COPYING
+'''
+
+import os
 import StringIO
 
 from rmtoo.outputs.latex2 import latex2
@@ -21,31 +22,37 @@ from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable
+from rmtoo.tests.lib.TestVCS import TestVCS
+from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 class TestOutputLaTeX2:
-
-    def test_positive_01(self):
-        "LaTeX output: check config"
-
-        mconfig = { "req_attributes": ["Id", "Priority", ],
-                    "output_filename": "/please/ignore/me"}
-
-        l = latex2(None, mconfig)
-        assert(l.config == mconfig)
 
     def test_neg_01(self):
         "LaTeX output: check invalid tag in topic"
 
+        tcfg = TestConfig()
+        tcfg.set_output_cfg()
+
+        tvcs = TestVCS(tcfg)
+        tfile = tvcs.get_tfile1()
+
         fd = StringIO.StringIO()
-        topic = Topic(None, "TName", None, None, None)
+        topic = Topic(None, "TName", tvcs, None, tfile, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
-        mconfig = {"output_filename": "/please/ignore/me"}
-        l2 = latex2(None, mconfig)
+        tmpdir = create_tmp_dir()
+        mconfig = {"output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
+        l2 = latex2(mconfig)
+
         try:
-            l2.output_latex_topic(fd, topic, None)
+            l2.topics_set_pre(None)
+            topic.execute(l2, "")
+
+#            l2.output_latex_topic(fd, topic, None)
             assert(False)
         except RMTException, rmte:
             pass
+        delete_tmp_dir(tmpdir)
 
     def test_neg_02(self):
         "LaTeX output: check invalid tag in requirement output config"
