@@ -45,7 +45,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                         "Invented by", "Status", "Class"])
         self.__level = -1
 
-    def topics_set_pre(self, topics_set):
+    def topic_set_pre(self, topics_set):
         '''Prepare the output file.'''
         self.__fd = file(self._output_filename, "w")
 
@@ -55,7 +55,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 #        constraints = Constraints.collect(topic_set)
 #        self.output_latex_constraints(fd, topic_set, constraints)
 
-    def topics_set_post(self, topics_set):
+    def topic_set_post(self, topics_set):
         '''Clean up file.'''
         self.__fd.close()
 
@@ -185,7 +185,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         self.__fd.write("\end{tabular}\end{center} }\n\n")
 
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,

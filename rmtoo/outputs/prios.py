@@ -40,7 +40,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         CreateMakeDependencies.__init__(self)
         self.__cmad_file = None
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
@@ -259,7 +259,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                           sprios_detail, sprios_assigned, sprios_finished)
         f.close()
 
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file, 

@@ -49,12 +49,12 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                   mode)
         return fd
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''       
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topics_set_pre(self, topics_set):
+    def topic_set_pre(self, topics_set):
         '''Do all the file and directory preparation.'''
         self.__ouput_html_topic_mkdirs()
 
@@ -194,15 +194,15 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         # some ruler here
         fd.write('<div class="requirment_end"> </div>')
 
-    def cmad_topics_continuum_pre(self, topics_continuum):
+    def cmad_topic_continuum_pre(self, topics_continuum):
         '''Save the name.'''
         self.__tc_name = topics_continuum.get_name()
 
-    def cmad_topics_set_pre(self, topic_set):
+    def cmad_topic_set_pre(self, topic_set):
         '''Save the name.'''
         self.__topic_set = topic_set
 
-    def cmad_topics_set_post(self, topic_set):
+    def cmad_topic_set_post(self, topic_set):
         '''Output symbol with all the HTMLs artifacts inside.'''
         self._cmad_file.write("OUTPUT_HTML=")
         for topic_name in self.__topic_name_set:

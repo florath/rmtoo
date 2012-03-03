@@ -50,7 +50,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         self.next_id += 1
         return self.req_ids[name]
 
-    def topics_continuum_pre(self, topics_continuum):
+    def topic_continuum_pre(self, topics_continuum):
         '''Do the preprocessing: create the empty document.'''
         # Create the minidom document
         self.__xml_doc = Document()
@@ -69,12 +69,12 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
             xml_taskdisplaycolumns.appendChild(xml_tpd)
         self.__xml_obj_stack.append(xml_project)
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because gantt2 can only one topic continuum,
            the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topics_continuum_post(self, topics_continuum):
+    def topic_continuum_post(self, topics_continuum):
         '''Do the postprocessing: create the file.'''
         # Close the (hopefully) last open
         assert len(self.__xml_obj_stack) == 1

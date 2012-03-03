@@ -38,7 +38,7 @@ class Output(Executor):
         # Create the constructor object
         return eval("output_module.%s" % output_name)
 
-    def __common_topics_continuum_pre(self, topic_continuum, special):
+    def __common_topic_continuum_pre(self, topic_continuum, special):
         '''Common method used by cmad_ and normal callback.'''
         tracer.debug("Called.")
         output_config = topic_continuum.get_output_config()
@@ -55,27 +55,27 @@ class Output(Executor):
                 topic_continuum.execute(output_obj, special)
         tracer.debug("Finished.")
 
-    def topics_continuum_pre(self, topic_continuum):
+    def topic_continuum_pre(self, topic_continuum):
         '''This is called in the TopicsContinuum pre-phase.'''
         tracer.debug("Called.")
-        return self.__common_topics_continuum_pre(topic_continuum, "")
+        return self.__common_topic_continuum_pre(topic_continuum, "")
         
-    def cmad_topics_continuum_set_pre(self, topic_continuum_set):
+    def cmad_topic_continuum_set_pre(self, topic_continuum_set):
         '''Initialized the global cmad.'''
         cmad_filename = self.__config.get_rvalue(
                       'actions.create_makefile_dependencies')
         tracer.debug("Opening cmad file [%s]" % cmad_filename)
         self.__cmad_file = file(cmad_filename, "w")
         
-    def cmad_topics_continuum_set_post(self, topic_continuum_set):
+    def cmad_topic_continuum_set_post(self, topic_continuum_set):
         '''Cleans up the global cmad.'''
         tracer.debug("Closing cmad file.")
         self.__cmad_file.close()
     
-    def cmad_topics_continuum_pre(self, topic_continuum):
+    def cmad_topic_continuum_pre(self, topic_continuum):
         '''Main entry point for creating make dependencies.'''
         # This is a link to the topics_continuum pre
-        return self.__common_topics_continuum_pre(topic_continuum, "cmad_")
+        return self.__common_topic_continuum_pre(topic_continuum, "cmad_")
         
 
     @staticmethod

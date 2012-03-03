@@ -12,13 +12,13 @@
 
 class ExecutorTopicContinuum:
 
-    def topics_continuum_pre(self, topics_continuum):
+    def topic_continuum_pre(self, topics_continuum):
         '''This is called in the TopicsContinuum pre-phase.
            This is typically the phase where all the output modules
            will be used.'''
         return
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Sort the list of continuums.
            The commits are the commits in chronological order.
            The vcs_ids are the ids in chronological order.
@@ -30,19 +30,19 @@ class ExecutorTopicContinuum:
             res.append(topic_sets[vcs_id.get_commit()])
         return res
 
-    def topics_continuum_post(self, topics_continuum):
+    def topic_continuum_post(self, topics_continuum):
         '''This is called in the TopicsContinuum post-phase.'''
         return
 
-    def topics_set_pre(self, topics_set):
+    def topic_set_pre(self, topics_set):
         '''This is called in the TopicsSet pre-phase.'''
         return
 
-    def topics_set_sort(self, list_to_sort):
+    def topic_set_sort(self, list_to_sort):
         '''Sort the list of contimuums.'''
         return list_to_sort
 
-    def topics_set_post(self, topics_set):
+    def topic_set_post(self, topics_set):
         '''This is called in the TopicsSet post-phase.'''
         return
 

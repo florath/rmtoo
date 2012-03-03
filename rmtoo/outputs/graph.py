@@ -34,13 +34,13 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self._config.set_value('node_attributes',
                 ["Type", "Status", "Class", "Topic", "Priority", ])
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topics_set_pre(self, requirement_set):
+    def topic_set_pre(self, requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
         # Initialize the graph output
@@ -53,7 +53,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
 
-    def topics_set_post(self, requirement_set):
+    def topic_set_post(self, requirement_set):
         '''Write footer - close file.'''
         # Print out a node with the version number:
         self.__output_file.write(
@@ -119,7 +119,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         return ",".join(nodeparam)
 
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file, 

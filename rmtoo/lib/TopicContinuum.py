@@ -95,13 +95,13 @@ class TopicContinuum(UsableFlag):
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuum.'''
         tracer.debug("Calling pre [%s]." % self.__name)
-        FuncCall.pcall(executor, func_prefix + "topics_continuum_pre", self)
+        FuncCall.pcall(executor, func_prefix + "topic_continuum_pre", self)
         tracer.debug("Calling sub [%s]." % self.__name)
-        for topic_set in executor.topics_continuum_sort(
+        for topic_set in executor.topic_continuum_sort(
                 self.__vcs_commit_ids, self.__topic_sets):
             topic_set.execute(executor, func_prefix)
         tracer.debug("Calling post [%s]." % self.__name)
-        FuncCall.pcall(executor, func_prefix + "topics_continuum_post", self)
+        FuncCall.pcall(executor, func_prefix + "topic_continuum_post", self)
         tracer.debug("Finished [%s]." % self.__name)
 
     def get_output_config(self):

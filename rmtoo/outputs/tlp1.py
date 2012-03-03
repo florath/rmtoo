@@ -38,7 +38,7 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum):
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because tlp1 can only one topic continuum,
            the latest (newest) is used.'''       
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]

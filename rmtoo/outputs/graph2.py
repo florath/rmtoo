@@ -48,12 +48,12 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__level -= 1
         self.__set_indent()
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topics_set_pre(self, _):
+    def topic_set_pre(self, _):
         '''This is the first thing which is called.'''
         tracer.debug("Called.")
         self.__output_file = file(self._output_filename, "w")
@@ -62,7 +62,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 "nslimit=10.0;ranksep=1;\n")
         tracer.debug("Finished.")
 
-    def topics_set_post(self, _):
+    def topic_set_post(self, _):
         '''Finish major entry and close file.'''
         tracer.debug("Called.")
         self.__output_file.write(self.__req_dep_graph)
@@ -100,7 +100,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
 
 
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file, 

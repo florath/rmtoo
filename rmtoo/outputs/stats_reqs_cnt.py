@@ -24,22 +24,22 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
         StdOutputParams.__init__(self, oconfig)
         tracer.debug("Finished.")
 
-    def topics_continuum_pre(self, topics_continuum):
+    def topic_continuum_pre(self, topics_continuum):
         '''Prepare file.'''
         self.__ofile = file(self._output_filename, "w")
         
-    def topics_continuum_post(self, topics_continuum):
+    def topic_continuum_post(self, topics_continuum):
         '''Cleanup file.'''
         self.__ofile.close()
 
-    def topics_set_pre(self, tset):
+    def topic_set_pre(self, tset):
         '''Output the data for this topics set.'''
         self.__ofile.write("%s %d\n" %
             (time.strftime("%Y-%m-%d_%H:%M:%S",
              time.localtime(tset.get_commit_info().get_timestamp())),
              tset.get_topic_set().get_complete_requirement_set_count()))
 
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file, 

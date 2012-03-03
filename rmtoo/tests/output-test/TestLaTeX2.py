@@ -44,12 +44,12 @@ class TestOutputLaTeX2:
         l2 = latex2(mconfig)
 
         try:
-            l2.topics_set_pre(None)
+            l2.topic_set_pre(None)
             topic.execute(l2, "")
             assert(False)
         except RMTException, rmte:
             pass
-        l2.topics_set_post(None)
+        l2.topic_set_post(None)
         delete_tmp_dir(tmpdir)
 
     def test_neg_02(self):
@@ -79,11 +79,11 @@ class TestOutputLaTeX2:
         ce3set.insert("TestReq", ce3)
 
         try:
-            l2.topics_set_pre(None)
+            l2.topic_set_pre(None)
             req.execute(l2, "")
             assert(False)
         except RMTException, rmte:
             pass
-        l2.topics_set_post(None)
+        l2.topic_set_post(None)
         delete_tmp_dir(tmpdir)
 

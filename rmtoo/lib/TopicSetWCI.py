@@ -36,11 +36,11 @@ class TopicSetWCI:
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
         tracer.debug("Calling pre.")
-        FuncCall.pcall(executor, func_prefix + "topics_set_pre", self)
+        FuncCall.pcall(executor, func_prefix + "topic_set_pre", self)
         tracer.debug("Calling sub topic.")
         self.__topic_set.execute(executor, func_prefix)
         tracer.debug("Calling post.")
-        FuncCall.pcall(executor, func_prefix + "topics_set_post", self)
+        FuncCall.pcall(executor, func_prefix + "topic_set_post", self)
         tracer.debug("Finished.")
 
     def create_makefile_name(self, name, topicn):

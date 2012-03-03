@@ -27,7 +27,7 @@ class stats_burndown1(StdOutputParams, ExecutorTopicContinuum):
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because stats can only one topic continuum,
            the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]

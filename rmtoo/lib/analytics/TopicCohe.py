@@ -61,7 +61,7 @@ class TopicCohe(Base):
             for topic_b in self.__req2topics[req_b.get_id()]:
                 self.__add_topic_relation(topic_a, topic_b)
 
-    def topics_set_post(self, topic_set):
+    def topic_set_post(self, topic_set):
         '''This is call in the TopicsSet post-phase.'''
         for req_id in self.__req2topics.keys():
             req_a = topic_set.get_topic_set().get_requirement_set().\

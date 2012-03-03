@@ -56,12 +56,12 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
         tracer.debug("Calling pre.")
-        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_pre', self)
+        FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_pre', self)
         tracer.debug("Calling sub.")
-        for continuum in executor.topics_continuum_set_sort(
+        for continuum in executor.topic_continuum_set_sort(
                                 self.__continuum.values()):
             continuum.execute(executor, func_prefix)
         tracer.debug("Calling Post")
-        FuncCall.pcall(executor, func_prefix + 'topics_continuum_set_post', self)
+        FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_post', self)
         tracer.debug("Finished.")
 

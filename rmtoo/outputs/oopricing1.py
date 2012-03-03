@@ -55,7 +55,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__used_vcs_id = None
         self.__setup_coord_lookup()
 
-    def topics_continuum_sort(self, vcs_commit_ids, topic_sets):
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because oopricing1 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
@@ -193,7 +193,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__create_styles_currency()
         self.__create_styles_int()
 
-    def topics_set_pre(self, topics_set):
+    def topic_set_pre(self, topics_set):
         '''Document setup and output.
            Because for this document a very specific sort order
            must be implemented, everything must be done here explicitly -
@@ -202,7 +202,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__create_meta()
         self.__create_styles()
         
-    def topics_set_post(self, topics_set):
+    def topic_set_post(self, topics_set):
         '''Document storage.'''
         self.__calcdoc.save(self._output_filename, True)
 
@@ -302,7 +302,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__create_constants_sheet()
         self.__create_result_sheet(sreqs)
       
-    def cmad_topics_continuum_pre(self, _):
+    def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file, 

@@ -18,15 +18,15 @@ class Executor(ExecutorTopicContinuum):
     '''Base class for the different executors.
        All methods are implemented: they are doing nothing.'''
 
-    def topics_continuum_set_pre(self, topics_continuum_set):
+    def topic_continuum_set_pre(self, topics_continuum_set):
         '''This is call in the TopicsContinuumSet pre-phase.'''
         return
 
-    def topics_continuum_set_sort(self, list_to_sort):
+    def topic_continuum_set_sort(self, list_to_sort):
         '''Sorts the list of topic continuums.'''
         return list_to_sort
 
-    def topics_continuum_set_post(self, topics_continuum_set):
+    def topic_continuum_set_post(self, topics_continuum_set):
         '''This is call in the TopicsContinuumSet post-phase.'''
         return
 
