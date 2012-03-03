@@ -4,7 +4,7 @@
    
   Unit test for ReqInventedBy
    
- (c) 2010-2012 by flonatel GmhH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

@@ -5,7 +5,7 @@
   Caches objects.
    This class caches objects.  The ID is the unique VCS id.
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

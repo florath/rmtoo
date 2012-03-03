@@ -4,7 +4,7 @@
    
   Small helper class for storing commit / vcs id information.
    
- (c) 2012 by flonatel GmhH & Co. KG
+ (c) 2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

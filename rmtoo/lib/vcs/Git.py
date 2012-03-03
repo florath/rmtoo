@@ -5,7 +5,7 @@
   Version Control System.
    Git implementation.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

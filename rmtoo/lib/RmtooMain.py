@@ -7,7 +7,7 @@
   It is stored here (in a separate file) for (black-box) testing
   proposes. 
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

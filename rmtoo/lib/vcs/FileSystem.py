@@ -4,7 +4,7 @@
    
   Implementation of the VCS interface for the local file system.
    
- (c) 2011-2012 by flonatel GmhH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

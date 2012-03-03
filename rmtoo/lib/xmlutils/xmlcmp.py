@@ -16,7 +16,7 @@
  'no they are not the same' (maybe with a hint of the difference's
  location) is needed.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

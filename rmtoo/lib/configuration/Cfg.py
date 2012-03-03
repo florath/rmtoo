@@ -9,7 +9,7 @@
  History: this is a new implementation of the old Configuration 
  and command line parameter handling. 
    
- (c) 2011-2012 by flonatel GmhH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

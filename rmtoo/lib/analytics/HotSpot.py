@@ -5,7 +5,7 @@
   Sometimes there are so called 'Requirements Hotspots'.  These are
   requirements which have too many links.
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

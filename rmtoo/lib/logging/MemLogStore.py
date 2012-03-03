@@ -13,7 +13,7 @@
   Also this makes is easier to write test cases handling error
   messages. 
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

@@ -5,7 +5,7 @@
   Abstract Base Class (ABC) to handle different version control systems.
   This includes also reading in the latest version from the file system.
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

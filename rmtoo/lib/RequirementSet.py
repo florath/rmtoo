@@ -6,7 +6,7 @@
   Note that the TopicSet is a tree where the leaves are 
   orders - i.e. it is not possible to put them into a set_value.
    
- (c) 2010-2011 by flonatel GmhH & Co. KG
+ (c) 2010-2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

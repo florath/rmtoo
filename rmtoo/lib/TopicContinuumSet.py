@@ -7,7 +7,7 @@
   from the whole time of being.
   The key to access this is the 'name' under 'topic' (in the configuration).
    
- (c) 2011 by flonatel GmhH & Co. KG
+ (c) 2011 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
