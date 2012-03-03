@@ -37,7 +37,6 @@ class TestOutputLaTeX2:
         tvcs = TestVCS(tcfg)
         tfile = tvcs.get_tfile1()
 
-        fd = StringIO.StringIO()
         topic = Topic(None, "TName", tvcs, None, tfile, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         tmpdir = create_tmp_dir()
@@ -47,23 +46,27 @@ class TestOutputLaTeX2:
         try:
             l2.topics_set_pre(None)
             topic.execute(l2, "")
-
-#            l2.output_latex_topic(fd, topic, None)
             assert(False)
         except RMTException, rmte:
             pass
+        l2.topics_set_post(None)
         delete_tmp_dir(tmpdir)
 
     def test_neg_02(self):
         "LaTeX output: check invalid tag in requirement output config"
 
-        fd = StringIO.StringIO()
+        tcfg = TestConfig()
+        tcfg.set_output_cfg()
 
+        tvcs = TestVCS(tcfg)
+        tfile = tvcs.get_tfile1()
+
+        tmpdir = create_tmp_dir()
         mconfig = { "req_attributes": ["Status", "Class", "DoesNotExists"],
-                    "output_filename": "/please/ignore/me"}
+                    "output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
 
-        l2 = latex2(None, mconfig)
-        req = Requirement(None, "TestReq", None, None, None)
+        l2 = latex2(mconfig)
+        req = Requirement(None, "TestReq", None, None, None, None)
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")
         req.values["Description"] = RecordEntry("Description", "my desc")
@@ -76,8 +79,11 @@ class TestOutputLaTeX2:
         ce3set.insert("TestReq", ce3)
 
         try:
-            l2.output_requirement(fd, req, 2, ce3set)
+            l2.topics_set_pre(None)
+            req.execute(l2, "")
             assert(False)
         except RMTException, rmte:
             pass
+        l2.topics_set_post(None)
+        delete_tmp_dir(tmpdir)
 

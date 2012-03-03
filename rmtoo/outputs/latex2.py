@@ -37,6 +37,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        self.__ce3set = None
 
         if not self._config.is_available('req_attributes'):
             self._config.set_value('req_attributes',
