@@ -70,7 +70,7 @@ install:
 .PHONY: tests
 tests:
 	nosetests -w rmtoo -v --with-coverage -s \
-		--cover-package=rmtoo.lib,rmtoo.output,rmtoo.modules
+	 --cover-package=rmtoo.lib,rmtoo.output,rmtoo.inputs
 
 .PHONY: deb
 deb:
@@ -79,6 +79,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/analytics-tests/TestDescWordsLang.py
-
-#		tests/blackbox-test/bb010-test/test-bb010.py
+		tests/blackbox-test/bb011-test/test-bb011.py

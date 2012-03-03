@@ -11,6 +11,7 @@
 
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
+from rmtoo.lib.logging.EventLogging import tracer
 
 class TopicCohe(Base):
     '''Class for checking topic coherence.'''
@@ -57,6 +58,15 @@ class TopicCohe(Base):
 
     def __eval_link(self, req_a, req_b):
         '''Add all the links between all topics of req_a and req_b.'''
+        # If either one of the requirements is not in the topic,
+        # skip this step
+        if req_a.get_id() not in self.__req2topics \
+            or req_b.get_id() not in self.__req2topics:
+            tracer.debug("One of the requirements is not in the topic - "
+                         "skipping evaluation [%s] [%s]" %
+                         (req_a.get_id(), req_b.get_id()))
+            return
+
         for topic_a in self.__req2topics[req_a.get_id()]:
             for topic_b in self.__req2topics[req_b.get_id()]:
                 self.__add_topic_relation(topic_a, topic_b)

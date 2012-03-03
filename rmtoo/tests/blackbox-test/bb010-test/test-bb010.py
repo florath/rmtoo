@@ -35,27 +35,6 @@ class TestBB010:
         check_file_results(mdir)
         delete_result_is_dir()
 
-       
-        
-    def OLD(self):
-        missing_files, additional_files, diffs = compare_results(mdir)
-
-        assert(len(missing_files) == 0)
-
-        if(len(additional_files) != 0):
-            print("Additional files [%s]" % additional_files)
-
-        assert(len(additional_files) == 0)
-
-        # There must be a diff - because the estimated end date 
-        # is also based on the date of today
-        if len(diffs) != 2:
-            print("DIFFS '%s'" % diffs)
-
-        assert(len(diffs) == 2)
-        #delete_result_is_dir()
-
-
 if __name__ == "__main__":
     t = TestBB010()
     t.test_pos_001()
