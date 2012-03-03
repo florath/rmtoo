@@ -1,40 +1,32 @@
-#
-# Command Line Parser Test Class
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Test case for Command Line Parser
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
-from rmtoo.lib.RmtooMain import parse_cmd_line_opts
+ For licensing details see COPYING
+'''
+
+from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.RMTException import RMTException
 
 class TestCmdLineParser:
 
     def test_neg_01(self):
-        "Command Line Parser: check default -m"
+        "Command Line Parser: check -m."
 
         args = ["-f", "SomeFile" ]
-        options = parse_cmd_line_opts(args)
-        assert(options.modules_directory == "/usr/share/pyshared")
+        options = CmdLineParams.create_dicts(args)
+        assert(options[1]["global"]["modules"]["directories"] == \
+               ["/usr/share/pyshared"])
 
-    def test_neg_02(self):
-        "Command Line Parser: no config file given"
-
-        args = [ ]
-        try:
-            options = parse_cmd_line_opts(args)
-            assert(False)
-        except RMTException, rmte:
-            assert(rmte.id()==60)
-
-    def test_neg_03(self):
+    def test_additional_old_params(self):
         "Command Line Parser: too many args"
 
         args = ["-f", "SomeFile", "das", "ist", "was"]
-        try:
-            options = parse_cmd_line_opts(args)
-            assert(False)
-        except RMTException, rmte:
-            assert(rmte.id()==61)
+        options = CmdLineParams.create_dicts(args)
+        assert(options[0]["general"]["command_line_arguments"] == \
+               ['das', 'ist', 'was'])
 
