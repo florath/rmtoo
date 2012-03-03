@@ -1,11 +1,15 @@
-#
-# This function implements the digraph algorithm finding the connected
-# components of a digraph.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  This function implements the digraph algorithm finding the connected
+  components of a digraph.
+
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 
@@ -39,7 +43,6 @@ class CC_Components:
             if n in i:
                 return c, i
             c += 1
-        assert False
         # Node not found
         raise RMTException(68, "Node [%s] not found" % n)
 

@@ -1,12 +1,13 @@
-#
-# Digraph Pyhton library
-#
-# Unit tests for connected components
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit tests for connected components
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import unittest
 
@@ -19,17 +20,17 @@ class CCTest(unittest.TestCase):
 
     def test_cc_001(self):
         "Connected digraph"
-        dg = Digraph( {"A": ["B"], "B": ["C"], "C": [] } )
+        dg = Digraph({"A": ["B"], "B": ["C"], "C": [] })
         ccs = connected_components(dg)
-        assert(ccs.len()==1)
+        assert(ccs.len() == 1)
 
     def test_cc_002(self):
         "Not connected digraph"
-        dg = Digraph( {"A": ["B"], "B": ["C"], "C": [],
-                       "D": ["E"], "E": [] } )
+        dg = Digraph({"A": ["B"], "B": ["C"], "C": [],
+                       "D": ["E"], "E": [] })
         ccs = connected_components(dg)
-        assert(ccs.len()>1)
-        
+        assert(ccs.len() > 1)
+
     def test_cc_003(self):
         "digraph connected_component: check for not found node exception"
 
@@ -38,6 +39,6 @@ class CCTest(unittest.TestCase):
             ccc.find(None)
             assert(False)
         except RMTException, rmte:
-            assert(rmte.id()==68)
+            assert(rmte.id() == 68)
 
 
