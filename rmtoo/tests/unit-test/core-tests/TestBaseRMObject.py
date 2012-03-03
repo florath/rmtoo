@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Test case for handling BaseRMObjects
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Test case for handling BaseRMObjects
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import StringIO
 from rmtoo.lib.logging.MemLogStore import MemLogStore
@@ -23,14 +23,13 @@ class TMods:
 class TBRMObj(BaseRMObject):
 
     def __init__(self):
-        sfd = StringIO.StringIO()
         tc = TestConfig()
         tc.set_value('input.txtfile.whatsoever.max_line_length', 80)
         tm = TMods()
         tm.tagtypes = {"mytag": {"keyA": TMods()}}
         self.mls = MemLogStore()
-        BaseRMObject.__init__(self, "mytag", sfd, "MRid", self.mls, tm,
-                              tc, "tobjs")
+        BaseRMObject.__init__(self, "mytag", "", "MRid", self.mls, tm,
+                              tc, "tobjs", None)
 
 class TestBaseRMObject:
 
