@@ -1,12 +1,13 @@
-#
-# Requirement Management Toolset
-#
-# Common setup for RDep test cases
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Common setup for RDep test cases
+ 
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging.MemLogStore import MemLogStore

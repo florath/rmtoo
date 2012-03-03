@@ -53,7 +53,7 @@ class BaseRMObject(UsableFlag):
 
     def get_value(self, key):
         return self.values[key]
-    
+
     def get_file_path(self):
         return self._file_path
 
@@ -88,9 +88,12 @@ class BaseRMObject(UsableFlag):
         self.brmo = brmo
 
     def handle_modules_tag(self, reqs):
+        if self.mods == None:
+            return
+
         for modkey, module in self.mods.tagtypes[self.tbhtags].items():
             try:
-                tracer.debug("handle modules tag modkey [%s] tagtype [%s]" 
+                tracer.debug("handle modules tag modkey [%s] tagtype [%s]"
                       % (modkey, self.tbhtags))
                 if self.tbhtags not in module.type():
                     self.mls.error(90, "Wrong module type [%s] not in [%s]" %

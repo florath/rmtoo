@@ -13,106 +13,71 @@ from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.inputs.RDepSolvedBy import RDepSolvedBy
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.LogLevel import LogLevel
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestRDepSolvedBy:
 
-    def test_negative_01(self):
-        "Two nodes as master requirement"
-        config, reqset = create_parameters()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_master_requirement},
-                         {})}
-
-        config.set_solved_by()
-        rdep = RDepSolvedBy(config)
-        status = rdep.rewrite(reqset)
-        assert(status == False)
-        assert(reqset.mls() == MemLogStore.create_mls(
-                [ [76, LogLevel.error(), "Another master is already there. "
-                   "There can only be one.", "B"] ]))
-
-    def test_negative_02(self):
+    def test_neg_empty_solved_by(self):
         "Normal requirement has empty 'Solved by'"
-        config, reqset = create_parameters()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Solved by": RecordEntry("Solved by", "")})}
-
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by:''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
         assert(status == False)
-        assert(reqset.mls() == MemLogStore.create_mls(
-                [ [77, LogLevel.error(), "'Solved by' field has len 0", "B"] ]))
+        assert(reqset.to_list() ==
+                [ [77, LogLevel.error(), "'Solved by' field has length 0", "B"] ])
 
-    def test_negative_03(self):
+    def test_neg_solved_by_to_nonex_req(self):
         "'Solved by' points to a non existing requirement"
-        config, reqset = create_parameters()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Solved by": RecordEntry("Solved by", "C")})}
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by: C''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
 
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
         assert(status == False)
-        assert(reqset.mls() == MemLogStore.create_mls(
+        assert(reqset.to_list() ==
                 [[74, LogLevel.error(), "'Solved by' points to a non-existing "
-                  "requirement 'C'", "B" ], ]))
+                  "requirement 'C'", "B" ], ])
 
-    def test_negative_04(self):
+    def test_neg_point_to_self(self):
         "'Solved by' points to same requirement"
-        config, reqset = create_parameters()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Solved by": RecordEntry("Solved by", "B")})}
-
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by: B''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
         assert(status == False)
-        assert(reqset.mls() == MemLogStore.create_mls(
+        assert(reqset.to_list() ==
                 [[75, LogLevel.error(), "'Solved by' points to the requirement "
-                  "itself", "B" ], ]))
-
-    def test_negative_05(self):
-        "Set without any master requirement"
-        config, reqset = create_parameters()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_requirement},
-                         {"Solved by": RecordEntry("Solved by", "B")}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Solved by": RecordEntry("Solved by", "A")})}
-
-        config.set_solved_by()
-        rdep = RDepSolvedBy(config)
-        status = rdep.rewrite(reqset)
-
-        assert(status == False)
-        assert(reqset.mls() == MemLogStore.create_mls(
-                [[78, LogLevel.error(), "no master requirement found"], ]))
+                  "itself", "B" ], ])

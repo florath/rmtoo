@@ -80,7 +80,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         if req.is_usable():
             # Store in the map, so that it is easy to access the
             # node by id.
-            self.__add_requirement(req)
+            self._add_requirement(req)
             # Also store it in the digraph's node list for simple
             # access to the digraph algorithms.
             # TODO: self.nodes.append(req) ?
@@ -153,7 +153,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__handle_modules(input_mods)
         tracer.debug("Finished.")
 
-    def __add_requirement(self, req):
+    def _add_requirement(self, req):
         '''Add requirement to the internal container.'''
         tracer.debug("Add requirement [%s]" % req.get_id())
         self.__requirements[req.get_id()] = req
@@ -166,7 +166,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
                 # Add to the internal map
-                restricted_reqs.__add_requirement(req)
+                restricted_reqs._add_requirement(req)
                 # Add to the common digraph structure
                 restricted_reqs.add_node(req)
         return restricted_reqs

@@ -79,6 +79,6 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/topic-tests/TestParse.py
+		tests/unit-test/tag-tests/TestRDepSolvedBy.py
 
 #		tests/blackbox-test/bb014-test/test-bb014.py
