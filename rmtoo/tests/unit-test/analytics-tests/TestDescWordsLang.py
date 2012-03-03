@@ -1,12 +1,15 @@
-#
-# Requirement Management Toolset
-#
-#  Unit test for calling main
-#
-# (c) 2010 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for desc words.
+  
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
+
+import StringIO
 
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.configuration.Cfg import Cfg
@@ -24,26 +27,30 @@ class TestConfig2(Cfg):
 
 class TestDescWords:
 
-    def test_pos_01(self):
-        "DescWords: check language handling"
+    def test_check_language_handling(self):
+        "DescWords: check language handling."
 
         tc = TestConfig1()
         lwords = DescWords.get_lang(tc)
-        level, log = DescWords.analyse(lwords, "Me and You, You and Me")
-        assert(level == -30)
-        assert(log == [" -20:2*-10: Usage of the word 'and'"])
+        res = DescWords.analyse("lname", lwords, "Me and You, You and Me")
+        assert(res.get_value() == -30)
 
+        fd = StringIO.StringIO()
+        res.write_error(fd)
+        assert(fd.getvalue() == '''+++ Error:Analytics:DescWords:lname:result is '-30'
++++ Error:Analytics:DescWords:lname: -20:2*-10: Usage of the word 'and'
+''')
 
     def test_neg_01(self):
-        "DescWords: get non existing language spec"
+        "DescWords: get non existing language spec (empty config)."
 
         tc = TestConfig2()
-        lwords = DescWords.get_lang(tc)
-        assert(lwords == None)
+        lang = DescWords.get_lang(tc)
+        assert(lang == DescWords.words_en_GB)
 
     def test_neg_02(self):
-        "DescWords: get non existing language spec using run function"
+        "DescWords: get non existing language spec (wrong config)."
 
         tc = TestConfig2()
-        r = DescWords.run(tc, None, None)
-        assert(r == True)
+        lang = DescWords.get_lang(tc)
+        assert(lang == DescWords.words_en_GB)

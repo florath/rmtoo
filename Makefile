@@ -79,6 +79,6 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/output-test/TestLaTeX2.py
+		tests/unit-test/analytics-tests/TestDescWordsLang.py
 
 #		tests/blackbox-test/bb010-test/test-bb010.py

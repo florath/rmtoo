@@ -19,6 +19,7 @@ import re
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.analytics.Base import Base
+from rmtoo.lib.logging.EventLogging import tracer
 
 class DescWords(Base):
 
@@ -80,8 +81,7 @@ class DescWords(Base):
 
         if def_lang in DescWords.words:
             return DescWords.words[def_lang]
-        else:
-            return None
+        tracer.warn("Language [%s] not suppurted, using en_GB." % def_lang)
         return DescWords.words["en_GB"]
 
     @staticmethod
