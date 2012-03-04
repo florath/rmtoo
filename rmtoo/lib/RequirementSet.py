@@ -115,6 +115,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         all_handled = True
         for req in self.nodes:
             if len(req.brmo) > 0:
+                assert False
                 self.error(57, "No tag handler found for tag(s) '%s' "
                            "- Hint: typo in tag(s)?" % req.brmo.keys(),
                            req.get_id())
