@@ -11,12 +11,25 @@
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepPriority import RDepPriority
+from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.lib.RequirementSet import RequirementSet
+from rmtoo.lib.Requirement import Requirement
 
 class TestRDepPriority:
 
     def test_positive_01(self):
         "Two node one edge digraph B -> A"
-        config, reqset = create_parameters({"B": ["A"], "A": [] })
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by: A''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
+        reqset.resolve_solved_by()
+        reqset.find_master_nodes()
         reqset.build_named_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
         reqset.get_named_node("A").set_value("Factor", 1.0)
@@ -30,9 +43,23 @@ class TestRDepPriority:
 
     def test_positive_02(self):
         "Three node digraph C -> B -> A"
-        config, reqset = create_parameters(
-            {"C": ["B"], "B": ["A"], "A": [] })
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by: A''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
+        req3 = Requirement('''Name: C
+Type: requirement
+Solved by: B''', 'C', None, None, None, None)
+        reqset._add_requirement(req3)
+        reqset.resolve_solved_by()
+        reqset.find_master_nodes()
         reqset.build_named_nodes()
+
         reqset.graph_master_node = reqset.get_named_node("A")
         reqset.get_named_node("A").set_value("Factor", 1.0)
         reqset.get_named_node("B").set_value("Factor", 0.8)
@@ -47,9 +74,27 @@ class TestRDepPriority:
 
     def test_positive_03(self):
         "Four node digraph D -> B -> A and D -> C -> A"
-        config, reqset = create_parameters(
-            {"D": ["B", "C"], "C": ["A"], "B": ["A"], "A": [] })
+        config = TestConfig()
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, None, None, None)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Solved by: A''', 'B', None, None, None, None)
+        reqset._add_requirement(req2)
+        req3 = Requirement('''Name: C
+Type: requirement
+Solved by: A''', 'C', None, None, None, None)
+        reqset._add_requirement(req3)
+        req4 = Requirement('''Name: D
+Type: requirement
+Solved by: B C''', 'D', None, None, None, None)
+        reqset._add_requirement(req4)
+        reqset.resolve_solved_by()
+        reqset.find_master_nodes()
         reqset.build_named_nodes()
+
         reqset.graph_master_node = reqset.get_named_node("A")
         reqset.get_named_node("A").set_value("Factor", 1.0)
         reqset.get_named_node("B").set_value("Factor", 0.2)
