@@ -52,6 +52,7 @@ class BaseRMObject(UsableFlag):
         return self.id
 
     def get_value(self, key):
+        print("VALUS [%s]" % self.values)
         return self.values[key]
 
     def get_file_path(self):

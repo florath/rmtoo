@@ -14,80 +14,83 @@ from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.inputs.RDepDependsOn import RDepDependsOn
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from rmtoo.lib.RequirementSet import RequirementSet
+from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.lib.InputModules import InputModules
+from rmtoo.lib.logging.MemLogStore import MemLogStore
 
 class TestRDepDependsOn:
 
     def test_positive_01(self):
         "Two node one edge digraph B -> A"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Depends on: A''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_initial_requirement},
-                         {"Depends on": RecordEntry("Depends on", "A")})}
 
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.reqs["A"].outgoing_as_named_list() == [])
-        assert(reqset.reqs["A"].incoming_as_named_list() == ["B"])
-        assert(reqset.reqs["B"].outgoing_as_named_list() == ["A"])
-        assert(reqset.reqs["B"].incoming_as_named_list() == [])
+        assert(reqset.get_requirement("A").incoming_as_named_list() == [])
+        assert(reqset.get_requirement("A").outgoing_as_named_list() == ["B"])
+        assert(reqset.get_requirement("B").incoming_as_named_list() == ["A"])
+        assert(reqset.get_requirement("B").outgoing_as_named_list() == [])
 
     def test_positive_02(self):
         "Three node one edge digraph B -> A, C -> A and C -> B"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Depends on: A''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_initial_requirement},
-                         {"Depends on": RecordEntry("Depends on", "A")}),
-            "C": TestReq("C",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "A B")}),
-            }
+        req3 = Requirement('''Name: C
+Type: requirement
+Depends on: A B''', 'C', None, mls, imod, config)
+        reqset._add_requirement(req3)
+        config.set_depends_on()
 
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.reqs["A"].outgoing_as_named_list() == [])
-        assert(reqset.reqs["A"].incoming_as_named_list() == ["C", "B"])
-        assert(reqset.reqs["B"].outgoing_as_named_list() == ["A"])
-        assert(reqset.reqs["B"].incoming_as_named_list() == ["C"])
-        assert(reqset.reqs["C"].outgoing_as_named_list() == ["A", "B"])
-        assert(reqset.reqs["C"].incoming_as_named_list() == [])
+        assert(reqset.get_requirement("A").incoming_as_named_list() == [])
+        assert(reqset.get_requirement("A").outgoing_as_named_list() == ["C", "B"])
+        assert(reqset.get_requirement("B").incoming_as_named_list() == ["A"])
+        assert(reqset.get_requirement("B").outgoing_as_named_list() == ["C"])
+        assert(reqset.get_requirement("C").incoming_as_named_list() == ["A", "B"])
+        assert(reqset.get_requirement("C").outgoing_as_named_list() == [])
 
     def test_negative_01(self):
         "Master requirement with Depends on field"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement
+Depends on: A''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {"Depends on": RecordEntry("Depends on", "A")})}
-
-        rdep = RDepDependsOn(config)
-        status = rdep.rewrite(reqset)
-
-        assert(status == False)
-
-    def test_negative_02(self):
-        "Two nodes as master requirement"
-        config, reqset = create_parameters()
-        config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_master_requirement},
-                         {})}
 
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
@@ -96,15 +99,19 @@ class TestRDepDependsOn:
 
     def test_negative_03(self):
         "Normal requirement has no 'Depends on'"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {})}
 
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
@@ -113,15 +120,20 @@ class TestRDepDependsOn:
 
     def test_negative_04(self):
         "Normal requirement has empty 'Depends on'"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Depends on:''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "")})}
 
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
@@ -130,32 +142,20 @@ class TestRDepDependsOn:
 
     def test_negative_05(self):
         "'Depends on' points to a non existing requirement"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Depends on: C''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "C")})}
-
-        rdep = RDepDependsOn(config)
-        status = rdep.rewrite(reqset)
-
-        assert(status == False)
-
-    def test_negative_06(self):
-        "Set without any master requirement"
-        config, reqset = create_parameters()
-        config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "B")}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "A")})}
 
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
@@ -164,17 +164,23 @@ class TestRDepDependsOn:
 
     def test_negative_07(self):
         "'Depends on' points to same requirement"
-        config, reqset = create_parameters()
+        config = TestConfig()
+
+        imod = InputModules("..", config)
+        mls = MemLogStore()
+
+        reqset = RequirementSet(config)
+        req1 = Requirement('''Name: A
+Type: master requirement''', 'A', None, mls, imod, config)
+        reqset._add_requirement(req1)
+        req2 = Requirement('''Name: B
+Type: requirement
+Depends on: B''', 'B', None, mls, imod, config)
+        reqset._add_requirement(req2)
         config.set_depends_on()
-        reqset.reqs = {
-            "A": TestReq("A",
-                         {"Type": Requirement.rt_master_requirement},
-                         {}),
-            "B": TestReq("B",
-                         {"Type": Requirement.rt_requirement},
-                         {"Depends on": RecordEntry("Depends on", "B")})}
 
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
         assert(status == False)
+
