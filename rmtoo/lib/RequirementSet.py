@@ -121,9 +121,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 all_handled = False
         return all_handled
 
-    def __handle_modules(self, input_mods):
+    def _handle_modules(self, input_mods):
         '''Handle all modules which are executed on the 
-           requirement set level.'''
+           requirement set level.
+           (One '_' only because this is used by the unit tests.'''
         tracer.debug("Called.")
         # Dependencies can be done, if all requirements are successfully
         # read in.
@@ -150,7 +151,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("Called.")
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
-        self.__handle_modules(input_mods)
+        self._handle_modules(input_mods)
         tracer.debug("Finished.")
 
     def _add_requirement(self, req):

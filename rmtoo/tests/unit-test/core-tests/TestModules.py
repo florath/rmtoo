@@ -1,14 +1,17 @@
-#
-# Unit Test cases for Modules
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for input modules
+
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 import StringIO
-from rmtoo.lib.Modules import Modules
+from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -22,26 +25,26 @@ mod_base_dir = "tests/unit-test/core-tests/testdata"
 class TestModules:
 
     def test_positive_01(self):
-        "Modules.split_directory with '.'"
+        "InputModules.split_directory with '.'"
 
-        d = Modules.split_directory(".")
+        d = InputModules.split_directory(".")
         assert(d == [])
 
     def test_positive_02(self):
-        "Modules.split_directory with absolute path"
+        "InputModules.split_directory with absolute path"
 
-        d = Modules.split_directory("/tmp/this/is/a/path")
+        d = InputModules.split_directory("/tmp/this/is/a/path")
         assert(d == ['/', 'tmp', 'this', 'is', 'a', 'path'])
 
 
     def test_simple_01(self):
         "Simple module test"
-        mods = Modules(os.path.join(mod_base_dir, "modules01"),
+        mods = InputModules(os.path.join(mod_base_dir, "modules01"),
                        {}, [], mods_list("modules01", mod_base_dir))
 
     def test_simple_02(self):
         "Module test with dependend modules"
-        mods = Modules(os.path.join(mod_base_dir, "modules02"),
+        mods = InputModules(os.path.join(mod_base_dir, "modules02"),
                        {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.reqdeps_sorted)
         assert(mods_name == ['Module01', 'Module02'])
@@ -49,7 +52,7 @@ class TestModules:
     def test_simple_03(self):
         "Module test with invalid dependency "
         try:
-            mods = Modules(os.path.join(mod_base_dir, "modules03"),
+            mods = InputModules(os.path.join(mod_base_dir, "modules03"),
                            {}, [], mods_list("modules03", mod_base_dir))
             assert(False)
         except RMTException, rmte:
@@ -58,7 +61,7 @@ class TestModules:
     def test_simple_04(self):
         "Module test with cyclic dependency "
         try:
-            mods = Modules(os.path.join(mod_base_dir, "modules04"),
+            mods = InputModules(os.path.join(mod_base_dir, "modules04"),
                            {}, [], mods_list("modules04", mod_base_dir))
             assert(False)
         except RMTException, rmte:
@@ -66,42 +69,41 @@ class TestModules:
 
     def test_simple_05(self):
         "Module test with dependend modules"
-        mods = Modules(os.path.join(mod_base_dir, "modules05"),
+        mods = InputModules(os.path.join(mod_base_dir, "modules05"),
                        {}, [], mods_list("modules05", mod_base_dir))
-        sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
-        req = Requirement(sio, 77, mls, mods, TestConfig())
+        req = Requirement("Name: t\n", 77, None, mls, mods, TestConfig())
 
         sout = StringIO.StringIO()
         mls.write_log(sout)
-        assert(req.state == Requirement.er_error)
+        assert(req.is_usable() == False)
         assert(sout.getvalue() ==
-               "+++ Error: 54:77:tag 'SameTag' already defined\n")
+               "+++ Error: 54:77:tag [SameTag] already defined\n")
 
     def test_simple_06(self):
         "Requirement: Module test with exception thrown"
 
-        mods = Modules(os.path.join(mod_base_dir, "modules06"),
+        mods = InputModules(os.path.join(mod_base_dir, "modules06"),
                        {}, [], mods_list("modules06", mod_base_dir))
-        sio = StringIO.StringIO("Name: t\n")
         mls = MemLogStore()
-        req = Requirement(sio, 77, mls, mods, TestConfig())
+        req = Requirement("Name: t\n", 77, None, mls, mods, TestConfig())
 
         sout = StringIO.StringIO()
         mls.write_log(sout)
-        assert(req.state == Requirement.er_error)
+        assert(req.is_usable() == False)
         assert(sout.getvalue() ==
-               "+++ Error: 55:TCExcept\n"
-               "+++ Error: 41:77:semantic error occured in module 'Module01'\n")
+               '''+++ Error: 55:TCExcept
++++ Error: 41:77:semantic error occurred in module [Module01]
+''')
 
     def test_simple_07(self):
         "RequirementSet: Module which renders set as errornous"
 
-        mods = Modules(os.path.join(mod_base_dir, "modules07"),
+        mods = InputModules(os.path.join(mod_base_dir, "modules07"),
                        {}, [], mods_list("modules07", mod_base_dir))
-        reqs = RequirementSet(mods, None)
-        reqs.handle_modules()
-        assert(reqs.state == RequirementSet.er_error)
+        reqs = RequirementSet(None)
+        reqs._handle_modules(mods)
+        assert(reqs.is_usable() == False)
 
         sout = StringIO.StringIO()
         reqs.write_log(sout)
