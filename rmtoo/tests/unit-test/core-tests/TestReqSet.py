@@ -39,13 +39,11 @@ class TestReqSet:
         reqs._add_requirement(req)
         reqs._handle_modules(mods)
 
-        print("REAS [%s]" % reqs.to_list())
-
         assert(reqs.to_list() ==
-                [[57, LogLevel.error(), "No tag handler found for tag(s) "
-                  "'['Hubbel']' - Hint: typo in tag(s)?", 'hubbel'],
-                 [56, LogLevel.error(), "There were errors encountered during "
-                  "parsing and checking - can't continue"] ])
+               [[57, LogLevel.error(), "No tag handler found for tag(s) "
+                 "'['Hubbel']' - Hint: typo in tag(s)?", 'hubbel'],
+                [56, LogLevel.error(), "There were errors encountered during "
+                 "parsing and checking - can't continue."]])
 
     def test_positive_02(self):
         "Requirement contains a tag where no handler exists - multiple tags"
@@ -53,20 +51,19 @@ class TestReqSet:
         mods = InputModules(os.path.join(mod_base_dir, "modules08"),
                        {}, [], mods_list("modules08", mod_base_dir))
 
-        sio = StringIO.StringIO("Hubbel: bubbel\nSiebel: do")
-        req = Requirement(sio, "InvalidTagReq", None, mods, TestConfig())
-
-        reqs = RequirementSet(mods, None)
-        reqs.add_req(req)
-        reqs.handle_modules()
+        reqs = RequirementSet(None)
+        req = Requirement("Hubbel: bubbel\nSiebel: do", "InvalidTagReq",
+                          None, reqs, mods, TestConfig())
+        reqs._add_requirement(req)
+        reqs._handle_modules(mods)
 
         #o = StringIO.StringIO()
         #reqs.write_log(o)
         #print("HHHHHHHHHHH %s" % o.getvalue())
 
-        assert(reqs.mls() == MemLogStore.create_mls(
+        assert(reqs.to_list() ==
                 [[57, LogLevel.error(), "No tag handler found for tag(s) "
                   "'['Siebel', 'Hubbel']' - Hint: typo in tag(s)?",
                   'InvalidTagReq'],
                  [56, LogLevel.error(), "There were errors encountered during "
-                  "parsing and checking - can't continue"]]))
+                  "parsing and checking - can't continue."]])

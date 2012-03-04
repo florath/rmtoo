@@ -81,9 +81,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # Store in the map, so that it is easy to access the
             # node by id.
             self._add_requirement(req)
-            # Also store it in the digraph's node list for simple
-            # access to the digraph algorithms.
-            # TODO: self.nodes.append(req) ?
         else:
             self.error(45, "could not be parsed", req.id)
         tracer.debug("Finished.")
@@ -115,7 +112,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         all_handled = True
         for req in self.nodes:
             if len(req.brmo) > 0:
-                assert False
                 self.error(57, "No tag handler found for tag(s) '%s' "
                            "- Hint: typo in tag(s)?" % req.brmo.keys(),
                            req.get_id())
@@ -156,9 +152,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("Finished.")
 
     def _add_requirement(self, req):
-        '''Add requirement to the internal container.'''
+        '''Add requirement to the internal fields.'''
         tracer.debug("Add requirement [%s]" % req.get_id())
         self.__requirements[req.get_id()] = req
+        # Also store it in the digraph's node list for simple
+        # access to the digraph algorithms.
+        self.nodes.append(req)
 
     def restrict_to_topics(self, topic_set):
         '''Restrict the list (dictionary) of requirements to the given
