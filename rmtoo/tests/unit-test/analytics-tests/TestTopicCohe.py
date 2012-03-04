@@ -1,14 +1,16 @@
-#
-# Requirement Management Toolset
-#
-#  Unit test for calling main
-#
-# (c) 2010 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for topic coherence
+
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
+from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestTopicCohe:
 
@@ -23,8 +25,8 @@ class TestTopicCohe:
             def is_self_of_ancient(self, t):
                 return False
 
-        tcnt = {}
+        cfg = TestConfig()
+        topic_cohe = TopicCohe(cfg)
+        topic_cohe._add_topic_relation(LNTopic("first"), LNTopic("second"))
 
-        TopicCohe.add_releation(tcnt, LNTopic("first"), LNTopic("second"))
-        
-        assert(tcnt=={'second': [0, 1], 'first': [0, 1]})
+        assert(topic_cohe._get_tcnt() == {'second': [0, 1], 'first': [0, 1]})

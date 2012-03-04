@@ -36,8 +36,14 @@ class TopicCohe(Base):
         for req_id in req_set.get_all_requirement_ids():
             self.__add_req2topic(req_id, topic)
 
-    def __add_topic_relation(self, topic_a, topic_b):
-        '''Add the relation between topic_a and topic_b.'''
+    def _get_tcnt(self):
+        '''Returns the internal state.
+           This is only used by the unit tests.'''
+        return self.__tcnt
+
+    def _add_topic_relation(self, topic_a, topic_b):
+        '''Add the relation between topic_a and topic_b.
+           (Here only one _ is used because this is used by the unit tests.)'''
         # If not there, add the initial count [0, 0]
         for topic in [topic_a.name, topic_b.name]:
             if not topic in self.__tcnt:
@@ -69,7 +75,7 @@ class TopicCohe(Base):
 
         for topic_a in self.__req2topics[req_a.get_id()]:
             for topic_b in self.__req2topics[req_b.get_id()]:
-                self.__add_topic_relation(topic_a, topic_b)
+                self._add_topic_relation(topic_a, topic_b)
 
     def topic_set_post(self, topic_set):
         '''This is call in the TopicsSet post-phase.'''
