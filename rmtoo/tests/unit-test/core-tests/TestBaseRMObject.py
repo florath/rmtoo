@@ -17,7 +17,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TMods:
 
-    def type(self):
+    def get_type_set(self):
         return [1, 2, 3]
 
 class TBRMObj(BaseRMObject):

@@ -20,7 +20,7 @@ class ReqTagGeneric:
     def __init__(self, config):
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return self.ltype
 
     # Call this from the 'rewrite()' method, if the tag is mandatory.

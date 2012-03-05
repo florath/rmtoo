@@ -26,7 +26,7 @@ class TestGenericTag:
     def test_positive_02(self):
         "Generic Tag: type()"
         mt = MyTag(None)
-        t = mt.type()
+        t = mt.get_type_set()
         assert(t == set(["reqtag", ]))
 
     def test_positive_03(self):

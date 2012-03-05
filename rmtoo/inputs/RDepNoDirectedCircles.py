@@ -23,7 +23,7 @@ class RDepNoDirectedCircles(Digraph.Node):
         Digraph.Node.__init__(self, "RDepNoDirectedCircles")
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     # The rewrite function here does mostly a search for strongly

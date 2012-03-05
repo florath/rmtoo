@@ -18,7 +18,7 @@ class ReqCE3(ReqTagGeneric):
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)
 
-    def rewrite(self, rid, req):
-    	# This is optional
+    def rewrite(self, _, req):
+        '''This attribute is optional.'''
         return self.handle_optional_tag(req)
 

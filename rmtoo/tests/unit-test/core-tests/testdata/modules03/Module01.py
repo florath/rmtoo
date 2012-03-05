@@ -1,11 +1,13 @@
-#
-# Requirement Management Toolset
-#  Test Module
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Test Module
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 class Module01:
     depends_on = ["Module02"]
@@ -13,7 +15,7 @@ class Module01:
     def __init__(self, config):
         pass
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     def set_modules(self, mods):

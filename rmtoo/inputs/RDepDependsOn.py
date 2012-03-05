@@ -23,7 +23,7 @@ class RDepDependsOn(Digraph.Node):
         Digraph.Node.__init__(self, "RDepDependsOn")
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     def rewrite(self, reqset):

@@ -93,7 +93,7 @@ class InputModules(Digraph):
             # Create object from the module
             o = eval("module.%s(self.config)" % modulename)
             # Query the object itself which type it is
-            types = o.type()
+            types = o.get_type_set()
             # Add the objects to the appropriate directory
             for ltype in types:
                 self.tagtypes[ltype][modulename] = o

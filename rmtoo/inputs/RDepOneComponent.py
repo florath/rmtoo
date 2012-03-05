@@ -22,7 +22,7 @@ class RDepOneComponent(Digraph.Node):
         Digraph.Node.__init__(self, "RDepOneComponent")
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     # The rewrite method checks if there is only one connected

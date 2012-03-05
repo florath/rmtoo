@@ -19,7 +19,7 @@ class RDepMasterNodes(Digraph.Node):
         Digraph.Node.__init__(self, "RDepMasterNodes")
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     def rewrite(self, reqset):

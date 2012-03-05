@@ -95,9 +95,9 @@ class BaseRMObject(UsableFlag):
             try:
                 tracer.debug("handle modules tag modkey [%s] tagtype [%s]"
                       % (modkey, self.tbhtags))
-                if self.tbhtags not in module.type():
+                if self.tbhtags not in module.get_type_set():
                     self.mls.error(90, "Wrong module type [%s] not in [%s]" %
-                                   (self.tbhtags, module.type()))
+                                   (self.tbhtags, module.get_type_set()))
                     continue
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key

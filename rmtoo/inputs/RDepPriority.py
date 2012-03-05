@@ -24,7 +24,7 @@ class RDepPriority(Digraph.Node):
         Digraph.Node.__init__(self, "RDepPriority")
         self.config = config
 
-    def type(self):
+    def get_type_set(self):
         return set(["reqdeps", ])
 
     # Do a DFS and compute the priority during that way.
