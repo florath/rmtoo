@@ -1,0 +1,56 @@
+{
+    "constraints": {
+        "search_dirs": [
+            "../rmtoo/collection/constraints"
+        ]
+    }, 
+    "global": {
+        "modules": {
+            "directories": [
+                ".."
+            ]
+        }
+    }, 
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "default_language": "en_GB", 
+            "dependency_notation": [
+                "Solved by"
+            ]
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    }, 
+    "topics": {
+        "ts_common": {
+ 	    "sources": [
+	        [
+		    "filesystem", {
+		        "requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:basedir}/input/topics" ],
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "../rmtoo/collection/constraints" ] }
+		]
+	    ],
+            "output": {
+                "latex2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqtopics.tex"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -29,7 +29,7 @@ class FileSystem(Interface):
 
     def __setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
-        tracer.debug("called")
+        tracer.debug("Called.")
         for dir_type in ["requirements", "topics", "constraints"]:
             dirs = cfg.get_rvalue(dir_type + "_dirs")
             self._check_list_of_strings(dir_type, dirs)
@@ -59,7 +59,7 @@ class FileSystem(Interface):
         assert commit == None
         tracer.debug("called: directory type [%s]" % dir_type)
         return ObjectCache.create_hashable(self.__dirs[dir_type])
-    
+
     def get_timestamp(self, commit):
         '''Return the file time: this is the current time.'''
         return time.time()

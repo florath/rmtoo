@@ -48,7 +48,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self._config = config
         self.__master_nodes = None
         self.__requirements = {}
-        self.__ce3set = None
+        self.__ce3set = CE3Set()
         tracer.debug("Finished.")
 
     def __str__(self):
@@ -145,12 +145,84 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
 
         return True
 
+    def __read_one_constraint(self, fileinfo, input_mods, object_cache):
+        '''Read in one constraints from the file info.'''
+        tracer.debug("Called.")
+        # Check for correct filename
+        if not fileinfo.get_filename().endswith(".ctr"):
+            tracer.info("skipping file [%s]" % fileinfo.get_filename())
+            return
+        # Handle caching.
+        vcs_id = fileinfo.get_vcs_id()
+        rid = fileinfo.get_filename_sub_part()[:-4]
+        ctr = object_cache.get("Constraint", vcs_id)
+        tracer.info("Reading constraint [%s]" % rid)
+
+        if ctr == None:
+            file_content = fileinfo.get_content()
+            ctr = Constraint(file_content, rid, fileinfo.get_filename(),
+                             self, input_mods, self._config)
+            # Add the requirement to the cache.
+            object_cache.add(vcs_id, "Constraint", ctr)
+
+        self._adapt_usablility(ctr)
+
+        if ctr.is_usable():
+            # Store in the map, so that it is easy to access the
+            # node by id.
+            self._add_constraint(ctr)
+            # Also store it in the digraph's node list for simple
+            # access to the digraph algorithms.
+            # self.nodes.append(req)
+        else:
+            self.error(87, "could not be parsed", ctr.id)
+        tracer.debug("Finished.")
+
+#        everythings_fine = True
+#        files = os.listdir(directory)
+#        for f in files:
+#            m = re.match("^.*\.ctr$", f)
+#            if m == None:
+#                continue
+#            rid = f[:-4]
+#            fd = codecs.open(os.path.join(directory, f), "r", "utf-8")
+#            cnstrnt = Constraint(fd, rid, self, self.mods, self._config)
+#            if cnstrnt.ok():
+#                # Store in the map, so that it is easy to access the
+#                # node by id.
+#                self.constraints[cnstrnt.get_id()] = cnstrnt
+#            else:
+#                self.error(87, "could not be parsed", cnstrnt.get_id())
+#                everythings_fine = False
+#        self.ts = time.time()
+#        return everythings_fine
+
+    def __read_all_constraints(self, input_handler, commit, input_mods,
+                               object_cache):
+        '''Read in all the constraints from the input handler.'''
+        tracer.debug("Called.");
+        fileinfos = input_handler.get_file_infos(commit, "constraints")
+        for fileinfo in fileinfos:
+            self.__read_one_constraint(fileinfo, input_mods, object_cache)
+        tracer.debug("Finished.");
+
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
         '''Reads in all the requirements from the input_handler.'''
-        tracer.debug("Called.")
+        tracer.debug("Called; reading requirements.")
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
+
+        tracer.debug("Called; reading constrains.")
+        self.__read_all_constraints(input_handler, commit, input_mods,
+                                    object_cache)
+#
+#        if not everythings_fine:
+#            self.error(86, "There were errors in the requirement set - "
+#                       "in the constraints")
+#            self._set_not_usable()
+#            return False
+
         self._handle_modules(input_mods)
         tracer.debug("Finished.")
 
@@ -158,6 +230,11 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Add requirement to the internal container.'''
         tracer.debug("Add requirement [%s]" % req.get_id())
         self.__requirements[req.get_id()] = req
+
+    def _add_constraint(self, ctr):
+        '''Add constraint to the internal container.'''
+        tracer.debug("Add constraint [%s]." % ctr.get_id())
+        self.__ce3set.insert(ctr.get_id(), ctr)
 
     def restrict_to_topics(self, topic_set):
         '''Restrict the list (dictionary) of requirements to the given
@@ -332,7 +409,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            (instead of the TextRecord a map of name to constraint
             object is stored).'''
         tracer.debug("Called.")
-        self.__ce3set = CE3Set()
         for req_name, req in self.__requirements.items():
             ce3 = CE3()
             cstrnts = req.get_value("Constraints")
@@ -523,42 +599,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.ts = time.time()
         return everythings_fine
 
-    # This is mostly a copy of the read - but changed at at least some
-    # major points. 
-    def deprecated_read_constraints(self, directories):
-        everythings_fine = True
-        for da in directories:
-            # TODO: Check if this is really unicode
-            # d = unicode(da, "utf-8")
-            d = da
-            if not os.path.isdir(d):
-                print("+++ WARN: skipping non-existant constraint "
-                      "directory [%s]" % d)
-                continue
-            ef = self.read_constraints_one_dir(d)
-            if not ef:
-                everythings_fine = False
-        return everythings_fine
-
-    def deprecated_read_constraints_one_dir(self, directory):
-        everythings_fine = True
-        files = os.listdir(directory)
-        for f in files:
-            m = re.match("^.*\.ctr$", f)
-            if m == None:
-                continue
-            rid = f[:-4]
-            fd = codecs.open(os.path.join(directory, f), "r", "utf-8")
-            cnstrnt = Constraint(fd, rid, self, self.mods, self.config)
-            if cnstrnt.ok():
-                # Store in the map, so that it is easy to access the
-                # node by id.
-                self.constraints[cnstrnt.get_id()] = cnstrnt
-            else:
-                self.error(87, "could not be parsed", cnstrnt.get_id())
-                everythings_fine = False
-        self.ts = time.time()
-        return everythings_fine
 
 
     def deprecated_not_usable(self):
