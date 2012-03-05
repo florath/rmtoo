@@ -29,8 +29,13 @@ class Topic(Digraph.Node):
 
     def __read(self, tname, input_handler, commit, file_info, req_set):
         '''Read in the topic and create all the tags.'''
-        self.__tags = TxtRecord.from_string(file_info.get_content(),
-                                           tname, input_handler.get_txt_io_config())
+        self.__tags = TxtRecord.from_string(
+                    file_info.get_content(),
+                    tname, input_handler.get_txt_io_config())
+
+        for tag in self.__tags:
+            print("TAGS [%s]" % tag.get_tag())
+
         for tag in self.__tags:
             # If the topic has subtopics, read them also in.
             if tag.get_tag() == "SubTopic":

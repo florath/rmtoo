@@ -48,3 +48,7 @@ class RecordEntry:
         fd.write("# ")
         fd.write(self.get_comment())
         fd.write("\n")
+
+    def __str__(self):
+        return "Tag [%s] Content [%s] Comment [%s]" % \
+            (self.tag, self.content, self.comment)

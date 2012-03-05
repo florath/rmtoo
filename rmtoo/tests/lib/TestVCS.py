@@ -56,7 +56,7 @@ class TestVCS(Interface):
 
         def get_content(self):
             '''Returns the file content.'''
-            return "Nothing: Else"
+            return "Name: ItsMe\nNothing: Else\n"
 
         def __str__(self):
             '''Returns the string representation.'''

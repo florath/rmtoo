@@ -22,7 +22,7 @@ class TxtRecordEntry(RecordEntry):
         # 1) initial line with tag
         # 2) possible empty list of continue lines (starting with space)
         # 3) possible empty list of comment and / or empty lines
-        assert(len(se)==3)
+        assert(len(se) == 3)
 
         self.setup(se)
 
@@ -45,6 +45,9 @@ class TxtRecordEntry(RecordEntry):
         r = self.tag_raw + add_content + add_comment
         return r
 
+    def __str__(self):
+        return self.to_string()
+
     # For 'Normal' RecordEntries there is the need to convert them
     # into Txt ones.
     # XXX This is a minimalistic implementation - which works.
@@ -52,7 +55,7 @@ class TxtRecordEntry(RecordEntry):
     @staticmethod
     def format_entry(l):
         comment = ""
-        if l.get_comment()!=None:
+        if l.get_comment() != None:
             comment = "# " + l.get_comment()
 
         print("TTTTTTT [%s]" % l.get_tag())
@@ -61,7 +64,7 @@ class TxtRecordEntry(RecordEntry):
 
     # Write record entry to filesystem
     def write_fd(self, fd):
-        if self.content_raw!=None:
+        if self.content_raw != None:
             fd.write(self.tag_raw)
             fd.write(StringHelper.join_ate("\n", self.content_raw))
         else:
@@ -69,8 +72,8 @@ class TxtRecordEntry(RecordEntry):
             fd.write(": ")
             fd.write(self.get_content())
             fd.write("\n")
-            
-        if self.comment_raw!=None:
+
+        if self.comment_raw != None:
             fd.write(StringHelper.join_ate("\n", self.comment_raw))
         else:
             fd.write("# ")
