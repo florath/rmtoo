@@ -18,7 +18,7 @@ class CC_Components:
     def __init__(self):
         self.cs = []
 
-    def len(self):
+    def get_length(self):
         return len(self.cs)
 
     @staticmethod

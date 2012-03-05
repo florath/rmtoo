@@ -32,7 +32,7 @@ class RDepOneComponent(Digraph.Node):
         tracer.debug("Called.")
         components = connected_components(reqset)
 
-        if components.len() == 1:
+        if components.get_length() == 1:
             # Everything is ok: graph is connected
             tracer.debug("Finished.")
             return True

@@ -22,14 +22,14 @@ class CCTest(unittest.TestCase):
         "Connected digraph"
         dg = Digraph({"A": ["B"], "B": ["C"], "C": [] })
         ccs = connected_components(dg)
-        assert(ccs.len() == 1)
+        assert(ccs.get_length() == 1)
 
     def test_cc_002(self):
         "Not connected digraph"
         dg = Digraph({"A": ["B"], "B": ["C"], "C": [],
                        "D": ["E"], "E": [] })
         ccs = connected_components(dg)
-        assert(ccs.len() > 1)
+        assert(ccs.get_length() > 1)
 
     def test_cc_003(self):
         "digraph connected_component: check for not found node exception"
