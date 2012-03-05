@@ -48,6 +48,9 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self._config = config
         self.__master_nodes = None
         self.__requirements = {}
+        # The key is the id the value the constraint.
+        self.__constraints = {}
+        # This holds only ready to use CE3 objects.
         self.__ce3set = CE3Set()
         tracer.debug("Finished.")
 
@@ -234,7 +237,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def _add_constraint(self, ctr):
         '''Add constraint to the internal container.'''
         tracer.debug("Add constraint [%s]." % ctr.get_id())
-        self.__ce3set.insert(ctr.get_id(), ctr)
+        self.__constraints[ctr.get_id()] = ctr
+        
+    def _add_ce3(self, name, ce3):
+        '''Add the ce3 under the given name.'''
+        tracer.debug("Add CE3 for requirement [%s]" % name)
+        self.__ce3set.insert(name, ce3)
 
     def restrict_to_topics(self, topic_set):
         '''Restrict the list (dictionary) of requirements to the given
@@ -247,6 +255,9 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 restricted_reqs._add_requirement(req)
                 # Add to the common digraph structure
                 restricted_reqs.add_node(req)
+                # Add ce3 of the requirement
+                restricted_reqs._add_ce3(req.get_id(), 
+                                         self.__ce3set.get(req.get_id()))
         return restricted_reqs
 
     def execute(self, executor, func_prefix):
@@ -410,6 +421,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             object is stored).'''
         tracer.debug("Called.")
         for req_name, req in self.__requirements.items():
+            # In each case store a (maybe empty) CE3 in the set.
             ce3 = CE3()
             cstrnts = req.get_value("Constraints")
             if cstrnts != None:
@@ -417,16 +429,17 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 cs = {}
                 for s in sval:
                     ctr_name = self.get_ctr_name(s)
-                    if not ctr_name in self.__ce3set.ce3s:
+                    if not ctr_name in self.__constraints:
                         raise RMTException(88, "Constraint [%s] does not "
                                            "exists" % ctr_name)
-                    rcs = self.__ce3set.get(ctr_name)
+                    rcs = self.__constraints.get(ctr_name)
                     ce3.eval(rcs, ctr_name, s)
                     cs[ctr_name] = rcs
                 req.set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
             self.__ce3set.insert(req_name, ce3)
-        tracer.debug("Finished.")
+        tracer.debug("Finished. Number of constraints [%d]." % 
+                     self.__ce3set.length())
 
     def __unite_ce3s(self):
         '''Execute the unification of the CE3s:
