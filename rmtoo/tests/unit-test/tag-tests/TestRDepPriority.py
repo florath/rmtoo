@@ -37,7 +37,7 @@ Solved by: A''', 'B', None, None, None, None)
 
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
-
+        
         assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
         assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
 

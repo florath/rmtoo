@@ -52,6 +52,9 @@ class Requirement(Digraph.Node, BaseRMObject):
     def __str__(self):
         '''Return the name/id of the requirement.'''
         return "Requirement [%s]" % self.get_id()
+    
+    def __repr__(self):
+        return self.__str__()
 
 ### Looks that these functions are not used at all
 
