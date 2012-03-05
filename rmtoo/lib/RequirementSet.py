@@ -312,6 +312,17 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("Finished; success [%s]." % success)
         return success
 
+    @staticmethod
+    def get_ctr_name(s):
+        '''Extracts the name of the constrains file name.'''
+        i = s.find("(")
+        if i == -1:
+            print("+++ Error: no '(' in constraints")
+            print("ASSERT %s" % s)
+            # Throw: does not contain (
+            assert(False)
+        return s[:i]
+
     def __create_local_ce3s(self):
         '''Create the local Constraint Execution Environments
            and evaluate the given statements.
@@ -330,10 +341,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 cs = {}
                 for s in sval:
                     ctr_name = self.get_ctr_name(s)
-                    if not ctr_name in reqset.constraints:
+                    if not ctr_name in self.__ce3set.ce3s:
                         raise RMTException(88, "Constraint [%s] does not "
                                            "exists" % ctr_name)
-                    rcs = reqset.constraints[ctr_name]
+                    rcs = self.__ce3set.get(ctr_name)
                     ce3.eval(rcs, ctr_name, s)
                     cs[ctr_name] = rcs
                 req.set_value("Constraints", cs)

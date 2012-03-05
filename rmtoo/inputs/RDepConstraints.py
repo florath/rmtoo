@@ -27,18 +27,6 @@ class RDepConstraints(Digraph.Node):
     def set_modules(self, mods):
         self.mods = mods
 
-    # Extracts the name of the constrains file name
-    @staticmethod
-    def get_ctr_name(s):
-        i = s.find("(")
-        if i == -1:
-            print("+++ Error: no '(' in constraints")
-            print("ASSERT %s" % s)
-            # Throw: does not contain (
-            assert(False)
-        return s[:i]
-
-
     # The constrains value gets a dictionary from the name of the
     # constraints to the object.
     def rewrite(self, reqset):
