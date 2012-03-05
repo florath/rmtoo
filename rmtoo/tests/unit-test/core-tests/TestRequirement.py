@@ -1,12 +1,13 @@
-#
-# Unit Test cases for Requirement
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit Test cases for Requirement
 
-import StringIO
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
@@ -18,10 +19,10 @@ class TestRequirement:
     def test_positive_01(self):
         "Requirement: parser returns error"
 
-        sio = StringIO.StringIO("DTag: content1\n"
-                                "DTag: content2\n")
         try:
-            req = Requirement(sio, 1, MemLogStore(), None, TestConfig())
+            req = Requirement("DTag: content1\n"
+                              "DTag: content2\n", 1, None,
+                              MemLogStore(), None, TestConfig())
             assert(False)
         except RMTException, rmte:
             assert(rmte.get_id() == 81)
