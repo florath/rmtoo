@@ -1,10 +1,13 @@
-#
-# Digraph Pyhton library
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Digraph Pyhton library
+   
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 
@@ -68,6 +71,7 @@ class Digraph:
     # If no dictionary is given, an empty digraph will be created.
     def __init__(self, d=None, node_gen_func=Node):
         self.nodes = []
+        self.named_nodes = None
         if d != None:
             self.create_from_dict(d, node_gen_func)
 

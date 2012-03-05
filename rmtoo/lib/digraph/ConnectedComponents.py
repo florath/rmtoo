@@ -47,7 +47,7 @@ class CC_Components:
         raise RMTException(68, "Node [%s] not found" % n)
 
     def contract(self, n, v):
-        gi, g = self.find(n)
+        _, g = self.find(n)
         hi, h = self.find(v)
         if g == h:
             # Already in one component - nothing to do

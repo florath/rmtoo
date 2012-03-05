@@ -1,27 +1,30 @@
-#
-# This implements an algothim for digraphs which computes the strongly
-# connected components.
-#
-# The algorithm was introduced by Trajan and it's typically called
-# 'Trajan's algorithm'.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  This implements an algorithm for digraphs which computes the strongly
+  connected components.
+ 
+  The algorithm was introduced by Trajan and it's typically called
+  'Trajan's algorithm'.
+   
+ (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 # This algorithm is based upon a depth first search.  It assigns a
 # number to each visited node.
 def strongly_connected_components(dg):
     # This is the number the next node is assigned. (There is no other
-    # way to access local varaibles?)
+    # way to access local variables?)
     index = [0]
     # The stack (list) of nodes - initially empty.
     S = []
     # Two maps for storing algorithm-local data.
     indizes = {}
     lowlinks = {}
-    # The result is a list of lists containg nodes which form the
+    # The result is a list of lists containing nodes which form the
     # strongly connected component
     scc = []
 
@@ -31,7 +34,7 @@ def strongly_connected_components(dg):
         lowlinks[v] = index[0]
         # Increase the all time DFS counter
         index[0] += 1
-        # Append currnet node to stack
+        # Append current node to stack
         S.append(v)
 
         # For all successors of v:

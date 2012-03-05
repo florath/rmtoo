@@ -1,24 +1,27 @@
-#
-# This implements a tolological sort for a directed graph
-#
-# (c) 2008, 2010 by flonatel
-#
-# For licencing details see COPYING
-#
-# This was initially written for the init4boot project to handle
-# dependencies of different modules.  It was adapted to work with a
-# Digraph. 
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  This implements a tolological sort for a directed graph
 
-# This algorithm is based upon a depth first search with 'making' some
-# special nodes.
-# The result is the topological sorted list of nodes.
+  This was initially written for the init4boot project to handle
+  dependencies of different modules.  It was adapted to work with a
+  Digraph. 
+   
+ (c) 2008,2010,2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
+
 def topological_sort(dg):
+    '''This algorithm is based upon a depth first search with 'making' some
+       special nodes.
+       The result is the topological sorted list of nodes.'''
     # List of topological sorted nodes
     tsort = []
     # List of nodes already visited.
     # (This is held here - local to the algorithm - to not modify the
-    # nodes themselfs.) 
+    # nodes themselves.) 
     visited = []
 
     # Recursive deep first search function
