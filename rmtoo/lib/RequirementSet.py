@@ -314,6 +314,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # Mark down the depends on...
             dep_req = self.__requirements[dep]
             # This is exactly the other way as used in the 'Depends on'
+            tracer.debug("Add edge [%s] -> [%s]" %
+                         (dep_req.get_id(), req.get_id()))
             Digraph.create_edge(req, dep_req)
 
         # Delete the original tag
@@ -477,7 +479,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            a class field.'''
         self.__master_nodes = set()
         for req in self.nodes:
-            if len(req.outgoing) == 0:
+            if len(req.incoming) == 0:
                 tracer.debug("Found master nodes [%s]" % req.get_id())
                 self.__master_nodes.add(req)
         tracer.info("Found [%d] master nodes" % len(self.__master_nodes))

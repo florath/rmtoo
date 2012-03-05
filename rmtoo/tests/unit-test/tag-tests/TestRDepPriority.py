@@ -22,11 +22,11 @@ class TestRDepPriority:
         config = TestConfig()
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, None, None, None)
+Type: master requirement
+Solved by: B''', 'A', None, None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
-Type: requirement
-Solved by: A''', 'B', None, None, None, None)
+Type: requirement''', 'B', None, None, None, None)
         reqset._add_requirement(req2)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
@@ -46,15 +46,15 @@ Solved by: A''', 'B', None, None, None, None)
         config = TestConfig()
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, None, None, None)
+Type: master requirement
+Solved by: B''', 'A', None, None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Solved by: A''', 'B', None, None, None, None)
+Solved by: C''', 'B', None, None, None, None)
         reqset._add_requirement(req2)
         req3 = Requirement('''Name: C
-Type: requirement
-Solved by: B''', 'C', None, None, None, None)
+Type: requirement''', 'C', None, None, None, None)
         reqset._add_requirement(req3)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
@@ -77,19 +77,19 @@ Solved by: B''', 'C', None, None, None, None)
         config = TestConfig()
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, None, None, None)
+Type: master requirement
+Solved by: B C''', 'A', None, None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Solved by: A''', 'B', None, None, None, None)
+Solved by: D''', 'B', None, None, None, None)
         reqset._add_requirement(req2)
         req3 = Requirement('''Name: C
 Type: requirement
-Solved by: A''', 'C', None, None, None, None)
+Solved by: D''', 'C', None, None, None, None)
         reqset._add_requirement(req3)
         req4 = Requirement('''Name: D
-Type: requirement
-Solved by: B C''', 'D', None, None, None, None)
+Type: requirement''', 'D', None, None, None, None)
         reqset._add_requirement(req4)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
