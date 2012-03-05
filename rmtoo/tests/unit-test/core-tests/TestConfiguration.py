@@ -92,12 +92,8 @@ class TestConfiguration(unittest.TestCase):
         config.evaluate(log_store)
         self.failUnlessEqual(['development', 'management', 'users', 'customers'],
                              config.get_value("requirements.stakeholders"))
-        print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
         log_store.write_log(sys.stdout)
 
-## TODO:+ + +Warning:100:Old Configuration: Not converted attributes: [['output_specs2']]
-
-        print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
         self.failUnlessEqual(MemLogStore.create_mls([[
             100, LogLevel.warning(),
             "Old Configuration: Not converted attributes: [['output_specs2']]"]]),

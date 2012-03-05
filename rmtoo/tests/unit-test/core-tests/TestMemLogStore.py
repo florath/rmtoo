@@ -60,10 +60,6 @@ class TestMemLogStore:
         mls = MemLogStore()
         mls.error(77, "ErrMsg")
 
-        print("1111 [%s]" % mls.to_list())
-        print("2222 [%s]" % MemLogStore.create_mls(
-                [ [77, LogLevel.error(), "ErrMsg"] ]).to_list())
-
         assert(mls == MemLogStore.create_mls(
                 [ [77, LogLevel.error(), "ErrMsg"] ]))
 

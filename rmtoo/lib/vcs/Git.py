@@ -168,9 +168,7 @@ class Git(Interface):
         '''Return the tree of the given directory.
            This does not walk down the directory structure.
            It just checks the current hierarchy.'''
-        print("+++ NEW SEARCH FOR [%s] +++" % directory)
         for tree in base_tree.trees:
-            print("CHECKING DIR [%s] [%s]" % (tree, tree.name))
             if tree.name == directory:
                 return tree
         raise RMTException(108, "directory entry [%s] not found in tree "

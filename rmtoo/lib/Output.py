@@ -42,10 +42,8 @@ class Output(Executor):
         '''Common method used by cmad_ and normal callback.'''
         tracer.debug("Called.")
         output_config = topic_continuum.get_output_config()
-        print("OUTPUT CONFIG %s" % output_config)
 
         for oconfig_name, oconfig in output_config.iteritems():
-            print("NAME %s  Inhalt %s " % (oconfig_name, oconfig))
             output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)

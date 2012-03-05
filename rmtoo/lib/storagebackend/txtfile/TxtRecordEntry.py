@@ -58,8 +58,6 @@ class TxtRecordEntry(RecordEntry):
         if l.get_comment() != None:
             comment = "# " + l.get_comment()
 
-        print("TTTTTTT [%s]" % l.get_tag())
-
         return l.get_tag() + ": " + l.get_content() + "\n" + comment
 
     # Write record entry to filesystem

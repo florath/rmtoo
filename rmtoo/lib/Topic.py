@@ -34,9 +34,6 @@ class Topic(Digraph.Node):
                     tname, input_handler.get_txt_io_config())
 
         for tag in self.__tags:
-            print("TAGS [%s]" % tag.get_tag())
-
-        for tag in self.__tags:
             # If the topic has subtopics, read them also in.
             if tag.get_tag() == "SubTopic":
                 lfile_info = input_handler.get_file_info_with_type(

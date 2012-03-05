@@ -70,7 +70,6 @@ class MemLogFile(MemLog):
 
     def __eq__(self, other):
         '''The equal method: if everything is the same, it's true.'''
-        print("MemLogFile.__eq__ [%s]" % self.lid)
         return MemLog.__eq__(self, other) \
             and self.efile == other.efile \
             and self.eline == other.eline

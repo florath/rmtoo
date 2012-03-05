@@ -53,6 +53,5 @@ class TestReqOwner:
             name, value = rt.rewrite("Owner-test", req)
             assert(False)
         except RMTException, rmte:
-            print("SKDJFHSDJKFH [%s]" % rmte.id())
             assert(rmte.id() == 11)
 
