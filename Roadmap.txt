@@ -26,25 +26,11 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-TODO
-====
-o What should happen if the output module only supports one
-  version - but many are specified?
-  Take the last?
-  How to implement this with Executor?
-
 v22
 ===
-o Unify Interface filesystem and VCS
-o Add multiple versions history
-o If possible:
-  Add GUI for creating and modifying a configuration.
-
-o Clean up Git-History repeating (read also the topics from git)
-o Improve git history:
-  o Update to a new version
-  o Read only the files which are needed
-    (delayed read in?!?)
+o Document new configuration
+  (must be done in config man page and mostly all output modules
+   man pages)
 o Document: Understanding that all requirements need at least one edge
   solved it for me. 
   -> rmtoo general overview man page.
@@ -54,10 +40,13 @@ o Man page:
   + graph
   + graph2
   + EfEU
-o Fix asserts from 'RequirementStatus.py'
 
 v23
 ===
+o Add support for Tasks / Issues
+  ( -> import from Bugzilla? )
+o If possible:
+  Add GUI for creating and modifying a configuration.
 o Check Web-Site for user features / bugs
   - Fix (small) bugs
   - Add feature request requirements
