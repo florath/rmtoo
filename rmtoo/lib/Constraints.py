@@ -23,6 +23,10 @@ class Constraints:
         '''Collect all the constraints which are used in the given topic.'''
         tracer.debug("Called for topic set.")
         cnsts = {}
+        
+        if topic_set == None:
+            assert False
+        
         for ctr, cval in topic_set.get_requirement_set().get_constraints().iteritems():
             tracer.debug("Add constraint [%s]" % ctr)
             cnsts[ctr] = cval

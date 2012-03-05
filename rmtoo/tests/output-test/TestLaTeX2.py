@@ -19,11 +19,13 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
+from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable
 from rmtoo.tests.lib.TestVCS import TestVCS
 from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.tests.lib.TestTopicSet import TestTopicSet
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 class TestOutputLaTeX2:
@@ -40,16 +42,21 @@ class TestOutputLaTeX2:
         topic = Topic(None, "TName", tvcs, None, tfile, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         tmpdir = create_tmp_dir()
+        
+        rset = RequirementSet(tcfg)
+        
+        ttopic_set = TestTopicSet(rset)
+        
         mconfig = {"output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
         l2 = latex2(mconfig)
 
         try:
-            l2.topic_set_pre(None)
+            l2.topic_set_pre(ttopic_set)
             topic.execute(l2, "")
             assert(False)
         except RMTException, rmte:
             pass
-        l2.topic_set_post(None)
+        l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
 
     def test_neg_02(self):
@@ -78,12 +85,15 @@ class TestOutputLaTeX2:
         ce3 = CE3()
         ce3set.insert("TestReq", ce3)
 
+        rset = RequirementSet(tcfg)
+        ttopic_set = TestTopicSet(rset)
+
         try:
             l2.topic_set_pre(None)
             req.execute(l2, "")
             assert(False)
         except RMTException, rmte:
             pass
-        l2.topic_set_post(None)
+        l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
 

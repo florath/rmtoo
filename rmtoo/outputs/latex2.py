@@ -82,6 +82,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_set_post(self, topic_set):
         '''Print out the constraints and clean up file.'''
         tracer.debug("Called; output constraints.")
+        if topic_set == None:
+            assert False
         constraints = Constraints.collect(topic_set)
         self.__output_latex_constraints(constraints)
         tracer.debug("Clean up file.")
