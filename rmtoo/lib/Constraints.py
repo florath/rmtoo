@@ -32,28 +32,3 @@ class Constraints:
             cnsts[ctr] = cval
         tracer.debug("Finished; size [%d]" % len(cnsts))
         return cnsts
-        
-        
-        
-        
-#        t = topic_set.get_master_topic()
-#        cnsts = {}
-#
-#        # Recursive (local) function to get the constraints container filled
-#        # up.
-#        def collect_constraints_rec(topic):
-#            tracer.debug("Collect constraints for [%s]" % topic.get_id())
-#            
-#            print("RS [%s]" % topic.get_requirement_set())
-#            
-#            for req in topic.get_requirement_set():
-#                if req.get_value("Constraints") != None:
-#                    for k, v in req.get_value("Constraints").items():
-#                        cnsts[k] = v
-#
-#            for ltopic in topic.outgoing:
-#                collect_constraints_rec(ltopic)
-#
-#        collect_constraints_rec(t)
-#        return cnsts
-#

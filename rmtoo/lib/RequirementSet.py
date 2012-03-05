@@ -314,7 +314,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # Mark down the depends on...
             dep_req = self.__requirements[dep]
             # This is exactly the other way as used in the 'Depends on'
-            Digraph.create_edge(dep_req, req)
+            Digraph.create_edge(req, dep_req)
 
         # Delete the original tag
         del req.brmo["Solved by"]
@@ -457,7 +457,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for r in ce3tsort:
             # Have a look for incoming nodes
             ince3s = []
-            for i in r.outgoing:
+            for i in r.incoming:
                 ince3s.append(self.__ce3set.get(i.get_id()))
             lce3 = self.__ce3set.get(r.get_id())
             lce3.unite(ince3s)
