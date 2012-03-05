@@ -2,11 +2,6 @@
     "general" : {
         "command_line_arguments": ["${ENV:rmtoo_test_dir}/reqs" ]
     },
-    "constraints": {
-        "search_dirs": [
-            "/usr/share/pyshared/rmtoo/collection/constraints"
-        ]
-    }, 
     "global": {
         "modules": {
             "directories": [
@@ -34,5 +29,5 @@
     "topic_root_node": "B1",
     "requirements_dirs": [ "${ENV:rmtoo_test_dir}/reqs" ],
     "topics_dirs": [ "${ENV:rmtoo_test_dir}/input/topics" ],
-    "constraints_dirs": [ "rmtoo/collection/constraints" ] 
+    "constraints_dirs": [ "../rmtoo/collection/constraints" ] 
 }
