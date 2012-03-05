@@ -133,24 +133,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                      % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.outgoing) > 0:
+        if len(req.incoming) > 0:
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.strescape(d.id),
                                  latex2.strescape(d.id))
-                                for d in sorted(req.outgoing,
+                                for d in sorted(req.incoming,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
 
-        if len(req.incoming) > 0:
+        if len(req.outgoing) > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.strescape(d.id),
                                  latex2.strescape(d.id))
-                                for d in sorted(req.incoming,
+                                for d in sorted(req.outgoing,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
 
