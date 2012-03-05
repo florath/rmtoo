@@ -55,7 +55,8 @@ class Git(Interface):
         if self.__repo_base_dir == None:
             self.__setup_repo(directory)
         if not directory.startswith(self.__repo_base_dir):
-            raise RMTException(28, "directory [%s] not in repository")
+            raise RMTException(28, "directory [%s] not in repository"
+                               % directory)
 
     def __cut_off_repo_dir(self, directory):
         '''Cuts off the repository directory from the directory.'''
