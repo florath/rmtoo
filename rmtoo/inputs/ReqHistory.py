@@ -1,14 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement Management Toolset
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Generic Tag handling
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
+ For licensing details see COPYING
+'''
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqHistory(ReqTagGeneric):
@@ -18,6 +17,6 @@ class ReqHistory(ReqTagGeneric):
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)
 
-    def rewrite(self, rid, req):
-    	# This is optional
+    def rewrite(self, _, req):
+        '''This attribute is optional.'''
         return self.handle_optional_tag(req)

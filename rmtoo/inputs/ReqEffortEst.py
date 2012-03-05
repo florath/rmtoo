@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement Management Toolset
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Effort estimation attribute
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 #
 # The 'Effort estimation' must be one of
@@ -27,7 +27,7 @@ class ReqEffortEst(ReqTagGeneric):
         ReqTagGeneric.__init__(self, config)
 
     def rewrite(self, rid, req):
-    	# This is optional
+        '''This attrbute is optional.'''
         tag, value = self.handle_optional_tag(req)
         if value == None:
             return tag, value

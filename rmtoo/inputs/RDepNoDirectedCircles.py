@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Detect if the graph has directed circles
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Detect if the graph has directed circles
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.digraph.StronglyConnectedComponents \
     import strongly_connected_components
@@ -25,9 +25,6 @@ class RDepNoDirectedCircles(Digraph.Node):
 
     def type(self):
         return set(["reqdeps", ])
-
-    def set_modules(self, mods):
-        self.mods = mods
 
     # The rewrite function here does mostly a search for strongly
     # connected components.  It uses the algorithm from Trajan for

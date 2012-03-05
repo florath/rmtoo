@@ -9,7 +9,6 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.digraph.Digraph import Digraph
 
 class RDepDependsOn(Digraph.Node):
@@ -26,9 +25,6 @@ class RDepDependsOn(Digraph.Node):
 
     def type(self):
         return set(["reqdeps", ])
-
-    def set_modules(self, mods):
-        self.mods = mods
 
     def rewrite(self, reqset):
         conf_dependency_notation = \

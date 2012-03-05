@@ -22,8 +22,5 @@ class RDepMasterNodes(Digraph.Node):
     def type(self):
         return set(["reqdeps", ])
 
-    def set_modules(self, mods):
-        self.mods = mods
-
     def rewrite(self, reqset):
         return reqset.find_master_nodes()

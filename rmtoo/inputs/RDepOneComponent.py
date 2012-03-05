@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Detect if the graph is connected or not
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Detect if the graph is connected or not
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.digraph.ConnectedComponents \
     import connected_components
@@ -24,9 +24,6 @@ class RDepOneComponent(Digraph.Node):
 
     def type(self):
         return set(["reqdeps", ])
-
-    def set_modules(self, mods):
-        self.mods = mods
 
     # The rewrite method checks if there is only one connected
     # component.  If not an error is printed including all the found

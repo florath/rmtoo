@@ -1,17 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Constrains implementation
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Constrains implementation
+   
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
-from rmtoo.lib.CE3 import CE3
+ For licensing details see COPYING
+'''
+
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.logging.EventLogging import tracer
 
 class RDepConstraints(Digraph.Node):
@@ -23,9 +21,6 @@ class RDepConstraints(Digraph.Node):
 
     def type(self):
         return set(["reqdeps", ])
-
-    def set_modules(self, mods):
-        self.mods = mods
 
     # The constrains value gets a dictionary from the name of the
     # constraints to the object.

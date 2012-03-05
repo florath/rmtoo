@@ -27,9 +27,6 @@ class RDepPriority(Digraph.Node):
     def type(self):
         return set(["reqdeps", ])
 
-    def set_modules(self, mods):
-        self.mods = mods
-
     # Do a DFS and compute the priority during that way.
     # If there is a node which was already visited, only recompute the
     # subtree, if the new priority is higher.

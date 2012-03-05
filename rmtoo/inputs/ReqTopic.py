@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-#  Requirement Tag Class for Topic
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Topic attribute
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 

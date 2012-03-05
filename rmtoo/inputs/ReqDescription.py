@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement Tag Description
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Requirement Tag Description
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
@@ -26,10 +26,6 @@ class ReqDescription(ReqTagGeneric):
         t = req[self.tag]
         # It must not be too long.
         # (Long text means: split it up!)
-        # ToDo: one day, check for special words which are not allowed
-        # in requirements (like 'or' or 'and')
-        # ToDo: Check for words which must appear in a requirement,
-        # like 'have to' or 'must'.
         if len(t.get_content()) > 1024:
             raise RMTException(3, "%s: Description is much too long: "
                                "%d characters" % (rid, len(t.get_content())))

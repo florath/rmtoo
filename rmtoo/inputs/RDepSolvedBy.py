@@ -22,9 +22,6 @@ class RDepSolvedBy(Digraph.Node):
     def type(self):
         return set(["reqdeps", ])
 
-    def set_modules(self, mods):
-        self.mods = mods
-
     def rewrite(self, reqset):
         # Solved by: is (historically) seen the default.
         if self.tag not in \

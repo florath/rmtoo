@@ -1,23 +1,16 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement Management Toolset
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Class attribute
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
-from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.Requirement import Requirement
+ For licensing details see COPYING
+'''
+
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.ClassType import create_class_type, ClassTypeDetailable
-
-# Note:
-# The class of the requirement is used in the 'Depends on' checker.
-# So if something changes here - possible also there must be changed
-# something.
 
 class ReqClass(ReqTagGeneric):
     tag = "Class"

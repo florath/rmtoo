@@ -1,17 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement Management Toolset
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Invented on attribute
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
-import time
+ For licensing details see COPYING
+'''
+
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.DateUtils import parse_date
 
 class ReqInventedOn(ReqTagGeneric):
