@@ -106,5 +106,3 @@ class CmdLineParams:
         lresult.append(CmdLineParams.add_deprecated_values(options))
         lresult.append(CmdLineParams.add_values(options))
         return lresult
-
-

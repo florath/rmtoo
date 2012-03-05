@@ -14,7 +14,7 @@ from rmtoo.lib.analytics.Base import Base
 
 class ReqTopicCohe(Base):
 
-    def __init__(self, config):
+    def __init__(self, _):
         '''Sets up the ReqTopicCohe object for use.'''
         Base.__init__(self)
 

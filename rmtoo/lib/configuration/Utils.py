@@ -4,7 +4,7 @@
    
  Configuration Utilities.
  
- (c) 2011 by flonatel
+ (c) 2011-2012 by flonatel
 
  For licensing details see COPYING
 '''

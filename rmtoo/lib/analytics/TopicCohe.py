@@ -4,7 +4,7 @@
    
   Coherence of one topic.
 
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -16,7 +16,7 @@ from rmtoo.lib.logging.EventLogging import tracer
 class TopicCohe(Base):
     '''Class for checking topic coherence.'''
 
-    def __init__(self, config):
+    def __init__(self, _):
         '''Sets up the TopicCohe object for use.'''
         Base.__init__(self)
         self.__req2topics = {}

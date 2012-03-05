@@ -35,8 +35,6 @@ class Old:
         exec(conf_file)
         # pylint: disable=E0602
         config = Config()
-#        ConfigUtils.set_defaults(config)
-#        ConfigUtils.check(config)
         old_config_fd.close()
         return config
 

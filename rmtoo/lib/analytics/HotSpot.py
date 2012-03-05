@@ -5,7 +5,7 @@
   Sometimes there are so called 'Requirements Hotspots'.  These are
   requirements which have too many links.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -18,7 +18,7 @@ class HotSpot(Base):
     max_incoming = 7
     max_outgoing = 4
 
-    def __init__(self, config):
+    def __init__(self, _):
         Base.__init__(self)
 
     def requirement(self, req):
