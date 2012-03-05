@@ -95,6 +95,10 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
     def get_requirement_set(self):
         '''Returns the requirement set for the whole topic set.'''
         return self.__requirement_set
+    
+    def get_master_topic(self):
+        '''Return the main topic.'''
+        return self.__topic
 
     def get_complete_requirement_set_count(self):
         '''Return the number of requirments in this RequirementSet.  This

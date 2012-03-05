@@ -45,4 +45,9 @@ class TopicSetWCI:
 
     def create_makefile_name(self, name, topicn):
         return self.__topic_set.create_makefile_name(name, topicn)
-    
+
+    def get_master_topic(self):
+        return self.__topic_set.get_master_topic()
+
+    def get_requirement_set(self):
+        return self.__topic_set.get_requirement_set()

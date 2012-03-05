@@ -258,6 +258,13 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 # Add ce3 of the requirement
                 restricted_reqs._add_ce3(req.get_id(), 
                                          self.__ce3set.get(req.get_id()))
+                ctrs = req.get_value("Constraints")
+                if ctrs == None:
+                    # No constraints for this requirement
+                    continue
+                for cval in ctrs:
+                    restricted_reqs._add_constraint(self.__constraints[cval])
+
         return restricted_reqs
 
     def execute(self, executor, func_prefix):
@@ -499,6 +506,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
         return self.__ce3set
+    
+    def get_constraints(self):
+        '''Return the constraints.'''
+        return self.__constraints
 
     # Note: the following methods are of no use any more,
     # because the 'Solved by' will be gone in nead future.

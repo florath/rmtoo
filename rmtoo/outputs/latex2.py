@@ -49,15 +49,44 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Prepare the output file.'''
         self.__fd = file(self._output_filename, "w")
 
-        # The TopicSet itself needs no output.
-        # TODO:
-#        self.output_latex_topic(fd, topic_set.get_master(), ce3set)
-#        constraints = Constraints.collect(topic_set)
-#        self.output_latex_constraints(fd, topic_set, constraints)
+    def __output_latex_one_constraint(self, cname, cnstrt):
+        '''Output one constraint.'''
+        cname = latex2.strescape(cname)
+        tracer.debug("Output constraint [%s]." % cname)
+        self.__fd.write("%% CONSTRAINT '%s'\n" % cname)
 
-    def topic_set_post(self, topics_set):
-        '''Clean up file.'''
+        self.__fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n"
+                 % (self.level_names[1],
+                    cnstrt.get_value("Name").get_content(),
+                    cname, cnstrt.get_value("Description").get_content()))
+
+        if cnstrt.is_val_av_and_not_null("Rationale"):
+            self.__fd.write("\n\\textbf{Rationale:} %s\n"
+                     % cnstrt.get_value("Rationale").get_content())
+
+        if cnstrt.is_val_av_and_not_null("Note"):
+            self.__fd.write("\n\\textbf{Note:} %s\n"
+                     % cnstrt.get_value("Note").get_content())
+        tracer.debug("Finished.")
+
+    def __output_latex_constraints(self, constraints):
+        '''Write out all constraints for the topic set.'''
+        if len(constraints) == 0:
+            tracer.debug("No constraints to output.")
+            return
+
+        self.__fd.write("\\%s{Constraints}\n" % self.level_names[0])
+        for cname, cnstrt in sorted(constraints.iteritems()):
+            self.__output_latex_one_constraint(cname, cnstrt)
+
+    def topic_set_post(self, topic_set):
+        '''Print out the constraints and clean up file.'''
+        tracer.debug("Called; output constraints.")
+        constraints = Constraints.collect(topic_set)
+        self.__output_latex_constraints(constraints)
+        tracer.debug("Clean up file.")
         self.__fd.close()
+        tracer.debug("Finished.")
 
     def topic_pre(self, topic):
         '''Output one topic.'''
@@ -102,24 +131,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                      % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.incoming) > 0:
+        if len(req.outgoing) > 0:
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.strescape(d.id),
                                  latex2.strescape(d.id))
-                                for d in sorted(req.incoming,
+                                for d in sorted(req.outgoing,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
 
-        if len(req.outgoing) > 0:
+        if len(req.incoming) > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.strescape(d.id),
                                  latex2.strescape(d.id))
-                                for d in sorted(req.outgoing,
+                                for d in sorted(req.incoming,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
 
@@ -233,28 +262,3 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         for req in sorted(topic.reqs, key=lambda r: r.id):
             self.output_requirement(fd, req, topic.level + 1, ce3set)
 
-    def output_latex_constraints(self, fd, topic_set, constraints):
-
-        #print("AC %s" % self.constraints)
-
-        if len(constraints) > 0:
-            fd.write("\\%s{Constraints}\n" % self.level_names[0])
-            for cname, cnstrt in sorted(constraints.iteritems()):
-                self.output_latex_one_constraint(fd, cname, cnstrt)
-
-    def output_latex_one_constraint(self, fd, cname, cnstrt):
-        cname = latex2.strescape(cname)
-        fd.write("%% CONSTRAINT '%s'\n" % cname)
-
-        fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n"
-                 % (self.level_names[1],
-                    cnstrt.get_value("Name").get_content(),
-                    cname, cnstrt.get_value("Description").get_content()))
-
-        if cnstrt.is_val_av_and_not_null("Rationale"):
-            fd.write("\n\\textbf{Rationale:} %s\n"
-                     % cnstrt.get_value("Rationale").get_content())
-
-        if cnstrt.is_val_av_and_not_null("Note"):
-            fd.write("\n\\textbf{Note:} %s\n"
-                     % cnstrt.get_value("Note").get_content())

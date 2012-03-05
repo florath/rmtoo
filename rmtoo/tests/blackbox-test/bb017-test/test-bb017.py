@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Blackbox test for simple constraint handling
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Blackbox test for simple constraint handling
+   
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 
@@ -18,7 +18,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/blackbox-test/bb017-test"
 
-class TestBB01:
+class TestBB17:
 
     def test_pos_001(self):
         "Blackbox test for simple constraint handling"
@@ -26,8 +26,9 @@ class TestBB01:
         def myexit(n):
             pass
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main(["-f", mdir + "/input/Config1.py", "-m", ".."], mout, merr,
+        main(["-j", "file://" + mdir + "/input/Config.json"], mout, merr,
              exitfun=myexit)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
