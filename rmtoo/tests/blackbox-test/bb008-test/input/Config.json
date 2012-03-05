@@ -1,9 +1,4 @@
 {
-    "constraints": {
-        "search_dirs": [
-            "/usr/share/pyshared/rmtoo/collection/constraints"
-        ]
-    }, 
     "global": {
         "modules": {
             "directories": [
@@ -43,14 +38,14 @@
 			"requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
 			"topics_dirs": [ "${ENV:basedir}/input/topics"] ,
 			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+			"constraints_dirs": [ "../rmtoo/collection/constraints" ] }
 		],
 	        [
 		    "filesystem", {
 		        "requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
 			"topics_dirs": [ "${ENV:basedir}/input/topics" ],
 			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+			"constraints_dirs": [ "../rmtoo/collection/constraints" ] }
 		]
 	    ],
             "output": {
