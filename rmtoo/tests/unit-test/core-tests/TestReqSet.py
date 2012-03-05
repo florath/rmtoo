@@ -37,6 +37,7 @@ class TestReqSet:
         reqs = RequirementSet(None)
         req = Requirement("Hubbel: bubbel", "hubbel", None, reqs, mods, TestConfig())
         reqs._add_requirement(req)
+        reqs.nodes.append(req)
         reqs._handle_modules(mods)
 
         assert(reqs.to_list() ==
@@ -55,6 +56,7 @@ class TestReqSet:
         req = Requirement("Hubbel: bubbel\nSiebel: do", "InvalidTagReq",
                           None, reqs, mods, TestConfig())
         reqs._add_requirement(req)
+        reqs.nodes.append(req)
         reqs._handle_modules(mods)
 
         #o = StringIO.StringIO()
