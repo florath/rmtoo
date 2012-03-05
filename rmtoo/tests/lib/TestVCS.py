@@ -41,6 +41,12 @@ class TestVCS(Interface):
 
     class FileInfo(Interface.FileInfo):
 
+        def __init__(self, tc=0):
+            if tc == 0:
+                self.__content = "Name: ItsMe\nNothing: Else\n"
+            if tc == 1:
+                self.__content = "Nothing: Else\n"
+
         def get_filename(self):
             '''Returns the filename.'''
             assert False
@@ -56,7 +62,7 @@ class TestVCS(Interface):
 
         def get_content(self):
             '''Returns the file content.'''
-            return "Name: ItsMe\nNothing: Else\n"
+            return self.__content
 
         def __str__(self):
             '''Returns the string representation.'''

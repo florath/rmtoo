@@ -24,7 +24,7 @@ class TestTopic:
         tconfig = TestConfig()
         tconfig.set_value("topic_root_node", "/nothing/compare")
         tvcs = TestVCS(tconfig)
-        tfileinfo = TestVCS.FileInfo()
+        tfileinfo = TestVCS.FileInfo(1)
 
         try:
             topic = Topic(dg, tconfig, tvcs, None, tfileinfo, None)
