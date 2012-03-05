@@ -1,11 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Tag Invented by handling
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RMTException import RMTException
@@ -23,7 +25,11 @@ class ReqInventedBy(ReqTagGeneric):
 
         t = req[self.tag].get_content()
         # This must be one of the inventors
-        if t not in self.config.get_value('requirements.inventors'):
+        # 'flonatel' is always allowed to add things.
+        # (This is needed for the collections handling - which always
+        #  comes from flonatel.
+        if t not in self.config.get_value('requirements.inventors') \
+            and t != "flonatel":
             raise RMTException(6, "Invalid invented by '%s'. Must be one "
                                "of the inventors '%s'" %
                                (t, self.config.get_value('requirements.inventors')), rid)
