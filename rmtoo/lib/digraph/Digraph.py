@@ -42,7 +42,7 @@ class Digraph:
         # Find a subnode with the given name
         def find_outgoing(self, name):
             for o in self.outgoing:
-                if o.name==name:
+                if o.name == name:
                     return o
             return None
 
@@ -51,7 +51,7 @@ class Digraph:
         # A depth first search is done.
         def is_self_of_ancient(self, onode):
             # Check for break
-            if self==onode:
+            if self == onode:
                 # Stop iff found.
                 return True
 
@@ -66,9 +66,9 @@ class Digraph:
 
     # Create a digraph from the given dictionary representation. 
     # If no dictionary is given, an empty digraph will be created.
-    def __init__(self, d=None, node_gen_func = Node):
+    def __init__(self, d=None, node_gen_func=Node):
         self.nodes = []
-        if d!=None:
+        if d != None:
             self.create_from_dict(d, node_gen_func)
 
     # Creates an edge from a to b - both must be nodes.
@@ -81,14 +81,14 @@ class Digraph:
     def add_node(self, a):
         # Check if the node with the same name already exists.
         for n in self.nodes:
-            if n.name==a.name:
+            if n.name == a.name:
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % a.name)
         self.nodes.append(a)
 
     # Low level creation method, which really does the job of
     # converting a given dictionary to a digraph
-    def create_from_dict(self, d, node_gen_func = Node):
+    def create_from_dict(self, d, node_gen_func=Node):
         # First run: create all nodes
         named_nodes = {}
         for node_name in d:
@@ -115,11 +115,11 @@ class Digraph:
         for n in self.nodes:
             rv[n.name] = n.outgoing_as_named_list()
         return rv
-            
+
     # Find a node with a given name
     def find(self, name):
         for n in self.nodes:
-            if name==n.name:
+            if name == n.name:
                 return n
         return None
 
@@ -129,7 +129,7 @@ class Digraph:
     def build_named_nodes(self):
         self.named_nodes = {}
         for n in self.nodes:
-            if n.name==None:
+            if n.name == None:
                 # Delete the whole dictionary first
                 self.named_nodes = None
                 raise RMTException(20, "cannot create node dictionary "
@@ -146,7 +146,7 @@ class Digraph:
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
     def get_named_node_no_throw(self, name):
-        if not hasattr(self, "named_nodes") or self.named_nodes==None:
+        if not hasattr(self, "named_nodes") or self.named_nodes == None:
             raise RMTException(22, "no named_nodes dictionary available "
                                "- maybe call 'build_named_nodes()' first")
         if name not in self.named_nodes:
@@ -157,7 +157,7 @@ class Digraph:
     # Mostly the same as before, but throws if the node can not be found. 
     def get_named_node(self, name):
         r = self.get_named_node_no_throw(name)
-        if r==None:
+        if r == None:
             raise RMTException(23, "node with name '%s' not available"
                                % name)
         return r

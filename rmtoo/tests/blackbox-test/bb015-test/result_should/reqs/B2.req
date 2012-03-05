@@ -6,6 +6,7 @@ Owner: development
 Description: B1 \textsl{must} exists.
 Status: not done
 Priority: development:10
-Solved by: C1 C2
 Effort estimation: 5
 Topic: B1
+Solved by: C1 C2
+# Added by rmtoo-normalize-dependencies

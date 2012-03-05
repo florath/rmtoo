@@ -7,4 +7,5 @@ Description: C2 \textsl{must} exists.
 Status: not done
 Priority: development:10
 Effort estimation: 5
+Depends on: B2
 Topic: B1

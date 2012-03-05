@@ -1,11 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit test for Topic
+
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import os
 import shutil
@@ -25,6 +27,7 @@ class TestBB015:
         def myexit(n):
             self.rval = n
 
+        os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
         td = tmp_dir()
 
@@ -36,8 +39,8 @@ class TestBB015:
                         ignore=shutil.ignore_patterns('*~',))
 
         # Call the converter
-        main(["-f", os.path.join(mdir, "input", "Config2.py"),
-              "-m", "..", destdir], mout, merr, main_impl, myexit)
+        main(["-j", "file://" + mdir + "/input/Config.json"],
+             mout, merr, main_impl, myexit)
         assert(self.rval == 0)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)

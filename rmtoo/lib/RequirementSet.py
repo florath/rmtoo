@@ -400,6 +400,48 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Return the ce3 set which belongs to this requirement set.'''
         return self.__ce3set
 
+    # Note: the following methods are of no use any more,
+    # because the 'Solved by' will be gone in nead future.
+
+    def normalize_dependencies(self):
+        '''Normalize the dependencies to 'Depends on'.'''
+        for r in self.__requirements.itervalues():
+            # Remove the old 'Depends on'
+            r.record.remove("Depends on")
+
+            # Create the list of dependencies
+            onodes = []
+            for n in r.outgoing:
+                onodes.append(n.name)
+
+            # If the onodes is empty: There must no old 'Solved by'
+            # tag available - if so something completey strange has
+            # happens and it is better to stop directly.
+            if len(onodes) == 0:
+                assert(not r.record.is_tag_available("Solved by"))
+                # Looks that everything is ok: continue
+                continue
+
+            onodes.sort()
+            on = " ".join(onodes)
+
+            # Check if there is already a 'Solved by'
+            try:
+                r.record.set_content("Solved by", on)
+            except ValueError, ve:
+                r.record.append(RecordEntry(
+                        "Solved by", on,
+                        "Added by rmtoo-normalize-dependencies"))
+        return True
+
+    def write_to_filesystem(self, directory):
+        '''Write the requirements back to the filesystem.'''
+        for r in self.__requirements.itervalues():
+            fd = file(directory + "/" + r.id + ".req", "w")
+            r.record.write_fd(fd)
+            fd.close()
+        return True
+
     # EVERYTHING BENEATH IS DEPRECATED!
 
     deprecated__er_fine = 0
@@ -532,42 +574,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for req in sorted(self.reqs.values(), key=lambda r: r.id):
             req.write_analytics_result(mstderr)
 
-    def deprecated_normalize_dependencies(self):
-        for r in self.reqs.itervalues():
-            # Remove the old 'Depends on'
-            r.record.remove("Depends on")
-
-            # Create the list of dependencies
-            onodes = []
-            for n in r.incoming:
-                onodes.append(n.name)
-
-            # If the onodes is empty: There must no old 'Solved by'
-            # tag available - if so something completey strange has
-            # happens and it is better to stop directly.
-            if len(onodes) == 0:
-                assert(not r.record.is_tag_available("Solved by"))
-                # Looks that everything is ok: continue
-                continue
-
-            onodes.sort()
-            on = " ".join(onodes)
-
-            # Check if there is already a 'Solved by'
-            try:
-                r.record.set_content("Solved by", on)
-            except ValueError, ve:
-                r.record.append(RecordEntry(
-                        "Solved by", on,
-                        "Added by rmtoo-normalize-dependencies"))
-        return True
-
-    def deprecated_write_to_filesystem(self, directory):
-        for r in self.reqs.itervalues():
-            fd = file(directory + "/" + r.id + ".req", "w")
-            r.record.write_fd(fd)
-            fd.close()
-        return True
 
 # Not used at the moment
 #    def edge_count(self):

@@ -13,14 +13,22 @@ import sys
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RequirementSet import RequirementSet
-
+from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.vcs.FileSystem import FileSystem
+from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 def main_impl(args, mstdout, mstderr):
+    tracer.debug("Called.")
     config, mods = MainHelper.main_setup(args, mstdout, mstderr)
-    rs = RequirementSet(mods, config)
-    command_line_args = config.get_value('general.command_line_arguments')
-    return rs.read_from_filesystem(command_line_args[0]) \
-        and rs.normalize_dependencies() \
+
+    file_system_if = FileSystem(config)
+    object_cache = ObjectCache()
+
+    rs = RequirementSet(config)
+    command_line_args = config.get_rvalue('general.command_line_arguments')
+
+    rs.read_requirements(file_system_if, None, mods, object_cache)
+    return rs.normalize_dependencies() \
         and rs.write_to_filesystem(command_line_args[0])
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):

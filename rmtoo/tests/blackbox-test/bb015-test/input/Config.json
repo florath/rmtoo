@@ -1,0 +1,38 @@
+{
+    "general" : {
+        "command_line_arguments": ["${ENV:rmtoo_test_dir}/reqs" ]
+    },
+    "constraints": {
+        "search_dirs": [
+            "/usr/share/pyshared/rmtoo/collection/constraints"
+        ]
+    }, 
+    "global": {
+        "modules": {
+            "directories": [
+                ".."
+            ]
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "default_language": "kl_EL", 
+            "dependency_notation": [
+                "Depends on"
+            ]
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    },
+    "topic_root_node": "B1",
+    "requirements_dirs": [ "${ENV:rmtoo_test_dir}/reqs" ],
+    "topics_dirs": [ "${ENV:rmtoo_test_dir}/input/topics" ],
+    "constraints_dirs": [ "rmtoo/collection/constraints" ] 
+}

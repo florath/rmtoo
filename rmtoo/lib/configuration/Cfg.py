@@ -53,6 +53,9 @@ class Cfg:
         if type(initial_values) == DictType:
             self.__merge_dictionary(initial_values)
             return
+        if isinstance(initial_values, Cfg):
+            self.config = initial_values.get_dict()
+            return
         assert(False)
 
     @staticmethod
