@@ -1,2 +1,1 @@
-+++ Warning:100:Old Configuration: Not converted attributes: [['basedir', 'result_is']]
-+++ ERROR: Problem reading in the continuum: '[  90]: Failed CE3 assert: msg [MinShockResistance: Value of device is smaller than the needed - device will fail. Device [5G] - needed [7G]]'
++++ ERROR: Problem reading in the continuum [[  90]: Failed CE3 assert: msg [MinShockResistance: Value of device is smaller than the needed - device will fail. Device [5G] - needed [7G]]]

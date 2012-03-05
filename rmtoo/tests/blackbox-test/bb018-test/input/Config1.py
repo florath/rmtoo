@@ -2,8 +2,8 @@ import os
 
 class Config:
 
-    basedir = "tests/blackbox-test/bb018-test/"
-    result_is = os.environ["rmtoo_test_dir"]
+#    basedir = "tests/blackbox-test/bb018-test/"
+#    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -11,7 +11,7 @@ class Config:
 
     reqs_spec = \
         {
-           "directory": basedir + "input/reqs",
+           "directory": "${ENV:basedir}/input/reqs",
            "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
            "dependency_notation": set(["Solved by", ]),
@@ -19,7 +19,7 @@ class Config:
 
     topic_specs = \
         {
-          "ts_common": [basedir + "input/topics", "ReqsDocument"],
+          "ts_common": [ "${ENV:basedir}/input/topics", "ReqsDocument"],
         }
 
     analytics_specs = \
@@ -48,7 +48,7 @@ class Config:
 #           ["ts_common", result_is + "/stats_reqs_cnt.csv"]],
 
           ["latex2", 
-           ["ts_common", result_is + "/reqtopics.tex"]],
+           ["ts_common", "${ENV:rmtoo_test_dir}/reqtopics.tex"]],
 
 #          ["html", 
 #           ["ts_common", 
