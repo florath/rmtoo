@@ -54,6 +54,10 @@ class Topic(Digraph.Node):
                 tracer.debug("Found [%d] requirements for topic [%s]."
                              % (self.__requirements.get_requirements_cnt(),
                                 tname))
+        # Check for the existence of the name
+        if self.__topic_name == None:
+            raise RMTException(62, "Mandatory tag 'Name' not given in topic",
+                               self.name)
 
     def __init__(self, digraph, config, input_handler, commit, file_info,
                  req_set):
