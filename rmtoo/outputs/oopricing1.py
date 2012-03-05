@@ -231,9 +231,9 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         tr = odf.table.TableRow()
         for req in sreqs:
             tc = odf.table.TableCell()
-            if len(req.outgoing) > 0:
+            if len(req.incoming) > 0:
                 # By default, the chosen is the first one.
-                p = odf.text.P(text=req.outgoing[0].id)
+                p = odf.text.P(text=req.incoming[0].id)
                 tc.addElement(p)
             tr.addElement(tc)
         sheet.addElement(tr)
@@ -489,7 +489,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         # Dependent on Chooser
         tc = odf.table.TableCell()
         # Do not do this for first cell.
-        if len(req.outgoing) > 0:
+        if len(req.incoming) > 0:
             dc = odf.draw.Control(control="lbdependentfrom%s" % req.name,
                                   zindex="0",
                                   x="0.0in",
@@ -503,12 +503,12 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         # dependet rate and material
         # Do not do this for first cell.
         for sname in ["SumRate", "SumMat"]:
-            if len(req.incoming) > 0:
+            if len(req.outgoing) > 0:
                 tc = odf.table.TableCell(
                     valuetype="currency", currency="EUR",
                     formula="oooc:=SUM([%s.%s2:%s.%s%d])" \
                         % (sname, self.__sscoords[i], sname, self.__sscoords[i],
-                           (1 + len(req.incoming))))
+                           (1 + len(req.outgoing))))
                 tr.addElement(tc)
             else:
                 self.create_empty_currency_cell_ro(tr)
@@ -547,7 +547,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
 
     def create_deps_dependent(self, sheet, sreqs):
         # The number of the following rows depend on the maximum
-        # number of outgoing requirements.
+        # number of incoming requirements.
         # This flags if there is something found with the current
         # index.
         i = 0
@@ -555,9 +555,9 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             tr = odf.table.TableRow()
             index_used = False
             for req in sreqs:
-                if len(req.outgoing) > i:
+                if len(req.incoming) > i:
                     tc = odf.table.TableCell()
-                    p = odf.text.P(text=req.outgoing[i].name)
+                    p = odf.text.P(text=req.incoming[i].name)
                     tc.addElement(p)
                     tr.addElement(tc)
                     index_used = True
@@ -582,7 +582,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             tr = odf.table.TableRow()
             index_used = False
             for req in sreqs:
-                if len(req.incoming) > i:
+                if len(req.outgoing) > i:
                     # This is somewhat complicated:
                     # If on the Costs sheet one direction is chosen,
                     # it is written to the deps sheet (row 3).
@@ -594,9 +594,9 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                     tc = odf.table.TableCell(
                         valuetype="currency", currency="EUR",
                         formula='oooc:=IF([Deps.%s3]="%s";[Costs.%s%d];0)' %
-                        (self.__sscoords[self.sreqs_index[req.incoming[i]]],
+                        (self.__sscoords[self.sreqs_index[req.outgoing[i]]],
                          req.name, colname,
-                         self.sreqs_index[req.incoming[i]] + DEPS_HEADER_LEN))
+                         self.sreqs_index[req.outgoing[i]] + DEPS_HEADER_LEN))
                     tr.addElement(tc)
                     index_used = True
                 else:
@@ -662,7 +662,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             # When there is only one entry in the list, there is no
             # need to have a dropdown list.
             ddown = "yes"
-            if len(req.outgoing) <= 1:
+            if len(req.incoming) <= 1:
                 ddown = "no"
 
             lb = odf.form.Listbox(
@@ -675,7 +675,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                 name="ListBox Dependet From %s" % req.name,
                 size="3",
                 sourcecellrange="Deps.%s5:Deps.%s%d" % (
-                    self.__sscoords[i], self.__sscoords[i], len(req.outgoing) + 4)
+                    self.__sscoords[i], self.__sscoords[i], len(req.incoming) + 4)
                 )
             lbproperties = odf.form.Properties()
             lbprop = odf.form.Property(
@@ -694,7 +694,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             # When there is only one dependent requirement, it makes
             # no sense to have something which can be changed.
             # Therefore this should be readonly then.
-            if len(req.outgoing) <= 1:
+            if len(req.incoming) <= 1:
                 lstprop = odf.form.Property(
                     propertyname="ReadOnly",
                     valuetype="boolean",

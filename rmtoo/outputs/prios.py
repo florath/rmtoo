@@ -38,7 +38,6 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
-        self.__cmad_file = None
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
