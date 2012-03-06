@@ -85,7 +85,7 @@ class TestConfiguration(unittest.TestCase):
         log_store = MemLogStore()
 
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
-        config.merge_cmd_line_params(['-f', 'tests/unit-test/core-tests/'
+        config.merge_cmd_line_params(['-f', 'tests/UnitTest/CoreTests/'
                                       'testdata/Config3.py'])
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")

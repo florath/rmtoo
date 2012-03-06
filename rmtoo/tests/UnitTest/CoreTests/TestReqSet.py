@@ -23,7 +23,7 @@ from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 
-mod_base_dir = "tests/unit-test/core-tests/testdata"
+mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
 class TestReqSet:
 

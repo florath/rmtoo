@@ -20,7 +20,7 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 
-mod_base_dir = "tests/unit-test/core-tests/testdata"
+mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
 class TestModules:
 
