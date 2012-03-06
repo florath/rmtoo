@@ -16,6 +16,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir, extract_container_files, \
     unify_output_dir, check_file_results
 
+mdir_orig = "tests/blackbox-test/bb007-test"
 mdir = "tests/BlackboxTest/Bb007Test"
 
 class TestBB007:
@@ -23,7 +24,8 @@ class TestBB007:
     def test_pos_001(self):
         "BB Basic with one requirement - check log output for typo in topic"
 
-        os.environ["basedir"] = mdir
+        os.environ["basedir"] = mdir_orig
+        os.environ["rbasedir"] = mdir
         mout, merr = prepare_result_is_dir()
         main_impl(["-j", "file://" + mdir + "/input/Config.json"], 
                   mout, merr)
