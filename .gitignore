@@ -21,4 +21,5 @@ debian/rmtoo.substvars
 doc/html/reqs
 doc/presentations/reqspricing.dot
 doc/presentations/reqspricing.png
-ttt
+make_tests.log
+

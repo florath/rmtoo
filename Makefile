@@ -70,6 +70,7 @@ install:
 .PHONY: tests
 tests:
 	nosetests -w rmtoo -v --with-coverage -s \
+	 --testmatch ".*[tT]est.*" \
 	 --cover-package=rmtoo.lib,rmtoo.output,rmtoo.inputs
 
 .PHONY: deb
@@ -79,4 +80,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/unit-test/core-tests/TestBaseRMObject.py
+		tests/BlackboxTest/Bb001Test/bb001Test.py

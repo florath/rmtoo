@@ -28,7 +28,6 @@ for sp in sys.path:
         break
 #pylint: disable=F0401
 import git
-
 import copy
 
 
@@ -90,8 +89,20 @@ class Git(Interface):
         # Check all if they are in the same repository.
         # Note: because every directory list must contain at least one
         #  directory, use just one.
-        tracer.debug("using [%s] as sample directory" % directory)
-        self.__repo = git.Repo(directory)
+        repo_found = False
+        while len(directory) > 1:
+            try:
+                tracer.debug("using [%s] as sample directory" % directory)
+                self.__repo = git.Repo(directory)
+                repo_found = True
+                break
+            except git.exc.NoSuchPathError:
+                tracer.debug("Sample directory [%s] does not exists" %
+                             directory)
+                directory = os.path.dirname(directory)
+        if not repo_found:
+            assert False
+
         # :-4: cut off the '/.git'.
         self.__repo_base_dir = self.__repo.git_dir[:-5]
         tracer.debug("repository base directory [%s]" % self.__repo_base_dir)
