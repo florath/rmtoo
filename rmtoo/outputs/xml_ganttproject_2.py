@@ -21,36 +21,38 @@
 '''
 
 from xml.dom.minidom import Document
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
-from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
+from rmtoo.lib.RequirementStatus import \
     RequirementStatusAssigned, RequirementStatusFinished
-from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
+class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
+                         CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
+        self.__fd = None
         self.effort_factor = self._config.get_value_default('effort_factor', 1)
         self.req_ids = {}
         self.next_id = 1
         self.__xml_doc = None
         self.__xml_obj_stack = []
 
-    # Get an id: if the req is not there a new id will be generated.
     def get_req_id(self, name):
+        '''Get an id: if the req is not there a new id will be generated.'''
         if name in self.req_ids:
             return self.req_ids[name]
         self.req_ids[name] = self.next_id
         self.next_id += 1
         return self.req_ids[name]
 
-    def topic_continuum_pre(self, topics_continuum):
+    def topic_continuum_pre(self, _topics_continuum):
         '''Do the preprocessing: create the empty document.'''
         # Create the minidom document
         self.__xml_doc = Document()
@@ -60,12 +62,13 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
 
         # This is needed: if not given, on the left side there is
         # nothing displayed. 
-        xml_taskdisplaycolumns = self.__xml_doc.createElement("taskdisplaycolumns")
+        xml_taskdisplaycolumns = \
+            self.__xml_doc.createElement("taskdisplaycolumns")
         xml_project.appendChild(xml_taskdisplaycolumns)
-        for s in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
+        for display_col in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
             xml_tpd = self.__xml_doc.createElement("displaycolumn")
-            xml_tpd.setAttribute("property-id", s[0])
-            xml_tpd.setAttribute("width", str(s[1]))
+            xml_tpd.setAttribute("property-id", display_col[0])
+            xml_tpd.setAttribute("width", str(display_col[1]))
             xml_taskdisplaycolumns.appendChild(xml_tpd)
         self.__xml_obj_stack.append(xml_project)
 
@@ -74,7 +77,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
            the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topic_continuum_post(self, topics_continuum):
+    def topic_continuum_post(self, _topics_continuum):
         '''Do the postprocessing: create the file.'''
         # Close the (hopefully) last open
         assert len(self.__xml_obj_stack) == 1
@@ -95,7 +98,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         tracer.debug("Finished; xml document stack length [%s]" %
                      len(self.__xml_obj_stack))
 
-    def topic_post(self, topic):
+    def topic_post(self, _topic):
         '''This is called in the Topic post-phase.'''
         # Add the xml_task to the current document
         xml_task = self.__xml_obj_stack.pop()
@@ -125,12 +128,12 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
         # Currently rmtoo supports only two states: not done (~0) or
         # finished (~100)
         if req.is_val_av_and_not_null("Status"):
-            v = "0"
+            complete_val = "0"
             if isinstance(req.get_status(), RequirementStatusFinished):
-                v = "100"
+                complete_val = "100"
             elif isinstance(req.get_status(), RequirementStatusAssigned):
-                v = "50"
-            xml_task.setAttribute("complete", v)
+                complete_val = "50"
+            xml_task.setAttribute("complete", complete_val)
 
         # Notes
         # Add the description and if available also the rationale and
@@ -166,63 +169,8 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum):
 
         self.__xml_obj_stack[-1].appendChild(xml_task)
 
-# TODO: Ueberarbeiten!
-
-    # Run through all the topics
-    # (Deep first search / output)
-    def output_reqset(self, reqset, doc, sobj):
-        self.output_topic(self.topic_set.get_master(), reqset, doc, sobj)
-
-    # First output all the requirements in this topic - then all the
-    # subtopics. 
-    def output_topic(self, topic, reqset, doc, sobj):
-        # Add a new level (task)
-        xml_task = doc.createElement("task")
-        xml_task.setAttribute("name", topic.name)
-        xml_task.setAttribute("id", str(self.get_req_id(
-                    "TOPIC-" + topic.name)))
-
-        # Run through all the requirements and output them
-        for req in sorted(topic.reqs, key=lambda r: r.id):
-            self.output_req(req, reqset, doc, xml_task)
-        # After this have a look at the (sub-)topics
-        for st in sorted(topic.outgoing, key=lambda t: t.name):
-            self.output_topic(st, reqset, doc, xml_task)
-
-        # Add the xml_task to the current document
-        sobj.appendChild(xml_task)
-
-
-### DONE!
-    def output(self, reqscont):
-        # Create the minidom document
-        doc = Document()
-
-        xml_project = doc.createElement("project")
-        doc.appendChild(xml_project)
-
-        # This is needed: if not given, on the left side there is
-        # nothing displayed. 
-        xml_taskdisplaycolumns = doc.createElement("taskdisplaycolumns")
-        xml_project.appendChild(xml_taskdisplaycolumns)
-        for s in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
-            xml_tpd = doc.createElement("displaycolumn")
-            xml_tpd.setAttribute("property-id", s[0])
-            xml_tpd.setAttribute("width", str(s[1]))
-            xml_taskdisplaycolumns.appendChild(xml_tpd)
-
-        # Output all the 'tasks' (i.e. requirements)
-        self.output_reqset(reqscont.continuum_latest(), doc, xml_project)
-
-        fd = file(self.output_filename, "w")
-        fd.write(doc.toprettyxml())
-        fd.close()
-
-# TODO Deprecated
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
-
+    def cmad_topic_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
+                                              self._output_filename)
