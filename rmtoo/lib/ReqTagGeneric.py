@@ -24,33 +24,33 @@ class ReqTagGeneric:
     def get_type_set(self):
         '''Return all types where this tag is valid for.'''
         return self.__ltypes
-    
+
     def get_tag(self):
         '''Returns the current tag.'''
         return self.__tag
-    
+
     def get_config(self):
         '''Return the configuration.'''
         return self.__config
-    
+
     def get_and_remove(self, req):
         '''Remove the deleted tag from the req.'''
-        t = req[self.__tag]
+        tval = req[self.__tag]
         del req[self.__tag]
-        return self.__tag, t
+        return self.__tag, tval
 
-    def check_mandatory_tag(self, rid, r, eid):
+    def check_mandatory_tag(self, rid, req, eid):
         '''Call this from the 'rewrite()' method, if the tag is mandatory.
            Note: this function only checks the availability of the tag but
            does not perform any other check.
            Returns 'True' if the tag is available and 'False' if the tag is
            not available.'''
         # The given tag is mandatory
-        if self.__tag not in r:
+        if self.__tag not in req:
             raise RMTException(eid, "Does not contain the "
                                "tag '%s'" % self.__tag, rid)
 
-    def handle_optional_tag(self, r):
+    def handle_optional_tag(self, req):
         '''The method 'handle_optional_tag()' handles optional tags in the
            sense, that it copies over the content to the class object
            itself and removes it from the input req queue.  It does not
@@ -59,9 +59,7 @@ class ReqTagGeneric:
            to None.
            Note: It is possible to use the return values directly from the
            rewrite() method.'''
-        if self.__tag in r:
-            v = r[self.__tag]
-            del r[self.__tag]
-            return self.__tag, v
+        if self.__tag in req:
+            return self.get_and_remove(req)
 
         return self.__tag, None

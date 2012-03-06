@@ -9,13 +9,13 @@
  For licensing details see COPYING
 '''
 
-import time
-
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
+from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-class tlp1(StdOutputParams, ExecutorTopicContinuum):
+class tlp1(StdOutputParams, ExecutorTopicContinuum,
+           CreateMakeDependencies):
 
     class Id2IntMapper:
 
@@ -37,10 +37,11 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because tlp1 can only one topic continuum,
-           the latest (newest) is used.'''       
+           the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def requirement_set_pre(self, requirement_set):
@@ -89,16 +90,9 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum):
     def write_footer(self, fd):
         fd.write(")\n")
 
-# TODO
-
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.filename))
-
-    # The real output
-    # Note that currently the 'reqscont' is not used in case of topics
-    # based output.
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest())
+    def cmad_topic_continuum_pre(self, _):
+        '''Write out the one and only dependency to all the requirements.'''
+        tracer.debug("Called.")
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
+                                              self._output_filename)
 

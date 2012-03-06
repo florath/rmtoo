@@ -22,10 +22,10 @@ from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging.EventLogging import configure_logging
 
 def execute_cmds(config, input_mods, _mstdout, mstderr):
-    # Checks are always done - to be sure that e.g. the dependencies
-    # are correct.
-    # Please note: there is no 'ONE' latest continuum any more
-    #  - but a list.
+    '''Checks are always done - to be sure that e.g. the dependencies
+       are correct.
+       Please note: there is no 'ONE' latest continuum any more
+       - but a list.'''
     try:
         topic_continuum_set = TopicContinuumSet(input_mods, config)
     except RMTException, rmte:
@@ -63,6 +63,10 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
     return True
 
 def main_impl(args, mstdout, mstderr):
+    '''The real implementation of the main function:
+       o get config
+       o set up logging
+       o do everything'''
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
     configure_logging(config)
     return execute_cmds(config, input_mods, mstdout, mstderr)

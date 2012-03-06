@@ -13,9 +13,11 @@ from rmtoo.lib.logging.EventLogging import tracer
 
 # pylint: disable=W0232
 class Constraints:
+    '''Helper functions for constraint handling.'''
 
     @staticmethod
     def set_default_values(cfg):
+        '''Set the default values to the given configuration.'''
         cfg.set_value('constraints.search_dirs',
                       ['/usr/share/pyshared/rmtoo/collection/constraints'])
 
@@ -24,11 +26,12 @@ class Constraints:
         '''Collect all the constraints which are used in the given topic.'''
         tracer.debug("Called for topic set.")
         cnsts = {}
-        
+
         if topic_set == None:
             assert False
-        
-        for ctr, cval in topic_set.get_requirement_set().get_constraints().iteritems():
+
+        for ctr, cval in topic_set.get_requirement_set().\
+                    get_constraints().iteritems():
             tracer.debug("Add constraint [%s]" % ctr)
             cnsts[ctr] = cval
         tracer.debug("Finished; size [%d]" % len(cnsts))

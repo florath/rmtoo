@@ -12,13 +12,14 @@
 
 # pylint: disable=W0232
 class StringHelper:
+    '''String Helper class function collection.'''
 
     @staticmethod
     def join_ate(delim, jlist):
         '''This is mostly the same as the string 'join()' method, but
            The delimiter is also added to the end of the list.'''
-        r = ""
+        res = ""
         for j in jlist:
-            r += j + delim
-        return r
+            res += j + delim
+        return res
 

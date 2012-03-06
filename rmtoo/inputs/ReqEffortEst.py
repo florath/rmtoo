@@ -19,6 +19,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqEffortEst(ReqTagGeneric):
+    '''Implements the Effort estimation attribute.'''
     valid_values = [0, 1, 2, 3, 5, 8, 13, 21, 34]
 
     def __init__(self, config):
@@ -31,10 +32,9 @@ class ReqEffortEst(ReqTagGeneric):
         if value == None:
             return tag, value
 
-        v = int(value.get_content())
-
-        if v not in self.valid_values:
+        ival = int(value.get_content())
+        if ival not in self.valid_values:
             raise RMTException(4, "%s: effort estimation must be one of %s"
                                % (rid, self.valid_values))
-        return tag, v
+        return tag, ival
 

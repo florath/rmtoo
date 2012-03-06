@@ -12,6 +12,7 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqHistory(ReqTagGeneric):
+    '''History tag implementation.'''
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "History",

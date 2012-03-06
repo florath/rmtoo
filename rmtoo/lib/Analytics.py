@@ -21,6 +21,7 @@ class Analytics:
 
     @staticmethod
     def execute(config, topic_continuum_set, mstderr):
+        '''Executes all the available analytics modules.'''
         tracer.debug("Called.")
         success = True
         for analytic_type in [DescWords, HotSpot, ReqTopicCohe, TopicCohe]:
