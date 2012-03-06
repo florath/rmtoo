@@ -7,7 +7,7 @@
   It is stored here (in a separate file) for (black-box) testing
   proposes. 
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -18,7 +18,6 @@ from optparse import OptionParser
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.TopicContinuum import TopicContinuum
-from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
