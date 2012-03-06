@@ -26,6 +26,7 @@ for sp in sys.path:
     if os.path.exists(rc):
         sys.path.insert(0, rc)
         break
+#pylint: disable=F0401
 import git
 
 import copy
@@ -68,6 +69,7 @@ class Git(Interface):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
         for dir_type in ["requirements", "topics", "constraints"]:
+            # pylint: disable=W0141
             dirs = map(self.__abs_path, cfg.get_rvalue(dir_type + "_dirs"))
             self._check_list_of_strings(dir_type, dirs)
 

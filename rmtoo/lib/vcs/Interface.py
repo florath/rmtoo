@@ -55,6 +55,7 @@ class Interface:
         assert commit
         assert False
 
+    # pylint: disable=W0232
     class FileInfo:
         '''Holds information about a file in a repository.
            Information are filename, vcs_id and a method to
