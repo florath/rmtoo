@@ -1,16 +1,16 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# This is the definition of the Base rmtoo Management Object
-# which can be used as a base object for many different text base 
-# major management objects like 'Requirement' or 'Constraint'.
-# (Maybe this might also be used for the 'Topic'.)
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  This is the definition of the Base rmtoo Management Object
+  which can be used as a base object for many different text base 
+  major management objects like 'Requirement' or 'Constraint'.
+  (Maybe this might also be used for the 'Topic'.) 
+   
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
@@ -20,8 +20,9 @@ from rmtoo.lib.logging.EventLogging import tracer
 
 class BaseRMObject(UsableFlag):
 
-    def internal_init(self, tbhtags, rid, mls, mods, config, type_str,
-                      file_path):
+    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str,
+                 file_path):
+        UsableFlag.__init__(self)
         # This is the name of the tags which will be handled by the
         # module input. 
         self.tbhtags = tbhtags
@@ -37,16 +38,13 @@ class BaseRMObject(UsableFlag):
         self.config = config
         self.type_str = type_str
         self._file_path = file_path
+        self.record = None
+        self.brmo = None
 
         # The analytic modules store the results in this map:
         self.analytics = {}
-
-    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str,
-                 file_path):
-        UsableFlag.__init__(self)
-        self.internal_init(tbhtags, rid, mls, mods, config, type_str, file_path)
         if content != None:
-            self.input(content)
+            self.__input(content)
 
     def get_id(self):
         return self.id
@@ -67,8 +65,8 @@ class BaseRMObject(UsableFlag):
     def set_value(self, key, value):
         self.values[key] = value
 
-    def input(self, content):
-        # Read it in from the file (Syntactic input)
+    def __input(self, content):
+        '''Read it in from the file (Syntactic input).'''
         txtio = TxtIOConfig(self.config, self.type_str)
 
         self.record = TxtRecord.from_string(content, self.id, txtio)

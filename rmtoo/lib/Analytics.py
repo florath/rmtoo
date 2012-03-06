@@ -15,6 +15,7 @@ from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
 from rmtoo.lib.logging.EventLogging import tracer
 
+# pylint: disable=W0232
 class Analytics:
     '''Collection class which calls the other analytics modules.'''
 
