@@ -54,8 +54,8 @@
                 ], 
                 "html": [
                     {
-                        "footer": "${ENV:basedir}/input/footer.html", 
-                        "header": "${ENV:basedir}/input/header.html", 
+                        "footer": "${ENV:rbasedir}/input/footer.html", 
+                        "header": "${ENV:rbasedir}/input/header.html", 
                         "output_directory": "${ENV:rmtoo_test_dir}/html"
                     }
                 ], 
