@@ -37,9 +37,6 @@ class MemLog:
     def to_list(self):
         r = []
         r.append(self.lid)
-        # XXX This is not that perfect yet: it would be better 
-        # to have here the symbolic output instead of the number.
-        # This implies IMHO to move the levels to a sperate class.
         r.append(self.level.get_symbolic_str())
         r.append(self.msg)
         return r

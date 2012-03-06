@@ -21,28 +21,24 @@ from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.MemLogFile import MemLogFile
 from rmtoo.lib.logging.LogLevel import LogLevel
 
-# This is an in memory log message storage.
-# It is mainly used when reading in old / historic requirments. When
-# there are problems reading them, these problems are logged into the
-# MemLog storage.
 class MemLogStore(object):
+    '''This is an in memory log message storage.
+       It is mainly used when reading in old / historic requirements. When
+       there are problems reading them, these problems are logged into the
+       MemLog storage.'''
 
     def __init__(self):
         super(MemLogStore, self).__init__()
         self.logs = []
 
     def log(self, lid, level, msg, efile=None, eline=None):
-        if efile == None and eline == None:
-            self.logs.append(MemLog(lid, level, msg))
-        else:
-            self.logs.append(MemLogFile(lid, level, msg, efile, eline))
+        self.__log(lid, level, msg, efile, eline)
 
     def write_log(self, file_descriptor):
         for l in self.logs:
             l.write_log(file_descriptor)
 
-    # TODO Duplicate of log()
-    def internal_log(self, lid, level, msg, efile=None, eline=None):
+    def __log(self, lid, level, msg, efile=None, eline=None):
         if efile == None and eline == None:
             self.logs.append(MemLog(lid, level, msg))
         else:
@@ -50,19 +46,19 @@ class MemLogStore(object):
 
     # Convenience functions
     def trace(self, lid, msg, efile=None, eline=None):
-        self.internal_log(lid, LogLevel.trace(), msg, efile, eline)
+        self.__log(lid, LogLevel.trace(), msg, efile, eline)
 
     def debug(self, lid, msg, efile=None, eline=None):
-        self.internal_log(lid, LogLevel.debug(), msg, efile, eline)
+        self.__log(lid, LogLevel.debug(), msg, efile, eline)
 
     def info(self, lid, msg, efile=None, eline=None):
-        self.internal_log(lid, LogLevel.info(), msg, efile, eline)
+        self.__log(lid, LogLevel.info(), msg, efile, eline)
 
     def warning(self, lid, msg, efile=None, eline=None):
-        self.internal_log(lid, LogLevel.warning(), msg, efile, eline)
+        self.__log(lid, LogLevel.warning(), msg, efile, eline)
 
     def error(self, lid, msg, efile=None, eline=None):
-        self.internal_log(lid, LogLevel.error(), msg, efile, eline)
+        self.__log(lid, LogLevel.error(), msg, efile, eline)
 
     # Construct log message from exception
     def error_from_rmte(self, rmte):
@@ -92,10 +88,6 @@ class MemLogStore(object):
 
     # For comparison (also mostly used in test-cases) the eq operator
     # must be defined.
-    # TODO: DO NOT USE THIS, BECAUSE THEN ALL CHECKS FOR NONE
-    #   DOES NOT WORK
     def __eq__(self, other):
         return type(self) == type(other) and self.logs == other.logs
 
-    def get_mls(self):
-        return self
