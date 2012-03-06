@@ -14,11 +14,12 @@
 
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
+# pylint: disable=W0232
 class Executor(ExecutorTopicContinuum):
     '''Base class for the different executors.
        All methods are implemented: they are doing nothing.'''
 
-    def topic_continuum_set_pre(self, topics_continuum_set):
+    def topic_continuum_set_pre(self, _topics_continuum_set):
         '''This is call in the TopicsContinuumSet pre-phase.'''
         return
 
@@ -26,7 +27,7 @@ class Executor(ExecutorTopicContinuum):
         '''Sorts the list of topic continuums.'''
         return list_to_sort
 
-    def topic_continuum_set_post(self, topics_continuum_set):
+    def topic_continuum_set_post(self, _topics_continuum_set):
         '''This is call in the TopicsContinuumSet post-phase.'''
         return
 

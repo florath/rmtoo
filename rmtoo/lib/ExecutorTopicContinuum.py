@@ -10,9 +10,10 @@
  For licensing details see COPYING
 '''
 
+# pylint: disable=W0232 
 class ExecutorTopicContinuum:
 
-    def topic_continuum_pre(self, topics_continuum):
+    def topic_continuum_pre(self, _topic_continuum):
         '''This is called in the TopicsContinuum pre-phase.
            This is typically the phase where all the output modules
            will be used.'''
@@ -30,11 +31,11 @@ class ExecutorTopicContinuum:
             res.append(topic_sets[vcs_id.get_commit()])
         return res
 
-    def topic_continuum_post(self, topics_continuum):
+    def topic_continuum_post(self, _topics_continuum):
         '''This is called in the TopicsContinuum post-phase.'''
         return
 
-    def topic_set_pre(self, topics_set):
+    def topic_set_pre(self, _topic_set):
         '''This is called in the TopicsSet pre-phase.'''
         return
 
@@ -42,35 +43,35 @@ class ExecutorTopicContinuum:
         '''Sort the list of contimuums.'''
         return list_to_sort
 
-    def topic_set_post(self, topics_set):
+    def topic_set_post(self, _topic_set):
         '''This is called in the TopicsSet post-phase.'''
         return
 
-    def topic_pre(self, topic):
+    def topic_pre(self, _topic):
         '''This is called in the Topic pre-phase.'''
         return
 
-    def topic_name(self, name):
+    def topic_name(self, _name):
         '''Called when the Name tag appears in the topic.'''
         return
     
-    def topic_text(self, text):
+    def topic_text(self, _text):
         '''Called when there is text to be outputted.'''
         return
 
-    def topic_sub_pre(self, subtopic):
+    def topic_sub_pre(self, _subtopic):
         '''Called when before the subtopic is called.'''
         return
 
-    def topic_sub_post(self, subtopic):
+    def topic_sub_post(self, _subtopic):
         '''Called when after the subtopic is called.'''
         return
 
-    def topic_post(self, topic):
+    def topic_post(self, _topic):
         '''This is called in the Topic post-phase.'''
         return
 
-    def requirement_set_pre(self, requirement_set):
+    def requirement_set_pre(self, _requirement_set):
         '''This is called in the RequirementSet pre-phase.'''
         return
 
@@ -78,10 +79,10 @@ class ExecutorTopicContinuum:
         '''Sort the list of requirement set.'''
         return list_to_sort
 
-    def requirement_set_post(self, requirement_set):
+    def requirement_set_post(self, _requirement_set):
         '''This is called in the RequirementSet post-phase.'''
         return
 
-    def requirement(self, requirement):
+    def requirement(self, _requirement):
         '''This is called in the Requirement phase.'''
         return

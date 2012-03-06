@@ -11,6 +11,7 @@
 
 from rmtoo.lib.logging.EventLogging import tracer
 
+# pylint: disable=W0232
 class Constraints:
 
     @staticmethod

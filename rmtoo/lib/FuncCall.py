@@ -11,12 +11,9 @@
 
 from rmtoo.lib.logging.EventLogging import tracer
 
+# pylint: disable=W0232
 class FuncCall:
-    
-    def __init__(self):
-        '''Hide the constructor.'''
-        assert False
-    
+
     @staticmethod
     def pcall(obj, method_name, *args):
         '''Possible CALL a method.

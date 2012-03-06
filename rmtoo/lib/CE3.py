@@ -2,7 +2,8 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
-  Constraint Execution and Evaluation EnvironmentHeuristics to check the quality of the requirements. 
+  Constraint Execution and Evaluation EnvironmentHeuristics to check the 
+  quality of the requirements. 
 
  (c) 2011-2012 by flonatel GmbH & Co. KG
 
