@@ -29,6 +29,8 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.info("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
+        self.__used_vcs_id = None
+        self.__output_file = None
 
         if not self._config.is_available('node_attributes'):
             self._config.set_value('node_attributes',
@@ -40,7 +42,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__used_vcs_id = vcs_commit_ids[-1]
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def topic_set_pre(self, requirement_set):
+    def topic_set_pre(self, _requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
         # Initialize the graph output
@@ -53,7 +55,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
 
-    def topic_set_post(self, requirement_set):
+    def topic_set_post(self, _requirement_set):
         '''Write footer - close file.'''
         # Print out a node with the version number:
         self.__output_file.write(

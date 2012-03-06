@@ -6,7 +6,7 @@
   This class contains a 'plain' topic set - with additional information
   about the commit.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''

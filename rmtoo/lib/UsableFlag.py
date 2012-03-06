@@ -7,7 +7,7 @@
    an error - to continue.
    This objects help flagging the object either usable or unusable.
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
