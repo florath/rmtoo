@@ -1,20 +1,17 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement class itself
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Requirement class itself
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
-import os
-import time
+ For licensing details see COPYING
+'''
+
 import operator
 
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.FuncCall import FuncCall
@@ -22,6 +19,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 import sys
 reload(sys)
+# pylint: disable=E1101
 sys.setdefaultencoding('utf-8')
 
 class Requirement(Digraph.Node, BaseRMObject):
@@ -58,28 +56,14 @@ class Requirement(Digraph.Node, BaseRMObject):
     def __repr__(self):
         return self.__str__()
 
-### Looks that these functions are not used at all
-
-    # Error is an error (no distinct syntax error)
-#    def mark_syntax_error(self):
-#        self.state = self.er_error
-
-    # Error is an error (no distinct sematic error)
-#    def mark_sematic_error(self):
-#        self.state = self.er_error
-
-
-#    def is_open(self):
-#        return self.values["Status"] == self.st_not_done
-
     def get_status(self):
         return self.values["Status"]
 
     def get_topic(self):
         return self.values["Topic"]
 
-    # Returns the EfE units or 0 if not available.
     def get_efe_or_0(self):
+        '''Returns the EfE units or 0 if not available.'''
         efe = self.get_value("Effort estimation")
         if efe == None:
             return 0
@@ -88,8 +72,8 @@ class Requirement(Digraph.Node, BaseRMObject):
     def is_implementable(self):
         return self.values["Class"].is_implementable()
 
-    # Write out the analytics results.
     def write_analytics_result(self, mstderr):
+        '''Write out the analytics results.'''
         for k, v in sorted(self.analytics.items(),
                            key=operator.itemgetter(0)):
             if v[0] < 0:
@@ -98,46 +82,3 @@ class Requirement(Digraph.Node, BaseRMObject):
                 for l in v[1]:
                     mstderr.write("+++ Error:Analytics:%s:%s:%s\n" %
                                   (k, self.id, l))
-
-    # The following functions are declared internal because they are
-    # for internal use only.
-    # To copy a requirement (functionally deep copy) two phases are
-    # needed: First copy the requirements themselfs then adapt the
-    # incoming and outgoing lists to the new requirements.
-
-    # internal copy phase 1
-    # Create a deep copy without all requirements (incoming and
-    # outgoing) which are not part of one of the given topics.
-    # The reqs_included set is a set of pointers to the old
-    # requirements. 
-    def internal_copy_phase1(self, topic_name_list):
-        # Create the new Requirement itself.
-        r = Requirement(None, self.id, self.mls, self.mods, self.config)
-        r.otags = self.otags
-        r.values = self.values
-
-        # The only things to copy over are the incoming and the
-        # outgoing lists.
-        # These are pointers to the old ones!!!
-        for req in self.incoming:
-            if req.values["Topic"] in topic_name_list:
-                r.incoming.append(req)
-        for req in self.outgoing:
-            if req.values["Topic"] in topic_name_list:
-                r.outgoing.append(req)
-
-        return r
-
-    # Adapt the incoming and outgoing list: given a dictionary to map
-    # from old to new.
-    def internal_copy_phase2(self, old2new):
-        outgoing = []
-        for o in self.outgoing:
-            outgoing.append(old2new[o])
-        self.outgoing = outgoing
-
-        incoming = []
-        for o in self.incoming:
-            incoming.append(old2new[o])
-        self.incoming = incoming
-
