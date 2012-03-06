@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Constraint Execution and Evaluation Environment
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+
+  Constraint Execution and Evaluation EnvironmentHeuristics to check the quality of the requirements. 
+
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 

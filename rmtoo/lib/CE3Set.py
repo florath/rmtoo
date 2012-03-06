@@ -10,7 +10,6 @@
 '''
 
 from rmtoo.lib.logging.EventLogging import tracer
-from rmtoo.lib.CE3 import CE3
 
 class CE3Set:
     '''Sets which holds all the constrains execution environments.'''
@@ -20,7 +19,6 @@ class CE3Set:
         tracer.debug("CE3Set constructor called.")
         # This holds all the requirements CE3s
         self.__ce3s = {}
-        # ??? NEEDED? self.global_ce3 = None
 
     def insert(self, name, ce3):
         '''Add a new ce3.'''
