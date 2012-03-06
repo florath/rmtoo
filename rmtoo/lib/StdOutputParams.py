@@ -21,6 +21,9 @@ class StdOutputParams:
     def __init__(self, config):
         '''Constructs the standard output parameters based on the
            provided config.'''
+        self._output_filename = None
+        self._start_date = None
+        self._end_date = None
         self._config = Cfg(config)
         self.__parse()
 

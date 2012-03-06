@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Status of a requirement
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Status of a requirement
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.DateUtils import parse_date, format_date
 from rmtoo.lib.RMTException import RMTException
@@ -15,7 +15,7 @@ from rmtoo.lib.RMTException import RMTException
 class RequirementStatusNotDone:
     tval = "not done"
 
-    def __init__(self, config, rid, t):
+    def __init__(self, _config, rid, t):
         if t!=self.tval:
             raise RMTException(92, "%s: Not done contains "
                                "additional data '%s'" % (rid, t))
@@ -26,9 +26,9 @@ class RequirementStatusNotDone:
 class RequirementStatusAssigned:
     tval = "assigned"
 
-    def __init__(self, config, rid, t):
+    def __init__(self, _config, rid, t):
         ts = t.split(":")
-        
+
         if len(ts)!=3:
             raise RMTException(93, "%s: Assigned values invalid '%s'"
                                % (rid, t))
@@ -51,7 +51,7 @@ class RequirementStatusAssigned:
 class RequirementStatusFinished:
     tval = "finished"
 
-    def __init__(self, config, rid, t):
+    def __init__(self, _config, rid, t):
         if t==self.tval:
             # This is the old way: only 'finished' is specified.
             self.person = None
@@ -60,8 +60,8 @@ class RequirementStatusFinished:
             return
         ts = t.split(":")
         if len(ts)!=4:
-            raise RMTException(94, "%s: Finished values invalid '%s'"
-                               % (rid, l))
+            raise RMTException(94, "%s: Finished values invalid [%s]"
+                               % (rid, ts))
         assert(ts[0]==self.tval)
         self.person = ts[1]
         self.date = parse_date(rid, ts[2])

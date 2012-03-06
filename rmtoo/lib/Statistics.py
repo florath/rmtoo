@@ -1,23 +1,22 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Common statistics functions
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Common statistics functions
+   
+ (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import datetime
 from scipy import stats
 
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
-from rmtoo.lib.ClassType import ClassTypeImplementable, \
-    ClassTypeDetailable, ClassTypeSelected
+from rmtoo.lib.ClassType import ClassTypeSelected
 
+# pylint: disable=W0232
 class Statistics:
 
     @staticmethod
@@ -33,7 +32,7 @@ class Statistics:
         diff = end_date - start_date
         diff_in_days = diff.days
 
-        for i in xrange(0, diff_in_days + 1):
+        for _ in xrange(0, diff_in_days + 1):
             rv.append([0, 0, 0])
         return rv
 
@@ -43,7 +42,7 @@ class Statistics:
         # depending on the date.
         rv = Statistics.prepare_result_vector(start_date, end_date)
 
-        for rid, req in rset.get_requirements_iteritems():
+        for _, req in rset.get_requirements_iteritems():
             invented_on = req.get_value("Invented on")
 
             if start_date > invented_on:
@@ -61,7 +60,7 @@ class Statistics:
 
             if isinstance(status, RequirementStatusNotDone):
                 # Only count those which are implementable
-                rclass = req.get_value("Class")
+#                rclass = req.get_value("Class")
                 if req.get_value("Class").is_implementable():
                     Statistics.inc_stats(rv, start_date, 0, invented_on,
                                          end_date, efe)
@@ -102,7 +101,7 @@ class Statistics:
     @staticmethod
     def get_units(rset, start_date, end_date):
 
-        def skip_never(req):
+        def skip_never(_):
             return False
 
         return Statistics.get_units_generic(rset, start_date,
@@ -135,7 +134,8 @@ class Statistics:
         x = list(i for i in xrange(0, len(rv)))
         y = list(x[0] + x[1] for x in rv)
 
-        gradient, intercept, r_value, p_value, std_err = stats.linregress(x, y)
+        gradient, intercept, _r_value, _p_value, _std_err = \
+                stats.linregress(x, y)
 
         if gradient >= 0.0:
             print("+++ WARN: gradient is positive [%d]: "

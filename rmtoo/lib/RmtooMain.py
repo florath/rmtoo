@@ -14,16 +14,14 @@
 
 import sys
 
-from optparse import OptionParser
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
-from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging.EventLogging import configure_logging
 
-def execute_cmds(config, input_mods, mstdout, mstderr):
+def execute_cmds(config, input_mods, _mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
     # are correct.
     # Please note: there is no 'ONE' latest continuum any more
@@ -50,7 +48,6 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
     cmad_filename = config.get_value_wo_throw(
                        'actions.create_makefile_dependencies')
     if cmad_filename != None:
-        cmad_rfilename = config.dollar_replace(cmad_filename)
         Output.execute(config, topic_continuum_set, mstderr, "cmad_")
         return True
 
