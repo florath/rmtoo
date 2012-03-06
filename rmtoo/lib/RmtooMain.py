@@ -22,6 +22,7 @@ from rmtoo.lib.OutputHandler import OutputHandler
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
+from rmtoo.lib.logging.EventLogging import configure_logging
 
 def execute_cmds(config, input_mods, mstdout, mstderr):
     # Checks are always done - to be sure that e.g. the dependencies
@@ -67,6 +68,7 @@ def execute_cmds(config, input_mods, mstdout, mstderr):
 
 def main_impl(args, mstdout, mstderr):
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
+    configure_logging(config)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):

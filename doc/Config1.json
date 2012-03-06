@@ -4,6 +4,15 @@
             "directories": [
                 "."
             ]
+        },
+	"logging": { 
+	    "stdout": {
+	        "loglevel": "debug"
+	    },
+	    "tracer": {
+	        "loglevel": "debug",
+		"filename": "./rmtoo.log"
+    	    }
         }
     }, 
     "processing": {
