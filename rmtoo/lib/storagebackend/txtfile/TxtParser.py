@@ -1,36 +1,37 @@
-#
-# rmtoo 
-#   Free and Open Source Requirements Management Tool
-#
-#  Text Parser
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+
+ Text Parser
+ 
+ (c) 2011 by flonatel
+
+ For licensing details see COPYING
+'''
 
 from rmtoo.lib.RMTException import RMTException
 
 import re
 
+# pylint: disable=W0232
 class TxtParser:
 
     re_tag_line = re.compile("^([a-zA-Z][a-zA-Z0-9_ ]*:)(.*)$")
-
-    # Checks if the given line is empty or a comment.
+    
     @staticmethod
     def is_comment_or_empty(line):
+        '''Checks if the given line is empty or a comment.'''
         if len(line)==0:
             return True
         if line[0]=='#':
             return True
         return False
 
-    # This takes a record as input and splits it up into two:
-    # o the initial comment
-    # o the rest
     @staticmethod
     def extract_record_comment(sl):
+        '''This takes a record as input and splits it up into two:
+           o the initial comment
+           o the rest'''
         comment = []
         for i in xrange(0, len(sl)):
             if not TxtParser.is_comment_or_empty(sl[i]):
@@ -44,11 +45,11 @@ class TxtParser:
         "when they are re-written with rmtoo-tools. Please consult " \
         "rmtoo-req-format(5) or rmtoo-topic-format(5)"
 
-    # Splits off the first record from the given string list.
-    # The record is returned and the string list is shortened.
-    # Precondition: it can be assumed that len(sl)>0
     @staticmethod
     def split_next_record(sl, rid, lineno, mls):
+        '''Splits off the first record from the given string list.
+           The record is returned and the string list is shortened.
+           Precondition: it can be assumed that len(sl)>0'''
         i = 0
         sl_len = len(sl)
         # The first line must contain the tag.
@@ -57,10 +58,9 @@ class TxtParser:
             raise RMTException(79, "Expected tag line not found",
                                rid, lineno)
 
-        tag = None
         content = []
         comment = []
-        
+
         # Split first line: the Tag is everyting including the ':'
         # The content starts directly after this ':'
         tag = retl.group(1)
@@ -102,12 +102,12 @@ class TxtParser:
 ##        del(sl[0:i])
 ##        return rec
 
-    # This method splits up the given string in seperate entries which
-    # represent a entry record each.
-    # The lineno offset is the line number of the first line given in 
-    # the sl array.
     @staticmethod
     def split_entries(sl, rid, mls, lineno_offset):
+        '''This method splits up the given string in seperate entries which
+           represent a entry record each.
+           The lineno offset is the line number of the first line given in 
+           the sl array.'''
         doc = []
         lineno = lineno_offset
         success = True
@@ -126,10 +126,10 @@ class TxtParser:
                 success = False
         return success, doc
 
-    # Takes a raw comment as input and converts it to a user readable
-    # string.
     @staticmethod
     def extract_comment(cl):
+        '''Takes a raw comment as input and converts it to a user readable
+           string.'''
         s = ""
         for l in cl:
             # Empty lines -> \n
@@ -140,30 +140,9 @@ class TxtParser:
             s += l[1:] + "\n"
         return s
 
-    # Splits up a tag line into tag and rest
-# XXX IS THIS NEEDED ANYMORE????
-    @staticmethod
-    def split_tag_line(line):
-        # Line must not be empty
-        assert(len(line)>0)
-        colon_pos = line.find(':')
-        # There must be a colon
-        assert(colon_pos>=0)
-        rest = line[colon_pos+1:]
-        # Special case: when the rest starts with a white space, delete
-        # those.
-        rest = rest.lstrip()
-        return line[0:colon_pos], rest
-
-    # Extract the contents of the contination lines
-# XXX IS THIS NEEDED ANYMORE?????
-    @staticmethod
-    def extract_continuation_lines(lines):
-        return "".join(lines)
-
-    # Add the 'lost' newlines to the raw string - return string
     @staticmethod
     def add_newlines(sl):
+        '''Add the 'lost' newlines to the raw string - return string.'''
         if len(sl)==0:
             return ""
         return '\n'.join(sl) + '\n'

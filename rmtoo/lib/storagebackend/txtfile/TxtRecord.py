@@ -24,6 +24,7 @@ class TxtRecord(Record):
            TxtRecord from client code.'''
         super(TxtRecord, self).__init__()
         self.tioconfig = tioconfig
+        self.comment_raw = None
 
     # There is the need to have something like 
     # is_usable

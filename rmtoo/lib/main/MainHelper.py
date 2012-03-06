@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Main Helper. 
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -16,6 +16,10 @@ from rmtoo.lib.logging.MemLogStore import MemLogStore
 
 class MainHelper:
     '''Utility class for different aspects of the different mains.'''
+
+    def __init__(self):
+        '''Private constructor only - do not use.'''
+        assert False
 
     @staticmethod
     def main_setup_config(args, log_store):
