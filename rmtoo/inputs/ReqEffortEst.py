@@ -19,13 +19,11 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqEffortEst(ReqTagGeneric):
-    tag = "Effort estimation"
-    ltype = set([InputModuleTypes.reqtag, ])
-
     valid_values = [0, 1, 2, 3, 5, 8, 13, 21, 34]
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Effort estimation",
+                               set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, rid, req):
         '''This attrbute is optional.'''

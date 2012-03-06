@@ -13,11 +13,10 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqConstraints(ReqTagGeneric):
-    tag = "Constraints"
-    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Constraints",
+                               set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, _, req):
         '''This tag is optional.'''

@@ -13,11 +13,10 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqCE3(ReqTagGeneric):
-    tag = "CE3"
-    ltype = set([InputModuleTypes.ctstag, ])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "CE3",
+                               set([InputModuleTypes.ctstag, ]))
 
     def rewrite(self, _, req):
         '''This attribute is optional.'''

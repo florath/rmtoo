@@ -12,11 +12,10 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqHistory(ReqTagGeneric):
-    tag = "History"
-    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "History",
+                               set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, _, req):
         '''This attribute is optional.'''

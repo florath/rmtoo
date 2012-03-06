@@ -20,9 +20,6 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 # something.
 
 class ReqType(ReqTagGeneric):
-    tag = "Type"
-    ltype = set([InputModuleTypes.reqtag, ])
-
     types = [
         [ "master requirement", Requirement.rt_master_requirement ],
         [ "initial requirement", Requirement.rt_initial_requirement ],
@@ -31,7 +28,8 @@ class ReqType(ReqTagGeneric):
         ]
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Type",
+                               set([InputModuleTypes.reqtag, ]))
 
         # Precompute once for all the rewrites
         self.type_keys = []
@@ -49,12 +47,12 @@ class ReqType(ReqTagGeneric):
         # This tag (Type) is mandatory
         self.check_mandatory_tag(rid, req, 18)
 
-        t = req[self.tag].get_content()
+        t = req[self.get_tag()].get_content()
         rt = self.find_type(t)
         if rt == None:
             raise RMTException(19, "%s: invalid type field '%s': "
                                    "must be one of '%s'" %
                                (rid, t, self.type_keys))
 
-        del req[self.tag]
-        return self.tag, rt[1]
+        del req[self.get_tag()]
+        return self.get_tag(), rt[1]

@@ -14,27 +14,26 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
-# A priority is a number between 0 and 1.
-# The stakeholders can name a number between 0 and 10 (only full
-# numbers) which are scaled down to the interval [0..1].
-# If a priority is not given, a priority of 0 is assumed - which in
-# turn means, that the whole subtree has priority 0.
-# The computed priority is the average of all stakeholders numbers.
 
 class ReqPriority(ReqTagGeneric):
-    tag = "Priority"
-    ltype = set([InputModuleTypes.reqtag, ])
+    '''A priority is a number between 0 and 1.
+       The stakeholders can name a number between 0 and 10 (only full
+       numbers) which are scaled down to the interval [0..1].
+       If a priority is not given, a priority of 0 is assumed - which in
+       turn means, that the whole subtree has priority 0.
+       The computed priority is the average of all stakeholders numbers.'''
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Priority",
+                               set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, rid, req):
         # This tag is mandatory - but might be empty
-        if self.tag not in req:
+        if self.get_tag() not in req:
             return "Factor", 0.0
         # Compute the priority.  This is done by adding the simple
         # priorities and afterwars build the average from this.
-        t = req[self.tag]
+        t = req[self.get_tag()]
         lop = t.get_content().split()
         # The (computed) priority
         priority_sum = 0.0
@@ -48,7 +47,7 @@ class ReqPriority(ReqTagGeneric):
                                    % (rid, l))
             # p[0] is the stakeholder
             # p[1] is the given priority
-            if p[0] not in self.config.get_value('requirements.stakeholders'):
+            if p[0] not in self.get_config().get_value('requirements.stakeholders'):
                 raise RMTException(13, "%s: stakeholder '%s' not known"
                                    % (rid, p[0]))
             if p[0] in priority_done:
@@ -67,5 +66,5 @@ class ReqPriority(ReqTagGeneric):
             # Flag stakeholder that he voted already
             priority_done.append(p[0])
 
-        del req[self.tag]
+        del req[self.get_tag()]
         return "Factor", priority_sum / float(num_stakeholders)

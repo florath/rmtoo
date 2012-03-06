@@ -14,17 +14,16 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqDescription(ReqTagGeneric):
-    tag = "Description"
-    ltype = set([InputModuleTypes.ctstag, InputModuleTypes.reqtag])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Description",
+                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
 
     def rewrite(self, rid, req):
         # This tag (Description) is mandatory
         self.check_mandatory_tag(rid, req, 2)
 
-        t = req[self.tag]
+        t = req[self.get_tag()]
         # It must not be too long.
         # (Long text means: split it up!)
         if len(t.get_content()) > 1024:
@@ -35,7 +34,7 @@ class ReqDescription(ReqTagGeneric):
                   % (rid, len(t.get_content())))
             print("+++          Please consider split up this requirement")
         # Copy and delete the original
-        del req[self.tag]
+        del req[self.get_tag()]
 
-        return self.tag, t
+        return self.get_tag(), t
 

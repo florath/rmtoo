@@ -13,11 +13,10 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqNote(ReqTagGeneric):
-    tag = "Note"
-    ltype = set([InputModuleTypes.ctstag, InputModuleTypes.reqtag])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Note",
+                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
 
     def rewrite(self, _, req):
         '''This attribute is optional.'''

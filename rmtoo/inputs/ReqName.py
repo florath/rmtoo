@@ -13,16 +13,12 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqName(ReqTagGeneric):
-    tag = "Name"
-    ltype = set([InputModuleTypes.ctstag, InputModuleTypes.reqtag])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Name",
+                        set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
 
     def rewrite(self, rid, req):
         # This tag (Name) is mandatory
         self.check_mandatory_tag(rid, req, 37)
-
-        t = req[self.tag]
-        del req[self.tag]
-        return self.tag, t
+        return self.get_and_remove(req)

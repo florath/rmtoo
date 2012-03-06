@@ -14,17 +14,16 @@ from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqInventedOn(ReqTagGeneric):
-    tag = "Invented on"
-    ltype = set([InputModuleTypes.ctstag, InputModuleTypes.reqtag])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Invented on",
+                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
 
     def rewrite(self, rid, req):
         # This tag (Invented on) is mandatory
         self.check_mandatory_tag(rid, req, 7)
 
-        t = req[self.tag]
+        t = req[self.get_tag()]
         pt = parse_date(rid, t.get_content())
-        del req[self.tag]
-        return self.tag, pt
+        del req[self.get_tag()]
+        return self.get_tag(), pt

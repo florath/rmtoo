@@ -14,20 +14,19 @@ from rmtoo.lib.ClassType import create_class_type, ClassTypeDetailable
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqClass(ReqTagGeneric):
-    tag = "Class"
-    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config)
+        ReqTagGeneric.__init__(self, config, "Class",
+                               set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, rid, req):
         # This tag (Class) is mandatory optional
         # (which means: if it's not there, there is a default - but
-        # every requirment do own one class)
-        if "Class" not in req:
+        # every requirement do own one class)
+        if self.get_tag() not in req:
             v = ClassTypeDetailable()
         else:
-            t = req['Class'].get_content()
+            t = req[self.get_tag()].get_content()
             v = create_class_type(rid, t)
-            del req['Class']
-        return self.tag, v
+            del req[self.get_tag()]
+        return self.get_tag(), v
