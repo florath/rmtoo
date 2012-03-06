@@ -23,10 +23,10 @@ class TxtRecordEntry(RecordEntry):
            2) possible empty list of continue lines (starting with space)
            3) possible empty list of comment and / or empty lines.'''
         assert(len(se) == 3)
-        self.__setup(se)
         self.content_raw = None
         self.comment_raw = None
         self.tag_raw = None
+        self.__setup(se)
 
     def __setup(self, se):
         '''Store the raw input for possible later output.'''
