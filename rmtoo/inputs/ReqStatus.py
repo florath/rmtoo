@@ -11,10 +11,11 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RequirementStatus import create_requirement_status
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqStatus(ReqTagGeneric):
     tag = "Status"
-    ltype = set(["reqtag", ])
+    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)

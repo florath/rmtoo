@@ -89,7 +89,7 @@ class BaseRMObject(UsableFlag):
         if self.mods == None:
             return
 
-        for modkey, module in self.mods.tagtypes[self.tbhtags].items():
+        for modkey, module in self.mods.get_tagtype(self.tbhtags).items():
             try:
                 tracer.debug("handle modules tag modkey [%s] tagtype [%s]"
                       % (modkey, self.tbhtags))

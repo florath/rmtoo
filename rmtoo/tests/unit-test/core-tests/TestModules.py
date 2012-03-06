@@ -25,15 +25,15 @@ mod_base_dir = "tests/unit-test/core-tests/testdata"
 class TestModules:
 
     def test_positive_01(self):
-        "InputModules.split_directory with '.'"
+        "InputModules._split_directory with '.'"
 
-        d = InputModules.split_directory(".")
+        d = InputModules._split_directory(".")
         assert(d == [])
 
     def test_positive_02(self):
-        "InputModules.split_directory with absolute path"
+        "InputModules._split_directory with absolute path"
 
-        d = InputModules.split_directory("/tmp/this/is/a/path")
+        d = InputModules._split_directory("/tmp/this/is/a/path")
         assert(d == ['/', 'tmp', 'this', 'is', 'a', 'path'])
 
 
@@ -46,7 +46,7 @@ class TestModules:
         "Module test with dependend modules"
         mods = InputModules(os.path.join(mod_base_dir, "modules02"),
                        {}, [], mods_list("modules02", mod_base_dir))
-        mods_name = node_list_to_node_name_list(mods.reqdeps_sorted)
+        mods_name = node_list_to_node_name_list(mods.get_reqdeps_sorted())
         assert(mods_name == ['Module01', 'Module02'])
 
     def test_simple_03(self):

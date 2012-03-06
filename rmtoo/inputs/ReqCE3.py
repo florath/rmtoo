@@ -10,10 +10,11 @@
 '''
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqCE3(ReqTagGeneric):
     tag = "CE3"
-    ltype = set(["ctstag", ])
+    ltype = set([InputModuleTypes.ctstag, ])
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)

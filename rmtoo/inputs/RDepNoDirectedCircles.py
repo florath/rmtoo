@@ -15,6 +15,7 @@ from rmtoo.lib.digraph.StronglyConnectedComponents \
     import check_for_strongly_connected_components
 from rmtoo.lib.digraph.Helper import remove_single_element_lists_name_rest
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepNoDirectedCircles(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
@@ -24,7 +25,7 @@ class RDepNoDirectedCircles(Digraph.Node):
         self.config = config
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     # The rewrite function here does mostly a search for strongly
     # connected components.  It uses the algorithm from Trajan for

@@ -18,6 +18,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.FuncCall import FuncCall
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 import sys
 reload(sys)
@@ -43,7 +44,8 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def __init__(self, content, rid, file_path, mls, mods, config):
         Digraph.Node.__init__(self, rid)
-        BaseRMObject.__init__(self, "reqtag", content, rid, mls, mods,
+        BaseRMObject.__init__(self, InputModuleTypes.reqtag, 
+                              content, rid, mls, mods,
                               config, "requirements", file_path)
 
     def get_prio(self):

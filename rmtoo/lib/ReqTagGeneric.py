@@ -10,6 +10,7 @@
 #
 
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 #
 # This class is the base class of mostly all tags.

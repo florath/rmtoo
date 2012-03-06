@@ -10,10 +10,12 @@
 '''
 
 from rmtoo.lib.BaseRMObject import BaseRMObject
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class Constraint(BaseRMObject):
 
     def __init__(self, content, rid, file_path, mls, mods, config):
-        BaseRMObject.__init__(self, "ctstag", content, rid, mls, mods,
+        BaseRMObject.__init__(self, InputModuleTypes.ctstag, content, 
+                              rid, mls, mods,
                               config, "constraints", file_path)
 

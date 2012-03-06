@@ -11,6 +11,7 @@
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepPriority(Digraph.Node):
     '''This class computes the priority.
@@ -25,7 +26,7 @@ class RDepPriority(Digraph.Node):
         self.config = config
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     # Do a DFS and compute the priority during that way.
     # If there is a node which was already visited, only recompute the

@@ -12,6 +12,7 @@
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 # A priority is a number between 0 and 1.
 # The stakeholders can name a number between 0 and 10 (only full
@@ -22,7 +23,7 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqPriority(ReqTagGeneric):
     tag = "Priority"
-    ltype = set(["reqtag", ])
+    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)

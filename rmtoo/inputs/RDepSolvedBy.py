@@ -10,6 +10,7 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepSolvedBy(Digraph.Node):
     depends_on = []
@@ -20,7 +21,7 @@ class RDepSolvedBy(Digraph.Node):
         self.config = config
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     def rewrite(self, reqset):
         # Solved by: is (historically) seen the default.

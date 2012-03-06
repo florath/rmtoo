@@ -21,8 +21,7 @@ from rmtoo.lib.digraph.TopologicalSort \
     import topological_sort
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
-
-# TODO: refactor: e.g. privatize
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class InputModules(Digraph):
     '''The modules class is also a digraph for the reqdeps modules which 
@@ -31,7 +30,7 @@ class InputModules(Digraph):
        Digraph.nodes list.'''
 
     @staticmethod
-    def split_directory(directory):
+    def _split_directory(directory):
         '''Work with directory components: this is used for directory
            access as well as for module name handling.
            The local directory must be handled in a special way
@@ -52,22 +51,22 @@ class InputModules(Digraph):
                  mod_components=["rmtoo", "inputs"]):
         '''Read in the modules directory.'''
         Digraph.__init__(self)
-        self.config = config
+        self._config = config
+        self.__reqdeps_sorted = None
 
         # The different types of tags
-        self.tagtypes = {}
-        # TODO: add symbolic constants for this
-        self.tagtypes["reqtag"] = {}
-        self.tagtypes["reqdeps"] = {}
-        self.tagtypes["ctstag"] = {}
+        self.__tagtypes = {}
+        self.__tagtypes[InputModuleTypes.reqtag] = {}
+        self.__tagtypes[InputModuleTypes.reqdeps] = {}
+        self.__tagtypes[InputModuleTypes.ctstag] = {}
 
         # Split it up into components
-        dir_components = self.split_directory(directory)
+        dir_components = self._split_directory(directory)
         dir_components.extend(add_dir_components)
 
-        self.load(dir_components, mod_components)
+        self.__load(dir_components, mod_components)
 
-    def load(self, dir_components, mod_components):
+    def __load(self, dir_components, mod_components):
         '''Load the modules.'''
         for filename in sorted(os.listdir(os.path.join(*dir_components))):
             if not filename.endswith(".py"):
@@ -87,46 +86,42 @@ class InputModules(Digraph):
             # Import module
             #print("Loading module '%s' from '%s'" %
             #      (modulename, ".".join(mod_components)))
+            # pylint: disable=W0612
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
 
             # Create object from the module
-            o = eval("module.%s(self.config)" % modulename)
+            o = eval("module.%s(self._config)" % modulename)
             # Query the object itself which type it is
             types = o.get_type_set()
             # Add the objects to the appropriate directory
             for ltype in types:
-                self.tagtypes[ltype][modulename] = o
+                self.__tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
-            if "reqdeps" in types:
+            if InputModuleTypes.reqdeps in types:
                 self.nodes.append(o)
-
-        # Not sure, if this is really needed.
-#        print("***** NEEDED?????????")        
-#        for rd in self.reqdeps:
-#            self.reqdeps[rd].set_modules(self)
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.
-        self.connect_nodes()
+        self.__connect_nodes()
         # Then check, if there are circles in the dependency.
-        self.check_for_circles()
+        self.__check_for_circles()
         # And if this succeeds, do the topological sort.
-        self.topological_sort()
+        self.__topological_sort()
 
-    def connect_nodes(self):
+    def __connect_nodes(self):
         '''Precondition: the depends_on must be set.
            The method connect all the nodes based on this value.'''
-        for mod_name, mod in self.tagtypes["reqdeps"].items():
+        for mod_name, mod in self.__tagtypes[InputModuleTypes.reqdeps].items():
             for n in mod.depends_on:
                 # Connect in both directions
-                if n not in self.tagtypes["reqdeps"]:
+                if n not in self.__tagtypes[InputModuleTypes.reqdeps]:
                     raise RMTException(27, "Module '%s' depends on "
                                        "'%s' - which does not exists"
                                        % (mod_name, n))
-                self.create_edge(mod, self.tagtypes["reqdeps"][n])
+                self.create_edge(mod, self.__tagtypes[InputModuleTypes.reqdeps][n])
 
-    def check_for_circles(self):
+    def __check_for_circles(self):
         '''This does check if there is a directed circle (e.g. an strongly
            connected component) in the modules graph.'''
         scc = strongly_connected_components(self)
@@ -135,10 +130,14 @@ class InputModules(Digraph):
                                "component in the modules graph '%s'"
                                % scc)
 
-    def topological_sort(self):
-        '''Do a topoligical sort on the reqdeps modules.'''
-        self.reqdeps_sorted = topological_sort(self)
+    def __topological_sort(self):
+        '''Do a topological sort on the reqdeps modules.'''
+        self.__reqdeps_sorted = topological_sort(self)
 
     def get_reqdeps_sorted(self):
         '''Return the sorted requirements dependencies.'''
-        return self.reqdeps_sorted
+        return self.__reqdeps_sorted
+    
+    def get_tagtype(self, imtype):
+        '''Return the tags for the given type.'''
+        return self.__tagtypes[imtype]

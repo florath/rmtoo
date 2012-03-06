@@ -11,6 +11,7 @@
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepConstraints(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
@@ -20,7 +21,7 @@ class RDepConstraints(Digraph.Node):
         self.config = config
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     # The constrains value gets a dictionary from the name of the
     # constraints to the object.

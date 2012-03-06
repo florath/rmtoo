@@ -9,6 +9,8 @@
  For licensing details see COPYING
 '''
 
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 class Module01:
     depends_on = ["Module02"]
 
@@ -16,7 +18,7 @@ class Module01:
         pass
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     def set_modules(self, mods):
         pass

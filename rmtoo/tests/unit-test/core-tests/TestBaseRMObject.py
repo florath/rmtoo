@@ -18,7 +18,10 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 class TMods:
 
     def get_type_set(self):
-        return [1, 2, 3]
+        return set([1, 2, 3])
+    
+    def get_tagtype(self, ttype):
+        return {"heinzelmann": self}
 
 class TBRMObj(BaseRMObject):
 
@@ -37,6 +40,8 @@ class TestBaseRMObject:
         "BaseRMObject: check for module which has wrong type"
 
         tbrmo = TBRMObj()
+        
+        print("ERRLOG [%s]" % tbrmo.mls.to_list())
 
         assert(tbrmo.mls.to_list() ==
-               [[90, 'error', 'Wrong module type [mytag] not in [[1, 2, 3]]']])
+               [[90, 'error', 'Wrong module type [mytag] not in [set([1, 2, 3])]']])

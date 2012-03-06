@@ -16,10 +16,11 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqEffortEst(ReqTagGeneric):
     tag = "Effort estimation"
-    ltype = set(["reqtag", ])
+    ltype = set([InputModuleTypes.reqtag, ])
 
     valid_values = [0, 1, 2, 3, 5, 8, 13, 21, 34]
 

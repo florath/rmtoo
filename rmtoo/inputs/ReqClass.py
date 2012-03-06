@@ -11,10 +11,11 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.ClassType import create_class_type, ClassTypeDetailable
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqClass(ReqTagGeneric):
     tag = "Class"
-    ltype = set(["reqtag", ])
+    ltype = set([InputModuleTypes.reqtag, ])
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)

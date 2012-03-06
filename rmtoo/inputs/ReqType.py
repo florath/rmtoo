@@ -12,6 +12,7 @@
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 # Note:
 # The type of the requirement is used in the 'Depends on' checker.
@@ -20,7 +21,7 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 
 class ReqType(ReqTagGeneric):
     tag = "Type"
-    ltype = set(["reqtag", ])
+    ltype = set([InputModuleTypes.reqtag, ])
 
     types = [
         [ "master requirement", Requirement.rt_master_requirement ],

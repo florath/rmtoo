@@ -11,10 +11,11 @@
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.DateUtils import parse_date
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqInventedOn(ReqTagGeneric):
     tag = "Invented on"
-    ltype = set(["reqtag", "ctstag"])
+    ltype = set([InputModuleTypes.ctstag, InputModuleTypes.reqtag])
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config)

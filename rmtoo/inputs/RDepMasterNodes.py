@@ -10,6 +10,7 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepMasterNodes(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
@@ -20,7 +21,7 @@ class RDepMasterNodes(Digraph.Node):
         self.config = config
 
     def get_type_set(self):
-        return set(["reqdeps", ])
+        return set([InputModuleTypes.reqdeps, ])
 
     def rewrite(self, reqset):
         return reqset.find_master_nodes()

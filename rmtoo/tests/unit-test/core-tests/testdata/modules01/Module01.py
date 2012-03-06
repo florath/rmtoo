@@ -9,9 +9,11 @@
  For licensing details see COPYING
 '''
 
+from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 class Module01:
     def __init__(self, config):
         pass
 
     def get_type_set(self):
-        return set(["reqtag", ])
+        return set([InputModuleTypes.reqtag, ])
