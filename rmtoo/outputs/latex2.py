@@ -9,10 +9,6 @@
  For licensing details see COPYING
 '''
 
-import os
-import time
-
-from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
@@ -37,7 +33,9 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Create a graph output object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
+        CreateMakeDependencies.__init__(self)
         self.__ce3set = None
+        self.__fd = None
 
         if not self._config.is_available('req_attributes'):
             self._config.set_value('req_attributes',
@@ -45,17 +43,29 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                         "Invented by", "Status", "Class"])
         self.__level = -1
 
-    def topic_set_pre(self, topics_set):
+    @staticmethod
+    def __strescape(string):
+        '''Escapes a string: hexifies it.'''
+        result = ""
+        for fchar in string:
+            if ord(fchar) >= 32 and ord(fchar) < 127:
+                result += fchar
+            else:
+                result += "%02x" % ord(fchar)
+        return result
+
+    def topic_set_pre(self, _topics_set):
         '''Prepare the output file.'''
         self.__fd = file(self._output_filename, "w")
 
     def __output_latex_one_constraint(self, cname, cnstrt):
         '''Output one constraint.'''
-        cname = latex2.strescape(cname)
+        cname = latex2.__strescape(cname)
         tracer.debug("Output constraint [%s]." % cname)
         self.__fd.write("%% CONSTRAINT '%s'\n" % cname)
 
-        self.__fd.write("\%s{%s}\label{CONSTRAINT%s}\n\\textbf{Description:} %s\n"
+        self.__fd.write("\%s{%s}\label{CONSTRAINT%s}\n"
+                        "\\textbf{Description:} %s\n"
                  % (self.level_names[1],
                     cnstrt.get_value("Name").get_content(),
                     cname, cnstrt.get_value("Description").get_content()))
@@ -95,7 +105,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__level += 1
         self.__fd.write("%% Output topic '%s'\n" % topic.name)
 
-    def topic_post(self, topic):
+    def topic_post(self, _topic):
         '''Cleanup things for topic.'''
         self.__level -= 1
 
@@ -116,12 +126,13 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         return sorted(list_to_sort, key=lambda r: r.id)
 
     def requirement(self, req):
+        '''Write out one requirement.'''
         self.__fd.write("%% REQ '%s'\n" % req.id)
 
         self.__fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
                  % (self.level_names[self.__level + 1],
                     req.get_value("Name").get_content(),
-                    latex2.strescape(req.id),
+                    latex2.__strescape(req.id),
                     req.get_value("Description").get_content()))
 
         if req.is_val_av_and_not_null("Rationale"):
@@ -137,8 +148,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.strescape(d.id),
-                                 latex2.strescape(d.id))
+                                (latex2.__strescape(d.id),
+                                 latex2.__strescape(d.id))
                                 for d in sorted(req.incoming,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
@@ -148,8 +159,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.strescape(d.id),
-                                 latex2.strescape(d.id))
+                                (latex2.__strescape(d.id),
+                                 latex2.__strescape(d.id))
                                 for d in sorted(req.outgoing,
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
@@ -158,27 +169,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt != None and cnstrt.len() > 0:
                 self.__fd.write("\n\\textbf{Constraints:} ")
-
-                #cl = req.get_value("Constraints") # .split()
-
-                cs = []
-                for k, v in sorted(cnstrt.get_values().iteritems()):
-                    #name = v.get_value("Name").get_content()
-                    refid = latex2.strescape(k)
-                    rs = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
+                cstrs = []
+                for key, val in sorted(cnstrt.get_values().iteritems()):
+                    refid = latex2.__strescape(key)
+                    refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                            % (refid, refid)
-                    description = v.description()
+                    description = val.description()
                     if description != None:
-                        rs += " [" + description + "] "
-                    cs.append(rs)
+                        refctr += " [" + description + "] "
+                    cstrs.append(refctr)
 
-                self.__fd.write(", ".join(cs))
+                self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()
 
-        self.__fd.write("\n\\par\n{\small \\begin{center}\\begin{tabular}{rlrlrl}\n")
+        self.__fd.write("\n\\par\n{\small \\begin{center}"
+                        "\\begin{tabular}{rlrlrl}\n")
 
         # Put mostly three things in a line.
         i = 0
@@ -189,7 +197,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write("\\textbf{Priority:} & %4.2f "
                          % (req.get_value("Priority") * 10))
             elif rattr == "Owner":
-                self.__fd.write("\\textbf{Owner:} & %s" % req.get_value("Owner"))
+                self.__fd.write("\\textbf{Owner:} & %s" %
+                                req.get_value("Owner"))
             elif rattr == "Invented on":
                 self.__fd.write("\\textbf{Invented on:} & %s "
                          % req.get_value("Invented on").strftime("%Y-%m-%d"))
@@ -221,46 +230,3 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
-
-### TODO: Ueberlegen
-
-    def set_topics(self, topics):
-        self.topic_set = topics.get(self.topic_name)
-
-    @staticmethod
-    def strescape(string):
-        r = ""
-        for s in string:
-            if ord(s) >= 32 and ord(s) < 127:
-                r += s
-            else:
-                r += "%02x" % ord(s)
-        return r
-
-    # Create Makefile Dependencies
-    def cmad(self, reqscont, ofile):
-        ofile.write("REQS_LATEX2=%s\n" % self.filename)
-        reqset = reqscont.continuum_latest()
-        # For each requirement get the dependency correct
-        reqs_directory = reqscont.config.get_value('requirements.input.directory')
-        ofile.write("%s: " % self.filename)
-        for r in reqset.reqs:
-            ofile.write("%s/%s.req "
-                        % (reqs_directory, reqset.reqs[r].id))
-        ofile.write("\n\t${CALL_RMTOO}\n")
-
-    # The real output
-    # Note that currently the 'reqscont' is not used in case of topics
-    # based output.
-    def output(self, reqscont):
-        # Currently just pass this to the RequirementSet
-        self.output_reqset(reqscont.continuum_latest())
-
-    def output_reqset(self, reqset):
-        # Call the topic to write out everything
-        self.output_latex_topic_set(self.topic_set, reqset.ce3set)
-
-    def output_requirements(self, fd, topic, ce3set):
-        for req in sorted(topic.reqs, key=lambda r: r.id):
-            self.output_requirement(fd, req, topic.level + 1, ce3set)
-
