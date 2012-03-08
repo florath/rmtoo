@@ -1,0 +1,12 @@
+Name: project
+Type: master requirement
+Invented on: 2010-10-09
+Invented by: flonatel
+Owner: development
+Description: \textsl{project} \textbf{must} exists.
+Rationale: The world needs a good, usable and free \textsl{project}.
+Status: not done
+Solved by: req1
+Priority: development:10
+Effort estimation: 5
+Topic: ReqsDocument
