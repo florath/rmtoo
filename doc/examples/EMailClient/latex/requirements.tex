@@ -1,0 +1,77 @@
+\documentclass{report}
+\usepackage{longtable}
+\usepackage{graphicx}
+% When latex aborts with
+%  pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
+%  fstartlink.
+% Comment that line with draft out and inpect the errornous page
+\usepackage[pdfauthor={flonatel},%
+%draft,%
+pdftitle={Requirment for project},%
+pdfsubject={Requirment description for project},%
+pdfkeywords={placeholder for some keywords},%
+pagebackref=true,%
+pdftex, bookmarks=true, colorlinks=true]{hyperref}
+
+\usepackage[a4paper]{geometry}
+
+\usepackage[titles]{tocloft}
+\usepackage{fancyhdr}
+
+\setlength{\cftsubsecnumwidth}{4em}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[L]{\rightmark}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Version \input{../artifacts/reqs-version.txt}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\parindent0em
+
+\begin{document}
+\thispagestyle{empty}
+
+\mbox{}
+
+\vfill
+
+{\LARGE\textbf{Requirements for project}}
+
+\vfill
+
+{\Large\textbf{written by You}}
+
+\vfill
+
+09. October 2010
+
+\vfill
+
+Requirements Version: \input{../artifacts/reqs-version.txt}
+
+\vfill
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\chapter{Status}
+\input{../artifacts/reqsprios.tex}
+
+\input{../artifacts/reqtopics.tex}
+
+\chapter{Statistics}
+\section{Burndown diagram for Sprint}
+\includegraphics{../artifacts/stats_sprint_burndown.pdf}
+
+\section{Burndown diagram for Project}
+\includegraphics{../artifacts/stats_burndown.pdf}
+
+\section{Requirements Count Statistics}
+\includegraphics{../artifacts/stats_reqs_cnt.pdf}
+
+\end{document}
