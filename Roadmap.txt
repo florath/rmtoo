@@ -28,18 +28,8 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v22
 ===
-o Document new configuration
-  (must be done in config man page and mostly all output modules
-   man pages)
-o Document: Understanding that all requirements need at least one edge
-  solved it for me. 
-  -> rmtoo general overview man page.
 o Bug fixes! 
   - Time zone problem when running test cases
-o Man page: 
-  + graph
-  + graph2
-  + EfEU
 o Check requirements document for historic changes.
 
 v23
@@ -51,6 +41,10 @@ o If possible:
 o Check Web-Site for user features / bugs
   - Fix (small) bugs
   - Add feature request requirements
+o Man page: (???)
+  + graph
+  + graph2
+  + EfEU
 
 v24
 ===

@@ -18,7 +18,7 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo 7 2011-11-21 "User Commands" "Requirements Management"
+.TH rmtoo 7 2012-03-08 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH DESCRIPTION
@@ -129,6 +129,47 @@ one set of requirements for internally used project documentation
 and another for an external company which delivers only one small part
 of the whole project.
 .\" The following section was not corrected
+.SH REQUIREMENTS vs DECISIONS
+\fBrmtoo\fR is a requirements management tool in the sense that it is
+possible to mange the typical requirements documents with the help of
+the tool.
+.P
+Strictly speaking most so called requirements are not 'really'
+requirements but 'decisions'.  Example: it is not a requirement that a
+company want to build a EMail Client, it is the decision of the
+marketing department.
+.P
+If a decision is made, more decisions will follow (e.g. which
+operating system to support, how should the GUI looks like, which mail
+protocols to implement).
+.P
+A requirement is something, which is really needed in the sense to
+realize the design decision which were made.  Example: if it is
+decided to use SMTP, there is a \fBmust\fR that the appropriate
+specification (RFC) is implemented.  There is no other way.
+.P
+Two definitions:
+.P
+A \fBrequirement\fR is something which \fBmust\fR be done to implement
+/ realize the previous made decisions.  There is no other way.
+.P
+A \fB(design) decision\fR is something which is chosen from a list of
+alternatives.
+.P
+It is very important to show and vizualize what a design decision and
+what a requirement is.  \fBrmtoo\fR supports this concept.
+.SH TREES OF REQUIREMENTS / DECISIONS
+Requirements and decisions live in trees.  There is always a root
+which comes first (and typically describes the whole project /
+product).
+.P
+All other requirements and decisions depend on this.  This first
+decision entails other decisions / requirements - which agains entail
+futher decisions and requirements.  This is what the so called
+requirements management process is about.
+.P
+In a project all requirements and design decisions are connected in
+some way.  There are no separate ones.
 .SH CONSTRAINTS
 The possible solutions of requirements are mostly always limited:
 Software must run on a specific hardware or operating system, a
@@ -143,12 +184,12 @@ minimal shock resistance of 7G.
 It is possible that a requirement has a constraint and this constraint
 is also inherited from a parent.  In this case it must be individually
 decided how to handle this. Example: A device must be designed which
-has a minimal shock resistance of 7G.  One Bauteil you already
+has a minimal shock resistance of 7G.  One component you already
 designed some time ago can be reused for the new device. The decision
-whether this Bauteil can be used or not depends on it's minimal shock
+whether this component can be used or not depends on it's minimal shock
 resistance: if the minimal shock resistance of the device is lower or
-equal, it is possible to use this Bauteil in the new device.  If it is
-higher, it is not possible to use the Bauteil to build up the new
+equal, it is possible to use this component in the new device.  If it is
+higher, it is not possible to use the component to build up the new
 device.
 .P
 .B rmtoo
@@ -179,7 +220,7 @@ supports automatic constraint checking.
 .B rmtoo-constraints(5)
 - format description for constraints files
 .P
-.B rmtoo-config(5)
+.B rmtoo-config3(5)
 - description of the \fIConfig.py\fR file which is needed for 
 .B rmtoo
 environment definition and output specification.
@@ -248,5 +289,5 @@ version 1.
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2012 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later

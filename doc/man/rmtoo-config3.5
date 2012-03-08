@@ -18,11 +18,9 @@
 .\"
 .\" (c) 2010-2011 by flonatel (sf@flonatel.org)
 .\"
-.TH rmtoo-config 5 2011-11-19 "User Commands" "Requirements Management"
-.SH DEPRECATION WARNING
-\fBThe use of this configuration file format is deprecated and in supported in version 21 only. For new projects use the new configuration file format which is described in rmtoo-config3(5).
+.TH rmtoo-config 5 2012-03-08 "User Commands" "Requirements Management"
 .SH NAME
-rmtoo-config \- requirements management tool configuration file version 2
+rmtoo-config \- requirements management tool configuration file version 3
 .SH DESCRIPTION
 .B rmtoo
 needs some information to work, like input directories and which
@@ -31,14 +29,6 @@ more configuratio files.
 .P
 The format of the configuration files is
 .B JSON.
-.SH HISTORY
-This is the second version of the configuration file format.  This has
-some major advantages over the first version: changing the format to
-JSON enables the possibility to use other programing languages than
-python to be used - esspecially with a possible future GUI in mind.
-Also the new format provides more flexibility: it is now possible to
-output two different documents of the same type (e.g. LaTeX documents)
-for the same topic set in only one rmtoo call.
 .SH EXAMPLE
 The following example is the configuration file for the 
 .B rmtoo
@@ -55,16 +45,20 @@ This is called \fIcustomer_topic\fR.
 .RS
 .nf
 {
-    "constraints": {
-        "search_dirs": [
-            "rmtoo/collection/constraints"
-        ]
-    }, 
     "global": {
         "modules": {
             "directories": [
                 "."
             ]
+        },
+	"logging": { 
+	    "stdout": {
+	        "loglevel": "debug"
+	    },
+	    "tracer": {
+	        "loglevel": "debug",
+		"filename": "./rmtoo.log"
+    	    }
         }
     }, 
     "processing": {
@@ -74,16 +68,10 @@ This is called \fIcustomer_topic\fR.
     }, 
     "requirements": {
         "input": {
-            "commit_interval": {
-                "begin": "FILES", 
-                "end": "FILES"
-            }, 
             "default_language": "en_GB", 
             "dependency_notation": [
                 "Solved by"
-            ], 
-            "directory": "doc/requirements",
-	    "txtfile": { "reqtag": { "max_line_length": 80 } }
+            ]
         }, 
         "inventors": [
             "flonatel"
@@ -96,13 +84,43 @@ This is called \fIcustomer_topic\fR.
         ]
     }, 
     "topics": {
-        "all_topics": {
-            "directory": "doc/topics", 
-            "name": "ReqsDocument", 
+        "ts_common": {
+	    "sources": [
+		[
+		    "git", {
+		        "start_vers": "v9", 
+			"end_vers": "v11", 
+			"requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics" ],
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+		],
+		[
+		    "git", {
+		        "start_vers": "v13", 
+			"end_vers": "v17", 
+			"requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics"] ,
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+		],
+	        [
+		    "filesystem", {
+		        "requirements_dirs": [ "doc/requirements" ],
+			"topics_dirs": [ "doc/topics" ],
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+		] 
+	    ],
             "output": {
                 "graph": [
                     {
                         "output_filename": "artifacts/req-graph1.dot"
+                    }
+                ], 
+                "graph2": [
+                    {
+                        "output_filename": "artifacts/req-graph2.dot"
                     }
                 ], 
                 "html": [
@@ -114,7 +132,12 @@ This is called \fIcustomer_topic\fR.
                 ], 
                 "latex2": [
                     {
-                        "output_filename": "artifacts//reqtopics.tex"
+                        "output_filename": "artifacts/reqtopics.tex"
+                    }
+                ], 
+                "oopricing1": [
+                    {
+                        "output_filename": "artifacts/reqspricing"
                     }
                 ], 
                 "prios": [
@@ -123,36 +146,27 @@ This is called \fIcustomer_topic\fR.
                         "start_date": "2011-04-25"
                     }
                 ], 
+                "stats_burndown1": [
+                    {
+                        "output_filename": "artifacts/stats_burndown.csv", 
+                        "start_date": "2011-04-25"
+                    }
+                ], 
                 "stats_reqs_cnt": [
                     {
                         "output_filename": "artifacts/stats_reqs_cnt.csv"
                     }
                 ], 
-            }
-        "marketing_topics": {
-            "directory": "doc/topics", 
-            "name": "ReqsDocument", 
-            "output": {
-                "graph": [
+                "tlp1": [
                     {
-                        "output_filename": "artifacts/req-graph1-marketing.dot"
+                        "output_filename": "artifacts/reqdeps1.tlp"
                     }
                 ], 
-                "latex2": [
+                "version1": [
                     {
-                        "output_filename": "artifacts/reqtopics-marketing.tex"
+                        "output_filename": "artifacts/reqs-version.txt"
                     }
-                ], 
-            }
-        "customer_topics": {
-            "directory": "doc/customer_topics", 
-            "name": "InitialReq", 
-            "output": {
-                "latex2": [
-                    {
-                        "output_filename": "artifacts/reqtopics-customer.tex"
-                    }
-                ], 
+                ]
             }
         }
     }
@@ -160,19 +174,15 @@ This is called \fIcustomer_topic\fR.
 
 .SH DETAILS
 The file must contain a map (dictionary) as the top level element.
-Valid keys for the top level map are: \fIconstraints\fR, \fIglobal\fR,
-\fIprocessing\fR, \fIrequirements\fR, \fItopics\fR.
-
-.SS constraints
-The only available entry in the \fIconstraints\fR map is
-\fIsearch_dirs\fR.  The value is a list of directories where
-constraints definitions are searched.
+Valid keys for the top level map are: \fIglobal\fR, \fIprocessing\fR,
+\fIrequirements\fR, \fItopics\fR.
 
 .SS global
-The only available entry in the \fIglobal\fR map is
-\fImodules\fR.  The only available entry in the \fImodules\fR map is
-\fIdirectories\fR.  The value must be a list of directories where
-modules are searched.
+There are two possible entries in the \fIglobal\fR map: \fImodules\fR
+and \fIlogging\fR.  The only available entry in the \fImodules\fR map
+is \fIdirectories\fR.  The value must be a list of directories where
+modules are searched.  Details about configuration the logging can be
+found in the section \fBLOGGING DETAILS\fR.
 
 .SS processing
 The only available entry in the \fIprocessing\fR map is
@@ -190,30 +200,30 @@ The configuration parameter \fItopics\fR is a map.  The key is the
 name with which the entry can be referenced.  For a description about
 the details, please see chapter \fBTOPICS DETAILS\fR.
 
-.SH REQUIREMENTS DETAILS
-.SS input
-The input section defines properties of the requirement input format
-handling.  Possible values are \fIcommit_interval\fR,
-\fIdefault_language\fR, \fIdependency_notation\fR, \fIdirectory\fR 
-or \fItxtfile\fR.
+.SH LOGGING DETAILS
+There are two logging streams which can be configured seperately: one
+is the stdout stream and the other is a file.  All log messages are
+sent to both strams.  With the help of the configuration it is
+possible to filter out only those which may be of some interest.
 
-.B commit_interval
-The commit_interval map has two entries: the \fIbegin\fR and the
-\fIend\fR. The values are either git version numbers (md5 sums) or
-tag names. The given interval is used during the run of \fBrmtoo\fR
-and everything e.g. statistics in based (only) on this interval.
-Mostly all operations are done on the second entry.  Additional to the
-git version strings, the special string \fIFILES\fR can be used.  This
-references to the local stored files.
-.P
-When both elements are the same, only this unique version is used.
-When using only files (e.g. during requirements elaboration) an entry
-like ["FILES", "FILES"] makes sense here: then only the locally stored
-files are used.
-.P
-An entry like ["v9", "HEAD"] specifies all checked in files (ignoring
-possible changes of local files) beginning from the tag v9 up to the
-HEAD of git.
+Configuring the stdout, the key must be \fBstdout\fR.  The value must
+be a map with the entry \fBloglevel\fR.  The value of the loglevel
+must be one of 'debug', 'info', 'warn', 'error'.
+
+The configuration for the file logging is very similar.  The key is
+\fBtracer\fR.  It also supports the \fBloglevel\fR entry which is
+described under stdout.  There can be an additional entry called
+\fBfilename\fR which is the name of the file where everything should
+be logged to.
+
+Please note: due to the fact that the logging can be configured,
+reading in the configuration is logged with the default logging
+values. 
+
+.SH REQUIREMENTS DETAILS
+The input section defines properties of the requirement input format
+handling.  Possible values are \fIdefault_language\fR,
+\fIdependency_notation\fR, or \fItxtfile\fR.
 
 .B default_language 
 The paramter \fIdefault_language\fR specifies the language in 
@@ -229,11 +239,6 @@ be specified: \fIDepends on\fR and \fISolved by\fR.  The last one is
 the preferred way of specifying dependencies - but the first is the
 old and default one.  Therefore it is recommended to set the value to
 \fISolved by\fR only.
-
-.B directory
-This is the definition of the set of requirements \fBrmtoo\fR uses.
-It is a dictionary: the entry named \fIdirectory\fR is the name of the
-directory where all the requirements can be found.
 
 .B txtfile
 This defines limitations while parsing the text file. By default for
@@ -252,12 +257,11 @@ Stakeholders can own a and prioritize a requirement.  Tags:
 \fIOwner\fR and \fIPriority\fR.
 
 .SH TOPICS DETAILS
-The topics contain one or more entries: the key is the name of the
-appropriate entry.  The value is a map which can contain the following
-entries: \fIdirectory\fR, \fIname\fR or \fIoutput\fR.
+Each topic contains configuration is a map as a value which the name
+of the topic set as the key.
 
-.B directory
-The directory where the topic structure is defined.
+The map can contain the following entries: \fIsources\fR and
+\fIoutput\fR.
 
 .B name
 The name of the entry node of the topic. It is possible to use the
@@ -265,9 +269,61 @@ same directory but another entry name for additional topic
 specifications.  This makes it possible to easily use a sub-topic for
 a complete set of output documents.
 
+.B sources
+The sources to build up the documents from. Please consult the section
+\fBSOURCES\fR for more details.
+
 .B output
 The output specification. Please consult the section \fBOUTPUT\fR for
 more details.
+
+.SH SOURCES
+The sources are a list of sources from possible different input access
+methods.  Currently there are two input access methods supported:
+files in the filesystem and files from a version control system like
+git.
+
+The key in the map defines the access method name: eihter 'git'
+or 'filesystem'.
+
+For \fBgit\fR the following attributes must be defined:
+\fIstart_vers\fR, \fIend_vers\fR, \fIrequirements_dirs\fR,
+\fItopics_dirs\fR, \fItopic_root_node\fR and \fIconstraints_dirs\fR.
+
+For \fBfilesystem\fR the following attributes must be defined:
+\fIrequirements_dirs\fR, \fItopics_dirs\fR, \fItopic_root_node\fR and
+\fIconstraints_dirs\fR. (Which are the same as for \fIgit\fR - except
+that the version information is missing - which is not needed for
+files in the filesystem.)
+
+The given intervals are concatenated and rmtoo works on all of them.
+Some output modules e.g. statistics are based on the whole input.  Mostly
+all other operations are done on the last entry only.  
+
+.B start_vers, end_vers
+The values are either git version numbers (md5 sums) or tag names. 
+.P
+An entry like "start_vers": "v9" and "end_vers": "HEAD" specifies all
+checked in files (ignoring possible changes of local files) beginning
+from the tag v9 up to the HEAD of git.
+
+.B requirements_dirs
+This contains a list of directories where the requirements are read
+from. 
+
+.B topics_dirs
+A list of directories where the topics are read from.
+
+.B topic_root_node
+The name of the master (first) topic to read.
+
+.B constraints_dirs
+A list of directories where the constraints are read from.
+
+.SS constraints
+The only available entry in the \fIconstraints\fR map is
+\fIsearch_dirs\fR.  The value is a list of directories where
+constraints definitions are searched.
 
 .SH OUTPUT
 The output which 
@@ -308,11 +364,19 @@ documents.
 .SS xml1
 This outputs the requirements as an xml file. See \fBrmtoo-art-xml1(1)\fR 
 for details.
+.SH HISTORY
+This is the third version of the configuration file format.  This has
+some major advantages over the first versions: changing the format to
+JSON enables the possibility to use other programing languages than
+python to be used - especially with a possible future GUI in mind.
+Also the new format provides more flexibility: it is now possible to
+output two different documents of the same type (e.g. LaTeX documents)
+for the same topic set in only one rmtoo call.
 .SH "SEE ALSO"
 .B rmtoo(7)
 - overview of rmtoo including all references to available documentation. 
 .SH AUTHOR
 Written by Andreas Florath (sf@flonatel.org)
 .SH COPYRIGHT
-Copyright \(co 2010-2011 by flonatel (sf@flonatel.org).
+Copyright \(co 2010-2012 by flonatel (sf@flonatel.org).
 License GPLv3+: GNU GPL version 3 or later
