@@ -76,6 +76,7 @@ class TestOutputLaTeX2:
         req = Requirement(None, "TestReq", None, None, None, None)
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")
+        req.values["Type"] = Requirement.rt_requirement
         req.values["Description"] = RecordEntry("Description", "my desc")
         req.values["Status"] = RequirementStatusFinished(
                 None, "rid", "finished:meiner:2011-04-15:4h")

@@ -10,6 +10,7 @@
 '''
 
 import os
+import time
 
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
@@ -22,6 +23,10 @@ class TestBB002:
 
     def test_pos_001(self):
         "BB Hotspot in the middle of the graph 2"
+
+        # This is needed, because the prios use localtime
+        os.environ['TZ'] = 'Europe/Berlin'
+        time.tzset()
 
         def myexit(n):
             pass

@@ -41,6 +41,10 @@ constraints.
 Fixed some problems with historic version handling directly from
 version control system. 
 
+Fixed test cases: now they pass on servers in different timezones
+(Thanks to vakaras).
+
+
 Internal Changes
 ----------------
 

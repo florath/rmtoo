@@ -16,3 +16,4 @@ OUTPUT_HTML====SYMBOLIC-OUTPUT-DIR===/html/ReqsDocument.html ===SYMBOLIC-OUTPUT-
 	${CALL_RMTOO}
 ===SYMBOLIC-OUTPUT-DIR===/reqtopics.tex: ${REQS}
 	${CALL_RMTOO}
+REQS_LATEX2====SYMBOLIC-OUTPUT-DIR===/reqtopics.tex

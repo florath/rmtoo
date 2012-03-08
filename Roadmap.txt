@@ -28,8 +28,6 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v22
 ===
-o Bug fixes! 
-  - Time zone problem when running test cases
 o Check requirements document for historic changes.
 
 v23

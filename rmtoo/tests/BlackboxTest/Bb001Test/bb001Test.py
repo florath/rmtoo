@@ -10,6 +10,7 @@
 '''
 
 import os
+import time
 
 from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
@@ -23,6 +24,9 @@ class TestBB001:
 
     def test_pos_001(self):
         "BB Basic with one requirement - reqs only from git"
+
+        os.environ['TZ'] = 'Europe/Berlin'
+        time.tzset()
 
         def myexit(n):
             pass
