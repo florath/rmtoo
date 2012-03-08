@@ -1,0 +1,12 @@
+Name: Use TCP/IP
+Type: requirement
+Invented on: 2012-03-08
+Invented by: Itl Hack
+Owner: marketing
+Description: The EMail Client \textbf{must} support TCP/IP when
+ delivering mails. 
+Rationale: This is the protocoll with is described in the RFC.
+Status: not done
+Priority: it:10
+Topic: EMailClient
+

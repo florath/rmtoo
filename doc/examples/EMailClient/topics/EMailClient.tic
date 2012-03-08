@@ -1,0 +1,4 @@
+Name: EMail Client
+Text: This is the specification and agile development document for the
+ \textsl{EmailClient}. 
+IncludeRequirements: full

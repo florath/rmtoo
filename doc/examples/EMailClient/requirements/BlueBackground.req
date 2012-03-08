@@ -1,0 +1,11 @@
+Name: Blue Background
+Type: design decision
+Invented on: 2012-03-08
+Invented by: Mustermann
+Owner: marketing
+Description: The EMail Client \textbf{must} provide a light blue
+ backgound. 
+Rationale: I like this color - and I think all user's will.
+Status: not done
+Priority: marketing:10
+Topic: EMailClient

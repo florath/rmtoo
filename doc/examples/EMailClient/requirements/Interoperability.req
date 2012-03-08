@@ -1,0 +1,14 @@
+Name: Interoperability with Existing EMail System
+Type: design decision
+Invented on: 2012-03-08
+Invented by: Itl Hack
+Owner: marketing
+Description: The EMail Client \textbf{must} be interoperable with the
+ current existing email system.
+Rationale: We do not want to create the whole new infrastructure
+ needed to establish a new protocol.  Existing EMail protocols should
+ therefore be used.
+Status: not done
+Priority: marketing:10 it:10
+Solved by: SMTP
+Topic: EMailClient

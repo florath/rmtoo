@@ -1,0 +1,11 @@
+Name: EMail Client
+Type: design decision
+Invented on: 2012-03-08
+Invented by: Mustermann
+Owner: marketing
+Description: A EMail Client \textbf{must} be created.
+Rationale: We want to sell it to make money.
+Status: not done
+Solved by: Linux Interoperability BlueBackground
+Priority: marketing:10
+Topic: EMailClient

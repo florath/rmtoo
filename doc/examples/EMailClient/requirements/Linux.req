@@ -1,0 +1,12 @@
+Name: Linux
+Type: design decision
+Invented on: 2012-03-08
+Invented by: Mustermann
+Owner: marketing
+Description: The EMail Client \textbf{must} run under Linux.
+Rationale: There are millions of Linux users, and we want to sell the
+ EMail Client to them.
+Status: not done
+Priority: marketing:10
+Topic: EMailClient
+

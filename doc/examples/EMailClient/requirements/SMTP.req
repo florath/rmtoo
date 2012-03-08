@@ -1,0 +1,11 @@
+Name: Support SMTP
+Type: design decision
+Invented on: 2012-03-08
+Invented by: Mustermann
+Owner: it
+Description: The EMail Client \textbf{must} support SMPT.
+Rationale: This is the standard protocol for EMail delivery.
+Status: not done
+Priority: it:10 marketing:7
+Solved by: RFC2821
+Topic: EMailClient

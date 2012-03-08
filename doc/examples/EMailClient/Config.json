@@ -6,24 +6,18 @@
     }, 
     "requirements": {
         "input": {
-            "commit_interval": {
-                "begin": "FILES", 
-                "end": "FILES"
-            }, 
             "default_language": "en_GB", 
             "dependency_notation": [
                 "Solved by"
-            ], 
-            "directory": "requirements"
+            ]
         }, 
         "inventors": [
-            "flonatel"
+            "Mustermann",
+	    "Itl Hack"
         ], 
         "stakeholders": [
-            "development", 
-            "management", 
-            "users", 
-            "customers"
+            "marketing", 
+            "it"
         ]
     }, 
     "topics": {
@@ -33,7 +27,7 @@
 		    "filesystem", {
 		        "requirements_dirs": [ "requirements" ],
 			"topics_dirs": [ "topics" ],
-			"topic_root_node": "ReqsDocument",
+			"topic_root_node": "EMailClient",
 			"constraints_dirs": [ "../../../rmtoo/collection/constraints" ] }
 		] 
 	    ],
@@ -57,7 +51,10 @@
                 ], 
                 "latex2": [
                     {
-                        "output_filename": "artifacts/reqtopics.tex"
+                        "output_filename": "artifacts/reqtopics.tex",
+			"req_attributes":
+			    ["Id", "Priority", "Owner", "Invented on",
+			     "Invented by", "Status", "Class", "Type"]
                     }
                 ], 
                 "prios": [

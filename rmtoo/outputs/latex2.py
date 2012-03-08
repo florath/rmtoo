@@ -9,6 +9,7 @@
  For licensing details see COPYING
 '''
 
+from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
@@ -184,6 +185,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()
+        rtype = Requirement.get_type_as_str(req.get_value("Type"))
 
         self.__fd.write("\n\\par\n{\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")
@@ -209,6 +211,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write("\\textbf{Status:} & %s " % status)
             elif rattr == "Class":
                 self.__fd.write("\\textbf{Class:} & %s " % clstr)
+            elif rattr == "Type":
+                self.__fd.write("\\textbf{Type:} & %s " % rtype)
             else:
                 # This only happens when a wrong configuration is supllied.
                 raise RMTException(85, "Wrong latex2 output configuration "
@@ -230,3 +234,4 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
+        self._cmad_file.write("REQS_LATEX2=%s\n" % self._output_filename)

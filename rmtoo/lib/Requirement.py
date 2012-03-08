@@ -39,6 +39,18 @@ class Requirement(Digraph.Node, BaseRMObject):
     rt_initial_requirement = 2
     rt_design_decision = 3
     rt_requirement = 4
+    
+    @staticmethod
+    def get_type_as_str(rtype):
+        if rtype == Requirement.rt_master_requirement:
+            return "requirement"
+        if rtype == Requirement.rt_initial_requirement:
+            return "requirement"        
+        if rtype == Requirement.rt_design_decision:
+            return "design decision"
+        if rtype == Requirement.rt_requirement:
+            return "requirement"
+        assert False
 
     def __init__(self, content, rid, file_path, mls, mods, config):
         Digraph.Node.__init__(self, rid)
