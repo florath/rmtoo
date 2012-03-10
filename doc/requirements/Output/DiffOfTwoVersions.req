@@ -1,0 +1,14 @@
+Name: Output Diff of Two Versions
+Type: design decision
+Invented on: 2012-03-08
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} support document output
+ generation where the differences of two versions are marked.
+Rationale: This feature is often needed: one document is read and will
+ change over time.  To be up to date, you need only read the changes -
+ which should me market / highlighed somehow.
+Status: not done
+Priority: customers:10
+Effort estimation: 13
+Topic: Output

@@ -1,5 +1,5 @@
 Name: Output of Text Document
-Type: requirement
+Type: design decision
 Invented on: 2010-03-12
 Invented by: flonatel
 Owner: development
@@ -11,5 +11,6 @@ Status: finished
 Priority: customers:8
 Effort estimation: 8
 Topic: Output
-Solved by: OutputBaseReqRefs OutputBaseTags OutputConfgbl OutputHTML OutputPDF OutputTextSameBase
+Solved by: OutputBaseReqRefs OutputBaseTags OutputConfgbl OutputHTML 
+ OutputPDF OutputTextSameBase Output/DiffOfTwoVersions
 # Added by rmtoo-normalize-dependencies

@@ -1,5 +1,5 @@
 Name: rmtoo
-Type: master requirement
+Type: design decision
 Invented on: 2010-02-06
 Invented by: flonatel
 Owner: development
@@ -13,4 +13,3 @@ Priority: development:10
 Effort estimation: 5
 Topic: ReqsDocument
 Solved by: Documentation OpenSource Processing Simplicity Testing
-# Added by rmtoo-normalize-dependencies
