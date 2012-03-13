@@ -1,5 +1,5 @@
 Name: Output XML File
-Type: requirement
+Type: design decision
 Invented on: 2010-04-26
 Invented by: flonatel
 Owner: customers

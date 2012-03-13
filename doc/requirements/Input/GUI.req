@@ -1,0 +1,15 @@
+Name: Graphical User Interface
+Type: design decision
+Invented on: 2012-03-13
+Invented by: flonatel
+Description: It \textbf{must} be able to enter all data needed by a
+ project with the help of a GUI.
+Rationale: Not everybody is willing to enter the data inside a text
+ editor. 
+Note: Think about the possibility of also implementing this by means
+ of a browser interface.
+Owner: development
+Status: not done
+Priority: development:10
+Effort estimation: 34
+Topic: Basics

@@ -6,6 +6,6 @@ Owner: development
 Description: \textsl{rmtoo} \textbf{must} support comments in the text
  input files.
 Rationale: Sometimes there is the need to comment tags.
-Status: not done
+Status: finished
 Priority: development:10
 Topic: Basics
