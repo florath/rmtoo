@@ -14,14 +14,16 @@
 User visible changes
 --------------------
 
-Drop concept of one master requirement.
-(This concept maked it impossible to include complete projects into
-other projects: in this case there would be more than one master
-requirement.) 
+Input files can be stored in multiple different directories.
+Input files can be stored in sub-directories. (Input files include
+requirements, topics and constraints.)
 
-Added (optional) logging of current actions / events. 
-This makes it much easier for the user and also the support to find
-problems.
+Drop concept of one master requirement.  This concept maked it
+impossible to include complete projects into other projects: in this
+case there would be more than one master requirement.
+
+Added (optional) logging of current actions / events.  This makes it
+much easier for the user and our support to find problems.
 
 Added cache for reading objects from version control system.  This
 speeds up reading (especially projects with a long history)
@@ -34,9 +36,6 @@ NOTE: configuration prior to this version of rmtoo can not be used any
 more and must be rewritten.  There is a tools with supports you, but
 because of the restructuring it is not possible to do the whole
 process automatically.
-
-Support multiple directories for storing requirements, topics and
-constraints. 
 
 Fixed some problems with historic version handling directly from
 version control system. 

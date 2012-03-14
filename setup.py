@@ -4,7 +4,7 @@ from distutils.core import setup
 import os, sys
 
 package = 'rmtoo'
-version = '21'
+version = '22'
 
 add_data = []
 for dadi in ['rmtoo/tests', 'rmtoo/collection']:

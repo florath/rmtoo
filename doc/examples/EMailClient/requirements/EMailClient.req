@@ -6,6 +6,6 @@ Owner: marketing
 Description: A EMail Client \textbf{must} be created.
 Rationale: We want to sell it to make money.
 Status: not done
-Solved by: Linux Interoperability BlueBackground
+Solved by: Linux Interoperability BlueBackground ManyAccounts
 Priority: marketing:10
 Topic: EMailClient

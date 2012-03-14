@@ -1,0 +1,13 @@
+Name: Many Accounts
+Type: design decision
+Invented on: 2012-03-09
+Invented by: Mustermann
+Owner: marketing
+Description: The EMail Client \textbf{must} support many EMail
+ accounts. 
+Rationale: Many people have more than one EMail account.  The client
+ should support this scenario.
+Status: not done
+Priority: marketing:10
+Topic: EMailClient
+

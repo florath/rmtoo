@@ -7,6 +7,6 @@ Description: The EMail Client \textbf{must} implement RFC 2821.
 Rationale: This is the latest specification of the SMTP.
 Status: not done
 Priority: it:10
-Solved by: TCPIP
+Solved by: CmdHELO
 Topic: EMailClient
 

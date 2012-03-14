@@ -26,12 +26,9 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v22
-===
-o Check requirements document for historic changes.
-
 v23
 ===
+o Think about GUI
 o Add support for Tasks / Issues
   ( -> import from Bugzilla? )
 o If possible:
@@ -51,12 +48,6 @@ o Add changes to presentation
 o More testcases
 o Archive old versions from slashdot to flonatel.de
   (leave only last three versions on slashdot)
-o Major code refactoring is needed
-  - restriction of reqset to topic set
-    + especially the new constraints
-    + Is the 'reqset' needed at all?
-    + How to 'restrict' different views? Have the same objects
-      around with different pointers or copy the objects?
 
 IMPORTANT
 =========
@@ -70,6 +61,8 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o Add tasks to rmtoo
+  (Maybe import possibility from Bugzilla.)
 o Draw overview picture for current Sprint (a la 'Paper' overview with
   'Chosen', 'In Progress' and 'Finished'.
 o Now that the finished date and duration is available, gantt output

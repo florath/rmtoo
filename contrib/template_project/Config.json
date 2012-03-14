@@ -31,10 +31,10 @@
 	    "sources": [
 	        [
 		    "filesystem", {
-		        "requirements_dirs": [ "doc/requirements" ],
-			"topics_dirs": [ "doc/topics" ],
+		        "requirements_dirs": [ "requirements" ],
+			"topics_dirs": [ "topics" ],
 			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
+			"constraints_dirs": [ "constraints" ] }
 		] 
 	    ],
             "output": {

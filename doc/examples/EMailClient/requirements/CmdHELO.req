@@ -1,0 +1,12 @@
+Name: Support HELO command
+Type: requirement
+Invented on: 2012-03-09
+Invented by: Itl Hack
+Owner: marketing
+Description: The EMail Client \textbf{must} support the SMTP HELO
+ command. 
+Rationale: This command is described in section 4.1.1.1 of the RFC. 
+Status: not done
+Priority: it:10
+Topic: EMailClient
+
