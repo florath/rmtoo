@@ -24,24 +24,51 @@ from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 
 class GUI1ViewOnly:
     
+    def selection_received(self, widget, selection_data, data):
+        print("SELECTED [%s] [%s]" % (selection_data, data))
+
+    def on_selection_changed(self, selection, *args):
+        model, paths = selection.get_selected_rows()
+        print("SELECTED A [%s]" % (selection))
+        print("SELECTED B [%s]" % (model))
+        print("SELECTED C [%s]" % (paths))
+    
+    def __add_requirements(self, model, iter, node):
+        liter = model.append(iter)
+        model.set(liter, 0, node.get_id())
+        for n in node.outgoing:
+            self.__add_requirements(model, liter, n)
+    
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 
         model = gtk.TreeStore(gobject.TYPE_STRING)
+
         tree_view = gtk.TreeView(model)
         scrolled_window.add_with_viewport (tree_view)
         tree_view.show()
+
+        selection = tree_view.get_selection()
+        selection.connect('changed', self.on_selection_changed)
 
         for name, continuum in topic_continuum_set.get_continuum_dict().iteritems():
             iter_continuum = model.append(None)
             model.set(iter_continuum, 0, name)
             for commit_id in continuum.get_vcs_commit_ids():
-                print("ADD COMMIT ID [%s]" % commit_id)
                 iter_commit = model.append(iter_continuum)
                 model.set(iter_commit, 0, commit_id)
-#                for 
+                topic_set = continuum.get_topic_set(commit_id.get_commit())
+                req_set = topic_set.get_requirement_set()
+                
+                req_set.find_master_nodes()
+                for master_node in req_set.get_master_nodes():
+                    self.__add_requirements(model, iter_commit, master_node)
+                
+#                for requirement_id in req_set.get_all_requirement_ids():
+#                    iter_requirement = model.append(iter_commit)
+#                    model.set(iter_requirement, 0, requirement_id)
 
 
         # Add some messages to the window
@@ -94,7 +121,7 @@ class GUI1ViewOnly:
         
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("rmtoo - Read only GUI")
-        self.window.set_default_size(300, 300)
+        self.window.set_default_size(800, 600)
         
         # create a vpaned widget and add it to our toplevel window
         hpaned = gtk.HPaned()

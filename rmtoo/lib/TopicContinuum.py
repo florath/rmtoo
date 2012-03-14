@@ -114,6 +114,10 @@ class TopicContinuum(UsableFlag):
     def get_name(self):
         '''Return the name of the topic continuum.'''
         return self.__name
+    
+    def get_topic_set(self, oid):
+        '''Returns the topic set with the given id.'''
+        return self.__topic_sets[oid]
 
     def __str__(self):
         return "TopicContinuum [%s]" % self.__name
