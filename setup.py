@@ -76,8 +76,10 @@ setup(name=package, version=version,
                 # git-python
                 'rmtoo/contrib/git',
                 'rmtoo/contrib/git/repo',
+                'rmtoo/contrib/git/refs',
                 'rmtoo/contrib/git/index',
                 'rmtoo/contrib/git/objects',
+                'rmtoo/contrib/git/objects/submodule',
                 # odf
                 'rmtoo/contrib/odf',
                 ],
