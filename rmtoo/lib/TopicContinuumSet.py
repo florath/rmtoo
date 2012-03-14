@@ -7,7 +7,7 @@
   from the whole time of being.
   The key to access this is the 'name' under 'topic' (in the configuration).
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -65,3 +65,6 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
         FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_post', self)
         tracer.debug("Finished.")
 
+    def get_continuum_dict(self):
+        '''Returns the continuum.'''
+        return self.__continuum 
