@@ -67,7 +67,8 @@ class Git(Interface):
     def __setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
-        for dir_type in ["requirements", "topics", "constraints"]:
+        # TODO: double code - also in FileSystem
+        for dir_type in ["requirements", "topics", "constraints", "testcases"]:
             # pylint: disable=W0141
             dirs = map(self.__abs_path, cfg.get_rvalue(dir_type + "_dirs"))
             self._check_list_of_strings(dir_type, dirs)

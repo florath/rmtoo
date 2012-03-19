@@ -16,7 +16,8 @@ class ReqHistory(ReqTagGeneric):
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "History",
-                               set([InputModuleTypes.reqtag, ]))
+                               set([InputModuleTypes.reqtag, 
+                                    InputModuleTypes.testcase]))
 
     def rewrite(self, _, req):
         '''This attribute is optional.'''

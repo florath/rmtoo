@@ -16,7 +16,8 @@ class ReqNote(ReqTagGeneric):
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Note",
-                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
+                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
+                         InputModuleTypes.testcase]))
 
     def rewrite(self, _, req):
         '''This attribute is optional.'''

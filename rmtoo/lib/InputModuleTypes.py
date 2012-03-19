@@ -12,5 +12,5 @@
 
 from rmtoo.lib.EnumType import EnumType
 
-InputModuleTypes = EnumType('reqtag', 'reqdeps', 'ctstag')
+InputModuleTypes = EnumType('reqtag', 'reqdeps', 'ctstag', 'testcase')
 

@@ -30,7 +30,7 @@ class FileSystem(Interface):
     def __setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
         tracer.debug("Called.")
-        for dir_type in ["requirements", "topics", "constraints"]:
+        for dir_type in ["requirements", "topics", "constraints", "testcases"]:
             dirs = cfg.get_rvalue(dir_type + "_dirs")
             self._check_list_of_strings(dir_type, dirs)
 

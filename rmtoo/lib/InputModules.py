@@ -59,6 +59,7 @@ class InputModules(Digraph):
         self.__tagtypes[InputModuleTypes.reqtag] = {}
         self.__tagtypes[InputModuleTypes.reqdeps] = {}
         self.__tagtypes[InputModuleTypes.ctstag] = {}
+        self.__tagtypes[InputModuleTypes.testcase] = {}
 
         # Split it up into components
         dir_components = self._split_directory(directory)

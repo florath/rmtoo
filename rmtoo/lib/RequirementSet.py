@@ -32,6 +32,7 @@ from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.FuncCall import FuncCall
+from rmtoo.lib.TestCase import TestCase 
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -52,6 +53,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__constraints = {}
         # This holds only ready to use CE3 objects.
         self.__ce3set = CE3Set()
+        # All the test cases for this requirement set
+        self.__testcases = {}
         tracer.debug("Finished.")
 
     def __str__(self):
@@ -208,6 +211,50 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for fileinfo in fileinfos:
             self.__read_one_constraint(fileinfo, input_mods, object_cache)
         tracer.debug("Finished.");
+        
+    # TODO: double feature code with small adaptions only.
+    def __read_one_testcase(self, fileinfo, input_mods, object_cache):
+        '''Read in one testcase from the file info.'''
+        tracer.debug("Called.")
+        # Check for correct filename
+        if not fileinfo.get_filename().endswith(".tec"):
+            tracer.info("skipping file [%s]" % fileinfo.get_filename())
+            return
+        # Handle caching.
+        vcs_id = fileinfo.get_vcs_id()
+        rid = fileinfo.get_filename_sub_part()[:-4]
+        testcase = object_cache.get("TestCase", vcs_id)
+        tracer.info("Reading testcase [%s]" % rid)
+
+        if testcase == None:
+            file_content = fileinfo.get_content()
+            testcase = TestCase(file_content, rid, fileinfo.get_filename(),
+                                self, input_mods, self._config)
+            # Add the requirement to the cache.
+            object_cache.add(vcs_id, "TestCase", testcase)
+
+        self._adapt_usablility(testcase)
+
+        if testcase.is_usable():
+            # Store in the map, so that it is easy to access the
+            # node by id.
+            self._add_testcase(testcase)
+            # Also store it in the digraph's node list for simple
+            # access to the digraph algorithms.
+            # self.nodes.append(req)
+        else:
+            self.error(115, "could not be parsed", testcase.id)
+        tracer.debug("Finished.")
+        
+    def __read_all_testcases(self, input_handler, commit, input_mods,
+                               object_cache):
+        '''Read in all the testcases from the input handler.'''
+        tracer.debug("Called.");
+        fileinfos = input_handler.get_file_infos(commit, "testcases")
+        for fileinfo in fileinfos:
+            self.__read_one_testcase(fileinfo, input_mods, object_cache)
+        tracer.debug("Finished.");
+        
 
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
@@ -216,9 +263,13 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
 
-        tracer.debug("Called; reading constrains.")
+        tracer.debug("Reading constrains.")
         self.__read_all_constraints(input_handler, commit, input_mods,
                                     object_cache)
+        
+        tracer.debug("Reading test cases.")
+        self.__read_all_testcases(input_handler, commit, input_mods,
+                                  object_cache)
 #
 #        if not everythings_fine:
 #            self.error(86, "There were errors in the requirement set - "
@@ -238,6 +289,11 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Add constraint to the internal container.'''
         tracer.debug("Add constraint [%s]." % ctr.get_id())
         self.__constraints[ctr.get_id()] = ctr
+        
+    def _add_testcase(self, testcase):
+        '''Add testcase to the internal container.'''
+        tracer.debug("Add testcase [%s]." % testcase.get_id())
+        self.__testcases[testcase.get_id()] = testcase 
         
     def _add_ce3(self, name, ce3):
         '''Add the ce3 under the given name.'''

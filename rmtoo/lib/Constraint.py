@@ -18,4 +18,3 @@ class Constraint(BaseRMObject):
         BaseRMObject.__init__(self, InputModuleTypes.ctstag, content, 
                               rid, mls, mods,
                               config, "constraints", file_path)
-
