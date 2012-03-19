@@ -45,7 +45,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__used_vcs_id = vcs_commit_ids[-1]
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
-    def __get_reqs_impl_detail(self, requirement_set):
+    def __get_reqs_impl_detail(self, topic_set):
         '''Return the implementation details of the requirements.'''
         prios_impl = []
         prios_detail = []
@@ -53,7 +53,9 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         prios_assigned = []
         prios_finished = []
 
-        for tr in requirement_set.nodes:
+        req_set = topic_set.get_requirement_set()
+        for reqid in req_set.get_all_requirement_ids():
+            tr = req_set.get_requirement(reqid)
             try:
                 status = tr.get_status()
                 if isinstance(status, RequirementStatusNotDone):
@@ -74,11 +76,11 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         return prios_impl, prios_detail, prios_selected, \
             prios_assigned, prios_finished
 
-    def requirement_set_pre(self, requirement_set):
-        '''This is call in the RequirementSet pre-phase.'''
+    def topic_set_pre(self, topic_set):
+        '''This is call in the TopicSet pre-phase.'''
         prios_impl, prios_detail, prios_selected, \
             prios_assigned, prios_finished = \
-            self.__get_reqs_impl_detail(requirement_set)
+            self.__get_reqs_impl_detail(topic_set)
 
         # Sort them after prio
         sprios_impl = sorted(prios_impl, key=operator.itemgetter(0, 1),
@@ -114,9 +116,9 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                        
             s = 0
             for p in l:
-                if requirement_set.get_requirement(p[1]).\
+                if topic_set.get_requirement_set().get_requirement(p[1]).\
                     get_value("Effort estimation") != None:
-                    efest = requirement_set.get_requirement(p[1]).\
+                    efest = topic_set.get_requirement_set().get_requirement(p[1]).\
                         get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)
@@ -186,7 +188,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             sum_open = 0
             for sp in [simpl, sselected]:
                 for p in sp:
-                    sum_open += requirement_set.get_requirement(p[1]).\
+                    sum_open += topic_set.get_requirement_set().get_requirement(p[1]).\
                         get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
@@ -231,7 +233,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
                 # Estimated End Date
 
-                rv = Statistics.get_units(requirement_set,
+                rv = Statistics.get_units(topic_set.get_requirement_set(),
                                           self._start_date, self._end_date)
                 x = list(i for i in xrange(0, len(rv)))
                 y = list(x[0] + x[1] for x in rv)
