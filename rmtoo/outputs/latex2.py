@@ -229,8 +229,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                                % (refid, refid)
                 tcout.append(refctr)
 
-                self.__fd.write(", ".join(tcout))
-                self.__fd.write("\n")
+            self.__fd.write(", ".join(tcout))
+            self.__fd.write("\n")
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()
