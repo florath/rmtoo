@@ -304,9 +304,11 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
            one of the topics in the topic set.'''
+        tracer.debug("Called.")
         restricted_reqs = RequirementSet(self._config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
+                tracer.debug("Restricting requirement [%s]" % req.get_id())
                 # Add to the internal map
                 restricted_reqs._add_requirement(req)
                 # Add to the common digraph structure
@@ -315,11 +317,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 restricted_reqs._add_ce3(req.get_id(), 
                                          self.__ce3set.get(req.get_id()))
                 ctrs = req.get_value("Constraints")
-                if ctrs == None:
-                    # No constraints for this requirement
-                    continue
-                for cval in ctrs:
-                    restricted_reqs._add_constraint(self.__constraints[cval])
+                if ctrs != None:
+                    for cval in ctrs:
+                        restricted_reqs._add_constraint(self.__constraints[cval])
+                    
+                # Add testcases
+                testcases = req.get_value("Test Cases")
+                if testcases != None:
+                    tracer.debug("Restricting testcases [%s]" % testcases) 
+                    for testcase in testcases:
+                        restricted_reqs._add_testcase(self.__testcases[testcase])
 
         return restricted_reqs
 
@@ -569,8 +576,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Return the constraints.'''
         return self.__constraints
 
+    def get_testcases(self):
+        '''Return the testcases.'''
+        return self.__testcases
+
     # Note: the following methods are of no use any more,
-    # because the 'Solved by' will be gone in nead future.
+    # because the 'Solved by' will be gone in near future.
 
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''
