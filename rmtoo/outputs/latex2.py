@@ -104,6 +104,10 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     cnstrt.get_value("Name").get_content(),
                     cname, cnstrt.get_value("Description").get_content()))
 
+        if cnstrt.is_val_av_and_not_null("Expected Result"):
+            self.__fd.write("\n\\textbf{Expected Result:} %s\n"
+                     % cnstrt.get_value("Expected Result").get_content())
+
         if cnstrt.is_val_av_and_not_null("Rationale"):
             self.__fd.write("\n\\textbf{Rationale:} %s\n"
                      % cnstrt.get_value("Rationale").get_content())
