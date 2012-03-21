@@ -17,7 +17,8 @@ class ReqOwner(ReqTagGeneric):
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Owner",
-                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag]))
+                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
+                         InputModuleTypes.testcase]))
 
     def rewrite(self, rid, req):
         # This tag (Owner) is mandatory

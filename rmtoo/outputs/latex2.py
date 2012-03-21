@@ -11,6 +11,7 @@
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraints import Constraints
+from rmtoo.lib.TestCases import TestCases
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
@@ -90,6 +91,42 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         for cname, cnstrt in sorted(constraints.iteritems()):
             self.__output_latex_one_constraint(cname, cnstrt)
 
+    # TODO: Code duplication from constraints
+    def __output_latex_one_testcase(self, cname, cnstrt):
+        '''Output one testcase.'''
+        cname = latex2.__strescape(cname)
+        tracer.debug("Output testcase [%s]." % cname)
+        self.__fd.write("%% TEST-CASE '%s'\n" % cname)
+
+        self.__fd.write("\%s{%s}\label{TESTCASE%s}\n"
+                        "\\textbf{Description:} %s\n"
+                 % (self.level_names[1],
+                    cnstrt.get_value("Name").get_content(),
+                    cname, cnstrt.get_value("Description").get_content()))
+
+        if cnstrt.is_val_av_and_not_null("Expected Result"):
+            self.__fd.write("\n\\textbf{Expected Result:} %s\n"
+                     % cnstrt.get_value("Expected Result").get_content())
+
+        if cnstrt.is_val_av_and_not_null("Rationale"):
+            self.__fd.write("\n\\textbf{Rationale:} %s\n"
+                     % cnstrt.get_value("Rationale").get_content())
+
+        if cnstrt.is_val_av_and_not_null("Note"):
+            self.__fd.write("\n\\textbf{Note:} %s\n"
+                     % cnstrt.get_value("Note").get_content())
+        tracer.debug("Finished.")
+
+    def __output_latex_testcases(self, testcases):
+        '''Write out all testcases for the topic set.'''
+        if len(testcases) == 0:
+            tracer.debug("No testcases to output.")
+            return
+
+        self.__fd.write("\\%s{Test Cases}\n" % self.level_names[0])
+        for cname, cnstrt in sorted(testcases.iteritems()):
+            self.__output_latex_one_testcase(cname, cnstrt)
+
     def topic_set_post(self, topic_set):
         '''Print out the constraints and clean up file.'''
         tracer.debug("Called; output constraints.")
@@ -97,6 +134,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             assert False
         constraints = Constraints.collect(topic_set)
         self.__output_latex_constraints(constraints)
+        testcases = TestCases.collect(topic_set)
+        self.__output_latex_testcases(testcases)
         tracer.debug("Clean up file.")
         self.__fd.close()
         tracer.debug("Finished.")
@@ -121,6 +160,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def requirement_set_pre(self, rset):
         '''Prepare the requirements set output.'''
         self.__ce3set = rset.get_ce3set()
+        self.__testcases = rset.get_testcases()
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
@@ -182,6 +222,19 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
+
+        testcases = req.get_value("Test Cases")
+        if testcases != None:
+            self.__fd.write("\n\\textbf{Test Cases:} ")
+            tcout = []
+            for testcase in testcases:
+                refid = latex2.__strescape(testcase)
+                refctr = "\\ref{TESTCASE%s} \\nameref{TESTCASE%s}" \
+                               % (refid, refid)
+                tcout.append(refctr)
+
+            self.__fd.write(", ".join(tcout))
+            self.__fd.write("\n")
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()

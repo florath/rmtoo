@@ -32,6 +32,7 @@ from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.FuncCall import FuncCall
+from rmtoo.lib.TestCase import TestCase 
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -52,6 +53,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__constraints = {}
         # This holds only ready to use CE3 objects.
         self.__ce3set = CE3Set()
+        # All the test cases for this requirement set
+        self.__testcases = {}
         tracer.debug("Finished.")
 
     def __str__(self):
@@ -208,6 +211,50 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         for fileinfo in fileinfos:
             self.__read_one_constraint(fileinfo, input_mods, object_cache)
         tracer.debug("Finished.");
+        
+    # TODO: double feature code with small adaptions only.
+    def __read_one_testcase(self, fileinfo, input_mods, object_cache):
+        '''Read in one testcase from the file info.'''
+        tracer.debug("Called.")
+        # Check for correct filename
+        if not fileinfo.get_filename().endswith(".tec"):
+            tracer.info("skipping file [%s]" % fileinfo.get_filename())
+            return
+        # Handle caching.
+        vcs_id = fileinfo.get_vcs_id()
+        rid = fileinfo.get_filename_sub_part()[:-4]
+        testcase = object_cache.get("TestCase", vcs_id)
+        tracer.info("Reading testcase [%s]" % rid)
+
+        if testcase == None:
+            file_content = fileinfo.get_content()
+            testcase = TestCase(file_content, rid, fileinfo.get_filename(),
+                                self, input_mods, self._config)
+            # Add the requirement to the cache.
+            object_cache.add(vcs_id, "TestCase", testcase)
+
+        self._adapt_usablility(testcase)
+
+        if testcase.is_usable():
+            # Store in the map, so that it is easy to access the
+            # node by id.
+            self._add_testcase(testcase)
+            # Also store it in the digraph's node list for simple
+            # access to the digraph algorithms.
+            # self.nodes.append(req)
+        else:
+            self.error(115, "could not be parsed", testcase.id)
+        tracer.debug("Finished.")
+        
+    def __read_all_testcases(self, input_handler, commit, input_mods,
+                               object_cache):
+        '''Read in all the testcases from the input handler.'''
+        tracer.debug("Called.");
+        fileinfos = input_handler.get_file_infos(commit, "testcases")
+        for fileinfo in fileinfos:
+            self.__read_one_testcase(fileinfo, input_mods, object_cache)
+        tracer.debug("Finished.");
+        
 
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
@@ -216,9 +263,13 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         self.__read_all_requirements(input_handler, commit, input_mods,
                                      object_cache)
 
-        tracer.debug("Called; reading constrains.")
+        tracer.debug("Reading constrains.")
         self.__read_all_constraints(input_handler, commit, input_mods,
                                     object_cache)
+        
+        tracer.debug("Reading test cases.")
+        self.__read_all_testcases(input_handler, commit, input_mods,
+                                  object_cache)
 #
 #        if not everythings_fine:
 #            self.error(86, "There were errors in the requirement set - "
@@ -239,6 +290,11 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("Add constraint [%s]." % ctr.get_id())
         self.__constraints[ctr.get_id()] = ctr
         
+    def _add_testcase(self, testcase):
+        '''Add testcase to the internal container.'''
+        tracer.debug("Add testcase [%s]." % testcase.get_id())
+        self.__testcases[testcase.get_id()] = testcase 
+        
     def _add_ce3(self, name, ce3):
         '''Add the ce3 under the given name.'''
         tracer.debug("Add CE3 for requirement [%s]" % name)
@@ -248,9 +304,11 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
            one of the topics in the topic set.'''
+        tracer.debug("Called.")
         restricted_reqs = RequirementSet(self._config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
+                tracer.debug("Restricting requirement [%s]" % req.get_id())
                 # Add to the internal map
                 restricted_reqs._add_requirement(req)
                 # Add to the common digraph structure
@@ -259,11 +317,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
                 restricted_reqs._add_ce3(req.get_id(), 
                                          self.__ce3set.get(req.get_id()))
                 ctrs = req.get_value("Constraints")
-                if ctrs == None:
-                    # No constraints for this requirement
-                    continue
-                for cval in ctrs:
-                    restricted_reqs._add_constraint(self.__constraints[cval])
+                if ctrs != None:
+                    for cval in ctrs:
+                        restricted_reqs._add_constraint(self.__constraints[cval])
+                    
+                # Add testcases
+                testcases = req.get_value("Test Cases")
+                if testcases != None:
+                    tracer.debug("Restricting testcases [%s]" % testcases) 
+                    for testcase in testcases:
+                        restricted_reqs._add_testcase(self.__testcases[testcase])
 
         return restricted_reqs
 
@@ -513,8 +576,12 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         '''Return the constraints.'''
         return self.__constraints
 
+    def get_testcases(self):
+        '''Return the testcases.'''
+        return self.__testcases
+
     # Note: the following methods are of no use any more,
-    # because the 'Solved by' will be gone in nead future.
+    # because the 'Solved by' will be gone in near future.
 
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''

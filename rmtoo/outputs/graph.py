@@ -99,7 +99,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             elif isinstance(req_status, RequirementStatusAssigned):
                 nodeparam.append("fontcolor=blue")
 
-            label = 'label="%s' % req.id
+            label = 'label="%s' % req.id.replace("/", "\\n/")
 
             if get_conf_attr("Priority"):
                 label += "\\n[%4.2f]" % (req.get_value("Priority") * 10)

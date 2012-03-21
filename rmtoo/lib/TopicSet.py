@@ -93,7 +93,7 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         return self.__topic
 
     def get_complete_requirement_set_count(self):
-        '''Return the number of requirments in this RequirementSet.  This
+        '''Return the number of requirements in this RequirementSet.  This
            is e.g. needed for statistics.'''
         return self.__complete_requirement_set.get_requirements_cnt()
 
