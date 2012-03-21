@@ -21,33 +21,38 @@ from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
+from rmtoo.lib.TopicContinuum import TopicContinuum
 
 class RmtooTreeModel(gtk.GenericTreeModel):
-    
-    column_names = ['Name', 'Size', 'Mode', 'Last Changed']
-    
-    
+
+    column_names = ['Element - Commit - Requirement']
+
+
     def __init__(self, topic_continuum_set):
         gtk.GenericTreeModel.__init__(self)
         self.__topic_continuum_set = topic_continuum_set
-        
+
     def get_column_names(self):
-        return self.column_names[:]        
-        
+        return self.column_names[:]
 
     def on_get_flags(self):
-        assert False
-        return gtk.TREE_MODEL_LIST_ONLY|gtk.TREE_MODEL_ITERS_PERSIST
+        '''The model is a real tree and is not persistence against changes.'''
+        return 0
 
     def on_get_n_columns(self):
+        return 1
         assert False
         return len(self.column_types)
 
     def on_get_column_type(self, n):
+        return [str]
         assert False
         return self.column_types[n]
 
     def on_get_iter(self, path):
+        print("PATH [%s]" % path)
+        if path[0] == 0:
+            return self.__topic_continuum_set.get_continuum_dict().iteritems()
         assert False
         return self.files[path[0]]
 
@@ -56,6 +61,9 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return self.files.index(rowref)
 
     def on_get_value(self, rowref, column):
+
+        print("ON GET VALUE [%s] [%s]" % (rowref, column))
+
         assert False
         fname = os.path.join(self.dirname, rowref)
         try:
@@ -77,9 +85,16 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return time.ctime(filestat.st_mtime)
 
     def on_iter_next(self, rowref):
+        print("ON ITER NEXT [%s]" % rowref)
+
+        try:
+            return rowref.next()
+        except StopIteration:
+            return None
+
         assert False
         try:
-            i = self.files.index(rowref)+1
+            i = self.files.index(rowref) + 1
             return self.files[i]
         except IndexError:
             return None
@@ -91,6 +106,16 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return self.files[0]
 
     def on_iter_has_child(self, rowref):
+        print("ON ITER HAS CHILD [%s]" % rowref)
+        print("ON ITER HAS CHILD [%s]" % dir(rowref))
+
+        key, value = rowref.next()
+        print("ON ITER HAS CHILD [%s] [%s]" % (key, value))
+        print("ON ITER HAS CHILD [%s]" % type(value))
+
+        if isinstance(value, TopicContinuum):
+            return len(value.get_vcs_commit_ids()) > 0
+
         assert False
         return False
 
@@ -114,19 +139,19 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return None
 
 class GUI1ViewOnly:
-    
+
     def on_selection_changed(self, selection, *args):
         model, paths = selection.get_selected_rows()
         print("SELECTED A [%s]" % (selection))
         print("SELECTED B [%s]" % (model))
         print("SELECTED C [%s]" % (paths))
-    
+
     def __add_requirements(self, model, iter, node):
         liter = model.append(iter)
         model.set(liter, 0, node.get_id())
         for n in node.outgoing:
             self.__add_requirements(model, liter, n)
-    
+
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
         scrolled_window = gtk.ScrolledWindow()
@@ -145,7 +170,7 @@ class GUI1ViewOnly:
 
         # create the TreeView
         self.treeview = gtk.TreeView()
- 
+
         # create the TreeViewColumns to display the data
         column_names = rmtoo_model.get_column_names()
         self.tvcolumn = [None] * len(column_names)
@@ -161,9 +186,9 @@ class GUI1ViewOnly:
             if n == 1:
                 cell.set_property('xalign', 1.0)
             self.tvcolumn[n] = gtk.TreeViewColumn(column_names[n],
-                                                  cell, text=n+1)
+                                                  cell, text=n + 1)
             self.treeview.append_column(self.tvcolumn[n])
-            
+
         scrolled_window.add_with_viewport (self.treeview)
         self.treeview.set_model(rmtoo_model)
         self.treeview.show()
@@ -188,7 +213,7 @@ class GUI1ViewOnly:
 #        tree_view.append_column(column)
 
         return scrolled_window
-   
+
     # Add some text to our text widget - this is a callback that is invoked
     # when our window is realized. We could also force our window to be
     # realized with GtkWidget.realize, but it would have to be part of a
@@ -215,7 +240,7 @@ class GUI1ViewOnly:
         self.insert_text(buffer)
         scrolled_window.show_all()
         return scrolled_window
-   
+
 
     def __init__(self, config, input_mods, _mstdout, mstderr):
         try:
@@ -224,11 +249,11 @@ class GUI1ViewOnly:
             mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
             return
-        
+
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("rmtoo - Read only GUI")
         self.window.set_default_size(800, 600)
-        
+
         # create a vpaned widget and add it to our toplevel window
         hpaned = gtk.HPaned()
         self.window.add(hpaned)
@@ -242,16 +267,16 @@ class GUI1ViewOnly:
         text = self.create_text()
         hpaned.add2(text)
         text.show()
-        
+
         self.window.show()
 
     def main(self):
         gtk.main()
-        
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     view_only = GUI1ViewOnly(config, input_mods, _mstdout, mstderr)
     view_only.main()
-        
+
 def main_impl(args, mstdout, mstderr):
     '''The real implementation of the main function:
        o get config
