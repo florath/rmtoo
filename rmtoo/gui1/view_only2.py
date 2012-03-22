@@ -283,12 +283,13 @@ class GUI1ViewOnly:
         # create a vpaned widget and add it to our toplevel window
         hpaned = gtk.HPaned()
         self.window.add(hpaned)
+        hpaned.set_position(200)
         hpaned.show()
 
         # Now create the contents of the two halves of the window
-        list = self.create_tree(topic_continuum_set)
-        hpaned.add1(list)
-        list.show()
+        tree = self.create_tree(topic_continuum_set)
+        hpaned.add1(tree)
+        tree.show()
 
         text = self.create_text()
         hpaned.add2(text)
