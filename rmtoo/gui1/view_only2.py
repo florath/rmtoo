@@ -23,7 +23,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.TopicContinuum import TopicContinuum
 
-class GTMInterator:
+class GTMIterator:
 
     def __init__(self, iterator):
         self.__iterator = iterator
@@ -31,28 +31,20 @@ class GTMInterator:
         self.next()
 
     def next(self):
-        print("++ ITER NEXT() CALLED")
-        if self.__current == None:
-            print("   WAS None")
-        else:
-            print("   WAS [%s] [%s]" % self.__current)
         try:
             self.__current = self.__iterator.next()
         except StopIteration:
-            print("   STOP ITERATION")
             return None
-        print("++ ITER NEXT() CALLED; NOW [%s] [%s]" % self.__current)
         return self.__current
 
     def current(self):
-        print("++ ITER CURRENT() CALLED")
         return self.__current
 
 class RmtooTreeModel(gtk.GenericTreeModel):
 
     column_names = ['Requirement', ]
-    column_types = (gtk.gdk.Pixbuf, str,)
-#    column_types = (str,)
+#    column_types = (gtk.gdk.Pixbuf, str,)
+    column_types = (str,)
 
     def __init__(self, topic_continuum_set):
         gtk.GenericTreeModel.__init__(self)
@@ -74,7 +66,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
     def on_get_iter(self, path):
         print("NEW ITER PATH [%s]" % path)
         if path[0] == 0:
-            return GTMInterator(self.__topic_continuum_set.get_continuum_dict().iteritems())
+            return GTMIterator(self.__topic_continuum_set.get_continuum_dict().iteritems())
         assert False
         return self.files[path[0]]
 
@@ -85,11 +77,6 @@ class RmtooTreeModel(gtk.GenericTreeModel):
     def on_get_value(self, rowref, column):
 
         print("GET VALUE COL [%s]" % column)
-
-        if column == 0:
-            return u"Was Soll Denn Das"
-
-        assert column == 1
 
         key, value = rowref.current()
 
@@ -213,19 +200,19 @@ class GUI1ViewOnly:
         # create the TreeViewColumns to display the data
         column_names = rmtoo_model.get_column_names()
         self.tvcolumn = [None] * len(column_names)
-        cellpb = gtk.CellRendererPixbuf()
-        self.tvcolumn[0] = gtk.TreeViewColumn(column_names[0],
-                                              cellpb, pixbuf=0)
-        cell = gtk.CellRendererText()
-        self.tvcolumn[0].pack_start(cell, False)
-        self.tvcolumn[0].add_attribute(cell, 'text', 1)
-        self.treeview.append_column(self.tvcolumn[0])
-        for n in range(1, len(column_names)):
+#        cellpb = gtk.CellRendererPixbuf()
+#        self.tvcolumn[0] = gtk.TreeViewColumn(column_names[0],
+#                                              cellpb, pixbuf=0)
+#        cell = gtk.CellRendererText()
+#        self.tvcolumn[0].pack_start(cell, False)
+#        self.tvcolumn[0].add_attribute(cell, 'text', 1)
+#        self.treeview.append_column(self.tvcolumn[0])
+        for n in range(0, len(column_names)):
             cell = gtk.CellRendererText()
-            if n == 1:
-                cell.set_property('xalign', 1.0)
+#            if n == 0:
+#                cell.set_property('xalign', 1.0)
             self.tvcolumn[n] = gtk.TreeViewColumn(column_names[n],
-                                                  cell, text=n + 1)
+                                                  cell, text=n)
             self.treeview.append_column(self.tvcolumn[n])
 
         scrolled_window.add_with_viewport (self.treeview)
