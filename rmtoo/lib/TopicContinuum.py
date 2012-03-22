@@ -23,6 +23,7 @@ from rmtoo.lib.vcs.Factory import Factory
 from rmtoo.lib.TopicSetWCI import TopicSetWCI
 from rmtoo.lib.vcs.CommitInfo import CommitInfo
 from rmtoo.lib.FuncCall import FuncCall
+from rmtoo.lib.GenIterator import GenIterator
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -121,3 +122,28 @@ class TopicContinuum(UsableFlag):
 
     def __str__(self):
         return "TopicContinuum [%s]" % self.__name
+
+
+class TopicContinuumIterator(GenIterator):
+    '''This class provides an iterator interface for all the subelements
+       of a topic continuum.'''
+
+    def __init__(self, topic_continuum):
+        '''Initialize the iterator.'''
+        self.__topic_continuum = topic_continuum
+        GenIterator.__init__(
+            self, topic_continuum.get_vcs_commit_ids().__iter__())
+        
+    def current(self):
+        '''This is somewhat more complicated, because the list just contains
+           the ids which must be looked-up first in the dictionary.'''
+        print("MCURRENT [%s]" % self._current)
+        return self.__topic_continuum.get_topic_set(self._current)
+
+    def next(self):
+        GenIterator._next(self)
+        return self.current()
+    
+    def has_child(self):
+        '''If the current element has a child, true is returned.'''
+        return len(self.current().get_requirement_set().outgoing)>0

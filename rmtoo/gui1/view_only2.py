@@ -20,13 +20,18 @@ import sys
 from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
+from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, TopicContinuumSetIterator
 from rmtoo.lib.TopicContinuum import TopicContinuum
+
+def advance(iter, n):
+    for i in xrange(0, n):
+        iter.next()
 
 class GTMIterator:
 
-    def __init__(self, iterator):
+    def __init__(self, iterator, type_name):
         self.__iterator = iterator
+        self.__type_name = type_name
         self.__current = None
         self.next()
 
@@ -39,6 +44,19 @@ class GTMIterator:
 
     def current(self):
         return self.__current
+    
+    def type_name(self):
+        return self.__type_name
+    
+    def inc(self, n):
+        for i in xrange(0, n):
+            self.next()
+            
+    def __str__(self):
+        return "GTMIterator [%s] [%s]" % (self.__type_name, self.__iterator)
+    
+    def __repr__(self):
+        return self.__str__()
 
 class RmtooTreeModel(gtk.GenericTreeModel):
 
@@ -66,7 +84,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
     def on_get_iter(self, path):
         print("NEW ITER PATH [%s]" % path)
         if path[0] == 0:
-            return GTMIterator(self.__topic_continuum_set.get_continuum_dict().iteritems())
+            return TopicContinuumSetIterator(self.__topic_continuum_set)
         assert False
         return self.files[path[0]]
 
@@ -110,7 +128,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         print("ON ITER NEXT [%s]" % rowref)
 
         try:
-            print("CURRENT2 [%s] [%s]" % rowref.current())
+#            print("CURRENT2 [%s] [%s]" % rowref.current())
             return rowref.next()
         except StopIteration:
             return None
@@ -123,21 +141,38 @@ class RmtooTreeModel(gtk.GenericTreeModel):
             return None
 
     def on_iter_children(self, rowref):
+        print("On ITER CHILDERN [%s]" % rowref)
+        
+        if rowref!=None:
+            return rowref.iter_children()
+            
+#            print("ITER TYPE [%s]" % rowref.type_name())
+#            if rowref.type_name() == "topic_continuum":
+#                tcsetname, tcset = rowref.current()
+#                return GTMIterator(
+#                        tcset.get_vcs_commit_ids().__iter__(), "topics")
+        
         assert False
         if rowref:
             return None
         return self.files[0]
 
     def on_iter_has_child(self, rowref):
-        print("ON ITER HAS CHILD [%s]" % rowref)
-        print("ON ITER HAS CHILD [%s]" % dir(rowref))
+#        print("ON ITER HAS CHILD [%s]" % rowref)
+#        print("ON ITER HAS CHILD [%s]" % dir(rowref))
+#
+#        key, value = rowref.current()
+#        print("ON ITER HAS CHILD [%s] [%s]" % (key, value))
+#        print("ON ITER HAS CHILD [%s]" % type(value))
 
-        key, value = rowref.current()
-        print("ON ITER HAS CHILD [%s] [%s]" % (key, value))
-        print("ON ITER HAS CHILD [%s]" % type(value))
+        return rowref.has_child()
 
-        if isinstance(value, TopicContinuum):
+        type_name = rowref.type_name()
+        if type_name == "topic_continuum":
+            key, value = rowref.current()
             return len(value.get_vcs_commit_ids()) > 0
+        if type_name == "topics":
+            return rowref.current()!=None
 
         assert False
         return False
@@ -150,6 +185,14 @@ class RmtooTreeModel(gtk.GenericTreeModel):
 
     def on_iter_nth_child(self, rowref, n):
         print("ON ITER NTH CHILD [%s] [%s]" % (rowref, n))
+        
+        if rowref == None:
+            iter = TopicContinuumSetIterator(self.__topic_continuum_set)
+            advance(iter, n)
+            return iter
+        
+        assert False
+        
         return None
 
         assert False
