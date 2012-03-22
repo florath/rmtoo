@@ -31,7 +31,10 @@ class FileSystem(Interface):
         '''Cleans up and unifies the directories.'''
         tracer.debug("Called.")
         for dir_type in ["requirements", "topics", "constraints", "testcases"]:
-            dirs = cfg.get_rvalue(dir_type + "_dirs")
+            dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
+            if dirs == None:
+                tracer.info("Directory [%s] not configured - skipping.",
+                            dir_type)
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []

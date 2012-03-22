@@ -236,6 +236,15 @@ class Cfg:
            If key is not found a RMTException is thrown.'''
         return self.dollar_replace(self.get_value(key))
 
+    def get_rvalue_default(self, key, default_value):
+        '''Return the value of the key from the configuration.
+           Replacement of ${} is done, if the key is available,
+           If the key is not available, the default_value is returned.'''
+        try:
+            return self.dollar_replace(self.get_raw(key))
+        except CfgEx:
+            return default_value
+
     def get_value_wo_throw(self, key):
         '''Returns the value of the given key.
            If key is not found None is returned.'''

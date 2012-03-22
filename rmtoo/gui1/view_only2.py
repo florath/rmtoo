@@ -23,36 +23,58 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.TopicContinuum import TopicContinuum
 
+class GTMInterator:
+
+    def __init__(self, iterator):
+        self.__iterator = iterator
+        self.__current = None
+        self.next()
+
+    def next(self):
+        print("++ ITER NEXT() CALLED")
+        if self.__current == None:
+            print("   WAS None")
+        else:
+            print("   WAS [%s] [%s]" % self.__current)
+        try:
+            self.__current = self.__iterator.next()
+        except StopIteration:
+            print("   STOP ITERATION")
+            return None
+        print("++ ITER NEXT() CALLED; NOW [%s] [%s]" % self.__current)
+        return self.__current
+
+    def current(self):
+        print("++ ITER CURRENT() CALLED")
+        return self.__current
+
 class RmtooTreeModel(gtk.GenericTreeModel):
 
-    column_names = ['Element - Commit - Requirement']
-
+    column_names = ['Requirement', ]
+    column_types = (gtk.gdk.Pixbuf, str,)
+#    column_types = (str,)
 
     def __init__(self, topic_continuum_set):
         gtk.GenericTreeModel.__init__(self)
         self.__topic_continuum_set = topic_continuum_set
 
     def get_column_names(self):
-        return self.column_names[:]
+        return self.column_names
 
     def on_get_flags(self):
         '''The model is a real tree and is not persistence against changes.'''
         return 0
 
     def on_get_n_columns(self):
-        return 1
-        assert False
         return len(self.column_types)
 
     def on_get_column_type(self, n):
-        return [str]
-        assert False
         return self.column_types[n]
 
     def on_get_iter(self, path):
-        print("PATH [%s]" % path)
+        print("NEW ITER PATH [%s]" % path)
         if path[0] == 0:
-            return self.__topic_continuum_set.get_continuum_dict().iteritems()
+            return GTMInterator(self.__topic_continuum_set.get_continuum_dict().iteritems())
         assert False
         return self.files[path[0]]
 
@@ -62,7 +84,20 @@ class RmtooTreeModel(gtk.GenericTreeModel):
 
     def on_get_value(self, rowref, column):
 
-        print("ON GET VALUE [%s] [%s]" % (rowref, column))
+        print("GET VALUE COL [%s]" % column)
+
+        if column == 0:
+            return u"Was Soll Denn Das"
+
+        assert column == 1
+
+        key, value = rowref.current()
+
+#        print("ON GET VALUE [%s] [%s]" % (rowref, column))
+        print("Current value [%s] [%s]" % (key, value))
+        print("TYPE KEY [%s]" % type(key))
+
+        return key
 
         assert False
         fname = os.path.join(self.dirname, rowref)
@@ -88,6 +123,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         print("ON ITER NEXT [%s]" % rowref)
 
         try:
+            print("CURRENT2 [%s] [%s]" % rowref.current())
             return rowref.next()
         except StopIteration:
             return None
@@ -109,7 +145,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         print("ON ITER HAS CHILD [%s]" % rowref)
         print("ON ITER HAS CHILD [%s]" % dir(rowref))
 
-        key, value = rowref.next()
+        key, value = rowref.current()
         print("ON ITER HAS CHILD [%s] [%s]" % (key, value))
         print("ON ITER HAS CHILD [%s]" % type(value))
 
@@ -126,6 +162,9 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return len(self.files)
 
     def on_iter_nth_child(self, rowref, n):
+        print("ON ITER NTH CHILD [%s] [%s]" % (rowref, n))
+        return None
+
         assert False
         if rowref:
             return None

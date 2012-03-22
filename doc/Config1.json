@@ -52,7 +52,7 @@
 		[
 		    "git", {
 		        "start_vers": "v21", 
-			"end_vers": "HEAD", 
+			"end_vers": "v22", 
 			"requirements_dirs": [ "doc/requirements" ],
 			"topics_dirs": [ "doc/topics"] ,
 			"topic_root_node": "ReqsDocument",

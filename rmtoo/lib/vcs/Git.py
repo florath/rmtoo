@@ -69,8 +69,13 @@ class Git(Interface):
         tracer.debug("called")
         # TODO: double code - also in FileSystem
         for dir_type in ["requirements", "topics", "constraints", "testcases"]:
+            config_dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
+            if config_dirs == None:
+                tracer.info("Directory [%s] not configured - skipping." %
+                            dir_type)
+                continue
             # pylint: disable=W0141
-            dirs = map(self.__abs_path, cfg.get_rvalue(dir_type + "_dirs"))
+            dirs = map(self.__abs_path, config_dirs)
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
@@ -233,6 +238,10 @@ class Git(Interface):
            given directory type.'''
         tracer.debug("called: commit [%s] directory type [%s]"
                      % (commit, dir_type))
+        if dir_type not in self.__dirs:
+            tracer.debug("Skipping non existent directory for [%s]" % dir_type)
+            return []
+
         result = []
         for directory in self.__dirs[dir_type]:
             result.extend(self.__get_file_infos_from_tree(
