@@ -33,8 +33,6 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
                       % rmte)
         return False
 
-    # Print out all logs (from all kinds of objects)
-    topic_continuum_set.write_log(mstderr)
     # If there is a problem with the last requirement set included in
     # the requirements continuum and stop processing. (Note the logs
     # were already written out).

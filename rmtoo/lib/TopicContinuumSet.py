@@ -27,7 +27,6 @@ class TopicContinuumSet(MemLogStore, UsableFlag):
     def __init__(self, input_mods, config):
         '''Sets up a TopicContinuum for use.'''
         tracer.info("called")
-        MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self.__input_mods = input_mods
         self._config = config

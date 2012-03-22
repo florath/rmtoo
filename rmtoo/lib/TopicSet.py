@@ -27,7 +27,6 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         tracer.info("Called; commit timestamp [%s]" 
                     % input_handler.get_timestamp(commit))
         Digraph.__init__(self)
-        MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self._config = config
         self.__input_handler = input_handler
@@ -35,15 +34,29 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
         self.__object_cache = object_cache
         self.__input_mods = input_mods
 
-        # First: read in all the requirements.
+        # Because it is possible that things are failing, there is the need to
+        # have some defaults here:
         self.__complete_requirement_set = None
+        self.__topic = None
+        self.__requirement_set = None
+
+        # First: read in all the requirements.
         self.__read_requirement_set()
+        if not self.is_usable():
+            tracer.error("Errors during reading the requirements.")
+            return
         # Second: read in all the topics.
         # Stored here is the initial node of the topic digraph.
         self.__topic = self.__read_topics()
+        if not self.is_usable():
+            tracer.error("Errors during reading the topics.")
+            return
         # Third: restrict requirements to those which are 
         #    needed in the topic.
         self.__requirement_set = self.__restrict_requirements_set()
+        if not self.is_usable():
+            tracer.error("Errors during restriction of the requirements.")
+            return
         tracer.debug("Finished.")
 
     def __read_requirement_set(self):
@@ -99,7 +112,8 @@ class TopicSet(Digraph, MemLogStore, UsableFlag):
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
-        self.__topic.execute(executor, func_prefix)
+        if self.__topic!=None:
+            self.__topic.execute(executor, func_prefix)
 
     def create_makefile_name(self, name, topicn):
         return "TOPIC_%s_%s_DEPS" % (name, topicn)

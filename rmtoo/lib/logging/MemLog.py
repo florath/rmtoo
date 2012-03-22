@@ -11,6 +11,7 @@
 
 import time
 from types import ListType
+from rmtoo.lib.logging.EventLogging import logger
 
 class MemLog:
     '''This represents one memory log message.
@@ -54,6 +55,9 @@ class MemLog:
     def write_log(self, file_descriptor):
         self.write_log_prefix(file_descriptor)
         self.write_log_suffix(file_descriptor)
+        
+    def write_to_logger(self):
+        logger.log(self.level, "%3d:%s" % (self.lid, self.msg))
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ \

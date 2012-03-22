@@ -130,7 +130,7 @@ class Cfg:
             # Nothing to do: JSON entries not available
             pass
 
-    def __evaluate_old_config(self, log_store):
+    def __evaluate_old_config(self):
         '''Looks if the old configuration file handling must be applied -
            and if so applies it.'''
         try:
@@ -148,12 +148,12 @@ class Cfg:
             # Nothing to do: old configuration file not specified
             pass
 
-    def evaluate(self, log_store):
+    def evaluate(self):
         '''Evaluates the configuration.
            This does two things:
            o Read in the 'old' configuration
            o Read in the new configuration'''
-        self.__evaluate_old_config(log_store)
+        self.__evaluate_old_config()
         self.__evaluate_json()
 
     def get_raw(self, key):

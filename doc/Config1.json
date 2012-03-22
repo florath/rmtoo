@@ -7,10 +7,10 @@
         },
 	"logging": { 
 	    "stdout": {
-	        "loglevel": "info"
+	        "loglevel": "critical"
 	    },
 	    "tracer": {
-	        "loglevel": "debug",
+	        "loglevel": "info",
 		"filename": "./rmtoo.log"
     	    }
         }

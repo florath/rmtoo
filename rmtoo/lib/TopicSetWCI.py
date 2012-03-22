@@ -51,3 +51,6 @@ class TopicSetWCI:
 
     def get_requirement_set(self):
         return self.__topic_set.get_requirement_set()
+    
+    def write_to_logger(self):
+        self.__topic_set.write_to_logger()

@@ -12,7 +12,6 @@
 from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.configuration.DefaultValues import DefaultValues
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 
 class MainHelper:
     '''Utility class for different aspects of the different mains.'''
@@ -22,17 +21,16 @@ class MainHelper:
         assert False
 
     @staticmethod
-    def main_setup_config(args, log_store):
+    def main_setup_config(args):
         config = Cfg()
         DefaultValues.set_default_values(config)
         config.merge_cmd_line_params(args)
-        config.evaluate(log_store)
+        config.evaluate()
         return config
 
     @staticmethod
     def main_setup(args, mstdout, mstderr):
-        log_store = MemLogStore()
-        config = MainHelper.main_setup_config(args, log_store)
+        config = MainHelper.main_setup_config(args)
 
         moddirs = config.get_value("global.modules.directories")
         if len(moddirs) != 1:
@@ -40,5 +38,4 @@ class MainHelper:
             assert(False)
 
         mods = InputModules(moddirs[0], config)
-        log_store.write_log(mstderr)
         return config, mods

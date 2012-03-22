@@ -29,7 +29,6 @@ from rmtoo.lib.RMTException import RMTException
 class Record(MemLogStore, list):
 
     def __init__(self):
-        MemLogStore.__init__(self)
         list.__init__(self)
         self.ldict = None
         self.lis_usable = True

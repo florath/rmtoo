@@ -20,45 +20,36 @@
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.MemLogFile import MemLogFile
 from rmtoo.lib.logging.LogLevel import LogLevel
+from rmtoo.lib.logging.EventLogging import logger
 
-class MemLogStore(object):
+class MemLogStore:
     '''This is an in memory log message storage.
        It is mainly used when reading in old / historic requirements. When
        there are problems reading them, these problems are logged into the
        MemLog storage.'''
 
-    def __init__(self):
-        super(MemLogStore, self).__init__()
-        self.logs = []
-
-    def log(self, lid, level, msg, efile=None, eline=None):
-        self.__log(lid, level, msg, efile, eline)
-
-    def write_log(self, file_descriptor):
-        for l in self.logs:
-            l.write_log(file_descriptor)
-
-    def __log(self, lid, level, msg, efile=None, eline=None):
-        if efile == None and eline == None:
-            self.logs.append(MemLog(lid, level, msg))
-        else:
-            self.logs.append(MemLogFile(lid, level, msg, efile, eline))
+    @staticmethod            
+    def __format(lid, msg, efile, eline):
+        rval = "%3d:" % lid
+        if efile!=None:
+            rval += "%s:" % efile
+        if eline!=None:
+            rval += "%s:" % eline
+        rval += "%s" % msg
+        return rval
 
     # Convenience functions
-    def trace(self, lid, msg, efile=None, eline=None):
-        self.__log(lid, LogLevel.trace(), msg, efile, eline)
-
     def debug(self, lid, msg, efile=None, eline=None):
-        self.__log(lid, LogLevel.debug(), msg, efile, eline)
+        logger.debug(self.__format(lid, msg, efile, eline))
 
     def info(self, lid, msg, efile=None, eline=None):
-        self.__log(lid, LogLevel.info(), msg, efile, eline)
+        logger.info(self.__format(lid, msg, efile, eline))
 
     def warning(self, lid, msg, efile=None, eline=None):
-        self.__log(lid, LogLevel.warning(), msg, efile, eline)
+        logger.warn(self.__format(lid, msg, efile, eline))
 
     def error(self, lid, msg, efile=None, eline=None):
-        self.__log(lid, LogLevel.error(), msg, efile, eline)
+        logger.error(self.__format(lid, msg, efile, eline))
 
     # Construct log message from exception
     def error_from_rmte(self, rmte):

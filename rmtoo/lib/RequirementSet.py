@@ -11,13 +11,6 @@
  For licensing details see COPYING
 '''
 
-import os
-import re
-import sys
-import time
-import codecs
-import operator
-import StringIO
 import json
 
 from rmtoo.lib.Requirement import Requirement
@@ -45,7 +38,6 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
            use the appropriate method to do so.'''
         tracer.debug("Called.")
         Digraph.__init__(self)
-        MemLogStore.__init__(self)
         UsableFlag.__init__(self)
         self._config = config
         self.__master_nodes = None
@@ -396,6 +388,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         success = True
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
+                tracer.error("Handling of requirement [%s] was not successful"
+                             % req.get_id())
                 success = False
         tracer.debug("Finished; success [%s]." % success)
         return success

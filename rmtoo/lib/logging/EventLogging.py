@@ -6,7 +6,7 @@
    This is used to get information about the events / tasks
    done in the rmtoo itself.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -14,6 +14,7 @@
 import logging
 
 tracer = None
+logger = None
 
 logging_config = {
     "stdout": {
@@ -26,7 +27,7 @@ logging_config = {
     "handler": []
 }
 
-def __setup_log_handler():
+def __setup_trace_handler():
     '''Based on the configuration, establish a new set of log handlers.'''
 
     # Remove the (possible) old handlers
@@ -58,6 +59,21 @@ def __setup_log_handler():
     logging_config["handler"].append(tracer_fh)
     logging_config["handler"].append(tracer_ch)
 
+def __setup_log_handler():
+    '''Set up logger.'''
+    # create console handler and set level to debug
+    logger_ch = logging.StreamHandler()
+    logger_ch.setLevel(logging.INFO)
+    # create formatter
+    formatter = logging.Formatter(
+                '%(asctime)s;%(name)s;%(levelname)s;%(module)s;'
+                '%(funcName)s;%(lineno)d;%(message)s')
+    # add formatter to ch
+    logger_ch.setFormatter(formatter)
+    # add ch to logger
+    logger.addHandler(logger_ch)
+    
+
 def init_logging():
     '''This sets up the whole logging that it is available directly 
        after process startup.
@@ -66,11 +82,16 @@ def init_logging():
 
     # pylint: disable=W0603
     global tracer
+    global logger
 
     tracer = logging.getLogger("rmtoo-trace")
     tracer.setLevel(logging.DEBUG)
     tracer.propagate = False
+    __setup_trace_handler()
     
+    logger = logging.getLogger("rmtoo")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
     __setup_log_handler()
 
     tracer.debug("rmtoo tracer system enabled.")
@@ -79,7 +100,9 @@ def configure_logging(cfg):
     '''Configure the logging based on the configuration.'''
     llmap= {"debug": logging.DEBUG,
             "info": logging.INFO,
-            "warn": logging.WARN }
+            "warn": logging.WARN,
+            "error": logging.ERROR,
+            "critical": logging.CRITICAL }
     
     if not cfg.is_available("global.logging"):
         tracer.debug("No logging configuration found - continue with default.")
@@ -93,7 +116,7 @@ def configure_logging(cfg):
         logging_config["tracer"]["filename"] = \
             cfg.get_value("global.logging.tracer.filename")
 
-    __setup_log_handler()
+    __setup_trace_handler()
     
     tracer.debug("rmtoo logging system configured.")
     
