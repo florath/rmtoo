@@ -16,9 +16,8 @@ import json
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging.EventLogging import tracer, logger
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
@@ -27,8 +26,9 @@ from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.TestCase import TestCase 
 from rmtoo.lib.GenIterator import GenIterator
+from rmtoo.lib.logging.LogFormatter import LogFormatter
 
-class RequirementSet(Digraph, MemLogStore, UsableFlag):
+class RequirementSet(Digraph, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
        of requirements.'''
 
@@ -84,17 +84,18 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # access to the digraph algorithms.
             # self.nodes.append(req)
         else:
-            self.error(45, "could not be parsed", req.id)
+            logger.error(LogFormatter.format(
+                45, "could not be parsed", req.id))
         tracer.debug("Finished.")
 
     def __read_all_requirements(self, input_handler, commit, input_mods,
                                 object_cache):
         '''Read in all the requirements from the input handler.'''
-        tracer.debug("Called.");
+        tracer.debug("Called.")
         fileinfos = input_handler.get_file_infos(commit, "requirements")
         for fileinfo in fileinfos:
             self.__read_one_requirement(fileinfo, input_mods, object_cache)
-        tracer.debug("Finished.");
+        tracer.debug("Finished.")
 
     def __handle_modules_reqdeps(self, input_mods):
         '''This is mostly the same functionality of similar method of the
@@ -114,9 +115,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         all_handled = True
         for req in self.nodes:
             if len(req.brmo) > 0:
-                self.error(57, "No tag handler found for tag(s) '%s' "
+                logger.error(LogFormatter.format(
+                           57, "No tag handler found for tag(s) '%s' "
                            "- Hint: typo in tag(s)?" % req.brmo.keys(),
-                           req.get_id())
+                           req.get_id()))
                 all_handled = False
         return all_handled
 
@@ -131,15 +133,17 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         # If there was an error, the state flag is set:
         tracer.debug("Check usability.")
         if not self.is_usable():
-            self.error(43, "there was a problem handling the "
-                       "requirement set modules")
+            logger.error(LogFormatter.format(
+                       43, "there was a problem handling the "
+                       "requirement set modules"))
             return False
 
         # The must no be left
         tracer.debug("Check all handled.")
         if not self.__all_tags_handled():
-            self.error(56, "There were errors encountered during parsing "
-                       "and checking - can't continue.")
+            logger.error(LogFormatter.format(
+                       56, "There were errors encountered during parsing "
+                       "and checking - can't continue."))
             return False
 
         return True
@@ -174,7 +178,7 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # access to the digraph algorithms.
             # self.nodes.append(req)
         else:
-            self.error(87, "could not be parsed", ctr.id)
+            logger.error(LogFormatter.format(87, "could not be parsed", ctr.id))
         tracer.debug("Finished.")
 
 #        everythings_fine = True
@@ -236,7 +240,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             # access to the digraph algorithms.
             # self.nodes.append(req)
         else:
-            self.error(115, "could not be parsed", testcase.id)
+            logger.error(LogFormatter.format(
+                115, "could not be parsed", testcase.id))
         tracer.debug("Finished.")
         
     def __read_all_testcases(self, input_handler, commit, input_mods,
@@ -349,7 +354,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         content = req.brmo["Solved by"].get_content()
         # If available, it must not empty
         if len(content) == 0:
-            self.error(77, "'Solved by' field has length 0", req.id)
+            logger.error(LogFormatter.format(
+                        77, "'Solved by' field has length 0", req.id))
             return False
 
         # Step through the list
@@ -357,14 +363,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tracer.debug("dependent list [%s]" % dep_list)
         for dep in dep_list:
             if dep not in self.__requirements:
-                self.error(74, "'Solved by' points to a "
-                           "non-existing requirement '%s'" % dep, req.get_id())
+                logger.error(LogFormatter.format(
+                        74, "'Solved by' points to a "
+                        "non-existing requirement '%s'" % dep, req.get_id()))
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
             if dep == req.id:
-                self.error(75, "'Solved by' points to the "
-                           "requirement itself", req.id)
+                logger.error(LogFormatter.format(
+                           75, "'Solved by' points to the "
+                           "requirement itself", req.id))
                 return False
 
             # Mark down the depends on...
@@ -431,14 +439,16 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
         tl = t.get_content().split()
         for ts in tl:
             if ts not in self.get_all_requirement_ids():
-                self.error(47, "'Depends on' points to a "
-                             "non-existing requirement '%s'" % ts, req.id)
+                logger.error(LogFormatter.format(
+                             47, "'Depends on' points to a "
+                             "non-existing requirement '%s'" % ts, req.id))
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
             if ts == req.id:
-                self.error(59, "'Depends on' points to the "
-                      "requirement itself", req.id)
+                logger.error(LogFormatter.format(
+                      59, "'Depends on' points to the "
+                      "requirement itself", req.id))
                 return False
 
             # Mark down the depends on...

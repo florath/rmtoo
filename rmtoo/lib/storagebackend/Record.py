@@ -1,37 +1,38 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Record Document Class
-#  This is the base class which defines the interface to retrieve or
-#  store data for the documents used in rmtoo.
-#  This class is independend of the underlaying storage backend.
-#
-# (c) 2010-2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Record Document Class
+  This is the base class which defines the interface to retrieve or
+  store data for the documents used in rmtoo.
+  This class is independent of the underlying storage back-end.
 
-# This class represents one input document for the rmtoo tool
-# set.  Additionally to the data only (where mostly everything
-# operates on) this class also stores the order of the tags and
-# possible empty lines and / or comments.  Also the id is stored
-# inside this object.
-# There are (at least) two different access and usage methods:
-# o tags must be unique and order does not matter.
-# o tags need not be unique but order does matter.
-# The first can easily be represented by a dictionary, the second by a
-# list.
+   
+ (c) 2011-2012 by flonatel GmbH & Co. KG
 
-from rmtoo.lib.logging.MemLogStore import MemLogStore
+ For licensing details see COPYING
+'''
+
+
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.UsableFlag import UsableFlag
 
-class Record(MemLogStore, list):
+class Record(list, UsableFlag):
+    '''This class represents one input document for the rmtoo tool
+       set.  Additionally to the data only (where mostly everything
+       operates on) this class also stores the order of the tags and
+       possible empty lines and / or comments.  Also the id is stored
+       inside this object.
+       There are (at least) two different access and usage methods:
+       o tags must be unique and order does not matter.
+       o tags need not be unique but order does matter.
+       The first can easily be represented by a dictionary, the second by a
+       list.'''
 
     def __init__(self):
         list.__init__(self)
+        UsableFlag.__init__(self)
         self.ldict = None
-        self.lis_usable = True
 
     # The complete record can have a comment
     def get_comment(self):
@@ -39,12 +40,6 @@ class Record(MemLogStore, list):
 
     def set_comment(self, comment):
         self.comment = comment
-
-    def is_usable(self):
-        return self.lis_usable
-
-    def set_unusable(self):
-        self.lis_usable = False
 
     def convert_to_dict(self):
         self.ldict = {}
@@ -54,8 +49,8 @@ class Record(MemLogStore, list):
                 raise RMTException(81, "Tag '%s' multiple defined" % tag)
             self.ldict[i.get_tag()] = i
 
-    # The dict which is returned here must be seen as read only.
-    # The data is only valid until the underlaying list is changed.
+    # The dictionary which is returned here must be seen as read only.
+    # The data is only valid until the underlying list is changed.
     def get_dict(self):
         if self.ldict == None:
             self.convert_to_dict()

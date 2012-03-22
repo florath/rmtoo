@@ -2,34 +2,21 @@
  rmtoo
    Free and Open Source Requirements Management Tool
    
-  Memory Logging Store
+  Logging Formatter
 
-  There is the need (e.g. for the RequirementSet) to store logs in
-  memory - including a unique log-number, file name, line number and
-  so on.
-  This is needed because historic RequirementSets might have some
-  problems when parsing them - and a throw (which includes an abort)
-  is not what is wanted.
-  Also this makes is easier to write test cases handling error
-  messages. 
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.MemLogFile import MemLogFile
-from rmtoo.lib.logging.LogLevel import LogLevel
 from rmtoo.lib.logging.EventLogging import logger
 
-class MemLogStore:
-    '''This is an in memory log message storage.
-       It is mainly used when reading in old / historic requirements. When
-       there are problems reading them, these problems are logged into the
-       MemLog storage.'''
+class LogFormatter:
 
     @staticmethod            
-    def __format(lid, msg, efile, eline):
+    def format(lid, msg, efile=None, eline=None):
         rval = "%3d:" % lid
         if efile!=None:
             rval += "%s:" % efile
@@ -37,19 +24,6 @@ class MemLogStore:
             rval += "%s:" % eline
         rval += "%s" % msg
         return rval
-
-    # Convenience functions
-    def debug(self, lid, msg, efile=None, eline=None):
-        logger.debug(self.__format(lid, msg, efile, eline))
-
-    def info(self, lid, msg, efile=None, eline=None):
-        logger.info(self.__format(lid, msg, efile, eline))
-
-    def warning(self, lid, msg, efile=None, eline=None):
-        logger.warn(self.__format(lid, msg, efile, eline))
-
-    def error(self, lid, msg, efile=None, eline=None):
-        logger.error(self.__format(lid, msg, efile, eline))
 
     # Construct log message from exception
     def error_from_rmte(self, rmte):

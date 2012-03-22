@@ -13,14 +13,13 @@
 '''
 
 from rmtoo.lib.TopicContinuum import TopicContinuum, TopicContinuumIterator
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.GenIterator import GenIterator
 
-class TopicContinuumSet(MemLogStore, UsableFlag):
+class TopicContinuumSet(UsableFlag):
     '''Class holding all the available TopicSetCollections
        of the past and possible the current.'''
 

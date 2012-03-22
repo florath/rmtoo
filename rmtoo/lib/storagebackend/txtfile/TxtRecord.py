@@ -15,6 +15,8 @@
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
+from rmtoo.lib.logging.EventLogging import logger
+from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 class TxtRecord(Record):
 
@@ -68,10 +70,11 @@ class TxtRecord(Record):
         for l in sl:
             lineno += 1
             if len(l) > max_line_length:
-                self.error(80, "line too long: is [%d], "
+                logger.error(LogFormatter.format(
+                            80, "line too long: is [%d], "
                            "max allowed [%d]" % (len(l), max_line_length),
-                           rid, lineno)
-                self.set_unusable()
+                           rid, lineno))
+                self._set_not_usable()
 
     # Parse everything from a string
     def parse(self, s, rid):
@@ -87,7 +90,7 @@ class TxtRecord(Record):
         # If there was an error during the split already - stop
         # processing here
         if not success:
-            self.set_unusable()
+            self._set_not_usable()
             return
 
         for i in rp:

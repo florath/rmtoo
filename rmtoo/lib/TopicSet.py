@@ -14,11 +14,10 @@
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.logging.EventLogging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 
-class TopicSet(Digraph, MemLogStore, UsableFlag):
+class TopicSet(Digraph, UsableFlag):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
