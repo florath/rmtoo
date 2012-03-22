@@ -33,6 +33,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.TestCase import TestCase 
+from rmtoo.lib.GenIterator import GenIterator
 
 class RequirementSet(Digraph, MemLogStore, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -550,6 +551,8 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
     def get_master_nodes(self):
         '''Return the available master nodes.'''
         tracer.debug("Master nodes [%s]" % self.__master_nodes)
+        if self.__master_nodes==None:
+            self.find_master_nodes()
         return self.__master_nodes
 
     def get_requirements_cnt(self):
@@ -621,3 +624,10 @@ class RequirementSet(Digraph, MemLogStore, UsableFlag):
             r.record.write_fd(fd)
             fd.close()
         return True
+    
+class RequirementSetIterator(GenIterator):
+
+    def __init__(self, requirement_set):
+        GenIterator.__init__(
+            self, requirement_set.get_master_nodes().__iter__())
+        

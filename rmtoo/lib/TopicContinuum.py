@@ -24,6 +24,7 @@ from rmtoo.lib.TopicSetWCI import TopicSetWCI
 from rmtoo.lib.vcs.CommitInfo import CommitInfo
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.GenIterator import GenIterator
+from rmtoo.lib.RequirementSet import RequirementSetIterator
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -130,20 +131,26 @@ class TopicContinuumIterator(GenIterator):
 
     def __init__(self, topic_continuum):
         '''Initialize the iterator.'''
-        self.__topic_continuum = topic_continuum
-        GenIterator.__init__(
-            self, topic_continuum.get_vcs_commit_ids().__iter__())
+        self.__objs = []
+        for vcs_id in topic_continuum.get_vcs_commit_ids():
+            self.__objs.append([vcs_id, topic_continuum.get_topic_set(vcs_id.get_commit())])
+        GenIterator.__init__(self, self.__objs.__iter__())
         
-    def current(self):
-        '''This is somewhat more complicated, because the list just contains
-           the ids which must be looked-up first in the dictionary.'''
-        print("MCURRENT [%s]" % self._current)
-        return self.__topic_continuum.get_topic_set(self._current)
-
-    def next(self):
-        GenIterator._next(self)
-        return self.current()
+#    def current(self):
+#        '''This is somewhat more complicated, because the list just contains
+#           the ids which must be looked-up first in the dictionary.'''
+#        print("MCURRENT [%s]" % self._current)
+#        return self._current
+##        return self.__topic_continuum.get_topic_set(self._current.get_commit())
+#        
+##        return RequirementSetIterator(self.__topic_continuum.get_topic_set(
+##                            self._current.get_commit()).get_requirement_set())
+#
+#    def next(self):
+#        GenIterator._next(self)
+#        return self.current()
     
     def has_child(self):
         '''If the current element has a child, true is returned.'''
-        return len(self.current().get_requirement_set().outgoing)>0
+        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes())>0
+    

@@ -158,7 +158,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
         return self.files[0]
 
     def on_iter_has_child(self, rowref):
-#        print("ON ITER HAS CHILD [%s]" % rowref)
+        print("ON ITER HAS CHILD [%s]" % rowref)
 #        print("ON ITER HAS CHILD [%s]" % dir(rowref))
 #
 #        key, value = rowref.current()
