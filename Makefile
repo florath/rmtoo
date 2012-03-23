@@ -80,4 +80,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/UnitTest/tag-tests/TestRDepSolvedBy.py
+		tests/UnitTest/xmlcmp-tests/TestXMLCmp.py
