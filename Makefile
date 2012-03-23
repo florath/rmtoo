@@ -80,4 +80,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/UnitTest/CoreTests/TestModules.py
+		tests/UnitTest/CoreTests/TestReqSet.py

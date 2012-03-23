@@ -1,22 +1,21 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Record Text Test Class: try to run through all the possible states
-# and error scenarios.
-# Extended version
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+ Record Text Test Class: try to run through all the possible states
+ and error scenarios.
+ Extended version
+
+ (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import StringIO
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
-from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
-from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.logging import init_logger, tear_down_log_handler
 
 tc1i = """Name: rmtoo
 Type: master requirement
@@ -38,12 +37,11 @@ class TestRecordTxt3:
 
     def test_pos_01(self):
         "TestRecordTxt3: long long complicated input"
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
         txt_doc = TxtRecord.from_string(tc1i, "rmtoo", TxtIOConfig())
         d = txt_doc.get_dict()
-
-        o = StringIO.StringIO()
-        txt_doc.write_log(o)
 
         assert(d["Rationale"].get_content() ==
                "The world needs a good, usable and free "
@@ -53,4 +51,5 @@ class TestRecordTxt3:
         assert(len(txt_doc) == 11)
         assert(txt_doc.get_comment() == "")
 
+        tear_down_log_handler()
 

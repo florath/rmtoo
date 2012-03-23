@@ -10,6 +10,8 @@
 '''
 
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.logging.LogFormatter import LogFormatter
+from rmtoo.lib.logging import logger
 
 import re
 
@@ -77,8 +79,9 @@ class TxtParser:
                 if len(comment)>0:
                     # This is the possible problematic case where
                     # continuation lines are intermixed with comments.
-                    mls.info(80, TxtParser.comment_in_req,
-                             rid, lineno+i)
+                    logger.info(LogFormatter.format(
+                             80, TxtParser.comment_in_req,
+                             rid, lineno+i))
             elif TxtParser.is_comment_or_empty(sl[i]):
                 comment.append(sl[i])
             i+=1
@@ -119,7 +122,7 @@ class TxtParser:
             except RMTException, rmte:
                 # This is a hint that the tag line could not correctly
                 # parsed.
-                mls.error_from_rmte(rmte)
+                logger.error(LogFormatter.rmte(rmte))
                 # Remove the errornous line
                 del(sl[0])
                 lineno += 1
