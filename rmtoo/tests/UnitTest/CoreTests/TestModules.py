@@ -11,18 +11,20 @@
 
 import os
 import StringIO
+import unittest
 from rmtoo.lib.InputModules import InputModules
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.lib.logging import init_logger, tear_down_log_handler
+from rmtoo.tests.lib.Utils import hide_timestamp
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
-class TestModules:
+class TestModules(unittest.TestCase):
 
     def test_positive_01(self):
         "InputModules._split_directory with '.'"
@@ -68,43 +70,54 @@ class TestModules:
             assert(rmte.id() == 26)
 
     def test_simple_05(self):
-        "Module test with dependend modules"
+        "Module test with dependent modules"
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
+
         mods = InputModules(os.path.join(mod_base_dir, "modules05"),
                        {}, [], mods_list("modules05", mod_base_dir))
-        mls = MemLogStore()
-        req = Requirement("Name: t\n", 77, None, mls, mods, TestConfig())
+        req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        sout = StringIO.StringIO()
-        mls.write_log(sout)
-        assert(req.is_usable() == False)
-        assert(sout.getvalue() ==
-               "+++ Error: 54:77:tag [SameTag] already defined\n")
+        lstderr = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
+        self.assertEqual(req.is_usable(), False)
+        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
+        "handle_modules_tag;107; 54:77:tag [SameTag] already defined\n"
+        self.assertEqual(lstderr, expected_result)
 
     def test_simple_06(self):
         "Requirement: Module test with exception thrown"
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules06"),
                        {}, [], mods_list("modules06", mod_base_dir))
-        mls = MemLogStore()
-        req = Requirement("Name: t\n", 77, None, mls, mods, TestConfig())
+        req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        sout = StringIO.StringIO()
-        mls.write_log(sout)
-        assert(req.is_usable() == False)
-        assert(sout.getvalue() ==
-               '''+++ Error: 55:TCExcept
-+++ Error: 41:77:semantic error occurred in module [Module01]
-''')
+        lstderr = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
+        self.assertEqual(req.is_usable(), False)
+        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
+        "handle_modules_tag;115; 55:TCExcept\n" \
+        "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
+        "118; 41:77:semantic error occurred in module [Module01]\n"
+        self.assertEqual(lstderr, expected_result)
 
     def test_simple_07(self):
         "RequirementSet: Module which renders set as errornous"
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules07"),
                        {}, [], mods_list("modules07", mod_base_dir))
         reqs = RequirementSet(None)
         reqs._handle_modules(mods)
-        assert(reqs.is_usable() == False)
+        self.assertEqual(reqs.is_usable(), False)
 
-        sout = StringIO.StringIO()
-        reqs.write_log(sout)
-        assert(sout.getvalue() == "+++ Error: 43:there was a problem handling the requirement set modules\n")
+        lstderr = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
+
+        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
+        "_handle_modules;137; 43:there was a problem handling the " \
+        "requirement set modules\n"
+        self.assertEqual(lstderr, expected_result)

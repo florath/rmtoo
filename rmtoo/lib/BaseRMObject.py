@@ -105,7 +105,6 @@ class BaseRMObject(UsableFlag):
                     logger.error(LogFormatter.format(
                           54, "tag [%s] already defined" %
                           (key), self.id))
-                    tracer.error("tag [%s] already defined" % key)
                     self._set_not_usable()
                     # Also continue to get possible further error
                     # messages.
