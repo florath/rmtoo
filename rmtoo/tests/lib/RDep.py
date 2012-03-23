@@ -10,17 +10,15 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.TestConfig import TestConfig
 
-class ReqSet(Digraph, MemLogStore):
+class ReqSet(Digraph):
 
     def __init__(self, d=None):
         Digraph.__init__(self, d,
                          lambda nname: Requirement(None, nname, None,
                                                    None, None, None))
-        MemLogStore.__init__(self)
 
 # Create a set of parameters for the test-cases
 def create_parameters(d=None):

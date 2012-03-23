@@ -17,7 +17,6 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.InputModules import InputModules
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 
 class TestRDepDependsOn:
 
@@ -26,15 +25,14 @@ class TestRDepDependsOn:
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Depends on: A''', 'B', None, mls, imod, config)
+Depends on: A''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
 
@@ -51,20 +49,19 @@ Depends on: A''', 'B', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Depends on: A''', 'B', None, mls, imod, config)
+Depends on: A''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
         req3 = Requirement('''Name: C
 Type: requirement
-Depends on: A B''', 'C', None, mls, imod, config)
+Depends on: A B''', 'C', None, imod, config)
         reqset._add_requirement(req3)
         config.set_depends_on()
 
@@ -83,12 +80,11 @@ Depends on: A B''', 'C', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement
-Depends on: A''', 'A', None, mls, imod, config)
+Depends on: A''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         config.set_depends_on()
 
@@ -102,14 +98,13 @@ Depends on: A''', 'A', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
-Type: requirement''', 'B', None, mls, imod, config)
+Type: requirement''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
 
@@ -123,15 +118,14 @@ Type: requirement''', 'B', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Depends on:''', 'B', None, mls, imod, config)
+Depends on:''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
 
@@ -145,15 +139,14 @@ Depends on:''', 'B', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Depends on: C''', 'B', None, mls, imod, config)
+Depends on: C''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
 
@@ -167,15 +160,14 @@ Depends on: C''', 'B', None, mls, imod, config)
         config = TestConfig()
 
         imod = InputModules("..", config)
-        mls = MemLogStore()
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
-Type: master requirement''', 'A', None, mls, imod, config)
+Type: master requirement''', 'A', None, imod, config)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Depends on: B''', 'B', None, mls, imod, config)
+Depends on: B''', 'B', None, imod, config)
         reqset._add_requirement(req2)
         config.set_depends_on()
 

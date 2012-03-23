@@ -11,7 +11,6 @@
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.tests.lib.TestConfig import TestConfig
 
 class TestRequirement:
@@ -22,7 +21,7 @@ class TestRequirement:
         try:
             req = Requirement("DTag: content1\n"
                               "DTag: content2\n", 1, None,
-                              MemLogStore(), None, TestConfig())
+                              None, TestConfig())
             assert(False)
         except RMTException, rmte:
             assert(rmte.get_id() == 81)
