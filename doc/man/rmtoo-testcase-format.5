@@ -1,0 +1,79 @@
+.\" 
+.\" Man page for rmtoo testcase input format
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2012 by flonatel (sf@flonatel.org)
+.\"
+.TH rmtoo-testcase-format 5 2012-03-25 "File Formats" "Requirements Management"
+.SH NAME
+rmtoo-testcase-format \- requirements management tool: testcase format
+.SH FILE FORMAT
+Each testcase must be in its own file.  The filename must end
+in '.tec'.  Only ASCII characters are allowed.  Each line must at
+maximum 80 characters long.
+.P
+The topic must be written as a set of 'key: value' pairs.  A
+value is extended if the first column of a line is a space.
+.P
+A key can exists multiple times in a topic data file.  Order matters.
+.SH KEYS
+The following keys with the described syntax and semantic exists: 
+.SH KEY 'Name'
+The value is the name of the testcase.  This is used as a chapter
+headline in the output document.
+.SH KEY 'Description'
+The description of the testcase
+.SH KEY 'Expected Result'
+The expected result of the testcase.
+.SH KEY 'Invented on'
+The value of 'Invented on' is the date when the testcase was
+written.  The format must be YYYY-MM-DD.
+.SH KEY 'Invented by'
+This value is the name of the author of the testcase.  The author
+is the person who wrote the requirement.  It must not be necessary
+one of the stakeholders.
+.SH KEY 'Owner'
+This is the owner of the testcase.  He is responsible for the
+testcase.
+.SH KEY 'Note'
+The note is an additional comment for the testcase.  
+.SH EXAMPLE
+Note that the following example has some initial indent resulting
+from the word processing program.  The keywords must start at the
+first column.  Additional lines must have a space in column one.
+.sp
+.RS
+.nf
+Name: Example Test Case
+Owner: development
+Invented by: flonatel
+Invented on: 2012-03-19
+Description: This is an example test case.
+Expected Result: This is the result.
+Note: Just for testing.
+
+
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview over rmtoo requirements management tool.  All references
+can be found there.
+.SH AUTHOR
+Written by Andreas Florath (sf@flonatel.org)
+.SH COPYRIGHT
+Copyright \(co 2012 by flonatel (sf@flonatel.org).
+License GPLv3+: GNU GPL version 3 or later
+

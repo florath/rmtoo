@@ -82,7 +82,7 @@ class TestModules(unittest.TestCase):
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;107; 54:77:tag [SameTag] already defined\n"
+        "handle_modules_tag;112; 54:77:tag [SameTag] already defined\n"
         self.assertEqual(lstderr, expected_result)
 
     def test_simple_06(self):
@@ -98,9 +98,9 @@ class TestModules(unittest.TestCase):
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;115; 55:TCExcept\n" \
+        "handle_modules_tag;120; 55:TCExcept\n" \
         "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
-        "118; 41:77:semantic error occurred in module [Module01]\n"
+        "123; 41:77:semantic error occurred in module [Module01]\n"
         self.assertEqual(lstderr, expected_result)
 
     def test_simple_07(self):

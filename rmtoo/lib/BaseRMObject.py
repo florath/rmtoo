@@ -52,6 +52,11 @@ class BaseRMObject(UsableFlag):
     def get_value(self, key):
         return self.values[key]
 
+    def get_value_default(self, key, default_value = None):
+        if key not in self.values:
+            return default_value
+        return self.values[key]
+
     def get_file_path(self):
         return self._file_path
 

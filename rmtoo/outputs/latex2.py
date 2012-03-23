@@ -223,7 +223,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
 
-        testcases = req.get_value("Test Cases")
+        testcases = req.get_value_default("Test Cases")
         if testcases != None:
             self.__fd.write("\n\\textbf{Test Cases:} ")
             tcout = []

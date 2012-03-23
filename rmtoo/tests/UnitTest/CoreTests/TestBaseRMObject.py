@@ -9,6 +9,7 @@
  For licensing details see COPYING
 '''
 
+import unittest
 import StringIO
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.tests.lib.TestConfig import TestConfig
@@ -35,10 +36,10 @@ class TBRMObj(BaseRMObject):
                               tc, "tobjs", None)
 
 expected_result = \
-    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;99; " \
+    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;104; " \
     "90:Wrong module type [mytag] not in [set([1, 2, 3])]\n"
 
-class TestBaseRMObject:
+class TestBaseRMObject(unittest.TestCase):
 
     def test_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
@@ -51,4 +52,4 @@ class TestBaseRMObject:
         result = hide_timestamp(mstderr.getvalue())
         tear_down_log_handler()
 
-        assert(result == expected_result)
+        self.assertEqual(result, expected_result)

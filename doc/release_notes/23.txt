@@ -1,0 +1,40 @@
+**********************************************************************
+* CONFIGURATION IS UNDERGOING A MAJOR RESTRUCTURING.                 *
+* THE CURRENT VERSIONS (V22-V23) WILL (ONLY) BE ONE STEP IN THE      *
+* DIRECTION THE CONFIGURATION WILL CHANGE TO.                        *
+* BECAUSE THE STRUCTURE CHANGED, THERE IS NO AUTOMATIC UPDATE        *
+* POSSIBLE.                                                          *
+* IF YOU HAVE A RUNNING INSTALLED rmtoo THERE IS NO NEED TO UPDATE   *
+* DIRECTLY (IF YOU DO NOT NEED ANY OF THE NEW FEATURES).             *
+* IF YOU WANT TO USE THE NEW FEATURES, PLEASE FIRST READ THE         *
+* DOCUMENTATION (rmtoo-config3(5)).  IF YOU HAVE PROBLEMS WITH THIS  *
+* FEEL FREE TO CONTACT OUR SUPPORT AT info@flonatel.de               *
+**********************************************************************
+
+User visible changes
+--------------------
+
+Added support for Test Cases.
+
+Fixed latex2 output: there was a bug that the references were printed
+many times when there were more than one reference to another
+requirement.
+
+Fixed error reporting: there was an error that problems during parsing 
+the requirements / topics / constraints directories were not reported
+to the user at all.  Instead a python stack trace was printed.  This
+was fixed: now the user sees exactly the problems - if there were
+some. 
+
+Fixed long path names in graph2 output: Since v22 it is possible to
+use subdirectories with requirements.  This results in long names.
+These long names are now split up into some lines - with the '/' is
+the indicator where to split.
+
+Fixed priority list output: there was a bug that only the requirements
+were used for the prios list which are in the last topic worked on.
+This is fixed now: all requirements appear (again) in the prios list.
+
+Internal Changes
+----------------
+
