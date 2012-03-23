@@ -80,4 +80,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/UnitTest/tag-tests/TestRDepDependsOn.py
+		tests/UnitTest/tag-tests/TestRDepPriority.py

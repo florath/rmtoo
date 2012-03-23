@@ -23,10 +23,10 @@ class TestRDepPriority:
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement
-Solved by: B''', 'A', None, None, None, None)
+Solved by: B''', 'A', None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
-Type: requirement''', 'B', None, None, None, None)
+Type: requirement''', 'B', None, None, None)
         reqset._add_requirement(req2)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
@@ -47,14 +47,14 @@ Type: requirement''', 'B', None, None, None, None)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement
-Solved by: B''', 'A', None, None, None, None)
+Solved by: B''', 'A', None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Solved by: C''', 'B', None, None, None, None)
+Solved by: C''', 'B', None, None, None)
         reqset._add_requirement(req2)
         req3 = Requirement('''Name: C
-Type: requirement''', 'C', None, None, None, None)
+Type: requirement''', 'C', None, None, None)
         reqset._add_requirement(req3)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
@@ -78,18 +78,18 @@ Type: requirement''', 'C', None, None, None, None)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement
-Solved by: B C''', 'A', None, None, None, None)
+Solved by: B C''', 'A', None, None, None)
         reqset._add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
-Solved by: D''', 'B', None, None, None, None)
+Solved by: D''', 'B', None, None, None)
         reqset._add_requirement(req2)
         req3 = Requirement('''Name: C
 Type: requirement
-Solved by: D''', 'C', None, None, None, None)
+Solved by: D''', 'C', None, None, None)
         reqset._add_requirement(req3)
         req4 = Requirement('''Name: D
-Type: requirement''', 'D', None, None, None, None)
+Type: requirement''', 'D', None, None, None)
         reqset._add_requirement(req4)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
