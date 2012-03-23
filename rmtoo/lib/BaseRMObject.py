@@ -16,11 +16,12 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.UsableFlag import UsableFlag
-from rmtoo.lib.logging import tracer
+from rmtoo.lib.logging import tracer, logger
+from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 class BaseRMObject(UsableFlag):
 
-    def __init__(self, tbhtags, content, rid, mls, mods, config, type_str,
+    def __init__(self, tbhtags, content, rid, mods, config, type_str,
                  file_path):
         UsableFlag.__init__(self)
         # This is the name of the tags which will be handled by the
@@ -33,7 +34,6 @@ class BaseRMObject(UsableFlag):
         # This is the list of converted values.
         self.values = {}
         self.id = rid
-        self.mls = mls
         self.mods = mods
         self.config = config
         self.type_str = type_str
@@ -94,15 +94,17 @@ class BaseRMObject(UsableFlag):
                 tracer.debug("handle modules tag modkey [%s] tagtype [%s]"
                       % (modkey, self.tbhtags))
                 if self.tbhtags not in module.get_type_set():
-                    self.mls.error(90, "Wrong module type [%s] not in [%s]" %
-                                   (self.tbhtags, module.get_type_set()))
+                    logger.error(LogFormatter.format(
+                                 90, "Wrong module type [%s] not in [%s]" %
+                                 (self.tbhtags, module.get_type_set())))
                     continue
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key
                 # in the map.
                 if key in self.values:
-                    self.mls.error(54, "tag [%s] already defined" %
-                          (key), self.id)
+                    logger.error(LogFormatter.format(
+                          54, "tag [%s] already defined" %
+                          (key), self.id))
                     tracer.error("tag [%s] already defined" % key)
                     self._set_not_usable()
                     # Also continue to get possible further error
@@ -111,10 +113,10 @@ class BaseRMObject(UsableFlag):
             except RMTException, rmte:
                 # Some semantic error occurred: do not interpret key or
                 # value.
-                self.mls.error_from_rmte(rmte)
-                self.mls.error(41, "semantic error occurred in "
-                               "module [%s]" % modkey, self.id)
-                tracer.error("semantic error occurred: root cause [%s]" % rmte)
+                logger.error(LogFormatter.rmte(rmte))
+                logger.error(LogFormatter.format(
+                               41, "semantic error occurred in "
+                               "module [%s]" % modkey, self.id))
                 self._set_not_usable()
                 # Continue (do not return immediately) to get also
                 # possible other errors.

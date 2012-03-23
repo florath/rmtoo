@@ -7,7 +7,7 @@
 #
 
 import os
-import time
+import re
 import shutil
 import difflib
 import zipfile
@@ -16,8 +16,6 @@ import xml.dom.minidom
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
 from rmtoo.tests.lib.Utils import create_tmp_dir
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
-
-from logging import raiseExceptions
 
 def tmp_dir():
     return os.environ["rmtoo_test_dir"]
@@ -109,8 +107,6 @@ def cleanup_std_log(mout, merr):
     tear_down_trace_handler()
     mout.close()
     merr.close()
-    global raiseExceptions
-    raiseExceptions = 0
 
 def delete_result_is_dir():
     assert(os.environ["rmtoo_test_dir"] != None)
@@ -200,7 +196,22 @@ def check_result(missing_files, additional_files, diffs):
         print("DIFFS [%s]" % diffs)
     assert(len(diffs) == 0)
 
+def prepare_stderr():
+    '''Some lines of the stderr contain a date / timestamp.
+       This must be unified in order to be able to compare them.'''
+    date_re = re.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"
+                         ":[0-9]{2},[0-9]{3}")
+    mstderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"))
+    lines = mstderr.readlines()
+    mstderr.close()
+
+    new_stderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"), "w")
+    for line in lines:
+        new_stderr.write("%s" % date_re.sub("===DATETIMESTAMP===", line))
+    new_stderr.close()
+
 def check_file_results(mdir):
+    prepare_stderr()
     missing_files, additional_files, diffs = compare_results(mdir)
     check_result(missing_files, additional_files, diffs)
 

@@ -52,10 +52,10 @@ class Requirement(Digraph.Node, BaseRMObject):
             return "requirement"
         assert False
 
-    def __init__(self, content, rid, file_path, mls, mods, config):
+    def __init__(self, content, rid, file_path, mods, config):
         Digraph.Node.__init__(self, rid)
         BaseRMObject.__init__(self, InputModuleTypes.reqtag,
-                              content, rid, mls, mods,
+                              content, rid, mods,
                               config, "requirements", file_path)
 
     def get_prio(self):

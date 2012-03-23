@@ -9,9 +9,6 @@
 
  For licensing details see COPYING
 '''
-from rmtoo.lib.logging.MemLog import MemLog
-from rmtoo.lib.logging.MemLogFile import MemLogFile
-from rmtoo.lib.logging import logger
 
 class LogFormatter:
 
@@ -25,34 +22,39 @@ class LogFormatter:
         rval += "%s" % msg
         return rval
 
-    # Construct log message from exception
-    def error_from_rmte(self, rmte):
-        self.logs.append(MemLogFile(rmte.get_id(), LogLevel.error(),
-                                    rmte.get_msg(), rmte.get_efile(),
-                                    rmte.get_eline()))
-
-    # Method for creating a fully new blown set_value of log messages:
-    # usable for e.g. test cases.
     @staticmethod
-    def create_mls(ll):
-        mls = MemLogStore()
-        for l in ll:
-            if len(l) <= 3:
-                mls.logs.append(MemLog.create_ml(l))
-            else:
-                mls.logs.append(MemLogFile.create_ml(l))
-        return mls
+    def rmte(rmte):
+        return LogFormatter.format(rmte.get_id(), rmte.get_msg(),
+                                   rmte.get_efile(), rmte.get_eline())
 
-    # For writing test cases it is very helpful to get the internal
-    # representation of the object.
-    def to_list(self):
-        r = []
-        for m in self.logs:
-            r.append(m.to_list())
-        return r
 
-    # For comparison (also mostly used in test-cases) the eq operator
-    # must be defined.
-    def __eq__(self, other):
-        return type(self) == type(other) and self.logs == other.logs
-
+#    # Construct log message from exception
+#    def error_from_rmte(self, rmte):
+#        self.logs.append(MemLogFile(rmte.get_id(), LogLevel.error(),
+#                                    rmte.get_msg(), rmte.get_efile(),
+#                                    rmte.get_eline()))
+#
+#    # Method for creating a fully new blown set_value of log messages:
+#    # usable for e.g. test cases.
+#    @staticmethod
+#    def create_mls(ll):
+#        mls = MemLogStore()
+#        for l in ll:
+#            if len(l) <= 3:
+#                mls.logs.append(MemLog.create_ml(l))
+#            else:
+#                mls.logs.append(MemLogFile.create_ml(l))
+#        return mls
+#
+#    # For writing test cases it is very helpful to get the internal
+#    # representation of the object.
+#    def to_list(self):
+#        r = []
+#        for m in self.logs:
+#            r.append(m.to_list())
+#        return r
+#
+#    # For comparison (also mostly used in test-cases) the eq operator
+#    # must be defined.
+#    def __eq__(self, other):
+#        return type(self) == type(other) and self.logs == other.logs
