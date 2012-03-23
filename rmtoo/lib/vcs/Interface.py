@@ -14,18 +14,18 @@ import abc
 from types import ListType, StringType, UnicodeType
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class Interface:
     '''Defines the interface for input fontends like
        VCS or filesystem.'''
     __metaclass__ = abc.ABCMeta
-    
+
     def __init__(self, config):
         self._config = config
         self._txt_io_config = TxtIOConfig(config)
         self._topic_root_node = config.get_value("topic_root_node")
-        
+
     def get_txt_io_config(self):
         return self._txt_io_config
 
@@ -46,7 +46,7 @@ class Interface:
         assert commit
         assert dir_type
         assert False
-        
+
     @abc.abstractmethod
     def get_timestamp(self, commit):
         '''Returns the timestamp of the set of requirements.
@@ -87,7 +87,7 @@ class Interface:
         def __str__(self):
             '''Returns the string representation.'''
             assert False
-            
+
     @abc.abstractmethod
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
@@ -95,8 +95,8 @@ class Interface:
         assert commit
         assert dir_type
         assert False
-    
-    @abc.abstractmethod        
+
+    @abc.abstractmethod
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
         assert False
@@ -104,7 +104,11 @@ class Interface:
     # Common helper methods
     @staticmethod
     def _check_list_of_strings(name, tbc):
-        '''Checks if the given variable is a list of strings.'''
+        '''Checks if the given variable is a list of strings or None.'''
+        if tbc == None:
+            tracer.debug("Ignoring non existent configuration for [%s]" % tbc)
+            return
+
         if type(tbc) != ListType:
             raise RMTException(103, "Configuration error: [%s] configuration "
                                "must be a list" % name)

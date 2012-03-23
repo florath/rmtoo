@@ -19,7 +19,7 @@ import re
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.analytics.Base import Base
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class DescWords(Base):
 

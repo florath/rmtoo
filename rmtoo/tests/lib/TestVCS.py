@@ -15,7 +15,7 @@ import time
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.RMTException import RMTException
 

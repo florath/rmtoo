@@ -19,7 +19,7 @@ from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
-from rmtoo.lib.logging.EventLogging import configure_logging
+from rmtoo.lib.logging import configure_logging
 
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     '''Checks are always done - to be sure that e.g. the dependencies
@@ -66,7 +66,7 @@ def main_impl(args, mstdout, mstderr):
        o set up logging
        o do everything'''
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
-    configure_logging(config)
+    configure_logging(config, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):

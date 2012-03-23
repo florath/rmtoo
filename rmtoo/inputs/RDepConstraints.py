@@ -10,7 +10,7 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class RDepConstraints(Digraph.Node):

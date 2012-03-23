@@ -10,13 +10,11 @@
 '''
 
 import os
-import time
 
-from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 class html(ExecutorTopicContinuum, CreateMakeDependencies):
@@ -51,7 +49,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
-           the latest (newest) is used.'''       
+           the latest (newest) is used.'''
         return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def topic_set_pre(self, topics_set):
@@ -219,7 +217,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                                self.__topic_set.create_makefile_name(self.__tc_name, topic.name),
                                self._get_call_rmtoo_line()))
         # TODO: more is needed! (see beneath)
-        
+
     def cmad_requirement(self, requirement):
         '''Called on requirement level.'''
         self._cmad_file.write("REQS+=%s\n" % requirement.get_file_path())

@@ -9,18 +9,18 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class CreateMakeDependencies:
-    
+
     def __init__(self):
         '''Creates the object.'''
         self._cmad_file = None
-    
+
     def init_cmad_(self, cmad_file):
         '''This is called when the cmad should be written.'''
         tracer.debug("Called.")
-        self._cmad_file = cmad_file    
+        self._cmad_file = cmad_file
 
     @staticmethod
     def write_reqs_dep(filed, filename):

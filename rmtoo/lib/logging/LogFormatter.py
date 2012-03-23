@@ -11,16 +11,16 @@
 '''
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.lib.logging.MemLogFile import MemLogFile
-from rmtoo.lib.logging.EventLogging import logger
+from rmtoo.lib.logging import logger
 
 class LogFormatter:
 
-    @staticmethod            
+    @staticmethod
     def format(lid, msg, efile=None, eline=None):
         rval = "%3d:" % lid
-        if efile!=None:
+        if efile != None:
             rval += "%s:" % efile
-        if eline!=None:
+        if eline != None:
             rval += "%s:" % eline
         rval += "%s" % msg
         return rval

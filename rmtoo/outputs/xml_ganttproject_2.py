@@ -26,7 +26,7 @@ from rmtoo.lib.RequirementStatus import \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,

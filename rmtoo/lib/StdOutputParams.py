@@ -12,7 +12,7 @@
 import datetime
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.configuration.Cfg import Cfg
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class StdOutputParams:
     '''Handles the standard output parameters and sets the values

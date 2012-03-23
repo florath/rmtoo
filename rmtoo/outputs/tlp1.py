@@ -9,7 +9,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies

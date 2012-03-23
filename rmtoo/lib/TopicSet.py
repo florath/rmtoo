@@ -14,7 +14,7 @@
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 
 class TopicSet(Digraph, UsableFlag):
@@ -23,7 +23,7 @@ class TopicSet(Digraph, UsableFlag):
 
     def __init__(self, config, input_handler, commit, object_cache, input_mods):
         '''Read in all the dependent topics and the requirements.'''
-        tracer.info("Called; commit timestamp [%s]" 
+        tracer.info("Called; commit timestamp [%s]"
                     % input_handler.get_timestamp(commit))
         Digraph.__init__(self)
         UsableFlag.__init__(self)
@@ -99,7 +99,7 @@ class TopicSet(Digraph, UsableFlag):
     def get_requirement_set(self):
         '''Returns the requirement set for the whole topic set.'''
         return self.__requirement_set
-    
+
     def get_master_topic(self):
         '''Return the main topic.'''
         return self.__topic
@@ -111,7 +111,7 @@ class TopicSet(Digraph, UsableFlag):
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
-        if self.__topic!=None:
+        if self.__topic != None:
             self.__topic.execute(executor, func_prefix)
 
     def create_makefile_name(self, name, topicn):

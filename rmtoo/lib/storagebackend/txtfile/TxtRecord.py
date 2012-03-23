@@ -15,7 +15,8 @@
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
-from rmtoo.lib.logging.EventLogging import logger
+from rmtoo.lib.logging import tracer
+from rmtoo.lib.logging import logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 class TxtRecord(Record):

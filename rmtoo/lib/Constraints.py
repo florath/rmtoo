@@ -9,7 +9,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 # pylint: disable=W0232
 class Constraints:

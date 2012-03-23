@@ -15,7 +15,7 @@
 ###  the different lists.
 ###
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 import datetime
@@ -113,7 +113,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             f.write("\\textbf{Prio} & \\textbf{Chap} & "
                     "\\textbf{Requirement Id} & \\textbf{EfE} & "
                     "\\textbf{Sum} \\\ \hline\endhead\n")
-                       
+
             s = 0
             for p in l:
                 if topic_set.get_requirement_set().get_requirement(p[1]).\
@@ -263,6 +263,6 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
-        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
 

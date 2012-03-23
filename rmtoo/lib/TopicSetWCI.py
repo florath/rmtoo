@@ -11,7 +11,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 
 class TopicSetWCI:
@@ -19,20 +19,20 @@ class TopicSetWCI:
        This is implemented in the way it is (using fields
        instead of inheritance) because in this way the topic_set
        object can be reused (and stored in the object cache).'''
-    
+
     def __init__(self, topic_set, commit_info):
         '''Creates an object with the given values.'''
         self.__topic_set = topic_set
         self.__commit_info = commit_info
-        
+
     def get_topic_set(self):
         '''Returns the underlaying topic set.'''
         return self.__topic_set
-    
+
     def get_commit_info(self):
         '''Returns the commit info.'''
         return self.__commit_info
-        
+
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
         tracer.debug("Calling pre.")
@@ -51,6 +51,6 @@ class TopicSetWCI:
 
     def get_requirement_set(self):
         return self.__topic_set.get_requirement_set()
-    
+
     def write_to_logger(self):
         self.__topic_set.write_to_logger()

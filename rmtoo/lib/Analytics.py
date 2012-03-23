@@ -13,7 +13,7 @@ from rmtoo.lib.analytics.HotSpot import HotSpot
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.analytics.ReqTopicCohe import ReqTopicCohe
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 # pylint: disable=W0232
 class Analytics:

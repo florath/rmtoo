@@ -11,7 +11,7 @@
 
 from rmtoo.lib.vcs.Git import Git
 from rmtoo.lib.vcs.FileSystem import FileSystem
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 #pylint: disable=W0232
 class Factory:

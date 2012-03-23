@@ -11,7 +11,7 @@
 '''
 
 from types import ListType
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.RMTException import RMTException
 
 class ObjectCache:

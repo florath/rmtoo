@@ -16,7 +16,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.lib.vcs.Factory import Factory
@@ -116,7 +116,7 @@ class TopicContinuum(UsableFlag):
     def get_name(self):
         '''Return the name of the topic continuum.'''
         return self.__name
-    
+
     def get_topic_set(self, oid):
         '''Returns the topic set with the given id.'''
         return self.__topic_sets[oid]
@@ -135,7 +135,7 @@ class TopicContinuumIterator(GenIterator):
         for vcs_id in topic_continuum.get_vcs_commit_ids():
             self.__objs.append([vcs_id, topic_continuum.get_topic_set(vcs_id.get_commit())])
         GenIterator.__init__(self, self.__objs.__iter__())
-        
+
 #    def current(self):
 #        '''This is somewhat more complicated, because the list just contains
 #           the ids which must be looked-up first in the dictionary.'''
@@ -149,8 +149,7 @@ class TopicContinuumIterator(GenIterator):
 #    def next(self):
 #        GenIterator._next(self)
 #        return self.current()
-    
+
     def has_child(self):
         '''If the current element has a child, true is returned.'''
-        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes())>0
-    
+        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes()) > 0

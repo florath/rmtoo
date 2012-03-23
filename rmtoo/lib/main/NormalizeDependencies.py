@@ -13,7 +13,7 @@ import sys
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.FileSystem import FileSystem
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 

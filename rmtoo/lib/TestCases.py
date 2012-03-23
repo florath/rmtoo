@@ -9,17 +9,11 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 # pylint: disable=W0232
 class TestCases:
     '''Helper functions for testcases handling.'''
-
-#    @staticmethod
-#    def set_default_values(cfg):
-#        '''Set the default values to the given configuration.'''
-#        cfg.set_value('constraints.search_dirs',
-#                      ['/usr/share/pyshared/rmtoo/collection/constraints'])
 
     @staticmethod
     def collect(topic_set):

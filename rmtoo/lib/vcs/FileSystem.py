@@ -15,7 +15,7 @@ import time
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.RMTException import RMTException
 
@@ -35,6 +35,7 @@ class FileSystem(Interface):
             if dirs == None:
                 tracer.info("Directory [%s] not configured - skipping.",
                             dir_type)
+                continue
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
@@ -136,6 +137,10 @@ class FileSystem(Interface):
         assert commit == None
         tracer.debug("called: directory type [%s]" % dir_type)
         result = []
+        if dir_type not in self.__dirs:
+            '''Key not available: no files.'''
+            return result
+
         for directory in self.__dirs[dir_type]:
             result.extend(self.__get_file_infos_from_dir(directory))
         return result

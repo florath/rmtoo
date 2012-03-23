@@ -13,7 +13,7 @@
 '''
 
 from rmtoo.outputs.graph import graph
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
@@ -103,5 +103,5 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
-        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)

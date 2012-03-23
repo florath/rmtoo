@@ -15,6 +15,9 @@ import xml.dom.minidom
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
 from rmtoo.tests.lib.Utils import create_tmp_dir
+from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
+
+from logging import raiseExceptions
 
 def tmp_dir():
     return os.environ["rmtoo_test_dir"]
@@ -100,8 +103,14 @@ def create_std_log(mdir):
     return mout, merr
 
 def cleanup_std_log(mout, merr):
+    mout.flush()
+    merr.flush()
+    tear_down_log_handler()
+    tear_down_trace_handler()
     mout.close()
     merr.close()
+    global raiseExceptions
+    raiseExceptions = 0
 
 def delete_result_is_dir():
     assert(os.environ["rmtoo_test_dir"] != None)
@@ -170,7 +179,7 @@ def unify_output_dir(filename):
     c = fd.read()
     fd.close()
     # Replace
-      
+
     d = c.replace(os.environ["rmtoo_test_dir"],
                   "===SYMBOLIC-OUTPUT-DIR===")
     # Write out

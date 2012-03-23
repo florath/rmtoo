@@ -15,7 +15,7 @@ from rmtoo.lib.TestCases import TestCases
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):

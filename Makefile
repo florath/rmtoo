@@ -80,4 +80,4 @@ deb:
 .PHONY: last_test
 last_test:
 	nosetests -w rmtoo -v -s \
-		tests/BlackboxTest/Bb002Test/bb002Test.py
+		tests/BlackboxTest/Bb003Test/bb003Test.py

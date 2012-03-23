@@ -13,7 +13,7 @@
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 # imports from python-odf
@@ -201,7 +201,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__calcdoc = OpenDocumentSpreadsheet()
         self.__create_meta()
         self.__create_styles()
-        
+
     def topic_set_post(self, topics_set):
         '''Document storage.'''
         self.__calcdoc.save(self._output_filename, True)
@@ -301,11 +301,11 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__create_sums_sheet(sreqs)
         self.__create_constants_sheet()
         self.__create_result_sheet(sreqs)
-      
+
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
-        CreateMakeDependencies.write_reqs_dep(self._cmad_file, 
+        CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
 
     #################################################################

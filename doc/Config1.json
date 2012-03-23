@@ -7,7 +7,7 @@
         },
 	"logging": { 
 	    "stdout": {
-	        "loglevel": "critical"
+	        "loglevel": "info"
 	    },
 	    "tracer": {
 	        "loglevel": "info",

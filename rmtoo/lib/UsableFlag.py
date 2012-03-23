@@ -12,7 +12,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class UsableFlag:
     '''Holding flag to show if an object is usable or not.'''

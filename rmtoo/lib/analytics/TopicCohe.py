@@ -11,7 +11,7 @@
 
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class TopicCohe(Base):
     '''Class for checking topic coherence.'''

@@ -13,7 +13,7 @@
 '''
 
 from rmtoo.lib.TopicContinuum import TopicContinuum, TopicContinuumIterator
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.FuncCall import FuncCall
@@ -66,23 +66,22 @@ class TopicContinuumSet(UsableFlag):
 
     def get_continuum_dict(self):
         '''Returns the continuum.'''
-        return self.__continuum 
-    
-    
+        return self.__continuum
+
+
 class TopicContinuumSetIterator(GenIterator):
     '''This class provides an iterator interface for all the sub-elements
        of a topic continuum set.'''
-    
+
     def __init__(self, topic_continuum_set):
         '''Initialize the iterator.'''
         GenIterator.__init__(
             self, topic_continuum_set.get_continuum_dict().iteritems())
-    
+
     def has_child(self):
         '''If the current element has a child, true is returned.'''
-        return len(self._current[1].get_vcs_commit_ids())>0
-    
+        return len(self._current[1].get_vcs_commit_ids()) > 0
+
     def iter_children(self):
         '''Return an iterator for the children.'''
         return TopicContinuumIterator(self._current[1])
-        

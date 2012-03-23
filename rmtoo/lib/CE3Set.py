@@ -9,7 +9,7 @@
  For licensing details see COPYING
 '''
 
-from rmtoo.lib.logging.EventLogging import tracer
+from rmtoo.lib.logging import tracer
 
 class CE3Set:
     '''Sets which holds all the constrains execution environments.'''

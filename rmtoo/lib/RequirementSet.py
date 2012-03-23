@@ -17,14 +17,14 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
-from rmtoo.lib.logging.EventLogging import tracer, logger
+from rmtoo.lib.logging import tracer, logger
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.FuncCall import FuncCall
-from rmtoo.lib.TestCase import TestCase 
+from rmtoo.lib.TestCase import TestCase
 from rmtoo.lib.GenIterator import GenIterator
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
@@ -208,7 +208,7 @@ class RequirementSet(Digraph, UsableFlag):
         for fileinfo in fileinfos:
             self.__read_one_constraint(fileinfo, input_mods, object_cache)
         tracer.debug("Finished.");
-        
+
     # TODO: double feature code with small adaptions only.
     def __read_one_testcase(self, fileinfo, input_mods, object_cache):
         '''Read in one testcase from the file info.'''
@@ -243,7 +243,7 @@ class RequirementSet(Digraph, UsableFlag):
             logger.error(LogFormatter.format(
                 115, "could not be parsed", testcase.id))
         tracer.debug("Finished.")
-        
+
     def __read_all_testcases(self, input_handler, commit, input_mods,
                                object_cache):
         '''Read in all the testcases from the input handler.'''
@@ -252,7 +252,7 @@ class RequirementSet(Digraph, UsableFlag):
         for fileinfo in fileinfos:
             self.__read_one_testcase(fileinfo, input_mods, object_cache)
         tracer.debug("Finished.");
-        
+
 
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
@@ -264,7 +264,7 @@ class RequirementSet(Digraph, UsableFlag):
         tracer.debug("Reading constrains.")
         self.__read_all_constraints(input_handler, commit, input_mods,
                                     object_cache)
-        
+
         tracer.debug("Reading test cases.")
         self.__read_all_testcases(input_handler, commit, input_mods,
                                   object_cache)
@@ -287,12 +287,12 @@ class RequirementSet(Digraph, UsableFlag):
         '''Add constraint to the internal container.'''
         tracer.debug("Add constraint [%s]." % ctr.get_id())
         self.__constraints[ctr.get_id()] = ctr
-        
+
     def _add_testcase(self, testcase):
         '''Add testcase to the internal container.'''
         tracer.debug("Add testcase [%s]." % testcase.get_id())
-        self.__testcases[testcase.get_id()] = testcase 
-        
+        self.__testcases[testcase.get_id()] = testcase
+
     def _add_ce3(self, name, ce3):
         '''Add the ce3 under the given name.'''
         tracer.debug("Add CE3 for requirement [%s]" % name)
@@ -312,17 +312,17 @@ class RequirementSet(Digraph, UsableFlag):
                 # Add to the common digraph structure
                 restricted_reqs.add_node(req)
                 # Add ce3 of the requirement
-                restricted_reqs._add_ce3(req.get_id(), 
+                restricted_reqs._add_ce3(req.get_id(),
                                          self.__ce3set.get(req.get_id()))
                 ctrs = req.get_value("Constraints")
                 if ctrs != None:
                     for cval in ctrs:
                         restricted_reqs._add_constraint(self.__constraints[cval])
-                    
+
                 # Add testcases
                 testcases = req.get_value("Test Cases")
                 if testcases != None:
-                    tracer.debug("Restricting testcases [%s]" % testcases) 
+                    tracer.debug("Restricting testcases [%s]" % testcases)
                     for testcase in testcases:
                         restricted_reqs._add_testcase(self.__testcases[testcase])
 
@@ -515,7 +515,7 @@ class RequirementSet(Digraph, UsableFlag):
                 req.set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
             self.__ce3set.insert(req_name, ce3)
-        tracer.debug("Finished. Number of constraints [%d]." % 
+        tracer.debug("Finished. Number of constraints [%d]." %
                      self.__ce3set.length())
 
     def __unite_ce3s(self):
@@ -555,7 +555,7 @@ class RequirementSet(Digraph, UsableFlag):
     def get_master_nodes(self):
         '''Return the available master nodes.'''
         tracer.debug("Master nodes [%s]" % self.__master_nodes)
-        if self.__master_nodes==None:
+        if self.__master_nodes == None:
             self.find_master_nodes()
         return self.__master_nodes
 
@@ -578,7 +578,7 @@ class RequirementSet(Digraph, UsableFlag):
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
         return self.__ce3set
-    
+
     def get_constraints(self):
         '''Return the constraints.'''
         return self.__constraints
@@ -628,10 +628,10 @@ class RequirementSet(Digraph, UsableFlag):
             r.record.write_fd(fd)
             fd.close()
         return True
-    
+
 class RequirementSetIterator(GenIterator):
 
     def __init__(self, requirement_set):
         GenIterator.__init__(
             self, requirement_set.get_master_nodes().__iter__())
-        
+
