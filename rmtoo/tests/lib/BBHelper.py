@@ -14,7 +14,7 @@ import zipfile
 import xml.dom.minidom
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
-from rmtoo.tests.lib.Utils import create_tmp_dir
+from rmtoo.tests.lib.Utils import create_tmp_dir, hide_timestamp
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
 
 def tmp_dir():
@@ -199,15 +199,13 @@ def check_result(missing_files, additional_files, diffs):
 def prepare_stderr():
     '''Some lines of the stderr contain a date / timestamp.
        This must be unified in order to be able to compare them.'''
-    date_re = re.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"
-                         ":[0-9]{2},[0-9]{3}")
     mstderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"))
     lines = mstderr.readlines()
     mstderr.close()
 
     new_stderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"), "w")
     for line in lines:
-        new_stderr.write("%s" % date_re.sub("===DATETIMESTAMP===", line))
+        new_stderr.write("%s" % hide_timestamp(line))
     new_stderr.close()
 
 def check_file_results(mdir):

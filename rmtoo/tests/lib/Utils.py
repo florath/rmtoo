@@ -11,6 +11,7 @@
 
 import tempfile
 import shutil
+import re
 
 def create_tmp_dir():
     '''Create a temporary directory.'''
@@ -20,3 +21,8 @@ def delete_tmp_dir(dirname):
     '''Deletes a temporary directory.'''
     shutil.rmtree(dirname)
 
+_date_re = re.compile("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"
+                      ":[0-9]{2},[0-9]{3}")
+
+def hide_timestamp(istr):
+    return _date_re.sub("===DATETIMESTAMP===", istr)

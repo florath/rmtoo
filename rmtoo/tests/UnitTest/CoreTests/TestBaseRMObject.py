@@ -10,16 +10,17 @@
 '''
 
 import StringIO
-from rmtoo.lib.logging.MemLogStore import MemLogStore
 from rmtoo.lib.BaseRMObject import BaseRMObject
-from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.tests.lib.TestConfig import TestConfig
+from rmtoo.lib.logging import init_logger, tear_down_log_handler
+from rmtoo.tests.lib.Utils import hide_timestamp
+
 
 class TMods:
 
     def get_type_set(self):
         return set([1, 2, 3])
-    
+
     def get_tagtype(self, ttype):
         return {"heinzelmann": self}
 
@@ -30,18 +31,24 @@ class TBRMObj(BaseRMObject):
         tc.set_value('input.txtfile.whatsoever.max_line_length', 80)
         tm = TMods()
         tm.tagtypes = {"mytag": {"keyA": TMods()}}
-        self.mls = MemLogStore()
-        BaseRMObject.__init__(self, "mytag", "", "MRid", self.mls, tm,
+        BaseRMObject.__init__(self, "mytag", "", "MRid", tm,
                               tc, "tobjs", None)
+
+expected_result = \
+    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;99; " \
+    "90:Wrong module type [mytag] not in [set([1, 2, 3])]\n"
 
 class TestBaseRMObject:
 
     def test_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
 
-        tbrmo = TBRMObj()
-        
-        print("ERRLOG [%s]" % tbrmo.mls.to_list())
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
-        assert(tbrmo.mls.to_list() ==
-               [[90, 'error', 'Wrong module type [mytag] not in [set([1, 2, 3])]']])
+        tbrmo = TBRMObj()
+
+        result = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
+
+        assert(result == expected_result)

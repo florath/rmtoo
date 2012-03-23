@@ -9,6 +9,7 @@
  For licensing details see COPYING
 '''
 
+import StringIO
 import unittest
 import json
 import os
@@ -16,9 +17,9 @@ import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
-from rmtoo.lib.logging.MemLogStore import MemLogStore
-from rmtoo.lib.logging.LogLevel import LogLevel
+from rmtoo.tests.lib.Utils import create_tmp_dir
+from rmtoo.lib.logging import init_logger, tear_down_log_handler
+from rmtoo.tests.lib.Utils import hide_timestamp
 
 class TestConfiguration(unittest.TestCase):
 
@@ -52,11 +53,12 @@ class TestConfiguration(unittest.TestCase):
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
         self.failUnlessEqual({'create_makefile_dependencies': '/tmp/cmad'},
-                             config.get_value("actions"))
+                             config.get_value("actions").get_dict())
 
     def test_json_init_add_new_cmd_line_params(self):
         '''Init Cfg with JSON and adds parameters with command line options'''
-        log_store = MemLogStore()
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
         # Create two JSON files.
         tmpdir = create_tmp_dir()
@@ -75,33 +77,37 @@ class TestConfiguration(unittest.TestCase):
                                       '-j', '{"m": {"q": 100}}',
                                       '-j', 'file://' + jsonfile2])
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        config.evaluate(log_store)
+        config.evaluate()
         self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
         self.failUnlessEqual(11, config.get_value("m.w"))
-        self.failUnlessEqual(MemLogStore.create_mls([]), log_store)
+        lstderr = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
+        self.failUnlessEqual(lstderr, "")
 
-    def test_json_init_add_old_cmd_line_params(self):
+    def test_json_init_add_old2_cmd_line_params(self):
         '''Init Cfg with old config and adds parameters with command line options'''
-        log_store = MemLogStore()
+        mstderr = StringIO.StringIO()
+        init_logger(mstderr)
 
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
         config.merge_cmd_line_params(['-f', 'tests/UnitTest/CoreTests/'
                                       'testdata/Config3.py'])
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        config.evaluate(log_store)
+        config.evaluate()
         self.failUnlessEqual(['development', 'management', 'users', 'customers'],
                              config.get_value("requirements.stakeholders"))
-        log_store.write_log(sys.stdout)
+        lstderr = hide_timestamp(mstderr.getvalue())
+        tear_down_log_handler()
 
-        self.failUnlessEqual(MemLogStore.create_mls([[
-            100, LogLevel.warning(),
-            "Old Configuration: Not converted attributes: [['output_specs2']]"]]),
-                             log_store)
+        expected_result = "===DATETIMESTAMP===;rmtoo;WARNING;Old;" \
+        "internal_convert_to_new;171;100:Old Configuration: " \
+        "Not converted attributes: [['output_specs2']]\n"
+
+        self.failUnlessEqual(expected_result, lstderr)
 
     def test_dollar_replacement_environment_variables(self):
         '''Check if the $ replacement works with environment variables.'''
-        log_store = MemLogStore()
         os.environ["huho"] = "ThereIsSomeVal"
         config = Cfg.new_by_json_str('{"k": "${ENV:huho}"}')
         val = config.get_rvalue("k")
@@ -111,7 +117,6 @@ class TestConfiguration(unittest.TestCase):
 
     def test_dollar_replacement_configuration_variables(self):
         '''Check if the $ replacement works with configuration variables.'''
-        log_store = MemLogStore()
         config = Cfg.new_by_json_str(
             '{"k": "${huho}", "huho": "ThereIsSomeVal"}')
         self.failUnlessEqual("ThereIsSomeVal", config.get_rvalue("k"),

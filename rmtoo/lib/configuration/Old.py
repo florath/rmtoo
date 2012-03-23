@@ -15,6 +15,8 @@
 #@PydevCodeAnalysisIgnore
 # pylint: disable=W0611
 import os
+from rmtoo.lib.logging import logger
+from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 class Old:
     '''Deprecated.
@@ -131,7 +133,7 @@ class Old:
         cfg.set_value('constraints', constraints_specs)
 
     @staticmethod
-    def internal_convert_to_new(cfg, old_config, log_store):
+    def internal_convert_to_new(cfg, old_config):
         '''Converts the old given old_config object to the new configuration
            using a dictionary.'''
         cfg.set_value('requirements', {})
@@ -164,12 +166,13 @@ class Old:
             Old.internal_convert_constraints(cfg, old_config.constraints_specs)
             old_config_dir.remove('constraints_specs')
         if len(old_config_dir) > 0:
-            log_store.warning(100, "Old Configuration: "
-                    "Not converted attributes: [%s]" % old_config_dir)
+            logger.warning(LogFormatter.format(
+                    100, "Old Configuration: "
+                    "Not converted attributes: [%s]" % old_config_dir))
 
     @staticmethod
-    def convert_to_new(cfg, old_config_file, log_store):
+    def convert_to_new(cfg, old_config_file):
         '''Reads in the old configuration file and converts it to 
            a dictionary which can be used in the new configuration.'''
         old_config = Old.load_config(old_config_file)
-        return Old.internal_convert_to_new(cfg, old_config, log_store)
+        return Old.internal_convert_to_new(cfg, old_config)

@@ -42,11 +42,11 @@ class TestOutputLaTeX2:
         topic = Topic(None, "TName", tvcs, None, tfile, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         tmpdir = create_tmp_dir()
-        
+
         rset = RequirementSet(tcfg)
-        
+
         ttopic_set = TestTopicSet(rset)
-        
+
         mconfig = {"output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
         l2 = latex2(mconfig)
 
@@ -73,7 +73,7 @@ class TestOutputLaTeX2:
                     "output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
 
         l2 = latex2(mconfig)
-        req = Requirement(None, "TestReq", None, None, None, None)
+        req = Requirement(None, "TestReq", None, None, None)
         req.values = {}
         req.values["Name"] = RecordEntry("Name", "my name")
         req.values["Type"] = Requirement.rt_requirement

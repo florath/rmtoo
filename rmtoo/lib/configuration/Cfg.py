@@ -143,7 +143,7 @@ class Cfg:
             if self.config['configuration'] == {}:
                 del(self.config['configuration'])
 
-            Old.convert_to_new(self, old_config_file, log_store)
+            Old.convert_to_new(self, old_config_file)
         except RMTException:
             # Nothing to do: old configuration file not specified
             pass
