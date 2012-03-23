@@ -20,7 +20,7 @@ class stats_sprint_burndown1(StdOutputParams, ExecutorTopicContinuum,
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
-        tracer.debug("Called.")
+        tracer.info("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
 

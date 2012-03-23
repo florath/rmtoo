@@ -33,7 +33,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
-        tracer.debug("Called.")
+        tracer.info("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
         self.__ce3set = None

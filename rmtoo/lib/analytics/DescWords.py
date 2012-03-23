@@ -81,7 +81,7 @@ class DescWords(Base):
 
         if def_lang in DescWords.words:
             return DescWords.words[def_lang]
-        tracer.warn("Language [%s] not suppurted, using en_GB." % def_lang)
+        tracer.warn("Language [%s] not supported, using en_GB." % def_lang)
         return DescWords.words["en_GB"]
 
     @staticmethod
@@ -99,6 +99,15 @@ class DescWords(Base):
                 log.append("%+4d:%d*%d: %s" % (fal * wlvl, fal, wlvl, wdsc))
                 # Note the result of this test in the requirement itself.
         return Result('DescWords', lname, level, log)
+
+    def topic_continuum_set_sort(self, list_to_sort):
+        '''Can only handle from the last version.'''
+        return [list_to_sort[-1]]
+
+    def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
+        '''Because graph2 can only one topic continuum,
+           the latest (newest) is used.'''
+        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''

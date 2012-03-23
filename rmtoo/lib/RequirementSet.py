@@ -226,7 +226,7 @@ class RequirementSet(Digraph, UsableFlag):
         if testcase == None:
             file_content = fileinfo.get_content()
             testcase = TestCase(file_content, rid, fileinfo.get_filename(),
-                                self, input_mods, self._config)
+                                input_mods, self._config)
             # Add the requirement to the cache.
             object_cache.add(vcs_id, "TestCase", testcase)
 

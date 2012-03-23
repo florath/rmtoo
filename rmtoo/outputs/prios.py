@@ -35,7 +35,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def __init__(self, oconfig):
         '''Create a prios output object.'''
-        tracer.debug("Called.")
+        tracer.info("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
 

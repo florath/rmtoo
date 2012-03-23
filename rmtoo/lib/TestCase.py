@@ -13,8 +13,8 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class TestCase(BaseRMObject):
     
-     def __init__(self, content, rid, file_path, mls, mods, config):
+     def __init__(self, content, rid, file_path, mods, config):
         BaseRMObject.__init__(self, InputModuleTypes.testcase, content, 
-                              rid, mls, mods,
+                              rid, mods,
                               config, "testcases", file_path)
 

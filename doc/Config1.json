@@ -50,7 +50,7 @@
 			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
 		],
 		[
-		    "git", {
+		    "ignore:git", {
 		        "start_vers": "v21", 
 			"end_vers": "v22", 
 			"requirements_dirs": [ "doc/requirements" ],

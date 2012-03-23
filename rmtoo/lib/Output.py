@@ -42,7 +42,7 @@ class Output(Executor):
 
     def __common_topic_continuum_pre(self, topic_continuum, special):
         '''Common method used by cmad_ and normal callback.'''
-        tracer.debug("Called.")
+        tracer.info("Called.")
         output_config = topic_continuum.get_output_config()
 
         for oconfig_name, oconfig in output_config.iteritems():
@@ -53,7 +53,7 @@ class Output(Executor):
                     FuncCall.pcall(output_obj, "init_" + special,
                                    self.__cmad_file)
                 topic_continuum.execute(output_obj, special)
-        tracer.debug("Finished.")
+        tracer.info("Finished.")
 
     def topic_continuum_pre(self, topic_continuum):
         '''This is called in the TopicsContinuum pre-phase.'''
