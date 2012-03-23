@@ -396,7 +396,7 @@ class RequirementSet(Digraph, UsableFlag):
         success = True
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
-                tracer.error("Handling of requirement [%s] was not successful"
+                tracer.info("Handling of requirement [%s] was not successful"
                              % req.get_id())
                 success = False
         tracer.debug("Finished; success [%s]." % success)

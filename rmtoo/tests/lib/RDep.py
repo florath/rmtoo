@@ -17,7 +17,7 @@ class ReqSet(Digraph):
 
     def __init__(self, d=None):
         Digraph.__init__(self, d,
-                         lambda nname: Requirement(None, nname, None,
+                         lambda nname: Requirement(None, nname, 
                                                    None, None, None))
 
 # Create a set of parameters for the test-cases
