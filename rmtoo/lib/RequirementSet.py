@@ -525,6 +525,7 @@ class RequirementSet(Digraph, UsableFlag):
            The ce3s must be executed in topological order.'''
         ce3tsort = topological_sort(self)
         for r in ce3tsort:
+            # TODO Outgoing
             # Have a look for incoming nodes
             ince3s = []
             for i in r.incoming:

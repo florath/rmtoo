@@ -38,6 +38,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         CreateMakeDependencies.__init__(self)
         self.__ce3set = None
         self.__fd = None
+        self.__constraints_reqs_ref = {}
 
         if not self._config.is_available('req_attributes'):
             self._config.set_value('req_attributes',
@@ -79,6 +80,18 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         if cnstrt.is_val_av_and_not_null("Note"):
             self.__fd.write("\n\\textbf{Note:} %s\n"
                      % cnstrt.get_value("Note").get_content())
+
+        # Write out the references to the requirements
+
+        reqs_refs = []
+        for req in self.__constraints_reqs_ref[cname]:
+            refid = latex2.__strescape(req)
+            refctr = "\\ref{%s} \\nameref{%s}" \
+                           % (refid, refid)
+            reqs_refs.append(refctr)
+        self.__fd.write("\n\\textbf{Requirements:} %s\n" %
+                        ", ".join(reqs_refs))
+
         tracer.debug("Finished.")
 
     def __output_latex_constraints(self, constraints):
@@ -166,6 +179,11 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Sort by id.'''
         return sorted(list_to_sort, key=lambda r: r.id)
 
+    def __add_constraint_req_ref(self, constraint, requirement):
+        if constraint not in self.__constraints_reqs_ref:
+            self.__constraints_reqs_ref[constraint] = []
+        self.__constraints_reqs_ref[constraint].append(requirement)
+
     def requirement(self, req):
         '''Write out one requirement.'''
         self.__fd.write("%% REQ '%s'\n" % req.id)
@@ -219,6 +237,9 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     if description != None:
                         refctr += " [" + description + "] "
                     cstrs.append(refctr)
+                    # Also put a reference (for later use) in the 
+                    # constraints to requirements ref.
+                    self.__add_constraint_req_ref(refid, req.get_id())
 
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
