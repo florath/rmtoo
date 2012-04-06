@@ -206,13 +206,19 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                                                 key=lambda r: r.id)]))
             self.__fd.write("\n")
 
+        tracer.debug("Output constraints")
         if self.__ce3set != None:
             cnstrt = self.__ce3set.get(req.get_id())
+            tracer.debug("Constraints are available [%s]" % cnstrt)
+            tracer.debug("Check constraint header output [%s]" %
+                         cnstrt.len())
             if cnstrt != None and cnstrt.len() > 0:
+                tracer.debug("Output constraint header")
                 self.__fd.write("\n\\textbf{Constraints:} ")
                 cstrs = []
                 for key, val in sorted(cnstrt.get_values().iteritems()):
                     refid = latex2.__strescape(key)
+                    tracer.debug("Output constraint [%s]" % refid)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                            % (refid, refid)
                     description = val.description()
