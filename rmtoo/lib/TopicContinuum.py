@@ -130,10 +130,16 @@ class TopicContinuumIterator(GenIterator):
        of a topic continuum.'''
 
     def __init__(self, topic_continuum):
-        '''Initialize the iterator.'''
+        '''Initialize the iterator.
+           The iterator points to a list of the vcs_id and the appropriate 
+           topic set.
+           Please note: the current implementation of this iterator cannot
+           handle changes.'''
         self.__objs = []
+        self.__topic_continuum = topic_continuum
         for vcs_id in topic_continuum.get_vcs_commit_ids():
-            self.__objs.append([vcs_id, topic_continuum.get_topic_set(vcs_id.get_commit())])
+            self.__objs.append([vcs_id, topic_continuum.get_topic_set(
+                                                    vcs_id.get_commit())])
         GenIterator.__init__(self, self.__objs.__iter__())
 
 #    def current(self):
@@ -152,4 +158,7 @@ class TopicContinuumIterator(GenIterator):
 
     def has_child(self):
         '''If the current element has a child, true is returned.'''
-        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes()) > 0
+        return self._current[1].get_topic_set().get_master_topic() != None
+
+#        print("SELG CURRENT [%s]" % self._current)
+#        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes()) > 0

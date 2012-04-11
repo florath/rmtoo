@@ -17,13 +17,13 @@ import gobject
 
 import sys
 
-from rmtoo.lib.logging.EventLogging import configure_logging
+from rmtoo.lib.logging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 
 class GUI1ViewOnly:
-    
+
     def selection_received(self, widget, selection_data, data):
         print("SELECTED [%s] [%s]" % (selection_data, data))
 
@@ -32,13 +32,13 @@ class GUI1ViewOnly:
         print("SELECTED A [%s]" % (selection))
         print("SELECTED B [%s]" % (model))
         print("SELECTED C [%s]" % (paths))
-    
+
     def __add_requirements(self, model, iter, node):
         liter = model.append(iter)
         model.set(liter, 0, node.get_id())
         for n in node.outgoing:
             self.__add_requirements(model, liter, n)
-    
+
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
         scrolled_window = gtk.ScrolledWindow()
@@ -61,11 +61,11 @@ class GUI1ViewOnly:
                 model.set(iter_commit, 0, commit_id)
                 topic_set = continuum.get_topic_set(commit_id.get_commit())
                 req_set = topic_set.get_requirement_set()
-                
+
                 req_set.find_master_nodes()
                 for master_node in req_set.get_master_nodes():
                     self.__add_requirements(model, iter_commit, master_node)
-                
+
 #                for requirement_id in req_set.get_all_requirement_ids():
 #                    iter_requirement = model.append(iter_commit)
 #                    model.set(iter_requirement, 0, requirement_id)
@@ -82,7 +82,7 @@ class GUI1ViewOnly:
         tree_view.append_column(column)
 
         return scrolled_window
-   
+
     # Add some text to our text widget - this is a callback that is invoked
     # when our window is realized. We could also force our window to be
     # realized with GtkWidget.realize, but it would have to be part of a
@@ -109,7 +109,7 @@ class GUI1ViewOnly:
         self.insert_text(buffer)
         scrolled_window.show_all()
         return scrolled_window
-   
+
 
     def __init__(self, config, input_mods, _mstdout, mstderr):
         try:
@@ -118,11 +118,11 @@ class GUI1ViewOnly:
             mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
             return
-        
+
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("rmtoo - Read only GUI")
         self.window.set_default_size(800, 600)
-        
+
         # create a vpaned widget and add it to our toplevel window
         hpaned = gtk.HPaned()
         self.window.add(hpaned)
@@ -136,23 +136,23 @@ class GUI1ViewOnly:
         text = self.create_text()
         hpaned.add2(text)
         text.show()
-        
+
         self.window.show()
 
     def main(self):
         gtk.main()
-        
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     view_only = GUI1ViewOnly(config, input_mods, _mstdout, mstderr)
     view_only.main()
-        
+
 def main_impl(args, mstdout, mstderr):
     '''The real implementation of the main function:
        o get config
        o set up logging
        o do everything'''
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
-    configure_logging(config)
+    configure_logging(config, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
