@@ -28,54 +28,65 @@ class GUI1ViewOnly:
         print("SELECTED [%s] [%s]" % (selection_data, data))
 
     def on_selection_changed(self, selection, *args):
-        model, paths = selection.get_selected_rows()
+        store, paths = selection.get_selected_rows()
         print("SELECTED A [%s]" % (selection))
-        print("SELECTED B [%s]" % (model))
+        print("SELECTED B [%s]" % (store))
         print("SELECTED C [%s]" % (paths))
+        giter = store.get_iter(paths[0])
+        print("SELECTED D [%s]" % (giter))
+        print("SELECTED E [%s]" % (dir(giter)))
 
-    def __add_requirements(self, model, iter, node):
-        liter = model.append(iter)
-        model.set(liter, 0, node.get_id())
+    def __store_add_requirements(self, store, iter, node):
+        liter = store.append(iter)
+        store.set(liter, 0, node.get_id())
         for n in node.outgoing:
-            self.__add_requirements(model, liter, n)
+            self.__store_add_requirements(store, liter, n)
+
+    def __store_add_topic(self, tree_store, iter_topic, topic):
+        titer = tree_store.append(iter_topic, [topic.get_id()])
+        for n in topic.outgoing:
+            self.__store_add_topic(tree_store, titer, n)
+
+    def __store_add_vcs_commit_ids(self, tree_store, name, continuum,
+                                   iter_continuum):
+        for commit_id in continuum.get_vcs_commit_ids():
+            iter_commit = tree_store.append(iter_continuum, [commit_id])
+            iter_topic = tree_store.append(iter_commit, ["topics"])
+            iter_requirements = tree_store.append(iter_commit, ["requirements"])
+
+            topic_set = continuum.get_topic_set(commit_id.get_commit())
+            req_set = topic_set.get_requirement_set()
+
+            master_topic = topic_set.get_master_topic()
+            self.__store_add_topic(tree_store, iter_topic, master_topic)
+
+            req_set.find_master_nodes()
+            for master_node in req_set.get_master_nodes():
+                self.__store_add_requirements(tree_store, iter_requirements,
+                                              master_node)
+
+    def __store_add_topic_continuum_set(self, tree_store, topic_continuum_set):
+        for name, continuum in iter(sorted(
+                        topic_continuum_set.get_continuum_dict().items())):
+            iter_continuum = tree_store.append(None, [name])
+            self.__store_add_vcs_commit_ids(tree_store, name, continuum,
+                                            iter_continuum)
 
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 
-        model = gtk.TreeStore(gobject.TYPE_STRING)
+        tree_store = gtk.TreeStore(gobject.TYPE_STRING)
 
-        tree_view = gtk.TreeView(model)
+        tree_view = gtk.TreeView(tree_store)
         scrolled_window.add_with_viewport (tree_view)
         tree_view.show()
 
         selection = tree_view.get_selection()
         selection.connect('changed', self.on_selection_changed)
 
-        for name, continuum in topic_continuum_set.get_continuum_dict().iteritems():
-            iter_continuum = model.append(None)
-            model.set(iter_continuum, 0, name)
-            for commit_id in continuum.get_vcs_commit_ids():
-                iter_commit = model.append(iter_continuum)
-                model.set(iter_commit, 0, commit_id)
-                topic_set = continuum.get_topic_set(commit_id.get_commit())
-                req_set = topic_set.get_requirement_set()
-
-                req_set.find_master_nodes()
-                for master_node in req_set.get_master_nodes():
-                    self.__add_requirements(model, iter_commit, master_node)
-
-#                for requirement_id in req_set.get_all_requirement_ids():
-#                    iter_requirement = model.append(iter_commit)
-#                    model.set(iter_requirement, 0, requirement_id)
-
-
-        # Add some messages to the window
-#        for i in range(10):
-#            msg = "Message #%d" % i
-#            iter = model.append(None)
-#            model.set(iter, 0, msg)
+        self.__store_add_topic_continuum_set(tree_store, topic_continuum_set)
 
         cell = gtk.CellRendererText()
         column = gtk.TreeViewColumn("Requirements", cell, text=0)
