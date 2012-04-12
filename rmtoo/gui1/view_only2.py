@@ -217,11 +217,11 @@ class GUI1ViewOnly:
         print("SELECTED B [%s]" % (model))
         print("SELECTED C [%s]" % (paths))
 
-    def __add_requirements(self, model, iter, node):
-        liter = model.append(iter)
-        model.set(liter, 0, node.get_id())
+    def __add_requirements(self, store, iter, node):
+        liter = store.append(iter)
+        store.set(liter, 0, node.get_id())
         for n in node.outgoing:
-            self.__add_requirements(model, liter, n)
+            self.__add_requirements(store, liter, n)
 
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
