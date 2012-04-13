@@ -10,7 +10,6 @@
 '''
 
 import os
-import StringIO
 
 from rmtoo.outputs.latex2 import latex2
 from rmtoo.lib.Topic import Topic
@@ -20,8 +19,7 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.RequirementStatus import RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable
 from rmtoo.tests.lib.TestVCS import TestVCS
 from rmtoo.tests.lib.TestConfig import TestConfig

@@ -11,13 +11,13 @@
 
 from rmtoo.lib.RMTException import RMTException
 
-class Digraph:
+class Digraph(object):
 
-    class Node:
-        def __init__(self, name=None):
-            # Incoming and outgoing are lists of nodes.  Typically one
-            # direction is provided and the other can be automatically
-            # computed. 
+    class Node(object):
+        def __init__(self, name):
+            '''Incoming and outgoing are lists of nodes.  Typically one
+               direction is provided and the other can be automatically
+               computed.'''
             self.incoming = []
             self.outgoing = []
             self.name = name
@@ -67,49 +67,55 @@ class Digraph:
             # Did not find the other node.
             return False
 
-    # Create a digraph from the given dictionary representation. 
-    # If no dictionary is given, an empty digraph will be created.
     def __init__(self, d=None, node_gen_func=Node):
+        '''Create a digraph from the given dictionary representation. 
+           If no dictionary is given, an empty digraph will be created.'''
         self.nodes = []
         self.named_nodes = None
         if d != None:
             self.create_from_dict(d, node_gen_func)
+        self.__named_nodes = {}
 
-    # Creates an edge from a to b - both must be nodes.
     @staticmethod
     def create_edge(a, b):
+        '''Creates an edge from a to b - both must be nodes.'''
+        assert isinstance(a, Digraph.Node)
+        assert isinstance(b, Digraph.Node)
         a.outgoing.append(b)
         b.incoming.append(a)
 
-    # Adds a new node to the graph
     def add_node(self, a):
-        # Check if the node with the same name already exists.
+        '''Adds a new node to the graph.
+           Check if the node with the same name already exists.'''
+        assert isinstance(a, Digraph.Node)
+
         for n in self.nodes:
             if n.name == a.name:
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % a.name)
+        self.__named_nodes[a.name] = a
         self.nodes.append(a)
 
     # Low level creation method, which really does the job of
     # converting a given dictionary to a digraph
-    def create_from_dict(self, d, node_gen_func=Node):
-        # First run: create all nodes
-        named_nodes = {}
-        for node_name in d:
-            # Create the node and put it into the object list of all
-            # nodes and into the local dictionary of named nodes.
-            named_node = node_gen_func(node_name)
-            self.nodes.append(named_node)
-            named_nodes[node_name] = named_node
-
-        # Second run: run thorugh all nodes and create the edges.
-        for node_name, outs in d.items():
-            for o in outs:
-                if o not in named_nodes:
-                    raise RMTException(24, "Node '%s' is referenced "
-                                       "but not specified" % o)
-                self.create_edge(named_nodes[node_name],
-                                 named_nodes[o])
+#    def create_from_dict(self, d, node_gen_func=Node):
+#        # First run: create all nodes
+#        named_nodes = {}
+#        for node_name in d:
+#            # Create the node and put it into the object list of all
+#            # nodes and into the local dictionary of named nodes.
+#            named_node = node_gen_func(node_name)
+#            self.nodes.append(named_node)
+#            named_nodes[node_name] = named_node
+#
+#        # Second run: run thorugh all nodes and create the edges.
+#        for node_name, outs in d.items():
+#            for o in outs:
+#                if o not in named_nodes:
+#                    raise RMTException(24, "Node '%s' is referenced "
+#                                       "but not specified" % o)
+#                self.create_edge(named_nodes[node_name],
+#                                 named_nodes[o])
 
     # Reverse operation: outputs this digraph and create a dictionary
     # from it.
@@ -130,33 +136,30 @@ class Digraph:
     # Build up a dictionary with name:node pairs.
     # This will only be done, iff every node has a name (None is not a
     # name) and all names are different.
-    def build_named_nodes(self):
-        self.named_nodes = {}
-        for n in self.nodes:
-            if n.name == None:
-                # Delete the whole dictionary first
-                self.named_nodes = None
-                raise RMTException(20, "cannot create node dictionary "
-                                   "- node has no name")
-            if n.name in self.named_nodes:
-                # Also: delete the whole dictionary first.
-                self.named_nodes = None
-                raise RMTException(21, "same name for (at least) two "
-                                   "nodes '%s'" % n.name)
-
-            # Ok. Then put it into the dictionary:
-            self.named_nodes[n.name] = n
+#    def build_named_nodes(self):
+#        self.named_nodes = {}
+#        for n in self.nodes:
+#            if n.name == None:
+#                # Delete the whole dictionary first
+#                self.named_nodes = None
+#                raise RMTException(20, "cannot create node dictionary "
+#                                   "- node has no name")
+#            if n.name in self.named_nodes:
+#                # Also: delete the whole dictionary first.
+#                self.named_nodes = None
+#                raise RMTException(21, "same name for (at least) two "
+#                                   "nodes '%s'" % n.name)
+#
+#            # Ok. Then put it into the dictionary:
+#            self.named_nodes[n.name] = n
 
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
     def get_named_node_no_throw(self, name):
-        if not hasattr(self, "named_nodes") or self.named_nodes == None:
-            raise RMTException(22, "no named_nodes dictionary available "
-                               "- maybe call 'build_named_nodes()' first")
-        if name not in self.named_nodes:
+        if name not in self.__named_nodes:
             return None
         # When all checks succeed: return the value
-        return self.named_nodes[name]
+        return self.__named_nodes[name]
 
     # Mostly the same as before, but throws if the node can not be found. 
     def get_named_node(self, name):

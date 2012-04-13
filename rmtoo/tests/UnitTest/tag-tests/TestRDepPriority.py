@@ -30,16 +30,17 @@ Type: requirement''', 'B', None, None, None)
         reqset._add_requirement(req2)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
-        reqset.build_named_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").set_value("Factor", 1.0)
-        reqset.get_named_node("B").set_value("Factor", 0.8)
+        reqset.get_named_node("A").get_requirement().set_value("Factor", 1.0)
+        reqset.get_named_node("B").get_requirement().set_value("Factor", 0.8)
 
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
-        
-        assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
-        assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
+
+        assert(reqset.get_named_node("A").get_requirement()
+               .get_value("Priority") == 1.0)
+        assert(reqset.get_named_node("B").get_requirement()
+               .get_value("Priority") == 0.8)
 
     def test_positive_02(self):
         "Three node digraph C -> B -> A"
@@ -58,19 +59,25 @@ Type: requirement''', 'C', None, None, None)
         reqset._add_requirement(req3)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
-        reqset.build_named_nodes()
 
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").set_value("Factor", 1.0)
-        reqset.get_named_node("B").set_value("Factor", 0.8)
-        reqset.get_named_node("C").set_value("Factor", 0.5)
+        reqset.get_named_node("A").get_requirement().set_value("Factor", 1.0)
+        reqset.get_named_node("B").get_requirement().set_value("Factor", 0.8)
+        reqset.get_named_node("C").get_requirement().set_value("Factor", 0.5)
 
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
-        assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
-        assert(reqset.get_named_node("C").get_value("Priority") == 0.4)
+        assert(reqset.get_named_node("A").get_requirement()
+               .get_value("Priority") == 1.0)
+        assert(reqset.get_named_node("B").get_requirement()
+               .get_value("Priority") == 0.8)
+
+        print("VALUS 02 [%s]" % reqset.get_named_node("C").get_requirement()
+               .get_value("Priority"))
+
+        assert(reqset.get_named_node("C").get_requirement()
+               .get_value("Priority") == 0.4)
 
     def test_positive_03(self):
         "Four node digraph D -> B -> A and D -> C -> A"
@@ -93,18 +100,27 @@ Type: requirement''', 'D', None, None, None)
         reqset._add_requirement(req4)
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
-        reqset.build_named_nodes()
 
         reqset.graph_master_node = reqset.get_named_node("A")
-        reqset.get_named_node("A").set_value("Factor", 1.0)
-        reqset.get_named_node("B").set_value("Factor", 0.2)
-        reqset.get_named_node("C").set_value("Factor", 0.4)
-        reqset.get_named_node("D").set_value("Factor", 0.5)
+        reqset.get_named_node("A").get_requirement().set_value("Factor", 1.0)
+        reqset.get_named_node("B").get_requirement().set_value("Factor", 0.2)
+        reqset.get_named_node("C").get_requirement().set_value("Factor", 0.4)
+        reqset.get_named_node("D").get_requirement().set_value("Factor", 0.5)
 
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
-        assert(reqset.get_named_node("B").get_value("Priority") == 0.2)
-        assert(reqset.get_named_node("C").get_value("Priority") == 0.4)
-        assert(reqset.get_named_node("D").get_value("Priority") == 0.2)
+        assert(reqset.get_named_node("A").get_requirement()
+               .get_value("Priority") == 1.0)
+        assert(reqset.get_named_node("B").get_requirement()
+               .get_value("Priority") == 0.2)
+        assert(reqset.get_named_node("C").get_requirement()
+               .get_value("Priority") == 0.4)
+
+        print("VALUS 03 [%s]" % reqset.get_named_node("D").get_requirement()
+               .get_value("Priority"))
+
+        assert(reqset.get_named_node("D").get_requirement()
+               .get_value("Priority") == 0.2)
+
+

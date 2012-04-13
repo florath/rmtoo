@@ -12,9 +12,9 @@
 '''
 
 import json
-import copy
 
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.RequirementDNode import RequirementDNode
 from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
@@ -372,8 +372,14 @@ class RequirementSet(Digraph, UsableFlag):
         '''Resolve the 'Solved by' for one requirement.'''
         tracer.debug("Called: requirement id [%s]." % req.get_id())
 
+        req_node = self.get_named_node_no_throw(req.get_id())
+        # TODO possible cleanup
+        assert req_node == None
+        if req_node == None:
+            req_node = RequirementDNode(req)
+
         # Add node to digraph
-        self.add_node(req)
+        self.add_node(req_node)
 
         # It is a 'normal' case when there is no 'Solved by' (until now).
         if "Solved by" not in req.brmo:
@@ -383,7 +389,7 @@ class RequirementSet(Digraph, UsableFlag):
         # If available, it must not empty
         if len(content) == 0:
             logger.error(LogFormatter.format(
-                        77, "'Solved by' field has length 0", req.id))
+                        77, "'Solved by' field has length 0", req.get_id()))
             return False
 
         # Step through the list
@@ -397,18 +403,25 @@ class RequirementSet(Digraph, UsableFlag):
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
-            if dep == req.id:
+            if dep == req.get_id():
                 logger.error(LogFormatter.format(
                            75, "'Solved by' points to the "
                            "requirement itself", req.id))
                 return False
 
+#XXX UNSINN !! NICHT JEDESMAL NEUED DNODE !
+
             # Mark down the depends on...
             dep_req = self.__requirements[dep]
+
+        # TODO possible cleanup
+            dep_req_node = self.get_named_node_no_throw(dep_req.get_id())
+            if dep_req_node == None:
+                dep_req_node = RequirementDNode(dep_req)
             # This is exactly the other way as used in the 'Depends on'
             tracer.debug("Add edge [%s] -> [%s]" %
                          (dep_req.get_id(), req.get_id()))
-            Digraph.create_edge(req, dep_req)
+            Digraph.create_edge(req_node, dep_req_node)
 
         # Delete the original tag
         del req.brmo["Solved by"]
@@ -557,8 +570,8 @@ class RequirementSet(Digraph, UsableFlag):
             # Have a look for incoming nodes
             ince3s = []
             for i in r.incoming:
-                ince3s.append(self.__ce3set.get(i.get_id()))
-            lce3 = self.__ce3set.get(r.get_id())
+                ince3s.append(self.__ce3set.get(i.get_requirement().get_id()))
+            lce3 = self.__ce3set.get(r.get_requirement().get_id())
             lce3.unite(ince3s)
 
     def resolve_ce3(self):
@@ -584,15 +597,16 @@ class RequirementSet(Digraph, UsableFlag):
         tracer.debug("Looking for master nodes in [%d] nodes."
                      % len(self.nodes))
         self.__master_nodes = set()
-        for req in self.nodes:
-            if len(req.incoming) == 0:
-                tracer.debug("Found master nodes [%s]" % req.get_id())
-                self.__master_nodes.add(req)
+        for req_node in self.nodes:
+            if len(req_node.incoming) == 0:
+                tracer.debug("Found master nodes [%s]"
+                             % req_node.get_requirement().get_id())
+                self.__master_nodes.add(req_node)
             else:
                 tracer.debug("[%s] is not a master node; incoming from "
-                             % req.get_id())
-                for i in req.incoming:
-                    tracer.debug("  -> [%s]" % i.get_id())
+                             % req_node.get_requirement().get_id())
+                for i in req_node.incoming:
+                    tracer.debug("  -> [%s]" % i.get_requirement().get_id())
         tracer.info("Found [%d] master nodes" % len(self.__master_nodes))
 
     def get_master_nodes(self):

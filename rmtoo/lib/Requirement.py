@@ -11,7 +11,6 @@
 
 import operator
 
-from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
@@ -22,18 +21,13 @@ reload(sys)
 # pylint: disable=E1101
 sys.setdefaultencoding('utf-8')
 
-assert False
-
-This must be changed !
-The problem is, that a requirement can be part of many digraphs.
-
-Therefore something like a 'RequirementNode' must be added.
-
-class Requirement(Digraph.Node, BaseRMObject):
+class Requirement(BaseRMObject):
+    '''Class which holds one requirement.'''
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for Requirement.'''
-        tracer.debug("Called: name [%s]." % self.name)
+        assert False
+        tracer.debug("Called: name [%s]." % self.get_id())
         FuncCall.pcall(executor, func_prefix + "requirement", self)
         tracer.debug("Finished: name [%s]." % self.name)
 
@@ -60,7 +54,6 @@ class Requirement(Digraph.Node, BaseRMObject):
         assert False
 
     def __init__(self, content, rid, file_path, mods, config):
-        Digraph.Node.__init__(self, rid)
         BaseRMObject.__init__(self, InputModuleTypes.reqtag,
                               content, rid, mods,
                               config, "requirements", file_path)
