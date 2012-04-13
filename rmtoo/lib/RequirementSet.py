@@ -12,6 +12,7 @@
 '''
 
 import json
+import copy
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraint import Constraint
@@ -302,30 +303,57 @@ class RequirementSet(Digraph, UsableFlag):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
            one of the topics in the topic set.'''
-        tracer.debug("Called.")
+        tracer.debug("Called; TopicSet [%s]" % topic_set)
         restricted_reqs = RequirementSet(self._config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
                 tracer.debug("Restricting requirement [%s]" % req.get_id())
+                # Here a deep copy is needed, because the internal
+                # data structures must be adapted: the incoming and the
+                # outgoing lists.
+                nreq = copy.deepcopy(req)
+                # Smash the incoming and outgoing
+                nreq.incoming = []
+                nreq.outgoing = []
+
                 # Add to the internal map
-                restricted_reqs._add_requirement(req)
+                restricted_reqs._add_requirement(nreq)
                 # Add to the common digraph structure
-                restricted_reqs.add_node(req)
+                restricted_reqs.add_node(nreq)
                 # Add ce3 of the requirement
-                restricted_reqs._add_ce3(req.get_id(),
-                                         self.__ce3set.get(req.get_id()))
-                ctrs = req.get_value("Constraints")
+                restricted_reqs._add_ce3(nreq.get_id(),
+                                         self.__ce3set.get(nreq.get_id()))
+                ctrs = nreq.get_value("Constraints")
                 if ctrs != None:
                     for cval in ctrs:
                         restricted_reqs._add_constraint(self.__constraints[cval])
 
                 # Add testcases
-                testcases = req.get_value("Test Cases")
+                testcases = nreq.get_value("Test Cases")
                 if testcases != None:
                     tracer.debug("Restricting testcases [%s]" % testcases)
                     for testcase in testcases:
                         restricted_reqs._add_testcase(self.__testcases[testcase])
 
+# TODO refactor
+        # Run through the old list of incoming and outgoing and 
+        # only copy things over if they are also in the restricted 
+        # graph.
+        for req in restricted_reqs.__requirements.values():
+            old_req = self.__requirements[req.get_id()]
+            for incoming in old_req.incoming:
+                if incoming.get_topic() in topic_set:
+                    nreq = restricted_reqs.__requirements[incoming.get_id()]
+                    restricted_reqs.create_edge(req, nreq)
+        for req in restricted_reqs.__requirements.values():
+            old_req = self.__requirements[req.get_id()]
+            for outgoing in old_req.incoming:
+                if outgoing.get_topic() in topic_set:
+                    nreq = restricted_reqs.__requirements[outgoing.get_id()]
+                    restricted_reqs.create_edge(req, nreq)
+
+        tracer.debug("Finished; found [%d] requirements for TopicSet [%s]."
+                     % (restricted_reqs.get_requirements_cnt(), topic_set))
         return restricted_reqs
 
     def execute(self, executor, func_prefix):
@@ -546,11 +574,25 @@ class RequirementSet(Digraph, UsableFlag):
     def find_master_nodes(self):
         '''Find all the available master nodes and stored them in
            a class field.'''
+#        assert False
+#
+#    This is completely wrong:
+#    The digraph is only and always the digraph of the complete
+#    requirement set (not restricted to a topic)
+#    The only way to check, if a requirement is in the topic
+#    is to check if it is available in the topic._requirements dict.
+        tracer.debug("Looking for master nodes in [%d] nodes."
+                     % len(self.nodes))
         self.__master_nodes = set()
         for req in self.nodes:
             if len(req.incoming) == 0:
                 tracer.debug("Found master nodes [%s]" % req.get_id())
                 self.__master_nodes.add(req)
+            else:
+                tracer.debug("[%s] is not a master node; incoming from "
+                             % req.get_id())
+                for i in req.incoming:
+                    tracer.debug("  -> [%s]" % i.get_id())
         tracer.info("Found [%d] master nodes" % len(self.__master_nodes))
 
     def get_master_nodes(self):
