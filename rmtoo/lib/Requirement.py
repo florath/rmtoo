@@ -22,6 +22,13 @@ reload(sys)
 # pylint: disable=E1101
 sys.setdefaultencoding('utf-8')
 
+assert False
+
+This must be changed !
+The problem is, that a requirement can be part of many digraphs.
+
+Therefore something like a 'RequirementNode' must be added.
+
 class Requirement(Digraph.Node, BaseRMObject):
 
     def execute(self, executor, func_prefix):

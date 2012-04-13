@@ -21,6 +21,7 @@ from rmtoo.lib.logging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
+from rmtoo.lib.logging import tracer
 
 class GUI1ViewOnly:
 
@@ -37,22 +38,35 @@ class GUI1ViewOnly:
         print("SELECTED E [%s]" % (dir(giter)))
 
     def __store_add_requirements(self, store, iter, node):
-        liter = store.append(iter)
-        store.set(liter, 0, node.get_id())
+        liter = store.append(iter, [node.get_id(), "Requirement"])
         for n in node.outgoing:
             self.__store_add_requirements(store, liter, n)
 
     def __store_add_topic(self, tree_store, iter_topic, topic):
-        titer = tree_store.append(iter_topic, [topic.get_id()])
+        tracer.info("Add topic [%s]" % topic.get_id())
+        titer = tree_store.append(iter_topic, [topic.get_id(), "Topic"])
+
+        req_set = topic.get_requirement_set()
+
+        if req_set != None:
+            tracer.info("RequirementSet is available; requirements count [%d]"
+                        % req_set.get_requirements_cnt())
+            req_set.find_master_nodes()
+#            for n in req_set.outgoing:
+#                self.__store_add_requirements(tree_store, titer, n)
+
+#            for master_node in req_set.get_master_nodes():
+#                self.__store_add_requirements(tree_store, titer, master_node)
         for n in topic.outgoing:
             self.__store_add_topic(tree_store, titer, n)
 
     def __store_add_vcs_commit_ids(self, tree_store, name, continuum,
                                    iter_continuum):
         for commit_id in continuum.get_vcs_commit_ids():
-            iter_commit = tree_store.append(iter_continuum, [commit_id])
-            iter_topic = tree_store.append(iter_commit, ["topics"])
-            iter_requirements = tree_store.append(iter_commit, ["requirements"])
+            iter_commit = tree_store.append(iter_continuum, [commit_id, "VCS id"])
+            iter_topic = tree_store.append(iter_commit, ["topics", "Description"])
+            iter_requirements = tree_store.append(iter_commit,
+                                ["requirements", "Description"])
 
             topic_set = continuum.get_topic_set(commit_id.get_commit())
             req_set = topic_set.get_requirement_set()
@@ -68,7 +82,7 @@ class GUI1ViewOnly:
     def __store_add_topic_continuum_set(self, tree_store, topic_continuum_set):
         for name, continuum in iter(sorted(
                         topic_continuum_set.get_continuum_dict().items())):
-            iter_continuum = tree_store.append(None, [name])
+            iter_continuum = tree_store.append(None, [name, "Topic Continuum"])
             self.__store_add_vcs_commit_ids(tree_store, name, continuum,
                                             iter_continuum)
 
@@ -77,7 +91,7 @@ class GUI1ViewOnly:
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 
-        tree_store = gtk.TreeStore(gobject.TYPE_STRING)
+        tree_store = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
 
         tree_view = gtk.TreeView(tree_store)
         scrolled_window.add_with_viewport (tree_view)
@@ -89,7 +103,9 @@ class GUI1ViewOnly:
         self.__store_add_topic_continuum_set(tree_store, topic_continuum_set)
 
         cell = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("Requirements", cell, text=0)
+        column = gtk.TreeViewColumn("Name", cell, text=0)
+        tree_view.append_column(column)
+        column = gtk.TreeViewColumn("Type", cell, text=1)
         tree_view.append_column(column)
 
         return scrolled_window

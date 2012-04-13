@@ -10,7 +10,7 @@
 	        "loglevel": "info"
 	    },
 	    "tracer": {
-	        "loglevel": "info",
+	        "loglevel": "debug",
 		"filename": "./rmtoo.log"
     	    }
         }
