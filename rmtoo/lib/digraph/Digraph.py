@@ -35,6 +35,14 @@ class Digraph(object):
             '''Returns the name of the node.'''
             return self.__name
 
+        def get_iter_incoming(self):
+            '''Return an iterator over the incoming nodes.'''
+            return iter(self.__incoming)
+
+        def get_iter_outgoing(self):
+            '''Return an iterator over the outgoing nodes.'''
+            return iter(self.__outgoing)
+
         def add_incoming(self, node):
             '''Add node to the incoming list.'''
             self.__incoming.add(node)
@@ -82,6 +90,12 @@ class Digraph(object):
             # Did not find the other node.
             return False
 
+        def debug_output(self):
+            '''Prints out the internal state of the object to stdout.'''
+            print("Node [%s] Outgoing %s Incoming %s"
+                  % (self.get_name(), self.get_outgoing_as_named_list(),
+                     self.get_incoming_as_named_list()))
+
     def __init__(self):
         '''Create a digraph from the given dictionary representation. 
            If no dictionary is given, an empty digraph will be created.'''
@@ -106,6 +120,9 @@ class Digraph(object):
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode
 
+    def get_iter_nodes_values(self):
+        '''Returns the nodes dict.'''
+        return iter(self._named_nodes.values())
 
     def as_dict(self):
         '''Outputs this digraph and create a dictionary.'''
@@ -130,3 +147,10 @@ class Digraph(object):
         if res == None:
             raise RMTException(23, "node with name '%s' not available" % name)
         return res
+
+    def debug_output(self):
+        '''Writes out some graph skeleton to the stdout.'''
+        print("Digraph output:")
+        for node in self._named_nodes.values():
+            node.debug_output()
+        print("Digraph output end.")

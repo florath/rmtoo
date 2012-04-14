@@ -13,9 +13,9 @@
  For licensing details see COPYING
 '''
 
-# This algorithm is based upon a depth first search.  It assigns a
-# number to each visited node.
 def strongly_connected_components(dg):
+    '''This algorithm is based upon a depth first search.  It assigns a
+       number to each visited node.'''
     # This is the number the next node is assigned. (There is no other
     # way to access local variables?)
     index = [0]
@@ -38,7 +38,7 @@ def strongly_connected_components(dg):
         S.append(v)
 
         # For all successors of v:
-        for vl in v.outgoing:
+        for vl in v.get_iter_outgoing():
             # Only check it, if it is not visited already.
             if vl not in indizes:
                 trajan(vl)
@@ -49,7 +49,7 @@ def strongly_connected_components(dg):
         # Is this a SCC?
         if lowlinks[v] == indizes[v]:
             new_scc = []
-            while len(S)>0:
+            while len(S) > 0:
                 vv = S.pop()
                 new_scc.append(vv)
                 if vv == v:
@@ -58,7 +58,7 @@ def strongly_connected_components(dg):
 
     # The 'main' of the algorithm: for every node (which is not yet)
     # already indexed, call the trajan() function.
-    for v in dg.nodes:
+    for v in dg.get_iter_nodes_values():
         if v not in indizes:
             trajan(v)
 
@@ -71,7 +71,7 @@ def strongly_connected_components(dg):
 # component which contains more than one node.
 def check_for_strongly_connected_components(scc, minsize=2):
     for s in scc:
-        if len(s)>=minsize:
+        if len(s) >= minsize:
             # Jep there is one scc -> jump out.
             return True
     # Nope - no sccs.

@@ -45,7 +45,7 @@ class TestModules(unittest.TestCase):
                        {}, [], mods_list("modules01", mod_base_dir))
 
     def test_simple_02(self):
-        "Module test with dependend modules"
+        "Module test with dependent modules"
         mods = InputModules(os.path.join(mod_base_dir, "modules02"),
                        {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.get_reqdeps_sorted())

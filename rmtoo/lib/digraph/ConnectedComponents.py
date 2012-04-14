@@ -58,20 +58,20 @@ class CC_Components:
         del(self.cs[hi])
 
 def connected_components(dg):
-    # This hold the components:
-    #  the lists of the nodes which are in one component
+    '''This hold the components:
+       the lists of the nodes which are in one component.'''
     components = CC_Components()
 
-    for n in dg.nodes:
+    for node in dg.get_iter_nodes_values():
         # Each node itself is a separate component
-        components.add_component(n)
+        components.add_component(node)
 
-    for n in dg.nodes:
+    for node in dg.get_iter_nodes_values():
         # Run through the incoming and outgoing and collect the
         # different components
-        for v in n.incoming:
-            components.contract(n, v)
-        for v in n.outgoing:
-            components.contract(n, v)
+        for vnode in node.get_iter_incoming():
+            components.contract(node, vnode)
+        for vnode in node.get_iter_outgoing():
+            components.contract(node, vnode)
 
     return components

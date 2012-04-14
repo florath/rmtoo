@@ -31,9 +31,9 @@ def topological_sort(dg):
             for m in node.outgoing:
                 visit(m)
             tsort.append(node)
-    
+
     # The 'main' function of the topological sort
-    for node in dg.nodes:
+    for node in dg.get_iter_nodes_values():
         visit(node)
 
     return tsort

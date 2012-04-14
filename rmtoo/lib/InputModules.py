@@ -100,7 +100,7 @@ class InputModules(Digraph):
                 self.__tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
             if InputModuleTypes.reqdeps in types:
-                self.nodes.append(o)
+                self.add_node(o)
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.
@@ -138,7 +138,7 @@ class InputModules(Digraph):
     def get_reqdeps_sorted(self):
         '''Return the sorted requirements dependencies.'''
         return self.__reqdeps_sorted
-    
+
     def get_tagtype(self, imtype):
         '''Return the tags for the given type.'''
         return self.__tagtypes[imtype]
