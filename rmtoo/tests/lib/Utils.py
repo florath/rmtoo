@@ -26,3 +26,17 @@ _date_re = re.compile("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"
 
 def hide_timestamp(istr):
     return _date_re.sub("===DATETIMESTAMP===", istr)
+
+def hide_lineno(istr):
+    '''Hides the line number from the stderr/stdout output.'''
+    res = []
+    for line in istr.split("\n"):
+        print("LINE [%s]" % line)
+        isplit = line.split(";")
+        if len(isplit) >= 5:
+            isplit[5] = "===SOURCELINENO==="
+            res.append(";".join(isplit))
+        else:
+            res.append(line)
+    print("RES [%s]" % res)
+    return "\n".join(res)
