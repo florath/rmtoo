@@ -42,7 +42,6 @@ class RequirementSet(Digraph, UsableFlag):
         UsableFlag.__init__(self)
         self._config = config
         self.__master_nodes = None
-# Needed? Can be replaced by  self._named_nodes?       self.__requirements = {}
         # The key is the id the value the constraint.
         self.__constraints = {}
         # This holds only ready to use CE3 objects.
@@ -114,7 +113,8 @@ class RequirementSet(Digraph, UsableFlag):
     def __all_tags_handled(self):
         '''Returns true iff all the different tags are handled.'''
         all_handled = True
-        for req in self.nodes:
+        for req_node in self.nodes:
+            req = req_node.get_requirement()
             if len(req.brmo) > 0:
                 logger.error(LogFormatter.format(
                            57, "No tag handler found for tag(s) '%s' "

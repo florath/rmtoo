@@ -23,48 +23,58 @@ class Digraph(object):
             '''Incoming and outgoing are lists of nodes.  Typically one
                direction is provided and the other can be automatically
                computed.'''
-            self.name = name
-            self.incoming = []
-            self.outgoing = []
+            self.__name = name
+            self.__incoming = set()
+            self.__outgoing = set()
 
         def __hash__(self):
-            return self.name.__hash__()
+            '''Calculates the hash based on the node's name.'''
+            return self.__name.__hash__()
 
-        # Return given list as list of names.
+        def get_name(self):
+            '''Returns the name of the node.'''
+            return self.__name
+
+        def add_incoming(self, node):
+            '''Add node to the incoming list.'''
+            self.__incoming.add(node)
+
+        def add_outgoing(self, node):
+            '''Add node to the incoming list.'''
+            self.__outgoing.add(node)
+
         @staticmethod
-        def as_named_list(il):
-            # Start with an empty list
-            l = []
-            for o in il:
-                l.append(o.name)
-            return l
+        def __as_named_list(inlist):
+            '''Return given list as list of names.'''
+            # pylint: disable=W0141
+            return map(lambda x: x.get_name(), inlist)
 
-        # Return the names of all outgoing nodes as a list.
-        def outgoing_as_named_list(self):
-            return self.as_named_list(self.outgoing)
+        def get_outgoing_as_named_list(self):
+            '''Return the names of all outgoing nodes as a list.'''
+            return self.__as_named_list(self.__outgoing)
 
-        # Return the names of all incoming nodes as a list.
-        def incoming_as_named_list(self):
-            return self.as_named_list(self.incoming)
+        def get_incoming_as_named_list(self):
+            '''Return the names of all incoming nodes as a list.'''
+            return self.__as_named_list(self.__incoming)
 
-        # Find a subnode with the given name
         def find_outgoing(self, name):
-            for o in self.outgoing:
-                if o.name == name:
-                    return o
+            '''Find a subnode with the given name.'''
+            for onode in self.__outgoing:
+                if onode.get_name() == name:
+                    return onode
             return None
 
-        # This checks, if onode is in the ancient (parent, parent of
-        # parent, ...) of the current node.
-        # A depth first search is done.
         def is_self_of_ancient(self, onode):
+            '''Checks, if onode is in the ancient (parent, parent of
+               parent, ...) of the current node.
+               A depth first search is done.'''
             # Check for break
             if self == onode:
                 # Stop iff found.
                 return True
 
             # If not (yet) found: have a look at the ancestors.
-            for node in self.incoming:
+            for node in self.__incoming:
                 if node.is_self_of_ancient(onode):
                     # Found is somewhere in history.
                     return True
@@ -72,103 +82,51 @@ class Digraph(object):
             # Did not find the other node.
             return False
 
-    def __init__(self, d=None, node_gen_func=Node):
+    def __init__(self):
         '''Create a digraph from the given dictionary representation. 
            If no dictionary is given, an empty digraph will be created.'''
-        self.nodes = []
         self._named_nodes = {}
-        if d != None:
-            self.create_from_dict(d, node_gen_func)
 
     @staticmethod
-    def create_edge(a, b):
+    def create_edge(anode, bnode):
         '''Creates an edge from a to b - both must be nodes.'''
-        assert isinstance(a, Digraph.Node)
-        assert isinstance(b, Digraph.Node)
-        a.outgoing.append(b)
-        b.incoming.append(a)
+        assert isinstance(anode, Digraph.Node)
+        assert isinstance(bnode, Digraph.Node)
+        anode.add_outgoing(bnode)
+        bnode.add_incoming(anode)
 
-    def add_node(self, a):
+    def add_node(self, anode):
         '''Adds a new node to the graph.
            Check if the node with the same name already exists.'''
-        assert isinstance(a, Digraph.Node)
+        assert isinstance(anode, Digraph.Node)
 
-        for n in self.nodes:
-            if n.name == a.name:
+        for node in self._named_nodes.values():
+            if node.get_name() == anode.get_name():
                 raise RMTException(39, "Node with name '%s' already exists"
-                                   % a.name)
-        self._named_nodes[a.name] = a
-        self.nodes.append(a)
+                                   % anode.get_name())
+        self._named_nodes[anode.get_name()] = anode
 
-    # Low level creation method, which really does the job of
-    # converting a given dictionary to a digraph
-#    def create_from_dict(self, d, node_gen_func=Node):
-#        # First run: create all nodes
-#        named_nodes = {}
-#        for node_name in d:
-#            # Create the node and put it into the object list of all
-#            # nodes and into the local dictionary of named nodes.
-#            named_node = node_gen_func(node_name)
-#            self.nodes.append(named_node)
-#            named_nodes[node_name] = named_node
-#
-#        # Second run: run thorugh all nodes and create the edges.
-#        for node_name, outs in d.items():
-#            for o in outs:
-#                if o not in named_nodes:
-#                    raise RMTException(24, "Node '%s' is referenced "
-#                                       "but not specified" % o)
-#                self.create_edge(named_nodes[node_name],
-#                                 named_nodes[o])
 
-    # Reverse operation: outputs this digraph and create a dictionary
-    # from it.
-    def output_to_dict(self):
+    def as_dict(self):
+        '''Outputs this digraph and create a dictionary.'''
         # Start with an empty dictionary
-        rv = {}
-        for n in self.nodes:
-            rv[n.name] = n.outgoing_as_named_list()
-        return rv
+        rval = {}
+        for node in self._named_nodes.values():
+            rval[node.get_name()] = node.get_outgoing_as_named_list()
+        return rval
 
-    # Find a node with a given name
     def find(self, name):
-        for n in self.nodes:
-            if name == n.name:
-                return n
-        return None
-
-    # Build up a dictionary with name:node pairs.
-    # This will only be done, iff every node has a name (None is not a
-    # name) and all names are different.
-#    def build_named_nodes(self):
-#        self.named_nodes = {}
-#        for n in self.nodes:
-#            if n.name == None:
-#                # Delete the whole dictionary first
-#                self.named_nodes = None
-#                raise RMTException(20, "cannot create node dictionary "
-#                                   "- node has no name")
-#            if n.name in self.named_nodes:
-#                # Also: delete the whole dictionary first.
-#                self.named_nodes = None
-#                raise RMTException(21, "same name for (at least) two "
-#                                   "nodes '%s'" % n.name)
-#
-#            # Ok. Then put it into the dictionary:
-#            self.named_nodes[n.name] = n
-
-    # This is the appropriate accessor: get the content only if there
-    # is the dictionary.
-    def get_named_node_no_throw(self, name):
+        '''Get the node with the given name.
+           Return None if not available.'''
         if name not in self._named_nodes:
             return None
         # When all checks succeed: return the value
         return self._named_nodes[name]
 
-    # Mostly the same as before, but throws if the node can not be found. 
-    def get_named_node(self, name):
-        r = self.get_named_node_no_throw(name)
-        if r == None:
-            raise RMTException(23, "node with name '%s' not available"
-                               % name)
-        return r
+    def find_wt(self, name):
+        '''Get the node with the given name.
+           Throw if not available.'''
+        res = self.find(name)
+        if res == None:
+            raise RMTException(23, "node with name '%s' not available" % name)
+        return res
