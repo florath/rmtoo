@@ -14,6 +14,7 @@ from rmtoo.inputs.RDepPriority import RDepPriority
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.RequirementDNode import RequirementDNode
 
 class TestRDepPriority:
 
@@ -24,10 +25,11 @@ class TestRDepPriority:
         req1 = Requirement('''Name: A
 Type: master requirement
 Solved by: B''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+
+        reqset.add_node(RequirementDNode(req1))
         req2 = Requirement('''Name: B
 Type: requirement''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_node(RequirementDNode(req2))
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
         reqset.graph_master_node = reqset.get_named_node("A")
@@ -49,14 +51,14 @@ Type: requirement''', 'B', None, None, None)
         req1 = Requirement('''Name: A
 Type: master requirement
 Solved by: B''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+        reqset.add_node(RequirementDNode(req1))
         req2 = Requirement('''Name: B
 Type: requirement
 Solved by: C''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_node(RequirementDNode(req2))
         req3 = Requirement('''Name: C
 Type: requirement''', 'C', None, None, None)
-        reqset._add_requirement(req3)
+        reqset.add_node(RequirementDNode(req3))
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
 
@@ -86,18 +88,18 @@ Type: requirement''', 'C', None, None, None)
         req1 = Requirement('''Name: A
 Type: master requirement
 Solved by: B C''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+        reqset.add_node(RequirementDNode(req1))
         req2 = Requirement('''Name: B
 Type: requirement
 Solved by: D''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_node(RequirementDNode(req2))
         req3 = Requirement('''Name: C
 Type: requirement
 Solved by: D''', 'C', None, None, None)
-        reqset._add_requirement(req3)
+        reqset.add_node(RequirementDNode(req3))
         req4 = Requirement('''Name: D
 Type: requirement''', 'D', None, None, None)
-        reqset._add_requirement(req4)
+        reqset.add_node(RequirementDNode(req4))
         reqset.resolve_solved_by()
         reqset.find_master_nodes()
 

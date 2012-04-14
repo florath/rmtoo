@@ -28,15 +28,15 @@ class RDepPriority(Digraph.Node):
     def get_type_set(self):
         return set([InputModuleTypes.reqdeps, ])
 
-    # Do a DFS and compute the priority during that way.
-    # If there is a node which was already visited, only recompute the
-    # subtree, if the new priority is higher.
     def rewrite(self, reqset):
+        '''Does a DFS and compute the priority during that way.
+           If there is a node which was already visited, only recompute the
+           subtree, if the new priority is higher.'''
         tracer.debug("Called.")
 
-        # The second argument (the number) is the weight of the
-        # outgoing edge.
         def handle_priorization(node, inc_weight):
+            '''The second argument (the number) is the weight of the
+               outgoing edge.'''
             req = node.get_requirement()
             tracer.debug("Node [%s] inc_weight [%4.3f]" %
                          (req.get_id(), inc_weight))

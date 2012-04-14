@@ -2,7 +2,7 @@
  rmtoo
    Free and Open Source Requirements Management Tool
    
-  Digraph Pyhton library
+  Directed Graph implementation
    
  (c) 2010,2012 by flonatel GmbH & Co. KG
 
@@ -12,15 +12,20 @@
 from rmtoo.lib.RMTException import RMTException
 
 class Digraph(object):
+    '''Implements a directed graph.
+       The minimum requirement is, that each node has a unique name,'''
 
     class Node(object):
+        '''A directed graph node.
+           This holds the incoming and outgoing edges as well as the 
+           nodes' name,'''
         def __init__(self, name):
             '''Incoming and outgoing are lists of nodes.  Typically one
                direction is provided and the other can be automatically
                computed.'''
+            self.name = name
             self.incoming = []
             self.outgoing = []
-            self.name = name
 
         def __hash__(self):
             return self.name.__hash__()
@@ -71,10 +76,9 @@ class Digraph(object):
         '''Create a digraph from the given dictionary representation. 
            If no dictionary is given, an empty digraph will be created.'''
         self.nodes = []
-        self.named_nodes = None
+        self._named_nodes = {}
         if d != None:
             self.create_from_dict(d, node_gen_func)
-        self.__named_nodes = {}
 
     @staticmethod
     def create_edge(a, b):
@@ -93,7 +97,7 @@ class Digraph(object):
             if n.name == a.name:
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % a.name)
-        self.__named_nodes[a.name] = a
+        self._named_nodes[a.name] = a
         self.nodes.append(a)
 
     # Low level creation method, which really does the job of
@@ -156,10 +160,10 @@ class Digraph(object):
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
     def get_named_node_no_throw(self, name):
-        if name not in self.__named_nodes:
+        if name not in self._named_nodes:
             return None
         # When all checks succeed: return the value
-        return self.__named_nodes[name]
+        return self._named_nodes[name]
 
     # Mostly the same as before, but throws if the node can not be found. 
     def get_named_node(self, name):

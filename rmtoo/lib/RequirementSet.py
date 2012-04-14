@@ -42,7 +42,7 @@ class RequirementSet(Digraph, UsableFlag):
         UsableFlag.__init__(self)
         self._config = config
         self.__master_nodes = None
-        self.__requirements = {}
+# Needed? Can be replaced by  self._named_nodes?       self.__requirements = {}
         # The key is the id the value the constraint.
         self.__constraints = {}
         # This holds only ready to use CE3 objects.
@@ -53,7 +53,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def __str__(self):
         return "Master nodes [%s]  Requirements [%s]" % \
-            (self.__master_nodes, self.__requirements)
+            (self.__master_nodes, self._named_nodes)
 
     def __read_one_requirement(self, fileinfo, input_mods, object_cache):
         '''Read in one requirement from the file info.'''
@@ -279,11 +279,6 @@ class RequirementSet(Digraph, UsableFlag):
         self._handle_modules(input_mods)
         tracer.debug("Finished.")
 
-    def _add_requirement(self, req):
-        '''Add requirement to the internal container.'''
-        tracer.debug("Add requirement [%s]" % req.get_id())
-        self.__requirements[req.get_id()] = req
-
     def _add_constraint(self, ctr):
         '''Add constraint to the internal container.'''
         tracer.debug("Add constraint [%s]." % ctr.get_id())
@@ -317,7 +312,7 @@ class RequirementSet(Digraph, UsableFlag):
                 nreq.outgoing = []
 
                 # Add to the internal map
-                restricted_reqs._add_requirement(nreq)
+                restricted_reqs.add_node(nreq)
                 # Add to the common digraph structure
                 restricted_reqs.add_node(nreq)
                 # Add ce3 of the requirement
@@ -368,18 +363,11 @@ class RequirementSet(Digraph, UsableFlag):
         FuncCall.pcall(executor, func_prefix + "requirement_set_post", self)
         tracer.debug("finished")
 
-    def __resolve_solved_by_one_req(self, req):
+    def __resolve_solved_by_one_req(self, req_node):
         '''Resolve the 'Solved by' for one requirement.'''
+        assert isinstance(req_node, RequirementDNode)
+        req = req_node.get_requirement()
         tracer.debug("Called: requirement id [%s]." % req.get_id())
-
-        req_node = self.get_named_node_no_throw(req.get_id())
-        # TODO possible cleanup
-        assert req_node == None
-        if req_node == None:
-            req_node = RequirementDNode(req)
-
-        # Add node to digraph
-        self.add_node(req_node)
 
         # It is a 'normal' case when there is no 'Solved by' (until now).
         if "Solved by" not in req.brmo:
@@ -396,7 +384,7 @@ class RequirementSet(Digraph, UsableFlag):
         dep_list = content.split()
         tracer.debug("dependent list [%s]" % dep_list)
         for dep in dep_list:
-            if dep not in self.__requirements:
+            if dep not in self._named_nodes:
                 logger.error(LogFormatter.format(
                         74, "'Solved by' points to a "
                         "non-existing requirement '%s'" % dep, req.get_id()))
@@ -409,18 +397,14 @@ class RequirementSet(Digraph, UsableFlag):
                            "requirement itself", req.id))
                 return False
 
-#XXX UNSINN !! NICHT JEDESMAL NEUED DNODE !
-
             # Mark down the depends on...
-            dep_req = self.__requirements[dep]
+            dep_req_node = self._named_nodes[dep]
+            assert isinstance(dep_req_node, RequirementDNode)
 
-        # TODO possible cleanup
-            dep_req_node = self.get_named_node_no_throw(dep_req.get_id())
-            if dep_req_node == None:
-                dep_req_node = RequirementDNode(dep_req)
             # This is exactly the other way as used in the 'Depends on'
             tracer.debug("Add edge [%s] -> [%s]" %
-                         (dep_req.get_id(), req.get_id()))
+                         (dep_req_node.get_requirement().get_id(),
+                          req.get_id()))
             Digraph.create_edge(req_node, dep_req_node)
 
         # Delete the original tag
@@ -435,7 +419,7 @@ class RequirementSet(Digraph, UsableFlag):
         # Run through all the requirements and look for the 'Solved
         # by'
         success = True
-        for req in self.__requirements.values():
+        for req in self._named_nodes.values():
             if not self.__resolve_solved_by_one_req(req):
                 tracer.info("Handling of requirement [%s] was not successful"
                              % req.get_id())
