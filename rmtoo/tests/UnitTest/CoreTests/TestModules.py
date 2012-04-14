@@ -20,7 +20,7 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_timestamp, hide_lineno
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
@@ -114,7 +114,7 @@ class TestModules(unittest.TestCase):
         reqs._handle_modules(mods)
         self.assertEqual(reqs.is_usable(), False)
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(hide_timestamp(mstderr.getvalue()))
         tear_down_log_handler()
 
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \

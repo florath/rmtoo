@@ -22,6 +22,7 @@ from rmtoo.lib.digraph.TopologicalSort \
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+from rmtoo.lib.InputModuleNode import InputModuleNode
 
 class InputModules(Digraph):
     '''The modules class is also a digraph for the reqdeps modules which 
@@ -100,7 +101,7 @@ class InputModules(Digraph):
                 self.__tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
             if InputModuleTypes.reqdeps in types:
-                self.add_node(o)
+                self.add_node(InputModuleNode(modulename, o))
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.

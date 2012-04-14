@@ -48,7 +48,7 @@ class Topic(Digraph.Node):
                 if tag.get_content() != "full":
                     raise RMTException(113, "IncludeRequirements value not "
                                        "supported [%s]" % tag.get_content(),
-                           self.name)
+                           self.get_name())
                 self.__requirements = req_set.restrict_to_topics(tname)
                 tracer.debug("Found [%d] requirements for topic [%s]."
                              % (self.__requirements.get_requirements_cnt(),
@@ -56,7 +56,7 @@ class Topic(Digraph.Node):
         # Check for the existence of the name
         if self.__topic_name == None:
             raise RMTException(62, "Mandatory tag 'Name' not given in topic",
-                               self.name)
+                               self.get_name())
 
     def __init__(self, digraph, config, input_handler, commit, file_info,
                  req_set):
@@ -74,18 +74,18 @@ class Topic(Digraph.Node):
 
     def get_topic_names_flattened(self):
         '''Returns all the names of the complete topic hirarchy in one set.'''
-        tracer.debug("Called: name [%s]." % self.name)
+        tracer.debug("Called: name [%s]." % self.get_name())
         result = set()
-        result.add(self.name)
-        for topic in self.outgoing:
+        result.add(self.get_name())
+        for topic in self.get_iter_outgoing():
             result = result.union(topic.get_topic_names_flattened())
         return result
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuum.'''
-        tracer.debug("Calling pre [%s]." % self.name)
+        tracer.debug("Calling pre [%s]." % self.get_name())
         FuncCall.pcall(executor, func_prefix + "topic_pre", self)
-        tracer.debug("Calling sub [%s]." % self.name)
+        tracer.debug("Calling sub [%s]." % self.get_name())
         for tag in self.__tags:
             rtag = tag.get_tag()
             if rtag == "Name":
@@ -110,11 +110,11 @@ class Topic(Digraph.Node):
                 continue
 
             raise RMTException(114, "Unknown tag in topic [%s]" % rtag,
-                               self.name)
+                               self.get_name())
 
-        tracer.debug("Calling post [%s]." % self.name)
+        tracer.debug("Calling post [%s]." % self.get_name())
         FuncCall.pcall(executor, func_prefix + "topic_post", self)
-        tracer.debug("Finished [%s]." % self.name)
+        tracer.debug("Finished [%s]." % self.get_name())
 
     def get_requirement_set(self):
         '''Returns the requirement set for this topic.'''
@@ -132,4 +132,4 @@ class Topic(Digraph.Node):
     def get_id(self):
         '''Returns the topic id.
            Note: This is NOT the short description - a la 'Name'.'''
-        return self.name
+        return self.get_name()

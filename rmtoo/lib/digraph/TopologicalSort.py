@@ -24,12 +24,12 @@ def topological_sort(dg):
     # nodes themselves.) 
     visited = []
 
-    # Recursive deep first search function
     def visit(node):
+        '''Recursive deep first search function.'''
         if not node in visited:
             visited.append(node)
-            for m in node.outgoing:
-                visit(m)
+            for onode in node.get_iter_outgoing():
+                visit(onode)
             tsort.append(node)
 
     # The 'main' function of the topological sort

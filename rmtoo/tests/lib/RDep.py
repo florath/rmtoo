@@ -10,6 +10,7 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.digraph.Helper import digraph_create_from_dict
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.TestConfig import TestConfig
 
@@ -17,7 +18,7 @@ class ReqSet(Digraph):
 
     def __init__(self, d=None):
         Digraph.__init__(self, d,
-                         lambda nname: Requirement(None, nname, 
+                         lambda nname: Requirement(None, nname,
                                                    None, None, None))
 
 # Create a set of parameters for the test-cases

@@ -9,23 +9,26 @@
  For licensing details see COPYING
 '''
 
+from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.digraph.Digraph import Digraph
+
 def node_list_to_node_name_list(node_list):
     '''Converts a node list into a list of the corresponding node names.'''
     node_name_list = []
     for n in node_list:
-        node_name_list.append(n.name)
+        node_name_list.append(n.get_name())
     return node_name_list
 
 def node_set_to_node_name_set(node_set):
     '''Mostly the same: but this time for sets.'''
     node_name_set = set()
     for n in node_set:
-        node_name_set.add(n.name)
+        node_name_set.add(n.get_name())
     return node_name_set
 
 def node_sl_to_node_name_sl(node_sl):
     '''Converts a node set_value list into a list of sets of the corresponding
-       node names.''' 
+       node names.'''
     node_name_sl = []
     for n in node_sl:
         node_name_sl.append(node_set_to_node_name_set(n))
@@ -39,3 +42,26 @@ def remove_single_element_lists_name_rest(scc):
         if len(s) > 1:
             res.append(node_list_to_node_name_list(s))
     return res
+
+def digraph_create_from_dict(init_dgraph, node_gen_func=Digraph.Node):
+    '''Creates a new digraph based on the given information.'''
+    digraph = Digraph()
+
+    # First run: create all nodes
+    for node_name in init_dgraph:
+        # Create the node and put it into the object list of all
+        # nodes and into the local dictionary of named nodes.
+        named_node = node_gen_func(node_name)
+        digraph.add_node(named_node)
+
+    # Second run: run through all nodes and create the edges.
+    for node_name, outs in init_dgraph.items():
+        node_from = digraph.find(node_name)
+        for onode in outs:
+            node_to = digraph.find(onode)
+            if node_to == None:
+                raise RMTException(24, "Node '%s' is referenced "
+                                   "but not specified" % onode)
+            digraph.create_edge(node_from, node_to)
+
+    return digraph

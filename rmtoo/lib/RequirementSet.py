@@ -101,8 +101,8 @@ class RequirementSet(Digraph, UsableFlag):
         '''This is mostly the same functionality of similar method of the
            class Requirement - but with one major difference: for this
            implementation stop if an error occurred.'''
-        for module in input_mods.get_reqdeps_sorted():
-            state = module.rewrite(self)
+        for module_node in input_mods.get_reqdeps_sorted():
+            state = module_node.get_module().rewrite(self)
             if state == False:
                 # Some semantic error occurred.
                 self._set_not_usable()
@@ -113,7 +113,7 @@ class RequirementSet(Digraph, UsableFlag):
     def __all_tags_handled(self):
         '''Returns true iff all the different tags are handled.'''
         all_handled = True
-        for req_node in self.nodes:
+        for req_node in self.get_iter_nodes_values():
             req = req_node.get_requirement()
             if len(req.brmo) > 0:
                 logger.error(LogFormatter.format(
@@ -300,12 +300,13 @@ class RequirementSet(Digraph, UsableFlag):
            one of the topics in the topic set.'''
         tracer.debug("Called; TopicSet [%s]" % topic_set)
         restricted_reqs = RequirementSet(self._config)
-        for req in self.__requirements.values():
+        for req in self._named_nodes.values():
             if req.get_topic() in topic_set:
                 tracer.debug("Restricting requirement [%s]" % req.get_id())
                 # Here a deep copy is needed, because the internal
                 # data structures must be adapted: the incoming and the
                 # outgoing lists.
+                assert False
                 nreq = copy.deepcopy(req)
                 # Smash the incoming and outgoing
                 nreq.incoming = []
@@ -334,17 +335,17 @@ class RequirementSet(Digraph, UsableFlag):
         # Run through the old list of incoming and outgoing and 
         # only copy things over if they are also in the restricted 
         # graph.
-        for req in restricted_reqs.__requirements.values():
-            old_req = self.__requirements[req.get_id()]
+        for req in restricted_reqs._named_nodes.values():
+            old_req = self._named_nodes[req.get_id()]
             for incoming in old_req.incoming:
                 if incoming.get_topic() in topic_set:
-                    nreq = restricted_reqs.__requirements[incoming.get_id()]
+                    nreq = restricted_reqs._named_nodes[incoming.get_id()]
                     restricted_reqs.create_edge(req, nreq)
-        for req in restricted_reqs.__requirements.values():
-            old_req = self.__requirements[req.get_id()]
+        for req in restricted_reqs._named_nodes.values():
+            old_req = self._named_nodes[req.get_id()]
             for outgoing in old_req.incoming:
                 if outgoing.get_topic() in topic_set:
-                    nreq = restricted_reqs.__requirements[outgoing.get_id()]
+                    nreq = restricted_reqs._named_nodes[outgoing.get_id()]
                     restricted_reqs.create_edge(req, nreq)
 
         tracer.debug("Finished; found [%d] requirements for TopicSet [%s]."
@@ -357,7 +358,7 @@ class RequirementSet(Digraph, UsableFlag):
         FuncCall.pcall(executor, func_prefix + "requirement_set_pre", self)
         tracer.debug("calling sub requirement set")
         for requirement in executor.requirement_set_sort(
-                            self.__requirements.values()):
+                            self._named_nodes.values()):
             requirement.execute(executor, func_prefix)
         tracer.debug("calling post")
         FuncCall.pcall(executor, func_prefix + "requirement_set_post", self)
@@ -419,19 +420,17 @@ class RequirementSet(Digraph, UsableFlag):
         # Run through all the requirements and look for the 'Solved
         # by'
         success = True
-        for req in self._named_nodes.values():
-            if not self.__resolve_solved_by_one_req(req):
+        for req_node in self._named_nodes.values():
+            if not self.__resolve_solved_by_one_req(req_node):
                 tracer.info("Handling of requirement [%s] was not successful"
-                             % req.get_id())
+                             % req_node.get_requirement().get_id())
                 success = False
         tracer.debug("Finished; success [%s]." % success)
         return success
 
-    def __resolve_depends_on_one_req(self, req, also_solved_by):
+    def __resolve_depends_on_one_req(self, req_node, also_solved_by):
         tracer.debug("Called.")
-        # Add node to digraph
-        self.add_node(req)
-
+        req = req_node.get_requirement()
         if req.get_value("Type") == Requirement.rt_master_requirement:
             # There must no 'Depends on'
             if "Depends on" in req.brmo:
@@ -477,11 +476,12 @@ class RequirementSet(Digraph, UsableFlag):
                 return False
 
             # Mark down the depends on...
-            dep_req = self.__requirements[ts]
+            dep_req_node = self._named_nodes[ts]
             # This is exactly the other way as used in the 'Depends on'
             tracer.debug("Add edge [%s] -> [%s]" %
-                         (dep_req.get_id(), req.get_id()))
-            Digraph.create_edge(dep_req, req)
+                         (dep_req_node.get_requirement().get_id(),
+                          req.get_id()))
+            Digraph.create_edge(dep_req_node, req_node)
 
         # Copy and delete the original tag
         ## XXX Not neede any more? req.tags["Depends on"] = t.split()
@@ -496,7 +496,7 @@ class RequirementSet(Digraph, UsableFlag):
         # Run through all the requirements and look for the 'Depend
         # on' (depending on the type of the requirement)
         success = True
-        for req in self.__requirements.values():
+        for req in self._named_nodes.values():
             if not self.__resolve_depends_on_one_req(req, also_solved_by):
                 success = False
         tracer.debug("Finished; success [%s]." % success)
@@ -522,7 +522,7 @@ class RequirementSet(Digraph, UsableFlag):
            (instead of the TextRecord a map of name to constraint
             object is stored).'''
         tracer.debug("Called.")
-        for req_name, req in self.__requirements.items():
+        for req_name, req in self._named_nodes.items():
             # In each case store a (maybe empty) CE3 in the set.
             ce3 = CE3()
             cstrnts = req.get_value("Constraints")
@@ -602,19 +602,19 @@ class RequirementSet(Digraph, UsableFlag):
 
     def get_requirements_cnt(self):
         '''Returns the number of requirements.'''
-        return len(self.__requirements)
+        return len(self._named_nodes)
 
     def get_all_requirement_ids(self):
         '''Return all requirement ids of the requirement set.'''
-        return self.__requirements.keys()
+        return self._named_nodes.keys()
 
     def get_requirement(self, rid):
         '''Return the requirement with the given id.'''
-        return self.__requirements[rid]
+        return self._named_nodes[rid]
 
     def get_requirements_iteritems(self):
         '''Return the iteritems() iterator of all requirements.'''
-        return self.__requirements.iteritems()
+        return self._named_nodes.iteritems()
 
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
