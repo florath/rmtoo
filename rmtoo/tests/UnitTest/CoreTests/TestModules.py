@@ -118,6 +118,6 @@ class TestModules(unittest.TestCase):
         tear_down_log_handler()
 
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "_handle_modules;137; 43:there was a problem handling the " \
+        "_handle_modules;===SOURCELINENO===; 43:there was a problem handling the " \
         "requirement set modules\n"
         self.assertEqual(lstderr, expected_result)

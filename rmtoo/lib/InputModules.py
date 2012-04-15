@@ -23,6 +23,7 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 from rmtoo.lib.InputModuleNode import InputModuleNode
+from rmtoo.lib.logging import tracer
 
 class InputModules(Digraph):
     '''The modules class is also a digraph for the reqdeps modules which 
@@ -70,6 +71,7 @@ class InputModules(Digraph):
 
     def __load(self, dir_components, mod_components):
         '''Load the modules.'''
+        tracer.debug("Load modules from directory [%s]" % dir_components)
         for filename in sorted(os.listdir(os.path.join(*dir_components))):
             if not filename.endswith(".py"):
                 continue
@@ -101,6 +103,7 @@ class InputModules(Digraph):
                 self.__tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
             if InputModuleTypes.reqdeps in types:
+                tracer.debug("Add module [%s]" % modulename)
                 self.add_node(InputModuleNode(modulename, o))
 
         # Connect the different nodes
@@ -126,11 +129,13 @@ class InputModules(Digraph):
     def __check_for_circles(self):
         '''This does check if there is a directed circle (e.g. an strongly
            connected component) in the modules graph.'''
+        tracer.debug("Called.")
         scc = strongly_connected_components(self)
         if check_for_strongly_connected_components(scc):
             raise RMTException(26, "There is a strongly connected "
                                "component in the modules graph '%s'"
                                % scc)
+        tracer.debug("No circles found.")
 
     def __topological_sort(self):
         '''Do a topological sort on the reqdeps modules.'''
