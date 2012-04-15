@@ -101,11 +101,14 @@ class Digraph(object):
            If no dictionary is given, an empty digraph will be created.'''
         self._named_nodes = {}
 
-    @staticmethod
-    def create_edge(anode, bnode):
+    def create_edge(self, anode, bnode):
         '''Creates an edge from a to b - both must be nodes.'''
         assert isinstance(anode, Digraph.Node)
         assert isinstance(bnode, Digraph.Node)
+        assert anode.get_name() in self._named_nodes.keys()
+        assert anode == self._named_nodes[anode.get_name()]
+        assert bnode.get_name() in self._named_nodes.keys()
+        assert bnode == self._named_nodes[bnode.get_name()]
         anode.add_outgoing(bnode)
         bnode.add_incoming(anode)
 

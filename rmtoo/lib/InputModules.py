@@ -88,8 +88,8 @@ class InputModules(Digraph):
             mc.append(modulename)
 
             # Import module
-            #print("Loading module '%s' from '%s'" %
-            #      (modulename, ".".join(mod_components)))
+            tracer.debug("Loading module '%s' from '%s'" %
+                         (modulename, ".".join(mod_components)))
             # pylint: disable=W0612
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
@@ -117,14 +117,21 @@ class InputModules(Digraph):
     def __connect_nodes(self):
         '''Precondition: the depends_on must be set.
            The method connect all the nodes based on this value.'''
-        for mod_name, mod in self.__tagtypes[InputModuleTypes.reqdeps].items():
-            for n in mod.depends_on:
+        tracer.debug("Called.")
+        for mod_name, mod_node in self._named_nodes.items():
+            for n in mod_node.get_module().depends_on:
                 # Connect in both directions
-                if n not in self.__tagtypes[InputModuleTypes.reqdeps]:
-                    raise RMTException(27, "Module '%s' depends on "
-                                       "'%s' - which does not exists"
-                                       % (mod_name, n))
-                self.create_edge(mod, self.__tagtypes[InputModuleTypes.reqdeps][n])
+                print("NNNNNN [%s]" % self._named_nodes.keys())
+                if n not in self._named_nodes.keys():
+                    raise RMTException(27, "Module [%s] depends on "
+                                       "[%s] - which does not exists."
+                                       % (mod_node.get_name(), n))
+                tracer.debug("Connect input module [%s] -> [%s]." %
+                             (mod_node.get_name(),
+                              self._named_nodes[n].get_name()))
+                self.create_edge(mod_node, self._named_nodes[n])
+        self.debug_output()
+        tracer.debug("Finished; success.")
 
     def __check_for_circles(self):
         '''This does check if there is a directed circle (e.g. an strongly

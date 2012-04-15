@@ -65,6 +65,7 @@ class TestModules(unittest.TestCase):
         try:
             mods = InputModules(os.path.join(mod_base_dir, "modules04"),
                            {}, [], mods_list("modules04", mod_base_dir))
+            mods.debug_output()
             assert(False)
         except RMTException, rmte:
             assert(rmte.id() == 26)
