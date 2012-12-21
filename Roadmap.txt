@@ -28,6 +28,9 @@ o Get rmtoo added to at least one Linux distribution (preferred
 
 v23
 ===
+o Add support for setup.py
+  (At least check, if the current available setup.py does
+   its job while installing the package in the system.)
 o Think about GUI
 o Add support for Tasks / Issues
   ( -> import from Bugzilla? )
