@@ -42,6 +42,10 @@ class Digraph(object):
         def get_iter_outgoing(self):
             '''Return an iterator over the outgoing nodes.'''
             return iter(self.__outgoing)
+        
+        def get_incoming_cnt(self):
+            '''Returns the number of incoming nodes.'''
+            return len(self.__incoming)
 
         def add_incoming(self, node):
             '''Add node to the incoming list.'''
@@ -103,8 +107,8 @@ class Digraph(object):
 
     def create_edge(self, anode, bnode):
         '''Creates an edge from a to b - both must be nodes.'''
-        assert isinstance(anode, Digraph.Node)
-        assert isinstance(bnode, Digraph.Node)
+        assert issubclass(anode.__class__, Digraph.Node)
+        assert issubclass(bnode.__class__, Digraph.Node)
         assert anode.get_name() in self._named_nodes.keys()
         assert anode == self._named_nodes[anode.get_name()]
         assert bnode.get_name() in self._named_nodes.keys()
@@ -122,6 +126,10 @@ class Digraph(object):
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode
+        
+    def get_node_cnt(self):
+        '''Returns the number of nodes available in the digraph.'''
+        return len(self._named_nodes)
 
     def get_iter_nodes_values(self):
         '''Returns the nodes dict.'''

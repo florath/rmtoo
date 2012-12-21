@@ -404,7 +404,7 @@ class RequirementSet(Digraph, UsableFlag):
             tracer.debug("Add edge [%s] -> [%s]" %
                          (dep_req_node.get_requirement().get_id(),
                           req.get_id()))
-            Digraph.create_edge(req_node, dep_req_node)
+            Digraph.create_edge(self, req_node, dep_req_node)
 
         # Delete the original tag
         del req.brmo["Solved by"]
@@ -479,7 +479,7 @@ class RequirementSet(Digraph, UsableFlag):
             tracer.debug("Add edge [%s] -> [%s]" %
                          (dep_req_node.get_requirement().get_id(),
                           req.get_id()))
-            Digraph.create_edge(dep_req_node, req_node)
+            Digraph.create_edge(self, dep_req_node, req_node)
 
         # Copy and delete the original tag
         ## XXX Not neede any more? req.tags["Depends on"] = t.split()
@@ -577,17 +577,17 @@ class RequirementSet(Digraph, UsableFlag):
 #    The only way to check, if a requirement is in the topic
 #    is to check if it is available in the topic._requirements dict.
         tracer.debug("Looking for master nodes in [%d] nodes."
-                     % len(self.nodes))
+                     % self.get_node_cnt())
         self.__master_nodes = set()
-        for req_node in self.nodes:
-            if len(req_node.incoming) == 0:
+        for req_node in self.get_iter_nodes_values():
+            if req_node.get_incoming_cnt() == 0:
                 tracer.debug("Found master nodes [%s]"
                              % req_node.get_requirement().get_id())
                 self.__master_nodes.add(req_node)
             else:
                 tracer.debug("[%s] is not a master node; incoming from "
                              % req_node.get_requirement().get_id())
-                for i in req_node.incoming:
+                for i in req_node.get_iter_incoming():
                     tracer.debug("  -> [%s]" % i.get_requirement().get_id())
         tracer.info("Found [%d] master nodes" % len(self.__master_nodes))
 

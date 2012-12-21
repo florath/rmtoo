@@ -51,7 +51,7 @@ class RDepPriority(Digraph.Node):
                 tracer.debug("Node [%s] set priority to [%4.3f]"
                              % (req.get_id(), weight))
                 req.set_value("Priority", weight)
-                for nout in node.outgoing:
+                for nout in node.get_iter_outgoing():
                     tracer.debug("Recursive call to node [%s] "
                                  "with weight [%4.3f]"
                                  % (nout.get_requirement().get_id(), weight))
