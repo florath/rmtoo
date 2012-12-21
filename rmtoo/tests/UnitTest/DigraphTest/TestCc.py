@@ -12,7 +12,7 @@
 import unittest
 
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.digraph.DigraphUtils import digraph_create_from_dict
+from rmtoo.lib.digraph.Helper import digraph_create_from_dict
 from rmtoo.lib.digraph.ConnectedComponents \
     import connected_components, CC_Components
 

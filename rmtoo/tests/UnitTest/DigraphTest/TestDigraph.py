@@ -11,7 +11,7 @@
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.lib.digraph.DigraphUtils import digraph_create_from_dict
+from rmtoo.lib.digraph.Helper import digraph_create_from_dict
 
 class TestDigraph:
 

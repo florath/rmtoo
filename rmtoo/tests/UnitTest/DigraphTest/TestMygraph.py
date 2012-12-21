@@ -30,12 +30,12 @@ def create_test_graph_01():
     n1 = MyGraph.MyNode("A")
     n2 = MyGraph.MyNode("B")
     n3 = MyGraph.MyNode("C")
-    n1.outgoing.append(n2)
-    n1.outgoing.append(n3)
-    n2.outgoing.append(n3)
-    mg.nodes.append(n1)
-    mg.nodes.append(n2)
-    mg.nodes.append(n3)
+    n1.add_outgoing(n2)
+    n1.add_outgoing(n3)
+    n2.add_outgoing(n3)
+    mg.add_node(n1)
+    mg.add_node(n2)
+    mg.add_node(n3)
     return mg
 
 class InheritanceTest(unittest.TestCase):
@@ -47,8 +47,8 @@ class InheritanceTest(unittest.TestCase):
     def test_inherit_002(self):
         "Output check"
         mg = create_test_graph_01()
-        d = mg.output_to_dict()
-        self.assertEqual(d, {'A': ['B', 'C'], 'C': [], 'B': ['C']},
+        d = mg.as_dict()
+        self.assertEqual(d, {'A': ['C', 'B'], 'C': [], 'B': ['C']},
                          "incorrect dictionary output")
 
     def test_inherit_003(self):
