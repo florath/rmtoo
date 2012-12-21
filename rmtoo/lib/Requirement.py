@@ -24,13 +24,6 @@ sys.setdefaultencoding('utf-8')
 class Requirement(BaseRMObject):
     '''Class which holds one requirement.'''
 
-    def execute(self, executor, func_prefix):
-        '''Execute the parts which are needed for Requirement.'''
-        assert False
-        tracer.debug("Called: name [%s]." % self.get_id())
-        FuncCall.pcall(executor, func_prefix + "requirement", self)
-        tracer.debug("Finished: name [%s]." % self.name)
-
     # Requirement Type
     # Each requirement has exactly one type.
     # The class ReqType sets this from the contents of the file.

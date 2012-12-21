@@ -76,7 +76,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         # possible equally named requirements. 
         self.__output_file.write('%ssubgraph cluster_GRAPH_%s {\n'
             '%s label="Topic: %s";\n'
-            % (self.__ident, topic.name, self.__ident, topic.name))
+            % (self.__ident, topic.get_name(), self.__ident, topic.get_name()))
         self.__inc_indent_level()
 
     def topic_post(self, _):
@@ -86,18 +86,20 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Set the order of the requirements.'''
-        return sorted(list_to_sort, key=lambda t: t.name)
+        return sorted(list_to_sort, key=lambda t: t.get_name())
 
     def requirement(self, requirement):
         '''Output one requirement - and collect information about the 
            requirement's coherence.'''
         ident = "          "[0:self.__level]
         self.__output_file.write('%s"%s" [%s];\n'
-                      % (ident, requirement.name,
+                      % (ident, requirement.get_name(),
                          graph.node_attributes(requirement)))
 
-        for d in sorted(requirement.incoming, key=lambda r: r.id):
-            self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
+        for d in sorted(requirement.get_iter_incoming(), 
+                        key=lambda r: r.get_name()):
+            self.__req_dep_graph += '"%s" -> "%s";\n' % \
+                (requirement.get_name(), d.get_name())
 
 
     def cmad_topic_continuum_pre(self, _):

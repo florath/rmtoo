@@ -10,6 +10,7 @@
 '''
 
 import json
+import copy
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementDNode import RequirementDNode
@@ -75,9 +76,11 @@ class RequirementSet(Digraph, UsableFlag):
         self._adapt_usablility(req)
 
         if req.is_usable():
+            dnreq = RequirementDNode(req)
             # Store in the map, so that it is easy to access the
             # node by id.
-            self._add_requirement(req)
+### ToDo: needed            self._add_requirement(req)
+            self.add_node(dnreq)
             # Also store it in the digraph's node list for simple
             # access to the digraph algorithms.
             # self.nodes.append(req)
@@ -299,31 +302,35 @@ class RequirementSet(Digraph, UsableFlag):
         tracer.debug("Called; TopicSet [%s]" % topic_set)
         restricted_reqs = RequirementSet(self._config)
         for req in self._named_nodes.values():
-            if req.get_topic() in topic_set:
-                tracer.debug("Restricting requirement [%s]" % req.get_id())
+            if req.get_requirement().get_topic() in topic_set:
+                tracer.debug("Restricting requirement [%s]" % 
+                             req.get_requirement().get_id())
                 # Here a deep copy is needed, because the internal
                 # data structures must be adapted: the incoming and the
                 # outgoing lists.
-                assert False
-                nreq = copy.deepcopy(req)
+## ToDo: needed???                nreq = copy.deepcopy(req)
+                nreq = copy.copy(req)
                 # Smash the incoming and outgoing
-                nreq.incoming = []
-                nreq.outgoing = []
+# ToDo: check                nreq.incoming = []
+# ToDo: check               nreq.outgoing = []
+                nreq.clear_incoming()
+                nreq.clear_outgoing()
 
                 # Add to the internal map
                 restricted_reqs.add_node(nreq)
                 # Add to the common digraph structure
-                restricted_reqs.add_node(nreq)
+# ToDo: ???                restricted_reqs.add_node(nreq)
                 # Add ce3 of the requirement
-                restricted_reqs._add_ce3(nreq.get_id(),
-                                         self.__ce3set.get(nreq.get_id()))
-                ctrs = nreq.get_value("Constraints")
+                restricted_reqs._add_ce3(
+                    nreq.get_requirement().get_id(),
+                    self.__ce3set.get(nreq.get_requirement().get_id()))
+                ctrs = nreq.get_requirement().get_value("Constraints")
                 if ctrs != None:
                     for cval in ctrs:
                         restricted_reqs._add_constraint(self.__constraints[cval])
 
                 # Add testcases
-                testcases = nreq.get_value("Test Cases")
+                testcases = nreq.get_requirement().get_value("Test Cases")
                 if testcases != None:
                     tracer.debug("Restricting testcases [%s]" % testcases)
                     for testcase in testcases:
@@ -334,16 +341,18 @@ class RequirementSet(Digraph, UsableFlag):
         # only copy things over if they are also in the restricted 
         # graph.
         for req in restricted_reqs._named_nodes.values():
-            old_req = self._named_nodes[req.get_id()]
-            for incoming in old_req.incoming:
-                if incoming.get_topic() in topic_set:
-                    nreq = restricted_reqs._named_nodes[incoming.get_id()]
+            old_req = self._named_nodes[req.get_requirement().get_id()]
+            for incoming in old_req.get_iter_incoming():
+                if incoming.get_requirement().get_topic() in topic_set:
+                    nreq = restricted_reqs._named_nodes[
+                        incoming.get_requirement().get_id()]
                     restricted_reqs.create_edge(req, nreq)
         for req in restricted_reqs._named_nodes.values():
-            old_req = self._named_nodes[req.get_id()]
-            for outgoing in old_req.incoming:
-                if outgoing.get_topic() in topic_set:
-                    nreq = restricted_reqs._named_nodes[outgoing.get_id()]
+            old_req = self._named_nodes[req.get_requirement().get_id()]
+            for outgoing in old_req.get_iter_incoming():
+                if outgoing.get_requirement().get_topic() in topic_set:
+                    nreq = restricted_reqs._named_nodes[
+                        outgoing.get_requirement().get_id()]
                     restricted_reqs.create_edge(req, nreq)
 
         tracer.debug("Finished; found [%d] requirements for TopicSet [%s]."
@@ -523,7 +532,7 @@ class RequirementSet(Digraph, UsableFlag):
         for req_name, req in self._named_nodes.items():
             # In each case store a (maybe empty) CE3 in the set.
             ce3 = CE3()
-            cstrnts = req.get_value("Constraints")
+            cstrnts = req.get_requirement().get_value("Constraints")
             if cstrnts != None:
                 sval = json.loads(cstrnts.get_content())
                 cs = {}
@@ -551,7 +560,7 @@ class RequirementSet(Digraph, UsableFlag):
             # TODO Outgoing
             # Have a look for incoming nodes
             ince3s = []
-            for i in r.incoming:
+            for i in r.get_iter_incoming():
                 ince3s.append(self.__ce3set.get(i.get_requirement().get_id()))
             lce3 = self.__ce3set.get(r.get_requirement().get_id())
             lce3.unite(ince3s)

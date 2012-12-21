@@ -19,7 +19,14 @@ class InputModuleNode(Digraph.Node):
         '''Constructs an object with the help of the provided information.'''
         Digraph.Node.__init__(self, name)
         self.__module = module
+        
+        print("IMN")
+        print(self)
+        print(dir(self))
 
     def get_module(self):
         '''Returns the module.'''
         return self.__module
+    
+    def __deepcopy__(self, a):
+        assert False

@@ -47,6 +47,10 @@ class Digraph(object):
             '''Returns the number of incoming nodes.'''
             return len(self.__incoming)
 
+        def get_outgoing_cnt(self):
+            '''Returns the number of outgoing nodes.'''
+            return len(self.__outgoing)
+
         def add_incoming(self, node):
             '''Add node to the incoming list.'''
             self.__incoming.add(node)
@@ -54,6 +58,14 @@ class Digraph(object):
         def add_outgoing(self, node):
             '''Add node to the incoming list.'''
             self.__outgoing.add(node)
+            
+        def clear_incoming(self):
+            '''Empties the incoming list.'''
+            self.__incoming = set()
+
+        def clear_outgoing(self):
+            '''Empties the incoming list.'''
+            self.__outgoing = set()
 
         @staticmethod
         def __as_named_list(inlist):
@@ -109,6 +121,13 @@ class Digraph(object):
         '''Creates an edge from a to b - both must be nodes.'''
         assert issubclass(anode.__class__, Digraph.Node)
         assert issubclass(bnode.__class__, Digraph.Node)
+        
+        print("CE")
+        print(anode.get_name())
+        print("CE ---")
+        print(self._named_nodes.keys())
+        print("CE END")
+        
         assert anode.get_name() in self._named_nodes.keys()
         assert anode == self._named_nodes[anode.get_name()]
         assert bnode.get_name() in self._named_nodes.keys()
@@ -119,10 +138,14 @@ class Digraph(object):
     def add_node(self, anode):
         '''Adds a new node to the graph.
            Check if the node with the same name already exists.'''
-        assert isinstance(anode, Digraph.Node)
+        print("Anode")
+        print(anode.__class__)
+        
+        assert issubclass(anode.__class__, Digraph.Node)
 
         for node in self._named_nodes.values():
             if node.get_name() == anode.get_name():
+                assert False
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode

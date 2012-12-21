@@ -111,14 +111,15 @@ class DescWords(Base):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_requirement().get_id())
 
     def requirement(self, requirement):
         '''Checks all the requirements.
            If the result is positive, it is good.'''
-        result = DescWords.analyse(requirement.get_id(),
+        result = DescWords.analyse(requirement.get_requirement().get_id(),
                  self.lwords,
-                 requirement.get_value("Description").get_content())
+                 requirement.get_requirement().get_value("Description")
+                    .get_content())
         if result.get_value() < 0:
             self.set_failed()
         self.add_result(result)

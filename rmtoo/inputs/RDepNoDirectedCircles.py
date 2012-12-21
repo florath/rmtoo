@@ -31,7 +31,10 @@ class RDepNoDirectedCircles(Digraph.Node):
     # connected components.  It uses the algorithm from Trajan for
     # this - which is implemented in the digraph library.
     def rewrite(self, reqset):
+        print("REWRITE")
+        print(reqset)
         scc = strongly_connected_components(reqset)
+        print(scc)
         result = check_for_strongly_connected_components(scc)
         if result == True:
             print("+++ ERROR: There is at least one circular "

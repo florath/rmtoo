@@ -38,7 +38,7 @@ class Topic(Digraph.Node):
                 ntopic = Topic(self.__digraph, self._config, input_handler,
                                commit, lfile_info, req_set)
                 self.__digraph.add_node(ntopic)
-                Digraph.create_edge(self, ntopic)
+                self.__digraph.create_edge(self, ntopic)
             elif tag.get_tag() == "Name":
                 if self.__topic_name != None:
                     # TODO: Multiple Names

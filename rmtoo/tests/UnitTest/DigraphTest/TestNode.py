@@ -1,12 +1,14 @@
-#
-# Digraph Pyhton library
-#
-# Unit tests for the digraph
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+   
+  Unit tests for the digraph
+  
+ (c) 2010, 2012 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
+import copy
 
 from rmtoo.lib.digraph.Digraph import Digraph
 
@@ -25,3 +27,8 @@ class TestNode:
         n = Digraph.Node("MyName")
         r = n.is_self_of_ancient(None)
         assert(r==False)
+
+    def test_copy_node(self):
+        "Node test: deep copy node"
+        n = Digraph.Node("MyName")
+        nc = copy.deepcopy(n)

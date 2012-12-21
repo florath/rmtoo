@@ -18,6 +18,8 @@ from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
+from rmtoo.lib.Requirement import Requirement
+
 
 class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     default_config = Cfg.new_by_json_str(
@@ -53,7 +55,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_name())
 
     def topic_set_post(self, _requirement_set):
         '''Write footer - close file.'''
@@ -67,12 +69,12 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def requirement(self, requirement):
         '''Output the given requirement.'''
         self.__output_file.write('"%s" [%s];\n' %
-                      (requirement.get_id(),
+                      (requirement.get_name(),
                        self.node_attributes(requirement, self._config)))
 
-        for d in requirement.incoming:
+        for d in requirement.get_iter_incoming():
             self.__output_file.write('"%s" -> "%s";\n' %
-                                     (requirement.get_id(), d.id))
+                                     (requirement.get_name(), d.get_name()))
 
 # TODO: currently the =default_config is needed for graph2
     @staticmethod
@@ -85,24 +87,24 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         # Colorize the current requirement depending on type
         nodeparam = []
         if get_conf_attr("Type") \
-                and req.get_value("Type") == req.rt_initial_requirement:
+                and req.get_requirement().get_value("Type") == Requirement.rt_initial_requirement:
             nodeparam.append("color=orange")
         if get_conf_attr("Type") \
-                and req.get_value("Type") == req.rt_design_decision:
+                and req.get_requirement().get_value("Type") == Requirement.rt_design_decision:
             nodeparam.append("color=green")
 
         if get_conf_attr("Status"):
-            req_status = req.get_value("Status")
+            req_status = req.get_requirement().get_value("Status")
 
             if isinstance(req_status, RequirementStatusNotDone):
                 nodeparam.append("fontcolor=red")
             elif isinstance(req_status, RequirementStatusAssigned):
                 nodeparam.append("fontcolor=blue")
 
-            label = 'label="%s' % req.id.replace("/", "\\n/")
+            label = 'label="%s' % req.get_name().replace("/", "\\n/")
 
             if get_conf_attr("Priority"):
-                label += "\\n[%4.2f]" % (req.get_value("Priority") * 10)
+                label += "\\n[%4.2f]" % (req.get_requirement().get_value("Priority") * 10)
 
             if get_conf_attr("EffortEstimation"):
                 est_effort = req.get_value("Effort estimation")
@@ -113,7 +115,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             nodeparam.append(label)
 
         if get_conf_attr("Class"):
-            rclass = req.get_value("Class")
+            rclass = req.get_requirement().get_value("Class")
             if isinstance(rclass, ClassTypeImplementable):
                 nodeparam.append("shape=octagon")
             elif isinstance(rclass, ClassTypeSelected):

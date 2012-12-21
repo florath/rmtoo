@@ -22,14 +22,14 @@ class HotSpot(Base):
         Base.__init__(self)
 
     def requirement(self, req):
-        if len(req.incoming) > HotSpot.max_incoming:
+        if req.get_incoming_cnt() > HotSpot.max_incoming:
             self.add_result(
                 Result("HotSpot", req.get_id(), -10,
                     ["Number of incoming links is too high: %d" %
                        len(req.incoming)]))
             self.set_failed()
 
-        if len(req.outgoing) > HotSpot.max_outgoing:
+        if req.get_outgoing_cnt() > HotSpot.max_outgoing:
             self.add_result(
                 Result("HotSpot", req.get_id(), -10,
                  ["Number of outgoing links is too high: %d" %

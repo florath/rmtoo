@@ -57,15 +57,15 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         for reqid in req_set.get_all_requirement_ids():
             tr = req_set.get_requirement(reqid)
             try:
-                status = tr.get_status()
+                status = tr.get_requirement().get_status()
                 if isinstance(status, RequirementStatusNotDone):
-                    rclass = tr.values["Class"]
+                    rclass = tr.get_requirement().get_value("Class")
                     if isinstance(rclass, ClassTypeImplementable):
-                        prios_impl.append([tr.get_prio(), tr.id])
+                        prios_impl.append([tr.get_requirement().get_prio(), tr.get_name()])
                     elif isinstance(rclass, ClassTypeSelected):
-                        prios_selected.append([tr.get_prio(), tr.id])
+                        prios_selected.append([tr.get_requirement().get_prio(), tr.get_name()])
                     else:
-                        prios_detail.append([tr.get_prio(), tr.id])
+                        prios_detail.append([tr.get_requirement().get_prio(), tr.get_name()])
                 elif isinstance(status, RequirementStatusAssigned):
                     prios_assigned.append(tr)
                 elif isinstance(status, RequirementStatusFinished):
@@ -117,9 +117,9 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             s = 0
             for p in l:
                 if topic_set.get_requirement_set().get_requirement(p[1]).\
-                    get_value("Effort estimation") != None:
+                    get_requirement().get_value("Effort estimation") != None:
                     efest = topic_set.get_requirement_set().get_requirement(p[1]).\
-                        get_value("Effort estimation")
+                        get_requirement().get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)
                 else:
@@ -189,7 +189,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             for sp in [simpl, sselected]:
                 for p in sp:
                     sum_open += topic_set.get_requirement_set().get_requirement(p[1]).\
-                        get_efe_or_0()
+                        get_requirement().get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned

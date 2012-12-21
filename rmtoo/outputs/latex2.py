@@ -156,7 +156,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_pre(self, topic):
         '''Output one topic.'''
         self.__level += 1
-        self.__fd.write("%% Output topic '%s'\n" % topic.name)
+        self.__fd.write("%% Output topic '%s'\n" % topic.get_name())
 
     def topic_post(self, _topic):
         '''Cleanup things for topic.'''
@@ -177,7 +177,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_name())
 
     def __add_constraint_req_ref(self, constraint, requirement):
         if constraint not in self.__constraints_reqs_ref:
@@ -186,31 +186,31 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement(self, req):
         '''Write out one requirement.'''
-        self.__fd.write("%% REQ '%s'\n" % req.id)
+        self.__fd.write("%% REQ '%s'\n" % req.get_name())
 
         self.__fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
                  % (self.level_names[self.__level + 1],
-                    req.get_value("Name").get_content(),
-                    latex2.__strescape(req.id),
-                    req.get_value("Description").get_content()))
+                    req.get_requirement().get_value("Name").get_content(),
+                    latex2.__strescape(req.get_name()),
+                    req.get_requirement().get_value("Description").get_content()))
 
-        if req.is_val_av_and_not_null("Rationale"):
+        if req.get_requirement().is_val_av_and_not_null("Rationale"):
             self.__fd.write("\n\\textbf{Rationale:} %s\n"
-                     % req.get_value("Rationale").get_content())
+                     % req.get_requirement().get_value("Rationale").get_content())
 
-        if req.is_val_av_and_not_null("Note"):
+        if req.get_requirement().is_val_av_and_not_null("Note"):
             self.__fd.write("\n\\textbf{Note:} %s\n"
-                     % req.get_value("Note").get_content())
+                     % req.get_requirement().get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.incoming) > 0:
+        if req.get_incoming_cnt() > 0:
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.incoming,
-                                                key=lambda r: r.id)]))
+                                (latex2.__strescape(d.get_name()),
+                                 latex2.__strescape(d.get_name()))
+                                for d in sorted(req.get_iter_incoming(),
+                                                key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
         if len(req.outgoing) > 0:
