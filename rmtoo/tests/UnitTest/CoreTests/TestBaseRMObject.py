@@ -14,7 +14,7 @@ import StringIO
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_timestamp, hide_lineno
 
 
 class TMods:
@@ -36,7 +36,8 @@ class TBRMObj(BaseRMObject):
                               tc, "tobjs", None)
 
 expected_result = \
-    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;104; " \
+    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;"\
+    "===SOURCELINENO===; " \
     "90:Wrong module type [mytag] not in [set([1, 2, 3])]\n"
 
 class TestBaseRMObject(unittest.TestCase):
@@ -49,7 +50,7 @@ class TestBaseRMObject(unittest.TestCase):
 
         tbrmo = TBRMObj()
 
-        result = hide_timestamp(mstderr.getvalue())
+        result = hide_lineno(hide_timestamp(mstderr.getvalue()))
         tear_down_log_handler()
 
         self.assertEqual(result, expected_result)

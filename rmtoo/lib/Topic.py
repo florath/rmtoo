@@ -17,10 +17,7 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 
 class Topic(Digraph.Node):
-    '''Each topic has a level - which indicates the identation of the text
-       element. 
-       Each topic does link to it's super-topic.  This is the way to detect
-       cycles. 
+    '''Topics are stored as nodes in the digraph - which is the TopicSet. 
        This needs to be a digraph node, to handle dependencies within the
        topics - e.g. handling of makefile dependencies.'''
 
@@ -35,10 +32,12 @@ class Topic(Digraph.Node):
             if tag.get_tag() == "SubTopic":
                 lfile_info = input_handler.get_file_info_with_type(
                             commit, "topics", tag.get_content() + ".tic")
-                ntopic = Topic(self.__digraph, self._config, input_handler,
+                ntopic = Topic(self.__topicset, self._config, input_handler,
                                commit, lfile_info, req_set)
-                self.__digraph.add_node(ntopic)
-                self.__digraph.create_edge(self, ntopic)
+                print("SUBTOPIC")
+                print(ntopic.get_name())
+                self.__topicset.add_node(ntopic)
+                self.__topicset.create_edge(self, ntopic)
             elif tag.get_tag() == "Name":
                 if self.__topic_name != None:
                     # TODO: Multiple Names
@@ -58,17 +57,18 @@ class Topic(Digraph.Node):
             raise RMTException(62, "Mandatory tag 'Name' not given in topic",
                                self.get_name())
 
-    def __init__(self, digraph, config, input_handler, commit, file_info,
+    def __init__(self, topicset, config, input_handler, commit, file_info,
                  req_set):
         tname = file_info.get_filename_sub_part()[:-4]
         # The 'name' in the digraph node is the ID
         Digraph.Node.__init__(self, tname)
+        topicset.add_node(self)
         # This is the name of the topic (short description)
         self.__topic_name = None
         self.__tags = None
         self._config = config
         tracer.debug("Called: name [%s]." % tname)
-        self.__digraph = digraph
+        self.__topicset = topicset
         self.__requirements = None
         self.__read(tname, input_handler, commit, file_info, req_set)
 
@@ -93,7 +93,7 @@ class Topic(Digraph.Node):
                                tag.get_content())
                 continue
             if rtag == "SubTopic":
-                subtopic = self.__digraph.find(tag.get_content())
+                subtopic = self.__topicset.find(tag.get_content())
                 assert subtopic != None
                 FuncCall.pcall(executor, func_prefix + "topic_sub_pre",
                                subtopic)
