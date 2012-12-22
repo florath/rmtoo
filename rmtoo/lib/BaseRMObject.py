@@ -52,6 +52,10 @@ class BaseRMObject(UsableFlag):
     def get_value(self, key):
         return self.values[key]
 
+    def remove_value(self, key):
+        if key in self.values:
+            del(self.values[key])
+
     def get_value_default(self, key, default_value = None):
         if key not in self.values:
             return default_value
@@ -89,6 +93,9 @@ class BaseRMObject(UsableFlag):
         # If everything's fine, store the rest of the req for later
         # inspection.
         self.brmo = brmo
+        
+    def write_fd(self, fd):
+        self.record.write_fd(fd)
 
     def handle_modules_tag(self, reqs):
         if self.mods == None:

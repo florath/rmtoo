@@ -46,22 +46,5 @@ def remove_single_element_lists_name_rest(scc):
 def digraph_create_from_dict(init_dgraph, node_gen_func=Digraph.Node):
     '''Creates a new digraph based on the given information.'''
     digraph = Digraph()
-
-    # First run: create all nodes
-    for node_name in init_dgraph:
-        # Create the node and put it into the object list of all
-        # nodes and into the local dictionary of named nodes.
-        named_node = node_gen_func(node_name)
-        digraph.add_node(named_node)
-
-    # Second run: run through all nodes and create the edges.
-    for node_name, outs in init_dgraph.items():
-        node_from = digraph.find(node_name)
-        for onode in outs:
-            node_to = digraph.find(onode)
-            if node_to == None:
-                raise RMTException(24, "Node '%s' is referenced "
-                                   "but not specified" % onode)
-            digraph.create_edge(node_from, node_to)
-
+    digraph.create_from_dict(init_dgraph, node_gen_func)
     return digraph

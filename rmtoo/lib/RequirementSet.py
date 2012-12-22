@@ -544,7 +544,7 @@ class RequirementSet(Digraph, UsableFlag):
                     rcs = self.__constraints.get(ctr_name)
                     ce3.eval(rcs, ctr_name, s)
                     cs[ctr_name] = rcs
-                req.set_value("Constraints", cs)
+                req.get_requirement().set_value("Constraints", cs)
             # Store the fresh create CE3 into the ce3set
             self.__ce3set.insert(req_name, ce3)
         tracer.debug("Finished. Number of constraints [%d]." %
@@ -640,20 +640,20 @@ class RequirementSet(Digraph, UsableFlag):
 
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''
-        for r in self.__requirements.itervalues():
+        for r in self.get_iter_nodes_values():
             # Remove the old 'Depends on'
-            r.record.remove("Depends on")
+            r.get_requirement().remove_value("Depends on")
 
             # Create the list of dependencies
             onodes = []
-            for n in r.outgoing:
-                onodes.append(n.name)
+            for n in r.get_iter_outgoing():
+                onodes.append(n.get_name())
 
             # If the onodes is empty: There must no old 'Solved by'
             # tag available - if so something completey strange has
             # happens and it is better to stop directly.
             if len(onodes) == 0:
-                assert(not r.record.is_tag_available("Solved by"))
+                assert(not r.get_requirement().is_value_available("Solved by"))
                 # Looks that everything is ok: continue
                 continue
 
@@ -662,18 +662,18 @@ class RequirementSet(Digraph, UsableFlag):
 
             # Check if there is already a 'Solved by'
             try:
-                r.record.set_content("Solved by", on)
+                r.get_requirement().set_value("Solved by", on)
             except ValueError, ve:
-                r.record.append(RecordEntry(
+                r.get_requirement().append(RecordEntry(
                         "Solved by", on,
                         "Added by rmtoo-normalize-dependencies"))
         return True
 
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
-        for r in self.__requirements.itervalues():
-            fd = file(directory + "/" + r.id + ".req", "w")
-            r.record.write_fd(fd)
+        for r in self.get_iter_nodes_values():
+            fd = file(directory + "/" + r.get_name() + ".req", "w")
+            r.get_requirement().write_fd(fd)
             fd.close()
         return True
 

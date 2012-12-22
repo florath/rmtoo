@@ -52,3 +52,5 @@ class TestRDepSCC:
 
         assert(result == False)
 
+t = TestRDepSCC()
+t.test_negative_01()

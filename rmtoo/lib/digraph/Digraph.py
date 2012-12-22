@@ -117,6 +117,25 @@ class Digraph(object):
            If no dictionary is given, an empty digraph will be created.'''
         self._named_nodes = {}
 
+    def create_from_dict(self, init_dgraph, node_gen_func=Node):
+        '''Creates a new digraph based on the given information.'''
+        # First run: create all nodes
+        for node_name in init_dgraph:
+            # Create the node and put it into the object list of all
+            # nodes and into the local dictionary of named nodes.
+            named_node = node_gen_func(node_name)
+            self.add_node(named_node)
+
+        # Second run: run through all nodes and create the edges.
+        for node_name, outs in init_dgraph.items():
+            node_from = self.find(node_name)
+            for onode in outs:
+                node_to = self.find(onode)
+                if node_to == None:
+                    raise RMTException(24, "Node '%s' is referenced "
+                                       "but not specified" % onode)
+                self.create_edge(node_from, node_to)
+
     def create_edge(self, anode, bnode):
         '''Creates an edge from a to b - both must be nodes.'''
         assert issubclass(anode.__class__, Digraph.Node)
@@ -145,7 +164,7 @@ class Digraph(object):
 
         for node in self._named_nodes.values():
             if node.get_name() == anode.get_name():
-                assert False
+#                assert False
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode

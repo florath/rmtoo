@@ -213,20 +213,20 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                                                 key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
-        if len(req.outgoing) > 0:
+        if req.get_outgoing_cnt() > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.outgoing,
-                                                key=lambda r: r.id)]))
+                                (latex2.__strescape(d.get_name()),
+                                 latex2.__strescape(d.get_name()))
+                                for d in sorted(req.get_iter_outgoing(),
+                                                key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
         tracer.debug("Output constraints")
         if self.__ce3set != None:
-            cnstrt = self.__ce3set.get(req.get_id())
+            cnstrt = self.__ce3set.get(req.get_name())
             tracer.debug("Constraints are available [%s]" % cnstrt)
             tracer.debug("Check constraint header output [%s]" %
                          cnstrt.len())
@@ -250,7 +250,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
 
-        testcases = req.get_value_default("Test Cases")
+        testcases = req.get_requirement().get_value_default("Test Cases")
         if testcases != None:
             self.__fd.write("\n\\textbf{Test Cases:} ")
             tcout = []
@@ -263,9 +263,9 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__fd.write(", ".join(tcout))
             self.__fd.write("\n")
 
-        status = req.get_value("Status").get_output_string()
-        clstr = req.get_value("Class").get_output_string()
-        rtype = Requirement.get_type_as_str(req.get_value("Type"))
+        status = req.get_requirement().get_value("Status").get_output_string()
+        clstr = req.get_requirement().get_value("Class").get_output_string()
+        rtype = Requirement.get_type_as_str(req.get_requirement().get_value("Type"))
 
         self.__fd.write("\n\\par\n{\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")
@@ -274,19 +274,19 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         i = 0
         for rattr in self._config.get_value("req_attributes"):
             if rattr == "Id":
-                self.__fd.write("\\textbf{Id:} & %s " % req.id)
+                self.__fd.write("\\textbf{Id:} & %s " % req.get_name())
             elif rattr == "Priority":
                 self.__fd.write("\\textbf{Priority:} & %4.2f "
-                         % (req.get_value("Priority") * 10))
+                         % (req.get_requirement().get_value("Priority") * 10))
             elif rattr == "Owner":
                 self.__fd.write("\\textbf{Owner:} & %s" %
-                                req.get_value("Owner"))
+                                req.get_requirement().get_value("Owner"))
             elif rattr == "Invented on":
                 self.__fd.write("\\textbf{Invented on:} & %s "
-                         % req.get_value("Invented on").strftime("%Y-%m-%d"))
+                         % req.get_requirement().get_value("Invented on").strftime("%Y-%m-%d"))
             elif rattr == "Invented by":
                 self.__fd.write("\\textbf{Invented by:} & %s "
-                         % req.get_value("Invented by"))
+                         % req.get_requirement().get_value("Invented by"))
             elif rattr == "Status":
                 self.__fd.write("\\textbf{Status:} & %s " % status)
             elif rattr == "Class":
