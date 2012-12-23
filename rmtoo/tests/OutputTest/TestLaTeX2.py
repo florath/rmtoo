@@ -13,6 +13,7 @@ import os
 
 from rmtoo.outputs.latex2 import latex2
 from rmtoo.lib.Topic import Topic
+from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
@@ -38,7 +39,9 @@ class TestOutputLaTeX2:
         tvcs = TestVCS(tcfg)
         tfile = tvcs.get_tfile1()
 
-        topic = Topic(None, "TName", tvcs, None, tfile, None)
+        dg = Digraph()
+
+        topic = Topic(dg, "TName", tvcs, None, tfile, None)
         topic.t = [RecordEntry("CompleteleOther", "My content"), ]
         tmpdir = create_tmp_dir()
 

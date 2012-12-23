@@ -139,14 +139,7 @@ class Digraph(object):
     def create_edge(self, anode, bnode):
         '''Creates an edge from a to b - both must be nodes.'''
         assert issubclass(anode.__class__, Digraph.Node)
-        assert issubclass(bnode.__class__, Digraph.Node)
-        
-        print("CE")
-        print(anode.get_name())
-        print("CE ---")
-        print(self._named_nodes.keys())
-        print("CE END")
-        
+        assert issubclass(bnode.__class__, Digraph.Node)        
         assert anode.get_name() in self._named_nodes.keys()
         assert anode == self._named_nodes[anode.get_name()]
         assert bnode.get_name() in self._named_nodes.keys()
@@ -164,7 +157,7 @@ class Digraph(object):
 
         for node in self._named_nodes.values():
             if node.get_name() == anode.get_name():
-#                assert False
+                assert False
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode

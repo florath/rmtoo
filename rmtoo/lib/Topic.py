@@ -36,7 +36,9 @@ class Topic(Digraph.Node):
                                commit, lfile_info, req_set)
                 print("SUBTOPIC")
                 print(ntopic.get_name())
-                self.__topicset.add_node(ntopic)
+# The topic itself is already added in the constrcutor of Topic.
+# Therefore there is no need to add it here (again).                
+#                self.__topicset.add_node(ntopic)
                 self.__topicset.create_edge(self, ntopic)
             elif tag.get_tag() == "Name":
                 if self.__topic_name != None:

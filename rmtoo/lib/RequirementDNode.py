@@ -33,3 +33,7 @@ class RequirementDNode(Digraph.Node):
     def get_requirement(self):
         '''Returns the requirement from inside.'''
         return self.__requirement
+    
+    def __repr__(self):
+        '''The representation is the name of the node.'''
+        return self.get_name()
