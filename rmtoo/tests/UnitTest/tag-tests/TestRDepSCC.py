@@ -46,11 +46,5 @@ class TestRDepSCC:
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        print("HHIIIHIHIHIHI")
-        print(result)
-        print(rdep)
-
         assert(result == False)
 
-t = TestRDepSCC()
-t.test_negative_01()

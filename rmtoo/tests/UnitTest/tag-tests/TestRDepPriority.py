@@ -75,9 +75,6 @@ Type: requirement''', 'C', None, None, None)
         assert(reqset.find("B").get_requirement()
                .get_value("Priority") == 0.8)
 
-        print("VALUS 02 [%s]" % reqset.find("C").get_requirement()
-               .get_value("Priority"))
-
         assert(reqset.find("C").get_requirement()
                .get_value("Priority") == 0.4)
 
@@ -118,10 +115,6 @@ Type: requirement''', 'D', None, None, None)
                .get_value("Priority") == 0.2)
         assert(reqset.find("C").get_requirement()
                .get_value("Priority") == 0.4)
-
-        print("VALUS 03 [%s]" % reqset.find("D").get_requirement()
-               .get_value("Priority"))
-
         assert(reqset.find("D").get_requirement()
                .get_value("Priority") == 0.2)
 
