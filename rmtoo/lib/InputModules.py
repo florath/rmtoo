@@ -5,7 +5,7 @@
   InputModules
    This handles all the different input modules.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -121,7 +121,6 @@ class InputModules(Digraph):
         for mod_name, mod_node in self._named_nodes.items():
             for n in mod_node.get_module().depends_on:
                 # Connect in both directions
-                print("NNNNNN [%s]" % self._named_nodes.keys())
                 if n not in self._named_nodes.keys():
                     raise RMTException(27, "Module [%s] depends on "
                                        "[%s] - which does not exists."
@@ -130,7 +129,6 @@ class InputModules(Digraph):
                              (mod_node.get_name(),
                               self._named_nodes[n].get_name()))
                 self.create_edge(mod_node, self._named_nodes[n])
-        self.debug_output()
         tracer.debug("Finished; success.")
 
     def __check_for_circles(self):

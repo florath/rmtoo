@@ -21,7 +21,6 @@ class CCTest(unittest.TestCase):
     def test_cc_001(self):
         "Connected digraph"
         dg = digraph_create_from_dict({"A": ["B"], "B": ["C"], "C": [] })
-        dg.debug_output()
         ccs = connected_components(dg)
         assert(ccs.get_length() == 1)
 

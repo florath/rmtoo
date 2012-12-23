@@ -149,10 +149,7 @@ class Digraph(object):
 
     def add_node(self, anode):
         '''Adds a new node to the graph.
-           Check if the node with the same name already exists.'''
-        print("Anode")
-        print(anode.__class__)
-        
+           Check if the node with the same name already exists.'''       
         assert issubclass(anode.__class__, Digraph.Node)
 
         for node in self._named_nodes.values():

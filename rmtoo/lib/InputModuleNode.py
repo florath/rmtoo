@@ -20,10 +20,6 @@ class InputModuleNode(Digraph.Node):
         Digraph.Node.__init__(self, name)
         self.__module = module
         
-        print("IMN")
-        print(self)
-        print(dir(self))
-
     def get_module(self):
         '''Returns the module.'''
         return self.__module

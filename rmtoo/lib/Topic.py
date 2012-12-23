@@ -34,8 +34,6 @@ class Topic(Digraph.Node):
                             commit, "topics", tag.get_content() + ".tic")
                 ntopic = Topic(self.__topicset, self._config, input_handler,
                                commit, lfile_info, req_set)
-                print("SUBTOPIC")
-                print(ntopic.get_name())
 # The topic itself is already added in the constrcutor of Topic.
 # Therefore there is no need to add it here (again).                
 #                self.__topicset.add_node(ntopic)
