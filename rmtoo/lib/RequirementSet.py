@@ -636,24 +636,33 @@ class RequirementSet(Digraph, UsableFlag):
         return self.__testcases
 
     # Note: the following methods are of no use any more,
-    # because the 'Solved by' will be gone in near future.
+    # because the 'Depends on' will be gone in near future.
 
+    # Note: the following methods work on the 'record' part
+    # of the requirement! (Not on the values!)
     def normalize_dependencies(self):
-        '''Normalize the dependencies to 'Depends on'.'''
+        '''Normalize the dependencies to ''.'''
+        tracer.debug("Called.")
         for r in self.get_iter_nodes_values():
-            # Remove the old 'Depends on'
-            r.get_requirement().remove_value("Depends on")
+            req = r.get_requirement()
+            record = req.get_record()
 
+            # Remove the old 'Depends on'
+            if record.is_tag_available("Depends on"):
+                tracer.debug("[%s] Remove 'Depends on'." % r.get_name())
+                record.remove("Depends on")
+            
             # Create the list of dependencies
+            tracer.debug("[%s] Create list of dependencies." % r.get_name())
             onodes = []
             for n in r.get_iter_outgoing():
                 onodes.append(n.get_name())
 
-            # If the onodes is empty: There must no old 'Solved by'
+            # If the onodes is empty: There is no old 'Solved by'
             # tag available - if so something completey strange has
             # happens and it is better to stop directly.
             if len(onodes) == 0:
-                assert(not r.get_requirement().is_value_available("Solved by"))
+                assert(not record.is_tag_available("Solved by"))
                 # Looks that everything is ok: continue
                 continue
 
@@ -662,16 +671,23 @@ class RequirementSet(Digraph, UsableFlag):
 
             # Check if there is already a 'Solved by'
             try:
-                r.get_requirement().set_value("Solved by", on)
+                tracer.debug("[%s] Try to add 'Solved by' [%s]." % 
+                             (r.get_name(), on))
+                record.set_content("Solved by", on)
             except ValueError, ve:
-                r.get_requirement().append(RecordEntry(
+                tracer.debug("[%s] Try to append 'Solved by' [%s]." % 
+                             (r.get_name(), on))
+                record.append_entry(RecordEntry(
                         "Solved by", on,
                         "Added by rmtoo-normalize-dependencies"))
+
         return True
 
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
+        tracer.debug("Called.")
         for r in self.get_iter_nodes_values():
+            tracer.debug("[%s] write requirement" % r.get_name())
             fd = file(directory + "/" + r.get_name() + ".req", "w")
             r.get_requirement().write_fd(fd)
             fd.close()

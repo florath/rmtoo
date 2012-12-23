@@ -45,3 +45,6 @@ class TestBB015:
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
         delete_result_is_dir()
+        
+t = TestBB015()
+t.test_pos_01()

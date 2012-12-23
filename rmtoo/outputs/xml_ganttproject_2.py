@@ -158,7 +158,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         xml_task.appendChild(xml_note)
 
         # Dependencies
-        for node in req.get_iter_incoming():
+        for node in req.get_iter_outgoing():
             xml_depend = self.__xml_doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.get_name())))
             # There are some default attrs

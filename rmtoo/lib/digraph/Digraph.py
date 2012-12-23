@@ -157,7 +157,7 @@ class Digraph(object):
 
         for node in self._named_nodes.values():
             if node.get_name() == anode.get_name():
-                assert False
+#                assert False
                 raise RMTException(39, "Node with name '%s' already exists"
                                    % anode.get_name())
         self._named_nodes[anode.get_name()] = anode
@@ -167,8 +167,14 @@ class Digraph(object):
         return len(self._named_nodes)
 
     def get_iter_nodes_values(self):
-        '''Returns the nodes dict.'''
+        '''Returns the nodes dict to the values.
+           Note: it is not possible to change things with the help of the
+           result of this function.'''
         return iter(self._named_nodes.values())
+    
+    def get_iter_nodes_keys(self):
+        '''Returns an iter to the keys.'''
+        return iter(self._named_nodes.keys())
 
     def as_dict(self):
         '''Outputs this digraph and create a dictionary.'''

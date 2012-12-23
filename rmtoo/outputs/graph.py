@@ -72,7 +72,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                       (requirement.get_name(),
                        self.node_attributes(requirement, self._config)))
 
-        for d in requirement.get_iter_incoming():
+        for d in sorted(requirement.get_iter_outgoing(), key=lambda r: r.get_name()):
             self.__output_file.write('"%s" -> "%s";\n' %
                                      (requirement.get_name(), d.get_name()))
 

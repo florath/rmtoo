@@ -141,12 +141,12 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                      % req.get_requirement().get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if req.get_incoming_cnt() > 0:
+        if req.get_outgoing_cnt() > 0:
             # Create links to the corresponding labels.
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
-            for d in sorted(req.get_iter_incoming(), key=lambda r: r.get_name()):
+            for d in sorted(req.get_iter_outgoing(), key=lambda r: r.get_name()):
                 if not is_first:
                     fd.write(", ")
                 is_first = False
@@ -154,12 +154,12 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                          (d.get_requirement().get_value("Topic"), d.get_name(), d.get_name()))
             fd.write("</span></dd>")
 
-        if req.get_outgoing_cnt()> 0:
+        if req.get_incoming_cnt()> 0:
             # Create links to the corresponding dependency nodes.
             fd.write('<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in sorted(req.get_iter_outgoing(), key=lambda r: r.get_name()):
+            for d in sorted(req.get_iter_incoming(), key=lambda r: r.get_name()):
                 if not is_first:
                     fd.write(", ")
                 is_first = False
@@ -212,18 +212,20 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def cmad_topic_pre(self, topic):
         '''Create makefile dependencies for given topic.'''
-        self.__topic_name_set.append(topic.name)
+        self.__topic_name_set.append(topic.get_name())
         self._cmad_file.write("%s.html: %s %s ${%s}\n%s" %
-                              (os.path.join(self.__output_directory, topic.name),
+                              (os.path.join(self.__output_directory, 
+                                            topic.get_name()),
                                self.html_header_filename,
                                self.html_footer_filename,
-                               self.__topic_set.create_makefile_name(self.__tc_name, topic.name),
+                               self.__topic_set.create_makefile_name
+                               (self.__tc_name, topic.get_name()),
                                self._get_call_rmtoo_line()))
         # TODO: more is needed! (see beneath)
 
     def cmad_requirement(self, requirement):
         '''Called on requirement level.'''
-        self._cmad_file.write("REQS+=%s\n" % requirement.get_file_path())
+        self._cmad_file.write("REQS+=%s\n" % requirement.get_requirement().get_file_path())
 
 # TODO: Ueberlegen!
 
@@ -291,7 +293,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                     fd.write('<span class="subtopiclist"><ul>')
                     ul_open = True
 
-                rtopic = topic.find_outgoing(val)
+                rtopic = topic.find_incoming(val)
                 # A link to the other file.
                 fd.write('<li><a href="%s.html">%s</a></li>\n' %
                          (val, rtopic.get_name()))

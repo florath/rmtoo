@@ -96,6 +96,10 @@ class BaseRMObject(UsableFlag):
         
     def write_fd(self, fd):
         self.record.write_fd(fd)
+        
+    def get_record(self):
+        '''Returns the record(s).'''
+        return self.record
 
     def handle_modules_tag(self, reqs):
         if self.mods == None:

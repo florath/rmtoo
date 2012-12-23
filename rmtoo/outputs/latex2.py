@@ -203,24 +203,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                      % req.get_requirement().get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if req.get_incoming_cnt() > 0:
+        if req.get_outgoing_cnt() > 0:
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.__strescape(d.get_name()),
                                  latex2.__strescape(d.get_name()))
-                                for d in sorted(req.get_iter_incoming(),
+                                for d in sorted(req.get_iter_outgoing(),
                                                 key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
-        if req.get_outgoing_cnt() > 0:
+        if req.get_incoming_cnt() > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
                                 (latex2.__strescape(d.get_name()),
                                  latex2.__strescape(d.get_name()))
-                                for d in sorted(req.get_iter_outgoing(),
+                                for d in sorted(req.get_iter_incoming(),
                                                 key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
@@ -245,7 +245,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     cstrs.append(refctr)
                     # Also put a reference (for later use) in the 
                     # constraints to requirements ref.
-                    self.__add_constraint_req_ref(refid, req.get_id())
+                    self.__add_constraint_req_ref(refid, 
+                            req.get_requirement().get_id())
 
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")

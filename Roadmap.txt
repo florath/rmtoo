@@ -26,7 +26,12 @@ o Get rmtoo added to at least one Linux distribution (preferred
    distribution - preferred Debian.
    Problem: will eat up a lot of time
 
-v23
+v24
+===
+o Is there a need in the blackbox test to have a non empty
+  stderr / stdout?
+
+v25
 ===
 o Add support for setup.py
   (At least check, if the current available setup.py does
@@ -44,7 +49,7 @@ o Man page: (???)
   + graph2
   + EfEU
 
-v24
+v26
 ===
 o Add to FAQ: max level of topic inclusion.
 o Add changes to presentation
@@ -134,6 +139,9 @@ o Add roadmap feature
 o Add ToDo list feature
 o History in document: specify two versions and create automatically a
   list of all changed requirements.
+o History must have the form:
+  YYYY-MM-DD:name:explanation what changed
+  additional to the things stored in the VCS.
 o Clean up code (XXX, ToDo, ...)
 o Use MemLog instead of print.
 o 'The only requirement management tool which comes with the

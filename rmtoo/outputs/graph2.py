@@ -96,7 +96,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                       % (ident, requirement.get_name(),
                          graph.node_attributes(requirement)))
 
-        for d in sorted(requirement.get_iter_incoming(), 
+        for d in sorted(requirement.get_iter_outgoing(), 
                         key=lambda r: r.get_name()):
             self.__req_dep_graph += '"%s" -> "%s";\n' % \
                 (requirement.get_name(), d.get_name())

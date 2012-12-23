@@ -1,6 +1,6 @@
-===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;120; 37:A1:Does not contain the tag 'Name'
-===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;123; 41:A1:semantic error occurred in module [ReqName]
-===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;120;  2:A1:Does not contain the tag 'Description'
-===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;123; 41:A1:semantic error occurred in module [ReqDescription]
-===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;__read_one_requirement;88; 45:A1:could not be parsed
+===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;===SOURCELINENO===; 37:A1:Does not contain the tag 'Name'
+===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;===SOURCELINENO===; 41:A1:semantic error occurred in module [ReqName]
+===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;===SOURCELINENO===;  2:A1:Does not contain the tag 'Description'
+===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;===SOURCELINENO===; 41:A1:semantic error occurred in module [ReqDescription]
+===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;__read_one_requirement;===SOURCELINENO===; 45:A1:could not be parsed
 +++ ERROR: Problem reading in the continuum [[  69]: Requirements graph has two or more connected components. Please fix the edges between the nodes.Found components: []]

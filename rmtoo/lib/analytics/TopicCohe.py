@@ -82,7 +82,7 @@ class TopicCohe(Base):
         for req_id in self.__req2topics.keys():
             req_a = topic_set.get_topic_set().get_requirement_set().\
                        get_requirement(req_id)
-            for req_b in req_a.get_iter_incoming():
+            for req_b in req_a.get_iter_outgoing():
                 self.__eval_link(req_a, req_b)
 
         for topic, cnt in self.__tcnt.iteritems():
