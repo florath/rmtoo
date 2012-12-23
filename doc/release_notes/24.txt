@@ -1,0 +1,12 @@
+**********************************************************************
+* COMPLETE REWRITE OF ALL MAJOR PARTS OF RMTOO WAS DONE.             *
+* IF YOU GET UNEXPECTED RESULTS, PLEASE CONTACT US: info@flonatel.de *
+**********************************************************************
+
+User visible changes
+--------------------
+o Input of large projects (especially with long history) is MUCH
+  faster: object caches are used on mostly every level of input.
+
+Internal Changes
+----------------
