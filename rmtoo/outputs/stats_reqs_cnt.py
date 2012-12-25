@@ -19,7 +19,7 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
                      CreateMakeDependencies):
 
     def __init__(self, oconfig):
-        '''Create a graph output object.'''
+        '''Create a req statistics object.'''
         tracer.debug("Called.")
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)

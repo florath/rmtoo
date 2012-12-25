@@ -80,6 +80,11 @@
                         "effort_factor": 1, 
                         "output_filename": "${ENV:rmtoo_test_dir}/gantt2.xml"
                     }
+                ],
+                "stats_usage": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/gantt2.xml"
+                    }
                 ]
             }
         }

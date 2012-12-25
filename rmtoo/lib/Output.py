@@ -35,6 +35,7 @@ class Output(Executor):
 
     def __create_output_module(self, output_name):
         '''Creates the module object.'''
+        tracer.debug("Creating output module [%s]" % output_name)
         # pylint: disable=W0612
         output_module = self.__load_output_module(output_name)
         # Create the constructor object.
@@ -79,5 +80,6 @@ class Output(Executor):
 
     @staticmethod
     def execute(config, topic_continuum_set, _mstderr, func_prefix):
+        tracer.debug("Called for topic continuum set.")
         output = Output(config)
         return topic_continuum_set.execute(output, func_prefix)
