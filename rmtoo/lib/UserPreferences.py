@@ -37,3 +37,8 @@ class UserPreferences:
     def get_rmtoo_home_dir(self):
         '''Returns the used home directory.'''
         return self.__rmtoo_home_dir
+    
+    def set_value(self, filename, propname, value):
+        '''Sets the property with the name 'propname' to the file
+           'filename' to the given value.'''
+        
