@@ -41,8 +41,6 @@ class BaseRMObject(UsableFlag):
         self.record = None
         self.brmo = None
 
-        # The analytic modules store the results in this map:
-        self.analytics = {}
         if content != None:
             self.__input(content)
 

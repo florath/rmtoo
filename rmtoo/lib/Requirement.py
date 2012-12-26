@@ -76,14 +76,3 @@ class Requirement(BaseRMObject):
 
     def is_implementable(self):
         return self.values["Class"].is_implementable()
-
-    def write_analytics_result(self, mstderr):
-        '''Write out the analytics results.'''
-        for k, v in sorted(self.analytics.items(),
-                           key=operator.itemgetter(0)):
-            if v[0] < 0:
-                mstderr.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
-                              % (k, self.id, v[0]))
-                for l in v[1]:
-                    mstderr.write("+++ Error:Analytics:%s:%s:%s\n" %
-                                  (k, self.id, l))
