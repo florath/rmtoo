@@ -25,4 +25,12 @@ class TestGenNonEmptyDict(unittest.TestCase):
         self.assertEqual("one", gned[1])
         self.assertEqual("seventyseven", gned[77])
         
+    def test_int_not_existing(self):
+        '''GenNonEmtpyDict: (int): not existing values'''
+        
+        def string_was():
+            return "was"
+        
+        gned = GenNonEmptyDict(string_was)
+        self.assertEqual("was", gned[7])
         
