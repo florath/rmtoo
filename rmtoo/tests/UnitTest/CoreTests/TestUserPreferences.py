@@ -30,6 +30,6 @@ class TestUserPreferences(unittest.TestCase):
         '''UserPreferences: add new value to preferences.'''
         mid = "ThisIsMyNotSoAutomatedGeneratedId"
         up = UserPreferences()
-        up.add_value("stats", "id", mid)
+        up.set_value("stats", "id", mid)
         assert(up.get_value("stats", "id") == mid)
         

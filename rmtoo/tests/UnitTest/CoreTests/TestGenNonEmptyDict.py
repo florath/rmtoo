@@ -28,7 +28,7 @@ class TestGenNonEmptyDict(unittest.TestCase):
     def test_int_not_existing(self):
         '''GenNonEmtpyDict: (int): not existing values'''
         
-        def string_was():
+        def string_was(n):
             return "was"
         
         gned = GenNonEmptyDict(string_was)

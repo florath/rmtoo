@@ -11,7 +11,25 @@
 
 import os
 
-class UserPreferences:
+from rmtoo.lib.GenNonEmptyDict import GenNonEmptyDict
+
+class FileStorage(object):
+    '''Holds all the values which go in one file.'''
+        
+    def __init__(self, rel_filename):
+        '''Initializaes the FileStorage with the relative filename.'''
+        self.__rel_filename = rel_filename
+        self.__dict = {}
+       
+    def set_value(self, key, value):
+        '''Directly access the underlaying dict.'''
+        self.__dict[key] = value
+        
+    def get_value(self, key):
+        '''Directly access the underlaying dict.'''
+        return self.__dict[key]
+        
+class UserPreferences(object):
     '''Global User Preferences handling.
        There are some global user preferences which must be stored
        system wide.  This class with handle these things.'''
@@ -33,6 +51,7 @@ class UserPreferences:
         '''Constructs a User Preferences object which can hold
            and store configuration values.'''
         self.__rmtoo_home_dir = self.__eval_rmtoo_home_dir(rmtoo_home_dir)
+        self.__file_storage = GenNonEmptyDict(FileStorage)
         
     def get_rmtoo_home_dir(self):
         '''Returns the used home directory.'''
@@ -41,4 +60,8 @@ class UserPreferences:
     def set_value(self, filename, propname, value):
         '''Sets the property with the name 'propname' to the file
            'filename' to the given value.'''
+        self.__file_storage[filename].set_value(propname, value)
         
+    def get_value(self, filename, propname):
+        '''Gets the property from the file.'''
+        return self.__file_storage[filename].get_value(propname)

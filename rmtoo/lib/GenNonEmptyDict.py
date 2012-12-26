@@ -25,6 +25,6 @@ class GenNonEmptyDict:
     def __getitem__(self, key):
         '''Returns the key from the dict.'''
         if key not in self.__dict:
-            self.__dict[key] = self.__factory()
+            self.__dict[key] = self.__factory(key)
         return self.__dict[key]
     
