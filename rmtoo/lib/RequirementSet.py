@@ -2,7 +2,7 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
-    ???
+    Container object which holds the set of requirements.
    
  (c) 2010-2012 by flonatel GmbH & Co. KG
 
@@ -674,7 +674,7 @@ class RequirementSet(Digraph, UsableFlag):
                 tracer.debug("[%s] Try to add 'Solved by' [%s]." % 
                              (r.get_name(), on))
                 record.set_content("Solved by", on)
-            except ValueError, ve:
+            except ValueError:
                 tracer.debug("[%s] Try to append 'Solved by' [%s]." % 
                              (r.get_name(), on))
                 record.append_entry(RecordEntry(

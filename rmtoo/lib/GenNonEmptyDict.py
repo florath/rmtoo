@@ -28,3 +28,6 @@ class GenNonEmptyDict:
             self.__dict[key] = self.__factory(key)
         return self.__dict[key]
     
+    def iteritems(self):
+        '''Passes the things directly from the dict.'''
+        return self.__dict.iteritems()
