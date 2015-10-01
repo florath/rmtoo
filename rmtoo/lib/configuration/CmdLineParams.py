@@ -1,13 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Command line parameter handling.
-  
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+
+import distutils
 
 from optparse import OptionParser
 
@@ -38,7 +40,7 @@ class CmdLineParams:
 
     @staticmethod
     def add_deprecated_values(options):
-        '''Add all the values to the dictionary which were specified 
+        '''Add all the values to the dictionary which were specified
            with the help of the old and deprecated command line options.'''
         ldict = {}
 
@@ -51,8 +53,8 @@ class CmdLineParams:
                                            [options.modules_directory]}}
         else:
             # If there is no modules directory given, use the pyshared one.
-            ldict['global'] = {'modules': {'directories':
-                                           ["/usr/share/pyshared"]}}
+            mod_dir = distutils.sysconfig.get_python_lib()
+            ldict['global'] = {'modules': {'directories': [mod_dir]}}
 
         if options.create_makefile_dependencies != None:
             ldict['actions'] = {'create_makefile_dependencies':
