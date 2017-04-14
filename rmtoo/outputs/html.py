@@ -63,8 +63,8 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_pre(self, topic):
         '''Output one topic.
            This method is called once for each topic and subtopic.'''
-        tracer.debug("Called: topic name [%s]." % topic.name)
-        fd = self.__ouput_html_topic_open_output_file(topic.name, "w")
+        tracer.debug("Called: topic name [%s]." % topic.get_name())
+        fd = self.__ouput_html_topic_open_output_file(topic.get_name(), "w")
         self.__output_html_topic_write_header(fd)
         self.__fd_stack.append(fd)
         self.__ul_open_stack.append(False)
@@ -76,7 +76,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         self.__ul_open_stack.pop()
         self.output_html_topic_write_footer(fd)
         fd.close()
-        tracer.debug("Finished: topic name [%s]" % topic.name)
+        tracer.debug("Finished: topic name [%s]" % topic.get_name())
 
     def topic_name(self, name):
         '''Set the name.'''
@@ -108,65 +108,68 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_name())
 
     def requirement(self, req):
         '''Output one requirement.'''
         fd = self.__fd_stack[-1]
         level = len(self.__fd_stack)
 
-        fd.write("\n<!- REQ '%s' -->\n" % req.id)
+        fd.write("\n<!- REQ '%s' -->\n" % req.get_name())
         fd.write('<h%d><a name="%s">%s</a></h%d>\n' %
-                 (level + 1, req.id, req.get_value("Name").get_content(),
+                 (level + 1, req.get_name(), 
+                  req.get_requirement().get_value("Name").get_content(),
                   level + 1))
         fd.write("<dl>")
 
         fd.write('<dt><span class="dlt_description">Description</span>'
                  '</dt><dd><span class="dlv_description">%s</span></dd>' %
-                  LaTeXMarkup.replace_html(req.get_value("Description")
+                  LaTeXMarkup.replace_html(req.get_requirement().get_value("Description")
                                            .get_content()))
 
-        if req.is_value_available("Rationale") \
-                and req.get_value("Rationale") != None:
+        if req.get_requirement().is_value_available("Rationale") \
+                and req.get_requirement().get_value("Rationale") != None:
             fd.write('<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.get_value("Rationale").
+                     LaTeXMarkup.replace_html_par(req.get_requirement().get_value("Rationale").
                                                   get_content()))
 
-        if req.is_value_available("Note") and req.get_value("Note") != None:
+        if req.get_requirement().is_value_available("Note") \
+            and req.get_requirement().get_value("Note") != None:
             fd.write('<dt><span class="dlt_note">Note</span></dt>'
                      '<dd><span class="dlv_note">%s</span></dd>'
-                     % req.get_value("Note").get_content())
+                     % req.get_requirement().get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.incoming) > 0:
+        if req.get_outgoing_cnt() > 0:
             # Create links to the corresponding labels.
             fd.write('<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
-            for d in sorted(req.incoming, key=lambda r: r.id):
+            for d in sorted(req.get_iter_outgoing(), key=lambda r: r.get_name()):
                 if not is_first:
                     fd.write(", ")
                 is_first = False
                 fd.write('<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
+                         (d.get_requirement().get_value("Topic"), d.get_name(), d.get_name()))
             fd.write("</span></dd>")
 
-        if len(req.outgoing) > 0:
+        if req.get_incoming_cnt()> 0:
             # Create links to the corresponding dependency nodes.
             fd.write('<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in sorted(req.outgoing, key=lambda r: r.id):
+            for d in sorted(req.get_iter_incoming(), key=lambda r: r.get_name()):
                 if not is_first:
                     fd.write(", ")
                 is_first = False
                 fd.write('<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
+                         (d.get_requirement().get_value("Topic"), d.get_name(), 
+                          d.get_name()))
             fd.write("</span></dd>")
 
-        status = req.get_value("Status").get_output_string()
-        clstr = req.get_value("Class").get_output_string()
+        status = req.get_requirement().get_value("Status").get_output_string()
+        clstr = req.get_requirement().get_value("Class").get_output_string()
 
         fd.write('<dt><span class="dlt_id">Id</span></dt>'
                  '<dd><span class="dlv_id">%s</span></dd>'
@@ -182,10 +185,10 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                  '<dd><span class="dlv_status">%s</span></dd>'
                  '<dt><span class="dlt_class">Class</span></dt>'
                  '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.id, req.get_value("Priority") * 10,
-                    req.get_value("Owner"),
-                    req.get_value("Invented on").strftime("%Y-%m-%d"),
-                    req.get_value("Invented by"), status, clstr))
+                 % (req.get_name(), req.get_requirement().get_value("Priority") * 10,
+                    req.get_requirement().get_value("Owner"),
+                    req.get_requirement().get_value("Invented on").strftime("%Y-%m-%d"),
+                    req.get_requirement().get_value("Invented by"), status, clstr))
         fd.write("</dl>")
 
         # Mark the end of the requirment - then it is possible to add
@@ -209,18 +212,20 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def cmad_topic_pre(self, topic):
         '''Create makefile dependencies for given topic.'''
-        self.__topic_name_set.append(topic.name)
+        self.__topic_name_set.append(topic.get_name())
         self._cmad_file.write("%s.html: %s %s ${%s}\n%s" %
-                              (os.path.join(self.__output_directory, topic.name),
+                              (os.path.join(self.__output_directory, 
+                                            topic.get_name()),
                                self.html_header_filename,
                                self.html_footer_filename,
-                               self.__topic_set.create_makefile_name(self.__tc_name, topic.name),
+                               self.__topic_set.create_makefile_name
+                               (self.__tc_name, topic.get_name()),
                                self._get_call_rmtoo_line()))
         # TODO: more is needed! (see beneath)
 
     def cmad_requirement(self, requirement):
         '''Called on requirement level.'''
-        self._cmad_file.write("REQS+=%s\n" % requirement.get_file_path())
+        self._cmad_file.write("REQS+=%s\n" % requirement.get_requirement().get_file_path())
 
 # TODO: Ueberlegen!
 
@@ -288,7 +293,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                     fd.write('<span class="subtopiclist"><ul>')
                     ul_open = True
 
-                rtopic = topic.find_outgoing(val)
+                rtopic = topic.find_incoming(val)
                 # A link to the other file.
                 fd.write('<li><a href="%s.html">%s</a></li>\n' %
                          (val, rtopic.get_name()))

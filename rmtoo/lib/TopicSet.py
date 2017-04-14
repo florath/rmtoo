@@ -39,24 +39,25 @@ class TopicSet(Digraph, UsableFlag):
         self.__topic = None
         self.__requirement_set = None
 
-        # First: read in all the requirements.
+        tracer.debug("Read in all the requirements.")
         self.__read_requirement_set()
         if not self.is_usable():
             tracer.error("Errors during reading the requirements.")
             return
-        # Second: read in all the topics.
+
+        tracer.debug("Read in all the topics.")
         # Stored here is the initial node of the topic digraph.
         self.__topic = self.__read_topics()
         if not self.is_usable():
             tracer.error("Errors during reading the topics.")
             return
-        # Third: restrict requirements to those which are 
-        #    needed in the topic.
+        tracer.debug("Restrict requirements to those which are "
+                     "needed in the topic.")
         self.__requirement_set = self.__restrict_requirements_set()
         if not self.is_usable():
             tracer.error("Errors during restriction of the requirements.")
             return
-        tracer.debug("Finished.")
+        tracer.debug("Finished; success.")
 
     def __read_requirement_set(self):
         '''Reads in the requirement set.

@@ -14,7 +14,7 @@
 
 from rmtoo.lib.logging import tracer
 
-class UsableFlag:
+class UsableFlag(object):
     '''Holding flag to show if an object is usable or not.'''
 
     def __init__(self):

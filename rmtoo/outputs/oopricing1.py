@@ -231,9 +231,9 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         tr = odf.table.TableRow()
         for req in sreqs:
             tc = odf.table.TableCell()
-            if len(req.incoming) > 0:
+            if req.get_incoming_cnt() > 0:
                 # By default, the chosen is the first one.
-                p = odf.text.P(text=req.incoming[0].id)
+                p = odf.text.P(text=req.get_iter_incoming().next().get_name())
                 tc.addElement(p)
             tr.addElement(tc)
         sheet.addElement(tr)
@@ -355,7 +355,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         tr = odf.table.TableRow()
         for req in sreqs:
             tc = odf.table.TableCell()
-            p = odf.text.P(text=req.name)
+            p = odf.text.P(text=req.get_name())
             tc.addElement(p)
             tr.addElement(tc)
         sheet.addElement(tr)
@@ -430,7 +430,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.create_empty_row(sheet)
         # Second holds only the Overall sum
         tr = odf.table.TableRow()
-        self.create_text_cell(tr, req.id,
+        self.create_text_cell(tr, req.get_name(),
                               self.doc_styles["tc-bold"])
         sheet.addElement(tr)
         # Followed by an additionally empty line
@@ -460,15 +460,16 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             sheet.addElement(tr)
             i += 1
 
-    def create_costs_content_req(self, tr, req, i):
+    def create_costs_content_req(self, tr, dnreq, i):
+        req = dnreq.get_requirement()
         choi = i + DEPS_HEADER_LEN
         # First cell is the id
-        self.create_text_cell(tr, req.name)
+        self.create_text_cell(tr, dnreq.get_name())
         # Second cell is the name
         self.create_text_cell(tr, req.get_value("Name").get_content())
         # Third is the compliant
         tc = odf.table.TableCell()
-        dc = odf.draw.Control(control="lbcompliant%s" % req.name,
+        dc = odf.draw.Control(control="lbcompliant%s" % dnreq.get_name(),
                               zindex="0",
                               x="0.0in",
                               y="0.0in",
@@ -489,8 +490,8 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         # Dependent on Chooser
         tc = odf.table.TableCell()
         # Do not do this for first cell.
-        if len(req.incoming) > 0:
-            dc = odf.draw.Control(control="lbdependentfrom%s" % req.name,
+        if dnreq.get_incoming_cnt() > 0:
+            dc = odf.draw.Control(control="lbdependentfrom%s" % dnreq.get_name(),
                                   zindex="0",
                                   x="0.0in",
                                   y="0.0in",
@@ -503,12 +504,12 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         # dependet rate and material
         # Do not do this for first cell.
         for sname in ["SumRate", "SumMat"]:
-            if len(req.outgoing) > 0:
+            if dnreq.get_outgoing_cnt() > 0:
                 tc = odf.table.TableCell(
                     valuetype="currency", currency="EUR",
                     formula="oooc:=SUM([%s.%s2:%s.%s%d])" \
                         % (sname, self.__sscoords[i], sname, self.__sscoords[i],
-                           (1 + len(req.outgoing))))
+                           (1 + dnreq.get_outgoing_cnt())))
                 tr.addElement(tc)
             else:
                 self.create_empty_currency_cell_ro(tr)
@@ -555,9 +556,11 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             tr = odf.table.TableRow()
             index_used = False
             for req in sreqs:
-                if len(req.incoming) > i:
+                if req.get_incoming_cnt() > i:
                     tc = odf.table.TableCell()
-                    p = odf.text.P(text=req.incoming[i].name)
+                    # ToDo: Experimental
+                    ## p = odf.text.P(text=req.incoming[i].name)
+                    p = odf.text.P(text=req.get_iter_incoming().next().get_name())
                     tc.addElement(p)
                     tr.addElement(tc)
                     index_used = True
@@ -582,7 +585,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             tr = odf.table.TableRow()
             index_used = False
             for req in sreqs:
-                if len(req.outgoing) > i:
+                if req.get_outgoing_cnt() > i:
                     # This is somewhat complicated:
                     # If on the Costs sheet one direction is chosen,
                     # it is written to the deps sheet (row 3).
@@ -591,12 +594,22 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                     # overall costs of that requirement must go to the
                     # local list - which then is again summed over on
                     # the cost sheet.
+                    
+                    # ToDo: WHAT TO DO????????
+                    
+#                    tc = odf.table.TableCell(
+#                        valuetype="currency", currency="EUR",
+#                        formula='oooc:=IF([Deps.%s3]="%s";[Costs.%s%d];0)' %
+#                        (self.__sscoords[self.sreqs_index[req.outgoing[i]]],
+#                         req.name, colname,
+#                         self.sreqs_index[req.outgoing[i]] + DEPS_HEADER_LEN))
+
                     tc = odf.table.TableCell(
                         valuetype="currency", currency="EUR",
                         formula='oooc:=IF([Deps.%s3]="%s";[Costs.%s%d];0)' %
-                        (self.__sscoords[self.sreqs_index[req.outgoing[i]]],
-                         req.name, colname,
-                         self.sreqs_index[req.outgoing[i]] + DEPS_HEADER_LEN))
+                        (self.__sscoords[self.sreqs_index[req.get_iter_outgoing().next()]],
+                         req.get_name(), colname,
+                         self.sreqs_index[req.get_iter_outgoing().next()] + DEPS_HEADER_LEN))
                     tr.addElement(tc)
                     index_used = True
                 else:
@@ -627,13 +640,13 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         i = 0
         for req in sreqs:
             lb = odf.form.Listbox(
-                id="lbcompliant%s" % req.name,
+                id="lbcompliant%s" % req.get_name(),
                 boundcolumn="1",
                 dropdown="yes",
                 controlimplementation="ooo:com.sun.star.form.component.ListBox",
                 linkedcell="Deps.%s2" % self.__sscoords[i],
                 listlinkagetype="selection",
-                name="ListBox Compliant %s" % req.name,
+                name="ListBox Compliant %s" % req.get_name(),
                 size="3",
                 sourcecellrange="Constants.A1:Constants.A3"
                 )
@@ -662,20 +675,20 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             # When there is only one entry in the list, there is no
             # need to have a dropdown list.
             ddown = "yes"
-            if len(req.incoming) <= 1:
+            if req.get_incoming_cnt() <= 1:
                 ddown = "no"
 
             lb = odf.form.Listbox(
-                id="lbdependentfrom%s" % req.name,
+                id="lbdependentfrom%s" % req.get_name(),
                 boundcolumn="1",
                 dropdown="yes",
                 controlimplementation="ooo:com.sun.star.form.component.ListBox",
                 linkedcell="Deps.%s3" % self.__sscoords[i],
                 listlinkagetype="selection",
-                name="ListBox Dependet From %s" % req.name,
+                name="ListBox Dependet From %s" % req.get_name(),
                 size="3",
                 sourcecellrange="Deps.%s5:Deps.%s%d" % (
-                    self.__sscoords[i], self.__sscoords[i], len(req.incoming) + 4)
+                    self.__sscoords[i], self.__sscoords[i], req.get_incoming_cnt() + 4)
                 )
             lbproperties = odf.form.Properties()
             lbprop = odf.form.Property(
@@ -694,7 +707,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             # When there is only one dependent requirement, it makes
             # no sense to have something which can be changed.
             # Therefore this should be readonly then.
-            if len(req.incoming) <= 1:
+            if req.get_incoming_cnt() <= 1:
                 lstprop = odf.form.Property(
                     propertyname="ReadOnly",
                     valuetype="boolean",
@@ -712,7 +725,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
     ### Functions handling result sheet
     def create_result_one_req(self, tr, req, i):
         # 1 Id
-        self.create_text_cell(tr, req.name)
+        self.create_text_cell(tr, req.get_name())
         # 2 Compliance
         tc = odf.table.TableCell(
             valuetype="string",

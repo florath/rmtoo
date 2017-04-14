@@ -11,7 +11,6 @@
 
 
 import os
-import sys
 import StringIO
 import unittest
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -20,7 +19,8 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_timestamp, hide_lineno
+from rmtoo.lib.RequirementDNode import RequirementDNode
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
@@ -36,17 +36,19 @@ class TestReqSet(unittest.TestCase):
 
         reqs = RequirementSet(None)
         req = Requirement("Hubbel: bubbel", "hubbel", reqs, mods, TestConfig())
-        reqs._add_requirement(req)
-        reqs.nodes.append(req)
+        reqs.add_node(RequirementDNode(req))
         reqs._handle_modules(mods)
 
         lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(lstderr)
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "__all_tags_handled;121; 57:hubbel:No tag handler found for tag(s) " \
+        "__all_tags_handled;===SOURCELINENO===; 57:hubbel:No tag handler " \
+        "found for tag(s) " \
         "'['Hubbel']' - Hint: typo in tag(s)?\n" \
         "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
-        "145; 56:There were errors encountered during parsing and checking " \
+        "===SOURCELINENO===; 56:There were errors encountered during parsing " \
+        "and checking " \
         "- can't continue.\n"
 
         self.assertEquals(result_expected, lstderr)
@@ -62,17 +64,19 @@ class TestReqSet(unittest.TestCase):
         reqs = RequirementSet(None)
         req = Requirement("Hubbel: bubbel\nSiebel: do", "InvalidTagReq",
                           reqs, mods, TestConfig())
-        reqs._add_requirement(req)
-        reqs.nodes.append(req)
+        reqs.add_node(RequirementDNode(req))
         reqs._handle_modules(mods)
 
         lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(lstderr)
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "__all_tags_handled;121; 57:InvalidTagReq:No tag handler found " \
+        "__all_tags_handled;===SOURCELINENO===; 57:InvalidTagReq:No tag " \
+        "handler found " \
         "for tag(s) '['Siebel', 'Hubbel']' - Hint: typo in tag(s)?\n" \
         "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
-        "145; 56:There were errors encountered during parsing and checking " \
+        "===SOURCELINENO===; 56:There were errors encountered during parsing " \
+        "and checking " \
         "- can't continue.\n"
 
         self.assertEquals(result_expected, lstderr)

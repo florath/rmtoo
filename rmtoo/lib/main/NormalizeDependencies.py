@@ -28,6 +28,7 @@ def main_impl(args, mstdout, mstderr):
     command_line_args = config.get_rvalue('general.command_line_arguments')
 
     rs.read_requirements(file_system_if, None, mods, object_cache)
+    
     return rs.normalize_dependencies() \
         and rs.write_to_filesystem(command_line_args[0])
 

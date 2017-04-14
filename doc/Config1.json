@@ -10,7 +10,7 @@
 	        "loglevel": "info"
 	    },
 	    "tracer": {
-	        "loglevel": "info",
+	        "loglevel": "debug",
 		"filename": "./rmtoo.log"
     	    }
         }
@@ -115,6 +115,11 @@
                 "tlp1": [
                     {
                         "output_filename": "artifacts/reqdeps1.tlp"
+                    }
+                ], 
+                "csv1": [
+                    {
+                        "output_filename": "artifacts/requirements.csv"
                     }
                 ], 
                 "version1": [

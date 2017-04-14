@@ -22,7 +22,7 @@ logger = None
 
 LOGGING_CONFIG = {
     "stdout": {
-        "loglevel": logging.WARN,
+        "loglevel": logging.DEBUG,
     },
     "tracer": {
         "loglevel": logging.DEBUG,

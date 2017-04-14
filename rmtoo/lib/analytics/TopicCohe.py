@@ -45,7 +45,7 @@ class TopicCohe(Base):
         '''Add the relation between topic_a and topic_b.
            (Here only one _ is used because this is used by the unit tests.)'''
         # If not there, add the initial count [0, 0]
-        for topic in [topic_a.name, topic_b.name]:
+        for topic in [topic_a.get_name(), topic_b.get_name()]:
             if not topic in self.__tcnt:
                 self.__tcnt[topic] = [0, 0]
 
@@ -54,27 +54,27 @@ class TopicCohe(Base):
 
         # Iff self: add a 3!
         if topic_a == topic_b:
-            self.__tcnt[topic_a.name][0] += 3
+            self.__tcnt[topic_a.get_name()][0] += 3
         elif topic_a.is_self_of_ancient(topic_b):
             # 2: because it is one incoming and one outgoing
-            self.__tcnt[topic_b.name][0] += 2
+            self.__tcnt[topic_b.get_name()][0] += 2
         else:
-            self.__tcnt[topic_a.name][1] += 1
-            self.__tcnt[topic_b.name][1] += 1
+            self.__tcnt[topic_a.get_name()][1] += 1
+            self.__tcnt[topic_b.get_name()][1] += 1
 
     def __eval_link(self, req_a, req_b):
         '''Add all the links between all topics of req_a and req_b.'''
         # If either one of the requirements is not in the topic,
         # skip this step
-        if req_a.get_id() not in self.__req2topics \
-            or req_b.get_id() not in self.__req2topics:
+        if req_a.get_requirement().get_id() not in self.__req2topics \
+            or req_b.get_requirement().get_id() not in self.__req2topics:
             tracer.debug("One of the requirements is not in the topic - "
                          "skipping evaluation [%s] [%s]" %
                          (req_a.get_id(), req_b.get_id()))
             return
 
-        for topic_a in self.__req2topics[req_a.get_id()]:
-            for topic_b in self.__req2topics[req_b.get_id()]:
+        for topic_a in self.__req2topics[req_a.get_requirement().get_id()]:
+            for topic_b in self.__req2topics[req_b.get_requirement().get_id()]:
                 self._add_topic_relation(topic_a, topic_b)
 
     def topic_set_post(self, topic_set):
@@ -82,7 +82,7 @@ class TopicCohe(Base):
         for req_id in self.__req2topics.keys():
             req_a = topic_set.get_topic_set().get_requirement_set().\
                        get_requirement(req_id)
-            for req_b in req_a.incoming:
+            for req_b in req_a.get_iter_outgoing():
                 self.__eval_link(req_a, req_b)
 
         for topic, cnt in self.__tcnt.iteritems():

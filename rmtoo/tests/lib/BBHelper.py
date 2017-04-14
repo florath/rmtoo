@@ -14,7 +14,8 @@ import zipfile
 import xml.dom.minidom
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
-from rmtoo.tests.lib.Utils import create_tmp_dir, hide_timestamp
+from rmtoo.tests.lib.Utils import create_tmp_dir, hide_timestamp, \
+    hide_lineno
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
 
 def tmp_dir():
@@ -205,7 +206,7 @@ def prepare_stderr():
 
     new_stderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"), "w")
     for line in lines:
-        new_stderr.write("%s" % hide_timestamp(line))
+        new_stderr.write("%s" % hide_lineno(hide_timestamp(line)))
     new_stderr.close()
 
 def check_file_results(mdir):

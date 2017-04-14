@@ -20,7 +20,7 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_timestamp, hide_lineno
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
@@ -45,7 +45,7 @@ class TestModules(unittest.TestCase):
                        {}, [], mods_list("modules01", mod_base_dir))
 
     def test_simple_02(self):
-        "Module test with dependend modules"
+        "Module test with dependent modules"
         mods = InputModules(os.path.join(mod_base_dir, "modules02"),
                        {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.get_reqdeps_sorted())
@@ -65,6 +65,7 @@ class TestModules(unittest.TestCase):
         try:
             mods = InputModules(os.path.join(mod_base_dir, "modules04"),
                            {}, [], mods_list("modules04", mod_base_dir))
+            mods.debug_output()
             assert(False)
         except RMTException, rmte:
             assert(rmte.id() == 26)
@@ -78,11 +79,12 @@ class TestModules(unittest.TestCase):
                        {}, [], mods_list("modules05", mod_base_dir))
         req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(hide_timestamp(mstderr.getvalue()))
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;112; 54:77:tag [SameTag] already defined\n"
+        "handle_modules_tag;===SOURCELINENO===; 54:77:" \
+        "tag [SameTag] already defined\n"
         self.assertEqual(lstderr, expected_result)
 
     def test_simple_06(self):
@@ -94,13 +96,14 @@ class TestModules(unittest.TestCase):
                        {}, [], mods_list("modules06", mod_base_dir))
         req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(hide_timestamp(mstderr.getvalue()))
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;120; 55:TCExcept\n" \
+        "handle_modules_tag;===SOURCELINENO===; 55:TCExcept\n" \
         "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
-        "123; 41:77:semantic error occurred in module [Module01]\n"
+        "===SOURCELINENO===; 41:77:" \
+        "semantic error occurred in module [Module01]\n"
         self.assertEqual(lstderr, expected_result)
 
     def test_simple_07(self):
@@ -114,10 +117,10 @@ class TestModules(unittest.TestCase):
         reqs._handle_modules(mods)
         self.assertEqual(reqs.is_usable(), False)
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_lineno(hide_timestamp(mstderr.getvalue()))
         tear_down_log_handler()
 
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "_handle_modules;137; 43:there was a problem handling the " \
+        "_handle_modules;===SOURCELINENO===; 43:there was a problem handling the " \
         "requirement set modules\n"
         self.assertEqual(lstderr, expected_result)

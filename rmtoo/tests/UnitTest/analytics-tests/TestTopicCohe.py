@@ -24,6 +24,9 @@ class TestTopicCohe:
 
             def is_self_of_ancient(self, t):
                 return False
+            
+            def get_name(self):
+                return self.name
 
         cfg = TestConfig()
         topic_cohe = TopicCohe(cfg)

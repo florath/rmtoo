@@ -28,31 +28,34 @@ class RDepPriority(Digraph.Node):
     def get_type_set(self):
         return set([InputModuleTypes.reqdeps, ])
 
-    # Do a DFS and compute the priority during that way.
-    # If there is a node which was already visited, only recompute the
-    # subtree, if the new priority is higher.
     def rewrite(self, reqset):
+        '''Does a DFS and compute the priority during that way.
+           If there is a node which was already visited, only recompute the
+           subtree, if the new priority is higher.'''
         tracer.debug("Called.")
 
-        # The second argument (the number) is the weight of the
-        # outgoing edge.
         def handle_priorization(node, inc_weight):
-            tracer.debug("Node [%s] inc_weight [%4.3f]" % (node.get_id(), inc_weight))
+            '''The second argument (the number) is the weight of the
+               outgoing edge.'''
+            req = node.get_requirement()
+            tracer.debug("Node [%s] inc_weight [%4.3f]" %
+                         (req.get_id(), inc_weight))
             # This is the weight which is inherited
-            weight = inc_weight * node.get_value("Factor")
+            weight = inc_weight * req.get_value("Factor")
 
             # If there is none, or if the current priority is lower
             # that the newly computed, recompute this node and
             # everything beneath.
-            if not node.is_value_available("Priority") \
-                    or node.get_value("Priority") < weight:
+            if not req.is_value_available("Priority") \
+                    or req.get_value("Priority") < weight:
                 tracer.debug("Node [%s] set priority to [%4.3f]"
-                             % (node.get_id(), weight))
-                node.set_value("Priority", weight)
-                for n in node.outgoing:
-                    tracer.debug("Recursive call to node [%s] with weight [%4.3f]"
-                                 % (n.get_id(), weight))
-                    handle_priorization(n, weight)
+                             % (req.get_id(), weight))
+                req.set_value("Priority", weight)
+                for nout in node.get_iter_outgoing():
+                    tracer.debug("Recursive call to node [%s] "
+                                 "with weight [%4.3f]"
+                                 % (nout.get_requirement().get_id(), weight))
+                    handle_priorization(nout, weight)
 
         # Start at the root (master) node and evaluate all nodes
         # there.

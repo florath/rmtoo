@@ -21,6 +21,8 @@ class Output(Executor):
         tracer.debug("Called.")
         self.__config = config
         self.__cmad_file = None
+        # Some output statistics are collected here.
+        self.__ostats = []
 
     @staticmethod
     def __load_output_module(output_name):
@@ -35,6 +37,7 @@ class Output(Executor):
 
     def __create_output_module(self, output_name):
         '''Creates the module object.'''
+        tracer.debug("Creating output module [%s]" % output_name)
         # pylint: disable=W0612
         output_module = self.__load_output_module(output_name)
         # Create the constructor object.
@@ -46,6 +49,7 @@ class Output(Executor):
         output_config = topic_continuum.get_output_config()
 
         for oconfig_name, oconfig in output_config.iteritems():
+            self.__ostats.append(oconfig_name)
             output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)
@@ -77,7 +81,11 @@ class Output(Executor):
         # This is a link to the topics_continuum pre
         return self.__common_topic_continuum_pre(topic_continuum, "cmad_")
 
+    def topic_continuum_post(self, _topic_continuum):
+        tracer.info("Used output modules: %s" % self.__ostats)
+
     @staticmethod
     def execute(config, topic_continuum_set, _mstderr, func_prefix):
+        tracer.debug("Called for topic continuum set.")
         output = Output(config)
         return topic_continuum_set.execute(output, func_prefix)

@@ -28,6 +28,7 @@ class TestBB008:
         result = main_impl(["-j", "file://" + mdir + "/input/Config.json"],
               mout, merr)
         cleanup_std_log(mout, merr)
+
         assert(result == False)
         check_file_results(mdir)
         delete_result_is_dir()

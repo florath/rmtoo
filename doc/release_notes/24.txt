@@ -1,0 +1,17 @@
+**********************************************************************
+* COMPLETE REWRITE OF ALL MAJOR PARTS OF RMTOO WAS DONE.             *
+* IF YOU GET UNEXPECTED RESULTS, PLEASE CONTACT US: info@flonatel.de *
+**********************************************************************
+
+User visible changes
+--------------------
+o Input of large projects (especially with long history) is MUCH
+  faster: object caches are used on mostly every level of input.
+o Log System added: this makes it easier for the user and our support
+  to find any problems.
+
+Internal Changes
+----------------
+o Complete rewrite of all internal classes and structures.  New
+  class structure which reflects the topic -> requirement relationship.
+

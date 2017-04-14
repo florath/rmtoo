@@ -43,15 +43,15 @@ class Statistics:
         rv = Statistics.prepare_result_vector(start_date, end_date)
 
         for _, req in rset.get_requirements_iteritems():
-            invented_on = req.get_value("Invented on")
+            invented_on = req.get_requirement().get_value("Invented on")
 
             if start_date > invented_on:
                 invented_on = start_date
 
             assert(end_date >= invented_on)
 
-            status = req.get_status()
-            efe = req.get_value("Effort estimation")
+            status = req.get_requirement().get_status()
+            efe = req.get_requirement().get_value("Effort estimation")
             if efe == None:
                 continue
 
@@ -61,7 +61,7 @@ class Statistics:
             if isinstance(status, RequirementStatusNotDone):
                 # Only count those which are implementable
 #                rclass = req.get_value("Class")
-                if req.get_value("Class").is_implementable():
+                if req.get_requirement().get_value("Class").is_implementable():
                     Statistics.inc_stats(rv, start_date, 0, invented_on,
                                          end_date, efe)
             elif isinstance(status, RequirementStatusAssigned):
@@ -111,7 +111,7 @@ class Statistics:
     def get_units_sprint(rset, start_date, end_date):
 
         def skip_not_selected(req):
-            return not isinstance(req.get_value("Class"), ClassTypeSelected)
+            return not isinstance(req.get_requirement().get_value("Class"), ClassTypeSelected)
 
         return Statistics.get_units_generic(rset, start_date, end_date,
                                             skip_not_selected)

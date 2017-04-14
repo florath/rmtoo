@@ -41,8 +41,6 @@ class BaseRMObject(UsableFlag):
         self.record = None
         self.brmo = None
 
-        # The analytic modules store the results in this map:
-        self.analytics = {}
         if content != None:
             self.__input(content)
 
@@ -51,6 +49,10 @@ class BaseRMObject(UsableFlag):
 
     def get_value(self, key):
         return self.values[key]
+
+    def remove_value(self, key):
+        if key in self.values:
+            del(self.values[key])
 
     def get_value_default(self, key, default_value = None):
         if key not in self.values:
@@ -89,6 +91,13 @@ class BaseRMObject(UsableFlag):
         # If everything's fine, store the rest of the req for later
         # inspection.
         self.brmo = brmo
+        
+    def write_fd(self, fd):
+        self.record.write_fd(fd)
+        
+    def get_record(self):
+        '''Returns the record(s).'''
+        return self.record
 
     def handle_modules_tag(self, reqs):
         if self.mods == None:

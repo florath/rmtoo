@@ -17,72 +17,99 @@ import gobject
 
 import sys
 
-from rmtoo.lib.logging.EventLogging import configure_logging
+from rmtoo.lib.logging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
+from rmtoo.lib.logging import tracer
 
 class GUI1ViewOnly:
-    
+
     def selection_received(self, widget, selection_data, data):
         print("SELECTED [%s] [%s]" % (selection_data, data))
 
     def on_selection_changed(self, selection, *args):
-        model, paths = selection.get_selected_rows()
+        store, paths = selection.get_selected_rows()
         print("SELECTED A [%s]" % (selection))
-        print("SELECTED B [%s]" % (model))
+        print("SELECTED B [%s]" % (store))
         print("SELECTED C [%s]" % (paths))
-    
-    def __add_requirements(self, model, iter, node):
-        liter = model.append(iter)
-        model.set(liter, 0, node.get_id())
+        giter = store.get_iter(paths[0])
+        print("SELECTED D [%s]" % (giter))
+        print("SELECTED E [%s]" % (dir(giter)))
+
+    def __store_add_requirements(self, store, iter, node):
+        liter = store.append(iter, [node.get_id(), "Requirement"])
         for n in node.outgoing:
-            self.__add_requirements(model, liter, n)
-    
+            self.__store_add_requirements(store, liter, n)
+
+    def __store_add_topic(self, tree_store, iter_topic, topic):
+        tracer.info("Add topic [%s]" % topic.get_id())
+        titer = tree_store.append(iter_topic, [topic.get_id(), "Topic"])
+
+        req_set = topic.get_requirement_set()
+
+        if req_set != None:
+            tracer.info("RequirementSet is available; requirements count [%d]"
+                        % req_set.get_requirements_cnt())
+            req_set.find_master_nodes()
+#            for n in req_set.outgoing:
+#                self.__store_add_requirements(tree_store, titer, n)
+
+#            for master_node in req_set.get_master_nodes():
+#                self.__store_add_requirements(tree_store, titer, master_node)
+        for n in topic.outgoing:
+            self.__store_add_topic(tree_store, titer, n)
+
+    def __store_add_vcs_commit_ids(self, tree_store, name, continuum,
+                                   iter_continuum):
+        for commit_id in continuum.get_vcs_commit_ids():
+            iter_commit = tree_store.append(iter_continuum, [commit_id, "VCS id"])
+            iter_topic = tree_store.append(iter_commit, ["topics", "Description"])
+            iter_requirements = tree_store.append(iter_commit,
+                                ["requirements", "Description"])
+
+            topic_set = continuum.get_topic_set(commit_id.get_commit())
+            req_set = topic_set.get_requirement_set()
+
+            master_topic = topic_set.get_master_topic()
+            self.__store_add_topic(tree_store, iter_topic, master_topic)
+
+            req_set.find_master_nodes()
+            for master_node in req_set.get_master_nodes():
+                self.__store_add_requirements(tree_store, iter_requirements,
+                                              master_node)
+
+    def __store_add_topic_continuum_set(self, tree_store, topic_continuum_set):
+        for name, continuum in iter(sorted(
+                        topic_continuum_set.get_continuum_dict().items())):
+            iter_continuum = tree_store.append(None, [name, "Topic Continuum"])
+            self.__store_add_vcs_commit_ids(tree_store, name, continuum,
+                                            iter_continuum)
+
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 
-        model = gtk.TreeStore(gobject.TYPE_STRING)
+        tree_store = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
 
-        tree_view = gtk.TreeView(model)
+        tree_view = gtk.TreeView(tree_store)
         scrolled_window.add_with_viewport (tree_view)
         tree_view.show()
 
         selection = tree_view.get_selection()
         selection.connect('changed', self.on_selection_changed)
 
-        for name, continuum in topic_continuum_set.get_continuum_dict().iteritems():
-            iter_continuum = model.append(None)
-            model.set(iter_continuum, 0, name)
-            for commit_id in continuum.get_vcs_commit_ids():
-                iter_commit = model.append(iter_continuum)
-                model.set(iter_commit, 0, commit_id)
-                topic_set = continuum.get_topic_set(commit_id.get_commit())
-                req_set = topic_set.get_requirement_set()
-                
-                req_set.find_master_nodes()
-                for master_node in req_set.get_master_nodes():
-                    self.__add_requirements(model, iter_commit, master_node)
-                
-#                for requirement_id in req_set.get_all_requirement_ids():
-#                    iter_requirement = model.append(iter_commit)
-#                    model.set(iter_requirement, 0, requirement_id)
-
-
-        # Add some messages to the window
-#        for i in range(10):
-#            msg = "Message #%d" % i
-#            iter = model.append(None)
-#            model.set(iter, 0, msg)
+        self.__store_add_topic_continuum_set(tree_store, topic_continuum_set)
 
         cell = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("Requirements", cell, text=0)
+        column = gtk.TreeViewColumn("Name", cell, text=0)
+        tree_view.append_column(column)
+        column = gtk.TreeViewColumn("Type", cell, text=1)
         tree_view.append_column(column)
 
         return scrolled_window
-   
+
     # Add some text to our text widget - this is a callback that is invoked
     # when our window is realized. We could also force our window to be
     # realized with GtkWidget.realize, but it would have to be part of a
@@ -109,7 +136,7 @@ class GUI1ViewOnly:
         self.insert_text(buffer)
         scrolled_window.show_all()
         return scrolled_window
-   
+
 
     def __init__(self, config, input_mods, _mstdout, mstderr):
         try:
@@ -118,11 +145,11 @@ class GUI1ViewOnly:
             mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
             return
-        
+
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("rmtoo - Read only GUI")
         self.window.set_default_size(800, 600)
-        
+
         # create a vpaned widget and add it to our toplevel window
         hpaned = gtk.HPaned()
         self.window.add(hpaned)
@@ -136,23 +163,23 @@ class GUI1ViewOnly:
         text = self.create_text()
         hpaned.add2(text)
         text.show()
-        
+
         self.window.show()
 
     def main(self):
         gtk.main()
-        
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     view_only = GUI1ViewOnly(config, input_mods, _mstdout, mstderr)
     view_only.main()
-        
+
 def main_impl(args, mstdout, mstderr):
     '''The real implementation of the main function:
        o get config
        o set up logging
        o do everything'''
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
-    configure_logging(config)
+    configure_logging(config, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):

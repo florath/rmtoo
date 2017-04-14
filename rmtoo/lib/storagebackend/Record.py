@@ -62,7 +62,7 @@ class Record(list, UsableFlag):
         list.insert(self, index, o)
 
     # Append new RecordEntry
-    def append(self, o):
+    def append_entry(self, o):
         # This can be added seamlessly to a maybe already existsing ldict
         if self.ldict != None:
             self.ldict[o.get_tag()] = o

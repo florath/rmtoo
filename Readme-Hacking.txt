@@ -33,7 +33,25 @@ This file is not completed now - any might be in future.
 *** PyUnit
     In Eclipse goto: Preferences -> PyUnit and choose Nose Test runner.
 
+* Ideas
 
+** Use python iterator / self made iterator for GenericTreeModel
+   There was an attempt to use the GenericTreeModel: use the object
+   data structure which is already implemented and use this (by some
+   glue - iterator objects) as a GenericTreeModel.
+   The result was: 
+   o Impossible to use the available standard iterators from the 
+     different containeers.
+   o too complicated (need a own class at each level)
+   o introduced what should be avoided:
+     during creating the iterator, some container must be created
+     which is a copy (at least of references) to the real objects.
+     This is one thing which should be avoided choosing this kind of
+     implementation: that two or more containers must be held in
+     sync. 
+
+   Because of this, the 'standard' TreeView is used - with some
+   utility functions to access the values and synchronize data.
 
 * Testing
 

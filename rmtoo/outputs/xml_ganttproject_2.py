@@ -91,9 +91,9 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
     def topic_pre(self, topic):
         '''This is called in the Topic pre-phase.'''
         xml_task = self.__xml_doc.createElement("task")
-        xml_task.setAttribute("name", topic.name)
+        xml_task.setAttribute("name", topic.get_name())
         xml_task.setAttribute("id", str(self.get_req_id(
-                    "TOPIC-" + topic.name)))
+                    "TOPIC-" + topic.get_name())))
         self.__xml_obj_stack.append(xml_task)
         tracer.debug("Finished; xml document stack length [%s]" %
                      len(self.__xml_obj_stack))
@@ -108,30 +108,30 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_name())
 
     def requirement(self, req):
         '''Output the given requirement.'''
         # There is the need for a unique numeric id
         xml_task = self.__xml_doc.createElement("task")
-        xml_task.setAttribute("name", req.id)
-        xml_task.setAttribute("id", str(self.get_req_id(req.id)))
-        if req.is_val_av_and_not_null("Effort estimation"):
+        xml_task.setAttribute("name", req.get_name())
+        xml_task.setAttribute("id", str(self.get_req_id(req.get_name())))
+        if req.get_requirement().is_val_av_and_not_null("Effort estimation"):
             # The Effort Estimation is only rounded: ganntproject can
             # only handle integers as duration
             xml_task.setAttribute(
                 "duration",
-                str(int(req.get_value("Effort estimation")
+                str(int(req.get_requirement().get_value("Effort estimation")
                         * self.effort_factor + 1)))
 
         # The Status (a la complete) must be given in percent.
         # Currently rmtoo supports only two states: not done (~0) or
         # finished (~100)
-        if req.is_val_av_and_not_null("Status"):
+        if req.get_requirement().is_val_av_and_not_null("Status"):
             complete_val = "0"
-            if isinstance(req.get_status(), RequirementStatusFinished):
+            if isinstance(req.get_requirement().get_status(), RequirementStatusFinished):
                 complete_val = "100"
-            elif isinstance(req.get_status(), RequirementStatusAssigned):
+            elif isinstance(req.get_requirement().get_status(), RequirementStatusAssigned):
                 complete_val = "50"
             xml_task.setAttribute("complete", complete_val)
 
@@ -139,17 +139,17 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         # Add the description and if available also the rationale and
         # note.
         notes = "== Description ==\n"
-        notes += LaTeXMarkup.replace_txt(req.get_value("Description")
+        notes += LaTeXMarkup.replace_txt(req.get_requirement().get_value("Description")
                                          .get_content())
 
-        if req.is_val_av_and_not_null("Rationale"):
+        if req.get_requirement().is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
             notes += LaTeXMarkup.replace_txt(
-                req.get_value("Rationale").get_content())
+                req.get_requirement().get_value("Rationale").get_content())
 
-        if req.is_val_av_and_not_null("Note"):
+        if req.get_requirement().is_val_av_and_not_null("Note"):
             notes += "\n\n== Note ==\n"
-            notes += LaTeXMarkup.replace_txt(req.get_value("Note")
+            notes += LaTeXMarkup.replace_txt(req.get_requirement().get_value("Note")
                                              .get_content())
 
         xml_note = self.__xml_doc.createElement("notes")
@@ -158,9 +158,9 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         xml_task.appendChild(xml_note)
 
         # Dependencies
-        for node in req.incoming:
+        for node in req.get_iter_outgoing():
             xml_depend = self.__xml_doc.createElement("depend")
-            xml_depend.setAttribute("id", str(self.get_req_id(node.id)))
+            xml_depend.setAttribute("id", str(self.get_req_id(node.get_name())))
             # There are some default attrs
             xml_depend.setAttribute("type", "2")
             xml_depend.setAttribute("difference", "0")

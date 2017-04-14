@@ -156,7 +156,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_pre(self, topic):
         '''Output one topic.'''
         self.__level += 1
-        self.__fd.write("%% Output topic '%s'\n" % topic.name)
+        self.__fd.write("%% Output topic '%s'\n" % topic.get_name())
 
     def topic_post(self, _topic):
         '''Cleanup things for topic.'''
@@ -177,7 +177,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_name())
 
     def __add_constraint_req_ref(self, constraint, requirement):
         if constraint not in self.__constraints_reqs_ref:
@@ -186,51 +186,57 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement(self, req):
         '''Write out one requirement.'''
-        self.__fd.write("%% REQ '%s'\n" % req.id)
+        self.__fd.write("%% REQ '%s'\n" % req.get_name())
 
         self.__fd.write("\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
                  % (self.level_names[self.__level + 1],
-                    req.get_value("Name").get_content(),
-                    latex2.__strescape(req.id),
-                    req.get_value("Description").get_content()))
+                    req.get_requirement().get_value("Name").get_content(),
+                    latex2.__strescape(req.get_name()),
+                    req.get_requirement().get_value("Description").get_content()))
 
-        if req.is_val_av_and_not_null("Rationale"):
+        if req.get_requirement().is_val_av_and_not_null("Rationale"):
             self.__fd.write("\n\\textbf{Rationale:} %s\n"
-                     % req.get_value("Rationale").get_content())
+                     % req.get_requirement().get_value("Rationale").get_content())
 
-        if req.is_val_av_and_not_null("Note"):
+        if req.get_requirement().is_val_av_and_not_null("Note"):
             self.__fd.write("\n\\textbf{Note:} %s\n"
-                     % req.get_value("Note").get_content())
+                     % req.get_requirement().get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.incoming) > 0:
+        if req.get_outgoing_cnt() > 0:
             # Create links to the corresponding labels.
             self.__fd.write("\n\\textbf{Depends on:} ")
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.incoming,
-                                                key=lambda r: r.id)]))
+                                (latex2.__strescape(d.get_name()),
+                                 latex2.__strescape(d.get_name()))
+                                for d in sorted(req.get_iter_outgoing(),
+                                                key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
-        if len(req.outgoing) > 0:
+        if req.get_incoming_cnt() > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write("\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.outgoing,
-                                                key=lambda r: r.id)]))
+                                (latex2.__strescape(d.get_name()),
+                                 latex2.__strescape(d.get_name()))
+                                for d in sorted(req.get_iter_incoming(),
+                                                key=lambda r: r.get_name())]))
             self.__fd.write("\n")
 
+        tracer.debug("Output constraints")
         if self.__ce3set != None:
-            cnstrt = self.__ce3set.get(req.get_id())
+            cnstrt = self.__ce3set.get(req.get_name())
+            tracer.debug("Constraints are available [%s]" % cnstrt)
+            tracer.debug("Check constraint header output [%s]" %
+                         cnstrt.len())
             if cnstrt != None and cnstrt.len() > 0:
+                tracer.debug("Output constraint header")
                 self.__fd.write("\n\\textbf{Constraints:} ")
                 cstrs = []
                 for key, val in sorted(cnstrt.get_values().iteritems()):
                     refid = latex2.__strescape(key)
+                    tracer.debug("Output constraint [%s]" % refid)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                            % (refid, refid)
                     description = val.description()
@@ -239,12 +245,13 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     cstrs.append(refctr)
                     # Also put a reference (for later use) in the 
                     # constraints to requirements ref.
-                    self.__add_constraint_req_ref(refid, req.get_id())
+                    self.__add_constraint_req_ref(refid, 
+                            req.get_requirement().get_id())
 
                 self.__fd.write(", ".join(cstrs))
                 self.__fd.write("\n")
 
-        testcases = req.get_value_default("Test Cases")
+        testcases = req.get_requirement().get_value_default("Test Cases")
         if testcases != None:
             self.__fd.write("\n\\textbf{Test Cases:} ")
             tcout = []
@@ -257,9 +264,9 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__fd.write(", ".join(tcout))
             self.__fd.write("\n")
 
-        status = req.get_value("Status").get_output_string()
-        clstr = req.get_value("Class").get_output_string()
-        rtype = Requirement.get_type_as_str(req.get_value("Type"))
+        status = req.get_requirement().get_value("Status").get_output_string()
+        clstr = req.get_requirement().get_value("Class").get_output_string()
+        rtype = Requirement.get_type_as_str(req.get_requirement().get_value("Type"))
 
         self.__fd.write("\n\\par\n{\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")
@@ -268,19 +275,19 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         i = 0
         for rattr in self._config.get_value("req_attributes"):
             if rattr == "Id":
-                self.__fd.write("\\textbf{Id:} & %s " % req.id)
+                self.__fd.write("\\textbf{Id:} & %s " % req.get_name())
             elif rattr == "Priority":
                 self.__fd.write("\\textbf{Priority:} & %4.2f "
-                         % (req.get_value("Priority") * 10))
+                         % (req.get_requirement().get_value("Priority") * 10))
             elif rattr == "Owner":
                 self.__fd.write("\\textbf{Owner:} & %s" %
-                                req.get_value("Owner"))
+                                req.get_requirement().get_value("Owner"))
             elif rattr == "Invented on":
                 self.__fd.write("\\textbf{Invented on:} & %s "
-                         % req.get_value("Invented on").strftime("%Y-%m-%d"))
+                         % req.get_requirement().get_value("Invented on").strftime("%Y-%m-%d"))
             elif rattr == "Invented by":
                 self.__fd.write("\\textbf{Invented by:} & %s "
-                         % req.get_value("Invented by"))
+                         % req.get_requirement().get_value("Invented by"))
             elif rattr == "Status":
                 self.__fd.write("\\textbf{Status:} & %s " % status)
             elif rattr == "Class":

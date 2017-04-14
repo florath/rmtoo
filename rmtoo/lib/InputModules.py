@@ -5,7 +5,7 @@
   InputModules
    This handles all the different input modules.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -22,6 +22,8 @@ from rmtoo.lib.digraph.TopologicalSort \
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+from rmtoo.lib.InputModuleNode import InputModuleNode
+from rmtoo.lib.logging import tracer
 
 class InputModules(Digraph):
     '''The modules class is also a digraph for the reqdeps modules which 
@@ -69,6 +71,7 @@ class InputModules(Digraph):
 
     def __load(self, dir_components, mod_components):
         '''Load the modules.'''
+        tracer.debug("Load modules from directory [%s]" % dir_components)
         for filename in sorted(os.listdir(os.path.join(*dir_components))):
             if not filename.endswith(".py"):
                 continue
@@ -85,8 +88,8 @@ class InputModules(Digraph):
             mc.append(modulename)
 
             # Import module
-            #print("Loading module '%s' from '%s'" %
-            #      (modulename, ".".join(mod_components)))
+            tracer.debug("Loading module '%s' from '%s'" %
+                         (modulename, ".".join(mod_components)))
             # pylint: disable=W0612
             module = __import__(".".join(mc),
                                 globals(), locals(), modulename)
@@ -100,7 +103,8 @@ class InputModules(Digraph):
                 self.__tagtypes[ltype][modulename] = o
             # If a reqdeps type, put also the in the nodes list.
             if InputModuleTypes.reqdeps in types:
-                self.nodes.append(o)
+                tracer.debug("Add module [%s]" % modulename)
+                self.add_node(InputModuleNode(modulename, o))
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.
@@ -113,23 +117,30 @@ class InputModules(Digraph):
     def __connect_nodes(self):
         '''Precondition: the depends_on must be set.
            The method connect all the nodes based on this value.'''
-        for mod_name, mod in self.__tagtypes[InputModuleTypes.reqdeps].items():
-            for n in mod.depends_on:
+        tracer.debug("Called.")
+        for mod_name, mod_node in self._named_nodes.items():
+            for n in mod_node.get_module().depends_on:
                 # Connect in both directions
-                if n not in self.__tagtypes[InputModuleTypes.reqdeps]:
-                    raise RMTException(27, "Module '%s' depends on "
-                                       "'%s' - which does not exists"
-                                       % (mod_name, n))
-                self.create_edge(mod, self.__tagtypes[InputModuleTypes.reqdeps][n])
+                if n not in self._named_nodes.keys():
+                    raise RMTException(27, "Module [%s] depends on "
+                                       "[%s] - which does not exists."
+                                       % (mod_node.get_name(), n))
+                tracer.debug("Connect input module [%s] -> [%s]." %
+                             (mod_node.get_name(),
+                              self._named_nodes[n].get_name()))
+                self.create_edge(mod_node, self._named_nodes[n])
+        tracer.debug("Finished; success.")
 
     def __check_for_circles(self):
         '''This does check if there is a directed circle (e.g. an strongly
            connected component) in the modules graph.'''
+        tracer.debug("Called.")
         scc = strongly_connected_components(self)
         if check_for_strongly_connected_components(scc):
             raise RMTException(26, "There is a strongly connected "
                                "component in the modules graph '%s'"
                                % scc)
+        tracer.debug("No circles found.")
 
     def __topological_sort(self):
         '''Do a topological sort on the reqdeps modules.'''
@@ -138,7 +149,7 @@ class InputModules(Digraph):
     def get_reqdeps_sorted(self):
         '''Return the sorted requirements dependencies.'''
         return self.__reqdeps_sorted
-    
+
     def get_tagtype(self, imtype):
         '''Return the tags for the given type.'''
         return self.__tagtypes[imtype]

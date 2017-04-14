@@ -4,7 +4,7 @@
    
   Coherence of one requirement to the used topic.
    
- (c) 2010-2011 by flonatel GmbH & Co. KG
+ (c) 2010-2012 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -24,7 +24,7 @@ class ReqTopicCohe(Base):
         in_cnt = 0
         out_cnt = 0
         for l in li:
-            if l.get_value("Topic") == topic:
+            if l.get_requirement().get_value("Topic") == topic:
                 in_cnt += 1
             else:
                 out_cnt += 1
@@ -33,9 +33,11 @@ class ReqTopicCohe(Base):
     def requirement(self, requirement):
         '''Check the topic coherence.'''
         it_in, it_out = ReqTopicCohe.count_in_out_topic(
-                requirement.get_value("Topic"), requirement.incoming)
+                requirement.get_requirement().
+                  get_value("Topic"), requirement.get_iter_incoming())
         ot_in, ot_out = ReqTopicCohe.count_in_out_topic(
-                requirement.get_value("Topic"), requirement.outgoing)
+                requirement.get_requirement().
+                get_value("Topic"), requirement.get_iter_outgoing())
 
         # This is only problematic, if the in and out are not
         # really coherent to the topic.
