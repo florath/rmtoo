@@ -1,7 +1,7 @@
 Source: rmtoo
 Section: devel
 Priority: extra
-Maintainer: Andreas Florath <sf@flonatel.org>
+Maintainer: Andreas Florath <rmtoo@florath.net>
 Build-Depends: debhelper (>= 7), python-central (>=0.6), graphviz (>=2.20), texlive-latex-base (>=2007.dfsg.2), texlive-latex-extra (>=2007.dfsg.17), texlive-latex-recommended (>=2007.dfsg.2)
 Standards-Version: 3.8.0
 Homepage: http://www.flonatel.de/projekte/rmtoo

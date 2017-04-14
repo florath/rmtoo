@@ -1,11 +1,11 @@
-This package was debianized by Andreas Florath <sf@flonatel.org> on
+This package was debianized by Andreas Florath <rmtoo@florath.net> on
 Sat, 06 Mar 2010 15:02:27 +0100.
 
 It was downloaded from http://www.gnu4u.org/rmtoo
 
 Upstream Author(s):
 
-    Andreas Florath <sf@flonatel.org>
+    Andreas Florath <rmtoo@florath.net>
 
 Copyright:
 
@@ -30,6 +30,6 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2010, Andreas Florath <sf@flonatel.org> and
+The Debian packaging is (C) 2010, Andreas Florath <rmtoo@florath.net> and
 is licensed under the GPL, see above.
 

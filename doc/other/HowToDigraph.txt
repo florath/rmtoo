@@ -3,7 +3,7 @@ How To: About Digraphs
 ======================
 
 Date:   2010-12-09
-Author: Andreas Florath <sf@flonatel.org>
+Author: Andreas Florath <rmtoo@florath.net>
 
 
 Status

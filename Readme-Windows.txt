@@ -37,7 +37,7 @@ If you have any additional hints for using rmtoo under Windows, please
 contact me.
 
 Andreas Florath
-sf@flonatel.org
+rmtoo@florath.net
 2011-11-30
 
 [1] http://cygwin.com/install.html

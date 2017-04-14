@@ -1,7 +1,7 @@
 #
 # rmtoo __init__.py
 #
-# (c) 2010 by flonatel (sf@flonatel.org)
+# (c) 2010 by flonatel (rmtoo@florath.net)
 #
 # For licensing details see COPYING
 #
