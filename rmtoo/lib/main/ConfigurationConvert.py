@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Configuration Convert Utilities.
- 
- (c) 2011 by flonatel
+
+ (c) 2011,2017 by flonatel
 
  For licensing details see COPYING
 '''
@@ -13,7 +13,7 @@ import json
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging.MemLogStore import MemLogStore
 
-def main(args, mstdout, mstderr):
+def main_impl(args, mstdout, mstderr):
     '''Converts the configuration.
        Reads in the given and (pretty) prints the configuration
        to mstdout.'''
@@ -22,3 +22,6 @@ def main(args, mstdout, mstderr):
     log_store.write_log(mstderr)
     mstdout.write(json.dumps(config.config, sort_keys=True, indent=4))
     mstdout.write("\n")
+
+def main():
+    main(sys.argv[1:], sys.stdout, sys.stderr)

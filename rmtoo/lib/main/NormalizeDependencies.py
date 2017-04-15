@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Normalize dependencies to 'Solved by'.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -31,9 +31,12 @@ def main_impl(args, mstdout, mstderr):
     return rs.normalize_dependencies() \
         and rs.write_to_filesystem(command_line_args[0])
 
-def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
+def main_impl(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     try:
         exitfun(not main_func(args, mstdout, mstderr))
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
+
+def main():
+    main_impl(sys.argv[1:], sys.stdout, sys.stderr)

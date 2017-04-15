@@ -110,7 +110,7 @@ To refer to the current directory, it is called RMTOO_BASE_PATH.
 .. code:: bash
 
    $ export RMTOO_BASE_PATH=$PWD
-   $ tar -xvf rmtoo-YY.tar.gz
+   $ tar -xf rmtoo-YY.tar.gz
 
 To use rmtoo, you have to include
 ``${RMTOO_BASE_PATH}/rmtoo-YY/bin`` to your path,  include

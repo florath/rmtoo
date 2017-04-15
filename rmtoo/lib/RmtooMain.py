@@ -60,7 +60,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
     Output.execute(config, topic_continuum_set, mstderr, "")
     return True
 
-def main_impl(args, mstdout, mstderr):
+def main_func(args, mstdout, mstderr):
     '''The real implementation of the main function:
        o get config
        o set up logging
@@ -69,7 +69,7 @@ def main_impl(args, mstdout, mstderr):
     configure_logging(config, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
-def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
+def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
     '''The main entry function
     This calls the main_func function and does the exception handling.'''
     try:
@@ -77,3 +77,6 @@ def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     except RMTException, rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
+
+def main():
+    main_impl(sys.argv[1:], sys.stdout, sys.stderr)
