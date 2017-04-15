@@ -16,7 +16,7 @@
  'no they are not the same' (maybe with a hint of the difference's
  location) is needed.
 
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -72,14 +72,12 @@ def xml_check_child_count(xml_doc_a, xml_doc_b, xpath):
 def xml_check_children(xml_doc_a, xml_doc_b, xpath):
     '''Create a shallow copy of b's children (and remove nodes which
        are seen as equal).'''
-    print("DOCA", xml_doc_a)
-    print("DOCB", xml_doc_b)
-
-    bcn = copy.copy(xml_doc_b.childNodes)
-    print("BCN init", bcn)
+    bcn = []
+    for child in xml_doc_b.childNodes:
+        bcn.append(copy.copy(child))
 
     # Iterate through the child nodes of 'a' ...
-    bcn_found = set()
+    bcn_found_cnt = len(bcn)
     for a_children in xml_doc_a.childNodes:
         tracer.debug(LogFormatter.format(97,
                 "xmlcmp: comparing child node [%s]" % a_children))
@@ -91,7 +89,7 @@ def xml_check_children(xml_doc_a, xml_doc_b, xpath):
             if result:
                 # a_children and b_children are equal: remove b_children
                 # from bcn and skip to the next a_children
-                bcn_found.add(b_children)
+                bcn_found_cnt -= 1
                 found_ac = True
                 tracer.debug(LogFormatter.format(98,
                         "[%s] xmlcmp: found equal subtrees [%s]" \
@@ -104,13 +102,7 @@ def xml_check_children(xml_doc_a, xml_doc_b, xpath):
             return False, "Child node [%s] not found at [%s] - " \
                 "last error was [%s]" % (a_children, xpath, err_msg)
 
-    print("BCN before", bcn)
-    print("BF", bcn_found)
-    for bf in bcn_found:
-        bcn.remove(bf)
-
-    print("BCN", bcn)
-    assert(len(bcn) == 0)
+    assert(bcn_found_cnt == 0)
     return True, None
 
 def xmlequals(xml_doc_a, xml_doc_b, xpath):
@@ -135,8 +127,6 @@ def xmlcmp_files(file1, file2):
 
 def xmlcmp_strings(str1, str2):
     '''Compares two xml string.'''
-    print("STR1", str1)
-    print("STR2", str2)
     doc1 = parseString(str1)
     doc2 = parseString(str2)
     return xmlequals(doc1.documentElement, doc2.documentElement, "")

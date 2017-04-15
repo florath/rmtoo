@@ -71,7 +71,7 @@ install:
 tests:
 	nosetests -w rmtoo -v --cover-erase --with-coverage -s \
 	 --testmatch ".*[rR][mM][tT][tT]est_.*" \
-	 --cover-package=rmtoo.lib,rmtoo.output,rmtoo.inputs
+	 --cover-package=rmtoo.lib,rmtoo.outputs,rmtoo.inputs
 
 .PHONY: deb
 deb:
