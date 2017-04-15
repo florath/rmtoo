@@ -1,9 +1,7 @@
-import os
-
 class Config:
 
-#    basedir = "tests/BlackboxTest/Bb014Test/"
-#    result_is = os.environ["rmtoo_test_dir"]
+    #    basedir = "tests/BlackboxTest/Bb014Test/"
+    #    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["executive", ]
 
@@ -14,7 +12,7 @@ class Config:
            "directory": "${ENV:basedir}/input/reqs",
            "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
-           "dependency_notation": set(["Solved by",]),
+           "dependency_notation": set(["Solved by", ]),
         }
 
     topic_specs = \
@@ -27,12 +25,12 @@ class Config:
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
-          ["prios", 
+        [
+          ["prios",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqsprios.tex",
-            { "start_date": "2011-04-01" } ]],
+            {"start_date": "2011-04-01"}]],
 
           ["graph",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph1.dot"]],
@@ -40,11 +38,11 @@ class Config:
           ["graph2",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph2.dot"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "${ENV:rmtoo_test_dir}/html", "${ENV:basedir}/input/header.html",
             "${ENV:basedir}/input/footer.html"]],
 

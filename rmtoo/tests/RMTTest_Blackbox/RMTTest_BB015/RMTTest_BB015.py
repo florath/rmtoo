@@ -1,7 +1,7 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for Topic
 
  (c) 2011-2012,2017 by flonatel GmbH & Co. KG
@@ -13,11 +13,11 @@ import os
 import shutil
 
 from rmtoo.lib.main.NormalizeDependencies import main, main_impl
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
-    cleanup_std_log, delete_result_is_dir, extract_container_files, tmp_dir, \
-    check_file_results
+from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
+    cleanup_std_log, delete_result_is_dir, tmp_dir, check_file_results
 
 mdir = "tests/RMTTest_Blackbox/RMTTest_BB015"
+
 
 class RMTTest_BB015:
 
@@ -31,8 +31,6 @@ class RMTTest_BB015:
         mout, merr = prepare_result_is_dir()
         td = tmp_dir()
 
-        #print("TD %s" % td)
-
         # Copy requirements to tmp dir
         destdir = os.path.join(td, "reqs")
         shutil.copytree("%s/input/reqs" % mdir, destdir,
@@ -41,7 +39,7 @@ class RMTTest_BB015:
         # Call the converter
         main(["-j", "file://" + mdir + "/input/Config.json"],
              mout, merr, main_impl, myexit)
-        assert(self.rval == 0)
+        self.assertEqual(0, self.rval)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
         delete_result_is_dir()

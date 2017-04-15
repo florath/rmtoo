@@ -1,9 +1,7 @@
-import os
-
 class Config:
 
-#    basedir = "tests/BlackboxTest/Bb005Test/"
-#    result_is = os.environ["rmtoo_test_dir"]
+    #    basedir = "tests/BlackboxTest/Bb005Test/"
+    #    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -22,16 +20,16 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
-          ["prios", 
-           ["ts_common", "${ENV:rmtoo_test_dir}/reqsprios.tex", 
-            {"start_date": "2011-05-11"} ]],
+        [
+          ["prios",
+           ["ts_common", "${ENV:rmtoo_test_dir}/reqsprios.tex",
+            {"start_date": "2011-05-11"}]],
 
           ["graph",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph1.dot"]],
@@ -39,18 +37,18 @@ class Config:
           ["graph2",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "${ENV:rmtoo_test_dir}/html", "${ENV:basedir}/input/header.html",
             "${ENV:basedir}/input/footer.html"]],
 
-          ["oopricing1", 
+          ["oopricing1",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqspricing"]],
 
         ]

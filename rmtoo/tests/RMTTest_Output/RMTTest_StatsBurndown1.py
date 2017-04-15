@@ -1,5 +1,5 @@
 #
-# rmtoo 
+# rmtoo
 #   Free and Open Source Requirements Management Tool
 #
 # Unit test for RequirementSet
@@ -9,8 +9,5 @@
 # For licencing details see COPYING
 #
 
-from rmtoo.outputs.stats_burndown1 import stats_burndown1
-
 class RMTTest_StatsBurndown1:
     pass
-

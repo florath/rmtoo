@@ -1,9 +1,7 @@
-import os
-
 class Config:
 
-#    basedir = "tests/BlackboxTest/Bb006Test/"
-#    result_is = os.environ["rmtoo_test_dir"]
+    #    basedir = "tests/BlackboxTest/Bb006Test/"
+    #    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -11,13 +9,13 @@ class Config:
 
     reqs_spec = \
         {
-           "directory": "${ENV:basedir}/input/reqs",
-           "commit_interval": ["v10", 
-                               "FILES"],
-           #["138be32f1985aec694934263f02e47292deaac91", "FILES"]
-           #["v8", "FILES"]
-           # ["FILES", "FILES"]
-           "default_language": "en_GB",
+            "directory": "${ENV:basedir}/input/reqs",
+            "commit_interval": ["v10",
+                                "FILES"],
+            # ["138be32f1985aec694934263f02e47292deaac91", "FILES"]
+            # ["v8", "FILES"]
+            # ["FILES", "FILES"]
+            "default_language": "en_GB",
         }
 
     topic_specs = \
@@ -26,14 +24,14 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
-          ["prios", 
+        [
+          ["prios",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqsprios.tex"]],
 
           ["graph",
@@ -42,17 +40,17 @@ class Config:
           ["graph2",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "${ENV:rmtoo_test_dir}/html", "${ENV:basedir}/input/header.html",
             "${ENV:basedir}/input/footer.html"]],
 
-          ["oopricing1", 
+          ["oopricing1",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqspricing"]],
         ]

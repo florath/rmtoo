@@ -82,6 +82,7 @@ This file is not completed now - any might be in future.
     Because of the problems comparing automated created XML documents,
     the check is only done for the directly generated files.
 
+
 * Forks
 
   There are a couple of forks done during the last years; have a look
@@ -89,16 +90,8 @@ This file is not completed now - any might be in future.
 
   http://forked.yannick.io/florath/rmtoo
 
-  isaacde/rmtoo 		0 	0 	0 	2 years ago
-  apre/rmtoo 			0 	0 	0 	9 months ago
-  willtecti/rmtoo 		0 	0 	0 	2 years ago
-  LucasReller/rmtoo 		0 	0 	0 	2 years ago
-  albertogomcas/rmtoo 		0 	0 	0 	2 years ago
-  kevin-canadian/rmtoo 		0 	0 	0 	2 years ago
-  pnouvel/rmtoo 		0 	0 	0 	2 years ago
-  huddy1985/rmtoo 		0 	0 	0 	2 years ago
-  samjaninf/rmtoo 		0 	0 	0 	2 years ago
-  andipla/rmtoo 		0 	2 	1 	5 months ago
+  apre/rmtoo 			0 	0 	0 	9 months ago -> GUI branch!
+  andipla/rmtoo 		0 	2 	1 	5 months ago -> SIL feature
 
 ** Done
 
@@ -113,6 +106,13 @@ This file is not completed now - any might be in future.
     drewm135/rmtoo		2017-04-15
     thangphuocnguyen/rmtoo	2017-04-15
     isaacde/rmtoo		2017-04-15
+    willtecti/rmtoo		2017-04-15
+    LucasReller/rmtoo		2017-04-15
+    albertogomcas/rmtoo		2017-04-15
+    kevin-canadian/rmtoo	2017-04-15
+    pnouvel/rmtoo		2017-04-15
+    huddy1985/rmtoo		2017-04-15
+    samjaninf/rmtoo		2017-04-15
 
 Local Variables:
 mode:outline

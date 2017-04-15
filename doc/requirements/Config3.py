@@ -2,6 +2,7 @@
 # Config Class for the requirements for rmtoo
 #
 
+
 class Config:
     # development - team at flonatel
     # users - users from the Internet (sourceforge replies and wishes)
@@ -12,13 +13,13 @@ class Config:
     reqs_spec = \
         {
            "directory": "doc/requirements",
-           "commit_interval": 
+           "commit_interval":
            # This is used for all-day work:
            ["FILES", "FILES"],
            # This is used for releases (epoch -> HEAD)
-           #["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
+           # ["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
            "default_language": "en_GB",
-           #"dependency_notation": set(["Solved by", "Depends on"])
+           # "dependency_notation": set(["Solved by", "Depends on"])
            "dependency_notation": set(["Solved by", ])
         }
 
@@ -28,7 +29,7 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
@@ -40,9 +41,9 @@ class Config:
         }
 
     output_specs = \
-        [ 
-          ["prios", 
-           ["ts_common", "artifacts/reqsprios.tex", 
+        [
+          ["prios",
+           ["ts_common", "artifacts/reqsprios.tex",
             {'start_date': "2011-04-25"}]],
 
           ["graph",
@@ -51,14 +52,14 @@ class Config:
           ["graph2",
            ["ts_common", "artifacts/req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", "artifacts/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "artifacts//reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "artifacts/html", "doc/html/header.html",
             "doc/html/footer.html"]],
 
@@ -73,7 +74,7 @@ class Config:
 
           ["stats_burndown1",
            ["ts_common", "artifacts/stats_burndown.csv", "2011-04-25"]],
-           
+
         ]
 
     output_specs2 = \

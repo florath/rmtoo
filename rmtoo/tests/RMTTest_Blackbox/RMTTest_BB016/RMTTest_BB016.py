@@ -1,9 +1,9 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Blackbox rmtoo test
-   
+
  (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
@@ -12,11 +12,11 @@
 import os
 
 from rmtoo.lib.RmtooMain import main
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
-    cleanup_std_log, delete_result_is_dir, extract_container_files, \
-    check_file_results
+from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
+    cleanup_std_log, delete_result_is_dir, check_file_results
 
 mdir = "tests/RMTTest_Blackbox/RMTTest_BB016"
+
 
 class RMTTest_BB16:
 
@@ -31,10 +31,6 @@ class RMTTest_BB16:
         main(["-j", "file://" + mdir + "/input/Config.json"], mout, merr,
              exitfun=myexit)
         cleanup_std_log(mout, merr)
-#        extract_container_files(["reqspricing.ods",])
+        #        extract_container_files(["reqspricing.ods",])
         check_file_results(mdir)
         delete_result_is_dir()
-
-if __name__ == "__main__":
-    t = TestBB16()
-    t.test_pos_001()

@@ -1,9 +1,7 @@
-import os
-
 class Config:
 
-#    basedir = "tests/BlackboxTest/Bb010Test/"
-#    result_is = os.environ["rmtoo_test_dir"]
+    #    basedir = "tests/BlackboxTest/Bb010Test/"
+    #    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -31,8 +29,8 @@ class Config:
         [
           ["prios",
            ["ts_common", "${ENV:rmtoo_test_dir}/reqsprios.tex",
-            { "start_date": "2011-04-01",
-              "end_date": "2011-05-10"} ]],
+            {"start_date": "2011-04-01",
+             "end_date": "2011-05-10"}]],
 
           ["graph",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph1.dot"]],
@@ -56,11 +54,11 @@ class Config:
 
           ["stats_burndown1",
            ["ts_common", "${ENV:rmtoo_test_dir}/stats_burndown.csv",
-            '2011-04-01' ]],
+            '2011-04-01']],
 
           ["stats_sprint_burndown1",
            ["ts_common", "${ENV:rmtoo_test_dir}/stats_sprint_burndown.csv",
-            { "start_date": "2011-04-01",
-              "end_date": "2011-05-10"} ]],
+            {"start_date": "2011-04-01",
+             "end_date": "2011-05-10"}]],
 
         ]

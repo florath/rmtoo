@@ -1,9 +1,7 @@
-import os
-
 class Config:
 
-#    basedir = "tests/BlackboxTest/Bb013Test/"
-#    result_is = os.environ["rmtoo_test_dir"]
+    #    basedir = "tests/BlackboxTest/Bb013Test/"
+    #    result_is = os.environ["rmtoo_test_dir"]
 
     stakeholders = ["development", "management", "users", "customers"]
 
@@ -12,10 +10,10 @@ class Config:
     reqs_spec = \
         {
            "directory": "${ENV:basedir}/input/reqs",
-           "commit_interval": 
-           #["v10", "FILES"],
-           #["138be32f1985aec694934263f02e47292deaac91", "FILES"]
-           #["v8", "FILES"]
+           "commit_interval":
+           # ["v10", "FILES"],
+           # ["138be32f1985aec694934263f02e47292deaac91", "FILES"]
+           # ["v8", "FILES"]
            ["FILES", "FILES"],
            "default_language": "en_GB",
         }
@@ -26,14 +24,14 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
-    
+
     output_specs = \
-        [ 
+        [
           ["graph",
            ["ts_common", "${ENV:rmtoo_test_dir}/req-graph.dot",
-            { "node_attributes": ["Type", "Class", "Topic"]}, ]],
+            {"node_attributes": ["Type", "Class", "Topic"]}, ]],
         ]

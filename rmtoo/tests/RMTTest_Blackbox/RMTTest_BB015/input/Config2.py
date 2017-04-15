@@ -1,5 +1,3 @@
-import os
-
 class Config:
     stakeholders = ["development", "management", "users", "customers"]
 
