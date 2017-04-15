@@ -15,9 +15,9 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 
-class TestRDepPriority:
+class RMTTest_RDepPriority:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
         config = TestConfig()
         reqset = RequirementSet(config)
@@ -41,7 +41,7 @@ Type: requirement''', 'B', None, None, None)
         assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
         assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Three node digraph C -> B -> A"
         config = TestConfig()
         reqset = RequirementSet(config)
@@ -72,7 +72,7 @@ Type: requirement''', 'C', None, None, None)
         assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
         assert(reqset.get_named_node("C").get_value("Priority") == 0.4)
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Four node digraph D -> B -> A and D -> C -> A"
         config = TestConfig()
         reqset = RequirementSet(config)

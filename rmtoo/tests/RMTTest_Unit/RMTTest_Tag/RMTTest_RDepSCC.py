@@ -14,9 +14,9 @@
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
-class TestRDepSCC:
+class RMTTest_RDepSCC:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
         config, reqset = create_parameters({"B": ["A"], "A": [] })
         reqset.graph_master_node = reqset.find("A")
@@ -26,7 +26,7 @@ class TestRDepSCC:
 
         assert(result == True)
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "small digraph D -> B -> A and D -> C -> A"
         config, reqset = create_parameters(
             {"D": ["B", "C"], "C": ["A"], "B": ["A"], "A": [] })
@@ -37,7 +37,7 @@ class TestRDepSCC:
 
         assert(result == True)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "small digraph D -> B -> A and A -> C -> D"
         config, reqset = create_parameters(
             {"D": ["B"], "C": ["D"], "B": ["A"], "A": ["C"] })

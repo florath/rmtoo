@@ -17,9 +17,9 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeDetailable, ClassTypeSelected
 
-class TestReqClass:
+class RMTTest_ReqClass:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Class - no Class tag given"
         config, req = create_parameters()
 
@@ -28,7 +28,7 @@ class TestReqClass:
         assert(name == "Class")
         assert(isinstance(value, ClassTypeDetailable))
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Class - Class set to 'detailable'"
         config, req = create_parameters()
         req = {"Class": RecordEntry("Class", "detailable")}
@@ -38,7 +38,7 @@ class TestReqClass:
         assert(name == "Class")
         assert(isinstance(value, ClassTypeDetailable))
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Requirement Tag Class - no Class implementable"
         config, req = create_parameters()
         req = {"Class": RecordEntry("Class", "implementable")}
@@ -48,7 +48,7 @@ class TestReqClass:
         assert(name == "Class")
         assert(isinstance(value, ClassTypeImplementable))
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Class - unsupported Class value"
         config, req = create_parameters()
         req = {"Class": RecordEntry("Class", "something_completly_different")}

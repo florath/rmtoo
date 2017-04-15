@@ -17,9 +17,9 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 
-class TestReqStatus:
+class RMTTest_ReqStatus:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Status - tag given 'not done'"
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "not done")
@@ -29,7 +29,7 @@ class TestReqStatus:
         assert(name == "Status")
         assert(isinstance(value, RequirementStatusNotDone))
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "finished")
@@ -41,7 +41,7 @@ class TestReqStatus:
         assert(value.get_person() == None)
         assert(value.get_duration() == None)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"
         config, req = create_parameters()
 
@@ -52,7 +52,7 @@ class TestReqStatus:
         except RMTException, rmte:
             assert(rmte.id() == 16)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Status - invalid tag given"
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "dasjibtedjarnich")

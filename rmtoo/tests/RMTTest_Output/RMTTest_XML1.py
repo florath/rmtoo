@@ -10,7 +10,7 @@
 
 from rmtoo.outputs.xml1 import xml1
 
-class TestOutputXML1:
+class RMTTest_OutputXML1:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

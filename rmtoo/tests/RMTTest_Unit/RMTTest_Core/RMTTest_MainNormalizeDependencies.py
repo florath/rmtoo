@@ -13,9 +13,9 @@ import sys
 from rmtoo.lib.main.NormalizeDependencies import main
 from rmtoo.lib.RMTException import RMTException
 
-class TestMainNormalizeDependencies:
+class RMTTest_MainNormalizeDependencies:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "NormalizeDependencies: check if result is correctly handled: Exception"
         global myexit_called
         myexit_called = False

@@ -18,9 +18,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb016Test"
 
-class TestBB16:
+class RMTTest_BB16:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "Blackbox test for simple constraint handling"
 
         def myexit(n):

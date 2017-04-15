@@ -18,9 +18,9 @@ from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
-class TestParse:
+class RMTTest_Parse:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "TopicSet - constructor with only one element"
         try:
             tioconfig = TxtIOConfig()
@@ -39,7 +39,7 @@ class TestParse:
         except AssertionError, ae:
             pass
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "TopicSet - valid"
         tioconfig = TxtIOConfig()
         cfg = Cfg()
@@ -55,7 +55,7 @@ class TestParse:
         topicset = TopicSet(
             cfg, tvcs, "test-name01", tobjcache, tinmod)
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "TopicSet - valid with empty requirement set"
 
         tioconfig = TxtIOConfig()

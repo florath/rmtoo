@@ -13,9 +13,9 @@ import sys
 from rmtoo.lib.RmtooMain import main
 from rmtoo.lib.RMTException import RMTException
 
-class TestMain:
+class RMTTest_Main:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "main: check if result is correctly handled: True"
         global myexit_called
         myexit_called=False
@@ -35,7 +35,7 @@ class TestMain:
         assert(myexit_called==True)
         assert(myexit_val==0)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "main: check if result is correctly handled: False"
         global myexit_called
         myexit_called=False
@@ -55,7 +55,7 @@ class TestMain:
         assert(myexit_called==True)
         assert(myexit_val==1)
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "main: check if result is correctly handled: Exception"
         global myexit_called
         myexit_called=False

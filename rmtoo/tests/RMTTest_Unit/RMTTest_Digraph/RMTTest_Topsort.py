@@ -16,28 +16,28 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 
 class TopologicalSearchTests(unittest.TestCase):
 
-    def test_tsort_001(self):
+    def rmttest_tsort_001(self):
         "Simple three node digraph"
         dg = Digraph( {"A": ["B", "C"], "B": ["C"], "C": [] } )
         tsort = topological_sort(dg)
         tnames = node_list_to_node_name_list(tsort)
         self.assertEqual(tnames, ['C', 'B', 'A'], "incorrect")
 
-    def test_tsort_002(self):
+    def rmttest_tsort_002(self):
         "Zero node digraph"
         dg = Digraph( {} )
         tsort = topological_sort(dg)
         tnames = node_list_to_node_name_list(tsort)
         self.assertEqual(tnames, [], "incorrect")
 
-    def test_tsort_003(self):
+    def rmttest_tsort_003(self):
         "One node digraph"
         dg = Digraph( {"A": [] } )
         tsort = topological_sort(dg)
         tnames = node_list_to_node_name_list(tsort)
         self.assertEqual(tnames, ["A"], "incorrect")
 
-    def test_tsort_004(self):
+    def rmttest_tsort_004(self):
         "More complex digraph"
         dg = Digraph( {"A": ["B", "C"], "B": ["C", "E"], "C": ["D", "E"],
                        "D": [], "E": [] } )
@@ -45,7 +45,7 @@ class TopologicalSearchTests(unittest.TestCase):
         tnames = node_list_to_node_name_list(tsort)
         self.assertEqual(tnames, ['D', 'E', 'C', 'B', 'A'], "incorrect")
 
-    def test_tsort_005(self):
+    def rmttest_tsort_005(self):
         "Digraph with two components"
         dg = Digraph( {"A": ["B", "C"], "B": ["C"], "C": [],
                        "D": ["E"], "E": [] } )

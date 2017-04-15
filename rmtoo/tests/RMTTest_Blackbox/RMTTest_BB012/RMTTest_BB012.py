@@ -18,9 +18,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb012Test"
 
-class TestBB012:
+class RMTTest_BB012:
 
-    def test_pos(self):
+    def rmttest_pos(self):
         "BB resulting requirements are not dependend"
 
         os.environ["basedir"] = mdir

@@ -13,9 +13,9 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.inputs.RDepOneComponent import RDepOneComponent
 from rmtoo.lib.RMTException import RMTException
 
-class TestOutputOneComponent:
+class RMTTest_OutputOneComponent:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "RDepOneComponent: check rewrite error case"
 
         oc = RDepOneComponent(None)

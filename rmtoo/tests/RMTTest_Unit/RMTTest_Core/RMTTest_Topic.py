@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestVCS import TestVCS
 
-class TestTopic:
+class RMTTest_Topic:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "Topic: (internal) check if Name tag exists"
         dg = Digraph()
 

@@ -21,9 +21,9 @@ from rmtoo.tests.lib.Utils import create_tmp_dir
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_timestamp
 
-class TestConfiguration(unittest.TestCase):
+class RMTTest_Configuration(unittest.TestCase):
 
-    def test_empty_configuration(self):
+    def rmttest_empty_configuration(self):
         '''Checks the empty configuration with different types of parameters'''
         config = Cfg()
 
@@ -34,7 +34,7 @@ class TestConfiguration(unittest.TestCase):
         self.failUnlessRaises(RMTException, config.get_value, ['k', 'i'])
         self.failUnlessRaises(RMTException, config.get_value, ['k', 'i', 'j'])
 
-    def test_json_str(self):
+    def rmttest_json_str(self):
         '''Checks JSON string handling of the configuration class'''
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
         config.merge_json_str('{"k": 2, "m": {"n": 5}, "o": 7}')
@@ -45,7 +45,7 @@ class TestConfiguration(unittest.TestCase):
         self.failUnlessEqual(5, config.get_value(["m", "n"]), "m.n is not 5")
         self.failUnlessEqual(7, config.get_value("o"), "o is not 7")
 
-    def test_json_init_add_old_cmd_line_params(self):
+    def rmttest_json_init_add_old_cmd_line_params(self):
         '''Init Cfg with JSON and add parameters with command line options'''
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
         config.merge_cmd_line_params(['-m', '/tmp/something',
@@ -55,7 +55,7 @@ class TestConfiguration(unittest.TestCase):
         self.failUnlessEqual({'create_makefile_dependencies': '/tmp/cmad'},
                              config.get_value("actions").get_dict())
 
-    def test_json_init_add_new_cmd_line_params(self):
+    def rmttest_json_init_add_new_cmd_line_params(self):
         '''Init Cfg with JSON and adds parameters with command line options'''
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -84,7 +84,7 @@ class TestConfiguration(unittest.TestCase):
         tear_down_log_handler()
         self.failUnlessEqual(lstderr, "")
 
-    def test_json_init_add_old2_cmd_line_params(self):
+    def rmttest_json_init_add_old2_cmd_line_params(self):
         '''Init Cfg with old config and adds parameters with command line options'''
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -106,7 +106,7 @@ class TestConfiguration(unittest.TestCase):
 
         self.failUnlessEqual(expected_result, lstderr)
 
-    def test_dollar_replacement_environment_variables(self):
+    def rmttest_dollar_replacement_environment_variables(self):
         '''Check if the $ replacement works with environment variables.'''
         os.environ["huho"] = "ThereIsSomeVal"
         config = Cfg.new_by_json_str('{"k": "${ENV:huho}"}')
@@ -115,7 +115,7 @@ class TestConfiguration(unittest.TestCase):
         self.failUnlessEqual("ThereIsSomeVal", val,
                              "k is not ThereIsSomeVal")
 
-    def test_dollar_replacement_configuration_variables(self):
+    def rmttest_dollar_replacement_configuration_variables(self):
         '''Check if the $ replacement works with configuration variables.'''
         config = Cfg.new_by_json_str(
             '{"k": "${huho}", "huho": "ThereIsSomeVal"}')

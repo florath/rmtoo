@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqInventedBy:
+class RMTTest_ReqInventedBy:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Invented by - tag given"
         config, req = create_parameters()
         config.set_value('requirements.inventors',
@@ -29,7 +29,7 @@ class TestReqInventedBy:
         assert(name == "Invented by")
         assert(value == "meinereiner")
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Invented by - no tag given"
         config, req = create_parameters()
         config.inventors = ["meinereiner", "keinerseiner"]
@@ -41,7 +41,7 @@ class TestReqInventedBy:
         except RMTException, rmte:
             assert(rmte.id() == 5)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Invented by - invalid tag given"
         config, req = create_parameters()
         config.set_value('requirements.inventors',

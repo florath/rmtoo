@@ -11,6 +11,6 @@
 
 from rmtoo.outputs.stats_burndown1 import stats_burndown1
 
-class TestStatsBurndown1:
+class RMTTest_StatsBurndown1:
     pass
 

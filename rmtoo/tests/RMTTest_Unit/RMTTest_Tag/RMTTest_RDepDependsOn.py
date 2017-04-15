@@ -18,9 +18,9 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.InputModules import InputModules
 
-class TestRDepDependsOn:
+class RMTTest_RDepDependsOn:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
         config = TestConfig()
 
@@ -44,7 +44,7 @@ Depends on: A''', 'B', None, imod, config)
         assert(reqset.get_requirement("B").incoming_as_named_list() == ["A"])
         assert(reqset.get_requirement("B").outgoing_as_named_list() == [])
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Three node one edge digraph B -> A, C -> A and C -> B"
         config = TestConfig()
 
@@ -75,7 +75,7 @@ Depends on: A B''', 'C', None, imod, config)
         assert(reqset.get_requirement("C").incoming_as_named_list() == ["A", "B"])
         assert(reqset.get_requirement("C").outgoing_as_named_list() == [])
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Master requirement with Depends on field"
         config = TestConfig()
 
@@ -93,7 +93,7 @@ Depends on: A''', 'A', None, imod, config)
 
         assert(status == False)
 
-    def test_negative_03(self):
+    def rmttest_negative_03(self):
         "Normal requirement has no 'Depends on'"
         config = TestConfig()
 
@@ -113,7 +113,7 @@ Type: requirement''', 'B', None, imod, config)
 
         assert(status == False)
 
-    def test_negative_04(self):
+    def rmttest_negative_04(self):
         "Normal requirement has empty 'Depends on'"
         config = TestConfig()
 
@@ -134,7 +134,7 @@ Depends on:''', 'B', None, imod, config)
 
         assert(status == False)
 
-    def test_negative_05(self):
+    def rmttest_negative_05(self):
         "'Depends on' points to a non existing requirement"
         config = TestConfig()
 
@@ -155,7 +155,7 @@ Depends on: C''', 'B', None, imod, config)
 
         assert(status == False)
 
-    def test_negative_07(self):
+    def rmttest_negative_07(self):
         "'Depends on' points to same requirement"
         config = TestConfig()
 

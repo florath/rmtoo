@@ -40,18 +40,18 @@ def create_test_graph_01():
 
 class InheritanceTest(unittest.TestCase):
 
-    def test_inherit_001(self):
+    def rmttest_inherit_001(self):
         "Test creation syntax check"
         mg = create_test_graph_01()
 
-    def test_inherit_002(self):
+    def rmttest_inherit_002(self):
         "Output check"
         mg = create_test_graph_01()
         d = mg.output_to_dict()
         self.assertEqual(d, {'A': ['B', 'C'], 'C': [], 'B': ['C']},
                          "incorrect dictionary output")
 
-    def test_inherit_003(self):
+    def rmttest_inherit_003(self):
         "Topological sort check"
         mg = create_test_graph_01()
         tsort = topological_sort(mg)

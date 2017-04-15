@@ -20,9 +20,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 mdir_orig = "tests/blackbox-test/bb001-test"
 mdir = "tests/BlackboxTest/Bb001Test"
 
-class TestBB001:
+class RMTTest_BB001:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "BB Basic with one requirement - reqs only from git"
 
         os.environ['TZ'] = 'Europe/Berlin'

@@ -1,6 +1,6 @@
-class TestClass:
+class RMTTest_Class:
 
-    def test_0001(self):
+    def rmttest_0001(self):
         "Das ist ein Test"
         return True
 

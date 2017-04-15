@@ -18,9 +18,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb008Test"
 
-class TestBB008:
+class RMTTest_BB008:
 
-    def test_pos(self):
+    def rmttest_pos(self):
         "BB Basic with one requirement - parse error"
 
         os.environ["basedir"] = mdir

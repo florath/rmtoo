@@ -17,9 +17,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb013Test"
 
-class TestBB007:
+class RMTTest_BB007:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "BB Basic with one requirement - graph output with defined tags"
 
         os.environ["basedir"] = mdir

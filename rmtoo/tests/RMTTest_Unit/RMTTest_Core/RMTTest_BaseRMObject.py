@@ -39,9 +39,9 @@ expected_result = \
     "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;104; " \
     "90:Wrong module type [mytag] not in [set([1, 2, 3])]\n"
 
-class TestBaseRMObject(unittest.TestCase):
+class RMTTest_BaseRMObject(unittest.TestCase):
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
 
         mstderr = StringIO.StringIO()

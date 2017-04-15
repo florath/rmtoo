@@ -17,9 +17,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 
 mdir = "tests/BlackboxTest/Bb014Test"
 
-class TestBB001:
+class RMTTest_BB001:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "Pulp Fiction's Mr Wulf in English with Solved by"
 
         def myexit(n):

@@ -10,7 +10,7 @@
 
 from rmtoo.outputs.prios import prios
 
-class TestOutputPrios:
+class RMTTest_OutputPrios:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

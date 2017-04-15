@@ -14,9 +14,9 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 
-class TestReqHistory:
+class RMTTest_ReqHistory:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag History - no tag given"
         config, req = create_parameters()
 
@@ -25,7 +25,7 @@ class TestReqHistory:
         assert(name == "History")
         assert(value == None)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag History - History set"
         config, req = create_parameters()
         req = {"History": "something"}

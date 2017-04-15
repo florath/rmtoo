@@ -11,9 +11,9 @@
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 
-class TestTxtRecord:
+class RMTTest_TxtRecord:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "Check maybe_remove_last_empty_line with len=0"
         config = {}
         tr = TxtRecord(config)

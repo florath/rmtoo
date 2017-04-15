@@ -12,9 +12,9 @@
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.RMTException import RMTException
 
-class TestCmdLineParser:
+class RMTTest_CmdLineParser:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "Command Line Parser: check -m."
 
         args = ["-f", "SomeFile" ]
@@ -22,7 +22,7 @@ class TestCmdLineParser:
         assert(options[1]["global"]["modules"]["directories"] == \
                ["/usr/share/pyshared"])
 
-    def test_additional_old_params(self):
+    def rmttest_additional_old_params(self):
         "Command Line Parser: too many args"
 
         args = ["-f", "SomeFile", "das", "ist", "was"]

@@ -13,9 +13,9 @@ import StringIO
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
 
-class TestTxtRecordEntry:
+class RMTTest_TxtRecordEntry:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "Check format entry with existing comment"
         tre = TxtRecordEntry(["mtag:", [" iline"], ["# Comment"] ])
 
@@ -23,7 +23,7 @@ class TestTxtRecordEntry:
         expres = "mtag: iline\n#  Comment\n"
         assert(r==expres)
 
-    def test_pos_02(self):
+    def rmttest_pos_02(self):
         "Check fd output with no raw comment"
 
         tre = TxtRecordEntry(["mtag:", [" iline"], ["# Comment"] ])

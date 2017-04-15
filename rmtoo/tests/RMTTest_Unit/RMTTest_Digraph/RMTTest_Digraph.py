@@ -11,37 +11,37 @@
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Digraph import Digraph
 
-class TestDigraph:
+class RMTTest_Digraph:
 
-    def test_constructor_001(self):
+    def rmttest_constructor_001(self):
         "Test conversion from dictionary to graph and back (two nodes)"
         d = {"A": ["B"], "B": []}
         dg = Digraph(d)
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_constructor_002(self):
+    def rmttest_constructor_002(self):
         "Test conversion from dictionary to graph and back (zero nodes)"
         d = {}
         dg = Digraph(d)
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_constructor_003(self):
+    def rmttest_constructor_003(self):
         "Test conversion from dictionary to graph and back (one node)"
         d = {"A": [] }
         dg = Digraph(d)
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_constructor_004(self):
+    def rmttest_constructor_004(self):
         "Test conversion from dictionary to graph and back (one node to itself)"
         d = {"A": ["A"] }
         dg = Digraph(d)
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_constructor_005(self):
+    def rmttest_constructor_005(self):
         "Test conversion: error: pointed node does not exists"
         d = {"A": ["B"] }
         try:
@@ -50,14 +50,14 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==24)
 
-    def test_constructor_006(self):
+    def rmttest_constructor_006(self):
         "Test conversion from dictionary: two node circle"
         d = {"A": ["B"], "B": ["A"] }
         dg = Digraph(d)
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_constructor_007(self):
+    def rmttest_constructor_007(self):
         "Test conversion from dictionary: more complex graph"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -65,7 +65,7 @@ class TestDigraph:
         e = dg.output_to_dict()
         assert(d==e)
 
-    def test_find_01(self):
+    def rmttest_find_01(self):
         "Digraph find with element available"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -73,7 +73,7 @@ class TestDigraph:
         n = dg.find("A")
         assert(n.name=="A")
 
-    def test_find_02(self):
+    def rmttest_find_02(self):
         "Digraph find with element not available"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -81,7 +81,7 @@ class TestDigraph:
         n = dg.find("Z")
         assert(n==None)
 
-    def test_build_named_nodes_01(self):
+    def rmttest_build_named_nodes_01(self):
         "Digraph build named nodes with node without name"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -94,7 +94,7 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==20)
 
-    def test_build_named_nodes_02(self):
+    def rmttest_build_named_nodes_02(self):
         "Digraph build named nodes with two nodes with same name"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -110,7 +110,7 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==21)
 
-    def test_get_named_node_01(self):
+    def rmttest_get_named_node_01(self):
         "Digraph get named node with map available"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -119,7 +119,7 @@ class TestDigraph:
         n = dg.get_named_node("A")
         assert(n.name=="A")
 
-    def test_get_named_node_02(self):
+    def rmttest_get_named_node_02(self):
         "Digraph get named node with map available but invalid node name"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -131,7 +131,7 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==23)
 
-    def test_get_named_node_03(self):
+    def rmttest_get_named_node_03(self):
         "Digraph get named node with map not available"
         d = {"A": ["B"], "B": ["A", "C", "D"], "C": ["A", "D"],
              "D": ["D"] }
@@ -142,7 +142,7 @@ class TestDigraph:
         except RMTException, rmte:
             assert(rmte.id()==22)
 
-    def test_add_node_01(self):
+    def rmttest_add_node_01(self):
         "Digraph add node with two times same name"
         dg = Digraph()
         n1 = Digraph.Node("myname")

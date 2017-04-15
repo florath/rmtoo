@@ -10,7 +10,7 @@
 
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
 
-class TestLaTeXMarkup:
+class RMTTest_LaTeXMarkup:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

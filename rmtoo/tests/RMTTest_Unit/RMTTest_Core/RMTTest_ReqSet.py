@@ -24,9 +24,9 @@ from rmtoo.tests.lib.Utils import hide_timestamp
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
-class TestReqSet(unittest.TestCase):
+class RMTTest_ReqSet(unittest.TestCase):
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement contains a tag where no handler exists"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -51,7 +51,7 @@ class TestReqSet(unittest.TestCase):
 
         self.assertEquals(result_expected, lstderr)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement contains a tag where no handler exists - multiple tags"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)

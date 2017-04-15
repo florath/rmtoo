@@ -10,7 +10,7 @@
 
 from rmtoo.outputs.stats_reqs_cnt import stats_reqs_cnt
 
-class TestOutputSRC:
+class RMTTest_OutputSRC:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

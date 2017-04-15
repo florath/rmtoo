@@ -14,20 +14,20 @@ import StringIO
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.configuration.Cfg import Cfg
 
-class TestConfig1(Cfg):
+class RMTTest_Config1(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)
 
-class TestConfig2(Cfg):
+class RMTTest_Config2(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)
         self.set_value('requirements.input.default_language', 'kl_EL')
 
-class TestDescWords:
+class RMTTest_DescWords:
 
-    def test_check_language_handling(self):
+    def rmttest_check_language_handling(self):
         "DescWords: check language handling."
 
         tc = TestConfig1()
@@ -41,14 +41,14 @@ class TestDescWords:
 +++ Error:Analytics:DescWords:lname: -20:2*-10: Usage of the word 'and'
 ''')
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "DescWords: get non existing language spec (empty config)."
 
         tc = TestConfig2()
         lang = DescWords.get_lang(tc)
         assert(lang == DescWords.words_en_GB)
 
-    def test_neg_02(self):
+    def rmttest_neg_02(self):
         "DescWords: get non existing language spec (wrong config)."
 
         tc = TestConfig2()

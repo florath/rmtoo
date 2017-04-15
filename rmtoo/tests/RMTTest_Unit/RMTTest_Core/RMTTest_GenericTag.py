@@ -17,19 +17,19 @@ class MyTag(ReqTagGeneric):
                                set([InputModuleTypes.reqtag, ]))
 
 
-class TestGenericTag:
+class RMTTest_GenericTag:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Generic Tag: construction"
         mt = MyTag(None)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Generic Tag: type()"
         mt = MyTag(None)
         t = mt.get_type_set()
         assert(t == set([InputModuleTypes.reqtag, ]))
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Generic Tag: mandatory tag"
         mt = MyTag(None)
 
@@ -38,7 +38,7 @@ class TestGenericTag:
         eid = None
         mt.check_mandatory_tag(rid, r, eid)
 
-    def test_positive_04(self):
+    def rmttest_positive_04(self):
         "Generic Tag: optional tag (available)"
         mt = MyTag(None)
 
@@ -48,7 +48,7 @@ class TestGenericTag:
         assert(tag == "mytag")
         assert(v == "some value")
 
-    def test_positive_05(self):
+    def rmttest_positive_05(self):
         "Generic Tag: optional tag (not available)"
         mt = MyTag(None)
 
@@ -58,7 +58,7 @@ class TestGenericTag:
         assert(tag == "mytag")
         assert(v == None)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Generic Tag: mandatory tag not available"
         mt = MyTag(None)
 

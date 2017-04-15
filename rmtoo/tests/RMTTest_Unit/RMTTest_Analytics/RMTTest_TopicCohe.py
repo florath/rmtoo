@@ -12,9 +12,9 @@
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
 from rmtoo.tests.lib.TestConfig import TestConfig
 
-class TestTopicCohe:
+class RMTTest_TopicCohe:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "TopicCohe: Check different ways of topic coherence"
 
         class LNTopic:

@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqOwner:
+class RMTTest_ReqOwner:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Owner - tag given"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -29,7 +29,7 @@ class TestReqOwner:
         assert(name == "Owner")
         assert(value == "marketing")
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Owner - no tag given"
         config, req = create_parameters()
         config.stakeholders = ["marketing", "security"]
@@ -41,7 +41,7 @@ class TestReqOwner:
         except RMTException, rmte:
             assert(rmte.id() == 10)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Owner - invalid tag given"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',

@@ -28,9 +28,9 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestTopicSet import TestTopicSet
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
-class TestOutputLaTeX2:
+class RMTTest_OutputLaTeX2:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "LaTeX output: check invalid tag in topic"
 
         tcfg = TestConfig()
@@ -59,7 +59,7 @@ class TestOutputLaTeX2:
         l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
 
-    def test_neg_02(self):
+    def rmttest_neg_02(self):
         "LaTeX output: check invalid tag in requirement output config"
 
         tcfg = TestConfig()

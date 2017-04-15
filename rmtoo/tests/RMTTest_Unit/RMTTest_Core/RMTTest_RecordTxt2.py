@@ -23,9 +23,9 @@ from rmtoo.tests.lib.Utils import hide_timestamp
 comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
 "split_next_record;84; 80:CommentsEverywhere:%s:" + TxtParser.comment_in_req + "\n"
 
-class TestRecordTxt2(unittest.TestCase):
+class RMTTest_RecordTxt2(unittest.TestCase):
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "TestRecordTxt2: empty input"
 
         txt_doc = TxtRecord.from_string("", "Nothing", TxtIOConfig())
@@ -33,7 +33,7 @@ class TestRecordTxt2(unittest.TestCase):
         self.assertEqual(len(txt_doc), 0)
         assert(txt_doc.get_comment() == "")
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "TestRecordTxt2: rubbish in input"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -47,7 +47,7 @@ class TestRecordTxt2(unittest.TestCase):
         "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_02(self):
+    def rmttest_neg_02(self):
         "TestRecordTxt2: only ':'"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -61,7 +61,7 @@ class TestRecordTxt2(unittest.TestCase):
         "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_03(self):
+    def rmttest_neg_03(self):
         "TestRecordTxt2: no chars before ':'"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -76,7 +76,7 @@ class TestRecordTxt2(unittest.TestCase):
         "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_04(self):
+    def rmttest_neg_04(self):
         "TestRecordTxt2: long long line"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -96,7 +96,7 @@ class TestRecordTxt2(unittest.TestCase):
         "max allowed [7]\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_05(self):
+    def rmttest_neg_05(self):
         "TestRecordTxt2: long long line - check for lineno"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -123,7 +123,7 @@ good: but too long
         "max allowed [7]\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_06(self):
+    def rmttest_neg_06(self):
         "TestRecordTxt2: long long line - check for multiple errors"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -167,7 +167,7 @@ d:
         
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_07(self):
+    def rmttest_neg_07(self):
         "TestRecordTxt2: test comments between content lines"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -205,7 +205,7 @@ t4: uuuu
         
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_08(self):
+    def rmttest_neg_08(self):
         "TestRecordTxt2: only intro content line"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)

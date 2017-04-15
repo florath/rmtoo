@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqClass:
+class RMTTest_ReqClass:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Description - one word Description"
         config, req = create_parameters()
         req = {"Description": RecordEntry("Description", "short")}
@@ -27,7 +27,7 @@ class TestReqClass:
         assert(name == "Description")
         assert(value.get_content() == "short")
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Description - some words Description"
         config, req = create_parameters()
         d = "This are some words description."
@@ -38,7 +38,7 @@ class TestReqClass:
         assert(name == "Description")
         assert(value.get_content() == d)
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Requirement Tag Description - 500 chars description"
         config, req = create_parameters()
         long_text = ""
@@ -51,7 +51,7 @@ class TestReqClass:
         assert(name == "Description")
         assert(value.get_content() == long_text)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Description - empty reqs"
         config, req = create_parameters()
 
@@ -62,7 +62,7 @@ class TestReqClass:
         except RMTException, rmte:
             assert(rmte.id() == 2)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Description - description much too long"
         config, req = create_parameters()
         long_text = ""

@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqType:
+class RMTTest_ReqType:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Type - tag given 'master requirement'"
         config, req = create_parameters()
         req["Type"] = RecordEntry("Type", "master requirement")
@@ -27,7 +27,7 @@ class TestReqType:
         assert(name == "Type")
         assert(value == Requirement.rt_master_requirement)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Type - tag given 'initial requirement'"
         config, req = create_parameters()
         req["Type"] = RecordEntry("Type", "initial requirement")
@@ -37,7 +37,7 @@ class TestReqType:
         assert(name == "Type")
         assert(value == Requirement.rt_initial_requirement)
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Requirement Tag Type - tag given 'design decision'"
         config, req = create_parameters()
         req["Type"] = RecordEntry("Type", "design decision")
@@ -47,7 +47,7 @@ class TestReqType:
         assert(name == "Type")
         assert(value == Requirement.rt_design_decision)
 
-    def test_positive_04(self):
+    def rmttest_positive_04(self):
         "Requirement Tag Type - tag given 'requirement'"
         config, req = create_parameters()
         req["Type"] = RecordEntry("Type", "requirement")
@@ -57,7 +57,7 @@ class TestReqType:
         assert(name == "Type")
         assert(value == Requirement.rt_requirement)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Type - no tag given"
         config, req = create_parameters()
 
@@ -68,7 +68,7 @@ class TestReqType:
         except RMTException, rmte:
             assert(rmte.id() == 18)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Type - invalid tag given"
         config, req = create_parameters()
         req["Type"] = RecordEntry("Type", "dasjibtedjarnich")

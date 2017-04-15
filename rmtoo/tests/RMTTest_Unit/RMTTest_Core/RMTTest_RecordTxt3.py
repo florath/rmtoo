@@ -33,9 +33,9 @@ Effort estimation: 5
 Topic: ReqsDocument
 """
 
-class TestRecordTxt3:
+class RMTTest_RecordTxt3:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "TestRecordTxt3: long long complicated input"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)

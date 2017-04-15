@@ -18,9 +18,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb010Test"
 
-class TestBB010:
+class RMTTest_BB010:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "BB Basic with some requirements - used for the slides"
 
         def myexit(n):

@@ -11,15 +11,15 @@
 
 from rmtoo.lib.StringHelper import StringHelper
 
-class TestStringHelper:
+class RMTTest_StringHelper:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "StringHelper.join_ate with elements"
 
         s = StringHelper.join_ate("-", ["a", "b", "c", "d"])
         assert(s=="a-b-c-d-")
 
-    def test_pos_02(self):
+    def rmttest_pos_02(self):
         "StringHelper.join_ate empty list"
 
         s = StringHelper.join_ate("-", [])

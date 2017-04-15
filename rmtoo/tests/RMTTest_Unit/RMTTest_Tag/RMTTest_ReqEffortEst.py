@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqClass:
+class RMTTest_ReqClass:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Effort Estimation - no tag given"
         config, req = create_parameters()
 
@@ -26,7 +26,7 @@ class TestReqClass:
         assert(name == "Effort estimation")
         assert(value == None)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Effort Estimation - tag given with all valid numbers"
         config, req = create_parameters()
 
@@ -37,7 +37,7 @@ class TestReqClass:
             assert(name == "Effort estimation")
             assert(value == i)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Effort Estimation - tag given with invalid numbers"
         config, req = create_parameters()
 

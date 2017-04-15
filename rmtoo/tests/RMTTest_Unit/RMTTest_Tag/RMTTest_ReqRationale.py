@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqRationale:
+class RMTTest_ReqRationale:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Rationale - no tag given"
         config, req = create_parameters()
 
@@ -26,7 +26,7 @@ class TestReqRationale:
         assert(name == "Rationale")
         assert(value == None)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Rationale - Rationale set"
         config, req = create_parameters()
         req = {"Rationale": RecordEntry("Rationale", "something")}

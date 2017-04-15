@@ -22,9 +22,9 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_timestamp
 
-class TestRDepSolvedBy(unittest.TestCase):
+class RMTTest_RDepSolvedBy(unittest.TestCase):
 
-    def test_neg_empty_solved_by(self):
+    def rmttest_neg_empty_solved_by(self):
         "Normal requirement has empty 'Solved by'"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -49,7 +49,7 @@ Solved by:''', 'B', None, None, None)
         "__resolve_solved_by_one_req;358; 77:B:'Solved by' field has length 0\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_solved_by_to_nonex_req(self):
+    def rmttest_neg_solved_by_to_nonex_req(self):
         "'Solved by' points to a non existing requirement"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -76,7 +76,7 @@ Solved by: C''', 'B', None, None, None)
         "non-existing requirement 'C'\n"
         self.assertEquals(result_expected, lstderr)
 
-    def test_neg_point_to_self(self):
+    def rmttest_neg_point_to_self(self):
         "'Solved by' points to same requirement"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)

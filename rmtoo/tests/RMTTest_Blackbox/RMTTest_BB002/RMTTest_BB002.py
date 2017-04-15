@@ -19,9 +19,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir_orig = "tests/blackbox-test/bb002-test"
 mdir = "tests/BlackboxTest/Bb002Test"
 
-class TestBB002:
+class RMTTest_BB002:
 
-    def test_pos_001(self):
+    def rmttest_pos_001(self):
         "BB Hotspot in the middle of the graph 2"
 
         # This is needed, because the prios use localtime

@@ -24,34 +24,34 @@ from rmtoo.tests.lib.Utils import hide_timestamp
 
 mod_base_dir = "tests/UnitTest/CoreTests/testdata"
 
-class TestModules(unittest.TestCase):
+class RMTTest_Modules(unittest.TestCase):
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "InputModules._split_directory with '.'"
 
         d = InputModules._split_directory(".")
         assert(d == [])
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "InputModules._split_directory with absolute path"
 
         d = InputModules._split_directory("/tmp/this/is/a/path")
         assert(d == ['/', 'tmp', 'this', 'is', 'a', 'path'])
 
 
-    def test_simple_01(self):
+    def rmttest_simple_01(self):
         "Simple module test"
         mods = InputModules(os.path.join(mod_base_dir, "modules01"),
                        {}, [], mods_list("modules01", mod_base_dir))
 
-    def test_simple_02(self):
+    def rmttest_simple_02(self):
         "Module test with dependend modules"
         mods = InputModules(os.path.join(mod_base_dir, "modules02"),
                        {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.get_reqdeps_sorted())
         assert(mods_name == ['Module01', 'Module02'])
 
-    def test_simple_03(self):
+    def rmttest_simple_03(self):
         "Module test with invalid dependency "
         try:
             mods = InputModules(os.path.join(mod_base_dir, "modules03"),
@@ -60,7 +60,7 @@ class TestModules(unittest.TestCase):
         except RMTException, rmte:
             assert(rmte.id() == 27)
 
-    def test_simple_04(self):
+    def rmttest_simple_04(self):
         "Module test with cyclic dependency "
         try:
             mods = InputModules(os.path.join(mod_base_dir, "modules04"),
@@ -69,7 +69,7 @@ class TestModules(unittest.TestCase):
         except RMTException, rmte:
             assert(rmte.id() == 26)
 
-    def test_simple_05(self):
+    def rmttest_simple_05(self):
         "Module test with dependent modules"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -85,7 +85,7 @@ class TestModules(unittest.TestCase):
         "handle_modules_tag;112; 54:77:tag [SameTag] already defined\n"
         self.assertEqual(lstderr, expected_result)
 
-    def test_simple_06(self):
+    def rmttest_simple_06(self):
         "Requirement: Module test with exception thrown"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
@@ -103,7 +103,7 @@ class TestModules(unittest.TestCase):
         "123; 41:77:semantic error occurred in module [Module01]\n"
         self.assertEqual(lstderr, expected_result)
 
-    def test_simple_07(self):
+    def rmttest_simple_07(self):
         "RequirementSet: Module which renders set as errornous"
         mstderr = StringIO.StringIO()
         init_logger(mstderr)

@@ -13,9 +13,9 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 
-class TestReqName:
+class RMTTest_ReqName:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Name - tag given"
         config, req = create_parameters()
         req["Name"] = "This is something"
@@ -25,7 +25,7 @@ class TestReqName:
         assert(name == "Name")
         assert(value == "This is something")
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Name - no Name set"
         config, req = create_parameters()
 

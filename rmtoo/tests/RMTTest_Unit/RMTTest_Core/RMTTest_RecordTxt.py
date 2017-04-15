@@ -49,9 +49,9 @@ dpC1 = """ Comment for whole record
  ... with empty lines.
 """
 
-class TestRecordTxt:
+class RMTTest_RecordTxt:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "Check top level RecordAsDict (string)"
 
         txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
@@ -62,7 +62,7 @@ class TestRecordTxt:
         assert(txt_doc_dict["Note"].get_content() == "This is my Note.")
         assert(txt_doc.to_string()==doc1)
 
-    def test_pos_02(self):
+    def rmttest_pos_02(self):
         "Check top level RecordAsDict (fd)"
 
         fd = StringIO.StringIO(doc1)
@@ -74,7 +74,7 @@ class TestRecordTxt:
         assert(txt_doc_dict["Note"].get_content() == "This is my Note.")
         assert(txt_doc.to_string()==doc1)
 
-    def test_pos_03(self):
+    def rmttest_pos_03(self):
         "Check top level Record: insert entry"
 
         txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
@@ -86,7 +86,7 @@ class TestRecordTxt:
         assert(txt_doc_dict["Note"].get_content() == "This is my Note.")
         assert(txt_doc.to_string()==doc2)
 
-    def test_pos_04(self):
+    def rmttest_pos_04(self):
         "Check top level Record: append entry"
 
         txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
@@ -98,7 +98,7 @@ class TestRecordTxt:
         assert(txt_doc_dict["Note"].get_content() == "This is my Note.")
         assert(txt_doc.to_string()==doc4)
 
-    def test_pos_05(self):
+    def rmttest_pos_05(self):
         "Check top level Record: remove entry"
 
         txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())
@@ -117,7 +117,7 @@ class TestRecordTxt:
             pass
         assert(txt_doc.to_string()==doc3)
 
-    def test_pos_06(self):
+    def rmttest_pos_06(self):
         "Check top level Record: is_tag_available"
 
         txt_doc = TxtRecord.from_string(doc1, "Nothing", TxtIOConfig())

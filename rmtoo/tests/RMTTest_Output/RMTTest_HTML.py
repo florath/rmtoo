@@ -10,7 +10,7 @@
 
 from rmtoo.outputs.html import html
 
-class TestOutputHTML:
+class RMTTest_OutputHTML:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

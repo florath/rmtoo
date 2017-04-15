@@ -15,9 +15,9 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-class TestReqPriority:
+class RMTTest_ReqPriority:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         "Requirement Tag Priority - no tag given"
         config, req = create_parameters()
 
@@ -26,7 +26,7 @@ class TestReqPriority:
         assert(name == "Factor")
         assert(value == 0.0)
 
-    def test_positive_02(self):
+    def rmttest_positive_02(self):
         "Requirement Tag Priority - tag given one stakeholder"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -38,7 +38,7 @@ class TestReqPriority:
         assert(name == "Factor")
         assert(value == 0.7)
 
-    def test_positive_03(self):
+    def rmttest_positive_03(self):
         "Requirement Tag Priority - tag given two stakeholders"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -50,7 +50,7 @@ class TestReqPriority:
         assert(name == "Factor")
         assert(value == 0.5)
 
-    def test_negative_01(self):
+    def rmttest_negative_01(self):
         "Requirement Tag Priority - faulty priority declaration ':'"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -64,7 +64,7 @@ class TestReqPriority:
         except RMTException, rmte:
             assert(rmte.id() == 12)
 
-    def test_negative_02(self):
+    def rmttest_negative_02(self):
         "Requirement Tag Priority - invalid stakeholder"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -78,7 +78,7 @@ class TestReqPriority:
         except RMTException, rmte:
             assert(rmte.id() == 13)
 
-    def test_negative_03(self):
+    def rmttest_negative_03(self):
         "Requirement Tag Priority - stakeholder voted more than once"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -93,7 +93,7 @@ class TestReqPriority:
         except RMTException, rmte:
             assert(rmte.id() == 14)
 
-    def test_negative_04(self):
+    def rmttest_negative_04(self):
         "Requirement Tag Priority - invalid priority (too big)"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',
@@ -107,7 +107,7 @@ class TestReqPriority:
         except RMTException, rmte:
             assert(rmte.id() == 15)
 
-    def test_negative_05(self):
+    def rmttest_negative_05(self):
         "Requirement Tag Priority - invalid priority (too small)"
         config, req = create_parameters()
         config.set_value('requirements.stakeholders',

@@ -10,16 +10,16 @@
 
 from rmtoo.lib.digraph.Digraph import Digraph
 
-class TestNode:
+class RMTTest_Node:
 
-    def test_neg_01(self):
+    def rmttest_neg_01(self):
         "Node test: not find outgoing node which is not there"
 
         n = Digraph.Node()
         r = n.find_outgoing("nixdamit")
         assert(r==None)
 
-    def test_neg_02(self):
+    def rmttest_neg_02(self):
         "Node test: check if is_self_of_ancient is correct when the other is not an ancient"
 
         n = Digraph.Node()

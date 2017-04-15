@@ -10,7 +10,7 @@
 
 from rmtoo.outputs.graph2 import graph2
 
-class TestOutputGraph2:
+class RMTTest_OutputGraph2:
 
-    def test_positive_01(self):
+    def rmttest_positive_01(self):
         pass

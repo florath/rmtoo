@@ -19,9 +19,9 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 
 mdir = "tests/BlackboxTest/Bb015Test"
 
-class TestBB015:
+class RMTTest_BB015:
 
-    def test_pos_01(self):
+    def rmttest_pos_01(self):
         "Normalization test"
 
         def myexit(n):
