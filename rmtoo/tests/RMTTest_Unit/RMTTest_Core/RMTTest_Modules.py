@@ -22,7 +22,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_timestamp
 
-mod_base_dir = "tests/UnitTest/CoreTests/testdata"
+mod_base_dir = "tests/RMTTest_Unit/RMTTest_Core/testdata"
 
 class RMTTest_Modules(unittest.TestCase):
 

@@ -14,12 +14,12 @@ import StringIO
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.configuration.Cfg import Cfg
 
-class RMTTest_Config1(Cfg):
+class TestConfig1(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)
 
-class RMTTest_Config2(Cfg):
+class TestConfig2(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)

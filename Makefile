@@ -69,7 +69,7 @@ install:
 
 .PHONY: tests
 tests:
-	nosetests -w rmtoo -v --with-coverage -s \
+	nosetests -w rmtoo -v --cover-erase --with-coverage -s \
 	 --testmatch ".*[rR][mM][tT][tT]est_.*" \
 	 --cover-package=rmtoo.lib,rmtoo.output,rmtoo.inputs
 

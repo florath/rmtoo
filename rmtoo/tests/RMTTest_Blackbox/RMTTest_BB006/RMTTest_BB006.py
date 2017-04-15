@@ -4,7 +4,7 @@
    
   Blackbox rmtoo test
    
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -17,7 +17,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     unify_output_dir, check_file_results
 
 mdir_orig = "tests/blackbox-test/bb006-test"
-mdir = "tests/BlackboxTest/Bb006Test"
+mdir = "tests/RMTTest_Blackbox/RMTTest_BB006"
 
 class RMTTest_BB006:
 

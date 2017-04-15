@@ -4,7 +4,7 @@
    
  Blackbox test: Pulp Fiction in German.
    
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -14,7 +14,7 @@ from rmtoo.lib.RmtooMain import main
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
     compare_results, cleanup_std_log, delete_result_is_dir, check_file_results
 
-mdir = "tests/BlackboxTest/Bb004Test"
+mdir = "tests/RMTTest_Blackbox/RMTTest_BB004"
 
 class RMTTest_BB004:
 

@@ -90,7 +90,7 @@ class RMTTest_Configuration(unittest.TestCase):
         init_logger(mstderr)
 
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
-        config.merge_cmd_line_params(['-f', 'tests/UnitTest/CoreTests/'
+        config.merge_cmd_line_params(['-f', 'tests/RMTTest_Unit/RMTTest_Core/'
                                       'testdata/Config3.py'])
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
