@@ -4,7 +4,7 @@
    
  Test class for the Configuration.
  
- (c) 2011 by flonatel GmbH & Co. KG
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -13,6 +13,7 @@ import StringIO
 import unittest
 import json
 import os
+import shutil
 import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
@@ -81,6 +82,7 @@ class RMTTest_Configuration(unittest.TestCase):
         self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
         self.failUnlessEqual(11, config.get_value("m.w"))
         lstderr = hide_timestamp(mstderr.getvalue())
+        shutil.rmtree(tmpdir)
         tear_down_log_handler()
         self.failUnlessEqual(lstderr, "")
 
