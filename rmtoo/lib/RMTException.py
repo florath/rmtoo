@@ -4,10 +4,11 @@
 #
 # Common Exception
 #
-# (c) 2010-2011 by flonatel
+# (c) 2010-2011,2017 by flonatel
 #
 # For licencing details see COPYING
 #
+
 
 class RMTException(Exception):
 
@@ -19,9 +20,9 @@ class RMTException(Exception):
 
     def __str__(self):
         r = "[%4d]:" % self.lid
-        if self.lefile!=None:
+        if self.lefile is not None:
             r += "%s:" % self.lefile
-        if self.leline!=None:
+        if self.leline is not None:
             r += "%d:" % self.leline
         r += " %s" % self.lmsg
         return r
@@ -38,7 +39,6 @@ class RMTException(Exception):
 
     def get_efile(self):
         return self.lefile
-    
+
     def get_eline(self):
         return self.leline
-

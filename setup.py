@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-import os, sys
+import os
+import sys
 
 package = 'rmtoo'
 version = '23'
@@ -13,6 +14,7 @@ for dadi in ['rmtoo/tests', 'rmtoo/collection']:
             'share/pyshared/' + path,
             [path + '/' + filename for filename in files]))
 
+
 def adjust(input, output):
     if os.path.exists(output):
         input_time = os.path.getmtime(input)
@@ -20,12 +22,14 @@ def adjust(input, output):
         setup_time = os.path.getmtime('setup.py')
         if output_time > input_time and output_time > setup_time:
             return
-        os.chmod(output, 0644)
+        os.chmod(output, os.stat.S_IROTH | os.stat.S_IRGRP
+                 | os.stat.S_IREAD | os.stat.S_IWRITE)
         os.remove(output)
     sys.stdout.write('adjusting %s -> %s\n' % (input, output))
     buffer = file(input).read()
     file(output, 'w').write(buffer.replace('@VERSION@', version))
     os.chmod(output, 0444)
+
 
 setup(name=package, version=version,
       description='Requirements Management Tool',
@@ -66,7 +70,7 @@ setup(name=package, version=version,
                 # Blackbox Tests
                 # are included with the 'add_data' statement.
 
-                ## contrib
+                # contrib
                 'rmtoo/contrib',
                 # async
                 "rmtoo/contrib/async",
@@ -85,17 +89,18 @@ setup(name=package, version=version,
                 'rmtoo/contrib/odf',
                 ],
       data_files=add_data,
-      install_requires = [ 'numpy', 'scipy' ],
+      install_requires=['flake8', 'numpy', 'scipy'],
 
       license="GPL V3",
       platforms="all",
 
-  entry_points={
+      entry_points={
           'console_scripts': [
               "rmtoo = rmtoo.lib.RmtooMain.main",
-              "rmtoo-configuration-convert = rmtoo.lib.main.ConfigurationConvert.main",
-              "rmtoo-normalize-dependencies = rmtoo.lib.main.NormalizeDependencies.main",
+              "rmtoo-configuration-convert = "
+              "rmtoo.lib.main.ConfigurationConvert.main",
+              "rmtoo-normalize-dependencies = "
+              "rmtoo.lib.main.NormalizeDependencies.main",
               "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph.main",
           ]
-  }
-)
+      })

@@ -4,6 +4,7 @@
 
 import os
 
+
 class Config:
     # development - team at flonatel
     # users - users from the Internet (sourceforge replies and wishes)
@@ -16,7 +17,7 @@ class Config:
            "directory": "doc/requirements",
            "commit_interval": ["FILES", "FILES"],
            "default_language": "en_GB",
-        ]
+        }
 
     topic_specs = \
         {
@@ -24,14 +25,14 @@ class Config:
         }
 
     analytics_specs = \
-        { 
+        {
            "stop_on_errors": False,
            "topics": "ts_common",
         }
 
     output_specs = \
-        [ 
-          ["prios", 
+        [
+          ["prios",
            ["ts_common", "doc/latex2/reqsprios.tex"]],
 
           ["graph",
@@ -40,17 +41,18 @@ class Config:
           ["graph2",
            ["ts_common", "req-graph2.dot"]],
 
-          ["stats_reqs_cnt", 
+          ["stats_reqs_cnt",
            ["ts_common", "doc/latex2/stats_reqs_cnt.csv"]],
 
-          ["latex2", 
+          ["latex2",
            ["ts_common", "doc/latex2/reqtopics.tex"]],
 
-          ["html", 
-           ["ts_common", 
+          ["html",
+           ["ts_common",
             "doc/html/reqs", "doc/html/header.html",
             "doc/html/footer.html"]],
         ]
+
 
 files = os.listdir("doc/topics")
 for fi in files:
@@ -64,5 +66,6 @@ for fi in files:
         ["graph2", ["st_%s" % name, "graphs/st_%s.dot" % name]])
 
 #
-# for i in *.dot; do echo $i; k=`basename $i .dot`; dot -Tpng -o $k.png $k.dot; done
-# 
+# for i in *.dot; do echo $i; k=`basename $i .dot`; \
+#    dot -Tpng -o $k.png $k.dot; done
+#

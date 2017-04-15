@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Output class.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -12,6 +12,7 @@
 from rmtoo.lib.Executor import Executor
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
+
 
 class Output(Executor):
     '''Handle different outputs.'''
@@ -35,8 +36,7 @@ class Output(Executor):
 
     def __create_output_module(self, output_name):
         '''Creates the module object.'''
-        # pylint: disable=W0612
-        output_module = self.__load_output_module(output_name)
+        output_module = self.__load_output_module(output_name)  # noqa: F841
         # Create the constructor object.
         return eval("output_module.%s" % output_name)
 
