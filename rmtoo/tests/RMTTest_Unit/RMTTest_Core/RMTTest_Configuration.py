@@ -1,9 +1,9 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Test class for the Configuration.
- 
+
  (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
@@ -14,13 +14,13 @@ import unittest
 import json
 import os
 import shutil
-import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.Utils import create_tmp_dir
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_timestamp
+
 
 class RMTTest_Configuration(unittest.TestCase):
 
@@ -37,7 +37,7 @@ class RMTTest_Configuration(unittest.TestCase):
 
     def rmttest_json_str(self):
         '''Checks JSON string handling of the configuration class'''
-        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
         config.merge_json_str('{"k": 2, "m": {"n": 5}, "o": 7}')
 
         self.failUnlessEqual(2, config.get_value("k"), "k is not 2")
@@ -48,7 +48,7 @@ class RMTTest_Configuration(unittest.TestCase):
 
     def rmttest_json_init_add_old_cmd_line_params(self):
         '''Init Cfg with JSON and add parameters with command line options'''
-        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
         config.merge_cmd_line_params(['-m', '/tmp/something',
                                       '-c', '/tmp/cmad'])
 
@@ -65,14 +65,14 @@ class RMTTest_Configuration(unittest.TestCase):
         tmpdir = create_tmp_dir()
         jsonfile1 = os.path.join(tmpdir, "config1.json")
         jsonfd1 = file(jsonfile1, "w")
-        jsonfd1.write(json.dumps({'k': 2 , 'm': {'n': 5}, 'o': 7}))
+        jsonfd1.write(json.dumps({'k': 2, 'm': {'n': 5}, 'o': 7}))
         jsonfd1.close()
         jsonfile2 = os.path.join(tmpdir, "config2.json")
         jsonfd2 = file(jsonfile2, "w")
-        jsonfd2.write(json.dumps({'k': 3 , 'm': {'w': 11}, 'p': 9}))
+        jsonfd2.write(json.dumps({'k': 3, 'm': {'w': 11}, 'p': 9}))
         jsonfd2.close()
 
-        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
         config.merge_cmd_line_params(['-j', '{"m": {"p": 99}}',
                                       '-j', 'file://' + jsonfile1,
                                       '-j', '{"m": {"q": 100}}',
@@ -87,24 +87,26 @@ class RMTTest_Configuration(unittest.TestCase):
         self.failUnlessEqual(lstderr, "")
 
     def rmttest_json_init_add_old2_cmd_line_params(self):
-        '''Init Cfg with old config and adds parameters with command line options'''
+        '''Init Cfg with old config and adds params with command line opts'''
         mstderr = StringIO.StringIO()
         init_logger(mstderr)
 
-        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}');
+        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
         config.merge_cmd_line_params(['-f', 'tests/RMTTest_Unit/RMTTest_Core/'
                                       'testdata/Config3.py'])
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
         config.evaluate()
-        self.failUnlessEqual(['development', 'management', 'users', 'customers'],
-                             config.get_value("requirements.stakeholders"))
+        self.failUnlessEqual(
+            ['development', 'management', 'users', 'customers'],
+            config.get_value("requirements.stakeholders"))
         lstderr = hide_timestamp(mstderr.getvalue())
         tear_down_log_handler()
 
-        expected_result = "===DATETIMESTAMP===;rmtoo;WARNING;Old;" \
-        "internal_convert_to_new;171;100:Old Configuration: " \
-        "Not converted attributes: [['output_specs2']]\n"
+        expected_result \
+            = "===DATETIMESTAMP===;rmtoo;WARNING;Old;" \
+            "internal_convert_to_new;171;100:Old Configuration: " \
+            "Not converted attributes: [['output_specs2']]\n"
 
         self.failUnlessEqual(expected_result, lstderr)
 
@@ -123,6 +125,3 @@ class RMTTest_Configuration(unittest.TestCase):
             '{"k": "${huho}", "huho": "ThereIsSomeVal"}')
         self.failUnlessEqual("ThereIsSomeVal", config.get_rvalue("k"),
                              "k is not ThereIsSomeVal")
-
-
-

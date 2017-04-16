@@ -1,15 +1,16 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Common methods for handling test configuration.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.configuration.Cfg import Cfg
+
 
 class TestConfig(Cfg):
 

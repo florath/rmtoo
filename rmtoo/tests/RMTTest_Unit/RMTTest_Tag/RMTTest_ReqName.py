@@ -33,6 +33,6 @@ class RMTTest_ReqName:
         try:
             name, value = rt.rewrite("Name-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 37)
 

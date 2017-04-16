@@ -38,7 +38,7 @@ class CCTest(unittest.TestCase):
         try:
             ccc.find(None)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 68)
 
 

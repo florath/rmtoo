@@ -17,7 +17,8 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.FileSystem import FileSystem
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
-def main_impl(args, mstdout, mstderr):
+
+def main_func(args, mstdout, mstderr):
     tracer.debug("Called.")
     config, mods = MainHelper.main_setup(args, mstdout, mstderr)
 
@@ -31,12 +32,14 @@ def main_impl(args, mstdout, mstderr):
     return rs.normalize_dependencies() \
         and rs.write_to_filesystem(command_line_args[0])
 
-def main_impl(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
+
+def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
     try:
         exitfun(not main_func(args, mstdout, mstderr))
-    except RMTException, rmte:
+    except RMTException as rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
+
 
 def main():
     main_impl(sys.argv[1:], sys.stdout, sys.stderr)

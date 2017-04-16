@@ -1,16 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for Latex output
-  
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 import os
-import StringIO
 
 from rmtoo.outputs.latex2 import latex2
 from rmtoo.lib.Topic import Topic
@@ -20,13 +19,13 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RequirementSet import RequirementSet
-from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusAssigned, RequirementStatusFinished
+from rmtoo.lib.RequirementStatus import RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable
 from rmtoo.tests.lib.TestVCS import TestVCS
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestTopicSet import TestTopicSet
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
+
 
 class RMTTest_OutputLaTeX2:
 
@@ -47,14 +46,15 @@ class RMTTest_OutputLaTeX2:
 
         ttopic_set = TestTopicSet(rset)
 
-        mconfig = {"output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
+        mconfig = {"output_filename":
+                   os.path.join(tmpdir, "TestLateX2Out.tex")}
         l2 = latex2(mconfig)
 
         try:
             l2.topic_set_pre(ttopic_set)
             topic.execute(l2, "")
             assert(False)
-        except RMTException, rmte:
+        except RMTException:
             pass
         l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
@@ -65,12 +65,13 @@ class RMTTest_OutputLaTeX2:
         tcfg = TestConfig()
         tcfg.set_output_cfg()
 
-        tvcs = TestVCS(tcfg)
-        tfile = tvcs.get_tfile1()
+        # ToDo: is this needed? tvcs = TestVCS(tcfg)
+        # ToDo: is this needed? tfile = tvcs.get_tfile1()
 
         tmpdir = create_tmp_dir()
-        mconfig = { "req_attributes": ["Status", "Class", "DoesNotExists"],
-                    "output_filename": os.path.join(tmpdir, "TestLateX2Out.tex")}
+        mconfig = {"req_attributes": ["Status", "Class", "DoesNotExists"],
+                   "output_filename":
+                   os.path.join(tmpdir, "TestLateX2Out.tex")}
 
         l2 = latex2(mconfig)
         req = Requirement(None, "TestReq", None, None, None)
@@ -93,8 +94,7 @@ class RMTTest_OutputLaTeX2:
             l2.topic_set_pre(None)
             req.execute(l2, "")
             assert(False)
-        except RMTException, rmte:
+        except RMTException:
             pass
         l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
-

@@ -4,16 +4,18 @@
 #
 #  Unit test for calling main of Normalize Dependencies
 #
-# (c) 2011 on flonatel
+# (c) 2011,2017 on flonatel
 #
 # For licencing details see COPYING
 #
-import sys
 
-from rmtoo.lib.main.NormalizeDependencies import main
+import sys
+import unittest
+
+from rmtoo.lib.main.NormalizeDependencies import main_impl
 from rmtoo.lib.RMTException import RMTException
 
-class RMTTest_MainNormalizeDependencies:
+class RMTTest_MainNormalizeDependencies(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "NormalizeDependencies: check if result is correctly handled: Exception"
@@ -31,7 +33,7 @@ class RMTTest_MainNormalizeDependencies:
         def mymain(args, mstdout, mstderr):
             raise RMTException(63, "test thingy")
 
-        main(None, None, sys.stderr, mymain, myexit)
-        assert(myexit_called == True)
-        assert(myexit_val == 1)
+        main_impl(None, None, sys.stderr, mymain, myexit)
+        self.assertTrue(myexit_called)
+        self.assertEqual(1, myexit_val)
 

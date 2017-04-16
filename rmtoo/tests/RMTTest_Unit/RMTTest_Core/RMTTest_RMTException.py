@@ -15,30 +15,30 @@ class RMTTest_RMTException:
     
         rmte = RMTException(77, "ExceptMsg")
 
-        assert(rmte.get_id()==77)
-        assert(rmte.get_msg()=="ExceptMsg")
-        assert(rmte.get_efile()==None)
-        assert(rmte.get_eline()==None)
-        assert(rmte.__str__()=='[  77]: ExceptMsg')
+        assert rmte.get_id() == 77
+        assert rmte.get_msg() == "ExceptMsg"
+        assert rmte.get_efile() is None
+        assert rmte.get_eline() is None
+        assert rmte.__str__() == '[  77]: ExceptMsg'
 
     def rmttest_positive_02(self):
         "Checks the __str__ method: with file, no line"
     
         rmte = RMTException(77, "ExceptMsg", "MyFile")
 
-        assert(rmte.get_id()==77)
-        assert(rmte.get_msg()=="ExceptMsg")
-        assert(rmte.get_efile()=="MyFile")
-        assert(rmte.get_eline()==None)
-        assert(rmte.__str__()=='[  77]:MyFile: ExceptMsg')
+        assert rmte.get_id() == 77
+        assert rmte.get_msg() == "ExceptMsg"
+        assert rmte.get_efile() == "MyFile"
+        assert rmte.get_eline() is None
+        assert rmte.__str__() == '[  77]:MyFile: ExceptMsg'
 
     def rmttest_positive_03(self):
         "Checks the __str__ method: with file, with line"
     
         rmte = RMTException(77, "ExceptMsg", "MyFile", 678)
 
-        assert(rmte.get_id()==77)
-        assert(rmte.get_msg()=="ExceptMsg")
-        assert(rmte.get_efile()=="MyFile")
-        assert(rmte.get_eline()==678)
-        assert(rmte.__str__()=='[  77]:MyFile:678: ExceptMsg')
+        assert rmte.get_id() == 77
+        assert rmte.get_msg() == "ExceptMsg"
+        assert rmte.get_efile() == "MyFile"
+        assert rmte.get_eline() == 678
+        assert rmte.__str__() == '[  77]:MyFile:678: ExceptMsg'

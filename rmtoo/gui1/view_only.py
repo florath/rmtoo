@@ -114,7 +114,7 @@ class GUI1ViewOnly:
     def __init__(self, config, input_mods, _mstdout, mstderr):
         try:
             topic_continuum_set = TopicContinuumSet(input_mods, config)
-        except RMTException, rmte:
+        except RMTException as rmte:
             mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
             return
@@ -160,7 +160,7 @@ def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     This calls the main_func function and does the exception handling.'''
     try:
         exitfun(not main_func(args, mstdout, mstderr))
-    except RMTException, rmte:
+    except RMTException as rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
 

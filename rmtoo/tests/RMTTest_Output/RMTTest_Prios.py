@@ -3,12 +3,11 @@
 #
 #  Unit test for RequirementSet
 #
-# (c) 2010 on flonatel
+# (c) 2010,2017 on flonatel
 #
 # For licencing details see COPYING
 #
 
-from rmtoo.outputs.prios import prios
 
 class RMTTest_OutputPrios:
 

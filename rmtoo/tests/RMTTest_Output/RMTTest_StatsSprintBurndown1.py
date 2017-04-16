@@ -9,5 +9,6 @@
 # For licencing details see COPYING
 #
 
+
 class RMTTest_StatsSprintBurndown1:
     pass

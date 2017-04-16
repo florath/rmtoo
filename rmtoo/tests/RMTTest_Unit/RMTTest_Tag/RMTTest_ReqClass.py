@@ -57,5 +57,5 @@ class RMTTest_ReqClass:
         try:
             name, value = rt.rewrite("Class-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.get_id() == 95)

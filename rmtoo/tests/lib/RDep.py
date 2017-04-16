@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Common setup for RDep test cases
- 
- (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -13,17 +13,20 @@ from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.TestConfig import TestConfig
 
+
 class ReqSet(Digraph):
 
     def __init__(self, d=None):
         Digraph.__init__(self, d,
-                         lambda nname: Requirement(None, nname, 
+                         lambda nname: Requirement(None, nname,
                                                    None, None, None))
+
 
 # Create a set of parameters for the test-cases
 def create_parameters(d=None):
     tconfig = TestConfig()
     return tconfig, ReqSet(d)
+
 
 # This is a test (minimalistic) requirement
 class TestReq(Digraph.Node):
@@ -36,4 +39,3 @@ class TestReq(Digraph.Node):
 
     def get_value(self, key):
         return self.otags[key]
-

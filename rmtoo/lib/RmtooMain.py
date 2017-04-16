@@ -1,13 +1,13 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   This is the main function - it is called from the 'rmtoo'
-  executable directly. 
+  executable directly.
   It is stored here (in a separate file) for (black-box) testing
-  proposes. 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+  proposes.
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -28,7 +28,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
        - but a list.'''
     try:
         topic_continuum_set = TopicContinuumSet(input_mods, config)
-    except RMTException, rmte:
+    except RMTException as rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
                       % rmte)
         return False
@@ -74,7 +74,7 @@ def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
     This calls the main_func function and does the exception handling.'''
     try:
         exitfun(not main_func(args, mstdout, mstderr))
-    except RMTException, rmte:
+    except RMTException as rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
 

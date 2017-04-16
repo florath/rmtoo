@@ -11,7 +11,7 @@
 
 import os
 
-from rmtoo.lib.RmtooMain import main
+from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir
 
@@ -28,8 +28,8 @@ class RMTTest_BB001:
 
         os.environ["basedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main(["-j", "file://" + mdir + "/input/Config.json"], mout, merr,
-             exitfun=myexit)
+        main_impl(["-j", "file://" + mdir + "/input/Config.json"], mout, merr,
+                  exitfun=myexit)
         cleanup_std_log(mout, merr)
         #        extract_container_files(["reqspricing.ods", ])
         missing_files, additional_files, diffs = compare_results(mdir)

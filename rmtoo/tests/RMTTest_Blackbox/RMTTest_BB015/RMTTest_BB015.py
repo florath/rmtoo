@@ -11,15 +11,16 @@
 
 import os
 import shutil
+import unittest
 
-from rmtoo.lib.main.NormalizeDependencies import main, main_impl
+from rmtoo.lib.main.NormalizeDependencies import main_impl, main_func
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
     cleanup_std_log, delete_result_is_dir, tmp_dir, check_file_results
 
 mdir = "tests/RMTTest_Blackbox/RMTTest_BB015"
 
 
-class RMTTest_BB015:
+class RMTTest_BB015(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "Normalization test"
@@ -37,8 +38,8 @@ class RMTTest_BB015:
                         ignore=shutil.ignore_patterns('*~',))
 
         # Call the converter
-        main(["-j", "file://" + mdir + "/input/Config.json"],
-             mout, merr, main_impl, myexit)
+        main_impl(["-j", "file://" + mdir + "/input/Config.json"],
+                  mout, merr, main_func, myexit)
         self.assertEqual(0, self.rval)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)

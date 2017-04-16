@@ -4,6 +4,7 @@
 # This module is part of GitPython and is released under
 # the BSD License: http://www.opensource.org/licenses/bsd-license.php
 
+import distutils.sysconfig
 import os
 import sys
 import inspect
@@ -14,7 +15,9 @@ __version__ = '0.3.2 RC1'
 #{ Initialization
 def _init_externals():
 	"""Initialize external projects by putting them into the path"""
-	sys.path.append(os.path.join(os.path.dirname(__file__), 'ext', 'gitdb'))
+	mod_dir = distutils.sysconfig.get_python_lib()
+	spath = os.path.join(mod_dir, 'rmtoo', 'contrib', 'gitdb')
+	sys.path.append(spath)
 	
 	try:
 		import gitdb

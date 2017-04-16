@@ -119,7 +119,7 @@ class TxtParser:
                 nr = TxtParser.split_next_record(sl, rid, lineno, mls)
                 doc.append(nr)
                 lineno += len(nr[1]) + len(nr[2])
-            except RMTException, rmte:
+            except RMTException as rmte:
                 # This is a hint that the tag line could not correctly
                 # parsed.
                 logger.error(LogFormatter.rmte(rmte))

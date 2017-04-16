@@ -11,7 +11,7 @@
 
 import os
 
-from rmtoo.lib.RmtooMain import main_impl
+from rmtoo.lib.RmtooMain import main_func
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
     cleanup_std_log, delete_result_is_dir, check_file_results
 
@@ -27,7 +27,7 @@ class RMTTest_BB007:
         os.environ["basedir"] = mdir_orig
         os.environ["rbasedir"] = mdir
         mout, merr = prepare_result_is_dir()
-        main_impl(["-j", "file://" + mdir + "/input/Config.json"],
+        main_func(["-j", "file://" + mdir + "/input/Config.json"],
                   mout, merr)
         cleanup_std_log(mout, merr)
         check_file_results(mdir)

@@ -616,7 +616,7 @@ class RequirementSet(Digraph, UsableFlag):
             # Check if there is already a 'Solved by'
             try:
                 r.record.set_content("Solved by", on)
-            except ValueError, ve:
+            except ValueError as ve:
                 r.record.append(RecordEntry(
                         "Solved by", on,
                         "Added by rmtoo-normalize-dependencies"))

@@ -114,7 +114,7 @@ class BaseRMObject(UsableFlag):
                     # Also continue to get possible further error
                     # messages.
                 self.values[key] = value
-            except RMTException, rmte:
+            except RMTException as rmte:
                 # Some semantic error occurred: do not interpret key or
                 # value.
                 logger.error(LogFormatter.rmte(rmte))

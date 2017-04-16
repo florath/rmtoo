@@ -68,6 +68,6 @@ class RMTTest_GenericTag:
         try:
             mt.check_mandatory_tag(rid, r, eid)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 112)
 

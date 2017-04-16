@@ -1,16 +1,17 @@
-#
-# Requirement Management Toolset
-#
-#  Unit test for calling main
-#
-# (c) 2010 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+
+  Unit test for calling main
+
+ (c) 2010,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import sys
 
-from rmtoo.lib.RmtooMain import main
+from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.lib.RMTException import RMTException
 
 class RMTTest_Main:
@@ -31,7 +32,7 @@ class RMTTest_Main:
         def mymain(args, mstdout, mstderr):
             return True
 
-        main(None, None, None, mymain, myexit)
+        main_impl(None, None, None, mymain, myexit)
         assert(myexit_called==True)
         assert(myexit_val==0)
 
@@ -51,7 +52,7 @@ class RMTTest_Main:
         def mymain(args, mstdout, mstderr):
             return False
 
-        main(None, None, None, mymain, myexit)
+        main_impl(None, None, None, mymain, myexit)
         assert(myexit_called==True)
         assert(myexit_val==1)
 
@@ -71,7 +72,7 @@ class RMTTest_Main:
         def mymain(args, mstdout, mstderr):
             raise RMTException(63, "test thingy")
 
-        main(None, None, sys.stderr, mymain, myexit)
+        main_impl(None, None, sys.stderr, mymain, myexit)
         assert(myexit_called==True)
         assert(myexit_val==1)
 

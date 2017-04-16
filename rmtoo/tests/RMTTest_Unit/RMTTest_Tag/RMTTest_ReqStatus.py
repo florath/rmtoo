@@ -49,7 +49,7 @@ class RMTTest_ReqStatus:
         try:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 16)
 
     def rmttest_negative_02(self):
@@ -61,6 +61,6 @@ class RMTTest_ReqStatus:
         try:
             name, value = rt.rewrite("Status-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 91)
 

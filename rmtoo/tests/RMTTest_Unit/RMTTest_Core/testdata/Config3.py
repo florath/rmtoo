@@ -2,6 +2,7 @@
 # Config Class for the requirements for rmtoo
 #
 
+
 class Config:
     # development - team at flonatel
     # users - users from the Internet (sourceforge replies and wishes)
@@ -16,9 +17,9 @@ class Config:
            # This is used for all-day work:
            ["FILES", "FILES"],
            # This is used for releases (epoch -> HEAD)
-           #["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
+           # ["7018a441475fb5837be18725a4b40e8d9ef100b1", "HEAD"],
            "default_language": "en_GB",
-           #"dependency_notation": set(["Solved by", "Depends on"])
+           # "dependency_notation": set(["Solved by", "Depends on"])
            "dependency_notation": set(["Solved by", ])
         }
 
@@ -43,7 +44,7 @@ class Config:
         [
           ["prios",
            ["ts_common", "artifacts/reqsprios.tex",
-            {"start_date": "2011-04-25" }]],
+            {"start_date": "2011-04-25"}]],
 
           ["graph",
            ["ts_common", "artifacts/req-graph1.dot"]],

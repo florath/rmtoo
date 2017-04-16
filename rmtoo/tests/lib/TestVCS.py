@@ -1,23 +1,18 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
-  Implementation of  test VCS interface.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+  Implementation of test VCS interface.
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
-import os
-import stat
 import time
 
-from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
-from rmtoo.lib.logging import tracer
-from rmtoo.lib.vcs.ObjectCache import ObjectCache
-from rmtoo.lib.RMTException import RMTException
+
 
 class TestVCS(Interface):
 
@@ -32,7 +27,7 @@ class TestVCS(Interface):
         assert False
 
     def get_vcs_id_with_type(self, commit, dir_type):
-        '''Return the vcs id from the base directories of the given dir_type.'''
+        '''Return the vcs id from the base directories of the given dir_type'''
         return "TheStaticVcsId"
 
     def get_timestamp(self, commit):
@@ -56,7 +51,7 @@ class TestVCS(Interface):
             assert False
 
         def get_filename_sub_part(self):
-            '''Return the part of the filename which is beneath the 
+            '''Return the part of the filename which is beneath the
                base directory.'''
             return "/does/not/exist/topic.tic"
 

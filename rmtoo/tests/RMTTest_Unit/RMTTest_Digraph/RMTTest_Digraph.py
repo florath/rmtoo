@@ -47,7 +47,7 @@ class RMTTest_Digraph:
         try:
             d = Digraph(d)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==24)
 
     def rmttest_constructor_006(self):
@@ -91,7 +91,7 @@ class RMTTest_Digraph:
         try:
             dg.build_named_nodes()
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==20)
 
     def rmttest_build_named_nodes_02(self):
@@ -107,7 +107,7 @@ class RMTTest_Digraph:
         try:
             dg.build_named_nodes()
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==21)
 
     def rmttest_get_named_node_01(self):
@@ -128,7 +128,7 @@ class RMTTest_Digraph:
         try:
             n = dg.get_named_node("NotThere")
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==23)
 
     def rmttest_get_named_node_03(self):
@@ -139,7 +139,7 @@ class RMTTest_Digraph:
         try:
             n = dg.get_named_node("NotThere")
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==22)
 
     def rmttest_add_node_01(self):
@@ -151,6 +151,6 @@ class RMTTest_Digraph:
         try:
             dg.add_node(n2)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id()==39)
 

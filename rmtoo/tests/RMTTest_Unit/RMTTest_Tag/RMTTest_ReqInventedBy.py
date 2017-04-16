@@ -38,7 +38,7 @@ class RMTTest_ReqInventedBy:
         try:
             name, value = rt.rewrite("InventedBy-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 5)
 
     def rmttest_negative_02(self):
@@ -52,6 +52,6 @@ class RMTTest_ReqInventedBy:
         try:
             name, value = rt.rewrite("InventedBy-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 6)
 

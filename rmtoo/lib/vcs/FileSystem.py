@@ -4,11 +4,12 @@
    
   Implementation of the VCS interface for the local file system.
    
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
+import io
 import os
 import stat
 import time
@@ -96,9 +97,8 @@ class FileSystem(Interface):
 
         def get_content(self):
             '''Returns the file content.'''
-            fd = file(self.__filename, "r")
-            content = fd.read()
-            fd.close()
+            with io.open(self.__filename, "r", encoding="utf-8") as fd:
+                content = fd.read()
             return content
 
         def __str__(self):

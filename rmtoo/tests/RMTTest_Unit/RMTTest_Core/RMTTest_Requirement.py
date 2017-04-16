@@ -23,5 +23,5 @@ class RMTTest_Requirement:
                               "DTag: content2\n", 1, None,
                               None, TestConfig())
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.get_id() == 81)

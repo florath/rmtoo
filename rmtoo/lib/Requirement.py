@@ -4,23 +4,19 @@
    
   Requirement class itself
    
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 import operator
+import sys
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
-
-import sys
-reload(sys)
-# pylint: disable=E1101
-sys.setdefaultencoding('utf-8')
 
 class Requirement(Digraph.Node, BaseRMObject):
 

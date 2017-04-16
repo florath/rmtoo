@@ -29,6 +29,6 @@ class RMTTest_Topic:
         try:
             topic = Topic(dg, tconfig, tvcs, None, tfileinfo, None)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 62)
 

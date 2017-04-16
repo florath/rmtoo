@@ -61,7 +61,7 @@ class RMTTest_ReqPriority:
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 12)
 
     def rmttest_negative_02(self):
@@ -75,7 +75,7 @@ class RMTTest_ReqPriority:
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 13)
 
     def rmttest_negative_03(self):
@@ -90,7 +90,7 @@ class RMTTest_ReqPriority:
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 14)
 
     def rmttest_negative_04(self):
@@ -104,7 +104,7 @@ class RMTTest_ReqPriority:
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 15)
 
     def rmttest_negative_05(self):
@@ -118,5 +118,5 @@ class RMTTest_ReqPriority:
         try:
             name, value = rt.rewrite("Priority-test", req)
             assert(False)
-        except RMTException, rmte:
+        except RMTException as rmte:
             assert(rmte.id() == 15)

@@ -1,7 +1,7 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   xml ganttproject2 output class
 
  This is a second version of xml ganttproject output.
@@ -14,11 +14,13 @@
    new level.  The last (innermost) level are the requirements of the
    appropriate (sub)-topic.
  Output handler graph.
-  
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+
+import io
 
 from xml.dom.minidom import Document
 from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
@@ -61,7 +63,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         self.__xml_doc.appendChild(xml_project)
 
         # This is needed: if not given, on the left side there is
-        # nothing displayed. 
+        # nothing displayed.
         xml_taskdisplaycolumns = \
             self.__xml_doc.createElement("taskdisplaycolumns")
         xml_project.appendChild(xml_taskdisplaycolumns)
@@ -83,10 +85,9 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         assert len(self.__xml_obj_stack) == 1
         self.__xml_doc.appendChild(self.__xml_obj_stack[0])
 
-        # Write it out.        
-        self.__fd = file(self._output_filename, "w")
-        self.__fd.write(self.__xml_doc.toprettyxml())
-        self.__fd.close()
+        # Write it out.
+        with io.open(self._output_filename, "w", encoding="utf-8") as self.__fd:
+            self.__fd.write(self.__xml_doc.toprettyxml())
 
     def topic_pre(self, topic):
         '''This is called in the Topic pre-phase.'''
