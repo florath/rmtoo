@@ -11,6 +11,7 @@
  For licensing details see COPYING
 '''
 import json
+import os
 from six import iteritems, itervalues
 
 from rmtoo.lib.Requirement import Requirement
@@ -626,9 +627,8 @@ class RequirementSet(Digraph, UsableFlag):
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
         for r in self.__requirements.itervalues():
-            fd = file(directory + "/" + r.id + ".req", "w")
-            r.record.write_fd(fd)
-            fd.close()
+            with open(os.path.join(directory, r.id + ".req"), "w") as fd:
+                r.record.write_fd(fd)
         return True
 
 class RequirementSetIterator(GenIterator):

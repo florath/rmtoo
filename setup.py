@@ -26,7 +26,7 @@ def adjust(input, output):
                  | os.stat.S_IREAD | os.stat.S_IWRITE)
         os.remove(output)
     sys.stdout.write('adjusting %s -> %s\n' % (input, output))
-    buffer = file(input).read()
+    buffer = open(input).read()
     file(output, 'w').write(buffer.replace('@VERSION@', version))
     os.chmod(output, os.stat.S_IROTH | os.stat.S_IRGRP
                  | os.stat.S_IREAD | os.stat.S_IWRITE)

@@ -19,7 +19,7 @@ from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.Utils import create_tmp_dir
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 
 class RMTTest_Configuration(unittest.TestCase):
@@ -64,13 +64,12 @@ class RMTTest_Configuration(unittest.TestCase):
         # Create two JSON files.
         tmpdir = create_tmp_dir()
         jsonfile1 = os.path.join(tmpdir, "config1.json")
-        jsonfd1 = file(jsonfile1, "w")
-        jsonfd1.write(json.dumps({'k': 2, 'm': {'n': 5}, 'o': 7}))
-        jsonfd1.close()
+        with open(jsonfile1, "w") as jsonfd1:
+            jsonfd1.write(json.dumps({'k': 2, 'm': {'n': 5}, 'o': 7}))
+
         jsonfile2 = os.path.join(tmpdir, "config2.json")
-        jsonfd2 = file(jsonfile2, "w")
-        jsonfd2.write(json.dumps({'k': 3, 'm': {'w': 11}, 'p': 9}))
-        jsonfd2.close()
+        with open(jsonfile2, "w") as jsonfd2:
+            jsonfd2.write(json.dumps({'k': 3, 'm': {'w': 11}, 'p': 9}))
 
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
         config.merge_cmd_line_params(['-j', '{"m": {"p": 99}}',
@@ -81,7 +80,7 @@ class RMTTest_Configuration(unittest.TestCase):
         config.evaluate()
         self.failUnlessEqual(3, config.get_value("k"), "k is not 3")
         self.failUnlessEqual(11, config.get_value("m.w"))
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         shutil.rmtree(tmpdir)
         tear_down_log_handler()
         self.failUnlessEqual(lstderr, "")
@@ -100,12 +99,12 @@ class RMTTest_Configuration(unittest.TestCase):
         self.failUnlessEqual(
             ['development', 'management', 'users', 'customers'],
             config.get_value("requirements.stakeholders"))
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
         expected_result \
             = "===DATETIMESTAMP===;rmtoo;WARNING;Old;" \
-            "internal_convert_to_new;171;100:Old Configuration: " \
+            "internal_convert_to_new;===LINENO===;100:Old Configuration: " \
             "Not converted attributes: [['output_specs2']]\n"
 
         self.failUnlessEqual(expected_result, lstderr)

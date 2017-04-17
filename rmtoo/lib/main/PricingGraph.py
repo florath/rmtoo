@@ -1,14 +1,13 @@
-#!/usr/bin/env python
-#
-# Requirement Management Toolset
-#
-#  Generates the pricing graph
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+ Generates the pricing graph
+
+ (c) 2010,2017 by flonatel
+
+ For licensing details see COPYING
+'''
 import sys
 import csv
 
@@ -20,17 +19,18 @@ def parse_argv():
       sys.exit(1)
    return sys.argv[1], sys.argv[2]
 
+
 def main():
    csvfilename, graphfilename = parse_argv()
 
    # The files must be saved according to this rules:
    #  delimiter must be a ','
    #  quotechar must be a '"'
-   csvr = csv.reader(open(csvfilename, 'rb'), 
+   csvr = csv.reader(open(csvfilename, 'rb'),
                      delimiter=',', quotechar='"')
 
    # Open the output file and write out the header.
-   g = file(graphfilename, "w")
+   g = open(graphfilename, "w")
    g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
            "nslimit=10.0;ranksep=1;\n")
 
@@ -44,7 +44,7 @@ def main():
    # entry in this dictionary, there are no dependent costs.
    dep_costs = {}
    # Because the nodes are topoligical sorted, start at the end and go
-   # until you reach the beginning. 
+   # until you reach the beginning.
    rows.reverse()
    for row in rows:
 
@@ -73,7 +73,7 @@ def main():
       ocosts = lcosts + dcosts
 
       # Write out node (attributes)
-      nodeparams.append('label="%s\\n%9.2f\\n%9.2f"' % 
+      nodeparams.append('label="%s\\n%9.2f\\n%9.2f"' %
                         (row[0], ocosts, lcosts))
       g.write("%s [%s];\n" % (row[0], ",".join(nodeparams)))
 

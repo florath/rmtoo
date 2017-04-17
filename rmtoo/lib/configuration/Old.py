@@ -1,19 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Old way of configuration handling.
-  
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 # The import IS needed - because of the 'exec' command.
 # (Please note that this class is deprecated and will
-# vanish in near future.) 
-#@PydevCodeAnalysisIgnore
-# pylint: disable=W0611
+# vanish in near future.)
 import os
 from rmtoo.lib.logging import logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter

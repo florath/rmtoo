@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Version output class.
-  
- (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -41,7 +41,5 @@ class version1(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_set_pre(self, _requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
-        versfd = file(self._output_filename, "w")
-        versfd.write("%s\n" % self.__used_vcs_id)
-        versfd.close()
-
+        with open(self._output_filename, "w") as versfd:
+            versfd.write("%s\n" % self.__used_vcs_id)

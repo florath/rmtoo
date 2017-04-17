@@ -1,15 +1,16 @@
-#
-# xml output class
-#
-# This is a first version of xml output.
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+ This is a first version of xml output.
+
+ (c) 2011,2017 by flonatel
+
+ For licensing details see COPYING
+'''
 from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
+
 
 class xml1:
 
@@ -96,7 +97,6 @@ class xml1:
 
         self.output_reqset(reqscont.base_requirement_set, doc, reqscont_xml)
 
-        fd = file(self.output_filename, "w")
-        fd.write(doc.toxml())
-        fd.close()
+        with open(self.output_filename, "w") as fd:
+            fd.write(doc.toxml())
 

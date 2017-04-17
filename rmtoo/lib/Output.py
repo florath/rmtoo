@@ -66,7 +66,7 @@ class Output(Executor):
         cmad_filename = self.__config.get_rvalue(
                       'actions.create_makefile_dependencies')
         tracer.debug("Opening cmad file [%s]" % cmad_filename)
-        self.__cmad_file = file(cmad_filename, "w")
+        self.__cmad_file = open(cmad_filename, "w")
 
     def cmad_topic_continuum_set_post(self, _topic_continuum_set):
         '''Cleans up the global cmad.'''
