@@ -9,7 +9,6 @@
 
  For licensing details see COPYING
 '''
-
 import unittest
 try:
     from StringIO import StringIO

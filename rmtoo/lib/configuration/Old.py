@@ -28,14 +28,16 @@ class Old:
     @staticmethod
     def load_config(old_config_file):
         '''Load old config file'''
+        logger.debug("load old config [%s]", old_config_file)
+        print("LOAD OLD CONFIG [%s]" % old_config_file)
         # 'execfile' does not work here.
-        old_config_fd = open(old_config_file, "r")
-        conf_file = old_config_fd.read()
-        # pylint: disable=W0122
-        exec(conf_file)
-        # pylint: disable=E0602
-        config = Config()
-        old_config_fd.close()
+        with open(old_config_file, "r") as old_config_fd:
+            conf_file = old_config_fd.read()
+            print("1 HIIIIIIIIIIIIIIIIIIIIIII [%s]" % conf_file)
+            exec(conf_file)
+            print("2 HIIIIIIIIIIIIIIIIIIIIIII")
+            config = Config()
+            print("3 HIIIIIIIIIIIIIIIIIIIIIII")
         return config
 
     @staticmethod
@@ -170,7 +172,7 @@ class Old:
 
     @staticmethod
     def convert_to_new(cfg, old_config_file):
-        '''Reads in the old configuration file and converts it to 
+        '''Reads in the old configuration file and converts it to
            a dictionary which can be used in the new configuration.'''
         old_config = Old.load_config(old_config_file)
         return Old.internal_convert_to_new(cfg, old_config)

@@ -1,16 +1,16 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Text IO Configuration
   This holds the configuration for the TxtIO class.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.RMTException import RMTException
+
 
 class TxtIOConfig:
 
@@ -30,5 +30,3 @@ class TxtIOConfig:
         if self.__max_line_length < 0:
             raise RMTException(72, "max_input_line_length for type [%s] is "
                         "negative [%s]" % (type_str, self.__max_line_length))
-
-

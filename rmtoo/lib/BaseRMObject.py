@@ -1,17 +1,16 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   This is the definition of the Base rmtoo Management Object
-  which can be used as a base object for many different text base 
+  which can be used as a base object for many different text base
   major management objects like 'Requirement' or 'Constraint'.
-  (Maybe this might also be used for the 'Topic'.) 
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+  (Maybe this might also be used for the 'Topic'.)
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -19,13 +18,14 @@ from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.logging import tracer, logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
+
 class BaseRMObject(UsableFlag):
 
     def __init__(self, tbhtags, content, rid, mods, config, type_str,
                  file_path):
         UsableFlag.__init__(self)
         # This is the name of the tags which will be handled by the
-        # module input. 
+        # module input.
         self.tbhtags = tbhtags
         # This are the original tags - when there is no
         # need to convert them to specific values, they are left
@@ -76,7 +76,7 @@ class BaseRMObject(UsableFlag):
 
         self.record = TxtRecord.from_string(content, self.id, txtio)
         brmo = self.record.get_dict()
-        # This 'brmo' is always valid - if there is a problem, an exception 
+        # This 'brmo' is always valid - if there is a problem, an exception
         # is raised.
 
         # Handle all the modules (Semantic input)
@@ -101,7 +101,7 @@ class BaseRMObject(UsableFlag):
                 if self.tbhtags not in module.get_type_set():
                     logger.error(LogFormatter.format(
                                  90, "Wrong module type [%s] not in [%s]" %
-                                 (self.tbhtags, module.get_type_set())))
+                                 (self.tbhtags, list(module.get_type_set()))))
                     continue
                 key, value = module.rewrite(self.id, reqs)
                 # Check if there is already a key with the current key

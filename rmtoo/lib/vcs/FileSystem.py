@@ -93,7 +93,7 @@ class FileSystem(Interface):
             return self.__filename
 
         def get_filename_sub_part(self):
-            '''Return the part of the filename which is beneath the 
+            '''Return the part of the filename which is beneath the
                base directory.'''
             return self.__sub_dir
 

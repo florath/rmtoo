@@ -1,9 +1,9 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Requirement class itself
-   
+
  (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
@@ -17,6 +17,7 @@ from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class Requirement(Digraph.Node, BaseRMObject):
 

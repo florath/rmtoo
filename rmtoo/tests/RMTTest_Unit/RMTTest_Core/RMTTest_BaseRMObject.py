@@ -18,7 +18,7 @@ except ImportError:
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 
 class TMods:
@@ -40,8 +40,8 @@ class TBRMObj(BaseRMObject):
                               tc, "tobjs", None)
 
 expected_result = \
-    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;104; " \
-    "90:Wrong module type [mytag] not in [set([1, 2, 3])]\n"
+    "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
+    "===LINENO===; 90:Wrong module type [mytag] not in [[1, 2, 3]]\n"
 
 class RMTTest_BaseRMObject(unittest.TestCase):
 
@@ -53,7 +53,7 @@ class RMTTest_BaseRMObject(unittest.TestCase):
 
         tbrmo = TBRMObj()
 
-        result = hide_timestamp(mstderr.getvalue())
+        result = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
-        self.assertEqual(result, expected_result)
+        self.assertEqual(expected_result, result)

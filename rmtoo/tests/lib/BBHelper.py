@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+import io
 import os
 import shutil
 import difflib
@@ -155,8 +156,9 @@ def extract_container_files(lof):
             full_name = os.path.join(bdir, f.filename)
             directory = os.path.dirname(full_name)
             makedirs2(directory)
-            with open(full_name, "w") as ofile:
-                ofile.write(zf.read(f.filename))
+            with io.open(full_name, "w", encoding="utf-8") as ofile:
+                data = zf.read(f.filename).decode("utf-8")
+                ofile.write(data)
         zf.close()
         # Remove the original
         os.unlink(zip_filename)

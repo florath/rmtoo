@@ -9,7 +9,6 @@
 
  For licensing details see COPYING
 '''
-
 import abc
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -81,7 +80,7 @@ class Interface(object):
 
         @abc.abstractmethod
         def get_filename_sub_part(self):
-            '''Return the part of the filename which is beneath the 
+            '''Return the part of the filename which is beneath the
                base directory.'''
             assert False
 
@@ -117,8 +116,9 @@ class Interface(object):
             return
 
         if type(tbc) != list:
+            assert False
             raise RMTException(103, "Configuration error: [%s] configuration "
-                               "must be a list" % name)
+                               "must be a list, is [%s]" % (name, type(tbc)))
 
         if len(tbc) == 0:
             raise RMTException(105, "Configuration error: [%s] configuration "

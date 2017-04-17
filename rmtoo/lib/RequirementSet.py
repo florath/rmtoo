@@ -119,7 +119,7 @@ class RequirementSet(Digraph, UsableFlag):
             if len(req.brmo) > 0:
                 logger.error(LogFormatter.format(
                            57, "No tag handler found for tag(s) '%s' "
-                           "- Hint: typo in tag(s)?" % req.brmo.keys(),
+                           "- Hint: typo in tag(s)?" % list(req.brmo.keys()),
                            req.get_id()))
                 all_handled = False
         return all_handled

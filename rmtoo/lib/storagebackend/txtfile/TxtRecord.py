@@ -1,23 +1,23 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Text Record Input / Output class
 
   This is the parser and output module for the standard text file
-  format. 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+  format.
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.logging import logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
+
 
 class TxtRecord(Record):
 
@@ -29,7 +29,7 @@ class TxtRecord(Record):
         self.tioconfig = tioconfig
         self.comment_raw = None
 
-    # There is the need to have something like 
+    # There is the need to have something like
     # is_usable
 
     @classmethod

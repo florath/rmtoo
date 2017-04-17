@@ -1,41 +1,26 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Version Control System.
    Git implementation.
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
-import os
-import sys
-
-# To find the correct version of git-python (and friends) [the rmtoo
-# local version must be used], the sys.path is scanned and when a
-# sp/rmtoo/contrib is found, this is included (prepended) to sys.path.
-# This can be removed once the git-pyhton is removed.
-# (Calling this during the main does not help - because this might
-# already been loaded.) 
-# Note that this is a hack which will be removed when the API 
-# to the git-python is stable.
-##for sp in sys.path:
-##    rc = os.path.join(sp, 'rmtoo/contrib')
-##    if os.path.exists(rc):
-##        sys.path.insert(0, rc)
-##        break
-#pylint: disable=F0401
-import git
 import copy
-
+import git
+import os
+from six import iteritems
+import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.RMTException import RMTException
+
 
 class Git(Interface):
     '''Handles a git repository.'''
@@ -67,15 +52,14 @@ class Git(Interface):
     def __setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
-        # TODO: double code - also in FileSystem
+        # TODO: duplicated code - also in FileSystem
         for dir_type in ["requirements", "topics", "constraints", "testcases"]:
             config_dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
             if config_dirs == None:
                 tracer.info("Directory [%s] not configured - skipping." %
                             dir_type)
                 continue
-            # pylint: disable=W0141
-            dirs = map(self.__abs_path, config_dirs)
+            dirs = list(map(self.__abs_path, config_dirs))
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
@@ -84,7 +68,7 @@ class Git(Interface):
                 new_directories.append(self.__cut_off_repo_dir(directory))
             self.__dirs[dir_type] = new_directories
 
-        for dir_type, directory in self.__dirs.iteritems():
+        for dir_type, directory in iteritems(self.__dirs):
             tracer.debug("[%s] directories [%s]" % (dir_type, directory))
 
     def __setup_repo(self, directory):
@@ -127,7 +111,7 @@ class Git(Interface):
 
         # When the directory is not absolute, convert it to an
         # absolute path that it can be compared to the outcome of the
-        # git.Repo. 
+        # git.Repo.
         self.__dirs = {}
         self.__repo_base_dir = None
         self.__repo = None
@@ -175,13 +159,13 @@ class Git(Interface):
             return self.__blob.hexsha
 
         def get_filename_sub_part(self):
-            '''Return the part of the filename which is beneath the 
+            '''Return the part of the filename which is beneath the
                base directory.'''
             return os.path.join(self.__sub_dirname, self.__blob.name)
 
         def get_content(self):
             '''Returns the file content.'''
-            return self.__blob.data_stream.read()
+            return self.__blob.data_stream.read().decode("utf-8")
 
     def __get_tree_direct(self, base_tree, directory):
         '''Return the tree of the given directory.
@@ -215,7 +199,7 @@ class Git(Interface):
         return result
 
     def __get_file_infos_from_tree(self, tree, base_dir):
-        '''Returns all the file infos recursive starting with 
+        '''Returns all the file infos recursive starting with
            the given directory.'''
         tracer.info("called: base [%s]" % base_dir)
         base_dir_split = base_dir.split("/")
@@ -283,4 +267,3 @@ class Git(Interface):
                 return Git.FileInfo(dir_split, sub_split, blob)
         raise RMTException(111, "file [%s] in [%s] base file not found"
                            % (filename, file_type))
-

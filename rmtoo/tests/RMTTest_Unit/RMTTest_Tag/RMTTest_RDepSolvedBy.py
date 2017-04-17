@@ -1,16 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for RDepSolvedBy
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import unittest
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.inputs.RDepSolvedBy import RDepSolvedBy
@@ -26,7 +29,7 @@ class RMTTest_RDepSolvedBy(unittest.TestCase):
 
     def rmttest_neg_empty_solved_by(self):
         "Normal requirement has empty 'Solved by'"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         config = TestConfig()
@@ -52,7 +55,7 @@ Solved by:''', 'B', None, None, None)
 
     def rmttest_neg_solved_by_to_nonex_req(self):
         "'Solved by' points to a non existing requirement"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         config = TestConfig()
@@ -79,7 +82,7 @@ Solved by: C''', 'B', None, None, None)
 
     def rmttest_neg_point_to_self(self):
         "'Solved by' points to same requirement"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         config = TestConfig()

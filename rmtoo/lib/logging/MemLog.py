@@ -1,21 +1,20 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  The memory logging object.
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 import time
-from types import ListType
 from rmtoo.lib.logging import logger
 
 class MemLog:
     '''This represents one memory log message.
-       It contains some deep information about the file and line number. 
+       It contains some deep information about the file and line number.
        Also it contains a unique log message.'''
 
     def __init__(self, lid, level, msg):
@@ -29,9 +28,9 @@ class MemLog:
     def create_ml(param_list):
         '''This is mostly a second constructor for a message which can be
            called with a list.'''
-        assert(type(param_list) == ListType)
+        assert type(param_list) == list
         llen = len(param_list)
-        assert(llen == 3)
+        assert llen == 3
 
         return MemLog(param_list[0], param_list[1], param_list[2])
 
