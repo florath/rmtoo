@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Output handler prios.
-  
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -30,6 +30,7 @@ from rmtoo.lib.DateUtils import format_date
 from rmtoo.lib.Statistics import Statistics
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
+
 
 class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
@@ -70,7 +71,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     prios_assigned.append(tr)
                 elif isinstance(status, RequirementStatusFinished):
                     prios_finished.append(tr)
-            except KeyError, ke:
+            except KeyError as ke:
                 raise RMTException(35, "%s: KeyError: %s" % (tr.id, ke))
 
         return prios_impl, prios_detail, prios_selected, \
@@ -97,7 +98,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             reverse=False)
 
         # Write everything to a file.
-        f = file(self._output_filename, "w")
+        f = open(self._output_filename, "w")
 
         def get_efe(tr):
             if tr.get_value("Effort estimation") != None:
@@ -118,7 +119,8 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             for p in l:
                 if topic_set.get_requirement_set().get_requirement(p[1]).\
                     get_value("Effort estimation") != None:
-                    efest = topic_set.get_requirement_set().get_requirement(p[1]).\
+                    efest = topic_set.get_requirement_set().\
+                            get_requirement(p[1]).\
                         get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)

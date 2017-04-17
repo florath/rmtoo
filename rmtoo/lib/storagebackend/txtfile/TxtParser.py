@@ -3,23 +3,22 @@
    Free and Open Source Requirements Management Tool
 
  Text Parser
- 
- (c) 2011 by flonatel
+
+ (c) 2011,2017 by flonatel
 
  For licensing details see COPYING
 '''
+import re
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 from rmtoo.lib.logging import logger
 
-import re
 
-# pylint: disable=W0232
-class TxtParser:
+class TxtParser(object):
 
     re_tag_line = re.compile("^([a-zA-Z][a-zA-Z0-9_ ]*:)(.*)$")
-    
+
     @staticmethod
     def is_comment_or_empty(line):
         '''Checks if the given line is empty or a comment.'''
@@ -35,7 +34,7 @@ class TxtParser:
            o the initial comment
            o the rest'''
         comment = []
-        for i in xrange(0, len(sl)):
+        for i in range(0, len(sl)):
             if not TxtParser.is_comment_or_empty(sl[i]):
                 del(sl[0:i])
                 return comment
@@ -79,6 +78,7 @@ class TxtParser:
                 if len(comment)>0:
                     # This is the possible problematic case where
                     # continuation lines are intermixed with comments.
+                    #
                     logger.info(LogFormatter.format(
                              80, TxtParser.comment_in_req,
                              rid, lineno+i))
@@ -109,7 +109,7 @@ class TxtParser:
     def split_entries(sl, rid, mls, lineno_offset):
         '''This method splits up the given string in seperate entries which
            represent a entry record each.
-           The lineno offset is the line number of the first line given in 
+           The lineno offset is the line number of the first line given in
            the sl array.'''
         doc = []
         lineno = lineno_offset

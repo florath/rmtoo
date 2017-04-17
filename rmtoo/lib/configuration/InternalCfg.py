@@ -1,18 +1,23 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
- This file contains the internals handling of the 
+
+ This file contains the internals handling of the
  configuration classes.
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-from types import DictType, StringType, UnicodeType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 
-class InternalCfg:
+# python 2 and 3 compat hack:
+try:
+    unicode
+except NameError:
+    unicode = str
+
+class InternalCfg(object):
     '''Internal configuration utility class.'''
 
     def __init__(self):
@@ -24,7 +29,7 @@ class InternalCfg:
         '''If the key is a string, it is converted to the internally
            used list of strings.
            The original string is split at '.'.'''
-        if type(key) in [StringType, UnicodeType]:
+        if type(key) in [bytes, str, unicode]:
             return InternalCfg.parse_key_string(key)
         return key
 
@@ -39,7 +44,7 @@ class InternalCfg:
         '''Returns the key from the given dictionary.
            If this is not the last part of the key, this method
            is called recursively.'''
-        assert(type(ldict) == DictType)
+        assert(type(ldict) == dict)
         assert(len(key) > 0)
         if key[0] not in ldict:
             raise CfgEx("(Sub-)Key [%s] not found." % key[0])
@@ -47,7 +52,7 @@ class InternalCfg:
         # No more keys to go for.
         if len(key) == 1:
             return val
-        if type(val) != DictType:
+        if type(val) != dict:
             raise CfgEx("(Sub-)Type of configuration for key [%s] not a "
                         "dictionary " % key[0])
         return InternalCfg.get_value(key[1:], val)
@@ -57,7 +62,7 @@ class InternalCfg:
         '''Change the given key with the help of the change_func.
            If value does not exists, the empty_val is used for
            initial initialization.'''
-        assert(type(ldict) == DictType)
+        assert(type(ldict) == dict)
         assert(len(key) > 0)
 
         # Only use the given empty value for the last value in the

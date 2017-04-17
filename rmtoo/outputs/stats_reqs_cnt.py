@@ -1,19 +1,20 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Requirement statistics.
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import time
+
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
+
 
 class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
                      CreateMakeDependencies):
@@ -28,7 +29,7 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
 
     def topic_continuum_pre(self, _topics_continuum):
         '''Prepare file.'''
-        self.__ofile = file(self._output_filename, "w")
+        self.__ofile = open(self._output_filename, "w")
 
     def topic_continuum_post(self, _topics_continuum):
         '''Cleanup file.'''

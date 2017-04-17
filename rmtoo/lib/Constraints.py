@@ -1,18 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Constraints handling
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from six import iteritems
 
 from rmtoo.lib.logging import tracer
 
-# pylint: disable=W0232
-class Constraints:
+
+class Constraints(object):
     '''Helper functions for constraint handling.'''
 
     @staticmethod
@@ -30,8 +31,8 @@ class Constraints:
         if topic_set == None:
             assert False
 
-        for ctr, cval in topic_set.get_requirement_set().\
-                    get_constraints().iteritems():
+        for ctr, cval in iteritems(topic_set.get_requirement_set().
+                                   get_constraints()):
             tracer.debug("Add constraint [%s]" % ctr)
             cnsts[ctr] = cval
         tracer.debug("Finished; size [%d]" % len(cnsts))

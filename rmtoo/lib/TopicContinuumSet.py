@@ -1,16 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Collection of collection of collection of topics.
   The continuum holds all the different versions of TopicSetCollections
   from the whole time of being.
   The key to access this is the 'name' under 'topic' (in the configuration).
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from six import iteritems
 
 from rmtoo.lib.TopicContinuum import TopicContinuum, TopicContinuumIterator
 from rmtoo.lib.logging import tracer
@@ -18,6 +19,7 @@ from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.GenIterator import GenIterator
+
 
 class TopicContinuumSet(UsableFlag):
     '''Class holding all the available TopicSetCollections
@@ -45,7 +47,7 @@ class TopicContinuumSet(UsableFlag):
         tracer.debug("Called.")
         # Step through all the available topic sets.
         for ts_name, ts_config in \
-            self._config.get_value("topics").get_dict().iteritems():
+            iteritems(self._config.get_value("topics").get_dict()):
             topic_cont = TopicContinuum(ts_name, self._config, ts_config,
                                self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
@@ -76,7 +78,7 @@ class TopicContinuumSetIterator(GenIterator):
     def __init__(self, topic_continuum_set):
         '''Initialize the iterator.'''
         GenIterator.__init__(
-            self, topic_continuum_set.get_continuum_dict().iteritems())
+            self, iteritems(topic_continuum_set.get_continuum_dict()))
 
     def has_child(self):
         '''If the current element has a child, true is returned.'''

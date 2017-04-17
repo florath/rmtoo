@@ -1,18 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   TestCases handling
-   
- (c) 2012 by flonatel GmbH & Co. KG
+
+ (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from six import iteritems
 
 from rmtoo.lib.logging import tracer
 
-# pylint: disable=W0232
-class TestCases:
+
+class TestCases(object):
     '''Helper functions for testcases handling.'''
 
     @staticmethod
@@ -24,8 +25,8 @@ class TestCases:
         if topic_set == None:
             assert False
 
-        for testcase, tcval in topic_set.get_requirement_set().\
-                    get_testcases().iteritems():
+        for testcase, tcval in iteritems(topic_set.get_requirement_set().
+                                         get_testcases()):
             tracer.debug("Add constraint [%s]" % testcase)
             testcases[testcase] = tcval
         tracer.debug("Finished; size [%d]" % len(testcases))

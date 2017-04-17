@@ -23,7 +23,7 @@ mdir = "tests/RMTTest_Blackbox/RMTTest_BB002"
 class RMTTest_BB002:
 
     def rmttest_pos_001(self):
-        "BB Hotspot in the middle of the graph 2"
+        """BB Hotspot in the middle of the graph 2"""
 
         # This is needed, because the prios use localtime
         os.environ['TZ'] = 'Europe/Berlin'

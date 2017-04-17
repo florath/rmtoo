@@ -1,22 +1,21 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Caches objects.
    This class caches objects.  The ID is the unique VCS id.
-   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
-from types import ListType
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.RMTException import RMTException
 
-class ObjectCache:
+
+class ObjectCache(object):
     '''Stores objects from different types under a unique id.
-       Each class has a separate store: it is possible to 
+       Each class has a separate store: it is possible to
        have the same id for multiple objects of different types.'''
 
     def __init__(self):
@@ -34,13 +33,14 @@ class ObjectCache:
                     "cache hit ratio [%4.3f]."
                     % (self.__stats_cnt_objects, self.__stats_cnt_object_types,
                        self.__stats_cnt_get, self.__stats_cnt_get_found,
-                       float(self.__stats_cnt_get_found) / self.__stats_cnt_get))
+                       float(self.__stats_cnt_get_found) /
+                       self.__stats_cnt_get))
 
     @staticmethod
     def create_hashable(oid):
         '''If the oid is a list, the oid is converted into a string.'''
         tracer.debug("Called: oid [%s]." % oid)
-        if type(oid) == ListType:
+        if type(oid) == list:
             if len(oid) == 1:
                 return oid[0]
             return '-'.join(oid)
@@ -53,8 +53,8 @@ class ObjectCache:
         tracer.debug("called: object type [%s] oid [%s]" % (object_type, oid))
         self.__stats_cnt_get += 1
 
-        if self.__objects.has_key(object_type) \
-            and self.__objects[object_type].has_key(oid):
+        if object_type in self.__objects \
+            and oid in self.__objects[object_type]:
             self.__stats_cnt_get_found += 1
             return self.__objects[object_type][oid]
         return None
@@ -66,7 +66,7 @@ class ObjectCache:
         tracer.debug("adding object with object type [%s] oid [%s]"
                      % (object_type, oid))
 
-        if not self.__objects.has_key(object_type):
+        if object_type not in self.__objects:
             self.__stats_cnt_object_types += 1
             self.__objects[object_type] = {}
 

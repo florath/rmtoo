@@ -39,7 +39,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''If not already there, create the directory.'''
         try:
             os.makedirs(self.__output_directory)
-        except OSError, ose:
+        except OSError as ose:
             # It's ok if already there
             pass
 

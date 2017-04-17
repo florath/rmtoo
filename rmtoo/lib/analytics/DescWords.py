@@ -102,7 +102,7 @@ class DescWords(Base):
 
     def topic_continuum_set_sort(self, list_to_sort):
         '''Can only handle from the last version.'''
-        return [list_to_sort[-1]]
+        return [list(list_to_sort)[-1]]
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,

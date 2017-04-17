@@ -7,4 +7,5 @@ odfpy==1.3.4
 numpy
 scipy
 setuptools
+six
 tox

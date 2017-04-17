@@ -30,3 +30,24 @@ _date_re = re.compile("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"
 
 def hide_timestamp(istr):
     return _date_re.sub("===DATETIMESTAMP===", istr)
+
+
+def hide_lineno(istr):
+    res = ""
+    slines = istr.split("\n")
+    for line in slines:
+        if line == "":
+            break
+        sline = line.split(";")
+
+        if sline[0] != "===DATETIMESTAMP===":
+            res += line + "\n"
+            continue
+
+        sline[5] = "===LINENO==="
+        res += ";".join(sline) + "\n"
+    return res
+
+
+def hide_volatile(istr):
+    return hide_lineno(hide_timestamp(istr))

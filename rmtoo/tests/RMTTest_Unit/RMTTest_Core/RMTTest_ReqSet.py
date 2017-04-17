@@ -4,7 +4,7 @@
 
   Unit test for RequirementSet
 
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -19,7 +19,7 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 
 mod_base_dir = "tests/RMTTest_Unit/RMTTest_Core/testdata"
@@ -41,14 +41,15 @@ class RMTTest_ReqSet(unittest.TestCase):
         reqs.nodes.append(req)
         reqs._handle_modules(mods)
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__all_tags_handled;121; 57:hubbel:No tag handler found for " \
+            "__all_tags_handled;===LINENO===; 57:hubbel:No tag handler " \
+            "found for " \
             "tag(s) '['Hubbel']' - Hint: typo in tag(s)?\n" \
             "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
-            "145; 56:There were errors encountered during parsing " \
+            "===LINENO===; 56:There were errors encountered during parsing " \
             "and checking - can't continue.\n"
 
         self.assertEquals(result_expected, lstderr)
@@ -68,14 +69,15 @@ class RMTTest_ReqSet(unittest.TestCase):
         reqs.nodes.append(req)
         reqs._handle_modules(mods)
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__all_tags_handled;121; 57:InvalidTagReq:No tag handler found " \
+            "__all_tags_handled;===LINENO===; 57:InvalidTagReq:" \
+            "No tag handler found " \
             "for tag(s) '['Siebel', 'Hubbel']' - Hint: typo in tag(s)?\n" \
             "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
-            "145; 56:There were errors encountered during parsing " \
+            "===LINENO===; 56:There were errors encountered during parsing " \
             "and checking - can't continue.\n"
 
         self.assertEquals(result_expected, lstderr)

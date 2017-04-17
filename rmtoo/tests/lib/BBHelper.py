@@ -1,18 +1,20 @@
-#
-# Blackbox helper
-#
-# (c) 2010,2017 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+  Blackbox helper
+
+ (c) 2010,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 import os
 import shutil
 import difflib
 import zipfile
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
-from rmtoo.tests.lib.Utils import create_tmp_dir, hide_timestamp
+from rmtoo.tests.lib.Utils import create_tmp_dir, hide_volatile
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
 
 
@@ -32,13 +34,11 @@ def find(mdir):
 
 
 def unified_diff(mdir, fname):
-    fa = file(os.path.join(os.environ["rmtoo_test_dir"], fname), "r")
-    a = fa.readlines()
-    fa.close()
+    with open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r") as fa:
+        a = fa.readlines()
 
-    fb = file(os.path.join(mdir, "result_should", fname), "r")
-    b = fb.readlines()
-    fb.close()
+    with open(os.path.join(mdir, "result_should", fname), "r") as fb:
+        b = fb.readlines()
 
     r = []
     for l in difflib.unified_diff(a, b):
@@ -100,8 +100,8 @@ def compare_results(mdir):
 
 # Open up the stdout and stderr files for testing proposes
 def create_std_log(mdir):
-    mout = file(os.path.join(mdir, "stdout"), "w")
-    merr = file(os.path.join(mdir, "stderr"), "w")
+    mout = open(os.path.join(mdir, "stdout"), "w")
+    merr = open(os.path.join(mdir, "stderr"), "w")
     return mout, merr
 
 
@@ -155,9 +155,8 @@ def extract_container_files(lof):
             full_name = os.path.join(bdir, f.filename)
             directory = os.path.dirname(full_name)
             makedirs2(directory)
-            ofile = file(full_name, "w")
-            ofile.write(zf.read(f.filename))
-            ofile.close()
+            with open(full_name, "w") as ofile:
+                ofile.write(zf.read(f.filename))
         zf.close()
         # Remove the original
         os.unlink(zip_filename)
@@ -181,17 +180,15 @@ def extract_container_files(lof):
 def unify_output_dir(filename):
     fullpathname = os.path.join(os.environ["rmtoo_test_dir"], filename)
     # Read it in
-    fd = file(fullpathname, "r")
-    c = fd.read()
-    fd.close()
+    with open(fullpathname, "r") as fd:
+        c = fd.read()
     # Replace
 
     d = c.replace(os.environ["rmtoo_test_dir"],
                   "===SYMBOLIC-OUTPUT-DIR===")
     # Write out
-    fd = file(fullpathname, "w")
-    fd.write(d)
-    fd.close()
+    with open(fullpathname, "w") as fd:
+        fd.write(d)
 
 
 def check_result(missing_files, additional_files, diffs):
@@ -211,15 +208,13 @@ def check_result(missing_files, additional_files, diffs):
 def prepare_stderr():
     '''Some lines of the stderr contain a date / timestamp.
        This must be unified in order to be able to compare them.'''
-    mstderr = file(os.path.join(os.environ["rmtoo_test_dir"], "stderr"))
-    lines = mstderr.readlines()
-    mstderr.close()
+    with open(os.path.join(os.environ["rmtoo_test_dir"], "stderr")) as ms:
+        lines = ms.readlines()
 
-    new_stderr = file(os.path.join(
-        os.environ["rmtoo_test_dir"], "stderr"), "w")
-    for line in lines:
-        new_stderr.write("%s" % hide_timestamp(line))
-    new_stderr.close()
+    with open(os.path.join(
+            os.environ["rmtoo_test_dir"], "stderr"), "w") as new_stderr:
+        for line in lines:
+            new_stderr.write("%s" % hide_volatile(line))
 
 
 def check_file_results(mdir):

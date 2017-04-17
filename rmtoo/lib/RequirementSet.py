@@ -1,17 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Collection of topics.
-  Note that the TopicSet is a tree where the leaves are 
+  Note that the TopicSet is a tree where the leaves are
   orders - i.e. it is not possible to put them into a set_value.
-   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import json
+from six import iteritems, itervalues
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraint import Constraint
@@ -27,6 +27,7 @@ from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.TestCase import TestCase
 from rmtoo.lib.GenIterator import GenIterator
 from rmtoo.lib.logging.LogFormatter import LogFormatter
+
 
 class RequirementSet(Digraph, UsableFlag):
     '''A RequirementSet holds one DAG (directed acyclic graph)
@@ -123,7 +124,7 @@ class RequirementSet(Digraph, UsableFlag):
         return all_handled
 
     def _handle_modules(self, input_mods):
-        '''Handle all modules which are executed on the 
+        '''Handle all modules which are executed on the
            requirement set level.
            (One '_' only because this is used by the unit tests.'''
         tracer.debug("Called.")
@@ -465,7 +466,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def resolve_depends_on(self, also_solved_by):
         '''Step through the internal list of collected requirements and
-           evaluate the 'Depends on'.  This is done by creating the 
+           evaluate the 'Depends on'.  This is done by creating the
            appropriate digraph node.'''
         tracer.debug("Called.")
         # Run through all the requirements and look for the 'Depend
@@ -520,7 +521,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def __unite_ce3s(self):
         '''Execute the unification of the CE3s:
-           From the list of all incoming nodes and the value of the 
+           From the list of all incoming nodes and the value of the
            current node compute the new value of the current node
            The ce3s must be executed in topological order.'''
         ce3tsort = topological_sort(self)
@@ -574,7 +575,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def get_requirements_iteritems(self):
         '''Return the iteritems() iterator of all requirements.'''
-        return self.__requirements.iteritems()
+        return iteritems(self.__requirements)
 
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
@@ -593,7 +594,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''
-        for r in self.__requirements.itervalues():
+        for r in itervalues(self.__requirements):
             # Remove the old 'Depends on'
             r.record.remove("Depends on")
 
@@ -635,4 +636,3 @@ class RequirementSetIterator(GenIterator):
     def __init__(self, requirement_set):
         GenIterator.__init__(
             self, requirement_set.get_master_nodes().__iter__())
-

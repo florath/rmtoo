@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Coherence of one topic.
 
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from six import iteritems
 
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
@@ -85,7 +86,7 @@ class TopicCohe(Base):
             for req_b in req_a.incoming:
                 self.__eval_link(req_a, req_b)
 
-        for topic, cnt in self.__tcnt.iteritems():
+        for topic, cnt in iteritems(self.__tcnt):
             if cnt[0] <= cnt[1]:
                 self.add_result(Result("TopicCohe", topic,
                                 - 10, ["%s: Topic coherence inadequate: "

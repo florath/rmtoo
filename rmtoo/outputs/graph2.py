@@ -1,13 +1,13 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Output handler graph2.
- 
+
  This is the graph output class using topics as base for a clustered
  subgraph.
-  
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -18,7 +18,7 @@ from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
-# pylint: disable=C0103
+
 class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     '''The output class handling graph2.
        graph2 is a requirements dependency graph which has additional
@@ -56,7 +56,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_set_pre(self, _):
         '''This is the first thing which is called.'''
         tracer.debug("Called.")
-        self.__output_file = file(self._output_filename, "w")
+        self.__output_file = open(self._output_filename, "w")
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")
@@ -73,7 +73,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_pre(self, topic):
         '''This writes out all the subgraphs and nodes.'''
         # The _GRAPH_ is there to differentiate between topics and
-        # possible equally named requirements. 
+        # possible equally named requirements.
         self.__output_file.write('%ssubgraph cluster_GRAPH_%s {\n'
             '%s label="Topic: %s";\n'
             % (self.__ident, topic.name, self.__ident, topic.name))
@@ -89,7 +89,7 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         return sorted(list_to_sort, key=lambda t: t.name)
 
     def requirement(self, requirement):
-        '''Output one requirement - and collect information about the 
+        '''Output one requirement - and collect information about the
            requirement's coherence.'''
         ident = "          "[0:self.__level]
         self.__output_file.write('%s"%s" [%s];\n'

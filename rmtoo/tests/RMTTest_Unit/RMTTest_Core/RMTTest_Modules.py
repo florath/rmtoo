@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for input modules
 
- (c) 2010,2012 by flonatel GmbH & Co. KG
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -20,7 +20,7 @@ from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
 from rmtoo.tests.lib.ModuleHelper import mods_list
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 mod_base_dir = "tests/RMTTest_Unit/RMTTest_Core/testdata"
 
@@ -78,11 +78,12 @@ class RMTTest_Modules(unittest.TestCase):
                        {}, [], mods_list("modules05", mod_base_dir))
         req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;112; 54:77:tag [SameTag] already defined\n"
+        "handle_modules_tag;===LINENO===; 54:77:tag [SameTag] " \
+        "already defined\n"
         self.assertEqual(lstderr, expected_result)
 
     def rmttest_simple_06(self):
@@ -94,13 +95,13 @@ class RMTTest_Modules(unittest.TestCase):
                        {}, [], mods_list("modules06", mod_base_dir))
         req = Requirement("Name: t\n", 77, None, mods, TestConfig())
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;120; 55:TCExcept\n" \
+        "handle_modules_tag;===LINENO===; 55:TCExcept\n" \
         "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
-        "123; 41:77:semantic error occurred in module [Module01]\n"
+        "===LINENO===; 41:77:semantic error occurred in module [Module01]\n"
         self.assertEqual(lstderr, expected_result)
 
     def rmttest_simple_07(self):
@@ -114,10 +115,10 @@ class RMTTest_Modules(unittest.TestCase):
         reqs._handle_modules(mods)
         self.assertEqual(reqs.is_usable(), False)
 
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
         expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "_handle_modules;137; 43:there was a problem handling the " \
+        "_handle_modules;===LINENO===; 43:there was a problem handling the " \
         "requirement set modules\n"
         self.assertEqual(lstderr, expected_result)

@@ -16,7 +16,6 @@
 import os
 import json
 
-from types import DictType, ListType, StringType, UnicodeType
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
@@ -24,7 +23,15 @@ from rmtoo.lib.configuration.Old import Old
 from rmtoo.lib.configuration.InternalCfg import InternalCfg
 from rmtoo.lib.RMTException import RMTException
 
-class Cfg:
+
+# python 2 and 3 compat hack:
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+class Cfg(object):
     '''
     Configuration Class
 
@@ -50,7 +57,7 @@ class Cfg:
         '''Initializes the initial values.
            Depending on the type of the given value, the initial
            values are set.'''
-        if type(initial_values) == DictType:
+        if type(initial_values) == dict:
             self.__merge_dictionary(initial_values)
             return
         if isinstance(initial_values, Cfg):
@@ -73,7 +80,7 @@ class Cfg:
         if jstr.startswith("json:"):
             jstr = jstr[5:]
         jdict = json.loads(jstr)
-        if type(jdict) != DictType:
+        if type(jdict) != dict:
             raise CfgEx("Given JSON string encodes no dictionary.")
         self.__merge_dictionary(jdict)
 
@@ -82,10 +89,9 @@ class Cfg:
            the existing configuration.'''
         if jfile.startswith("file://"):
             jfile = jfile[7:]
-        jfd = file(jfile, "r")
-        jdict = json.load(jfd)
-        jfd.close()
-        if type(jdict) != DictType:
+        with open(jfile, "r") as jfd:
+            jdict = json.load(jfd)
+        if type(jdict) != dict:
             raise CfgEx("Given JSON string encodes no dictionary.")
         self.__merge_dictionary(jdict)
 
@@ -163,7 +169,7 @@ class Cfg:
         rval = InternalCfg.get_value(key, self.config)
         # This is the tricky part: With this construct each
         # sub-configuration is again a configuration.
-        if type(rval) == DictType:
+        if type(rval) == dict:
             return Cfg(rval)
         return rval
 
@@ -221,9 +227,9 @@ class Cfg:
 
     def dollar_replace(self, value):
         '''Replaces all occurrences of ${} for different types.'''
-        if type(value) in [StringType, UnicodeType]:
+        if type(value) in [bytes, str, unicode]:
             return self.__dollar_replace_string(value)
-        if type(value) == ListType:
+        if type(value) == list:
             return self.__dollar_replace_list(value)
         # Never reached: unknown type
         print("Never reached: [%s]" % type(value))

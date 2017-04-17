@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Output handler graph.
-  
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -46,7 +46,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''This is call in the RequirementSet pre-phase.'''
         tracer.debug("Called")
         # Initialize the graph output
-        self.__output_file = file(self._output_filename, "w")
+        self.__output_file = open(self._output_filename, "w")
         self.__output_file.write(
                 "digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
                 "nslimit=10.0;ranksep=1;\n")

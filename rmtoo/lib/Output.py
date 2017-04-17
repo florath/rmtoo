@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from six import iteritems
 
 from rmtoo.lib.Executor import Executor
 from rmtoo.lib.logging import tracer
@@ -45,7 +46,7 @@ class Output(Executor):
         tracer.info("Called.")
         output_config = topic_continuum.get_output_config()
 
-        for oconfig_name, oconfig in output_config.iteritems():
+        for oconfig_name, oconfig in iteritems(output_config):
             output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
                 output_obj = output_module_cstr(cfg)

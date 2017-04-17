@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Common statistics functions
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -16,14 +16,14 @@ from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeSelected
 
-# pylint: disable=W0232
-class Statistics:
+
+class Statistics(object):
 
     @staticmethod
     def inc_stats(rv, start_date, idx, invented_on, today, efe):
         start_index = (invented_on - start_date).days
         end_index = (today - start_date).days
-        for i in xrange(start_index, end_index + 1):
+        for i in range(start_index, end_index + 1):
             rv[i][idx] += efe
 
     @staticmethod
@@ -32,7 +32,7 @@ class Statistics:
         diff = end_date - start_date
         diff_in_days = diff.days
 
-        for _ in xrange(0, diff_in_days + 1):
+        for _ in range(0, diff_in_days + 1):
             rv.append([0, 0, 0])
         return rv
 
@@ -118,37 +118,31 @@ class Statistics:
 
     @staticmethod
     def output_stat_files(filename, start_date, rv):
-        ofile = file(filename, "w")
-        one_day = datetime.timedelta(1)
-        iday = start_date
-
-        for r in rv:
-            ofile.write("%s %d %d %d %d\n"
-                        % (iday.isoformat(), r[0], r[1], r[2], r[0] + r[1]))
-            iday += one_day
-
-        ofile.close()
+        with open(filename, "w") as ofile:
+            one_day = datetime.timedelta(1)
+            iday = start_date
+            for r in rv:
+                ofile.write("%s %d %d %d %d\n"
+                            % (iday.isoformat(), r[0], r[1], r[2],
+                               r[0] + r[1]))
+                iday += one_day
 
         # Estimation file
-        eofile = file(filename + ".est", "w")
-        x = list(i for i in xrange(0, len(rv)))
-        y = list(x[0] + x[1] for x in rv)
+        with open(filename + ".est", "w") as eofile:
+            x = list(i for i in range(0, len(rv)))
+            y = list(x[0] + x[1] for x in rv)
 
-        gradient, intercept, _r_value, _p_value, _std_err = \
-                stats.linregress(x, y)
+            gradient, intercept, _r_value, _p_value, _std_err \
+                = stats.linregress(x, y)
 
-        if gradient >= 0.0:
-            print("+++ WARN: gradient is positive [%d]: "
-                  "you get more than you finished" % gradient)
-            eofile.close()
-            return
+            if gradient >= 0.0:
+                print("+++ WARN: gradient is positive [%d]: "
+                      "you get more than you finished" % gradient)
+                eofile.close()
+                return
 
-        d = intercept / -gradient
-        end_date = start_date + datetime.timedelta(d)
+            d = intercept / -gradient
+            end_date = start_date + datetime.timedelta(d)
 
-        eofile.write("%s %d\n" % (start_date, intercept))
-        eofile.write("%s 0\n" % end_date)
-
-        eofile.close()
-
-
+            eofile.write("%s %d\n" % (start_date, intercept))
+            eofile.write("%s 0\n" % end_date)

@@ -20,7 +20,7 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 class RMTTest_RDepSolvedBy(unittest.TestCase):
 
@@ -43,10 +43,11 @@ Solved by:''', 'B', None, None, None)
         status = rdep.rewrite(reqset)
 
         self.assertFalse(status)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "__resolve_solved_by_one_req;358; 77:B:'Solved by' field has length 0\n"
+        "__resolve_solved_by_one_req;===LINENO===; 77:B:'Solved by' " \
+        "field has length 0\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_solved_by_to_nonex_req(self):
@@ -69,11 +70,11 @@ Solved by: C''', 'B', None, None, None)
         status = rdep.rewrite(reqset)
 
         self.assertFalse(status)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "__resolve_solved_by_one_req;368; 74:B:'Solved by' points to a " \
-        "non-existing requirement 'C'\n"
+        "__resolve_solved_by_one_req;===LINENO===; 74:B:'Solved by' " \
+        "points to a non-existing requirement 'C'\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_point_to_self(self):
@@ -95,11 +96,11 @@ Solved by: B''', 'B', None, None, None)
         status = rdep.rewrite(reqset)
 
         self.assertFalse(status)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "__resolve_solved_by_one_req;375; 75:B:'Solved by' points to the " \
-        "requirement itself\n"
+        "__resolve_solved_by_one_req;===LINENO===; 75:B:'Solved by' " \
+        "points to the requirement itself\n"
         self.assertEquals(result_expected, lstderr)
 #        assert(reqset.to_list() ==
 #                [[75, LogLevel.error(), "'Solved by' points to the requirement "

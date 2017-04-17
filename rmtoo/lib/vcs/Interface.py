@@ -1,22 +1,29 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Abstract Base Class (ABC) to handle different version control systems.
   This includes also reading in the latest version from the file system.
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 import abc
-from types import ListType, StringType, UnicodeType
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging import tracer
 
-class Interface:
+
+# python 2 and 3 compat hack:
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+class Interface(object):
     '''Defines the interface for input fontends like
        VCS or filesystem.'''
     __metaclass__ = abc.ABCMeta
@@ -109,7 +116,7 @@ class Interface:
             tracer.debug("Ignoring non existent configuration for [%s]" % tbc)
             return
 
-        if type(tbc) != ListType:
+        if type(tbc) != list:
             raise RMTException(103, "Configuration error: [%s] configuration "
                                "must be a list" % name)
 
@@ -118,9 +125,7 @@ class Interface:
                                "must be a non empty list" % name)
 
         for string in tbc:
-            if type(string) not in [StringType, UnicodeType]:
+            if type(string) not in [str, bytes, unicode]:
                 raise RMTException(104, "Configuration error: [%s].[%s] "
                                    " configuration must be a string"
                                    % (name, string))
-
-

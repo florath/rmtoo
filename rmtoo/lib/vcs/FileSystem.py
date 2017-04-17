@@ -1,9 +1,9 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Implementation of the VCS interface for the local file system.
-   
+
  (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
@@ -11,6 +11,7 @@
 
 import io
 import os
+from six import iteritems
 import stat
 import time
 
@@ -19,6 +20,7 @@ from rmtoo.lib.vcs.Interface import Interface
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.RMTException import RMTException
+
 
 class FileSystem(Interface):
     '''Implementation of the input interface for files in the file system.
@@ -44,7 +46,7 @@ class FileSystem(Interface):
                 new_directories.append(directory)
             self.__dirs[dir_type] = new_directories
 
-        for dir_type, directory in self.__dirs.iteritems():
+        for dir_type, directory in iteritems(self.__dirs):
             tracer.debug("[%s] directories [%s]" % (dir_type, directory))
 
     def __init__(self, config):
