@@ -1,6 +1,7 @@
 flake8
+nose
+nose-cov
 numpy
 scipy
 setuptools
-nose
-nose-cov
+tox

@@ -17,5 +17,5 @@ _init_externals()
 
 # default imports
 from gitdb.db import *
-from base import *
-from stream import *
+from gitdb.base import *
+from gitdb.stream import *
