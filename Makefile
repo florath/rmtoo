@@ -26,7 +26,7 @@ all_html: ${OUTPUT_HTML}
 
 # And how to make the dependencies
 artifacts/.rmtoo_dependencies:
-	./bin/rmtoo -m . -j ${CONFIG_FILE} \
+	rmtoo -m . -j ${CONFIG_FILE} \
 		--create-makefile-dependencies=artifacts/.rmtoo_dependencies
 
 artifacts/req-graph1.png: artifacts/req-graph1.dot
