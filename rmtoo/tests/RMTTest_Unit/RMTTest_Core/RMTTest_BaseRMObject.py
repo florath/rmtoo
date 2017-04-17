@@ -1,16 +1,20 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Test case for handling BaseRMObjects
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import unittest
-import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
@@ -44,7 +48,7 @@ class RMTTest_BaseRMObject(unittest.TestCase):
     def rmttest_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
 
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         tbrmo = TBRMObj()

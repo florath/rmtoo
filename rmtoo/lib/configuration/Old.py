@@ -29,7 +29,7 @@ class Old:
     def load_config(old_config_file):
         '''Load old config file'''
         # 'execfile' does not work here.
-        old_config_fd = file(old_config_file, "r")
+        old_config_fd = open(old_config_file, "r")
         conf_file = old_config_fd.read()
         # pylint: disable=W0122
         exec(conf_file)

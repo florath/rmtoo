@@ -10,7 +10,10 @@
 '''
 
 import os
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import unittest
 
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -29,7 +32,7 @@ class RMTTest_ReqSet(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement contains a tag where no handler exists"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules08"),
@@ -56,7 +59,7 @@ class RMTTest_ReqSet(unittest.TestCase):
 
     def rmttest_positive_02(self):
         "Requirement contains a tag where no handler exists - multiple tags"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules08"),

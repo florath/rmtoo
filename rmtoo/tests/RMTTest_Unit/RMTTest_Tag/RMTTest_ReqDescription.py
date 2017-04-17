@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for ReqDescription
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -14,6 +14,7 @@ from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+
 
 class RMTTest_ReqClass:
 
@@ -42,7 +43,7 @@ class RMTTest_ReqClass:
         "Requirement Tag Description - 500 chars description"
         config, req = create_parameters()
         long_text = ""
-        for c in xrange(0, 500):
+        for c in range(0, 500):
             long_text += "A"
         req = {"Description": RecordEntry("Description", long_text)}
 
@@ -66,7 +67,7 @@ class RMTTest_ReqClass:
         "Requirement Tag Description - description much too long"
         config, req = create_parameters()
         long_text = ""
-        for c in xrange(0, 1500):
+        for c in range(0, 1500):
             long_text += "A"
         req = {"Description": RecordEntry("Description", long_text)}
 
@@ -76,4 +77,3 @@ class RMTTest_ReqClass:
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 3)
-

@@ -8,10 +8,13 @@
 
  For licensing details see COPYING
 '''
-
 import os
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import unittest
+
 from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RequirementSet import RequirementSet
@@ -23,6 +26,7 @@ from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
 
 mod_base_dir = "tests/RMTTest_Unit/RMTTest_Core/testdata"
+
 
 class RMTTest_Modules(unittest.TestCase):
 
@@ -71,7 +75,7 @@ class RMTTest_Modules(unittest.TestCase):
 
     def rmttest_simple_05(self):
         "Module test with dependent modules"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules05"),
@@ -88,7 +92,7 @@ class RMTTest_Modules(unittest.TestCase):
 
     def rmttest_simple_06(self):
         "Requirement: Module test with exception thrown"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules06"),
@@ -106,7 +110,7 @@ class RMTTest_Modules(unittest.TestCase):
 
     def rmttest_simple_07(self):
         "RequirementSet: Module which renders set as errornous"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules07"),

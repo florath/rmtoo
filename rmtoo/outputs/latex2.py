@@ -8,8 +8,8 @@
 
  For licensing details see COPYING
 '''
-
 import io
+from six import iteritems
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraints import Constraints
@@ -104,7 +104,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             return
 
         self.__fd.write(u"\\%s{Constraints}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(constraints.iteritems()):
+        for cname, cnstrt in sorted(iteritems(constraints)):
             self.__output_latex_one_constraint(cname, cnstrt)
 
     # TODO: Code duplication from constraints
@@ -140,7 +140,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             return
 
         self.__fd.write(u"\\%s{Test Cases}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(testcases.iteritems()):
+        for cname, cnstrt in sorted(iteritems(testcases)):
             self.__output_latex_one_testcase(cname, cnstrt)
 
     def topic_set_post(self, topic_set):
@@ -232,7 +232,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             if cnstrt != None and cnstrt.len() > 0:
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
-                for key, val in sorted(cnstrt.get_values().iteritems()):
+                for key, val in sorted(iteritems(cnstrt.get_values())):
                     refid = latex2.__strescape(key)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                            % (refid, refid)

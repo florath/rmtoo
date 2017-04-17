@@ -626,7 +626,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
-        for r in self.__requirements.itervalues():
+        for r in itervalues(self.__requirements):
             with open(os.path.join(directory, r.id + ".req"), "w") as fd:
                 r.record.write_fd(fd)
         return True

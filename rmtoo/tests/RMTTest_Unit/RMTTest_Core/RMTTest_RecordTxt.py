@@ -8,7 +8,10 @@
 
  For licensing details see COPYING
 '''
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import unittest
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
@@ -69,7 +72,7 @@ class RMTTest_RecordTxt(unittest.TestCase):
     def rmttest_pos_02(self):
         "Check top level RecordAsDict (fd)"
 
-        fd = StringIO.StringIO(doc1)
+        fd = StringIO(doc1)
         txt_doc = TxtRecord.from_fd(fd, "Nothing", TxtIOConfig())
         txt_doc_dict = txt_doc.get_dict()
 

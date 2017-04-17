@@ -1,27 +1,31 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Record Text Test Class: try to run through all the possible states
   and error scenarios.
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 import unittest
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
+from rmtoo.tests.lib.Utils import hide_volatile
 
 comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
-"split_next_record;84; 80:CommentsEverywhere:%s:" + TxtParser.comment_in_req + "\n"
+"split_next_record;===LINENO===; 80:CommentsEverywhere:%s:" \
++ TxtParser.comment_in_req + "\n"
 
 class RMTTest_RecordTxt2(unittest.TestCase):
 
@@ -30,55 +34,58 @@ class RMTTest_RecordTxt2(unittest.TestCase):
 
         txt_doc = TxtRecord.from_string("", "Nothing", TxtIOConfig())
 
-        self.assertEqual(len(txt_doc), 0)
-        assert(txt_doc.get_comment() == "")
+        self.assertEqual(0, len(txt_doc))
+        self.assertEqual("", txt_doc.get_comment())
 
     def rmttest_neg_01(self):
         "TestRecordTxt2: rubbish in input"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
         txt_doc = TxtRecord.from_string("rubbish", "Rubbish",
                                         TxtIOConfig())
 
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
-        "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
+        "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
+        "not found\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_02(self):
         "TestRecordTxt2: only ':'"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
-        "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
+        "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
+        "not found\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_03(self):
         "TestRecordTxt2: no chars before ':'"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         txt_doc = TxtRecord.from_string(": something", "Rubbish",
                                         TxtIOConfig())
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
-        "split_entries;125; 79:Rubbish:1:Expected tag line not found\n"
+        "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
+        "not found\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_04(self):
         "TestRecordTxt2: long long line"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
@@ -88,17 +95,17 @@ class RMTTest_RecordTxt2(unittest.TestCase):
                                         "TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;" \
-        "check_line_length;77; 80:TooLong:1:line too long: is [18], " \
-        "max allowed [7]\n"
+        "check_line_length;===LINENO===; 80:TooLong:1:line too long: " \
+        "is [18], max allowed [7]\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_05(self):
         "TestRecordTxt2: long long line - check for lineno"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
@@ -115,17 +122,17 @@ good: but too long
                                         "TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;" \
-        "check_line_length;77; 80:TooLong:6:line too long: is [18], " \
-        "max allowed [7]\n"
+        "check_line_length;===LINENO===; 80:TooLong:6:line too long: " \
+        "is [18], max allowed [7]\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_06(self):
         "TestRecordTxt2: long long line - check for multiple errors"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
@@ -141,35 +148,39 @@ good: but too long
 also good: but too long
 #10 gsst
  dhd
-#12 dhdh 
+#12 dhdh
 d:
 #14
 """,
                                         "TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;" \
-        "check_line_length;77; 80:TooLong:6:line too long: is [18], " \
-        "max allowed [7]\n" \
-        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;77; 80:" \
+        "check_line_length;===LINENO===; 80:TooLong:6:line too long: " \
+        "is [18], max allowed [7]\n" \
+        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;" \
+        "===LINENO===; 80:" \
         "TooLong:9:line too long: is [23], max allowed [7]\n" \
-        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;77; 80:" \
+        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;" \
+        "===LINENO===; 80:" \
         "TooLong:10:line too long: is [8], max allowed [7]\n" \
-        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;77; 80:" \
-        "TooLong:12:line too long: is [9], max allowed [7]\n" \
-        "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;split_next_record;84; 80:" \
+        "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;check_line_length;" \
+        "===LINENO===; 80:" \
+        "TooLong:12:line too long: is [8], max allowed [7]\n" \
+        "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;split_next_record;" \
+        "===LINENO===; 80:" \
         "TooLong:11:Compatibility info: Comments will be reordered when " \
         "they are re-written with rmtoo-tools. Please consult " \
         "rmtoo-req-format(5) or rmtoo-topic-format(5)\n"
-        
+
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_07(self):
         "TestRecordTxt2: test comments between content lines"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         tioconfig = TxtIOConfig()
@@ -183,13 +194,13 @@ t2: uuuu
 #8 Here a comment is also not allowed
  wwww
 t3: uuuu
-#11 Same as t1 but with additional 
+#11 Same as t1 but with additional
 #12 comment at the end of the requirement
  vvvv
 #14 End comment for t3
 t4: uuuu
  vvvv
-#17 Same as t2 but with additional 
+#17 Same as t2 but with additional
 #18 comment at the end of the requirement
  wwww
 #20 End comment for t4
@@ -197,17 +208,17 @@ t4: uuuu
                                         "CommentsEverywhere", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), True)
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         result_expected = comment_line % 5 + comment_line % 9 + \
         comment_line % 13 + comment_line % 19
-        
+
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_08(self):
         "TestRecordTxt2: only intro content line"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         tioconfig = TxtIOConfig()
@@ -216,7 +227,7 @@ t4: uuuu
 
         self.assertEqual(txt_doc.is_usable(), True)
         self.assertEqual(txt_doc.get_comment(), "1 com\n")
-        lstderr = hide_timestamp(mstderr.getvalue())
+        lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        
+
         self.assertEquals("", lstderr)

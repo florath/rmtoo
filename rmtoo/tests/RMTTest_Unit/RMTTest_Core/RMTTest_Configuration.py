@@ -9,7 +9,11 @@
  For licensing details see COPYING
 '''
 
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 import unittest
 import json
 import os
@@ -58,7 +62,7 @@ class RMTTest_Configuration(unittest.TestCase):
 
     def rmttest_json_init_add_new_cmd_line_params(self):
         '''Init Cfg with JSON and adds parameters with command line options'''
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         # Create two JSON files.
@@ -87,7 +91,7 @@ class RMTTest_Configuration(unittest.TestCase):
 
     def rmttest_json_init_add_old2_cmd_line_params(self):
         '''Init Cfg with old config and adds params with command line opts'''
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')

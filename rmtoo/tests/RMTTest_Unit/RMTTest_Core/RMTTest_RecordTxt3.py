@@ -10,7 +10,10 @@
 
  For licensing details see COPYING
 '''
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import unittest
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
@@ -38,7 +41,7 @@ class RMTTest_RecordTxt3(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "TestRecordTxt3: long long complicated input"
-        mstderr = StringIO.StringIO()
+        mstderr = StringIO()
         init_logger(mstderr)
 
         txt_doc = TxtRecord.from_string(tc1i, "rmtoo", TxtIOConfig())

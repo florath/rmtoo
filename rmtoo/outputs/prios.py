@@ -237,7 +237,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
                 rv = Statistics.get_units(topic_set.get_requirement_set(),
                                           self._start_date, self._end_date)
-                x = list(i for i in xrange(0, len(rv)))
+                x = list(i for i in range(0, len(rv)))
                 y = list(x[0] + x[1] for x in rv)
 
                 gradient, intercept, r_value, p_value, std_err = \

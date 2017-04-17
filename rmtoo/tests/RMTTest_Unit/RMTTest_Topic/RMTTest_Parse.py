@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Topic tests
-     
- (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -17,6 +17,7 @@ from rmtoo.tests.lib.TestInputModules import TestInputModules
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
+
 
 class RMTTest_Parse:
 
@@ -36,7 +37,7 @@ class RMTTest_Parse:
             tinmod = TestInputModules()
             topicset = TopicSet(cfg, tvcs, "bkdkd", tobjcache, tinmod)
             assert(False)
-        except AssertionError, ae:
+        except AssertionError as ae:
             pass
 
     def rmttest_positive_02(self):
