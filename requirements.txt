@@ -1,0 +1,6 @@
+flake8
+numpy
+scipy
+setuptools
+nose
+nose-cov
