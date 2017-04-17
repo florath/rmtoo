@@ -8,7 +8,9 @@ import sys
 def _init_externals():
         """Initialize external projects by putting them into the path"""
         mod_dir = distutils.sysconfig.get_python_lib()
-        spath = os.path.join(mod_dir, 'rmtoo', 'contrib', 'gitdb')
+        print("MOD DIR", mod_dir)
+        spath = os.path.join(mod_dir, 'rmtoo', 'rmtoo', 'contrib', 'gitdb')
+        print("SPATH", spath)
         sys.path.append(spath)
 
 #} END initialization
@@ -16,6 +18,6 @@ def _init_externals():
 _init_externals()
 
 # default imports
-from gitdb.db import *
-from gitdb.base import *
-from gitdb.stream import *
+from db import *
+from base import *
+from stream import *
