@@ -34,7 +34,7 @@ class RMTTest_BB006:
         main_impl(["-j", "file://" + mdir + "/input/Config.json",
                    "-j", '''json:{"actions": {"create_makefile_dependencies":
                  "${ENV:rmtoo_test_dir}/makefile_deps"}}'''],
-             mout, merr, exitfun=myexit)
+                  mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")
         check_file_results(mdir)

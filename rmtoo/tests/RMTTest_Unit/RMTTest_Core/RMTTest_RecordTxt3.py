@@ -1,17 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Record Text Test Class: try to run through all the possible states
  and error scenarios.
  Extended version
 
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import StringIO
+import unittest
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -26,14 +26,15 @@ Description: \textsl{rmtoo} \textbf{must} exists.
 Rationale: The world needs a good, usable and free Requirements
  Management Tool.\par
  It looks that there are no such programs out.\par
- But: it's complex! 
+ But: it's complex!
 Status: not done
 Priority: development:10
 Effort estimation: 5
 Topic: ReqsDocument
 """
 
-class RMTTest_RecordTxt3:
+
+class RMTTest_RecordTxt3(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "TestRecordTxt3: long long complicated input"
@@ -43,13 +44,13 @@ class RMTTest_RecordTxt3:
         txt_doc = TxtRecord.from_string(tc1i, "rmtoo", TxtIOConfig())
         d = txt_doc.get_dict()
 
-        assert(d["Rationale"].get_content() ==
-               "The world needs a good, usable and free "
-               "Requirements Management Tool.\par It looks "
-               "that there are no such programs out.\par But: it's complex! ")
+        self.assertEqual(
+            "The world needs a good, usable and free "
+            "Requirements Management Tool.\par It looks "
+            "that there are no such programs out.\par But: it's complex!",
+            d["Rationale"].get_content())
 
-        assert(len(txt_doc) == 11)
-        assert(txt_doc.get_comment() == "")
+        self.assertEqual(11, len(txt_doc))
+        self.assertEqual("", txt_doc.get_comment())
 
         tear_down_log_handler()
-
