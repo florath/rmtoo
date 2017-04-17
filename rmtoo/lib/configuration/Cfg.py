@@ -6,9 +6,6 @@
  sources, i.e. configuration class, JSON configuration objects and the
  command line.
 
- History: this is a new implementation of the old Configuration
- and command line parameter handling.
-
  (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
@@ -19,7 +16,6 @@ import json
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
-from rmtoo.lib.configuration.Old import Old
 from rmtoo.lib.configuration.InternalCfg import InternalCfg
 from rmtoo.lib.RMTException import RMTException
 
@@ -136,30 +132,10 @@ class Cfg(object):
             # Nothing to do: JSON entries not available
             pass
 
-    def __evaluate_old_config(self):
-        '''Looks if the old configuration file handling must be applied -
-           and if so applies it.'''
-        try:
-            old_config_file = self.get_value(['configuration', 'deprecated',
-                                              'config_file'])
-            # housekeeping
-            del(self.config['configuration']['deprecated']['config_file'])
-            if self.config['configuration']['deprecated'] == {}:
-                del(self.config['configuration']['deprecated'])
-            if self.config['configuration'] == {}:
-                del(self.config['configuration'])
-
-            Old.convert_to_new(self, old_config_file)
-        except RMTException:
-            # Nothing to do: old configuration file not specified
-            pass
-
     def evaluate(self):
         '''Evaluates the configuration.
            This does two things:
-           o Read in the 'old' configuration
            o Read in the new configuration'''
-        self.__evaluate_old_config()
         self.__evaluate_json()
 
     def get_raw(self, key):
