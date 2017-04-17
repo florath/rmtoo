@@ -8,10 +8,11 @@ import sys
 def _init_externals():
         """Initialize external projects by putting them into the path"""
         mod_dir = distutils.sysconfig.get_python_lib()
-        print("MOD DIR", mod_dir)
+        print("gitdb MOD DIR", mod_dir)
         spath = os.path.join(mod_dir, 'rmtoo', 'rmtoo', 'contrib', 'gitdb')
-        print("SPATH", spath)
+        print("gitdb SPATH", spath)
         sys.path.append(spath)
+        print("gitdb sys.path", sys.path)
 
 #} END initialization
 

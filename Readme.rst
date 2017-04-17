@@ -1,6 +1,10 @@
 rmToo
 +++++
 
+Open Source Requirements Management Tool
+
+.. image:: https://travis-ci.org/florath/rmtoo.svg?branch=master
+    :target: https://travis-ci.org/florath/rmtoo
 
 Introduction
 ============

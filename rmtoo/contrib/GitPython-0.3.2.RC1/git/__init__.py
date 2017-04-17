@@ -16,8 +16,11 @@ __version__ = '0.3.2 RC1'
 def _init_externals():
         """Initialize external projects by putting them into the path"""
         mod_dir = distutils.sysconfig.get_python_lib()
-        spath = os.path.join(mod_dir, 'rmtoo', 'contrib', 'gitdb')
+        print("git MOD DIR", mod_dir)
+        spath = os.path.join(mod_dir, 'rmtoo', 'rmtoo', 'contrib', 'gitdb')
+        print("gitdb SPATH", spath)
         sys.path.append(spath)
+        print("gitdb sys.path", sys.path)
         
         try:
                 import gitdb
