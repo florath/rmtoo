@@ -11,6 +11,7 @@
 
  For licensing details see COPYING
 '''
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
@@ -36,6 +37,7 @@ class TxtRecord(Record):
     def from_string(cls, in_str, rid, tioconfig):
         '''Construct a TxtRecord from a given string.
            rid is the Requirement ID.'''
+        Encoding.check_unicode(in_str)
         obj = cls(tioconfig)
         obj.parse(in_str, rid)
         return obj
@@ -80,11 +82,15 @@ class TxtRecord(Record):
     # Parse everything from a string
     def parse(self, s, rid):
         # Split up into lines
+        Encoding.check_unicode(s)
         sl = s.split("\n")
         self.check_line_length(sl, rid)
         self.maybe_remove_last_empty_line(sl)
         self.comment_raw = TxtParser.extract_record_comment(sl)
+        for c in self.comment_raw:
+            Encoding.check_unicode(c)
         self.set_comment(TxtParser.extract_comment(self.comment_raw))
+        Encoding.check_unicode(self.get_comment())
 
         success, rp = TxtParser.split_entries(
             sl, rid, self, len(self.comment_raw) + 1)

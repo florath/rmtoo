@@ -10,6 +10,7 @@
 
  For licensing details see COPYING
 '''
+import io
 import json
 import os
 from six import iteritems, itervalues
@@ -620,14 +621,15 @@ class RequirementSet(Digraph, UsableFlag):
                 r.record.set_content("Solved by", on)
             except ValueError as ve:
                 r.record.append(RecordEntry(
-                        "Solved by", on,
-                        "Added by rmtoo-normalize-dependencies"))
+                        u"Solved by", on,
+                        u"Added by rmtoo-normalize-dependencies"))
         return True
 
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
         for r in itervalues(self.__requirements):
-            with open(os.path.join(directory, r.id + ".req"), "w") as fd:
+            with io.open(os.path.join(directory, r.id + ".req"), "w",
+                         encoding = "utf-8") as fd:
                 r.record.write_fd(fd)
         return True
 

@@ -1,4 +1,5 @@
 flake8
+future
 gitdb==0.6.4
 gitpython==1.0.2
 nose

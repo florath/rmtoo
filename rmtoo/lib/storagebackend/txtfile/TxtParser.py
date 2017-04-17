@@ -133,7 +133,7 @@ class TxtParser(object):
     def extract_comment(cl):
         '''Takes a raw comment as input and converts it to a user readable
            string.'''
-        s = ""
+        s = u""
         for l in cl:
             # Empty lines -> \n
             if len(l)==0:
@@ -149,4 +149,3 @@ class TxtParser(object):
         if len(sl)==0:
             return ""
         return '\n'.join(sl) + '\n'
-

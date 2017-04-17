@@ -2,9 +2,9 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
-  Constraint class 
+  Constraint class
 
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -17,4 +17,4 @@ class Constraint(BaseRMObject):
     def __init__(self, content, rid, file_path, mods, config):
         BaseRMObject.__init__(self, InputModuleTypes.ctstag, content,
                               rid, mods,
-                              config, "constraints", file_path)
+                              config, u"constraints", file_path)

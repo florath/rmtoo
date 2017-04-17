@@ -74,7 +74,7 @@ setup(name=package, version=version,
       data_files=add_data,
       install_requires=["flake8", "numpy", "scipy", "setuptools", "nose",
                         "gitdb==0.6.4", "gitpython==1.0.2", "odfpy==1.3.4",
-                        "six"],
+                        "six", "future"],
 
       license="GPL V3",
       platforms="all",

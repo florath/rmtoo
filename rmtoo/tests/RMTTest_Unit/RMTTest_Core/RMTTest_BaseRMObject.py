@@ -36,8 +36,8 @@ class TBRMObj(BaseRMObject):
         tc.set_value('input.txtfile.whatsoever.max_line_length', 80)
         tm = TMods()
         tm.tagtypes = {"mytag": {"keyA": TMods()}}
-        BaseRMObject.__init__(self, "mytag", "", "MRid", tm,
-                              tc, "tobjs", None)
+        BaseRMObject.__init__(self, u"mytag", u"", u"MRid", tm,
+                              tc, u"tobjs", None)
 
 expected_result = \
     "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \

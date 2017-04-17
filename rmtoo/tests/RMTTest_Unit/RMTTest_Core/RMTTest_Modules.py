@@ -80,7 +80,7 @@ class RMTTest_Modules(unittest.TestCase):
 
         mods = InputModules(os.path.join(mod_base_dir, "modules05"),
                        {}, [], mods_list("modules05", mod_base_dir))
-        req = Requirement("Name: t\n", 77, None, mods, TestConfig())
+        req = Requirement(u"Name: t\n", u"77", None, mods, TestConfig())
 
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
@@ -97,7 +97,7 @@ class RMTTest_Modules(unittest.TestCase):
 
         mods = InputModules(os.path.join(mod_base_dir, "modules06"),
                        {}, [], mods_list("modules06", mod_base_dir))
-        req = Requirement("Name: t\n", 77, None, mods, TestConfig())
+        req = Requirement(u"Name: t\n", u"77", None, mods, TestConfig())
 
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()

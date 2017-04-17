@@ -1,21 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Record Document Class
   This is the base class which defines the interface to retrieve or
   store data for the documents used in rmtoo.
   This class is independent of the underlying storage back-end.
 
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
-
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.UsableFlag import UsableFlag
+
 
 class Record(list, UsableFlag):
     '''This class represents one input document for the rmtoo tool

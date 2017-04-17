@@ -11,6 +11,7 @@
 
  For licensing details see COPYING
 '''
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -33,9 +34,11 @@ class BaseRMObject(UsableFlag):
         self.otags = {}
         # This is the list of converted values.
         self.values = {}
+        Encoding.check_unicode(rid)
         self.id = rid
         self.mods = mods
         self.config = config
+        Encoding.check_unicode(type_str)
         self.type_str = type_str
         self._file_path = file_path
         self.record = None
@@ -73,8 +76,9 @@ class BaseRMObject(UsableFlag):
     def __input(self, content):
         '''Read it in from the file (Syntactic input).'''
         txtio = TxtIOConfig(self.config, self.type_str)
-
+        Encoding.check_unicode(content)
         self.record = TxtRecord.from_string(content, self.id, txtio)
+
         brmo = self.record.get_dict()
         # This 'brmo' is always valid - if there is a problem, an exception
         # is raised.
@@ -100,7 +104,7 @@ class BaseRMObject(UsableFlag):
                       % (modkey, self.tbhtags))
                 if self.tbhtags not in module.get_type_set():
                     logger.error(LogFormatter.format(
-                                 90, "Wrong module type [%s] not in [%s]" %
+                                 90, u"Wrong module type [%s] not in [%s]" %
                                  (self.tbhtags, list(module.get_type_set()))))
                     continue
                 key, value = module.rewrite(self.id, reqs)
@@ -108,7 +112,7 @@ class BaseRMObject(UsableFlag):
                 # in the map.
                 if key in self.values:
                     logger.error(LogFormatter.format(
-                          54, "tag [%s] already defined" %
+                          54, u"tag [%s] already defined" %
                           (key), self.id))
                     self._set_not_usable()
                     # Also continue to get possible further error

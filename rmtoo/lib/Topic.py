@@ -1,31 +1,33 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Topic
    This holds one topic - and all subtopics of this topic
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 
+
 class Topic(Digraph.Node):
     '''Each topic has a level - which indicates the identation of the text
-       element. 
+       element.
        Each topic does link to it's super-topic.  This is the way to detect
-       cycles. 
+       cycles.
        This needs to be a digraph node, to handle dependencies within the
        topics - e.g. handling of makefile dependencies.'''
 
     def __read(self, tname, input_handler, commit, file_info, req_set):
         '''Read in the topic and create all the tags.'''
+        Encoding.check_unicode(tname)
         self.__tags = TxtRecord.from_string(
                     file_info.get_content(),
                     tname, input_handler.get_txt_io_config())

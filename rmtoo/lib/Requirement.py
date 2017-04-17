@@ -12,6 +12,7 @@
 import operator
 import sys
 
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.logging import tracer
@@ -50,10 +51,12 @@ class Requirement(Digraph.Node, BaseRMObject):
         assert False
 
     def __init__(self, content, rid, file_path, mods, config):
+        Encoding.check_unicode(content)
+        Encoding.check_unicode(rid)
         Digraph.Node.__init__(self, rid)
         BaseRMObject.__init__(self, InputModuleTypes.reqtag,
                               content, rid, mods,
-                              config, "requirements", file_path)
+                              config, u"requirements", file_path)
 
     def get_prio(self):
         return self.values["Priority"]

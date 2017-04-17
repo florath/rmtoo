@@ -38,9 +38,9 @@ class TestVCS(Interface):
 
         def __init__(self, tc=0):
             if tc == 0:
-                self.__content = "Name: ItsMe\nNothing: Else\n"
+                self.__content = u"Name: ItsMe\nNothing: Else\n"
             if tc == 1:
-                self.__content = "Nothing: Else\n"
+                self.__content = u"Nothing: Else\n"
 
         def get_filename(self):
             '''Returns the filename.'''
@@ -53,7 +53,7 @@ class TestVCS(Interface):
         def get_filename_sub_part(self):
             '''Return the part of the filename which is beneath the
                base directory.'''
-            return "/does/not/exist/topic.tic"
+            return u"/does/not/exist/topic.tic"
 
         def get_content(self):
             '''Returns the file content.'''
@@ -61,7 +61,7 @@ class TestVCS(Interface):
 
         def __str__(self):
             '''Returns the string representation.'''
-            return "NothingElse"
+            return u"NothingElse"
 
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the

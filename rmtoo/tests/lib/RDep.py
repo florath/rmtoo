@@ -10,6 +10,7 @@
 '''
 
 from rmtoo.lib.digraph.Digraph import Digraph
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.tests.lib.TestConfig import TestConfig
 
@@ -33,6 +34,7 @@ class TestReq(Digraph.Node):
 
     def __init__(self, name, tags, brmo=None):
         Digraph.Node.__init__(self, name)
+        Encoding.check_unicode(name)
         self.id = name
         self.otags = tags
         self.brmo = brmo

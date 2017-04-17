@@ -21,6 +21,11 @@ from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging import configure_logging
 
+try:
+    unicode
+except:
+    unicode = str
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     '''Checks are always done - to be sure that e.g. the dependencies
        are correct.
@@ -30,7 +35,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
         topic_continuum_set = TopicContinuumSet(input_mods, config)
     except RMTException as rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
-                      % rmte)
+                      % unicode(rmte))
         return False
 
     # If there is a problem with the last requirement set included in

@@ -8,7 +8,6 @@
 
  For licensing details see COPYING
 '''
-
 import os
 
 from rmtoo.outputs.latex2 import latex2
@@ -38,8 +37,8 @@ class RMTTest_OutputLaTeX2:
         tvcs = TestVCS(tcfg)
         tfile = tvcs.get_tfile1()
 
-        topic = Topic(None, "TName", tvcs, None, tfile, None)
-        topic.t = [RecordEntry("CompleteleOther", "My content"), ]
+        topic = Topic(None, u"TName", tvcs, None, tfile, None)
+        topic.t = [RecordEntry(u"CompleteleOther", u"My content"), ]
         tmpdir = create_tmp_dir()
 
         rset = RequirementSet(tcfg)
@@ -74,18 +73,18 @@ class RMTTest_OutputLaTeX2:
                    os.path.join(tmpdir, "TestLateX2Out.tex")}
 
         l2 = latex2(mconfig)
-        req = Requirement(None, "TestReq", None, None, None)
+        req = Requirement(None, u"TestReq", None, None, None)
         req.values = {}
-        req.values["Name"] = RecordEntry("Name", "my name")
-        req.values["Type"] = Requirement.rt_requirement
-        req.values["Description"] = RecordEntry("Description", "my desc")
-        req.values["Status"] = RequirementStatusFinished(
-                None, "rid", "finished:meiner:2011-04-15:4h")
-        req.values["Class"] = ClassTypeImplementable()
+        req.values[u"Name"] = RecordEntry(u"Name", u"my name")
+        req.values[u"Type"] = Requirement.rt_requirement
+        req.values[u"Description"] = RecordEntry(u"Description", u"my desc")
+        req.values[u"Status"] = RequirementStatusFinished(
+                None, u"rid", u"finished:meiner:2011-04-15:4h")
+        req.values[u"Class"] = ClassTypeImplementable()
 
         ce3set = CE3Set()
         ce3 = CE3()
-        ce3set.insert("TestReq", ce3)
+        ce3set.insert(u"TestReq", ce3)
 
         rset = RequirementSet(tcfg)
         ttopic_set = TestTopicSet(rset)

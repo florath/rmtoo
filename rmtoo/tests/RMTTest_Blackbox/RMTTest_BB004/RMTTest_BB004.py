@@ -20,7 +20,7 @@ mdir = "tests/RMTTest_Blackbox/RMTTest_BB004"
 class RMTTest_BB004:
 
     def rmttest_PulpFictionInGermanOldConfig(self):
-        "Pulp Fiction's Mr Wulf in German (old configuration)."
+        "Pulp Fiction's Mr Wulf in German (new configuration)."
 
         def myexit(n):
             pass
@@ -30,5 +30,5 @@ class RMTTest_BB004:
         main_impl(["-j", "file://" + mdir + "/input/Config.json"],
                   mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
-        check_file_results(mdir)
+        check_file_results(mdir, "BB004")
         delete_result_is_dir()

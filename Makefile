@@ -79,4 +79,4 @@ deb:
 
 .PHONY: last_test
 last_test:
-	nosetests -w rmtoo -v -s $${TC}
+	nosetests -w rmtoo -v -s --testmatch ".*[rR][mM][tT][tT]est_.*" $${TC}

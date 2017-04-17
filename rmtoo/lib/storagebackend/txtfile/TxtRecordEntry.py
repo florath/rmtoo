@@ -1,22 +1,22 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Txt Record Entry Class
    This class hold additionally the original raw representation of
-   each record entry. 
-   
- (c) 2011-2011 by flonatel GmbH & Co. KG
+   each record entry.
+
+ (c) 2011-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.StringHelper import StringHelper
 
 class TxtRecordEntry(RecordEntry):
 
-    #pylint: disable=W0231
     def __init__(self, se):
         '''There must be three entries:
            1) initial line with tag
@@ -30,8 +30,11 @@ class TxtRecordEntry(RecordEntry):
 
     def __setup(self, se):
         '''Store the raw input for possible later output.'''
+        Encoding.check_unicode(se[0])
         self.tag_raw = se[0]
+        Encoding.check_unicode_list(se[1])
         self.content_raw = se[1]
+        Encoding.check_unicode_list(se[2])
         self.comment_raw = se[2]
         # Parse the rest
         tag = self.tag_raw[0:-1]
@@ -64,7 +67,7 @@ class TxtRecordEntry(RecordEntry):
         '''Write record entry to filesystem.'''
         if self.content_raw != None:
             fd.write(self.tag_raw)
-            fd.write(StringHelper.join_ate("\n", self.content_raw))
+            fd.write(StringHelper.join_ate(u"\n", self.content_raw))
         else:
             fd.write(self.get_tag())
             fd.write(": ")
@@ -72,7 +75,7 @@ class TxtRecordEntry(RecordEntry):
             fd.write("\n")
 
         if self.comment_raw != None:
-            fd.write(StringHelper.join_ate("\n", self.comment_raw))
+            fd.write(StringHelper.join_ate(u"\n", self.comment_raw))
         else:
             fd.write("# ")
             fd.write(self.get_comment())
@@ -90,4 +93,3 @@ class TxtRecordEntry(RecordEntry):
 
     def get_content_with_nl(self):
         return self.content_raw
-

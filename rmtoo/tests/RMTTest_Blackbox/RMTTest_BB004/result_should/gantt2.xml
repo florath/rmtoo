@@ -18,13 +18,13 @@ Aktuell ist das Auto voller Blut.]]>			</notes>
 		<task complete="0" duration="3" id="4" name="CleanUpSeats">
 			<notes>
 <![CDATA[== Description ==
-Die Autositzte \textbf{müssen} gereinigt werden.]]>			</notes>
+Die Autositzte müssen gereinigt werden.]]>			</notes>
 			<depend difference="0" hardness="Strong" id="2" type="2"/>
 		</task>
 		<task complete="0" duration="6" id="5" name="CleanUpVicentAndJules">
 			<notes>
 <![CDATA[== Description ==
-Vincent und Jules \textbf{müssen} gereinigt werden.
+Vincent und Jules müssen gereinigt werden.
 
 == Rationale ==
 Beide sind über und über mit Blut bedeckt.]]>			</notes>
@@ -42,7 +42,7 @@ Das fahrende Auto darf kein Aufsehen erregen - so kann der Tote transportiert we
 		<task complete="0" duration="3" id="8" name="CoverWithBlankets">
 			<notes>
 <![CDATA[== Description ==
-Die Autositze \textbf{müssen} mit Decken abgedeckt werden.
+Die Autositze müssen mit Decken abgedeckt werden.
 
 == Rationale ==
 Es ist nicht möglich, die Sitze vollständig zu reinigen. ]]>			</notes>
@@ -84,7 +84,7 @@ Die Putzmittel stehen in der Küche unter der Spüle.]]>			</notes>
 		<task complete="0" duration="3" id="9" name="RoughlyCleanUpSeats">
 			<notes>
 <![CDATA[== Description ==
-Die Autositzte \textbf{müssen} grob gereinigt werden.
+Die Autositzte müssen grob gereinigt werden.
 
 == Rationale ==
 Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinübergelegt.]]>			</notes>
@@ -93,7 +93,7 @@ Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinü
 		<task complete="0" duration="3" id="11" name="SoapAndColdWater">
 			<notes>
 <![CDATA[== Description ==
-Vincent und Jules \textbf{müssen} sich mit Seife und kaltem Wasser vom Blut reinigen.
+Vincent und Jules müssen sich mit Seife und kaltem Wasser vom Blut reinigen.
 
 == Rationale ==
 Sie sind blutig.]]>			</notes>
@@ -113,7 +113,7 @@ Die Kleidung ist blutig - Otto der Müllmann wird sich weigern dies einzusammeln
 		<task complete="0" duration="3" id="12" name="TakeOff">
 			<notes>
 <![CDATA[== Description ==
-Vincent und Jules \textbf{müssen} ihre Kleider ausziehen. 
+Vincent und Jules müssen ihre Kleider ausziehen. 
 
 == Rationale ==
 Sie sind blutig.

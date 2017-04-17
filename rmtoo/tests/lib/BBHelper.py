@@ -35,10 +35,12 @@ def find(mdir):
 
 
 def unified_diff(mdir, fname):
-    with open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r") as fa:
+    with io.open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r",
+                 encoding = "utf-8") as fa:
         a = fa.readlines()
 
-    with open(os.path.join(mdir, "result_should", fname), "r") as fb:
+    with io.open(os.path.join(mdir, "result_should", fname), "r",
+                 encoding = "utf-8") as fb:
         b = fb.readlines()
 
     r = []
@@ -101,8 +103,8 @@ def compare_results(mdir):
 
 # Open up the stdout and stderr files for testing proposes
 def create_std_log(mdir):
-    mout = open(os.path.join(mdir, "stdout"), "w")
-    merr = open(os.path.join(mdir, "stderr"), "w")
+    mout = io.open(os.path.join(mdir, "stdout"), "w", encoding = "utf-8")
+    merr = io.open(os.path.join(mdir, "stderr"), "w", encoding = "utf-8")
     return mout, merr
 
 
@@ -182,28 +184,28 @@ def extract_container_files(lof):
 def unify_output_dir(filename):
     fullpathname = os.path.join(os.environ["rmtoo_test_dir"], filename)
     # Read it in
-    with open(fullpathname, "r") as fd:
+    with io.open(fullpathname, "r", encoding = "utf-8") as fd:
         c = fd.read()
     # Replace
 
     d = c.replace(os.environ["rmtoo_test_dir"],
                   "===SYMBOLIC-OUTPUT-DIR===")
     # Write out
-    with open(fullpathname, "w") as fd:
+    with io.open(fullpathname, "w", encoding = "utf-8") as fd:
         fd.write(d)
 
 
-def check_result(missing_files, additional_files, diffs):
+def check_result(missing_files, additional_files, diffs, tcname):
     if len(missing_files) != 0:
-        print("MISSING FILES [%s]" % missing_files)
+        print("[%s] MISSING FILES [%s]" % (tcname, missing_files))
     assert(len(missing_files) == 0)
 
     if len(additional_files) != 0:
-        print("ADDITIONAL FILES [%s]" % additional_files)
+        print("[%s] ADDITIONAL FILES [%s]" % (tcname, additional_files))
     assert(len(additional_files) == 0)
 
     if len(diffs) != 0:
-        print("DIFFS [%s]" % diffs)
+        print("[%s] DIFFS [%s]" % (tcname, diffs))
     assert(len(diffs) == 0)
 
 
@@ -219,7 +221,7 @@ def prepare_stderr():
             new_stderr.write("%s" % hide_volatile(line))
 
 
-def check_file_results(mdir):
+def check_file_results(mdir, tcname="<UNKNOWN>"):
     prepare_stderr()
     missing_files, additional_files, diffs = compare_results(mdir)
-    check_result(missing_files, additional_files, diffs)
+    check_result(missing_files, additional_files, diffs, tcname)
