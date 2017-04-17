@@ -98,11 +98,11 @@ setup(name=package, version=version,
 
       entry_points={
           'console_scripts': [
-              "rmtoo = rmtoo.lib.RmtooMain.main",
+              "rmtoo = rmtoo.lib.RmtooMain:main",
               "rmtoo-configuration-convert = "
-              "rmtoo.lib.main.ConfigurationConvert.main",
+              "rmtoo.lib.main.ConfigurationConvert:main",
               "rmtoo-normalize-dependencies = "
-              "rmtoo.lib.main.NormalizeDependencies.main",
-              "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph.main",
+              "rmtoo.lib.main.NormalizeDependencies:main",
+              "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph:main",
           ]
       })
