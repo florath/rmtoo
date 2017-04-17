@@ -21,11 +21,11 @@ import sys
 # already been loaded.) 
 # Note that this is a hack which will be removed when the API 
 # to the git-python is stable.
-for sp in sys.path:
-    rc = os.path.join(sp, 'rmtoo/contrib')
-    if os.path.exists(rc):
-        sys.path.insert(0, rc)
-        break
+##for sp in sys.path:
+##    rc = os.path.join(sp, 'rmtoo/contrib')
+##    if os.path.exists(rc):
+##        sys.path.insert(0, rc)
+##        break
 #pylint: disable=F0401
 import git
 import copy
@@ -102,7 +102,7 @@ class Git(Interface):
                 self.__repo = git.Repo(directory)
                 repo_found = True
                 break
-            except git.exc.NoSuchPathError:
+            except (git.exc.InvalidGitRepositoryError, git.exc.NoSuchPathError):
                 tracer.debug("Sample directory [%s] does not exists" %
                              directory)
                 directory = os.path.dirname(directory)

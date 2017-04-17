@@ -1,15 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  The Configuration Class hold values from the different configuration
  sources, i.e. configuration class, JSON configuration objects and the
  command line.
- 
- History: this is a new implementation of the old Configuration 
- and command line parameter handling. 
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ History: this is a new implementation of the old Configuration
+ and command line parameter handling.
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -30,7 +30,7 @@ class Cfg:
 
     Stores all the values from different sources into one data container
     which is a dictionary.
-    
+
     Each part of a Cfg is again a Cfg - except the last step where it is
     a value.
 
@@ -90,13 +90,13 @@ class Cfg:
         self.__merge_dictionary(jdict)
 
     def __merge_dictionary(self, ldict):
-        '''Merges the contents of the local dictionary into the 
+        '''Merges the contents of the local dictionary into the
            existing one.
            If a value already exists, it is overwritten'''
         Utils.internal_merge_dictionary(self.config, ldict)
 
     def merge_cmd_line_params(self, args):
-        '''Merges the command line arguments into the 
+        '''Merges the command line arguments into the
            existing configuration.'''
         ldicts = CmdLineParams.create_dicts(args)
         for ldict in ldicts:
@@ -172,7 +172,7 @@ class Cfg:
            If key is not found a RMTException is thrown.'''
         try:
             return self.get_raw(key)
-        except CfgEx, cex:
+        except CfgEx as cex:
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found. (Root cause: [%s])"
                                % (key, cex))
@@ -231,7 +231,7 @@ class Cfg:
 
     def get_rvalue(self, key):
         '''Returns the real value of the given key.
-           If found the value is interpreted as string - 
+           If found the value is interpreted as string -
            and the ${} replacement takes place.
            If key is not found a RMTException is thrown.'''
         return self.dollar_replace(self.get_value(key))

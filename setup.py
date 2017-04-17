@@ -70,22 +70,10 @@ setup(name=package, version=version,
 
                 # Blackbox Tests
                 # are included with the 'add_data' statement.
-
-                # contrib
-                'rmtoo/contrib',
-                # git-python
-                'rmtoo/contrib/git',
-                'rmtoo/contrib/git/repo',
-                'rmtoo/contrib/git/refs',
-                'rmtoo/contrib/git/index',
-                'rmtoo/contrib/git/objects',
-                'rmtoo/contrib/git/objects/submodule',
-                # odf
-                'rmtoo/contrib/odf',
                 ],
       data_files=add_data,
       install_requires=['flake8', 'numpy', 'scipy', 'setuptools', 'nose',
-                        "gitdb==0.6.4"],
+                        "gitdb==0.6.4", "gitpython==1.0.2", "odfpy==1.3.4"],
 
       license="GPL V3",
       platforms="all",
