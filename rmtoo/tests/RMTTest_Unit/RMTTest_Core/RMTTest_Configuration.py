@@ -89,30 +89,6 @@ class RMTTest_Configuration(unittest.TestCase):
         tear_down_log_handler()
         self.failUnlessEqual(lstderr, "")
 
-    def rmttest_json_init_add_old2_cmd_line_params(self):
-        '''Init Cfg with old config and adds params with command line opts'''
-        mstderr = StringIO()
-        init_logger(mstderr)
-
-        config = Cfg.new_by_json_str('{"k": 1, "l": [2, 3], "m": {"n": 4}}')
-        config.merge_cmd_line_params(['-f', 'tests/RMTTest_Unit/RMTTest_Core/'
-                                      'testdata/Config3.py'])
-
-        self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
-        config.evaluate()
-        self.failUnlessEqual(
-            ['development', 'management', 'users', 'customers'],
-            config.get_value("requirements.stakeholders"))
-        lstderr = hide_volatile(mstderr.getvalue())
-        tear_down_log_handler()
-
-        expected_result \
-            = "===DATETIMESTAMP===;rmtoo;WARNING;Old;" \
-            "internal_convert_to_new;===LINENO===;100:Old Configuration: " \
-            "Not converted attributes: [['output_specs2']]\n"
-
-        self.failUnlessEqual(expected_result, lstderr)
-
     def rmttest_dollar_replacement_environment_variables(self):
         '''Check if the $ replacement works with environment variables.'''
         os.environ["huho"] = "ThereIsSomeVal"
