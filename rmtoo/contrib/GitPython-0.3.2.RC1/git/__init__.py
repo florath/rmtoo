@@ -14,17 +14,17 @@ __version__ = '0.3.2 RC1'
 
 #{ Initialization
 def _init_externals():
-	"""Initialize external projects by putting them into the path"""
-	mod_dir = distutils.sysconfig.get_python_lib()
-	spath = os.path.join(mod_dir, 'rmtoo', 'contrib', 'gitdb')
-	sys.path.append(spath)
-	
-	try:
-		import gitdb
-	except ImportError:
-		raise ImportError("'gitdb' could not be found in your PYTHONPATH")
-	#END verify import
-	
+        """Initialize external projects by putting them into the path"""
+        mod_dir = distutils.sysconfig.get_python_lib()
+        spath = os.path.join(mod_dir, 'rmtoo', 'contrib', 'gitdb')
+        sys.path.append(spath)
+        
+        try:
+                import gitdb
+        except ImportError:
+                raise ImportError("'gitdb' could not be found in your PYTHONPATH")
+        #END verify import
+        
 #} END initialization
 
 #################
@@ -44,14 +44,14 @@ from git.repo import Repo
 from git.remote import *
 from git.index import *
 from git.util import (
-						LockFile, 
-						BlockingLockFile, 
-						Stats,
-						Actor
-						)
+                                                LockFile, 
+                                                BlockingLockFile, 
+                                                Stats,
+                                                Actor
+                                                )
 
 #} END imports
 
 __all__ = [ name for name, obj in locals().items()
-			if not (name.startswith('_') or inspect.ismodule(obj)) ]
-			
+                        if not (name.startswith('_') or inspect.ismodule(obj)) ]
+                        
