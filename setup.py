@@ -73,12 +73,6 @@ setup(name=package, version=version,
 
                 # contrib
                 'rmtoo/contrib',
-                # async
-                "rmtoo/contrib/async",
-                'rmtoo/contrib/async/mod',
-                # gitdb
-                'rmtoo/contrib/gitdb',
-                'rmtoo/contrib/gitdb/db',
                 # git-python
                 'rmtoo/contrib/git',
                 'rmtoo/contrib/git/repo',
@@ -90,7 +84,8 @@ setup(name=package, version=version,
                 'rmtoo/contrib/odf',
                 ],
       data_files=add_data,
-      install_requires=['flake8', 'numpy', 'scipy', 'setuptools', 'nose' ],
+      install_requires=['flake8', 'numpy', 'scipy', 'setuptools', 'nose',
+                        "gitdb==0.5.4"],
 
       license="GPL V3",
       platforms="all",
