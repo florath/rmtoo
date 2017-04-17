@@ -85,7 +85,7 @@ setup(name=package, version=version,
                 ],
       data_files=add_data,
       install_requires=['flake8', 'numpy', 'scipy', 'setuptools', 'nose',
-                        "gitdb==0.5.4"],
+                        "gitdb==0.6.4"],
 
       license="GPL V3",
       platforms="all",
