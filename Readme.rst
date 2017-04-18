@@ -5,17 +5,12 @@ Open Source Requirements Management Tool
 
 .. image:: https://travis-ci.org/florath/rmtoo.svg?branch=master
     :target: https://travis-ci.org/florath/rmtoo
-
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
     :target: http://www.gnu.org/licenses/gpl-3.0
-
 .. image:: https://img.shields.io/codecov/c/github/codecov/example-python.svg
-
 .. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
-
-.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
-
-.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+.. image:: https://img.shields.io/pypi/dm/Django.svg
+.. image:: https://img.shields.io/pypi/v/nine.svg
 
 
 Introduction
