@@ -9,6 +9,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import copy
 import git
 import os
