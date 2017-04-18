@@ -33,8 +33,6 @@ add_data.append(
     "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
       "Roadmap.txt", "Readme.rst"]))
 
-print(add_data)
-
 def adjust(input, output):
     if os.path.exists(output):
         input_time = os.path.getmtime(input)
