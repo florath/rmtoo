@@ -13,11 +13,10 @@ Open Source Requirements Management Tool
     :target: https://codecov.io/gh/florath/rmtoo
 .. image:: https://img.shields.io/github/downloads/florath/rmtoo/total.svg
     :target: http://rmtoo.florath.net
-
-.. image:: https://img.shields.io/pypi/dm/Django.svg
-    :target: http://rmtoo.florath.net
-.. image:: https://img.shields.io/pypi/v/nine.svg
-    :target: http://rmtoo.florath.net
+.. image:: https://img.shields.io/pypi/dm/rmtoo.svg
+    :target: https://pypi.python.org/pypi/rmtoo
+.. image:: https://img.shields.io/pypi/v/rmtoo.svg
+    :target: https://pypi.python.org/pypi/rmtoo
 
 
 Introduction
@@ -157,7 +156,9 @@ lines below), the shell script ``setenv.sh`` is doing this for you.
 First Project
 =============
 
-Change to a directory where you want to create the new project.
+Change to a directory where you want to create the new project.  In
+the following code, please replace ``${RMTOO_PATH}`` with ``VENV`` if
+you are using virtualenv.
 
 .. code:: bash
 
@@ -177,7 +178,13 @@ the command
 
 .. code:: bash
 
-   $ man -l ${RMTOO_BASE_PATH}/rmtoo-YY/doc/man/rmtoo.7
+   $ man -l ${RMTOO_PATH}/doc/man/rmtoo.7
+
+When using the virtualenv, the use
+
+.. code:: bash
+
+   $ man -l venv/rmtoo/doc/man/rmtoo.7
 
 to get an overview over all available man pages.
 Those other man pages you can read also with man. Replace the
@@ -191,8 +198,9 @@ Additional Documentation
 ------------------------
 
 Additional documentation can be found in the directories
-``${RMTOO_BASE_PATH}/rmtoo-YY`` (especially the Readme files)
-``${RMTOO_BASE_PATH}/rmtoo-YY/doc/other``
+``${RMTOO_PATH}/rmtoo-YY`` (especially the Readme files)
+``${RMTOO_PATH}/rmtoo-YY/doc/other``.  When using ``VENV`` the
+documentation is stored in ``venv/rmtoo/doc``.
 
 Other Documentation
 ===================
