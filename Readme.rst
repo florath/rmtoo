@@ -8,9 +8,13 @@ Open Source Requirements Management Tool
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
     :target: http://www.gnu.org/licenses/gpl-3.0
 .. image:: https://img.shields.io/codecov/c/github/codecov/example-python.svg
+    :target:
 .. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+    :target:
 .. image:: https://img.shields.io/pypi/dm/Django.svg
+    :target:
 .. image:: https://img.shields.io/pypi/v/nine.svg
+    :target:
 
 
 Introduction
