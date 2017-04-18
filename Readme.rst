@@ -3,18 +3,21 @@ rmToo
 
 Open Source Requirements Management Tool
 
+.. image:: https://img.shields.io/github/release/florath/rmtoo.svg
+    :target: https://github.com/florath/rmtoo/releases
 .. image:: https://travis-ci.org/florath/rmtoo.svg?branch=master
     :target: https://travis-ci.org/florath/rmtoo
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
     :target: http://www.gnu.org/licenses/gpl-3.0
 .. image:: https://img.shields.io/codecov/c/github/codecov/example-python.svg
+    :target: https://codecov.io/gh/florath/rmtoo
+.. image:: https://img.shields.io/github/downloads/florath/rmtoo/total.svg
     :target: http://rmtoo.florath.net
-.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
-    :target: http://rmtoo.florath.net
-.. image:: https://img.shields.io/pypi/dm/Django.svg
-    :target: http://rmtoo.florath.net
-.. image:: https://img.shields.io/pypi/v/nine.svg
-    :target: http://rmtoo.florath.net
+
+.. COMMENT .. image:: https://img.shields.io/pypi/dm/Django.svg
+.. COMMENT    :target: http://rmtoo.florath.net
+.. COMMENT .. image:: https://img.shields.io/pypi/v/nine.svg
+.. COMMENT    :target: http://rmtoo.florath.net
 
 
 Introduction
