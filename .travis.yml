@@ -17,7 +17,12 @@ install:
   - pip install -r requirements.txt
   - pip install -e .
 
+addons:
+  sonarqube:
+    organization: "xppackp2o895tua4ki8o3g" # the key of the org you chose at step #3
+
 # command to run tests
 script:
   - make tests
   - codecov
+  - sonar-scanner
