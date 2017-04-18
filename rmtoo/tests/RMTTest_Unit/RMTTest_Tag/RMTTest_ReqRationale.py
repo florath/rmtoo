@@ -1,19 +1,21 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for ReqRationale
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqRationale import ReqRationale
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+
 
 class RMTTest_ReqRationale:
 
@@ -35,4 +37,3 @@ class RMTTest_ReqRationale:
         name, value = rt.rewrite("Rationale-test", req)
         assert(name == "Rationale")
         assert(value.get_content() == "something")
-

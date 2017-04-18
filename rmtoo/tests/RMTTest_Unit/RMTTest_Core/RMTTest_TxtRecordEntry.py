@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -25,7 +27,7 @@ class RMTTest_TxtRecordEntry(unittest.TestCase):
 
         r = TxtRecordEntry.format_entry(tre)
         expres = "mtag: iline\n#  Comment\n"
-        assert(r==expres)
+        self.assertEqual(expres, r)
 
     def rmttest_pos_02(self):
         "Check fd output with no raw comment"

@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqDescription import ReqDescription
 from rmtoo.lib.Requirement import Requirement

@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for RDepDependsOn
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
@@ -17,6 +18,7 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.InputModules import InputModules
+
 
 class RMTTest_RDepDependsOn:
 

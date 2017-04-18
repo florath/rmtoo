@@ -16,12 +16,13 @@
 # to overwrite these settings and do other things which might be
 # needed.
 import sys
-from Encoding import Encoding
+
+from rmtoo.lib.Encoding import Encoding
+
 
 class RecordEntry(object):
 
     def __init__(self, tag, content, comment=None):
-        print("TYPE TAG", type(tag))
         Encoding.check_unicode(tag)
         self.__tag = tag
         Encoding.check_unicode(content)
@@ -37,11 +38,11 @@ class RecordEntry(object):
         return self.__content.lstrip()
 
     def set_content(self, c):
-        self.__check_unicode(c)
+        Encoding.check_unicode(c)
         self.__content = c
 
     def set_comment(self, c):
-        self.__check_unicode(c)
+        Encoding.check_unicode(c)
         self.__comment = c
 
     def get_comment(self):

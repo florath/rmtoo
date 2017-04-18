@@ -3,9 +3,7 @@ This is a description of the next and next-next generation of to be
 implemented features.
 
 There is no exact time line because the amount of time spend for this
-tools changes from time to time (depending on many factors).  From
-history it may be assumed that it takes about 6 to 8 weeks for one
-release.
+tools changes from time to time (depending on many factors).
 
 Also the version number shown here might change: if there are other
 requests from customers those will be done first.  Also it might be
@@ -14,40 +12,14 @@ that from time to time there is a bug-fix release of rmtoo.
 The history of this file, i. e. the already implemented features can
 be found the appropriate release notes.
 
-There are some major aims to go for:
-o Get rmtoo listed in the INCOSE tool survey.
-o Get rmtoo added to at least one Linux distribution (preferred
-  Debian)
-
-=> Mail to INCOSE was sent - they answered that they will include
-   rmtoo in their list as soon as possible. (Status 2011-02-14:
-   they move servers - therefore the inclusion will take some time.) 
-=> This will be the point of time to get rmtoo into one Linux
-   distribution - preferred Debian.
-   Problem: will eat up a lot of time
-
-v23
-===
-o Think about GUI
-o Add support for Tasks / Issues
-  ( -> import from Bugzilla? )
-o If possible:
-  Add GUI for creating and modifying a configuration.
-o Check Web-Site for user features / bugs
-  - Fix (small) bugs
-  - Add feature request requirements
-o Man page: (???)
-  + graph
-  + graph2
-  + EfEU
-
 v24
 ===
-o Add to FAQ: max level of topic inclusion.
-o Add changes to presentation
-o More testcases
-o Archive old versions from slashdot to flonatel.de
-  (leave only last three versions on slashdot)
+o Destroy old slashdot side (only old versions available)
+o Support for python3
+o Support for tox
+o Support for pypi / pip install
+o Add badges for license, issues and coverage
+o Create ready to use VM for OTC.
 
 IMPORTANT
 =========
@@ -61,6 +33,23 @@ o Rethink about the modules: they should also run (at least partially)
 
 OTHER / LATER
 =============
+o Think about GUI
+o Add support for Tasks / Issues
+  ( -> import from Bugzilla? )
+o If possible:
+  Add GUI for creating and modifying a configuration.
+o Check Web-Site for user features / bugs
+  - Fix (small) bugs
+  - Add feature request requirements
+o Man page: (???)
+  + graph
+  + graph2
+  + EfEU
+o Add to FAQ: max level of topic inclusion.
+o Add changes to presentation
+o More testcases
+o Archive old versions from slashdot to flonatel.de
+  (leave only last three versions on slashdot)
 o Add tasks to rmtoo
   (Maybe import possibility from Bugzilla.)
 o Draw overview picture for current Sprint (a la 'Paper' overview with

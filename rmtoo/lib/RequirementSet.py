@@ -10,6 +10,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import io
 import json
 import os
@@ -119,9 +121,10 @@ class RequirementSet(Digraph, UsableFlag):
         for req in self.nodes:
             if len(req.brmo) > 0:
                 logger.error(LogFormatter.format(
-                           57, "No tag handler found for tag(s) '%s' "
-                           "- Hint: typo in tag(s)?" % list(req.brmo.keys()),
-                           req.get_id()))
+                    57, "No tag handler found for tag(s) '%s' "
+                    "- Hint: typo in tag(s)?"
+                    % json.dumps(list(req.brmo.keys())),
+                    req.get_id()))
                 all_handled = False
         return all_handled
 

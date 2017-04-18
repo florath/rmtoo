@@ -26,12 +26,13 @@ comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
 "split_next_record;===LINENO===; 80:CommentsEverywhere:%s:" \
 + TxtParser.comment_in_req + "\n"
 
+
 class RMTTest_RecordTxt2(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "TestRecordTxt2: empty input"
 
-        txt_doc = TxtRecord.from_string("", "Nothing", TxtIOConfig())
+        txt_doc = TxtRecord.from_string(u"", u"Nothing", TxtIOConfig())
 
         self.assertEqual(0, len(txt_doc))
         self.assertEqual("", txt_doc.get_comment())
@@ -40,7 +41,7 @@ class RMTTest_RecordTxt2(unittest.TestCase):
         "TestRecordTxt2: rubbish in input"
         mstderr = StringIO()
         init_logger(mstderr)
-        txt_doc = TxtRecord.from_string("rubbish", "Rubbish",
+        txt_doc = TxtRecord.from_string(u"rubbish", u"Rubbish",
                                         TxtIOConfig())
 
         self.assertEqual(txt_doc.is_usable(), False)
@@ -56,7 +57,7 @@ class RMTTest_RecordTxt2(unittest.TestCase):
         mstderr = StringIO()
         init_logger(mstderr)
 
-        txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
+        txt_doc = TxtRecord.from_string(u":", u"Rubbish", TxtIOConfig())
         self.assertEqual(txt_doc.is_usable(), False)
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
@@ -71,7 +72,7 @@ class RMTTest_RecordTxt2(unittest.TestCase):
         mstderr = StringIO()
         init_logger(mstderr)
 
-        txt_doc = TxtRecord.from_string(": something", "Rubbish",
+        txt_doc = TxtRecord.from_string(u": something", u"Rubbish",
                                         TxtIOConfig())
         self.assertEqual(txt_doc.is_usable(), False)
         lstderr = hide_volatile(mstderr.getvalue())
@@ -90,8 +91,8 @@ class RMTTest_RecordTxt2(unittest.TestCase):
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
 
         tioconfig = TxtIOConfig(cfg)
-        txt_doc = TxtRecord.from_string("good: but too long",
-                                        "TooLong", tioconfig)
+        txt_doc = TxtRecord.from_string(u"good: but too long",
+                                        u"TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
         lstderr = hide_volatile(mstderr.getvalue())
@@ -109,7 +110,7 @@ class RMTTest_RecordTxt2(unittest.TestCase):
 
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
         tioconfig = TxtIOConfig(cfg)
-        txt_doc = TxtRecord.from_string("""# com
+        txt_doc = TxtRecord.from_string(u"""# com
 ok: yes
  no
 # cs
@@ -118,7 +119,7 @@ good: but too long
 # dds
 
 """,
-                                        "TooLong", tioconfig)
+                                        u"TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
         lstderr = hide_volatile(mstderr.getvalue())
@@ -136,7 +137,7 @@ good: but too long
 
         cfg = Cfg.new_by_json_str('{"max_input_line_length": 7}')
         tioconfig = TxtIOConfig(cfg)
-        txt_doc = TxtRecord.from_string("""#1 com
+        txt_doc = TxtRecord.from_string(u"""#1 com
 ok: yes
  no
 #4 cs
@@ -151,7 +152,7 @@ also good: but too long
 d:
 #14
 """,
-                                        "TooLong", tioconfig)
+                                        u"TooLong", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), False)
         lstderr = hide_volatile(mstderr.getvalue())
@@ -183,7 +184,7 @@ d:
         init_logger(mstderr)
 
         tioconfig = TxtIOConfig()
-        txt_doc = TxtRecord.from_string("""#1 com
+        txt_doc = TxtRecord.from_string(u"""#1 com
 t1: uuuu
 #3 Comment not allowed here.
 #4 Should emitt a warning
@@ -204,7 +205,7 @@ t4: uuuu
  wwww
 #20 End comment for t4
 """,
-                                        "CommentsEverywhere", tioconfig)
+                                        u"CommentsEverywhere", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), True)
         lstderr = hide_volatile(mstderr.getvalue())
@@ -221,8 +222,8 @@ t4: uuuu
         init_logger(mstderr)
 
         tioconfig = TxtIOConfig()
-        txt_doc = TxtRecord.from_string("#1 com",
-                                        "OnlyEntryComment", tioconfig)
+        txt_doc = TxtRecord.from_string(u"#1 com",
+                                        u"OnlyEntryComment", tioconfig)
 
         self.assertEqual(txt_doc.is_usable(), True)
         self.assertEqual(txt_doc.get_comment(), "1 com\n")

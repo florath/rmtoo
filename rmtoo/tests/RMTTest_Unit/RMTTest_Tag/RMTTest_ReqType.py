@@ -1,19 +1,21 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for ReqType
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2016 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqType import ReqType
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+
 
 class RMTTest_ReqType:
 
@@ -79,4 +81,3 @@ class RMTTest_ReqType:
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 19)
-

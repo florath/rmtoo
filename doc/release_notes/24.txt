@@ -19,6 +19,8 @@ Support for python3.
 Removed dependency to legacy included versions of other projects
 (async, git, gitdb, odfpy).
 
+Complete support for UTF-8.
+
 
 Internal Changes
 ----------------

@@ -1,20 +1,23 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for RDepNo Directed Digraph
   (which finds strongly connected components)
 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
+import unittest
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
-class RMTTest_RDepSCC:
+
+class RMTTest_RDepSCC(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
@@ -24,7 +27,7 @@ class RMTTest_RDepSCC:
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        assert(result == True)
+        self.assertTrue(result)
 
     def rmttest_positive_01(self):
         "small digraph D -> B -> A and D -> C -> A"
@@ -35,7 +38,7 @@ class RMTTest_RDepSCC:
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        assert(result == True)
+        self.assertTrue(result)
 
     def rmttest_negative_01(self):
         "small digraph D -> B -> A and A -> C -> D"
@@ -46,5 +49,4 @@ class RMTTest_RDepSCC:
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        assert(result == False)
-
+        self.assertFalse(result)

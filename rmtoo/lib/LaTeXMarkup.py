@@ -41,17 +41,13 @@ class LaTeXMarkup(object):
 
     @staticmethod
     def replace_generic(cmdset, t):
-        print("REPLACE FROM", t)
-        print("REPLACE TYPE", type(t))
         for i in range(len(LaTeXMarkup.markup)):
             t = re.sub(LaTeXMarkup.markup[i], cmdset[i], t,
                        flags = re.UNICODE)
-        print("REPLACE TO", t)
         return t
 
     @staticmethod
     def replace_html(t):
-        print("TTTTTTTTTTYYYYYYYYYYYYYYYYYYYYPPPPPPPPPPPE", type(t))
         return LaTeXMarkup.replace_generic(
             LaTeXMarkup2HTML.convert_markup, t)
 

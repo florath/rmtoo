@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
@@ -21,7 +22,7 @@ class RMTTest_Requirement:
 
         try:
             Requirement("DTag: content1\n"
-                        "DTag: content2\n", 1, None,
+                        "DTag: content2\n", "1", None,
                         None, TestConfig())
             assert(False)
         except RMTException as rmte:

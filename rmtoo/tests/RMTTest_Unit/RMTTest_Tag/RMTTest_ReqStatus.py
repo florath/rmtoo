@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for ReqStatus
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqStatus import ReqStatus
 from rmtoo.lib.Requirement import Requirement
@@ -16,6 +17,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusAssigned, RequirementStatusFinished
+
 
 class RMTTest_ReqStatus:
 
@@ -63,4 +65,3 @@ class RMTTest_ReqStatus:
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 91)
-

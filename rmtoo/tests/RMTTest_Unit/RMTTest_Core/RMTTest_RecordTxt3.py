@@ -20,7 +20,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 
-tc1i = """Name: rmtoo
+tc1i = u"""Name: rmtoo
 Type: master requirement
 Invented on: 2010-02-06
 Invented by: flonatel
@@ -44,7 +44,7 @@ class RMTTest_RecordTxt3(unittest.TestCase):
         mstderr = StringIO()
         init_logger(mstderr)
 
-        txt_doc = TxtRecord.from_string(tc1i, "rmtoo", TxtIOConfig())
+        txt_doc = TxtRecord.from_string(tc1i, u"rmtoo", TxtIOConfig())
         d = txt_doc.get_dict()
 
         self.assertEqual(

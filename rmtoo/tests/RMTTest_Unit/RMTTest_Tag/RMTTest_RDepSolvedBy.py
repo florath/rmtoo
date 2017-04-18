@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import unittest
 try:
     from StringIO import StringIO
@@ -24,6 +26,7 @@ from rmtoo.lib.logging.MemLog import MemLog
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
+
 
 class RMTTest_RDepSolvedBy(unittest.TestCase):
 

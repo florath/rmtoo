@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for ReqInventedBy
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqInventedBy import ReqInventedBy
 from rmtoo.lib.Requirement import Requirement
@@ -54,4 +55,3 @@ class RMTTest_ReqInventedBy:
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 6)
-

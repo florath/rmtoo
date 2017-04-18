@@ -41,3 +41,11 @@ class Encoding(object):
             assert False
         for s in l:
             Encoding.check_unicode(s)
+
+    @staticmethod
+    def to_unicode(l):
+        if sys.version_info[0] == 2:
+            return unicode(l)
+        if sys.version_info[0] == 3:
+            return str(l)
+        assert False

@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 import os
 try:
@@ -32,6 +33,7 @@ class RMTTest_ReqSet(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement contains a tag where no handler exists"
+        self.maxDiff = 1000
         mstderr = StringIO()
         init_logger(mstderr)
 
@@ -39,7 +41,8 @@ class RMTTest_ReqSet(unittest.TestCase):
                             {}, [], mods_list("modules08", mod_base_dir))
 
         reqs = RequirementSet(None)
-        req = Requirement("Hubbel: bubbel", "hubbel", reqs, mods, TestConfig())
+        req = Requirement("Hubbel: bubbel", "hubbel",
+                          reqs, mods, TestConfig())
         reqs._add_requirement(req)
         reqs.nodes.append(req)
         reqs._handle_modules(mods)
@@ -50,7 +53,7 @@ class RMTTest_ReqSet(unittest.TestCase):
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
             "__all_tags_handled;===LINENO===; 57:hubbel:No tag handler " \
             "found for " \
-            "tag(s) '['Hubbel']' - Hint: typo in tag(s)?\n" \
+            "tag(s) '[\"Hubbel\"]' - Hint: typo in tag(s)?\n" \
             "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
             "===LINENO===; 56:There were errors encountered during parsing " \
             "and checking - can't continue.\n"
@@ -78,7 +81,7 @@ class RMTTest_ReqSet(unittest.TestCase):
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
             "__all_tags_handled;===LINENO===; 57:InvalidTagReq:" \
             "No tag handler found " \
-            "for tag(s) '['Siebel', 'Hubbel']' - Hint: typo in tag(s)?\n" \
+            "for tag(s) '[\"Siebel\", \"Hubbel\"]' - Hint: typo in tag(s)?\n" \
             "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
             "===LINENO===; 56:There were errors encountered during parsing " \
             "and checking - can't continue.\n"

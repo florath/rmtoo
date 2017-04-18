@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for RDepPriority
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepPriority import RDepPriority
@@ -37,7 +38,7 @@ Type: requirement''', 'B', None, None, None)
 
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
-        
+
         assert(reqset.get_named_node("A").get_value("Priority") == 1.0)
         assert(reqset.get_named_node("B").get_value("Priority") == 0.8)
 
