@@ -3,6 +3,8 @@ language: python
 git:
   depth: 5000
 
+dist: trusty
+
 python:
   - "2.7"
   - "3.4"
