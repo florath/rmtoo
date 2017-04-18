@@ -1,13 +1,13 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-#  Unit test for calling main of Normalize Dependencies
-#
-# (c) 2011,2017 on flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+
+  Unit test for calling main of Normalize Dependencies.
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 
 import sys
 import unittest
@@ -15,10 +15,11 @@ import unittest
 from rmtoo.lib.main.NormalizeDependencies import main_impl
 from rmtoo.lib.RMTException import RMTException
 
+
 class RMTTest_MainNormalizeDependencies(unittest.TestCase):
 
     def rmttest_neg_01(self):
-        "NormalizeDependencies: check if result is correctly handled: Exception"
+        """NormalizeDependencies: is result is correctly handled: Exception"""
         global myexit_called
         myexit_called = False
         global myexit_val
@@ -36,4 +37,3 @@ class RMTTest_MainNormalizeDependencies(unittest.TestCase):
         main_impl(None, None, sys.stderr, mymain, myexit)
         self.assertTrue(myexit_called)
         self.assertEqual(1, myexit_val)
-

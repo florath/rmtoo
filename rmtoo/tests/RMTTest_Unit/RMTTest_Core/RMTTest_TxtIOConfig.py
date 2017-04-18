@@ -1,16 +1,16 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for Topic
 
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
+
 
 class RMTTest_TxtIOConfig:
 

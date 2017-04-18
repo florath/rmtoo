@@ -80,14 +80,14 @@ class RMTTest_ReqSet(unittest.TestCase):
         tear_down_log_handler()
         result \
             = re.match(
-                "^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-                "__all_tags_handled;===LINENO===; 57:InvalidTagReq:" \
-                "No tag handler found " \
-                "for tag\(s\) '\[.*\]' - Hint: typo in tag\(s\)\?\n" \
-                "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-                "_handle_modules;" \
-                "===LINENO===; 56:There were errors encountered " \
-                "during parsing " \
+                "^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
+                "__all_tags_handled;===LINENO===; 57:InvalidTagReq:"
+                "No tag handler found "
+                "for tag\(s\) '\[.*\]' - Hint: typo in tag\(s\)\?\n"
+                "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
+                "_handle_modules;"
+                "===LINENO===; 56:There were errors encountered "
+                "during parsing "
                 "and checking - can't continue.\n$", lstderr)
 
         self.assertTrue(result)

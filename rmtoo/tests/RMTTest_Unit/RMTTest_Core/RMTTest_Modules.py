@@ -42,24 +42,23 @@ class RMTTest_Modules(unittest.TestCase):
         d = InputModules._split_directory("/tmp/this/is/a/path")
         assert(d == ['/', 'tmp', 'this', 'is', 'a', 'path'])
 
-
     def rmttest_simple_01(self):
         "Simple module test"
-        mods = InputModules(os.path.join(mod_base_dir, "modules01"),
-                       {}, [], mods_list("modules01", mod_base_dir))
+        InputModules(os.path.join(mod_base_dir, "modules01"),
+                     {}, [], mods_list("modules01", mod_base_dir))
 
     def rmttest_simple_02(self):
         "Module test with dependend modules"
         mods = InputModules(os.path.join(mod_base_dir, "modules02"),
-                       {}, [], mods_list("modules02", mod_base_dir))
+                            {}, [], mods_list("modules02", mod_base_dir))
         mods_name = node_list_to_node_name_list(mods.get_reqdeps_sorted())
         assert(mods_name == ['Module01', 'Module02'])
 
     def rmttest_simple_03(self):
         "Module test with invalid dependency "
         try:
-            mods = InputModules(os.path.join(mod_base_dir, "modules03"),
-                           {}, [], mods_list("modules03", mod_base_dir))
+            InputModules(os.path.join(mod_base_dir, "modules03"),
+                         {}, [], mods_list("modules03", mod_base_dir))
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 27)
@@ -67,8 +66,8 @@ class RMTTest_Modules(unittest.TestCase):
     def rmttest_simple_04(self):
         "Module test with cyclic dependency "
         try:
-            mods = InputModules(os.path.join(mod_base_dir, "modules04"),
-                           {}, [], mods_list("modules04", mod_base_dir))
+            InputModules(os.path.join(mod_base_dir, "modules04"),
+                         {}, [], mods_list("modules04", mod_base_dir))
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 26)
@@ -79,15 +78,16 @@ class RMTTest_Modules(unittest.TestCase):
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules05"),
-                       {}, [], mods_list("modules05", mod_base_dir))
+                            {}, [], mods_list("modules05", mod_base_dir))
         req = Requirement(u"Name: t\n", u"77", None, mods, TestConfig())
 
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
-        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;===LINENO===; 54:77:tag [SameTag] " \
-        "already defined\n"
+        expected_result \
+            = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
+            "handle_modules_tag;===LINENO===; 54:77:tag [SameTag] " \
+            "already defined\n"
         self.assertEqual(lstderr, expected_result)
 
     def rmttest_simple_06(self):
@@ -96,16 +96,19 @@ class RMTTest_Modules(unittest.TestCase):
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules06"),
-                       {}, [], mods_list("modules06", mod_base_dir))
+                            {}, [], mods_list("modules06", mod_base_dir))
         req = Requirement(u"Name: t\n", u"77", None, mods, TestConfig())
 
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         self.assertEqual(req.is_usable(), False)
-        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
-        "handle_modules_tag;===LINENO===; 55:TCExcept\n" \
-        "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
-        "===LINENO===; 41:77:semantic error occurred in module [Module01]\n"
+        expected_result \
+            = "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
+            "handle_modules_tag;===LINENO===; 55:TCExcept\n" \
+            "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;" \
+            "handle_modules_tag;" \
+            "===LINENO===; 41:77:semantic error occurred " \
+            "in module [Module01]\n"
         self.assertEqual(lstderr, expected_result)
 
     def rmttest_simple_07(self):
@@ -114,7 +117,7 @@ class RMTTest_Modules(unittest.TestCase):
         init_logger(mstderr)
 
         mods = InputModules(os.path.join(mod_base_dir, "modules07"),
-                       {}, [], mods_list("modules07", mod_base_dir))
+                            {}, [], mods_list("modules07", mod_base_dir))
         reqs = RequirementSet(None)
         reqs._handle_modules(mods)
         self.assertEqual(reqs.is_usable(), False)
@@ -122,7 +125,8 @@ class RMTTest_Modules(unittest.TestCase):
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
-        expected_result = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-        "_handle_modules;===LINENO===; 43:there was a problem handling the " \
-        "requirement set modules\n"
+        expected_result \
+            = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
+            "_handle_modules;===LINENO===; 43:there was a problem " \
+            "handling the requirement set modules\n"
         self.assertEqual(lstderr, expected_result)

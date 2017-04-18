@@ -36,11 +36,11 @@ def find(mdir):
 
 def unified_diff(mdir, fname, sorted_diff=False):
     with io.open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r",
-                 encoding = "utf-8") as fa:
+                 encoding="utf-8") as fa:
         a = fa.readlines()
 
     with io.open(os.path.join(mdir, "result_should", fname), "r",
-                 encoding = "utf-8") as fb:
+                 encoding="utf-8") as fb:
         b = fb.readlines()
 
     if sorted_diff:
@@ -110,8 +110,8 @@ def compare_results(mdir, relaxed=False):
 
 # Open up the stdout and stderr files for testing proposes
 def create_std_log(mdir):
-    mout = io.open(os.path.join(mdir, "stdout"), "w", encoding = "utf-8")
-    merr = io.open(os.path.join(mdir, "stderr"), "w", encoding = "utf-8")
+    mout = io.open(os.path.join(mdir, "stdout"), "w", encoding="utf-8")
+    merr = io.open(os.path.join(mdir, "stderr"), "w", encoding="utf-8")
     return mout, merr
 
 
@@ -191,14 +191,14 @@ def extract_container_files(lof):
 def unify_output_dir(filename):
     fullpathname = os.path.join(os.environ["rmtoo_test_dir"], filename)
     # Read it in
-    with io.open(fullpathname, "r", encoding = "utf-8") as fd:
+    with io.open(fullpathname, "r", encoding="utf-8") as fd:
         c = fd.read()
     # Replace
 
     d = c.replace(os.environ["rmtoo_test_dir"],
                   "===SYMBOLIC-OUTPUT-DIR===")
     # Write out
-    with io.open(fullpathname, "w", encoding = "utf-8") as fd:
+    with io.open(fullpathname, "w", encoding="utf-8") as fd:
         fd.write(d)
 
 

@@ -1,27 +1,32 @@
-#
-# Generic Tag Class
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
+
+  Unit test for input modules
+
+ (c) 2010,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
+import unittest
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
+
 class MyTag(ReqTagGeneric):
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config, "mytag", 
+        ReqTagGeneric.__init__(self, config, "mytag",
                                set([InputModuleTypes.reqtag, ]))
 
 
-class RMTTest_GenericTag:
+class RMTTest_GenericTag(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Generic Tag: construction"
-        mt = MyTag(None)
+        MyTag(None)
 
     def rmttest_positive_02(self):
         "Generic Tag: type()"
@@ -56,7 +61,7 @@ class RMTTest_GenericTag:
         tag, v = mt.handle_optional_tag(r)
 
         assert(tag == "mytag")
-        assert(v == None)
+        self.assertIsNone(v)
 
     def rmttest_negative_01(self):
         "Generic Tag: mandatory tag not available"
@@ -70,4 +75,3 @@ class RMTTest_GenericTag:
             assert(False)
         except RMTException as rmte:
             assert(rmte.id() == 112)
-
