@@ -114,6 +114,15 @@ This file is not completed now - any might be in future.
     huddy1985/rmtoo		2017-04-15
     samjaninf/rmtoo		2017-04-15
 
+
+* pypi upload
+
+** testpypi
+   $ python setup.py sdist upload -r testpypi
+
+   Install:
+   pip install -i https://testpypi.python.org/pypi rmtoo
+
 Local Variables:
 mode:outline
 End:

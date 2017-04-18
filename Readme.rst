@@ -14,10 +14,10 @@ Open Source Requirements Management Tool
 .. image:: https://img.shields.io/github/downloads/florath/rmtoo/total.svg
     :target: http://rmtoo.florath.net
 
-.. COMMENT .. image:: https://img.shields.io/pypi/dm/Django.svg
-.. COMMENT    :target: http://rmtoo.florath.net
-.. COMMENT .. image:: https://img.shields.io/pypi/v/nine.svg
-.. COMMENT    :target: http://rmtoo.florath.net
+.. image:: https://img.shields.io/pypi/dm/Django.svg
+    :target: http://rmtoo.florath.net
+.. image:: https://img.shields.io/pypi/v/nine.svg
+    :target: http://rmtoo.florath.net
 
 
 Introduction
@@ -31,18 +31,7 @@ Content
 
 This file contains the following chapters:
 
-* Conventions
-* Operating System Support
-* Installation
-  - Dependencies
-* First Project
-* Using tar package
-  - Installation
-  - First Project
-  - Man Pages
-* Additional Documentation
-* Emacs Mode for Editing Requirements
-* Footer
+.. contents:: Table of Contents
 
 
 Conventions
@@ -82,6 +71,7 @@ Dependencies
 To use rmtoo, other software packages must be installed.
 
 rmtoo is written in python.  At least version 2.7 of python is needed.
+(Starting with version 24 python 3 will be supported.)
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
@@ -114,6 +104,32 @@ Note that during this document the project will be called
 'MyNewProject'.  Please adapt the name for your needs.
 
 
+Using virtualenv
+================
+
+This is the preferred installation method - it takes care that
+at least the python dependencies are correctly installed.
+
+Installation
+------------
+
+To install ``rmtoo`` in a virtualenv, execute the following steps:
+
+.. code:: bash
+
+   $ mkdir RMTOO
+   $ cd RMTOO
+   $ virtualenv venv
+   $ source venv/bin/activate
+   $ pip install --upgrade pip setuptools wheel
+   $ pip install --only-binary=numpy,scipy numpy scipy
+   $ pip install rmtoo
+   $ export RMTOO_CONTRIB=${PWD}/venv/rmtoo/contrib
+
+Please see the section 'First Project' how to use the template
+project.
+
+
 Using tar package
 =================
 
@@ -128,31 +144,33 @@ To refer to the current directory, it is called RMTOO_BASE_PATH.
 .. code:: bash
 
    $ export RMTOO_BASE_PATH=$PWD
+   $ export RMTOO_PATH=${RMTOO_BASE_PATH}/rmtoo-YY
+   $ export RMTOO_CONTRIB=${RMTOO_PATH}/contrib
    $ tar -xf rmtoo-YY.tar.gz
 
 To use rmtoo, you have to include
-``${RMTOO_BASE_PATH}/rmtoo-YY/bin`` to your path,  include
-``${RMTOO_BASE_PATH}/rmtoo-YY`` to your ``PYTHONPATH``. 
+``${RMTOO_PATH}/bin`` to your path,  include
+``${RMTOO_PATH}`` to your ``PYTHONPATH``.
 When you use the template project (see section 'First Project' some
 lines below), the shell script ``setenv.sh`` is doing this for you.
 
 First Project
--------------
+=============
 
 Change to a directory where you want to create the new project.
 
 .. code:: bash
 
-   $ cp -r ${RMTOO_BASE_PATH}/rmtoo-YY/contrib/template_project MyNewProject
+   $ cp -r ${RMTOO_CONTRIB}/template_project MyNewProject
    $ cd MyNewProject
-   $ source ./setenv.sh ${RMTOO_BASE_PATH}/rmtoo-YY
+   $ source ./setenv.sh ${RMTOO_PATH}
    $ make
    $ ls artifacts
 
 In the artifacts directory there are all the generated files.
 
 Man Pages
----------
+=========
 
 The man pages are located in the sub-directory doc/man.  Please use
 the command
@@ -190,7 +208,7 @@ Presentations
 There are also two presentations about the design and features of
 rmtoo. Theese presentations can be found in the download section of
 the sourceforge project page.  Please visit the projects home page
-http://www.flonatel.de/projekte/rmtoo for appropriate links. 
+http://www.flonatel.de/projekte/rmtoo for appropriate links.
 
 Readme-Overview.txt
 -------------------

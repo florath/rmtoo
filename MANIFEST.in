@@ -1,0 +1,6 @@
+include *.txt
+include *.rst
+recursive-include doc *
+recursive-include contrib *
+prune *~
+prune *.pyc

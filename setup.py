@@ -1,19 +1,39 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 import os
 import sys
 
 package = 'rmtoo'
-version = '23'
+version = '23.90.1'
 
 add_data = []
-for dadi in ['rmtoo/tests', 'rmtoo/collection']:
-    for (path, dirs, files) in os.walk(dadi):
-        add_data.append((
-            'share/pyshared/' + path,
-            [path + '/' + filename for filename in files]))
 
+for dadi, destpath_prefix in [('rmtoo/tests', None),
+                              ('rmtoo/collection', None),
+                              ('doc', 'rmtoo'),
+                              ('contrib', 'rmtoo')]:
+    for (path, dirs, files) in os.walk(dadi):
+        if path.endswith("__pycache__"):
+            continue
+        l = []
+        for filename in files:
+            if filename.endswith(".pyc"):
+                continue
+            l.append(os.path.join(path, filename))
+        dpath = os.path.join(destpath_prefix, path) \
+                if destpath_prefix is not None else path
+        add_data.append((dpath, l))
+
+add_data.append(
+    ("rmtoo/doc/readme",
+     ["Readme-Windows.txt", "gpl-3.0.txt", "Readme-GitPython.txt",
+      "Readme-Hacking.txt", "Readme-OS-X.txt", "Readme-Overview.txt",
+      "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
+    "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
+      "Roadmap.txt", "Readme.rst"]))
+
+print(add_data)
 
 def adjust(input, output):
     if os.path.exists(output):
@@ -33,10 +53,28 @@ def adjust(input, output):
 
 
 setup(name=package, version=version,
-      description='Requirements Management Tool',
+      description='Free and OpenSource Requirements Management Tool',
+      keywords='requirements management',
       author='Andreas Florath',
       author_email='rmtoo@florath.net',
       url='http://rmtoo.florath.net',
+      classifiers=[
+          "Development Status :: 6 - Mature",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "Intended Audience :: Education",
+          "Intended Audience :: End Users/Desktop",
+          "Intended Audience :: Manufacturing",
+          "Intended Audience :: Telecommunications Industry",
+          "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+          "Operating System :: MacOS",
+          "Operating System :: Microsoft :: Windows",
+          "Operating System :: OS Independent",
+          "Operating System :: POSIX :: Linux",
+          "Programming Language :: Python",
+          "Topic :: Software Development :: Quality Assurance",
+          "Topic :: Scientific/Engineering",
+      ],
       packages=['rmtoo', 'rmtoo/lib',
                 'rmtoo/inputs', 'rmtoo/tests', 'rmtoo/outputs',
                 'rmtoo/lib/analytics',
@@ -48,7 +86,6 @@ setup(name=package, version=version,
                 'rmtoo/lib/storagebackend/txtfile',
                 'rmtoo/lib/vcs',
                 'rmtoo/lib/xmlutils',
-                'rmtoo/collection', 'rmtoo/collection/constraints',
                 'rmtoo/tests/lib', 'rmtoo/tests/RMTTest_Syntax',
                 'rmtoo/tests/RMTTest_Unit',
                 'rmtoo/tests/RMTTest_Unit/RMTTest_Tag',
@@ -64,18 +101,20 @@ setup(name=package, version=version,
                 'rmtoo/tests/RMTTest_Unit/RMTTest_Core/testdata/modules07',
                 'rmtoo/tests/RMTTest_Unit/RMTTest_Core/testdata/modules08',
                 'rmtoo/tests/RMTTest_Unit/RMTTest_Topic',
-                'rmtoo/tests/RMTTest_Unit/RMTTest_Topic/testdata',
-                'rmtoo/tests/RMTTest_Unit/RMTTest_Topic/testdata/topicset01',
                 'rmtoo/tests/RMTTest_Output',
 
                 # Blackbox Tests
                 # are included with the 'add_data' statement.
                 ],
       data_files=add_data,
-      install_requires=["flake8", "numpy", "scipy", "setuptools", "nose",
-                        "gitdb==0.6.4", "gitpython==1.0.2", "odfpy==1.3.4",
-                        "six", "future"],
-
+      install_requires=[
+          "numpy>=1.12.0",
+          "scipy>=0.19.0",
+          "six>=1.10.0",
+          "future>=0.16.0",
+          "gitdb==0.6.4",
+          "gitpython==1.0.2",
+          "odfpy==1.3.4"],
       license="GPL V3",
       platforms="all",
 
