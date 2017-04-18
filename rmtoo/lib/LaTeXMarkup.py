@@ -19,8 +19,8 @@ import re
 class LaTeXMarkup2HTML(object):
     convert_markup = [
         "</p><p>",
-        "<b>\\1</b>",
-        "<i>\\1</i>",
+        "<strong>\\1</strong>",
+        "<em>\\1</em>",
         ]
 
 
