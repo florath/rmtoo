@@ -1,18 +1,19 @@
-#
-# Digraph Pyhton library
-#
-# Unit tests for tolological search
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+  Unit test for Toposort
+
+ (c) 2010,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 import unittest
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
+
 
 class TopologicalSearchTests(unittest.TestCase):
 
@@ -43,7 +44,18 @@ class TopologicalSearchTests(unittest.TestCase):
                        "D": [], "E": [] } )
         tsort = topological_sort(dg)
         tnames = node_list_to_node_name_list(tsort)
-        self.assertEqual(tnames, ['D', 'E', 'C', 'B', 'A'], "incorrect")
+        # There is no 'fixed' result - depending on the python
+        # implementation different correct values are computed.
+        self.assertTrue(self.__list_order(tnames, "D", "C"))
+        self.assertTrue(self.__list_order(tnames, "E", "C"))
+        self.assertTrue(self.__list_order(tnames, "E", "B"))
+        self.assertTrue(self.__list_order(tnames, "C", "B"))
+        self.assertTrue(self.__list_order(tnames, "C", "A"))
+        self.assertTrue(self.__list_order(tnames, "B", "A"))
+
+    @staticmethod
+    def __list_order(l, x, y):
+        return l.index(x) < l.index(y)
 
     def rmttest_tsort_005(self):
         "Digraph with two components"
@@ -51,7 +63,12 @@ class TopologicalSearchTests(unittest.TestCase):
                        "D": ["E"], "E": [] } )
         tsort = topological_sort(dg)
         tnames = node_list_to_node_name_list(tsort)
-        self.assertEqual(tnames, ['C', 'B', 'A', 'E', 'D'], "incorrect")
+
+        # There is no 'fixed' result - depending on the python
+        # implementation different correct values are computed.
+        self.assertTrue(self.__list_order(tnames, "B", "A"))
+        self.assertTrue(self.__list_order(tnames, "C", "A"))
+        self.assertTrue(self.__list_order(tnames, "E", "D"))
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TopologicalSearchTests)

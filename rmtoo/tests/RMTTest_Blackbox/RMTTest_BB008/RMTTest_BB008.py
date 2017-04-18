@@ -30,5 +30,5 @@ class RMTTest_BB008(unittest.TestCase):
                            mout, merr)
         cleanup_std_log(mout, merr)
         self.assertFalse(result)
-        check_file_results(mdir)
+        check_file_results(mdir, "BB008", True)
         delete_result_is_dir()

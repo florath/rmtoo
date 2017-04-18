@@ -34,7 +34,7 @@ def find(mdir):
     return r
 
 
-def unified_diff(mdir, fname):
+def unified_diff(mdir, fname, sorted_diff=False):
     with io.open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r",
                  encoding = "utf-8") as fa:
         a = fa.readlines()
@@ -42,6 +42,10 @@ def unified_diff(mdir, fname):
     with io.open(os.path.join(mdir, "result_should", fname), "r",
                  encoding = "utf-8") as fb:
         b = fb.readlines()
+
+    if sorted_diff:
+        a = sorted(a)
+        b = sorted(b)
 
     r = []
     for l in difflib.unified_diff(a, b):
@@ -76,7 +80,7 @@ def compare_xml(mdir, fname):
 #  differences in files
 # The differences is a map where the key is the filename and the
 # content is a unified diff output.
-def compare_results(mdir):
+def compare_results(mdir, relaxed=False):
     files_is = find(os.path.join(os.environ["rmtoo_test_dir"]))
     files_should = find(os.path.join(mdir, "result_should"))
 
@@ -94,7 +98,10 @@ def compare_results(mdir):
             if not compare_xml(mdir, df):
                 r[df] = "XML files differ"
         else:
-            ud = unified_diff(mdir, df)
+            sorted_diff = relaxed and \
+                          df in ['stderr', 'makefile_deps', 'req-graph1.dot',
+                                 'reqsprios.tex']
+            ud = unified_diff(mdir, df, sorted_diff)
             if ud is not None:
                 r[df] = ud
 
@@ -221,7 +228,7 @@ def prepare_stderr():
             new_stderr.write("%s" % hide_volatile(line))
 
 
-def check_file_results(mdir, tcname="<UNKNOWN>"):
+def check_file_results(mdir, tcname="<UNKNOWN>", relaxed=False):
     prepare_stderr()
-    missing_files, additional_files, diffs = compare_results(mdir)
+    missing_files, additional_files, diffs = compare_results(mdir, relaxed)
     check_result(missing_files, additional_files, diffs, tcname)

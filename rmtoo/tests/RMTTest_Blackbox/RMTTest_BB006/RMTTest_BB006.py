@@ -37,5 +37,5 @@ class RMTTest_BB006:
                   mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
         unify_output_dir("makefile_deps")
-        check_file_results(mdir)
+        check_file_results(mdir, "BB006", True)
         delete_result_is_dir()

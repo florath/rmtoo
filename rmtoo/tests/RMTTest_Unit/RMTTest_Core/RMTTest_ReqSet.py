@@ -11,6 +11,7 @@
 from __future__ import unicode_literals
 
 import os
+import re
 try:
     from StringIO import StringIO
 except ImportError:
@@ -77,13 +78,16 @@ class RMTTest_ReqSet(unittest.TestCase):
 
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
-        result_expected \
-            = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__all_tags_handled;===LINENO===; 57:InvalidTagReq:" \
-            "No tag handler found " \
-            "for tag(s) '[\"Siebel\", \"Hubbel\"]' - Hint: typo in tag(s)?\n" \
-            "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;_handle_modules;" \
-            "===LINENO===; 56:There were errors encountered during parsing " \
-            "and checking - can't continue.\n"
+        result \
+            = re.match(
+                "^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
+                "__all_tags_handled;===LINENO===; 57:InvalidTagReq:" \
+                "No tag handler found " \
+                "for tag\(s\) '\[.*\]' - Hint: typo in tag\(s\)\?\n" \
+                "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
+                "_handle_modules;" \
+                "===LINENO===; 56:There were errors encountered " \
+                "during parsing " \
+                "and checking - can't continue.\n$", lstderr)
 
-        self.assertEquals(result_expected, lstderr)
+        self.assertTrue(result)

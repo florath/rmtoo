@@ -38,5 +38,5 @@ class RMTTest_BB002:
         main_impl(["-j", "file://" + mdir + "/input/Config.json"],
                   mout, merr, exitfun=myexit)
         cleanup_std_log(mout, merr)
-        check_file_results(mdir)
+        check_file_results(mdir, "BB002", True)
         delete_result_is_dir()

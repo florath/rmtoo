@@ -1,7 +1,7 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Collection of collection of topics.
   In each run of rmtoo it is possible to have many different
   TopicSets handled.
@@ -10,8 +10,8 @@
   the 'topic' tag.
   The top level access of this are the different version numbers
   of the topic sets.
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -25,6 +25,7 @@ from rmtoo.lib.vcs.CommitInfo import CommitInfo
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.GenIterator import GenIterator
 from rmtoo.lib.RequirementSet import RequirementSetIterator
+
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
@@ -44,7 +45,7 @@ class TopicContinuum(UsableFlag):
         # Note: this does not contain any other data, only the ids.
         # To access the data, use some construct like:
         #   self.__topic_sets[self.__vcs_commit_ids[n].get_commit()]
-        # 
+        #
         self.__vcs_commit_ids = []
         self.__object_cache = object_cache
         self.__input_mods = input_mods
@@ -133,7 +134,9 @@ class TopicContinuumIterator(GenIterator):
         '''Initialize the iterator.'''
         self.__objs = []
         for vcs_id in topic_continuum.get_vcs_commit_ids():
-            self.__objs.append([vcs_id, topic_continuum.get_topic_set(vcs_id.get_commit())])
+            self.__objs.append([vcs_id,
+                                topic_continuum.get_topic_set(
+                                    vcs_id.get_commit())])
         GenIterator.__init__(self, self.__objs.__iter__())
 
 #    def current(self):
@@ -142,7 +145,7 @@ class TopicContinuumIterator(GenIterator):
 #        print("MCURRENT [%s]" % self._current)
 #        return self._current
 ##        return self.__topic_continuum.get_topic_set(self._current.get_commit())
-#        
+#
 ##        return RequirementSetIterator(self.__topic_continuum.get_topic_set(
 ##                            self._current.get_commit()).get_requirement_set())
 #
@@ -152,4 +155,6 @@ class TopicContinuumIterator(GenIterator):
 
     def has_child(self):
         '''If the current element has a child, true is returned.'''
-        return len(self.__topic_continuum.get_topic_set(self._current.get_commit()).get_requirement_set().get_master_nodes()) > 0
+        return len(self.__topic_continuum.get_topic_set(
+            self._current.get_commit()).get_requirement_set()
+                   .get_master_nodes()) > 0

@@ -1,12 +1,12 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Library for comparing XML documents.
 
  There is the need to compare XML documents when running test cases:
  the expected documents are compared with the test-case generated
- ones. 
+ ones.
  Looks that there is currently no existing out of the box solution
  for python to do this.
  The 'xmldiff' project does a similar thing, but with a different
@@ -20,11 +20,14 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 import copy
+
 from xml.dom.minidom import parse, parseString
 from rmtoo.lib.logging import tracer, logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
+
 
 def xml_check_type(xml_doc_a, xml_doc_b, xpath):
     '''Check for the type.'''
@@ -32,6 +35,7 @@ def xml_check_type(xml_doc_a, xml_doc_b, xpath):
         return False, "Node types differ [%s] != [%s] at [%s]" % \
             (xml_doc_a.nodeType, xml_doc_b.nodeType, xpath)
     return None, None
+
 
 def xml_check_text_content(xml_doc_a, xml_doc_b, xpath):
     '''Check for Text content.'''
@@ -51,6 +55,7 @@ def xml_check_name(xml_doc_a, xml_doc_b, xpath):
             (xml_doc_a.tagName, xml_doc_b.tagName, xpath)
     return None, None
 
+
 def xml_check_attributes(xml_doc_a, xml_doc_b, xpath):
     '''Check for the attributes.'''
     a_attr_sorted = sorted(xml_doc_a.attributes.items())
@@ -61,6 +66,7 @@ def xml_check_attributes(xml_doc_a, xml_doc_b, xpath):
             (xml_doc_a.tagName, a_attr_sorted, b_attr_sorted, xpath)
     return None, None
 
+
 def xml_check_child_count(xml_doc_a, xml_doc_b, xpath):
     '''Checks if both nodes contain the same number of child nodes.'''
     if len(xml_doc_a.childNodes) != len(xml_doc_b.childNodes):
@@ -68,6 +74,7 @@ def xml_check_child_count(xml_doc_a, xml_doc_b, xpath):
             "[%s] != [%s] at [%s]" % \
             (len(xml_doc_a.childNodes), len(xml_doc_b.childNodes), xpath)
     return None, None
+
 
 def xml_check_children(xml_doc_a, xml_doc_b, xpath):
     '''Create a shallow copy of b's children (and remove nodes which
@@ -105,6 +112,7 @@ def xml_check_children(xml_doc_a, xml_doc_b, xpath):
     assert(bcn_found_cnt == 0)
     return True, None
 
+
 def xmlequals(xml_doc_a, xml_doc_b, xpath):
     '''Calls the different xml_check helper functions.
        Returns True, None if xml document a and b are the same,
@@ -119,11 +127,13 @@ def xmlequals(xml_doc_a, xml_doc_b, xpath):
         assert(result == None)
     return True, None
 
+
 def xmlcmp_files(file1, file2):
     '''Compares two xml files.'''
     doc1 = parse(file1)
     doc2 = parse(file2)
     return xmlequals(doc1.documentElement, doc2.documentElement, "")
+
 
 def xmlcmp_strings(str1, str2):
     '''Compares two xml string.'''

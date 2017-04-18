@@ -10,6 +10,8 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.tests.lib.RDep import TestReq
 from rmtoo.inputs.RDepDependsOn import RDepDependsOn
@@ -20,7 +22,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.InputModules import InputModules
 
 
-class RMTTest_RDepDependsOn:
+class RMTTest_RDepDependsOn(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
@@ -41,10 +43,14 @@ Depends on: A''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_requirement("A").incoming_as_named_list() == [])
-        assert(reqset.get_requirement("A").outgoing_as_named_list() == ["B"])
-        assert(reqset.get_requirement("B").incoming_as_named_list() == ["A"])
-        assert(reqset.get_requirement("B").outgoing_as_named_list() == [])
+        self.assertEqual(
+            [], reqset.get_requirement("A").incoming_as_named_list())
+        self.assertEqual(
+            ["B"], reqset.get_requirement("A").outgoing_as_named_list())
+        self.assertEqual(
+            ["A"], reqset.get_requirement("B").incoming_as_named_list())
+        self.assertEqual(
+            [], reqset.get_requirement("B").outgoing_as_named_list())
 
     def rmttest_positive_02(self):
         "Three node one edge digraph B -> A, C -> A and C -> B"
@@ -70,12 +76,20 @@ Depends on: A B''', 'C', None, imod, config)
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        assert(reqset.get_requirement("A").incoming_as_named_list() == [])
-        assert(reqset.get_requirement("A").outgoing_as_named_list() == ["C", "B"])
-        assert(reqset.get_requirement("B").incoming_as_named_list() == ["A"])
-        assert(reqset.get_requirement("B").outgoing_as_named_list() == ["C"])
-        assert(reqset.get_requirement("C").incoming_as_named_list() == ["A", "B"])
-        assert(reqset.get_requirement("C").outgoing_as_named_list() == [])
+        self.assertEqual(
+            [],reqset.get_requirement("A").incoming_as_named_list())
+        # There are two possible valid results
+        self.assertTrue(
+            reqset.get_requirement("A").outgoing_as_named_list()
+            in [["C", "B"], ["B", "C"]])
+        self.assertEqual(
+            ["A"], reqset.get_requirement("B").incoming_as_named_list())
+        self.assertEqual(
+            ["C"], reqset.get_requirement("B").outgoing_as_named_list())
+        self.assertEqual(
+            ["A", "B"], reqset.get_requirement("C").incoming_as_named_list())
+        self.assertEqual(
+            [], reqset.get_requirement("C").outgoing_as_named_list())
 
     def rmttest_negative_01(self):
         "Master requirement with Depends on field"

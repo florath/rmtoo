@@ -33,5 +33,5 @@ class RMTTest_BB010:
                   mout, merr, exitfun=myexit)
         extract_container_files(["reqspricing.ods", ])
         cleanup_std_log(mout, merr)
-        check_file_results(mdir)
+        check_file_results(mdir, "BB010", True)
         delete_result_is_dir()
