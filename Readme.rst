@@ -6,6 +6,18 @@ Open Source Requirements Management Tool
 .. image:: https://travis-ci.org/florath/rmtoo.svg?branch=master
     :target: https://travis-ci.org/florath/rmtoo
 
+.. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
+    :target: http://www.gnu.org/licenses/gpl-3.0
+
+.. image:: https://img.shields.io/codecov/c/github/codecov/example-python.svg
+
+.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+
+.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+
+.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+
+
 Introduction
 ============
 
@@ -32,7 +44,7 @@ This file contains the following chapters:
 
 
 Conventions
-=========== 
+===========
 
 ``YY``
   names the version of rmtoo.  You have to replace this with the real
@@ -48,7 +60,7 @@ Operating System Support
 
 rmtoo is fully supported under Linux.  Nevertheless, because it is
 written in computer independent programming languages (such as
-python), is also works on other operating systems. 
+python), is also works on other operating systems.
 
 Mac OS X users might want to read ``Readme-OS-X.txt``.
 
@@ -67,14 +79,14 @@ Dependencies
 
 To use rmtoo, other software packages must be installed.
 
-rmtoo is written in python.  At least version 2.7 of python is needed. 
+rmtoo is written in python.  At least version 2.7 of python is needed.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
 For the requirements dependency graph, graphviz is used.
 
-For statistics plot gnuplot is used.  For the estimation module the 
-python-scipy package is needed. 
+For statistics plot gnuplot is used.  For the estimation module the
+python-scipy package is needed.
 
 Typically the packages from your distribution will work.
 
@@ -134,7 +146,7 @@ Change to a directory where you want to create the new project.
    $ source ./setenv.sh ${RMTOO_BASE_PATH}/rmtoo-YY
    $ make
    $ ls artifacts
-	  
+
 In the artifacts directory there are all the generated files.
 
 Man Pages
@@ -161,7 +173,7 @@ Additional Documentation
 Additional documentation can be found in the directories
 ``${RMTOO_BASE_PATH}/rmtoo-YY`` (especially the Readme files)
 ``${RMTOO_BASE_PATH}/rmtoo-YY/doc/other``
-  
+
 Other Documentation
 ===================
 
@@ -205,12 +217,12 @@ Some note about the (internal) use of GitPython.
 
 Emacs Mode for Editing Requirements
 ===================================
-  
-When using the tar package, emacs mode can be loaded in emacs by: 
+
+When using the tar package, emacs mode can be loaded in emacs by:
 ``M-x load-file``
 point to ``${RMTOO_BASE_PATH}/rmtoo-YY/contrib/req-mode.el``
 All files with suffix .req will now use the requirements editing
-mode. 
+mode.
 
 Footer
 ======
