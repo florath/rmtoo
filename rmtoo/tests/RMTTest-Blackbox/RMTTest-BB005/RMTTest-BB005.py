@@ -15,7 +15,7 @@ from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir
 
-mdir = "tests/RMTTest_Blackbox/RMTTest_BB005"
+mdir = "tests/RMTTest-Blackbox/RMTTest-BB005"
 
 
 class RMTTest_BB001:

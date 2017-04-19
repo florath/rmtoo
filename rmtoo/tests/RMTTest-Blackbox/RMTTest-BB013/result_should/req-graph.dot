@@ -1,0 +1,9 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+"A1" [];
+"A2" [color=orange];
+"A2" -> "A1";
+ReqVersion [shape=plaintext label="ReqVersion\nCommit [None] VCS Id [tests/RMTTest-Blackbox/RMTTest-BB013/input/topics]"]
+}

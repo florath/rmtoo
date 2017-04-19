@@ -1,0 +1,32 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+"CleanUpCar" [fontcolor=red,label="CleanUpCar\n[10.00]"];
+"CleanUpCar" -> "CreateOrder";
+"CleanUpSeats" [fontcolor=red,label="CleanUpSeats\n[10.00]"];
+"CleanUpSeats" -> "CleanUpCar";
+"CleanUpVicentAndJules" [fontcolor=red,label="CleanUpVicentAndJules\n[10.00]"];
+"CleanUpVicentAndJules" -> "CreateOrder";
+"CorpseInTrunk" [fontcolor=red,label="CorpseInTrunk\n[10.00]",shape=octagon];
+"CorpseInTrunk" -> "DeadManDisapper";
+"CoverWithBlankets" [fontcolor=red,label="CoverWithBlankets\n[10.00]",shape=octagon];
+"CoverWithBlankets" -> "CleanUpSeats";
+"CoverWithBlankets" -> "RoughlyCleanUpSeats";
+"CreateOrder" [fontcolor=red,label="CreateOrder\n[10.00]"];
+"DeadManDisapper" [fontcolor=red,label="DeadManDisapper\n[10.00]"];
+"DeadManDisapper" -> "CreateOrder";
+"DetergentForCar" [fontcolor=red,label="DetergentForCar\n[10.00]",shape=octagon];
+"DetergentForCar" -> "CleanUpCar";
+"RoughlyCleanUpSeats" [fontcolor=red,label="RoughlyCleanUpSeats\n[10.00]",shape=octagon];
+"RoughlyCleanUpSeats" -> "CleanUpSeats";
+"SoapAndColdWater" [fontcolor=red,label="SoapAndColdWater\n[10.00]",shape=octagon];
+"SoapAndColdWater" -> "CleanUpVicentAndJules";
+"SoapAndColdWater" -> "TakeOff";
+"TakeCareOfClothing" [fontcolor=red,label="TakeCareOfClothing\n[10.00]",shape=octagon];
+"TakeCareOfClothing" -> "CleanUpVicentAndJules";
+"TakeCareOfClothing" -> "TakeOff";
+"TakeOff" [fontcolor=red,label="TakeOff\n[10.00]",shape=octagon];
+"TakeOff" -> "CleanUpVicentAndJules";
+ReqVersion [shape=plaintext label="ReqVersion\nCommit [None] VCS Id [tests/RMTTest-Blackbox/RMTTest-BB003/input/topics]"]
+}

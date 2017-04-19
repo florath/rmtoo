@@ -1,0 +1,31 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+"Analytics" [label="Analytics\n[10.00]"];
+"Analytics" -> "Processing";
+"AutomaticGeneration" [fontcolor=red,label="AutomaticGeneration\n[3.00]"];
+"AutomaticGeneration" -> "Processing";
+"DocManPage" [color=green,fontcolor=red,label="DocManPage\n[4.12]",shape=box];
+"DocManPage" -> "Documentation";
+"DocSlides" [color=green,label="DocSlides\n[4.68]",shape=box];
+"DocSlides" -> "Documentation";
+"Documentation" [fontcolor=red,label="Documentation\n[5.50]"];
+"Documentation" -> "rmtoo";
+"Input" [fontcolor=red,label="Input\n[10.00]"];
+"Input" -> "Processing";
+"Output" [fontcolor=blue,label="Output\n[10.00]",shape=box];
+"Output" -> "Processing";
+"Processing" [fontcolor=red,label="Processing\n[10.00]",shape=octagon];
+"Processing" -> "rmtoo";
+"Simplicity" [fontcolor=red,label="Simplicity\n[9.00]"];
+"Simplicity" -> "rmtoo";
+"TestIntegration" [fontcolor=red,label="TestIntegration\n[10.00]",shape=box];
+"TestIntegration" -> "Testing";
+"TestUnit" [fontcolor=red,label="TestUnit\n[10.00]"];
+"TestUnit" -> "Testing";
+"Testing" [fontcolor=red,label="Testing\n[10.00]"];
+"Testing" -> "rmtoo";
+"rmtoo" [fontcolor=red,label="rmtoo\n[10.00]"];
+ReqVersion [shape=plaintext label="ReqVersion\nCommit [None] VCS Id [tests/RMTTest-Blackbox/RMTTest-BB010/input/topics]"]
+}

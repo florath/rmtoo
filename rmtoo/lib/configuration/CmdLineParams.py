@@ -8,10 +8,10 @@
 
  For licensing details see COPYING
 '''
-
 import distutils
 
 from optparse import OptionParser
+
 
 class CmdLineParams:
     '''Utility class for handling the old style command line
@@ -20,7 +20,7 @@ class CmdLineParams:
 
     def __init__(self):
         '''Utility class with 'hidden' constructor'''
-        assert(False)
+        assert False
 
     @staticmethod
     def initialize_parser():
@@ -79,9 +79,7 @@ class CmdLineParams:
 
         jopts = []
         for jopt in options.json:
-            if jopt.startswith("file://"):
-                jopts.append(jopt)
-            elif jopt.startswith("json:"):
+            if jopt.startswith("file://") or jopt.startswith("json:"):
                 jopts.append(jopt)
             else:
                 jopts.append("json:" + jopt)

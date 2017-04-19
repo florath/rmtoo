@@ -16,7 +16,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
     cleanup_std_log, delete_result_is_dir, check_file_results
 
 mdir_orig = "tests/blackbox-test/bb007-test"
-mdir = "tests/RMTTest_Blackbox/RMTTest_BB007"
+mdir = "tests/RMTTest-Blackbox/RMTTest-BB007"
 
 
 class RMTTest_BB007:
