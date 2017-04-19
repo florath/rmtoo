@@ -13,14 +13,16 @@ Open Source Requirements Management Tool
     :target: https://codecov.io/gh/florath/rmtoo
 .. image:: https://img.shields.io/github/downloads/florath/rmtoo/total.svg
     :target: http://rmtoo.florath.net
-.. image:: https://img.shields.io/pypi/dm/rmtoo.svg
-    :target: https://pypi.python.org/pypi/rmtoo
 .. image:: https://img.shields.io/pypi/v/rmtoo.svg
+    :target: https://pypi.python.org/pypi/rmtoo
+.. image:: https://img.shields.io/pypi/dm/rmtoo.svg
     :target: https://pypi.python.org/pypi/rmtoo
 .. image:: https://sonarqube.com/api/badges/measure?key=rmtoo:rmtoo&metric=sqale_debt_ratio
     :target: https://sonarqube.com/dashboard?id=rmtoo
+.. image:: https://img.shields.io/coverity/scan/12488.svg
+    :target: https://scan.coverity.com/projects/rmtoo
 
-
+	     
 Introduction
 ============
 
@@ -218,7 +220,7 @@ Presentations
 There are also two presentations about the design and features of
 rmtoo. Theese presentations can be found in the download section of
 the sourceforge project page.  Please visit the projects home page
-http://www.flonatel.de/projekte/rmtoo for appropriate links.
+http://rmtoo.florath.net
 
 Readme-Overview.txt
 -------------------

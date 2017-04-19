@@ -9,7 +9,6 @@
 
  For licensing details see COPYING
 '''
-
 import re
 
 # At the moment there is no need to have multiple files, because there
