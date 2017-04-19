@@ -113,7 +113,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         level = len(self.__fd_stack)
 
         fd.write(u"\n<!- REQ '%s' -->\n" % req.id)
-        fd.write(u'<h%d><a name="%s">%s</a></h%d>\n' %
+        fd.write(u'<h%d><a id="%s">%s</a></h%d>\n' %
                  (level + 1, req.id, req.get_value("Name").get_content(),
                   level + 1))
         fd.write(u"<dl>")
