@@ -11,6 +11,8 @@
 import sys
 import csv
 
+from rmtoo.lib.Encoding import Encoding
+
 
 # Minimalistic (but working) way to parse the command line parameters
 # and to be sure that two parameters are supplied.
@@ -60,9 +62,11 @@ def main():
 
         # Compute local costs (lcosts)
         # Sometimes a ',' is used to seperate 1000
-        dayrate = float(unicode(row[2], 'utf-8')[:-2].replace(",", ""))
+        dayrate = float(Encoding.to_unicode(row[2], 'utf-8')[:-2]
+                        .replace(",", ""))
         days = float(row[3])
-        material = float(unicode(row[4], 'utf-8')[:-2].replace(",", ""))
+        material = float(Encoding.to_unicode(row[4], 'utf-8')[:-2]
+                         .replace(",", ""))
         lcosts = dayrate * days + material
 
         # Check if there are dependent costs (dcosts)

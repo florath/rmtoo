@@ -14,17 +14,13 @@
 
 import sys
 
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging import configure_logging
-
-try:
-    unicode
-except:
-    unicode = str
 
 
 def execute_cmds(config, input_mods, _mstdout, mstderr):
@@ -36,7 +32,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
         topic_continuum_set = TopicContinuumSet(input_mods, config)
     except RMTException as rmte:
         mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
-                      % unicode(rmte))
+                      % Encoding.to_unicode(rmte))
         return False
 
     # If there is a problem with the last requirement set included in

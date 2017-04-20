@@ -23,7 +23,8 @@ class Encoding(object):
             print("+++ ERROR: Must be a string not a [%s]" % type(s))
             assert False
         if sys.version_info[0] == 2:
-            if type(s) != unicode:
+            # The noqa is needed to get pep8 run on python3
+            if type(s) != unicode:  # noqa: F821
                 print("+++ ERROR: String [%s] must be unicode" % s)
                 assert False
             return
@@ -45,7 +46,8 @@ class Encoding(object):
     @staticmethod
     def to_unicode(l):
         if sys.version_info[0] == 2:
-            return unicode(l)
+            # The noqa is needed to get pep8 run on python3
+            return unicode(l)  # noqa: F821
         if sys.version_info[0] == 3:
             return str(l)
         assert False

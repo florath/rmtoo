@@ -24,7 +24,7 @@ pygtk.require('2.0')
 
 
 def advance(iter, n):
-    for i in xrange(0, n):
+    for i in range(0, n):
         iter.next()
 
 
@@ -50,7 +50,7 @@ class GTMIterator:
         return self.__type_name
 
     def inc(self, n):
-        for i in xrange(0, n):
+        for i in range(0, n):
             self.next()
 
     def __str__(self):
