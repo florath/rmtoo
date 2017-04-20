@@ -50,25 +50,25 @@ class Record(list, UsableFlag):
     # The dictionary which is returned here must be seen as read only.
     # The data is only valid until the underlying list is changed.
     def get_dict(self):
-        if self.ldict == None:
+        if self.ldict is None:
             self.convert_to_dict()
         return self.ldict
 
     # Insert a new RecordEntry.
     def insert(self, index, o):
-        self.ldict = None
+        self.ldict is None
         list.insert(self, index, o)
 
     # Append new RecordEntry
     def append(self, o):
         # This can be added seamlessly to a maybe already existsing ldict
-        if self.ldict != None:
+        if self.ldict is not None:
             self.ldict[o.get_tag()] = o
         list.append(self, o)
 
     # Delete an item
     def __delitem__(self, index):
-        self.ldict = None
+        self.ldict is None
         list.__delitem__(self, index)
 
     # Remove the first occurance of value with the given tag
@@ -92,7 +92,5 @@ class Record(list, UsableFlag):
     def is_tag_available(self, tag):
         for i in self:
             if tag == i.get_tag():
-                return True;
+                return True
         return False
-
-

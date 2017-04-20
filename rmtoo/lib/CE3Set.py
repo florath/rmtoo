@@ -1,15 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Constraint Execution and Evaluation Environment Set
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.logging import tracer
+
 
 class CE3Set:
     '''Sets which holds all the constrains execution environments.'''

@@ -19,6 +19,7 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
+
 class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     default_config = Cfg.new_by_json_str(
             """json:{"node_attributes":
@@ -33,14 +34,15 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__output_file = None
 
         if not self._config.is_available('node_attributes'):
-            self._config.set_value('node_attributes',
+            self._config.set_value(
+                'node_attributes',
                 ["Type", "Status", "Class", "Topic", "Priority", ])
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def topic_set_pre(self, _requirement_set):
         '''This is call in the RequirementSet pre-phase.'''
@@ -66,9 +68,10 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement(self, requirement):
         '''Output the given requirement.'''
-        self.__output_file.write('"%s" [%s];\n' %
-                      (requirement.get_id(),
-                       self.node_attributes(requirement, self._config)))
+        self.__output_file.write(
+            '"%s" [%s];\n' %
+            (requirement.get_id(),
+             self.node_attributes(requirement, self._config)))
 
         for d in requirement.incoming:
             self.__output_file.write('"%s" -> "%s";\n' %
@@ -106,7 +109,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
             if get_conf_attr("EffortEstimation"):
                 est_effort = req.get_value("Effort estimation")
-                if est_effort != None:
+                if est_effort is not None:
                     label += "\\n(%d EfEU)" % est_effort
 
             label += '"'

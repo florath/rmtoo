@@ -8,10 +8,10 @@
 
  For licensing details see COPYING
 '''
-
 import datetime
 
 from rmtoo.lib.RMTException import RMTException
+
 
 def parse_date(rid, ds):
     try:
@@ -19,6 +19,7 @@ def parse_date(rid, ds):
     except ValueError:
         raise RMTException(8, "%s: invalid date specified (must be "
                            "YYYY-MM-DD) was '%s'" % (rid, ds))
+
 
 def format_date(dt):
     return dt.strftime("%Y-%m-%d")

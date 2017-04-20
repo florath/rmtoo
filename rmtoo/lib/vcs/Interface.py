@@ -48,7 +48,7 @@ class Interface(object):
 
     @abc.abstractmethod
     def get_vcs_id_with_type(self, commit, dir_type):
-        '''Return the vcs id from the base directories of the given dir_type.'''
+        '''Return the vcs id from the base dir of the given dir_type.'''
         assert commit
         assert dir_type
         assert False
@@ -111,7 +111,7 @@ class Interface(object):
     @staticmethod
     def _check_list_of_strings(name, tbc):
         '''Checks if the given variable is a list of strings or None.'''
-        if tbc == None:
+        if tbc is None:
             tracer.debug("Ignoring non existent configuration for [%s]" % tbc)
             return
 

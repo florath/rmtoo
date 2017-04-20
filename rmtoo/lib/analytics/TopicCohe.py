@@ -14,6 +14,7 @@ from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.logging import tracer
 
+
 class TopicCohe(Base):
     '''Class for checking topic coherence.'''
 
@@ -32,7 +33,7 @@ class TopicCohe(Base):
     def topic_pre(self, topic):
         '''Collect the relation between requirement and topic.'''
         req_set = topic.get_requirement_set()
-        if None == req_set:
+        if req_set is None:
             return
         for req_id in req_set.get_all_requirement_ids():
             self.__add_req2topic(req_id, topic)
@@ -47,7 +48,7 @@ class TopicCohe(Base):
            (Here only one _ is used because this is used by the unit tests.)'''
         # If not there, add the initial count [0, 0]
         for topic in [topic_a.name, topic_b.name]:
-            if not topic in self.__tcnt:
+            if topic not in self.__tcnt:
                 self.__tcnt[topic] = [0, 0]
 
         # Add relation to both directions if the topic is the same or
@@ -68,7 +69,7 @@ class TopicCohe(Base):
         # If either one of the requirements is not in the topic,
         # skip this step
         if req_a.get_id() not in self.__req2topics \
-            or req_b.get_id() not in self.__req2topics:
+           or req_b.get_id() not in self.__req2topics:
             tracer.debug("One of the requirements is not in the topic - "
                          "skipping evaluation [%s] [%s]" %
                          (req_a.get_id(), req_b.get_id()))

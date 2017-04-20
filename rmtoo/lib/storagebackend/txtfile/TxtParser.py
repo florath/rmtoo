@@ -22,9 +22,9 @@ class TxtParser(object):
     @staticmethod
     def is_comment_or_empty(line):
         '''Checks if the given line is empty or a comment.'''
-        if len(line)==0:
+        if len(line) == 0:
             return True
-        if line[0]=='#':
+        if line[0] == '#':
             return True
         return False
 
@@ -67,43 +67,42 @@ class TxtParser(object):
         tag = retl.group(1)
         content.append(retl.group(2))
 
-        i+=1
-##      This is what is needed - to be compatible with the old
-##      specification.
-        while i<sl_len:
+        i += 1
+        # This is what is needed - to be compatible with the old
+        # specification.
+        while i < sl_len:
             if TxtParser.re_tag_line.match(sl[i]):
                 break
-            elif len(sl[i])>0 and sl[i][0]==" ":
+            elif len(sl[i]) > 0 and sl[i][0] == " ":
                 content.append(sl[i])
-                if len(comment)>0:
+                if len(comment) > 0:
                     # This is the possible problematic case where
                     # continuation lines are intermixed with comments.
-                    #
                     logger.info(LogFormatter.format(
-                             80, TxtParser.comment_in_req,
-                             rid, lineno+i))
+                        80, TxtParser.comment_in_req,
+                        rid, lineno+i))
             elif TxtParser.is_comment_or_empty(sl[i]):
                 comment.append(sl[i])
-            i+=1
+            i += 1
         rec = [tag, content, comment]
-        del(sl[0:i])
+        del sl[0:i]
         return rec
 
-## This is, what I really want - but what is not needed
-##
-##        # This can be followed by optional lines starting with a
-##        # space.
-##        while i<sl_len and len(sl[i])>0 and sl[i][0]==" ":
-##            i+=1
-##        i_end_of_continue = i
-##        # Optional comments and empty lines can follow
-##        while i<sl_len and TxtParser.is_comment_or_empty(sl[i]):
-##            i+=1
-##        # At the end of the record now - move all lines from the sl
-##        # to the rec
-##        rec = [sl[0], sl[1:i_end_of_continue], sl[i_end_of_continue:i]]
-##        del(sl[0:i])
-##        return rec
+# This is, what I really want - but what is not needed
+#
+#        # This can be followed by optional lines starting with a
+#        # space.
+#        while i<sl_len and len(sl[i])>0 and sl[i][0]==" ":
+#            i+=1
+#        i_end_of_continue = i
+#        # Optional comments and empty lines can follow
+#        while i<sl_len and TxtParser.is_comment_or_empty(sl[i]):
+#            i+=1
+#        # At the end of the record now - move all lines from the sl
+#        # to the rec
+#        rec = [sl[0], sl[1:i_end_of_continue], sl[i_end_of_continue:i]]
+#        del(sl[0:i])
+#        return rec
 
     @staticmethod
     def split_entries(sl, rid, mls, lineno_offset):
@@ -114,7 +113,7 @@ class TxtParser(object):
         doc = []
         lineno = lineno_offset
         success = True
-        while len(sl)>0:
+        while len(sl) > 0:
             try:
                 nr = TxtParser.split_next_record(sl, rid, lineno, mls)
                 doc.append(nr)
@@ -124,7 +123,7 @@ class TxtParser(object):
                 # parsed.
                 logger.error(LogFormatter.rmte(rmte))
                 # Remove the errornous line
-                del(sl[0])
+                del sl[0]
                 lineno += 1
                 success = False
         return success, doc
@@ -136,7 +135,7 @@ class TxtParser(object):
         s = u""
         for l in cl:
             # Empty lines -> \n
-            if len(l)==0:
+            if len(l) == 0:
                 s += "\n"
                 continue
             # All other lines: cut of the leading '#'
@@ -146,6 +145,6 @@ class TxtParser(object):
     @staticmethod
     def add_newlines(sl):
         '''Add the 'lost' newlines to the raw string - return string.'''
-        if len(sl)==0:
+        if len(sl) == 0:
             return ""
         return '\n'.join(sl) + '\n'

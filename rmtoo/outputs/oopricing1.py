@@ -30,6 +30,7 @@ import odf.dc
 
 DEPS_HEADER_LEN = 6
 
+
 class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                  CreateMakeDependencies):
 
@@ -43,8 +44,8 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
            be handled with this output module to about 700. If there is a
            need for more requirements, this can be easily extended.'''
         alpha = 'abcdefghijklmnopqrstuvwxyz'.upper()
-        pairs = [''.join((x, y)) for x in alpha \
-                     for y in [''] + [z for z in alpha]]
+        pairs = [''.join((x, y)) for x in alpha
+                 for y in [''] + [z for z in alpha]]
         self.__sscoords = sorted(pairs, key=len)
 
     def __init__(self, oconfig):
@@ -60,8 +61,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         '''Because oopricing1 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
-
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def __create_meta(self):
         '''Create the meta-information for the document.'''
@@ -75,8 +75,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         m = odf.meta.UserDefined(name="Generator", text="rmtoo")
         self.__calcdoc.meta.addElement(m)
 
-
-    ### Functions handling style
+    # Functions handling style
 
     def __create_styles_table_cell(self):
         # Bold
@@ -207,7 +206,6 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         '''Document storage.'''
         self.__calcdoc.save(self._output_filename, True)
 
-
     # Sheet creation functions.
 
     def __create_costs_sheet(self, sreqs):
@@ -219,7 +217,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.__calcdoc.spreadsheet.addElement(sheet)
 
     def __create_deps_sheet(self, sreqs):
-        sheet = odf.table.Table(name="Deps") #, protected="true")
+        sheet = odf.table.Table(name="Deps")  # , protected="true")
         self.create_reqs_ids_row(sheet, sreqs)
         # The second row is where all the results will be inserted.
         # Therefore put in each one a none.
@@ -251,7 +249,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
     def __create_constants_sheet(self):
         sheet = odf.table.Table(name="Constants", protected="true")
         # This is the list where the requirement compliance gets it
-        # values from. 
+        # values from.
         for r in ["none", "partial", "fully"]:
             tr = odf.table.TableRow()
             tc = odf.table.TableCell()
@@ -309,11 +307,11 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
 
-    #################################################################
-    ### 2nd level functions
-    ###
+    # ======================================================================
+    # 2nd level functions
+    #
 
-    ### helper functions
+    # helper functions
 
     # Create an empty row
     @staticmethod
@@ -362,22 +360,20 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         sheet.addElement(tr)
 
     # Creates a text cell with the given text. Optional a style can be
-    # specified. 
+    # specified.
     @staticmethod
     def create_text_cell(table_row, text, style=None):
-        if style != None:
+        if style is not None:
             tc = odf.table.TableCell(stylename=style)
         else:
             tc = odf.table.TableCell()
 
-        if text != None:
+        if text is not None:
             p = odf.text.P(text=text)
             tc.addElement(p)
         table_row.addElement(tc)
 
-
-
-    ### Functions handling costs
+    # Functions handling costs
 
     def create_costs_column_styles(self, sheet):
         # 1 Colum: Ids
@@ -507,9 +503,9 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             if len(req.outgoing) > 0:
                 tc = odf.table.TableCell(
                     valuetype="currency", currency="EUR",
-                    formula="oooc:=SUM([%s.%s2:%s.%s%d])" \
-                        % (sname, self.__sscoords[i], sname, self.__sscoords[i],
-                           (1 + len(req.outgoing))))
+                    formula="oooc:=SUM([%s.%s2:%s.%s%d])"
+                    % (sname, self.__sscoords[i], sname, self.__sscoords[i],
+                       (1 + len(req.outgoing))))
                 tr.addElement(tc)
             else:
                 self.create_empty_currency_cell_ro(tr)
@@ -544,7 +540,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             valuetype="string", stylename=self.doc_styles["tc-shrink-to-fit"])
         tr.addElement(tc)
 
-    ### Functions handling deps
+    # Functions handling deps
 
     def create_deps_dependent(self, sheet, sreqs):
         # The number of the following rows depend on the maximum
@@ -570,8 +566,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                 break
             i += 1
 
-
-    ### Functions handling sums
+    # Functions handling sums
 
     # Create one sum sheet
     def create_one_sums_sheet(self, calcdoc, sreqs, name, colname):
@@ -610,8 +605,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
 
         calcdoc.spreadsheet.addElement(sheet)
 
-
-    ### Functions handling forms
+    # Functions handling forms
     def create_form(self, calcdoc, sreqs):
         forms = odf.office.Forms(
             applydesignmode="false",
@@ -631,7 +625,8 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
                 id="lbcompliant%s" % req.name,
                 boundcolumn="1",
                 dropdown="yes",
-                controlimplementation="ooo:com.sun.star.form.component.ListBox",
+                controlimplementation="ooo:com.sun.star."
+                "form.component.ListBox",
                 linkedcell="Deps.%s2" % self.__sscoords[i],
                 listlinkagetype="selection",
                 name="ListBox Compliant %s" % req.name,
@@ -662,21 +657,24 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         for req in sreqs:
             # When there is only one entry in the list, there is no
             # need to have a dropdown list.
-            ddown = "yes"
-            if len(req.incoming) <= 1:
-                ddown = "no"
+            # Needed?
+            # ddown = "yes"
+            # if len(req.incoming) <= 1:
+            #    ddown = "no"
 
             lb = odf.form.Listbox(
                 id="lbdependentfrom%s" % req.name,
                 boundcolumn="1",
                 dropdown="yes",
-                controlimplementation="ooo:com.sun.star.form.component.ListBox",
+                controlimplementation="ooo:com.sun.star."
+                "form.component.ListBox",
                 linkedcell="Deps.%s3" % self.__sscoords[i],
                 listlinkagetype="selection",
                 name="ListBox Dependet From %s" % req.name,
                 size="3",
                 sourcecellrange="Deps.%s5:Deps.%s%d" % (
-                    self.__sscoords[i], self.__sscoords[i], len(req.incoming) + 4)
+                    self.__sscoords[i], self.__sscoords[i],
+                    len(req.incoming) + 4)
                 )
             lbproperties = odf.form.Properties()
             lbprop = odf.form.Property(
@@ -710,7 +708,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         forms.addElement(form)
         calcdoc.addElement(forms)
 
-    ### Functions handling result sheet
+    # Functions handling result sheet
     def create_result_one_req(self, tr, req, i):
         # 1 Id
         self.create_text_cell(tr, req.name)
@@ -740,4 +738,3 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             valuetype="string",
             formula="oooc:=[Costs.P%d]" % (i + DEPS_HEADER_LEN))
         tr.addElement(tc)
-

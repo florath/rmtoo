@@ -13,9 +13,10 @@ from __future__ import unicode_literals
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
+
 class TestCase(BaseRMObject):
 
-     def __init__(self, content, rid, file_path, mods, config):
+    def __init__(self, content, rid, file_path, mods, config):
         BaseRMObject.__init__(self, InputModuleTypes.testcase, content,
                               rid, mods,
                               config, "testcases", file_path)

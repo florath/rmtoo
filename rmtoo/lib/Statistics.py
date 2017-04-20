@@ -52,7 +52,7 @@ class Statistics(object):
 
             status = req.get_status()
             efe = req.get_value("Effort estimation")
-            if efe == None:
+            if efe is None:
                 continue
 
             if skip_requirement(req):
@@ -60,7 +60,7 @@ class Statistics(object):
 
             if isinstance(status, RequirementStatusNotDone):
                 # Only count those which are implementable
-#                rclass = req.get_value("Class")
+                #                rclass = req.get_value("Class")
                 if req.get_value("Class").is_implementable():
                     Statistics.inc_stats(rv, start_date, 0, invented_on,
                                          end_date, efe)
@@ -82,7 +82,7 @@ class Statistics(object):
             elif isinstance(status, RequirementStatusFinished):
                 finished_date = status.get_date()
 
-                if finished_date == None:
+                if finished_date is None:
                     continue
 
                 if finished_date < start_date:

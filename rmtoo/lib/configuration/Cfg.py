@@ -46,7 +46,7 @@ class Cfg(object):
            This can be filled later on with the different merge
            methods.'''
         self.config = {}
-        if initial_values != None:
+        if initial_values is not None:
             self.__init_initial_values(initial_values)
 
     def __init_initial_values(self, initial_values):
@@ -279,4 +279,4 @@ class Cfg(object):
 
     def is_available(self, key):
         '''Returns true if the given key is available in the configuration.'''
-        return self.get_value_wo_throw(key) != None
+        return self.get_value_wo_throw(key) is not None

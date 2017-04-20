@@ -1,18 +1,18 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Base class for Analytics.
-  
+
   This class provides some basic functionality and the interface
-  for the analytics classes. 
-   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+  for the analytics classes.
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.Executor import Executor
+
 
 class Base(Executor):
     '''Base class for all analytics checks.

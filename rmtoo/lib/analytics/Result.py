@@ -1,13 +1,14 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Analytics result.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+
 
 class Result:
 
@@ -35,6 +36,7 @@ class Result:
     def __str__(self):
         '''Return a string representation of the object.'''
         return "Analytics name [%s] object path [%s] value [%d] "\
-            "message list [%s]" % (self.__analytics_name,
-            self.__object_path_name, self.__analytics_value,
-            self.__message_list)
+            "message list [%s]" % (
+                self.__analytics_name,
+                self.__object_path_name, self.__analytics_value,
+                self.__message_list)

@@ -15,7 +15,6 @@
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet
@@ -24,7 +23,6 @@ from rmtoo.lib.TopicSetWCI import TopicSetWCI
 from rmtoo.lib.vcs.CommitInfo import CommitInfo
 from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.GenIterator import GenIterator
-from rmtoo.lib.RequirementSet import RequirementSetIterator
 
 
 class TopicContinuum(UsableFlag):
@@ -64,7 +62,7 @@ class TopicContinuum(UsableFlag):
             tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
             topic_set = self.__object_cache.get("TopicSet", topic_set_vcs_id)
 
-            if topic_set == None:
+            if topic_set is None:
                 tracer.debug("TopicSet with ID [%s] not in cache."
                              % topic_set_vcs_id)
                 topic_set = TopicSet(self._config, input_handler, commit,
@@ -84,7 +82,7 @@ class TopicContinuum(UsableFlag):
         tracer.debug("Called.")
         for source in ts_config['sources']:
             input_handler = Factory.create(source[0], source[1])
-            if input_handler == None:
+            if input_handler is None:
                 continue
             commits = input_handler.get_commits()
             self.__read_commits(input_handler, commits)
@@ -144,10 +142,11 @@ class TopicContinuumIterator(GenIterator):
 #           the ids which must be looked-up first in the dictionary.'''
 #        print("MCURRENT [%s]" % self._current)
 #        return self._current
-##        return self.__topic_continuum.get_topic_set(self._current.get_commit())
+#        return self.__topic_continuum.get_topic_set(
+#                       self._current.get_commit())
 #
-##        return RequirementSetIterator(self.__topic_continuum.get_topic_set(
-##                            self._current.get_commit()).get_requirement_set())
+#        return RequirementSetIterator(self.__topic_continuum.get_topic_set(
+#                            self._current.get_commit()).get_requirement_set())
 #
 #    def next(self):
 #        GenIterator._next(self)

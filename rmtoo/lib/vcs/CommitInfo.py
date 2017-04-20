@@ -1,15 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Small helper class for storing commit / vcs id information.
-   
- (c) 2012 by flonatel GmbH & Co. KG
+
+ (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.logging import tracer
+
 
 class CommitInfo:
 
@@ -21,7 +21,8 @@ class CommitInfo:
         self.__commit = commit
         self.__vcs_id = vcs_id
         self.__timestamp = input_handler.get_timestamp(commit)
-        tracer.debug("Finished; commit info timestamp [%s]." % self.__timestamp)
+        tracer.debug("Finished; commit info timestamp [%s]."
+                     % self.__timestamp)
 
     def get_vcs_id(self):
         '''Returns the vcs id of the object.'''

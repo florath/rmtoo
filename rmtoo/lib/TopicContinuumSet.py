@@ -34,7 +34,8 @@ class TopicContinuumSet(UsableFlag):
         # This dictionary holds all the TopicSetCollections
         # available in the configured time period.
         self.__continuum = {}
-        # Store objects with IDs also in the cache - so that they can be reused.
+        # Store objects with IDs also in the cache - so that they
+        # can be reused.
         self.__object_cache = ObjectCache()
         self.__init_continuum_set()
         self.__object_cache.log_stats()
@@ -46,10 +47,10 @@ class TopicContinuumSet(UsableFlag):
            and read in the TopicContinuum.'''
         tracer.debug("Called.")
         # Step through all the available topic sets.
-        for ts_name, ts_config in \
-            iteritems(self._config.get_value("topics").get_dict()):
+        for ts_name, ts_config in iteritems(
+                self._config.get_value("topics").get_dict()):
             topic_cont = TopicContinuum(ts_name, self._config, ts_config,
-                               self.__object_cache, self.__input_mods)
+                                        self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
             self._adapt_usablility(topic_cont)
         tracer.debug("Finished; count [%d]" % len(self.__continuum))
@@ -63,7 +64,8 @@ class TopicContinuumSet(UsableFlag):
                                 self.__continuum.values()):
             continuum.execute(executor, func_prefix)
         tracer.debug("Calling Post")
-        FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_post', self)
+        FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_post',
+                       self)
         tracer.debug("Finished.")
 
     def get_continuum_dict(self):

@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Requirement Tag Description
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -13,12 +13,14 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
+
 class ReqDescription(ReqTagGeneric):
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config, "Description",
-                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
-                         InputModuleTypes.testcase]))
+        ReqTagGeneric.__init__(
+            self, config, "Description",
+            set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
+                 InputModuleTypes.testcase]))
 
     def rewrite(self, rid, req):
         # This tag (Description) is mandatory
@@ -38,4 +40,3 @@ class ReqDescription(ReqTagGeneric):
         del req[self.get_tag()]
 
         return self.get_tag(), t
-

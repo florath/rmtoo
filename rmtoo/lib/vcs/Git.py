@@ -15,7 +15,6 @@ import copy
 import git
 import os
 from six import iteritems
-import sys
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
@@ -39,7 +38,7 @@ class Git(Interface):
            The absolute path is computed if the path is relative and
            then compared to the repository base directory.'''
         tracer.debug("called: directory [%s]" % directory)
-        if self.__repo_base_dir == None:
+        if self.__repo_base_dir is None:
             self.__setup_repo(directory)
         if not directory.startswith(self.__repo_base_dir):
             raise RMTException(28, "directory [%s] not in repository"
@@ -57,7 +56,7 @@ class Git(Interface):
         # TODO: duplicated code - also in FileSystem
         for dir_type in ["requirements", "topics", "constraints", "testcases"]:
             config_dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
-            if config_dirs == None:
+            if config_dirs is None:
                 tracer.info("Directory [%s] not configured - skipping." %
                             dir_type)
                 continue
@@ -88,7 +87,8 @@ class Git(Interface):
                 self.__repo = git.Repo(directory)
                 repo_found = True
                 break
-            except (git.exc.InvalidGitRepositoryError, git.exc.NoSuchPathError):
+            except (git.exc.InvalidGitRepositoryError,
+                    git.exc.NoSuchPathError):
                 tracer.debug("Sample directory [%s] does not exists" %
                              directory)
                 directory = os.path.dirname(directory)
@@ -209,7 +209,7 @@ class Git(Interface):
         return self.__get_file_infos_from_tree_rec(ltree, base_dir_split, [])
 
     def get_vcs_id_with_type(self, commit, dir_type):
-        '''Return the vcs id from the base directories of the given dir_type.'''
+        '''Return the vcs id from the base dir of the given dir_type.'''
         tracer.debug("called: commit [%s] directory type [%s]"
                      % (commit, dir_type))
         result = []
@@ -263,7 +263,7 @@ class Git(Interface):
         for directory in self.__dirs[file_type]:
             tracer.debug("searching in directory [%s]" % directory)
             blob = self.__get_blob(commit, directory, filename)
-            if blob != None:
+            if blob is not None:
                 dir_split = directory.split("/")
                 sub_split = os.path.dirname(filename).split("/")
                 return Git.FileInfo(dir_split, sub_split, blob)

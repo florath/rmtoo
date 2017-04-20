@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Hirachical Priority computation
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -12,6 +12,7 @@
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class RDepPriority(Digraph.Node):
     '''This class computes the priority.
@@ -37,7 +38,8 @@ class RDepPriority(Digraph.Node):
         # The second argument (the number) is the weight of the
         # outgoing edge.
         def handle_priorization(node, inc_weight):
-            tracer.debug("Node [%s] inc_weight [%4.3f]" % (node.get_id(), inc_weight))
+            tracer.debug("Node [%s] inc_weight [%4.3f]"
+                         % (node.get_id(), inc_weight))
             # This is the weight which is inherited
             weight = inc_weight * node.get_value("Factor")
 
@@ -50,8 +52,9 @@ class RDepPriority(Digraph.Node):
                              % (node.get_id(), weight))
                 node.set_value("Priority", weight)
                 for n in node.outgoing:
-                    tracer.debug("Recursive call to node [%s] with weight [%4.3f]"
-                                 % (n.get_id(), weight))
+                    tracer.debug(
+                        "Recursive call to node [%s] with weight [%4.3f]"
+                        % (n.get_id(), weight))
                     handle_priorization(n, weight)
 
         # Start at the root (master) node and evaluate all nodes

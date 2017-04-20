@@ -1,16 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Generic Iterator
-   
- (c) 2012 by flonatel GmbH & Co. KG
+
+ (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
+
 class GenIterator:
-    '''Generic iterator: adds a current to the standard container 
+    '''Generic iterator: adds a current to the standard container
        iterators.'''
 
     def __init__(self, iterator):
@@ -30,9 +31,9 @@ class GenIterator:
     def _get_current(self):
         '''Returns the current element.'''
         return self._current
-    
+
     def next(self):
         return self._next()
-    
+
     def current(self):
         return self._current

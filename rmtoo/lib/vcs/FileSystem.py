@@ -35,7 +35,7 @@ class FileSystem(Interface):
         tracer.debug("Called.")
         for dir_type in ["requirements", "topics", "constraints", "testcases"]:
             dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
-            if dirs == None:
+            if dirs is None:
                 tracer.info("Directory [%s] not configured - skipping.",
                             dir_type)
                 continue
@@ -63,7 +63,7 @@ class FileSystem(Interface):
 
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the filename of the given dir_type.'''
-        assert commit == None
+        assert commit is None
         tracer.debug("called: directory type [%s]" % dir_type)
         return ObjectCache.create_hashable(self.__dirs[dir_type])
 
@@ -136,7 +136,7 @@ class FileSystem(Interface):
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
            given directory type.'''
-        assert commit == None
+        assert commit is None
         tracer.debug("called: directory type [%s]" % dir_type)
         result = []
         if dir_type not in self.__dirs:
@@ -149,7 +149,7 @@ class FileSystem(Interface):
 
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
-        assert commit == None
+        assert commit is None
         tracer.debug("called: file type [%s] filename [%s]"
                      % (file_type, filename))
         for directory in self.__dirs[file_type]:
@@ -159,5 +159,3 @@ class FileSystem(Interface):
                 return FileSystem.FileInfo(directory, filename)
         raise RMTException(112, "file [%s] in [%s] base file not found"
                            % (filename, file_type))
-
-

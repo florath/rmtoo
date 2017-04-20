@@ -1,15 +1,13 @@
-#
 # -*- coding: utf-8 -*-
-#
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   The Description is the critical part of the requirement. This
   module checks for some good and bad words and tries a heuristic to
   get an idea about bad requirement descriptions.
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -21,53 +19,57 @@ from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.logging import tracer
 
-class DescWords(Base):
 
+class DescWords(Base):
     # This is the assessment of each word (better regular expression).
     # If the regular expression matches, the value is added.
     # If the resulting number is lower than a given limit, an error is
-    # assumed. 
+    # assumed.
     # The numbers are provided on a level between [-100, 100] where
     # -100 is a very very bad word and 100 is a very very good.
     # Do not add the single word 'not': only do this in pairs,
     # e.g. 'must not'.
     words_en_GB = [
-        [ re.compile("\. "), -15, "Additional fullstop (not only at the end of the desctiption)"],
-        [ re.compile(" about "), -15, "Usage of the word 'about'"],
-        [ re.compile(" and "), -10, "Usage of the word 'and'"],
-        [ re.compile(" approximately "), -100, "Usage of the word 'approximately'"],
-        [ re.compile(" etc\.? "), -40, "Usage of the word 'etc'"],
-        [ re.compile(" e\.g\. "), -40, "Usage of the word 'e.g.'"],
-        [ re.compile(" has to "), 20, "Usage of the word 'has to'"],
-        [ re.compile(" have to "), 20, "Usage of the word 'have to'"],
-        [ re.compile(" i\.e\. "), -40, "Usage of the word 'i.e.'"],
-        [ re.compile(" many "), -20, "Usage of the word 'many'"],
-        [ re.compile(" may "), 10, "Usage of the word 'may'"],
-        [ re.compile(" maybe "), -50, "Usage of the word 'maybe'"],
-        [ re.compile(" might "), 10, "Usage of the word 'might'"],
-        [ re.compile(" must "), 25, "Usage of the word 'must'"],
-        [ re.compile(" or "), -15, "Usage of the word 'or'"],
-        [ re.compile(" perhaps "), -100, "Usage of the word 'perhaps'"],
-        [ re.compile(" should "), 15, "Usage of the word 'should'"],
-        [ re.compile(" shall "), 15, "Usage of the word 'shall'"],
-        [ re.compile(" some "), -25, "Usage of the word 'some'"],
-        [ re.compile(" vaguely "), -25, "Usage of the word 'vaguely'"],
+        [re.compile("\. "), -15,
+         "Additional fullstop (not only at the end of the desctiption)"],
+        [re.compile(" about "), -15, "Usage of the word 'about'"],
+        [re.compile(" and "), -10, "Usage of the word 'and'"],
+        [re.compile(" approximately "), -100,
+         "Usage of the word 'approximately'"],
+        [re.compile(" etc\.? "), -40, "Usage of the word 'etc'"],
+        [re.compile(" e\.g\. "), -40, "Usage of the word 'e.g.'"],
+        [re.compile(" has to "), 20, "Usage of the word 'has to'"],
+        [re.compile(" have to "), 20, "Usage of the word 'have to'"],
+        [re.compile(" i\.e\. "), -40, "Usage of the word 'i.e.'"],
+        [re.compile(" many "), -20, "Usage of the word 'many'"],
+        [re.compile(" may "), 10, "Usage of the word 'may'"],
+        [re.compile(" maybe "), -50, "Usage of the word 'maybe'"],
+        [re.compile(" might "), 10, "Usage of the word 'might'"],
+        [re.compile(" must "), 25, "Usage of the word 'must'"],
+        [re.compile(" or "), -15, "Usage of the word 'or'"],
+        [re.compile(" perhaps "), -100, "Usage of the word 'perhaps'"],
+        [re.compile(" should "), 15, "Usage of the word 'should'"],
+        [re.compile(" shall "), 15, "Usage of the word 'shall'"],
+        [re.compile(" some "), -25, "Usage of the word 'some'"],
+        [re.compile(" vaguely "), -25, "Usage of the word 'vaguely'"],
     ]
 
     words_de_DE = [
-        [ re.compile("\. "), -15, "Additional fullstop (not only at the end of the desctiption)"],
-        [ re.compile(" ca\. "), -75, "Usage of the word 'ca.'"],
-        [ re.compile(" möglicherweise "), -100, "Usage of the word 'möglicherweise'"],
-        [ re.compile(" muss "), 25, "Usage of the word 'muss'"],
-        [ re.compile(" oder "), -15, "Usage of the word 'oder'"],
-        [ re.compile(" und "), -10, "Usage of the word 'und'"],
-        [ re.compile(" usw."), -40, "Usage of the word 'usw'"],
-        [ re.compile(" vielleicht "), -25, "Usage of the word 'vielleicht'"],
-        [ re.compile(" z\.B\. "), -40, "Usage of the word 'z.B.'"],
+        [re.compile("\. "), -15,
+         "Additional fullstop (not only at the end of the desctiption)"],
+        [re.compile(" ca\. "), -75, "Usage of the word 'ca.'"],
+        [re.compile(" möglicherweise "), -100,
+         "Usage of the word 'möglicherweise'"],
+        [re.compile(" muss "), 25, "Usage of the word 'muss'"],
+        [re.compile(" oder "), -15, "Usage of the word 'oder'"],
+        [re.compile(" und "), -10, "Usage of the word 'und'"],
+        [re.compile(" usw."), -40, "Usage of the word 'usw'"],
+        [re.compile(" vielleicht "), -25, "Usage of the word 'vielleicht'"],
+        [re.compile(" z\.B\. "), -40, "Usage of the word 'z.B.'"],
     ]
 
-    words = { "en_GB": words_en_GB,
-              "de_DE": words_de_DE, }
+    words = {"en_GB": words_en_GB,
+             "de_DE": words_de_DE}
 
     def __init__(self, config):
         '''Sets up the DescWord object for use.'''
@@ -107,7 +109,7 @@ class DescWords(Base):
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
@@ -116,9 +118,10 @@ class DescWords(Base):
     def requirement(self, requirement):
         '''Checks all the requirements.
            If the result is positive, it is good.'''
-        result = DescWords.analyse(requirement.get_id(),
-                 self.lwords,
-                 requirement.get_value("Description").get_content())
+        result = DescWords.analyse(
+            requirement.get_id(),
+            self.lwords,
+            requirement.get_value("Description").get_content())
         if result.get_value() < 0:
             self.set_failed()
         self.add_result(result)

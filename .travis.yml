@@ -26,5 +26,6 @@ addons:
 # command to run tests
 script:
   - make tests
+  - tox -e pep8
   - codecov
   - sonar-scanner

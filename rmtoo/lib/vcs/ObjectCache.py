@@ -54,7 +54,7 @@ class ObjectCache(object):
         self.__stats_cnt_get += 1
 
         if object_type in self.__objects \
-            and oid in self.__objects[object_type]:
+           and oid in self.__objects[object_type]:
             self.__stats_cnt_get_found += 1
             return self.__objects[object_type][oid]
         return None

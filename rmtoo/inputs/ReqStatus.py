@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Status attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -12,6 +12,7 @@
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.RequirementStatus import create_requirement_status
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class ReqStatus(ReqTagGeneric):
 

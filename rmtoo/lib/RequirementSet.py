@@ -72,7 +72,7 @@ class RequirementSet(Digraph, UsableFlag):
         req = object_cache.get("Requirement", vcs_id)
         tracer.info("Reading requirement [%s]" % rid)
 
-        if req == None:
+        if req is None:
             file_content = fileinfo.get_content()
             req = Requirement(file_content, rid, fileinfo.get_filename(),
                               input_mods, self._config)
@@ -108,7 +108,7 @@ class RequirementSet(Digraph, UsableFlag):
            implementation stop if an error occurred.'''
         for module in input_mods.get_reqdeps_sorted():
             state = module.rewrite(self)
-            if state == False:
+            if state is False:
                 # Some semantic error occurred.
                 self._set_not_usable()
                 # Do not continue - return immediately, because some
@@ -167,7 +167,7 @@ class RequirementSet(Digraph, UsableFlag):
         ctr = object_cache.get("Constraint", vcs_id)
         tracer.info("Reading constraint [%s]" % rid)
 
-        if ctr == None:
+        if ctr is None:
             file_content = fileinfo.get_content()
             ctr = Constraint(file_content, rid, fileinfo.get_filename(),
                              input_mods, self._config)
@@ -184,7 +184,8 @@ class RequirementSet(Digraph, UsableFlag):
             # access to the digraph algorithms.
             # self.nodes.append(req)
         else:
-            logger.error(LogFormatter.format(87, "could not be parsed", ctr.id))
+            logger.error(LogFormatter.format(87, "could not be parsed",
+                                             ctr.id))
         tracer.debug("Finished.")
 
 #        everythings_fine = True
@@ -209,11 +210,11 @@ class RequirementSet(Digraph, UsableFlag):
     def __read_all_constraints(self, input_handler, commit, input_mods,
                                object_cache):
         '''Read in all the constraints from the input handler.'''
-        tracer.debug("Called.");
+        tracer.debug("Called.")
         fileinfos = input_handler.get_file_infos(commit, "constraints")
         for fileinfo in fileinfos:
             self.__read_one_constraint(fileinfo, input_mods, object_cache)
-        tracer.debug("Finished.");
+        tracer.debug("Finished.")
 
     # TODO: double feature code with small adaptions only.
     def __read_one_testcase(self, fileinfo, input_mods, object_cache):
@@ -229,7 +230,7 @@ class RequirementSet(Digraph, UsableFlag):
         testcase = object_cache.get("TestCase", vcs_id)
         tracer.info("Reading testcase [%s]" % rid)
 
-        if testcase == None:
+        if testcase is None:
             file_content = fileinfo.get_content()
             testcase = TestCase(file_content, rid, fileinfo.get_filename(),
                                 input_mods, self._config)
@@ -246,19 +247,19 @@ class RequirementSet(Digraph, UsableFlag):
             # access to the digraph algorithms.
             # self.nodes.append(req)
         else:
-            logger.error(LogFormatter.format(
-                115, "could not be parsed", testcase.id))
+            logger.error(
+                LogFormatter.format(
+                    115, "could not be parsed", testcase.id))
         tracer.debug("Finished.")
 
     def __read_all_testcases(self, input_handler, commit, input_mods,
-                               object_cache):
+                             object_cache):
         '''Read in all the testcases from the input handler.'''
-        tracer.debug("Called.");
+        tracer.debug("Called.")
         fileinfos = input_handler.get_file_infos(commit, "testcases")
         for fileinfo in fileinfos:
             self.__read_one_testcase(fileinfo, input_mods, object_cache)
-        tracer.debug("Finished.");
-
+        tracer.debug("Finished.")
 
     def read_requirements(self, input_handler, commit, input_mods,
                           object_cache):
@@ -321,16 +322,18 @@ class RequirementSet(Digraph, UsableFlag):
                 restricted_reqs._add_ce3(req.get_id(),
                                          self.__ce3set.get(req.get_id()))
                 ctrs = req.get_value("Constraints")
-                if ctrs != None:
+                if ctrs is not None:
                     for cval in ctrs:
-                        restricted_reqs._add_constraint(self.__constraints[cval])
+                        restricted_reqs._add_constraint(
+                            self.__constraints[cval])
 
                 # Add testcases
                 testcases = req.get_value("Test Cases")
-                if testcases != None:
+                if testcases is not None:
                     tracer.debug("Restricting testcases [%s]" % testcases)
                     for testcase in testcases:
-                        restricted_reqs._add_testcase(self.__testcases[testcase])
+                        restricted_reqs._add_testcase(
+                            self.__testcases[testcase])
 
         return restricted_reqs
 
@@ -403,7 +406,7 @@ class RequirementSet(Digraph, UsableFlag):
         for req in self.__requirements.values():
             if not self.__resolve_solved_by_one_req(req):
                 tracer.info("Handling of requirement [%s] was not successful"
-                             % req.get_id())
+                            % req.get_id())
                 success = False
         tracer.debug("Finished; success [%s]." % success)
         return success
@@ -465,7 +468,7 @@ class RequirementSet(Digraph, UsableFlag):
             Digraph.create_edge(dep_req, req)
 
         # Copy and delete the original tag
-        ## XXX Not neede any more? req.tags["Depends on"] = t.split()
+        # XXX Not neede any more? req.tags["Depends on"] = t.split()
         del req.brmo["Depends on"]
         return True
 
@@ -507,12 +510,12 @@ class RequirementSet(Digraph, UsableFlag):
             # In each case store a (maybe empty) CE3 in the set.
             ce3 = CE3()
             cstrnts = req.get_value("Constraints")
-            if cstrnts != None:
+            if cstrnts is not None:
                 sval = json.loads(cstrnts.get_content())
                 cs = {}
                 for s in sval:
                     ctr_name = self.get_ctr_name(s)
-                    if not ctr_name in self.__constraints:
+                    if ctr_name not in self.__constraints:
                         raise RMTException(88, "Constraint [%s] does not "
                                            "exists" % ctr_name)
                     rcs = self.__constraints.get(ctr_name)
@@ -562,7 +565,7 @@ class RequirementSet(Digraph, UsableFlag):
     def get_master_nodes(self):
         '''Return the available master nodes.'''
         tracer.debug("Master nodes [%s]" % self.__master_nodes)
-        if self.__master_nodes == None:
+        if self.__master_nodes is None:
             self.find_master_nodes()
         return self.__master_nodes
 
@@ -622,7 +625,7 @@ class RequirementSet(Digraph, UsableFlag):
             # Check if there is already a 'Solved by'
             try:
                 r.record.set_content("Solved by", on)
-            except ValueError as ve:
+            except ValueError:
                 r.record.append(RecordEntry(
                         u"Solved by", on,
                         u"Added by rmtoo-normalize-dependencies"))
@@ -632,9 +635,10 @@ class RequirementSet(Digraph, UsableFlag):
         '''Write the requirements back to the filesystem.'''
         for r in itervalues(self.__requirements):
             with io.open(os.path.join(directory, r.id + ".req"), "w",
-                         encoding = "utf-8") as fd:
+                         encoding="utf-8") as fd:
                 r.record.write_fd(fd)
         return True
+
 
 class RequirementSetIterator(GenIterator):
 

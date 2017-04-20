@@ -1,18 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  Handling of standard parameters for output parameter handling.
-   
- (c) 2011 by flonatel GmbH & Co. KG
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import datetime
+
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.logging import tracer
+
 
 class StdOutputParams:
     '''Handles the standard output parameters and sets the values
@@ -37,7 +38,7 @@ class StdOutputParams:
            and returned.  If name is not in params, the default_value
            is returned.'''
         pname = cfg.get_value_wo_throw(name)
-        if pname == None:
+        if pname is None:
             return default_value
         return parse_date(name, pname)
 

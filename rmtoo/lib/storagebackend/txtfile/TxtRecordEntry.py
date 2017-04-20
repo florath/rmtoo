@@ -15,6 +15,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.StringHelper import StringHelper
 
+
 class TxtRecordEntry(RecordEntry):
 
     def __init__(self, se):
@@ -58,14 +59,14 @@ class TxtRecordEntry(RecordEntry):
     # TODO This is a minimalistic implementation - which works.
     # Maybe add text wrapping.
         comment = ""
-        if l.get_comment() != None:
+        if l.get_comment() is not None:
             comment = "# " + l.get_comment()
 
         return l.get_tag() + ": " + l.get_content() + "\n" + comment
 
     def write_fd(self, fd):
         '''Write record entry to filesystem.'''
-        if self.content_raw != None:
+        if self.content_raw is not None:
             fd.write(self.tag_raw)
             fd.write(StringHelper.join_ate(u"\n", self.content_raw))
         else:
@@ -74,7 +75,7 @@ class TxtRecordEntry(RecordEntry):
             fd.write(self.get_content())
             fd.write("\n")
 
-        if self.comment_raw != None:
+        if self.comment_raw is not None:
             fd.write(StringHelper.join_ate(u"\n", self.comment_raw))
         else:
             fd.write("# ")

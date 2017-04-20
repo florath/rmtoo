@@ -39,14 +39,14 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''If not already there, create the directory.'''
         try:
             os.makedirs(self.__output_directory)
-        except OSError as ose:
+        except OSError:
             # It's ok if already there
             pass
 
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def topic_set_pre(self, topics_set):
         '''Do all the file and directory preparation.'''
@@ -120,17 +120,18 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
         fd.write(u'<dt><span class="dlt_description">Description</span>'
                  '</dt><dd><span class="dlv_description">%s</span></dd>' %
-                  LaTeXMarkup.replace_html(req.get_value("Description")
-                                           .get_content()))
+                 LaTeXMarkup.replace_html(req.get_value("Description")
+                                          .get_content()))
 
         if req.is_value_available("Rationale") \
-                and req.get_value("Rationale") != None:
+                and req.get_value("Rationale") is not None:
             fd.write(u'<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
                      LaTeXMarkup.replace_html_par(req.get_value("Rationale").
                                                   get_content()))
 
-        if req.is_value_available("Note") and req.get_value("Note") != None:
+        if req.is_value_available("Note") \
+           and req.get_value("Note") is not None:
             fd.write(u'<dt><span class="dlt_note">Note</span></dt>'
                      '<dd><span class="dlv_note">%s</span></dd>'
                      % req.get_value("Note").get_content())
@@ -221,14 +222,15 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''Called on requirement level.'''
         self._cmad_file.write(u"REQS+=%s\n" % requirement.get_file_path())
 
-# TODO: Ueberlegen!
+    # TODO: Think about this!
 
     # Create Makefile Dependencies
     # Basic idea: each HTML file is dependend of the approriate topic
     # file plus the header and the footer.
     # Each html file depends on it's topic file
     def cmad(self, reqscont, ofile):
-        reqset = reqscont.continuum_latest()
+        # ToDo: needed? (reqset is never used)
+        # reqset = reqscont.continuum_latest()
 
         # Dependencies of every single topic html page
         for topic in self.topic_set.nodes:
@@ -241,15 +243,16 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         # All HTML files
         ofile.write("OUTPUT_HTML=")
         for topic in self.topic_set.nodes:
-            ofile.write(u"%s.html " % os.path.join(self.output_dir, topic.name))
+            ofile.write(u"%s.html " % os.path.join(
+                self.output_dir, topic.name))
         ofile.write(u"\n")
 
     def read_html_arts(self):
-        if self.html_header_filename != None:
+        if self.html_header_filename is not None:
             with io.open(self.html_header_filename, "r",
                          encoding="utf-8") as fd:
                 self.html_header = fd.read()
-        if self.html_footer_filename != None:
+        if self.html_footer_filename is not None:
             with io.open(self.html_footer_filename, "r",
                          encoding="utf-8") as fd:
                 self.html_footer = fd.read()

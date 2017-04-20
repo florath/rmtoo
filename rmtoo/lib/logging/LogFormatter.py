@@ -1,23 +1,23 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Logging Formatter
 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+
 
 class LogFormatter:
 
     @staticmethod
     def format(lid, msg, efile=None, eline=None):
         rval = "%3d:" % lid
-        if efile != None:
+        if efile is not None:
             rval += "%s:" % efile
-        if eline != None:
+        if eline is not None:
             rval += "%s:" % eline
         rval += "%s" % msg
         return rval

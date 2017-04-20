@@ -28,7 +28,7 @@ class Constraints(object):
         tracer.debug("Called for topic set.")
         cnsts = {}
 
-        if topic_set == None:
+        if topic_set is None:
             assert False
 
         for ctr, cval in iteritems(topic_set.get_requirement_set().

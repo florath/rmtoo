@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Detect if the graph has directed circles
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -16,6 +16,7 @@ from rmtoo.lib.digraph.StronglyConnectedComponents \
 from rmtoo.lib.digraph.Helper import remove_single_element_lists_name_rest
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class RDepNoDirectedCircles(Digraph.Node):
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
@@ -33,7 +34,7 @@ class RDepNoDirectedCircles(Digraph.Node):
     def rewrite(self, reqset):
         scc = strongly_connected_components(reqset)
         result = check_for_strongly_connected_components(scc)
-        if result == True:
+        if result:
             print("+++ ERROR: There is at least one circular "
                   "dependency component: '%s'" %
                   remove_single_element_lists_name_rest(scc))

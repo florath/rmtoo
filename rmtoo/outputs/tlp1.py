@@ -43,7 +43,7 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum,
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because tlp1 can only one topic continuum,
            the latest (newest) is used.'''
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def requirement_set_pre(self, requirement_set):
         '''This is called in the RequirementSet pre-phase.'''

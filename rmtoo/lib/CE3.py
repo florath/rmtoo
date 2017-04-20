@@ -2,21 +2,22 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
-  Constraint Execution and Evaluation EnvironmentHeuristics to check the 
-  quality of the requirements. 
+  Constraint Execution and Evaluation EnvironmentHeuristics to check the
+  quality of the requirements.
 
- (c) 2011-2012 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.RMTException import RMTException
+
 
 # Some common used functions
 def ce3assert(b, errmsg):
     if not b:
         raise RMTException(90, "Failed CE3 assert: msg [%s]"
                            % errmsg)
+
 
 class CE3:
 
@@ -26,7 +27,7 @@ class CE3:
     def eval(self, cs, class_name, cstr_call):
         v = cs.get_value("CE3")
 
-        if v == None:
+        if v is None:
             return
 
         s = ""
@@ -63,26 +64,24 @@ class CE3:
         for k in okeys:
             # Is the key locally available?
             mobj = None
-            if self.has_key(k):
+            if k in self.values:
                 mobj = self.get_value(k)
 
             lobj = []
             # Look for this in all other oce3s
             for o in oce3s:
-                if o.has_key(k):
+                if k in o.values:
                     lobj.append(o.get_value(k))
 
             # For the execution one object is needed
             eobj = mobj
-            if mobj == None:
+            if mobj is None:
                 eobj = lobj[0]
-                ### lobj.add(eobj)
+                # lobj.add(eobj)
 
             ro = eobj.unite(mobj, lobj)
 
-            if ro != None:
+            if ro is not None:
                 # There is a new constraint for the local key
-                assert(mobj == None)
+                assert mobj is None
                 self.set_value(k, ro)
-
-

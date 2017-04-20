@@ -22,7 +22,7 @@ class TestCases(object):
         tracer.debug("Called for topic set.")
         testcases = {}
 
-        if topic_set == None:
+        if topic_set is None:
             assert False
 
         for testcase, tcval in iteritems(topic_set.get_requirement_set().

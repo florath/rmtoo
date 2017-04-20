@@ -1,24 +1,24 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Rationale attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class ReqRationale(ReqTagGeneric):
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config, "Rationale",
-                     set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
-                          InputModuleTypes.testcase]))
+        ReqTagGeneric.__init__(
+            self, config, "Rationale",
+            set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
+                 InputModuleTypes.testcase]))
 
     def rewrite(self, _, req):
         return self.handle_optional_tag(req)
-

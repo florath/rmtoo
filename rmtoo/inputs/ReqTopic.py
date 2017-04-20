@@ -1,16 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Topic attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class ReqTopic(ReqTagGeneric):
 

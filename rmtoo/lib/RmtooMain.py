@@ -26,6 +26,7 @@ try:
 except:
     unicode = str
 
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     '''Checks are always done - to be sure that e.g. the dependencies
        are correct.
@@ -50,7 +51,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
 
     cmad_filename = config.get_value_wo_throw(
                        'actions.create_makefile_dependencies')
-    if cmad_filename != None:
+    if cmad_filename is not None:
         Output.execute(config, topic_continuum_set, mstderr, "cmad_")
         return True
 
@@ -65,6 +66,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
     Output.execute(config, topic_continuum_set, mstderr, "")
     return True
 
+
 def main_func(args, mstdout, mstderr):
     '''The real implementation of the main function:
        o get config
@@ -74,6 +76,7 @@ def main_func(args, mstdout, mstderr):
     configure_logging(config, mstderr)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
+
 def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
     '''The main entry function
     This calls the main_func function and does the exception handling.'''
@@ -82,6 +85,7 @@ def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
     except RMTException as rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
+
 
 def main():
     main_impl(sys.argv[1:], sys.stdout, sys.stderr)

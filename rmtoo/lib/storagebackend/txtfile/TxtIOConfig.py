@@ -16,7 +16,7 @@ class TxtIOConfig:
 
     def __init__(self, config=None, type_str=""):
         self.__max_line_length = 80
-        if config != None:
+        if config is not None:
             self.__init_overwrite(config, type_str)
 
     def get_max_line_length(self):
@@ -28,5 +28,6 @@ class TxtIOConfig:
         self.__max_line_length = config.get_integer(
                                 'max_input_line_length', 80)
         if self.__max_line_length < 0:
-            raise RMTException(72, "max_input_line_length for type [%s] is "
-                        "negative [%s]" % (type_str, self.__max_line_length))
+            raise RMTException(
+                72, "max_input_line_length for type [%s] is "
+                "negative [%s]" % (type_str, self.__max_line_length))

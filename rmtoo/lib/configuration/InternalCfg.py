@@ -17,12 +17,13 @@ try:
 except NameError:
     unicode = str
 
+
 class InternalCfg(object):
     '''Internal configuration utility class.'''
 
     def __init__(self):
         '''Hide utility class constructor.'''
-        assert(False)
+        assert False
 
     @staticmethod
     def convert_key(key):
@@ -44,8 +45,8 @@ class InternalCfg(object):
         '''Returns the key from the given dictionary.
            If this is not the last part of the key, this method
            is called recursively.'''
-        assert(type(ldict) == dict)
-        assert(len(key) > 0)
+        assert type(ldict) == dict
+        assert len(key) > 0
         if key[0] not in ldict:
             raise CfgEx("(Sub-)Key [%s] not found." % key[0])
         val = ldict[key[0]]
@@ -62,8 +63,8 @@ class InternalCfg(object):
         '''Change the given key with the help of the change_func.
            If value does not exists, the empty_val is used for
            initial initialization.'''
-        assert(type(ldict) == dict)
-        assert(len(key) > 0)
+        assert type(ldict) == dict
+        assert len(key) > 0
 
         # Only use the given empty value for the last value in the
         # key-chain.  All others must be dictionaries.

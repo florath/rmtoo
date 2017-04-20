@@ -1,16 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Base class for handling different executions in and
   beneath the TopicContinuum.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
-# pylint: disable=W0232 
+
+# ToDo: Create an ABC?
 class ExecutorTopicContinuum:
 
     def topic_continuum_pre(self, _topic_continuum):
@@ -54,7 +55,7 @@ class ExecutorTopicContinuum:
     def topic_name(self, _name):
         '''Called when the Name tag appears in the topic.'''
         return
-    
+
     def topic_text(self, _text):
         '''Called when there is text to be outputted.'''
         return

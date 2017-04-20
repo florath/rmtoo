@@ -29,7 +29,7 @@ def find(mdir):
         for f in files:
             o = os.path.join(d, f)
             # Cut off the mdir at the beginning
-            assert(o.startswith(mdir))
+            assert o.startswith(mdir)
             r.add(o[len(mdir) + 1:])
     return r
 
@@ -125,9 +125,9 @@ def cleanup_std_log(mout, merr):
 
 
 def delete_result_is_dir():
-    assert(os.environ["rmtoo_test_dir"] is not None)
+    assert os.environ["rmtoo_test_dir"] is not None
     shutil.rmtree(os.environ["rmtoo_test_dir"])
-    del(os.environ["rmtoo_test_dir"])
+    del os.environ["rmtoo_test_dir"]
 
 
 def prepare_result_is_dir():
@@ -177,7 +177,7 @@ def extract_container_files(lof):
             extract_one_container_file_zip(fn)
         else:
             # Unknown extension
-            assert(False)
+            assert False
 
     for f in lof:
         extract_one_container_file(f)
@@ -205,15 +205,15 @@ def unify_output_dir(filename):
 def check_result(missing_files, additional_files, diffs, tcname):
     if len(missing_files) != 0:
         print("[%s] MISSING FILES [%s]" % (tcname, missing_files))
-    assert(len(missing_files) == 0)
+    assert len(missing_files) == 0
 
     if len(additional_files) != 0:
         print("[%s] ADDITIONAL FILES [%s]" % (tcname, additional_files))
-    assert(len(additional_files) == 0)
+    assert len(additional_files) == 0
 
     if len(diffs) != 0:
         print("[%s] DIFFS [%s]" % (tcname, diffs))
-    assert(len(diffs) == 0)
+    assert len(diffs) == 0
 
 
 def prepare_stderr():

@@ -1,18 +1,18 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  UsableFlag
    In some circumstances it makes sense - even if there is
    an error - to continue.
    This objects help flagging the object either usable or unusable.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.logging import tracer
+
 
 class UsableFlag:
     '''Holding flag to show if an object is usable or not.'''

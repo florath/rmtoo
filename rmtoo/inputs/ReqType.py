@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Type attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -19,12 +19,13 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 # So if something changes here - possible also there must be changed
 # something.
 
+
 class ReqType(ReqTagGeneric):
     types = [
-        [ "master requirement", Requirement.rt_master_requirement ],
-        [ "initial requirement", Requirement.rt_initial_requirement ],
-        [ "design decision", Requirement.rt_design_decision ],
-        [ "requirement", Requirement.rt_requirement ],
+        ["master requirement", Requirement.rt_master_requirement],
+        ["initial requirement", Requirement.rt_initial_requirement],
+        ["design decision", Requirement.rt_design_decision],
+        ["requirement", Requirement.rt_requirement],
         ]
 
     def __init__(self, config):
@@ -49,9 +50,9 @@ class ReqType(ReqTagGeneric):
 
         t = req[self.get_tag()].get_content()
         rt = self.find_type(t)
-        if rt == None:
+        if rt is None:
             raise RMTException(19, "%s: invalid type field '%s': "
-                                   "must be one of '%s'" %
+                               "must be one of '%s'" %
                                (rid, t, self.type_keys))
 
         del req[self.get_tag()]

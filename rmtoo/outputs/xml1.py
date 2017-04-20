@@ -18,8 +18,9 @@ class xml1:
         self.topic_set = topic_set
         self.output_filename = param[0]
 
-    def set_topics(self, topics):
-        self.topic_set = topics.get(param[1])
+    # ToDo: Needed? (param is not defined!)
+    # def set_topics(self, topics):
+    #    self.topic_set = topics.get(param[1])
 
     # Create MAkefile Dependencies
     def cmad(self, reqscont, ofile):
@@ -39,7 +40,7 @@ class xml1:
             tm = doc.createElement(self.name2xmltag(t))
             req_xml.appendChild(tm)
 
-            if req.tags[t] != None:
+            if req.tags[t] is not None:
                 tn = doc.createTextNode(str(req.tags[t]))
             tm.appendChild(tn)
 
@@ -91,7 +92,7 @@ class xml1:
         doc = Document()
 
         # This outputs only the current set of requirements (not the
-        # whole history). 
+        # whole history).
         reqscont_xml = doc.createElement("reqscont")
         doc.appendChild(reqscont_xml)
 
@@ -99,4 +100,3 @@ class xml1:
 
         with open(self.output_filename, "w") as fd:
             fd.write(doc.toxml())
-

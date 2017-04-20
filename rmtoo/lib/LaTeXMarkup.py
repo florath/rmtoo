@@ -33,16 +33,16 @@ class LaTeXMarkup2Txt(object):
 
 class LaTeXMarkup(object):
     markup = [
-        "\\\\par",               # New paragraph
-        "\\\\textbf{([\w\s]*)}", # Bold
-        "\\\\textsl{([\w\s]*)}", # Italics
+        "\\\\par",                # New paragraph
+        "\\\\textbf{([\w\s]*)}",  # Bold
+        "\\\\textsl{([\w\s]*)}",  # Italics
         ]
 
     @staticmethod
     def replace_generic(cmdset, t):
         for i in range(len(LaTeXMarkup.markup)):
             t = re.sub(LaTeXMarkup.markup[i], cmdset[i], t,
-                       flags = re.UNICODE)
+                       flags=re.UNICODE)
         return t
 
     @staticmethod

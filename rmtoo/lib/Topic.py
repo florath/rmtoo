@@ -42,21 +42,21 @@ class Topic(Digraph.Node):
                 self.__digraph.add_node(ntopic)
                 Digraph.create_edge(self, ntopic)
             elif tag.get_tag() == "Name":
-                if self.__topic_name != None:
+                if self.__topic_name is not None:
                     # TODO: Multiple Names
-                    assert(False)
+                    assert False
                 self.__topic_name = tag.get_content()
             elif tag.get_tag() == "IncludeRequirements":
                 if tag.get_content() != "full":
                     raise RMTException(113, "IncludeRequirements value not "
                                        "supported [%s]" % tag.get_content(),
-                           self.name)
+                                       self.name)
                 self.__requirements = req_set.restrict_to_topics(tname)
                 tracer.debug("Found [%d] requirements for topic [%s]."
                              % (self.__requirements.get_requirements_cnt(),
                                 tname))
         # Check for the existence of the name
-        if self.__topic_name == None:
+        if self.__topic_name is None:
             raise RMTException(62, "Mandatory tag 'Name' not given in topic",
                                self.name)
 
@@ -96,7 +96,7 @@ class Topic(Digraph.Node):
                 continue
             if rtag == "SubTopic":
                 subtopic = self.__digraph.find(tag.get_content())
-                assert subtopic != None
+                assert subtopic is not None
                 FuncCall.pcall(executor, func_prefix + "topic_sub_pre",
                                subtopic)
                 subtopic.execute(executor, func_prefix)

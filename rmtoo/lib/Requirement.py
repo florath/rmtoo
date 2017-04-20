@@ -10,7 +10,6 @@
 '''
 
 import operator
-import sys
 
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.digraph.Digraph import Digraph
@@ -77,7 +76,7 @@ class Requirement(Digraph.Node, BaseRMObject):
     def get_efe_or_0(self):
         '''Returns the EfE units or 0 if not available.'''
         efe = self.get_value("Effort estimation")
-        if efe == None:
+        if efe is None:
             return 0
         return efe
 

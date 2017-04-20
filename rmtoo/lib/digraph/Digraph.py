@@ -1,15 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Digraph Pyhton library
-   
- (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.RMTException import RMTException
+
 
 class Digraph:
 
@@ -17,7 +17,7 @@ class Digraph:
         def __init__(self, name=None):
             # Incoming and outgoing are lists of nodes.  Typically one
             # direction is provided and the other can be automatically
-            # computed. 
+            # computed.
             self.incoming = []
             self.outgoing = []
             self.name = name
@@ -67,12 +67,12 @@ class Digraph:
             # Did not find the other node.
             return False
 
-    # Create a digraph from the given dictionary representation. 
+    # Create a digraph from the given dictionary representation.
     # If no dictionary is given, an empty digraph will be created.
     def __init__(self, d=None, node_gen_func=Node):
         self.nodes = []
         self.named_nodes = None
-        if d != None:
+        if d is not None:
             self.create_from_dict(d, node_gen_func)
 
     # Creates an edge from a to b - both must be nodes.
@@ -133,7 +133,7 @@ class Digraph:
     def build_named_nodes(self):
         self.named_nodes = {}
         for n in self.nodes:
-            if n.name == None:
+            if n.name is None:
                 # Delete the whole dictionary first
                 self.named_nodes = None
                 raise RMTException(20, "cannot create node dictionary "
@@ -150,7 +150,7 @@ class Digraph:
     # This is the appropriate accessor: get the content only if there
     # is the dictionary.
     def get_named_node_no_throw(self, name):
-        if not hasattr(self, "named_nodes") or self.named_nodes == None:
+        if not hasattr(self, "named_nodes") or self.named_nodes is None:
             raise RMTException(22, "no named_nodes dictionary available "
                                "- maybe call 'build_named_nodes()' first")
         if name not in self.named_nodes:
@@ -158,10 +158,10 @@ class Digraph:
         # When all checks succeed: return the value
         return self.named_nodes[name]
 
-    # Mostly the same as before, but throws if the node can not be found. 
+    # Mostly the same as before, but throws if the node can not be found.
     def get_named_node(self, name):
         r = self.get_named_node_no_throw(name)
-        if r == None:
+        if r is None:
             raise RMTException(23, "node with name '%s' not available"
                                % name)
         return r

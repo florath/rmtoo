@@ -8,9 +8,9 @@
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+
 
 class Constraint(BaseRMObject):
 

@@ -25,7 +25,7 @@ from __future__ import unicode_literals
 import copy
 
 from xml.dom.minidom import parse, parseString
-from rmtoo.lib.logging import tracer, logger
+from rmtoo.lib.logging import tracer
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 
@@ -47,6 +47,7 @@ def xml_check_text_content(xml_doc_a, xml_doc_b, xpath):
         else:
             return True, None
     return None, None
+
 
 def xml_check_name(xml_doc_a, xml_doc_b, xpath):
     '''Check for the name.'''
@@ -86,8 +87,8 @@ def xml_check_children(xml_doc_a, xml_doc_b, xpath):
     # Iterate through the child nodes of 'a' ...
     bcn_found_cnt = len(bcn)
     for a_children in xml_doc_a.childNodes:
-        tracer.debug(LogFormatter.format(97,
-                "xmlcmp: comparing child node [%s]" % a_children))
+        tracer.debug(LogFormatter.format(
+            97, "xmlcmp: comparing child node [%s]" % a_children))
         # ... check if there is the same one in 'b'
         found_ac = False
         for b_children in bcn:
@@ -98,18 +99,18 @@ def xml_check_children(xml_doc_a, xml_doc_b, xpath):
                 # from bcn and skip to the next a_children
                 bcn_found_cnt -= 1
                 found_ac = True
-                tracer.debug(LogFormatter.format(98,
-                        "[%s] xmlcmp: found equal subtrees [%s]" \
-                              % (xpath, a_children)))
-                tracer.debug(LogFormatter.format(99,
-                        "[%s] xmlcmp: remaining elements [%s]" \
-                        % (xpath, bcn)))
+                tracer.debug(LogFormatter.format(
+                    98, "[%s] xmlcmp: found equal subtrees [%s]"
+                    % (xpath, a_children)))
+                tracer.debug(LogFormatter.format(
+                    99, "[%s] xmlcmp: remaining elements [%s]"
+                    % (xpath, bcn)))
                 break
         if not found_ac:
             return False, "Child node [%s] not found at [%s] - " \
                 "last error was [%s]" % (a_children, xpath, err_msg)
 
-    assert(bcn_found_cnt == 0)
+    assert bcn_found_cnt == 0
     return True, None
 
 
@@ -121,10 +122,10 @@ def xmlequals(xml_doc_a, xml_doc_b, xpath):
                        xml_check_name, xml_check_attributes,
                        xml_check_child_count, xml_check_children]:
         result, err_msg = check_func(xml_doc_a, xml_doc_b, xpath)
-        if result == False or result == True:
-            assert(result != None)
+        if result in (False, True):
+            assert result is not None
             return result, err_msg
-        assert(result == None)
+        assert result is None
     return True, None
 
 

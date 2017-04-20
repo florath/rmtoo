@@ -1,27 +1,28 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Collection of topics.
-  Note that the TopicSet is a tree where the leaves are 
+  Note that the TopicSet is a tree where the leaves are
   orders - i.e. it is not possible to put them into a set_value.
-   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 
+
 class TopicSet(Digraph, UsableFlag):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
-    def __init__(self, config, input_handler, commit, object_cache, input_mods):
+    def __init__(self, config, input_handler, commit, object_cache,
+                 input_mods):
         '''Read in all the dependent topics and the requirements.'''
         tracer.info("Called; commit timestamp [%s]"
                     % input_handler.get_timestamp(commit))
@@ -50,7 +51,7 @@ class TopicSet(Digraph, UsableFlag):
         if not self.is_usable():
             tracer.error("Errors during reading the topics.")
             return
-        # Third: restrict requirements to those which are 
+        # Third: restrict requirements to those which are
         #    needed in the topic.
         self.__requirement_set = self.__restrict_requirements_set()
         if not self.is_usable():
@@ -65,7 +66,7 @@ class TopicSet(Digraph, UsableFlag):
             self.__input_handler.get_vcs_id_with_type(
                             self.__commit, "requirements")
         req_set = self.__object_cache.get("RequirementSet", req_set_vcs_id)
-        if req_set == None:
+        if req_set is None:
             req_set = RequirementSet(self._config)
             req_set.read_requirements(self.__input_handler, self.__commit,
                                       self.__input_mods, self.__object_cache)
@@ -79,18 +80,20 @@ class TopicSet(Digraph, UsableFlag):
            Also topics are handled by the object cache.
            Note that the algorithm has a basic difference to the one
            used to read in the requirements.
-           This one known the base topic and therefore all dependent 
+           This one known the base topic and therefore all dependent
            sub-topics - the algorithm reading in the requirements
            just takes all the available files.'''
         tracer.debug("Called.")
 
-        topic_base = self.__input_handler.get_topic_base_file_info(self.__commit)
+        topic_base = self.__input_handler.get_topic_base_file_info(
+            self.__commit)
         tracer.debug("Topic base [%s]." % topic_base)
         return Topic(self, self._config, self.__input_handler,
-                     self.__commit, topic_base, self.__complete_requirement_set)
+                     self.__commit, topic_base,
+                     self.__complete_requirement_set)
 
     def __restrict_requirements_set(self):
-        '''Restricts all the available requirements (as stored in the 
+        '''Restricts all the available requirements (as stored in the
            RequirementsSet variable) to the topics.'''
         available_topics = self.__topic.get_topic_names_flattened()
         return self.__complete_requirement_set \
@@ -111,7 +114,7 @@ class TopicSet(Digraph, UsableFlag):
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsSet.'''
-        if self.__topic != None:
+        if self.__topic is not None:
             self.__topic.execute(executor, func_prefix)
 
     def create_makefile_name(self, name, topicn):

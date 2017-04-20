@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Invented on attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -13,12 +13,14 @@ from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.DateUtils import parse_date
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
+
 class ReqInventedOn(ReqTagGeneric):
 
     def __init__(self, config):
-        ReqTagGeneric.__init__(self, config, "Invented on",
-                    set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
-                         InputModuleTypes.testcase]))
+        ReqTagGeneric.__init__(
+            self, config, "Invented on",
+            set([InputModuleTypes.ctstag, InputModuleTypes.reqtag,
+                 InputModuleTypes.testcase]))
 
     def rewrite(self, rid, req):
         # This tag (Invented on) is mandatory

@@ -15,7 +15,6 @@ from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.Record import Record
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
-from rmtoo.lib.logging import tracer
 from rmtoo.lib.logging import logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
@@ -74,9 +73,9 @@ class TxtRecord(Record):
             lineno += 1
             if len(l) > max_line_length:
                 logger.error(LogFormatter.format(
-                            80, "line too long: is [%d], "
-                           "max allowed [%d]" % (len(l), max_line_length),
-                           rid, lineno))
+                    80, "line too long: is [%d], "
+                    "max allowed [%d]" % (len(l), max_line_length),
+                    rid, lineno))
                 self._set_not_usable()
 
     # Parse everything from a string

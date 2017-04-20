@@ -1,15 +1,15 @@
-#
-# rmtoo
-#   Free and Open Source Requirements Management Tool
-#
-# Requirement class itself
-#
-# (c) 2011 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+  Requirement class itself
+
+ (c) 2011,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 from rmtoo.lib.RMTException import RMTException
+
 
 class ClassTypeImplementable:
 
@@ -35,17 +35,17 @@ class ClassTypeSelected:
         return "selected"
 
     # The selected requirement is a requirement which can be
-    # (directly) implemented. 
+    # (directly) implemented.
     def is_implementable(self):
         return True
-    
+
 
 def create_class_type(rid, l):
-    if l=="implementable":
+    if l == "implementable":
         return ClassTypeImplementable()
-    if l=="detailable":
+    if l == "detailable":
         return ClassTypeDetailable()
-    if l=="selected":
+    if l == "selected":
         return ClassTypeSelected()
-    
+
     raise RMTException(95, "%s:class type invalid '%s'" % (rid, l))

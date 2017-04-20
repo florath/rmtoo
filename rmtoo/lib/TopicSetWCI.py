@@ -1,18 +1,18 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Collection of topics.
   This class contains a 'plain' topic set - with additional information
   about the commit.
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
+
 
 class TopicSetWCI:
     '''Class for storing topic set and it's commit info.

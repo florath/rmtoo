@@ -46,7 +46,7 @@ class BaseRMObject(UsableFlag):
 
         # The analytic modules store the results in this map:
         self.analytics = {}
-        if content != None:
+        if content is not None:
             self.__input(content)
 
     def get_id(self):
@@ -55,7 +55,7 @@ class BaseRMObject(UsableFlag):
     def get_value(self, key):
         return self.values[key]
 
-    def get_value_default(self, key, default_value = None):
+    def get_value_default(self, key, default_value=None):
         if key not in self.values:
             return default_value
         return self.values[key]
@@ -68,7 +68,7 @@ class BaseRMObject(UsableFlag):
 
     def is_val_av_and_not_null(self, key):
         return key in self.values \
-            and self.get_value(key) != None
+            and self.get_value(key) is not None
 
     def set_value(self, key, value):
         self.values[key] = value
@@ -95,13 +95,13 @@ class BaseRMObject(UsableFlag):
         self.brmo = brmo
 
     def handle_modules_tag(self, reqs):
-        if self.mods == None:
+        if self.mods is None:
             return
 
         for modkey, module in self.mods.get_tagtype(self.tbhtags).items():
             try:
                 tracer.debug("handle modules tag modkey [%s] tagtype [%s]"
-                      % (modkey, self.tbhtags))
+                             % (modkey, self.tbhtags))
                 if self.tbhtags not in module.get_type_set():
                     logger.error(LogFormatter.format(
                                  90, u"Wrong module type [%s] not in [%s]" %

@@ -10,7 +10,7 @@
  For licensing details see COPYING
 '''
 
-# pylint: disable=W0232
+
 class StringHelper:
     '''String Helper class function collection.'''
 

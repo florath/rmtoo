@@ -1,16 +1,16 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Coherence of one requirement to the used topic.
-   
- (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.analytics.Base import Base
+
 
 class ReqTopicCohe(Base):
 
@@ -40,7 +40,8 @@ class ReqTopicCohe(Base):
         # This is only problematic, if the in and out are not
         # really coherent to the topic.
         if it_in < it_out and ot_in < ot_out:
-            self.add_result(Result('ReqTopicCoherence',
+            self.add_result(Result(
+                'ReqTopicCoherence',
                 requirement.get_id(),
                 - 10, ["Requirement topic coherence inadequate: "
                        "incoming %d/%d, outgoing %d/%d"

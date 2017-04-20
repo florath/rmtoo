@@ -2,7 +2,7 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
- Main Helper. 
+ Main Helper.
 
  (c) 2011-2012 by flonatel GmbH & Co. KG
 
@@ -12,6 +12,7 @@
 from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.configuration.DefaultValues import DefaultValues
+
 
 class MainHelper:
     '''Utility class for different aspects of the different mains.'''

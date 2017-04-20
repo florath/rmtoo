@@ -1,15 +1,15 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
-  Generic Tag Class 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+  Generic Tag Class
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.RMTException import RMTException
+
 
 class ReqTagGeneric:
     '''This class is the base class of mostly all tags.

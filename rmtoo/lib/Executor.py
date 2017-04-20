@@ -1,20 +1,19 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Base class for handling different executions on different levels
   of the rmtoo data.
   This can be used for the analyze module, as well as for the different
   output modules.
-   
- (c) 2011-2012 by flonatel GmbH & Co. KG
+
+ (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
-# pylint: disable=W0232
+
 class Executor(ExecutorTopicContinuum):
     '''Base class for the different executors.
        All methods are implemented: they are doing nothing.'''
@@ -30,4 +29,3 @@ class Executor(ExecutorTopicContinuum):
     def topic_continuum_set_post(self, _topics_continuum_set):
         '''This is call in the TopicsContinuumSet post-phase.'''
         return
-

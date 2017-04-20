@@ -32,7 +32,8 @@ class CmdLineParams:
         '''Add the deprecated parameters to the given option parser.'''
         parser.add_option("-f", "--file-config", dest="config_file",
                           help="Configuration file")
-        parser.add_option("-m", "--modules-directory", dest="modules_directory",
+        parser.add_option("-m", "--modules-directory",
+                          dest="modules_directory",
                           help="Directory with modules")
         parser.add_option("-c", "--create-makefile-dependencies",
                           dest="create_makefile_dependencies",
@@ -44,11 +45,11 @@ class CmdLineParams:
            with the help of the old and deprecated command line options.'''
         ldict = {}
 
-        if options.config_file != None:
+        if options.config_file is not None:
             ldict['configuration'] = {'deprecated':
-                                      {'config_file': options.config_file }}
+                                      {'config_file': options.config_file}}
 
-        if options.modules_directory != None:
+        if options.modules_directory is not None:
             ldict['global'] = {'modules': {'directories':
                                            [options.modules_directory]}}
         else:
@@ -56,9 +57,9 @@ class CmdLineParams:
             mod_dir = distutils.sysconfig.get_python_lib()
             ldict['global'] = {'modules': {'directories': [mod_dir]}}
 
-        if options.create_makefile_dependencies != None:
+        if options.create_makefile_dependencies is not None:
             ldict['actions'] = {'create_makefile_dependencies':
-                                options.create_makefile_dependencies }
+                                options.create_makefile_dependencies}
 
         return ldict
 
@@ -74,7 +75,7 @@ class CmdLineParams:
     @staticmethod
     def add_values(options):
         '''Add all the new command line parameter values.'''
-        if options.json == None:
+        if options.json is None:
             return {}
 
         jopts = []
@@ -83,12 +84,12 @@ class CmdLineParams:
                 jopts.append(jopt)
             else:
                 jopts.append("json:" + jopt)
-        return {'configuration': {'json': jopts }}
+        return {'configuration': {'json': jopts}}
 
     @staticmethod
     def add_args(args):
         '''Add the arguments to the configuration.'''
-        if args == None or args == []:
+        if args is None or args == []:
             return {}
         return {'general': {'command_line_arguments': args}}
 

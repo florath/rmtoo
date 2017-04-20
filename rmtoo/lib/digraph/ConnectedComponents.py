@@ -1,17 +1,17 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   This function implements the digraph algorithm finding the connected
   components of a digraph.
 
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.RMTException import RMTException
+
 
 class CC_Components:
 
@@ -56,6 +56,7 @@ class CC_Components:
         g |= h
         # Remove h
         del(self.cs[hi])
+
 
 def connected_components(dg):
     # This hold the components:

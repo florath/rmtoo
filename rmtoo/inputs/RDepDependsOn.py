@@ -1,10 +1,10 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
  The correct way to define dependencies.
- 
- (c) 2010-2011 by flonatel GmbH & Co. KG
+
+ (c) 2010-2011,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
@@ -12,9 +12,10 @@
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
+
 class RDepDependsOn(Digraph.Node):
-    '''This class handles the creation of the full directed 
-       graphs: one 'Depends on' and one 'Dependent'.  
+    '''This class handles the creation of the full directed
+       graphs: one 'Depends on' and one 'Dependent'.
        Both graphs are digraphs.'''
 
     depends_on = []

@@ -1,17 +1,18 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   This implements an algorithm for digraphs which computes the strongly
   connected components.
- 
+
   The algorithm was introduced by Trajan and it's typically called
   'Trajan's algorithm'.
-   
- (c) 2010,2012 by flonatel GmbH & Co. KG
+
+ (c) 2010,2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+
 
 # This algorithm is based upon a depth first search.  It assigns a
 # number to each visited node.
@@ -49,7 +50,7 @@ def strongly_connected_components(dg):
         # Is this a SCC?
         if lowlinks[v] == indizes[v]:
             new_scc = []
-            while len(S)>0:
+            while len(S) > 0:
                 vv = S.pop()
                 new_scc.append(vv)
                 if vv == v:
@@ -65,13 +66,14 @@ def strongly_connected_components(dg):
     # Return the result
     return scc
 
+
 # This checks if there are at least one strongly connected component
 # with a size equal or larger than the given number.
 # The default '2' checks, if there is at least one strongly connected
 # component which contains more than one node.
 def check_for_strongly_connected_components(scc, minsize=2):
     for s in scc:
-        if len(s)>=minsize:
+        if len(s) >= minsize:
             # Jep there is one scc -> jump out.
             return True
     # Nope - no sccs.

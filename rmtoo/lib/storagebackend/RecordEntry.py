@@ -15,7 +15,6 @@
 # directly!)  This gives the underlaying (inherited) class the chance
 # to overwrite these settings and do other things which might be
 # needed.
-import sys
 
 from rmtoo.lib.Encoding import Encoding
 

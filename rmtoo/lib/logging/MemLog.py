@@ -8,9 +8,9 @@
 
  For licensing details see COPYING
 '''
-
 import time
 from rmtoo.lib.logging import logger
+
 
 class MemLog:
     '''This represents one memory log message.

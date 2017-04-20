@@ -1,14 +1,13 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Priority attribute
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
@@ -47,7 +46,8 @@ class ReqPriority(ReqTagGeneric):
                                    % (rid, l))
             # p[0] is the stakeholder
             # p[1] is the given priority
-            if p[0] not in self.get_config().get_value('requirements.stakeholders'):
+            if p[0] not in self.get_config().get_value(
+                    'requirements.stakeholders'):
                 raise RMTException(13, "%s: stakeholder '%s' not known"
                                    % (rid, p[0]))
             if p[0] in priority_done:
