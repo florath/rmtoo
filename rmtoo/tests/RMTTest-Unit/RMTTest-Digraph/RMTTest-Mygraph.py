@@ -1,18 +1,19 @@
-#
-# Digraph Pyhton library
-#
-# Unit tests for inheritance
-#
-# (c) 2010 by flonatel
-#
-# For licencing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
+  Unit tests for the digraph.
+
+ (c) 2010,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
 import unittest
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.digraph.Helper import node_list_to_node_name_list
+
 
 class MyGraph(Digraph):
 
@@ -24,6 +25,7 @@ class MyGraph(Digraph):
         def __init__(self, name):
             Digraph.Node.__init__(self, name)
             self.something_more = 1
+
 
 def create_test_graph_01():
     mg = MyGraph()
@@ -38,11 +40,12 @@ def create_test_graph_01():
     mg.nodes.append(n3)
     return mg
 
+
 class InheritanceTest(unittest.TestCase):
 
     def rmttest_inherit_001(self):
         "Test creation syntax check"
-        mg = create_test_graph_01()
+        create_test_graph_01()
 
     def rmttest_inherit_002(self):
         "Output check"
@@ -58,9 +61,3 @@ class InheritanceTest(unittest.TestCase):
         tnames = node_list_to_node_name_list(tsort)
         self.assertEqual(tnames, ['C', 'B', 'A'],
                          "incorrect topological sort")
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(InheritanceTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-        
