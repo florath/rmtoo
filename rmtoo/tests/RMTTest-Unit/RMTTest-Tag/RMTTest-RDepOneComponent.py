@@ -1,19 +1,21 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   Unit test for RequirementSet
-   
- (c) 2010-2012 by flonatel GmbH & Co. KG
+
+ (c) 2010-2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
+import unittest
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.inputs.RDepOneComponent import RDepOneComponent
 from rmtoo.lib.RMTException import RMTException
 
-class RMTTest_OutputOneComponent:
+
+class RMTTest_OutputOneComponent(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "RDepOneComponent: check rewrite error case"
@@ -21,9 +23,6 @@ class RMTTest_OutputOneComponent:
         oc = RDepOneComponent(None)
 
         dr = Digraph()
-        try:
+        with self.assertRaises(RMTException) as rmte:
             oc.rewrite(dr)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 69)
-
+            self.assertEqual(69, rmte.id())

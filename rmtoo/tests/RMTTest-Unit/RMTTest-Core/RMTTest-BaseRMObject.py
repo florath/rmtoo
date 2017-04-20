@@ -29,6 +29,7 @@ class TMods:
     def get_tagtype(self, ttype):
         return {"heinzelmann": self}
 
+
 class TBRMObj(BaseRMObject):
 
     def __init__(self):
@@ -39,11 +40,13 @@ class TBRMObj(BaseRMObject):
         BaseRMObject.__init__(self, u"mytag", u"", u"MRid", tm,
                               tc, u"tobjs", None)
 
+
 expected_result = \
     "===DATETIMESTAMP===;rmtoo;ERROR;BaseRMObject;handle_modules_tag;" \
     "===LINENO===; 90:Wrong module type [mytag] not in [[1, 2, 3]]\n"
 
-class RMTTest_BaseRMObject(unittest.TestCase):
+
+class RMTTestBaseRMObject(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
@@ -51,7 +54,7 @@ class RMTTest_BaseRMObject(unittest.TestCase):
         mstderr = StringIO()
         init_logger(mstderr)
 
-        tbrmo = TBRMObj()
+        TBRMObj()
 
         result = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()

@@ -10,14 +10,15 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.inputs.ReqTopic import ReqTopic
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqTopic:
+class RMTTest_ReqTopic(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Topic - tag given"
@@ -26,16 +27,14 @@ class RMTTest_ReqTopic:
 
         rt = ReqTopic(config)
         name, value = rt.rewrite("Topic-test", req)
-        assert(name == "Topic")
-        assert(value == "This is something")
+        self.assertEqual("Topic", name)
+        self.assertEqual("This is something", value)
 
     def rmttest_negative_01(self):
         "Requirement Tag Topic - no Topic set"
         config, req = create_parameters()
 
         rt = ReqTopic(config)
-        try:
-            name, value = rt.rewrite("Topic-test", req)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 9)
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("Topic-test", req)
+            self.assertEqual(9, rmte.id())

@@ -8,26 +8,28 @@
 
  For licensing details see COPYING
 '''
-
 import distutils
+import unittest
 
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
-from rmtoo.lib.RMTException import RMTException
 
-class RMTTest_CmdLineParser:
+
+class RMTTestCmdLineParser(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "Command Line Parser: check -m."
 
-        args = ["-f", "SomeFile" ]
+        args = ["-f", "SomeFile"]
         options = CmdLineParams.create_dicts(args)
         mod_dir = distutils.sysconfig.get_python_lib()
-        assert(options[1]["global"]["modules"]["directories"] == [mod_dir])
+        self.assertEqual(
+            [mod_dir], options[1]["global"]["modules"]["directories"])
 
     def rmttest_additional_old_params(self):
         "Command Line Parser: too many args"
 
         args = ["-f", "SomeFile", "das", "ist", "was"]
         options = CmdLineParams.create_dicts(args)
-        assert(options[0]["general"]["command_line_arguments"] == \
-               ['das', 'ist', 'was'])
+        self.assertEqual(
+            ['das', 'ist', 'was'],
+            options[0]["general"]["command_line_arguments"])

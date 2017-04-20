@@ -8,23 +8,20 @@
 
  For licensing details see COPYING
 '''
+import unittest
 
 from rmtoo.lib.TopicSet import TopicSet
-from rmtoo.lib.digraph.Digraph import Digraph
-from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestVCS import TestVCS
 from rmtoo.tests.lib.TestInputModules import TestInputModules
-from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 
-class RMTTest_Parse:
+class RMTTestParse(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "TopicSet - constructor with only one element"
         try:
-            tioconfig = TxtIOConfig()
             cfg = Cfg()
             cfg.set_value('ahah.directory',
                           'tests/unit-test/topic-tests/testdata/topicset01')
@@ -35,31 +32,28 @@ class RMTTest_Parse:
             tvcs = TestVCS(cfg)
             tobjcache = ObjectCache()
             tinmod = TestInputModules()
-            topicset = TopicSet(cfg, tvcs, "bkdkd", tobjcache, tinmod)
-            assert(False)
-        except AssertionError as ae:
+            TopicSet(cfg, tvcs, "bkdkd", tobjcache, tinmod)
+            self.assertTrue(False)
+        except AssertionError:
             pass
 
     def rmttest_positive_02(self):
         "TopicSet - valid"
-        tioconfig = TxtIOConfig()
         cfg = Cfg()
         cfg.set_value('hahaha.directory',
                       'tests/unit-test/topic-tests/testdata/topicset01')
         cfg.set_value('hahaha.name', 't01')
         cfg.set_value('topics.test-name01.output', {})
-        tioconfig = TxtIOConfig()
         cfg.set_value('topic_root_node', 'RootNode')
         tvcs = TestVCS(cfg)
         tobjcache = ObjectCache()
         tinmod = TestInputModules()
-        topicset = TopicSet(
+        TopicSet(
             cfg, tvcs, "test-name01", tobjcache, tinmod)
 
     def rmttest_positive_03(self):
         "TopicSet - valid with empty requirement set"
 
-        tioconfig = TxtIOConfig()
         cfg = Cfg()
         cfg.set_value('huhuhu.directory',
                       'tests/unit-test/topic-tests/testdata/topicset01')
@@ -69,4 +63,4 @@ class RMTTest_Parse:
         tvcs = TestVCS(cfg)
         tobjcache = ObjectCache()
         tinmod = TestInputModules()
-        topicset = TopicSet(cfg, tvcs, "test-name02", tobjcache, tinmod)
+        TopicSet(cfg, tvcs, "test-name02", tobjcache, tinmod)

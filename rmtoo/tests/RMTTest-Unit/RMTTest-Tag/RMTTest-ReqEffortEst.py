@@ -10,15 +10,16 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.inputs.ReqEffortEst import ReqEffortEst
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqClass:
+class RMTTestReqClass(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Effort Estimation - no tag given"
@@ -26,8 +27,8 @@ class RMTTest_ReqClass:
 
         rt = ReqEffortEst(config)
         name, value = rt.rewrite("EffortEstimation-test", req)
-        assert(name == "Effort estimation")
-        assert(value == None)
+        self.assertEqual("Effort estimation", name)
+        self.assertIsNone(value)
 
     def rmttest_positive_02(self):
         "Requirement Tag Effort Estimation - tag given with all valid numbers"
@@ -38,8 +39,8 @@ class RMTTest_ReqClass:
                                                    Encoding.to_unicode(i))
             rt = ReqEffortEst(config)
             name, value = rt.rewrite("EffortEstimation-test", req)
-            assert(name == "Effort estimation")
-            assert(value == i)
+            self.assertEqual("Effort estimation", name)
+            self.assertEqual(i, value)
 
     def rmttest_negative_01(self):
         "Requirement Tag Effort Estimation - tag given with invalid numbers"
@@ -50,8 +51,7 @@ class RMTTest_ReqClass:
             req["Effort estimation"] = RecordEntry("Effort estimation",
                                                    Encoding.to_unicode(i))
             rt = ReqEffortEst(config)
-            try:
-                name, value = rt.rewrite("EffortEstimation-test", req)
-                assert(False)
-            except RMTException as rmte:
-                assert(rmte.id() == 4)
+
+            with self.assertRaises(RMTException) as rmte:
+                rt.rewrite("EffortEstimation-test", req)
+                self.assertEqual(4, rmte.id())

@@ -10,15 +10,16 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 import datetime
 from rmtoo.inputs.ReqInventedOn import ReqInventedOn
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqInventedOn:
+class RMTTest_ReqInventedOn(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Invented on - tag given"
@@ -27,19 +28,17 @@ class RMTTest_ReqInventedOn:
 
         rt = ReqInventedOn(config)
         name, value = rt.rewrite("InventedOn-test", req)
-        assert(name == "Invented on")
-        assert(value == datetime.date(2010, 3, 8))
+        self.assertTrue("Invented on", name)
+        self.assertTrue(datetime.date(2010, 3, 8), value)
 
     def rmttest_negative_01(self):
         "Requirement Tag Invented on - no tag given"
         config, req = create_parameters()
 
         rt = ReqInventedOn(config)
-        try:
-            name, value = rt.rewrite("InventedOn-test", req)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 7)
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("InventedOn-test", req)
+            self.assertEqual(7, rmte.id())
 
     def rmttest_negative_02(self):
         "Requirement Tag Invented on - invalid tag given"
@@ -47,8 +46,6 @@ class RMTTest_ReqInventedOn:
         req["Invented on"] = RecordEntry("Invented on", "2010a-09-01")
 
         rt = ReqInventedOn(config)
-        try:
-            name, value = rt.rewrite("InventedOn-test", req)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 8)
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("InventedOn-test", req)
+            self.assertEqual(8, rmte.id())

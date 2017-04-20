@@ -14,11 +14,9 @@ import unittest
 import re
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_strings
-from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_timestamp
 
 
-class RMTTest_XMLCmp(unittest.TestCase):
+class RMTTestXMLCmp(unittest.TestCase):
 
     def rmttest_pos01(self):
         "xmlcmp: small xml document"

@@ -10,15 +10,16 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.inputs.ReqClass import ReqClass
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
-from rmtoo.lib.ClassType import ClassTypeImplementable, \
-    ClassTypeDetailable, ClassTypeSelected
+from rmtoo.lib.ClassType import ClassTypeDetailable, ClassTypeImplementable
 
-class RMTTest_ReqClass:
+
+class RMTTestReqClass(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Class - no Class tag given"
@@ -26,8 +27,8 @@ class RMTTest_ReqClass:
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        assert(name == "Class")
-        assert(isinstance(value, ClassTypeDetailable))
+        self.assertEqual("Class", name)
+        self.assertTrue(isinstance(value, ClassTypeDetailable))
 
     def rmttest_positive_02(self):
         "Requirement Tag Class - Class set to 'detailable'"
@@ -36,8 +37,8 @@ class RMTTest_ReqClass:
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        assert(name == "Class")
-        assert(isinstance(value, ClassTypeDetailable))
+        self.assertEqual("Class", name)
+        self.assertTrue(isinstance(value, ClassTypeDetailable))
 
     def rmttest_positive_03(self):
         "Requirement Tag Class - no Class implementable"
@@ -46,8 +47,8 @@ class RMTTest_ReqClass:
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        assert(name == "Class")
-        assert(isinstance(value, ClassTypeImplementable))
+        self.assertEqual("Class", name)
+        self.assertTrue(isinstance(value, ClassTypeImplementable))
 
     def rmttest_negative_01(self):
         "Requirement Tag Class - unsupported Class value"
@@ -57,6 +58,6 @@ class RMTTest_ReqClass:
         rt = ReqClass(config)
         try:
             name, value = rt.rewrite("Class-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.get_id() == 95)
+            self.assertEqual(95, rmte.get_id())

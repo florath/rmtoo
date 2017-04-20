@@ -10,14 +10,15 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.inputs.ReqPriority import ReqPriority
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqPriority:
+class RMTTestReqPriority(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Priority - no tag given"
@@ -25,8 +26,8 @@ class RMTTest_ReqPriority:
 
         rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name == "Factor")
-        assert(value == 0.0)
+        self.assertEqual("Factor", name)
+        self.assertEqual(0.0, value)
 
     def rmttest_positive_02(self):
         "Requirement Tag Priority - tag given one stakeholder"
@@ -37,8 +38,8 @@ class RMTTest_ReqPriority:
 
         rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name == "Factor")
-        assert(value == 0.7)
+        self.assertEqual("Factor", name)
+        self.assertEqual(0.7, value)
 
     def rmttest_positive_03(self):
         "Requirement Tag Priority - tag given two stakeholders"
@@ -49,8 +50,8 @@ class RMTTest_ReqPriority:
 
         rt = ReqPriority(config)
         name, value = rt.rewrite("Priority-test", req)
-        assert(name == "Factor")
-        assert(value == 0.5)
+        self.assertEqual("Factor", name)
+        self.assertEqual(0.5, value)
 
     def rmttest_negative_01(self):
         "Requirement Tag Priority - faulty priority declaration ':'"
@@ -62,9 +63,9 @@ class RMTTest_ReqPriority:
         rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 12)
+            self.assertEqual(12, rmte.id())
 
     def rmttest_negative_02(self):
         "Requirement Tag Priority - invalid stakeholder"
@@ -76,9 +77,9 @@ class RMTTest_ReqPriority:
         rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 13)
+            self.assertEqual(13, rmte.id())
 
     def rmttest_negative_03(self):
         "Requirement Tag Priority - stakeholder voted more than once"
@@ -91,9 +92,9 @@ class RMTTest_ReqPriority:
         rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 14)
+            self.assertEqual(14, rmte.id())
 
     def rmttest_negative_04(self):
         "Requirement Tag Priority - invalid priority (too big)"
@@ -105,9 +106,9 @@ class RMTTest_ReqPriority:
         rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 15)
+            self.assertEqual(15, rmte.id())
 
     def rmttest_negative_05(self):
         "Requirement Tag Priority - invalid priority (too small)"
@@ -119,6 +120,6 @@ class RMTTest_ReqPriority:
         rt = ReqPriority(config)
         try:
             name, value = rt.rewrite("Priority-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 15)
+            self.assertEqual(15, rmte.id())

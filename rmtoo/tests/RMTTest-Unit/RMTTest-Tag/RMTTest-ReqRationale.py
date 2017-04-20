@@ -10,14 +10,14 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.inputs.ReqRationale import ReqRationale
-from rmtoo.lib.Requirement import Requirement
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqRationale:
+class RMTTest_ReqRationale(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Rationale - no tag given"
@@ -25,8 +25,8 @@ class RMTTest_ReqRationale:
 
         rt = ReqRationale(config)
         name, value = rt.rewrite("Rationale-test", req)
-        assert(name == "Rationale")
-        assert(value == None)
+        self.assertEqual("Rationale", name)
+        self.assertIsNone(value)
 
     def rmttest_positive_02(self):
         "Requirement Tag Rationale - Rationale set"
@@ -35,5 +35,5 @@ class RMTTest_ReqRationale:
 
         rt = ReqRationale(config)
         name, value = rt.rewrite("Rationale-test", req)
-        assert(name == "Rationale")
-        assert(value.get_content() == "something")
+        self.assertEqual("Rationale", name)
+        self.assertEqual("something", value.get_content())

@@ -9,17 +9,17 @@
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
+import unittest
 
 from rmtoo.inputs.ReqStatus import ReqStatus
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusAssigned, RequirementStatusFinished
+    RequirementStatusFinished
 
 
-class RMTTest_ReqStatus:
+class RMTTestReqStatus(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Status - tag given 'not done'"
@@ -28,8 +28,8 @@ class RMTTest_ReqStatus:
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        assert(name == "Status")
-        assert(isinstance(value, RequirementStatusNotDone))
+        self.assertEqual("Status", name)
+        self.assertTrue(isinstance(value, RequirementStatusNotDone))
 
     def rmttest_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
@@ -38,10 +38,10 @@ class RMTTest_ReqStatus:
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        assert(name == "Status")
-        assert(isinstance(value, RequirementStatusFinished))
-        assert(value.get_person() == None)
-        assert(value.get_duration() == None)
+        self.assertEqual("Status", name)
+        self.assertTrue(isinstance(value, RequirementStatusFinished))
+        self.assertIsNone(value.get_person())
+        self.assertIsNone(value.get_duration())
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"
@@ -50,9 +50,9 @@ class RMTTest_ReqStatus:
         rt = ReqStatus(config)
         try:
             name, value = rt.rewrite("Status-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 16)
+            self.assertEqual(16, rmte.id())
 
     def rmttest_negative_02(self):
         "Requirement Tag Status - invalid tag given"
@@ -62,6 +62,6 @@ class RMTTest_ReqStatus:
         rt = ReqStatus(config)
         try:
             name, value = rt.rewrite("Status-test", req)
-            assert(False)
+            self.assertTrue(False)
         except RMTException as rmte:
-            assert(rmte.id() == 91)
+            self.assertEqual(91, rmte.id())

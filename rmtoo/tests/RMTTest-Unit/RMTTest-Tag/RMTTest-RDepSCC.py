@@ -21,7 +21,7 @@ class RMTTest_RDepSCC(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
-        config, reqset = create_parameters({"B": ["A"], "A": [] })
+        config, reqset = create_parameters({"B": ["A"], "A": []})
         reqset.graph_master_node = reqset.find("A")
 
         rdep = RDepNoDirectedCircles(config)
@@ -29,10 +29,10 @@ class RMTTest_RDepSCC(unittest.TestCase):
 
         self.assertTrue(result)
 
-    def rmttest_positive_01(self):
+    def rmttest_positive_02(self):
         "small digraph D -> B -> A and D -> C -> A"
         config, reqset = create_parameters(
-            {"D": ["B", "C"], "C": ["A"], "B": ["A"], "A": [] })
+            {"D": ["B", "C"], "C": ["A"], "B": ["A"], "A": []})
         reqset.graph_master_node = reqset.find("A")
 
         rdep = RDepNoDirectedCircles(config)
@@ -43,7 +43,7 @@ class RMTTest_RDepSCC(unittest.TestCase):
     def rmttest_negative_01(self):
         "small digraph D -> B -> A and A -> C -> D"
         config, reqset = create_parameters(
-            {"D": ["B"], "C": ["D"], "B": ["A"], "A": ["C"] })
+            {"D": ["B"], "C": ["D"], "B": ["A"], "A": ["C"]})
         reqset.graph_master_node = reqset.find("A")
 
         rdep = RDepNoDirectedCircles(config)
