@@ -9,11 +9,12 @@
 
  For licensing details see COPYING
 '''
+import abc
 
 
-# ToDo: Create an ABC?
-class ExecutorTopicContinuum:
+class ExecutorTopicContinuum(object):
 
+    @abc.abstractmethod
     def topic_continuum_pre(self, _topic_continuum):
         '''This is called in the TopicsContinuum pre-phase.
            This is typically the phase where all the output modules
@@ -32,58 +33,72 @@ class ExecutorTopicContinuum:
             res.append(topic_sets[vcs_id.get_commit()])
         return res
 
+    @abc.abstractmethod
     def topic_continuum_post(self, _topics_continuum):
         '''This is called in the TopicsContinuum post-phase.'''
         return
 
+    @abc.abstractmethod
     def topic_set_pre(self, _topic_set):
         '''This is called in the TopicsSet pre-phase.'''
         return
 
+    @abc.abstractmethod
     def topic_set_sort(self, list_to_sort):
         '''Sort the list of contimuums.'''
         return list_to_sort
 
+    @abc.abstractmethod
     def topic_set_post(self, _topic_set):
         '''This is called in the TopicsSet post-phase.'''
         return
 
+    @abc.abstractmethod
     def topic_pre(self, _topic):
         '''This is called in the Topic pre-phase.'''
         return
 
+    @abc.abstractmethod
     def topic_name(self, _name):
         '''Called when the Name tag appears in the topic.'''
         return
 
+    @abc.abstractmethod
     def topic_text(self, _text):
         '''Called when there is text to be outputted.'''
         return
 
+    @abc.abstractmethod
     def topic_sub_pre(self, _subtopic):
         '''Called when before the subtopic is called.'''
         return
 
+    @abc.abstractmethod
     def topic_sub_post(self, _subtopic):
         '''Called when after the subtopic is called.'''
         return
 
+    @abc.abstractmethod
     def topic_post(self, _topic):
         '''This is called in the Topic post-phase.'''
         return
 
+    @abc.abstractmethod
     def requirement_set_pre(self, _requirement_set):
         '''This is called in the RequirementSet pre-phase.'''
         return
 
+    @abc.abstractmethod
     def requirement_set_sort(self, list_to_sort):
         '''Sort the list of requirement set.'''
         return list_to_sort
 
+    @abc.abstractmethod
     def requirement_set_post(self, _requirement_set):
         '''This is called in the RequirementSet post-phase.'''
         return
 
+    @abc.abstractmethod
     def requirement(self, _requirement):
         '''This is called in the Requirement phase.'''
         return

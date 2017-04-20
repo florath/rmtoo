@@ -48,11 +48,9 @@ class RMTTestReqStatus(unittest.TestCase):
         config, req = create_parameters()
 
         rt = ReqStatus(config)
-        try:
-            name, value = rt.rewrite("Status-test", req)
-            self.assertTrue(False)
-        except RMTException as rmte:
-            self.assertEqual(16, rmte.id())
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("Status-test", req)
+            self.assertEqual(16, rmte.get_id())
 
     def rmttest_negative_02(self):
         "Requirement Tag Status - invalid tag given"
@@ -60,8 +58,6 @@ class RMTTestReqStatus(unittest.TestCase):
         req["Status"] = RecordEntry("Status", "dasjibtedjarnich")
 
         rt = ReqStatus(config)
-        try:
-            name, value = rt.rewrite("Status-test", req)
-            self.assertTrue(False)
-        except RMTException as rmte:
-            self.assertEqual(91, rmte.id())
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("Status-test", req)
+            self.assertEqual(91, rmte.get_id())

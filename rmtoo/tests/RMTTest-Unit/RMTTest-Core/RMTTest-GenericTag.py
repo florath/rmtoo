@@ -32,7 +32,7 @@ class RMTTestGenericTag(unittest.TestCase):
         "Generic Tag: type()"
         mt = MyTag(None)
         t = mt.get_type_set()
-        assert(t == set([InputModuleTypes.reqtag, ]))
+        self.assertEqual(set([InputModuleTypes.reqtag, ]), t)
 
     def rmttest_positive_03(self):
         "Generic Tag: mandatory tag"
@@ -50,8 +50,8 @@ class RMTTestGenericTag(unittest.TestCase):
         r = {"mytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        assert(tag == "mytag")
-        assert(v == "some value")
+        self.assertEqual("mytag", tag)
+        self.assertEqual("some value", v)
 
     def rmttest_positive_05(self):
         "Generic Tag: optional tag (not available)"
@@ -60,7 +60,7 @@ class RMTTestGenericTag(unittest.TestCase):
         r = {"notmytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        assert(tag == "mytag")
+        self.assertEqual("mytag", tag)
         self.assertIsNone(v)
 
     def rmttest_negative_01(self):
@@ -70,8 +70,6 @@ class RMTTestGenericTag(unittest.TestCase):
         rid = "Generic-Test-Id"
         r = {"notmytag": "some value"}
         eid = 112
-        try:
+        with self.assertRaises(RMTException) as rmte:
             mt.check_mandatory_tag(rid, r, eid)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 112)
+            self.assertEqual(112, rmte.id())

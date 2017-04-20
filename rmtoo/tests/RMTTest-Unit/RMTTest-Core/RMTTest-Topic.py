@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+import unittest
 
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
@@ -16,7 +17,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestVCS import TestVCS
 
 
-class RMTTestTopic:
+class RMTTestTopic(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "Topic: (internal) check if Name tag exists"
@@ -27,8 +28,6 @@ class RMTTestTopic:
         tvcs = TestVCS(tconfig)
         tfileinfo = TestVCS.FileInfo(1)
 
-        try:
+        with self.assertRaises(RMTException) as rmte:
             Topic(dg, tconfig, tvcs, None, tfileinfo, None)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 62)
+            self.assertEqual(62, rmte.get_id())

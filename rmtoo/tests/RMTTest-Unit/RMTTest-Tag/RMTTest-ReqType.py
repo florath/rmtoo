@@ -10,6 +10,8 @@
 '''
 from __future__ import unicode_literals
 
+import unittest
+
 from rmtoo.inputs.ReqType import ReqType
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
@@ -17,7 +19,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTestReqType:
+class RMTTestReqType(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Type - tag given 'master requirement'"
@@ -26,8 +28,8 @@ class RMTTestReqType:
 
         rt = ReqType(config)
         name, value = rt.rewrite("Type-test", req)
-        assert(name == "Type")
-        assert(value == Requirement.rt_master_requirement)
+        self.assertEqual("Type", name)
+        self.assertEqual(Requirement.rt_master_requirement, value)
 
     def rmttest_positive_02(self):
         "Requirement Tag Type - tag given 'initial requirement'"
@@ -36,8 +38,8 @@ class RMTTestReqType:
 
         rt = ReqType(config)
         name, value = rt.rewrite("Type-test", req)
-        assert(name == "Type")
-        assert(value == Requirement.rt_initial_requirement)
+        self.assertEqual("Type", name)
+        self.assertEqual(Requirement.rt_initial_requirement, value)
 
     def rmttest_positive_03(self):
         "Requirement Tag Type - tag given 'design decision'"
@@ -46,8 +48,8 @@ class RMTTestReqType:
 
         rt = ReqType(config)
         name, value = rt.rewrite("Type-test", req)
-        assert(name == "Type")
-        assert(value == Requirement.rt_design_decision)
+        self.assertEqual("Type", name)
+        self.assertEqual(Requirement.rt_design_decision, value)
 
     def rmttest_positive_04(self):
         "Requirement Tag Type - tag given 'requirement'"
@@ -56,19 +58,17 @@ class RMTTestReqType:
 
         rt = ReqType(config)
         name, value = rt.rewrite("Type-test", req)
-        assert(name == "Type")
-        assert(value == Requirement.rt_requirement)
+        self.assertEqual("Type", name)
+        self.assertEqual(Requirement.rt_requirement, value)
 
     def rmttest_negative_01(self):
         "Requirement Tag Type - no tag given"
         config, req = create_parameters()
 
         rt = ReqType(config)
-        try:
-            name, value = rt.rewrite("Type-test", req)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 18)
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("Type-test", req)
+            self.assertEqual(18, rmte.id())
 
     def rmttest_negative_02(self):
         "Requirement Tag Type - invalid tag given"
@@ -76,8 +76,6 @@ class RMTTestReqType:
         req["Type"] = RecordEntry("Type", "dasjibtedjarnich")
 
         rt = ReqType(config)
-        try:
-            name, value = rt.rewrite("Type-test", req)
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 19)
+        with self.assertRaises(RMTException) as rmte:
+            rt.rewrite("Type-test", req)
+            self.assertEqual(19, rmte.id())

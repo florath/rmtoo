@@ -34,13 +34,13 @@ class RMTTestModules(unittest.TestCase):
         "InputModules._split_directory with '.'"
 
         d = InputModules._split_directory(".")
-        assert(d == [])
+        self.assertEqual([], d)
 
     def rmttest_positive_02(self):
         "InputModules._split_directory with absolute path"
 
         d = InputModules._split_directory("/tmp/this/is/a/path")
-        assert(d == ['/', 'tmp', 'this', 'is', 'a', 'path'])
+        self.assertEqual(['/', 'tmp', 'this', 'is', 'a', 'path'], d)
 
     def rmttest_simple_01(self):
         "Simple module test"
@@ -56,21 +56,17 @@ class RMTTestModules(unittest.TestCase):
 
     def rmttest_simple_03(self):
         "Module test with invalid dependency "
-        try:
+        with self.assertRaises(RMTException) as rmte:
             InputModules(os.path.join(mod_base_dir, "modules03"),
                          {}, [], mods_list("modules03", mod_base_dir))
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 27)
+            self.assertEqual(27, rmte.id())
 
     def rmttest_simple_04(self):
         "Module test with cyclic dependency "
-        try:
+        with self.assertRaises(RMTException) as rmte:
             InputModules(os.path.join(mod_base_dir, "modules04"),
                          {}, [], mods_list("modules04", mod_base_dir))
-            assert(False)
-        except RMTException as rmte:
-            assert(rmte.id() == 26)
+            self.assertEqual(26, rmte.get_id())
 
     def rmttest_simple_05(self):
         "Module test with dependent modules"
