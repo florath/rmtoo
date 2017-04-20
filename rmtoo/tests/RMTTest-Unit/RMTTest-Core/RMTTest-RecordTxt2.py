@@ -29,7 +29,7 @@ comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
                + TxtParser.comment_in_req + "\n"
 
 
-class RMTTest_RecordTxt2(unittest.TestCase):
+class RMTTestRecordTxt2(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "TestRecordTxt2: empty input"

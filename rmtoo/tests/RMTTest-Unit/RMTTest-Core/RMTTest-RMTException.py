@@ -14,7 +14,7 @@ import unittest
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTest_RMTException(unittest.TestCase):
+class RMTTestRMTException(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Checks the __str__ method: no file, no line"

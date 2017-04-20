@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB009"
 
 
-class RMTTest_BB009(unittest.TestCase):
+class RMTTestBB009(unittest.TestCase):
 
     def rmttest_pos(self):
         "BB Basic with one requirement - bad analytics"

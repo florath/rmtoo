@@ -16,7 +16,7 @@ from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTest_Main(unittest.TestCase):
+class RMTTestMain(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "main: check if result is correctly handled: True"

@@ -17,7 +17,7 @@ from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
 
-class RMTTest_RDepSCC(unittest.TestCase):
+class RMTTestRDepSCC(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"

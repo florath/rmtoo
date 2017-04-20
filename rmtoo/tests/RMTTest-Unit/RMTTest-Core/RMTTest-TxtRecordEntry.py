@@ -19,7 +19,7 @@ import unittest
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
 
 
-class RMTTest_TxtRecordEntry(unittest.TestCase):
+class RMTTestTxtRecordEntry(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "Check format entry with existing comment"

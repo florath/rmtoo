@@ -14,7 +14,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.digraph.Digraph import Digraph
 
 
-class RMTTest_Digraph(unittest.TestCase):
+class RMTTestDigraph(unittest.TestCase):
 
     def rmttest_constructor_001(self):
         "Test conversion from dictionary to graph and back (two nodes)"

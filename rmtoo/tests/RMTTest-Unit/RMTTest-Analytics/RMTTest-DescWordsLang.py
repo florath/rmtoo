@@ -29,7 +29,7 @@ class TestConfig2(Cfg):
         Cfg.__init__(self)
         self.set_value('requirements.input.default_language', 'kl_EL')
 
-class RMTTest_DescWords(unittest.TestCase):
+class RMTTestDescWords(unittest.TestCase):
 
     def rmttest_check_language_handling(self):
         "DescWords: check language handling."

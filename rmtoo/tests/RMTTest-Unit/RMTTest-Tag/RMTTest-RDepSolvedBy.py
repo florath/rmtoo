@@ -24,7 +24,7 @@ from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
 
 
-class RMTTest_RDepSolvedBy(unittest.TestCase):
+class RMTTestRDepSolvedBy(unittest.TestCase):
 
     def rmttest_neg_empty_solved_by(self):
         "Normal requirement has empty 'Solved by'"

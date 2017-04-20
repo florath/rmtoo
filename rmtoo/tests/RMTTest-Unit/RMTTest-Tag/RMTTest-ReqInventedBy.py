@@ -18,7 +18,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqInventedBy(unittest.TestCase):
+class RMTTestReqInventedBy(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Invented by - tag given"

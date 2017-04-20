@@ -26,7 +26,7 @@ from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
 
 
-class RMTTest_Configuration(unittest.TestCase):
+class RMTTestConfiguration(unittest.TestCase):
 
     def rmttest_empty_configuration(self):
         '''Checks the empty configuration with different types of parameters'''

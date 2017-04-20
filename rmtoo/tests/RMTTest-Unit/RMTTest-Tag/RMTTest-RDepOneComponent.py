@@ -15,7 +15,7 @@ from rmtoo.inputs.RDepOneComponent import RDepOneComponent
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTest_OutputOneComponent(unittest.TestCase):
+class RMTTestOutputOneComponent(unittest.TestCase):
 
     def rmttest_neg_01(self):
         "RDepOneComponent: check rewrite error case"

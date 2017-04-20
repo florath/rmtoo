@@ -17,7 +17,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqType:
+class RMTTestReqType:
 
     def rmttest_positive_01(self):
         "Requirement Tag Type - tag given 'master requirement'"

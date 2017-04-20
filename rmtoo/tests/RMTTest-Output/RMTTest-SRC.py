@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_OutputSRC:
+class RMTTestOutputSRC:
 
     def rmttest_positive_01(self):
         pass

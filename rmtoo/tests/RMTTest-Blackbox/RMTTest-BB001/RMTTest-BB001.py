@@ -21,7 +21,7 @@ mdir_orig = "tests/blackbox-test/bb001-test"
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB001"
 
 
-class RMTTest_BB001:
+class RMTTestBB001:
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - reqs only from git"

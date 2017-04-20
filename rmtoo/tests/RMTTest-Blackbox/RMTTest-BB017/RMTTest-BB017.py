@@ -18,7 +18,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB017"
 
 
-class RMTTest_BB17:
+class RMTTestBB17:
 
     def rmttest_pos_001(self):
         "Blackbox test for simple constraint handling"

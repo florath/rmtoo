@@ -28,7 +28,7 @@ from rmtoo.tests.lib.Utils import hide_volatile
 mod_base_dir = "tests/RMTTest-Unit/RMTTest-Core/testdata"
 
 
-class RMTTest_Modules(unittest.TestCase):
+class RMTTestModules(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "InputModules._split_directory with '.'"

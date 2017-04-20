@@ -18,7 +18,7 @@ from rmtoo.lib.digraph.StronglyConnectedComponents \
 from rmtoo.lib.digraph.Helper import node_sl_to_node_name_sl
 
 
-class SCCTests(unittest.TestCase):
+class RMTTestSCCTests(unittest.TestCase):
 
     def rmttest_scc_001(self):
         "Simple two node digraph with one scc"

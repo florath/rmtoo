@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB010"
 
 
-class RMTTest_BB010:
+class RMTTestBB010:
 
     def rmttest_pos_001(self):
         "BB Basic with some requirements - used for the slides"

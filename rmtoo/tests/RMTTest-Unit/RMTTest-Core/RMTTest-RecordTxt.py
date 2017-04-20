@@ -55,7 +55,7 @@ dpC1 = u""" Comment for whole record
 """
 
 
-class RMTTest_RecordTxt(unittest.TestCase):
+class RMTTestRecordTxt(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "Check top level RecordAsDict (string)"

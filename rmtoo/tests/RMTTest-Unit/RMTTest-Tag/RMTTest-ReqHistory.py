@@ -14,7 +14,7 @@ from rmtoo.inputs.ReqHistory import ReqHistory
 from rmtoo.tests.lib.ReqTag import create_parameters
 
 
-class RMTTest_ReqHistory(unittest.TestCase):
+class RMTTestReqHistory(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag History - no tag given"

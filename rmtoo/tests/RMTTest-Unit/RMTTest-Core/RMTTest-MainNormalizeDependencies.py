@@ -16,7 +16,7 @@ from rmtoo.lib.main.NormalizeDependencies import main_impl
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTest_MainNormalizeDependencies(unittest.TestCase):
+class RMTTestMainNormalizeDependencies(unittest.TestCase):
 
     def rmttest_neg_01(self):
         """NormalizeDependencies: is result is correctly handled: Exception"""

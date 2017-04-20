@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_OutputGraph:
+class RMTTestOutputGraph:
 
     def rmttest_positive_01(self):
         pass

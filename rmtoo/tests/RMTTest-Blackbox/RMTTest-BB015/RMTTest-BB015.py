@@ -20,7 +20,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB015"
 
 
-class RMTTest_BB015(unittest.TestCase):
+class RMTTestBB015(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "Normalization test"

@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB013"
 
 
-class RMTTest_BB007(unittest.TestCase):
+class RMTTestBB007(unittest.TestCase):
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - graph output with defined tags"

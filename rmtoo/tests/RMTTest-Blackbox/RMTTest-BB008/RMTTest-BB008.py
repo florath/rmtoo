@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB008"
 
 
-class RMTTest_BB008(unittest.TestCase):
+class RMTTestBB008(unittest.TestCase):
 
     def rmttest_pos(self):
         "BB Basic with one requirement - parse error"

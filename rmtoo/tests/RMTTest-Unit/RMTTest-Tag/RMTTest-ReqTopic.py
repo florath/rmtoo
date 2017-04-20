@@ -18,7 +18,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqTopic(unittest.TestCase):
+class RMTTestReqTopic(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Topic - tag given"

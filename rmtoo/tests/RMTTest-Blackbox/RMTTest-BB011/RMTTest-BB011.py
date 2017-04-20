@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB011"
 
 
-class RMTTest_BB011(unittest.TestCase):
+class RMTTestBB011(unittest.TestCase):
 
     def rmttest_pos(self):
         "BB Basic where one requirement is not used because not in topic"

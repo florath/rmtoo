@@ -12,7 +12,7 @@
 from rmtoo.lib.StringHelper import StringHelper
 
 
-class RMTTest_StringHelper:
+class RMTTestStringHelper:
 
     def rmttest_pos_01(self):
         "StringHelper.join_ate with elements"

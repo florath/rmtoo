@@ -16,7 +16,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestVCS import TestVCS
 
 
-class RMTTest_Topic:
+class RMTTestTopic:
 
     def rmttest_neg_01(self):
         "Topic: (internal) check if Name tag exists"

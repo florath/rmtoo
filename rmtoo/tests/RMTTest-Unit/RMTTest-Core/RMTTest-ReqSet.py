@@ -30,7 +30,7 @@ from rmtoo.tests.lib.Utils import hide_volatile
 mod_base_dir = "tests/RMTTest-Unit/RMTTest-Core/testdata"
 
 
-class RMTTest_ReqSet(unittest.TestCase):
+class RMTTestReqSet(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement contains a tag where no handler exists"

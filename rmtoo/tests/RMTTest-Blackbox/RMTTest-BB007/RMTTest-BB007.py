@@ -19,7 +19,7 @@ mdir_orig = "tests/blackbox-test/bb007-test"
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB007"
 
 
-class RMTTest_BB007:
+class RMTTestBB007:
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - check log output for typo in topic"

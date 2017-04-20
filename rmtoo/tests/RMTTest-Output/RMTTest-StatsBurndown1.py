@@ -10,5 +10,5 @@
 #
 
 
-class RMTTest_StatsBurndown1:
+class RMTTestStatsBurndown1:
     pass

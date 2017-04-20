@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_LaTeXMarkup:
+class RMTTestLaTeXMarkup:
 
     def rmttest_positive_01(self):
         pass

@@ -22,7 +22,7 @@ class MyTag(ReqTagGeneric):
                                set([InputModuleTypes.reqtag, ]))
 
 
-class RMTTest_GenericTag(unittest.TestCase):
+class RMTTestGenericTag(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Generic Tag: construction"

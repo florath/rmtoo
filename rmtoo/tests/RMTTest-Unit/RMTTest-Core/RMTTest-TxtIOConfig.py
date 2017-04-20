@@ -12,7 +12,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 
 
-class RMTTest_TxtIOConfig:
+class RMTTestTxtIOConfig:
 
     def rmttest_pos_01(self):
         "TxtIOConfig: check new max line length setting"

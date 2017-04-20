@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_OutputXML1:
+class RMTTestOutputXML1:
 
     def rmttest_positive_01(self):
         pass

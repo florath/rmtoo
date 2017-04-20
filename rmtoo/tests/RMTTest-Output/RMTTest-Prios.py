@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_OutputPrios:
+class RMTTestOutputPrios:
 
     def rmttest_positive_01(self):
         pass

@@ -17,7 +17,7 @@ from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 
-class RMTTest_ReqRationale(unittest.TestCase):
+class RMTTestReqRationale(unittest.TestCase):
 
     def rmttest_positive_01(self):
         "Requirement Tag Rationale - no tag given"

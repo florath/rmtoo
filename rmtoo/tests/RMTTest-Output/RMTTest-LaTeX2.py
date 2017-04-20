@@ -26,7 +26,7 @@ from rmtoo.tests.lib.TestTopicSet import TestTopicSet
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 
-class RMTTest_OutputLaTeX2:
+class RMTTestOutputLaTeX2:
 
     def rmttest_neg_01(self):
         "LaTeX output: check invalid tag in topic"

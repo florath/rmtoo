@@ -19,7 +19,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB012"
 
 
-class RMTTest_BB012(unittest.TestCase):
+class RMTTestBB012(unittest.TestCase):
 
     def rmttest_pos(self):
         "BB resulting requirements are not dependend"

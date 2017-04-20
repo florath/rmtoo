@@ -15,7 +15,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.TestConfig import TestConfig
 
 
-class RMTTest_Requirement:
+class RMTTestRequirement:
 
     def rmttest_positive_01(self):
         "Requirement: parser returns error"

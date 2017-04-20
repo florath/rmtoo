@@ -20,7 +20,7 @@ mdir_orig = "tests/blackbox-test/bb002-test"
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB002"
 
 
-class RMTTest_BB002:
+class RMTTestBB002:
 
     def rmttest_pos_001(self):
         """BB Hotspot in the middle of the graph 2"""

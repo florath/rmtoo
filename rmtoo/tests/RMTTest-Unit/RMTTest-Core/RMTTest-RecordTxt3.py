@@ -37,7 +37,7 @@ Topic: ReqsDocument
 """
 
 
-class RMTTest_RecordTxt3(unittest.TestCase):
+class RMTTestRecordTxt3(unittest.TestCase):
 
     def rmttest_pos_01(self):
         "TestRecordTxt3: long long complicated input"

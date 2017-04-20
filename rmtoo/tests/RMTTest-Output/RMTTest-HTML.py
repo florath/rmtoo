@@ -9,7 +9,7 @@
 #
 
 
-class RMTTest_OutputHTML:
+class RMTTestOutputHTML:
 
     def rmttest_positive_01(self):
         pass

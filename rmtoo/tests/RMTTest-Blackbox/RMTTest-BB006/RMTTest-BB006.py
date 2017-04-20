@@ -20,7 +20,7 @@ mdir_orig = "tests/blackbox-test/bb006-test"
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB006"
 
 
-class RMTTest_BB006:
+class RMTTestBB006:
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - check makefile dependencies"
