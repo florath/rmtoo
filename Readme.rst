@@ -15,13 +15,14 @@ Open Source Requirements Management Tool
     :target: http://rmtoo.florath.net
 .. image:: https://img.shields.io/pypi/v/rmtoo.svg
     :target: https://pypi.python.org/pypi/rmtoo
-.. image:: https://img.shields.io/pypi/dm/rmtoo.svg
-    :target: https://pypi.python.org/pypi/rmtoo
 .. image:: https://sonarqube.com/api/badges/measure?key=rmtoo:rmtoo&metric=sqale_debt_ratio
     :target: https://sonarqube.com/dashboard?id=rmtoo
 .. image:: https://img.shields.io/coverity/scan/12488.svg
     :target: https://scan.coverity.com/projects/rmtoo
 
+.. COMMENT pypi stats are not working
+.. COMMENT .. image:: https://img.shields.io/pypi/dm/rmtoo.svg
+.. COMMENT    :target: https://pypi.python.org/pypi/rmtoo
 	     
 Introduction
 ============
