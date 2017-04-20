@@ -15,7 +15,8 @@ from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 
-class version1(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
+class version1(StdOutputParams, ExecutorTopicContinuum,
+               CreateMakeDependencies):
     '''Outputs the version number of the version control system to a given
        file.'''
 
@@ -36,7 +37,7 @@ class version1(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def topic_set_pre(self, _requirement_set):
         '''This is call in the RequirementSet pre-phase.'''

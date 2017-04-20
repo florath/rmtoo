@@ -31,6 +31,7 @@ from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
+
 class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
                          CreateMakeDependencies):
 
@@ -67,7 +68,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         xml_taskdisplaycolumns = \
             self.__xml_doc.createElement("taskdisplaycolumns")
         xml_project.appendChild(xml_taskdisplaycolumns)
-        for display_col in [["tpd3", 125] , ["tpd4", 25], ["tpd5", 25]]:
+        for display_col in [["tpd3", 125], ["tpd4", 25], ["tpd5", 25]]:
             xml_tpd = self.__xml_doc.createElement("displaycolumn")
             xml_tpd.setAttribute("property-id", display_col[0])
             xml_tpd.setAttribute("width", str(display_col[1]))
@@ -77,7 +78,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Because gantt2 can only one topic continuum,
            the latest (newest) is used.'''
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def topic_continuum_post(self, _topics_continuum):
         '''Do the postprocessing: create the file.'''
@@ -86,7 +87,8 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         self.__xml_doc.appendChild(self.__xml_obj_stack[0])
 
         # Write it out.
-        with io.open(self._output_filename, "w", encoding="utf-8") as self.__fd:
+        with io.open(self._output_filename, "w",
+                     encoding="utf-8") as self.__fd:
             self.__fd.write(self.__xml_doc.toprettyxml())
 
     def topic_pre(self, topic):

@@ -1,31 +1,32 @@
 '''
  rmtoo
    Free and Open Source Requirements Management Tool
-   
+
   First GUI:
     This is read only.
-   
- (c) 2012 by flonatel GmbH & Co. KG
+
+ (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
-
 import pygtk
-pygtk.require('2.0')
 import gtk
-import gobject
 
 import sys
 
 from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, TopicContinuumSetIterator
-from rmtoo.lib.TopicContinuum import TopicContinuum
+from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, \
+    TopicContinuumSetIterator
+
+pygtk.require('2.0')
+
 
 def advance(iter, n):
     for i in xrange(0, n):
         iter.next()
+
 
 class GTMIterator:
 
@@ -44,19 +45,20 @@ class GTMIterator:
 
     def current(self):
         return self.__current
-    
+
     def type_name(self):
         return self.__type_name
-    
+
     def inc(self, n):
         for i in xrange(0, n):
             self.next()
-            
+
     def __str__(self):
         return "GTMIterator [%s] [%s]" % (self.__type_name, self.__iterator)
-    
+
     def __repr__(self):
         return self.__str__()
+
 
 class RmtooTreeModel(gtk.GenericTreeModel):
 
@@ -98,37 +100,37 @@ class RmtooTreeModel(gtk.GenericTreeModel):
 
         key, value = rowref.current()
 
-#        print("ON GET VALUE [%s] [%s]" % (rowref, column))
+        #        print("ON GET VALUE [%s] [%s]" % (rowref, column))
         print("Current value [%s] [%s]" % (key, value))
         print("TYPE KEY [%s]" % type(key))
 
         return key
 
         assert False
-        fname = os.path.join(self.dirname, rowref)
-        try:
-            filestat = os.stat(fname)
-        except OSError:
-            return None
-        mode = filestat.st_mode
-        if column is 0:
-            if stat.S_ISDIR(mode):
-                return folderpb
-            else:
-                return filepb
-        elif column is 1:
-            return rowref
-        elif column is 2:
-            return filestat.st_size
-        elif column is 3:
-            return oct(stat.S_IMODE(mode))
-        return time.ctime(filestat.st_mtime)
+#        fname = os.path.join(self.dirname, rowref)
+#        try:
+#            filestat = os.stat(fname)
+#        except OSError:
+#            return None
+#        mode = filestat.st_mode
+#        if column is 0:
+#            if stat.S_ISDIR(mode):
+#                return folderpb
+#            else:
+#                return filepb
+#        elif column is 1:
+#            return rowref
+#        elif column is 2:
+#            return filestat.st_size
+#        elif column is 3:
+#            return oct(stat.S_IMODE(mode))
+#        return time.ctime(filestat.st_mtime)
 
     def on_iter_next(self, rowref):
         print("ON ITER NEXT [%s]" % rowref)
 
         try:
-#            print("CURRENT2 [%s] [%s]" % rowref.current())
+            #            print("CURRENT2 [%s] [%s]" % rowref.current())
             return rowref.next()
         except StopIteration:
             return None
@@ -142,16 +144,16 @@ class RmtooTreeModel(gtk.GenericTreeModel):
 
     def on_iter_children(self, rowref):
         print("On ITER CHILDERN [%s]" % rowref)
-        
-        if rowref!=None:
+
+        if rowref is not None:
             return rowref.iter_children()
-            
+
 #            print("ITER TYPE [%s]" % rowref.type_name())
 #            if rowref.type_name() == "topic_continuum":
 #                tcsetname, tcset = rowref.current()
 #                return GTMIterator(
 #                        tcset.get_vcs_commit_ids().__iter__(), "topics")
-        
+
         assert False
         if rowref:
             return None
@@ -172,7 +174,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
             key, value = rowref.current()
             return len(value.get_vcs_commit_ids()) > 0
         if type_name == "topics":
-            return rowref.current()!=None
+            return rowref.current() is not None
 
         assert False
         return False
@@ -185,14 +187,14 @@ class RmtooTreeModel(gtk.GenericTreeModel):
 
     def on_iter_nth_child(self, rowref, n):
         print("ON ITER NTH CHILD [%s] [%s]" % (rowref, n))
-        
-        if rowref == None:
+
+        if rowref is None:
             iter = TopicContinuumSetIterator(self.__topic_continuum_set)
             advance(iter, n)
             return iter
-        
+
         assert False
-        
+
         return None
 
         assert False
@@ -206,6 +208,7 @@ class RmtooTreeModel(gtk.GenericTreeModel):
     def on_iter_parent(child):
         assert False
         return None
+
 
 class GUI1ViewOnly:
 
@@ -235,8 +238,6 @@ class GUI1ViewOnly:
 #        selection = tree_view.get_selection()
 #        selection.connect('changed', self.on_selection_changed)
 
-
-
         # create the TreeView
         self.treeview = gtk.TreeView()
 
@@ -258,12 +259,12 @@ class GUI1ViewOnly:
                                                   cell, text=n)
             self.treeview.append_column(self.tvcolumn[n])
 
-        scrolled_window.add_with_viewport (self.treeview)
+        scrolled_window.add_with_viewport(self.treeview)
         self.treeview.set_model(rmtoo_model)
         self.treeview.show()
 
-
-#        for name, continuum in topic_continuum_set.get_continuum_dict().iteritems():
+#        for name, continuum in iteritem(
+#                 topic_continuum_set.get_continuum_dict()):
 #            iter_continuum = model.append(None)
 #            model.set(iter_continuum, 0, name)
 #            for commit_id in continuum.get_vcs_commit_ids():
@@ -271,11 +272,11 @@ class GUI1ViewOnly:
 #                model.set(iter_commit, 0, commit_id)
 #                topic_set = continuum.get_topic_set(commit_id.get_commit())
 #                req_set = topic_set.get_requirement_set()
-#                
+#
 #                req_set.find_master_nodes()
 #                for master_node in req_set.get_master_nodes():
 #                    self.__add_requirements(model, iter_commit, master_node)
-#                
+#
 #
 #        cell = gtk.CellRendererText()
 #        column = gtk.TreeViewColumn("Requirements", cell, text=0)
@@ -289,15 +290,16 @@ class GUI1ViewOnly:
     # hierarchy first
     def insert_text(self, buffer):
         iter = buffer.get_iter_at_offset(0)
-        buffer.insert(iter,
-                      "From: pathfinder@nasa.gov\n"
-                      "To: mom@nasa.gov\n"
-                      "Subject: Made it!\n"
-                      "\n"
-                      "We just got in this morning. The weather has been\n"
-                      "great - clear but cold, and there are lots of fun sights.\n"
-                      "Sojourner says hi. See you soon.\n"
-                      " -Path\n")
+        buffer.insert(
+            iter,
+            "From: pathfinder@nasa.gov\n"
+            "To: mom@nasa.gov\n"
+            "Subject: Made it!\n"
+            "\n"
+            "We just got in this morning. The weather has been\n"
+            "great - clear but cold, and there are lots of fun sights.\n"
+            "Sojourner says hi. See you soon.\n"
+            " -Path\n")
 
     # Create a scrolled text area that displays a "message"
     def create_text(self):
@@ -310,13 +312,12 @@ class GUI1ViewOnly:
         scrolled_window.show_all()
         return scrolled_window
 
-
     def __init__(self, config, input_mods, _mstdout, mstderr):
         try:
             topic_continuum_set = TopicContinuumSet(input_mods, config)
         except RMTException as rmte:
             mstderr.write("+++ ERROR: Problem reading in the continuum [%s]\n"
-                      % rmte)
+                          % rmte)
             return
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -343,9 +344,11 @@ class GUI1ViewOnly:
     def main(self):
         gtk.main()
 
+
 def execute_cmds(config, input_mods, _mstdout, mstderr):
     view_only = GUI1ViewOnly(config, input_mods, _mstdout, mstderr)
     view_only.main()
+
 
 def main_impl(args, mstdout, mstderr):
     '''The real implementation of the main function:
@@ -356,6 +359,7 @@ def main_impl(args, mstdout, mstderr):
     configure_logging(config)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
+
 def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
     '''The main entry function
     This calls the main_func function and does the exception handling.'''
@@ -365,6 +369,6 @@ def main(args, mstdout, mstderr, main_func=main_impl, exitfun=sys.exit):
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
 
+
 if __name__ == "__main__":
     main(sys.argv[1:], sys.stdout, sys.stderr)
-

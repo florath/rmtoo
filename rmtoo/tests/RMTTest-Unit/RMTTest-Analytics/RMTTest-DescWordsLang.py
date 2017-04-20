@@ -18,16 +18,19 @@ except ImportError:
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.configuration.Cfg import Cfg
 
+
 class TestConfig1(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)
+
 
 class TestConfig2(Cfg):
 
     def __init__(self):
         Cfg.__init__(self)
         self.set_value('requirements.input.default_language', 'kl_EL')
+
 
 class RMTTestDescWords(unittest.TestCase):
 

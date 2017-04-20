@@ -37,9 +37,11 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
 
     def topic_set_pre(self, tset):
         '''Output the data for this topics set.'''
-        self.__ofile.write("%s %d\n" %
+        self.__ofile.write(
+            "%s %d\n" %
             (time.strftime("%Y-%m-%d_%H:%M:%S",
-             time.localtime(tset.get_commit_info().get_timestamp())),
+                           time.localtime(
+                               tset.get_commit_info().get_timestamp())),
              tset.get_topic_set().get_complete_requirement_set_count()))
 
     def cmad_topic_continuum_pre(self, _):

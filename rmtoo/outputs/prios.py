@@ -8,12 +8,11 @@
 
  For licensing details see COPYING
 '''
-
-###
-### TODO:
-###  Store the whole requirements instead of some other date in
-###  the different lists.
-###
+#
+# TODO:
+#  Store the whole requirements instead of some other date in
+#  the different lists.
+#
 
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
@@ -44,7 +43,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Because graph2 can only one topic continuum,
            the latest (newest) is used.'''
         self.__used_vcs_id = vcs_commit_ids[-1]
-        return [ topic_sets[vcs_commit_ids[-1].get_commit()] ]
+        return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
     def __get_reqs_impl_detail(self, topic_set):
         '''Return the implementation details of the requirements.'''
@@ -101,7 +100,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         f = open(self._output_filename, "w")
 
         def get_efe(tr):
-            if tr.get_value("Effort estimation") != None:
+            if tr.get_value("Effort estimation") is not None:
                 return str(tr.get_value("Effort estimation"))
             else:
                 return " "
@@ -117,11 +116,11 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
             s = 0
             for p in l:
-                if topic_set.get_requirement_set().get_requirement(p[1]).\
-                    get_value("Effort estimation") != None:
+                if topic_set.get_requirement_set().get_requirement(
+                        p[1]).get_value("Effort estimation") is not None:
                     efest = topic_set.get_requirement_set().\
                             get_requirement(p[1]).\
-                        get_value("Effort estimation")
+                            get_value("Effort estimation")
                     s += efest
                     efest_str = str(efest)
                 else:
@@ -160,16 +159,16 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 status = tr.get_status()
                 rel = "\\ "
                 dur = status.get_duration()
-                if dur == None:
+                if dur is None:
                     durs = "\\ "
                 else:
                     durs = str(dur)
-                if tr.get_value("Effort estimation") != None:
+                if tr.get_value("Effort estimation") is not None:
                     efe = tr.get_value("Effort estimation")
-                    if dur != None and dur != 0.0:
+                    if dur is not None and dur != 0.0:
                         rel = "%4.2f" % (efe / float(dur))
                 person = status.get_person()
-                if person == None:
+                if person is None:
                     person = "\\ "
 
                 f.write("\\ref{%s} & \\nameref{%s} & %s & %s & %s & "
@@ -190,8 +189,9 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             sum_open = 0
             for sp in [simpl, sselected]:
                 for p in sp:
-                    sum_open += topic_set.get_requirement_set().get_requirement(p[1]).\
-                        get_efe_or_0()
+                    sum_open += topic_set.get_requirement_set().\
+                                get_requirement(p[1]).\
+                                get_efe_or_0()
             f.write("Not done & %d & EfE units \\\ \n" % sum_open)
 
             # Compute the assigned
@@ -209,7 +209,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             # Compute the finished where a time is given
             sum_finished_with_duration = 0
             for tr in sfinished:
-                if tr.get_status().get_duration() != None:
+                if tr.get_status().get_duration() is not None:
                     sum_finished_with_duration += tr.get_efe_or_0()
             f.write("Finished (duration given) & %d & EfE units \\\ \n" %
                     sum_finished_with_duration)
@@ -218,7 +218,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             sum_duration = 0
             for tr in sfinished:
                 dur = tr.get_status().get_duration()
-                if dur != None:
+                if dur is not None:
                     sum_duration += dur
             f.write(" & %d & hours \\\ \n" % sum_duration)
 
@@ -240,8 +240,8 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 x = list(i for i in range(0, len(rv)))
                 y = list(x[0] + x[1] for x in rv)
 
-                gradient, intercept, r_value, p_value, std_err = \
-                     stats.linregress(x, y)
+                gradient, intercept, r_value, p_value, std_err \
+                    = stats.linregress(x, y)
 
                 if gradient >= 0.0:
                     f.write("Estimated End date & unpredictable & \\\ \n")
@@ -267,4 +267,3 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
-

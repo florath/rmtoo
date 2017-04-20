@@ -22,9 +22,9 @@ from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
 class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
-    default_config = { "req_attributes":
-                       ["Id", "Priority", "Owner", "Invented on",
-                        "Invented by", "Status", "Class"] }
+    default_config = {"req_attributes":
+                      ["Id", "Priority", "Owner", "Invented on",
+                       "Invented by", "Status", "Class"]}
 
     level_names = [
         "chapter",
@@ -32,7 +32,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         "subsection",
         "subsubsection",
         "paragraph",
-        "subparagraph" ]
+        "subparagraph"
+    ]
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
@@ -44,9 +45,10 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__constraints_reqs_ref = {}
 
         if not self._config.is_available('req_attributes'):
-            self._config.set_value('req_attributes',
+            self._config.set_value(
+                'req_attributes',
                 ["Id", "Priority", "Owner", "Invented on",
-                        "Invented by", "Status", "Class"])
+                 "Invented by", "Status", "Class"])
         self.__level = -1
 
     @staticmethod
@@ -72,17 +74,18 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         self.__fd.write(u"\%s{%s}\label{CONSTRAINT%s}\n"
                         "\\textbf{Description:} %s\n"
-                 % (self.level_names[1],
-                    cnstrt.get_value("Name").get_content(),
-                    cname, cnstrt.get_value("Description").get_content()))
+                        % (self.level_names[1],
+                           cnstrt.get_value("Name").get_content(),
+                           cname, cnstrt.get_value(
+                               "Description").get_content()))
 
         if cnstrt.is_val_av_and_not_null("Rationale"):
             self.__fd.write(u"\n\\textbf{Rationale:} %s\n"
-                     % cnstrt.get_value("Rationale").get_content())
+                            % cnstrt.get_value("Rationale").get_content())
 
         if cnstrt.is_val_av_and_not_null("Note"):
             self.__fd.write(u"\n\\textbf{Note:} %s\n"
-                     % cnstrt.get_value("Note").get_content())
+                            % cnstrt.get_value("Note").get_content())
 
         # Write out the references to the requirements
 
@@ -90,7 +93,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         for req in self.__constraints_reqs_ref[cname]:
             refid = latex2.__strescape(req)
             refctr = "\\ref{%s} \\nameref{%s}" \
-                           % (refid, refid)
+                     % (refid, refid)
             reqs_refs.append(refctr)
         self.__fd.write(u"\n\\textbf{Requirements:} %s\n" %
                         ", ".join(reqs_refs))
@@ -116,21 +119,23 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         self.__fd.write(u"\%s{%s}\label{TESTCASE%s}\n"
                         "\\textbf{Description:} %s\n"
-                 % (self.level_names[1],
-                    cnstrt.get_value("Name").get_content(),
-                    cname, cnstrt.get_value("Description").get_content()))
+                        % (self.level_names[1],
+                           cnstrt.get_value("Name").get_content(),
+                           cname, cnstrt.get_value(
+                               "Description").get_content()))
 
         if cnstrt.is_val_av_and_not_null("Expected Result"):
             self.__fd.write(u"\n\\textbf{Expected Result:} %s\n"
-                     % cnstrt.get_value("Expected Result").get_content())
+                            % cnstrt.get_value(
+                                "Expected Result").get_content())
 
         if cnstrt.is_val_av_and_not_null("Rationale"):
             self.__fd.write(u"\n\\textbf{Rationale:} %s\n"
-                     % cnstrt.get_value("Rationale").get_content())
+                            % cnstrt.get_value("Rationale").get_content())
 
         if cnstrt.is_val_av_and_not_null("Note"):
             self.__fd.write(u"\n\\textbf{Note:} %s\n"
-                     % cnstrt.get_value("Note").get_content())
+                            % cnstrt.get_value("Note").get_content())
         tracer.debug("Finished.")
 
     def __output_latex_testcases(self, testcases):
@@ -146,7 +151,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
     def topic_set_post(self, topic_set):
         '''Print out the constraints and clean up file.'''
         tracer.debug("Called; output constraints.")
-        if topic_set == None:
+        if topic_set is None:
             assert False
         constraints = Constraints.collect(topic_set)
         self.__output_latex_constraints(constraints)
@@ -192,28 +197,28 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         self.__fd.write(u"%% REQ '%s'\n" % req.id)
 
         self.__fd.write(u"\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
-                 % (self.level_names[self.__level + 1],
-                    req.get_value("Name").get_content(),
-                    latex2.__strescape(req.id),
-                    req.get_value("Description").get_content()))
+                        % (self.level_names[self.__level + 1],
+                           req.get_value("Name").get_content(),
+                           latex2.__strescape(req.id),
+                           req.get_value("Description").get_content()))
 
         if req.is_val_av_and_not_null("Rationale"):
             self.__fd.write(u"\n\\textbf{Rationale:} %s\n"
-                     % req.get_value("Rationale").get_content())
+                            % req.get_value("Rationale").get_content())
 
         if req.is_val_av_and_not_null("Note"):
             self.__fd.write(u"\n\\textbf{Note:} %s\n"
-                     % req.get_value("Note").get_content())
+                            % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
         if len(req.incoming) > 0:
             # Create links to the corresponding labels.
             self.__fd.write(u"\n\\textbf{Depends on:} ")
             self.__fd.write(u", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.incoming,
-                                                key=lambda r: r.id)]))
+                                        (latex2.__strescape(d.id),
+                                         latex2.__strescape(d.id))
+                                        for d in sorted(req.incoming,
+                                                        key=lambda r: r.id)]))
             self.__fd.write(u"\n")
 
         if len(req.outgoing) > 0:
@@ -221,23 +226,23 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__fd.write(u"\n\\textbf{Solved by:} ")
             # No comma at the end.
             self.__fd.write(u", ".join(["\\ref{%s} \\nameref{%s}" %
-                                (latex2.__strescape(d.id),
-                                 latex2.__strescape(d.id))
-                                for d in sorted(req.outgoing,
-                                                key=lambda r: r.id)]))
+                                        (latex2.__strescape(d.id),
+                                         latex2.__strescape(d.id))
+                                        for d in sorted(req.outgoing,
+                                                        key=lambda r: r.id)]))
             self.__fd.write(u"\n")
 
-        if self.__ce3set != None:
+        if self.__ce3set is not None:
             cnstrt = self.__ce3set.get(req.get_id())
-            if cnstrt != None and cnstrt.len() > 0:
+            if cnstrt is not None and cnstrt.len() > 0:
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
                 for key, val in sorted(iteritems(cnstrt.get_values())):
                     refid = latex2.__strescape(key)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
-                           % (refid, refid)
+                             % (refid, refid)
                     description = val.description()
-                    if description != None:
+                    if description is not None:
                         refctr += " [" + description + "] "
                     cstrs.append(refctr)
                     # Also put a reference (for later use) in the
@@ -248,13 +253,13 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write(u"\n")
 
         testcases = req.get_value_default("Test Cases")
-        if testcases != None:
+        if testcases is not None:
             self.__fd.write(u"\n\\textbf{Test Cases:} ")
             tcout = []
             for testcase in testcases:
                 refid = latex2.__strescape(testcase)
                 refctr = "\\ref{TESTCASE%s} \\nameref{TESTCASE%s}" \
-                               % (refid, refid)
+                         % (refid, refid)
                 tcout.append(refctr)
 
             self.__fd.write(u", ".join(tcout))
@@ -274,16 +279,17 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write(u"\\textbf{Id:} & %s " % req.id)
             elif rattr == "Priority":
                 self.__fd.write(u"\\textbf{Priority:} & %4.2f "
-                         % (req.get_value("Priority") * 10))
+                                % (req.get_value("Priority") * 10))
             elif rattr == "Owner":
                 self.__fd.write(u"\\textbf{Owner:} & %s" %
                                 req.get_value("Owner"))
             elif rattr == "Invented on":
                 self.__fd.write(u"\\textbf{Invented on:} & %s "
-                         % req.get_value("Invented on").strftime("%Y-%m-%d"))
+                                % req.get_value("Invented on")
+                                .strftime("%Y-%m-%d"))
             elif rattr == "Invented by":
                 self.__fd.write(u"\\textbf{Invented by:} & %s "
-                         % req.get_value("Invented by"))
+                                % req.get_value("Invented by"))
             elif rattr == "Status":
                 self.__fd.write(u"\\textbf{Status:} & %s " % status)
             elif rattr == "Class":
