@@ -31,5 +31,4 @@ script:
   - sonar-scanner
 
 after_success:
-  - npm install codeclimate-test-reporter
   - codeclimate-test-reporter
