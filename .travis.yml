@@ -29,6 +29,4 @@ script:
   - tox -e pep8
   - codecov
   - sonar-scanner
-
-after_sucess:
   - CODECLIMATE_REPO_TOKEN=bc9cfc8dda8fab946f8dcaeb44cc42af70e9581f3b8fbe51dad0a825239d3f7d codeclimate-test-reporter

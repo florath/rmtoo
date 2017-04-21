@@ -19,12 +19,15 @@ Open Source Requirements Management Tool
     :target: https://sonarqube.com/dashboard?id=rmtoo
 .. image:: https://img.shields.io/coverity/scan/12488.svg
     :target: https://scan.coverity.com/projects/rmtoo
-.. image:: https://img.shields.io/codeclimate/github/florath/rmtoo.svg
-    :target: https://codeclimate.com/github/florath/rmtoo
-.. image:: https://img.shields.io/codeclimate/coverage/github/triAGENS/ashikawa-core.svg
-    :target: https://codeclimate.com/github/florath/rmtoo
-.. image:: https://img.shields.io/codeclimate/issues/github/me-and/mdf.svg
-    :target: https://codeclimate.com/github/florath/rmtoo
+.. image:: https://codeclimate.com/github/florath/rmtoo/badges/gpa.svg
+   :target: https://codeclimate.com/github/florath/rmtoo
+   :alt: Code Climate
+.. image:: https://codeclimate.com/github/florath/rmtoo/badges/coverage.svg
+   :target: https://codeclimate.com/github/florath/rmtoo/coverage
+   :alt: Test Coverage
+.. image:: https://codeclimate.com/github/florath/rmtoo/badges/issue_count.svg
+   :target: https://codeclimate.com/github/florath/rmtoo
+   :alt: Issue Count
 
 .. COMMENT pypi stats are not working
 .. COMMENT .. image:: https://img.shields.io/pypi/dm/rmtoo.svg
