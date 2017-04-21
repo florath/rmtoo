@@ -49,8 +49,8 @@ Solved by:''', 'B', None, None, None)
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__resolve_solved_by_one_req;===LINENO===; 77:B:'Solved by' " \
-            "field has length 0\n"
+            "__resolve_solved_by_one_req_deps;===LINENO===; " \
+            "77:B:'Solved by' field has length 0\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_solved_by_to_nonex_req(self):
@@ -77,8 +77,8 @@ Solved by: C''', 'B', None, None, None)
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__resolve_solved_by_one_req;===LINENO===; 74:B:'Solved by' " \
-            "points to a non-existing requirement 'C'\n"
+            "__resolve_solved_by_one_req_deps;===LINENO===; " \
+            "74:B:'Solved by' points to a non-existing requirement 'C'\n"
         self.assertEquals(result_expected, lstderr)
 
     def rmttest_neg_point_to_self(self):
@@ -104,6 +104,6 @@ Solved by: B''', 'B', None, None, None)
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
-            "__resolve_solved_by_one_req;===LINENO===; 75:B:'Solved by' " \
-            "points to the requirement itself\n"
+            "__resolve_solved_by_one_req_deps;===LINENO===; " \
+            "75:B:'Solved by' points to the requirement itself\n"
         self.assertEquals(result_expected, lstderr)

@@ -305,6 +305,30 @@ class RequirementSet(Digraph, UsableFlag):
         tracer.debug("Add CE3 for requirement [%s]" % name)
         self.__ce3set.insert(name, ce3)
 
+    def __restrict_to_topics_one_req(self, restricted_reqs, req):
+        tracer.debug("Restricting requirement [%s]" % req.get_id())
+        # Add to the internal map
+        restricted_reqs._add_requirement(req)
+        # Add to the common digraph structure
+        restricted_reqs.add_node(req)
+        # Add ce3 of the requirement
+        restricted_reqs._add_ce3(req.get_id(),
+                                 self.__ce3set.get(req.get_id()))
+        ctrs = req.get_value("Constraints")
+        if ctrs is not None:
+            for cval in ctrs:
+                restricted_reqs._add_constraint(
+                    self.__constraints[cval])
+
+        # Add testcases
+        testcases = req.get_value("Test Cases")
+        if testcases is not None:
+            tracer.debug("Restricting testcases [%s]" % testcases)
+            for testcase in testcases:
+                restricted_reqs._add_testcase(
+                    self.__testcases[testcase])
+        return restricted_reqs
+
     def restrict_to_topics(self, topic_set):
         '''Restrict the list (dictionary) of requirements to the given
            topic set - i.e. only requirements are returned which belong to
@@ -313,27 +337,8 @@ class RequirementSet(Digraph, UsableFlag):
         restricted_reqs = RequirementSet(self._config)
         for req in self.__requirements.values():
             if req.get_topic() in topic_set:
-                tracer.debug("Restricting requirement [%s]" % req.get_id())
-                # Add to the internal map
-                restricted_reqs._add_requirement(req)
-                # Add to the common digraph structure
-                restricted_reqs.add_node(req)
-                # Add ce3 of the requirement
-                restricted_reqs._add_ce3(req.get_id(),
-                                         self.__ce3set.get(req.get_id()))
-                ctrs = req.get_value("Constraints")
-                if ctrs is not None:
-                    for cval in ctrs:
-                        restricted_reqs._add_constraint(
-                            self.__constraints[cval])
-
-                # Add testcases
-                testcases = req.get_value("Test Cases")
-                if testcases is not None:
-                    tracer.debug("Restricting testcases [%s]" % testcases)
-                    for testcase in testcases:
-                        restricted_reqs._add_testcase(
-                            self.__testcases[testcase])
+                restricted_reqs = self.__restrict_to_topics_one_req(
+                    restricted_reqs, req)
 
         return restricted_reqs
 
@@ -349,17 +354,7 @@ class RequirementSet(Digraph, UsableFlag):
         FuncCall.pcall(executor, func_prefix + "requirement_set_post", self)
         tracer.debug("finished")
 
-    def __resolve_solved_by_one_req(self, req):
-        '''Resolve the 'Solved by' for one requirement.'''
-        tracer.debug("Called: requirement id [%s]." % req.get_id())
-
-        # Add node to digraph
-        self.add_node(req)
-
-        # It is a 'normal' case when there is no 'Solved by' (until now).
-        if "Solved by" not in req.brmo:
-            return True
-
+    def __resolve_solved_by_one_req_deps(self, req):
         content = req.brmo["Solved by"].get_content()
         # If available, it must not empty
         if len(content) == 0:
@@ -395,6 +390,19 @@ class RequirementSet(Digraph, UsableFlag):
         del req.brmo["Solved by"]
         return True
 
+    def __resolve_solved_by_one_req(self, req):
+        '''Resolve the 'Solved by' for one requirement.'''
+        tracer.debug("Called: requirement id [%s]." % req.get_id())
+
+        # Add node to digraph
+        self.add_node(req)
+
+        # It is a 'normal' case when there is no 'Solved by' (until now).
+        if "Solved by" not in req.brmo:
+            return True
+
+        return self.__resolve_solved_by_one_req_deps(req)
+
     def resolve_solved_by(self):
         '''Step through the internal list of collected requirements and
            evaluate the 'Solved by'.  This is done by creating the
@@ -411,31 +419,28 @@ class RequirementSet(Digraph, UsableFlag):
         tracer.debug("Finished; success [%s]." % success)
         return success
 
-    def __resolve_depends_on_one_req(self, req, also_solved_by):
-        tracer.debug("Called.")
-        # Add node to digraph
-        self.add_node(req)
+    def __resolve_depends_on_one_req_master(self, req):
+        """For the master requirement there must be no depends on."""
 
-        if req.get_value("Type") == Requirement.rt_master_requirement:
-            # There must no 'Depends on'
-            if "Depends on" in req.brmo:
-                print("+++ ERROR %s: initial requirement has "
-                      "Depends on field." % (req.id))
-                return False
-            # It self does not have any depends on nodes
-            req.graph_depends_on = None
-            # This is the master!
-            return True
-
-        # For all other requirements types there must be a 'Depends on'
-        if "Depends on" not in req.brmo:
-            if also_solved_by:
-                # Skip handling this requirement
-                return True
-            print("+++ ERROR %s: non-initial requirement has "
-                  "no 'Depends on' field." % (req.id))
+        if "Depends on" in req.brmo:
+            print("+++ ERROR %s: initial requirement has "
+                  "Depends on field." % (req.id))
             return False
+        # It self does not have any depends on nodes
+        req.graph_depends_on = None
+        # This is the master!
+        return True
 
+    def __resolve_depends_on_one_req_other(self, req, also_solved_by):
+        """For all other requirements types there must be a 'Depends on'"""
+        if also_solved_by:
+            # Skip handling this requirement
+            return True
+        print("+++ ERROR %s: non-initial requirement has "
+              "no 'Depends on' field." % (req.id))
+        return False
+
+    def __resolve_depends_on_one_req_impl(self, req):
         t = req.brmo["Depends on"]
 
         # If available, it must not empty
@@ -467,10 +472,21 @@ class RequirementSet(Digraph, UsableFlag):
                          (dep_req.get_id(), req.get_id()))
             Digraph.create_edge(dep_req, req)
 
-        # Copy and delete the original tag
-        # XXX Not neede any more? req.tags["Depends on"] = t.split()
+        # Delete the original tag
         del req.brmo["Depends on"]
         return True
+
+    def __resolve_depends_on_one_req(self, req, also_solved_by):
+        tracer.debug("Called.")
+        # Add node to digraph
+        self.add_node(req)
+
+        if req.get_value("Type") == Requirement.rt_master_requirement:
+            return self.__resolve_depends_on_one_req_master(req)
+        if "Depends on" not in req.brmo:
+            return self.__resolve_depends_on_one_req_other(req, also_solved_by)
+
+        return self.__resolve_depends_on_one_req_impl(req)
 
     def resolve_depends_on(self, also_solved_by):
         '''Step through the internal list of collected requirements and
