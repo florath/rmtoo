@@ -13,30 +13,39 @@ from rmtoo.lib.RMTException import RMTException
 
 class ClassTypeImplementable:
 
-    def get_output_string(self):
+    @staticmethod
+    def get_output_string():
         return "implementable"
 
-    def is_implementable(self):
+    @staticmethod
+    def is_implementable():
         return True
 
 
 class ClassTypeDetailable:
 
-    def get_output_string(self):
+    @staticmethod
+    def get_output_string():
         return "detailable"
 
-    def is_implementable(self):
+    @staticmethod
+    def is_implementable():
         return False
 
 
 class ClassTypeSelected:
 
-    def get_output_string(self):
+    @staticmethod
+    def get_output_string():
         return "selected"
 
-    # The selected requirement is a requirement which can be
-    # (directly) implemented.
-    def is_implementable(self):
+    @staticmethod
+    def is_implementable():
+        """Return if requirement is implementable
+
+        The selected requirement is a requirement which can be
+        (directly) implemented.
+        """
         return True
 
 

@@ -12,7 +12,8 @@ from xml.dom.minidom import Document
 from rmtoo.lib.Requirement import Requirement
 
 
-class xml1:
+# ToDo: Can this class be removed? There are (currently) no tests.
+class Xml1:
 
     def __init__(self, topic_set, param):
         self.topic_set = topic_set
@@ -26,7 +27,8 @@ class xml1:
     def cmad(self, reqscont, ofile):
         ofile.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (self.output_filename))
 
-    def name2xmltag(self, name):
+    @staticmethod
+    def name2xmltag(name):
         return name.replace(" ", "_").lower()
 
     def output_req(self, req, doc, sobj):

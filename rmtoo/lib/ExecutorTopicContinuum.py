@@ -21,6 +21,7 @@ class ExecutorTopicContinuum(object):
            will be used.'''
         return
 
+    @abc.abstractmethod
     def topic_continuum_sort(self, vcs_commit_ids, topic_sets):
         '''Sort the list of continuums.
            The commits are the commits in chronological order.

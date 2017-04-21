@@ -8,8 +8,8 @@
 
  For licensing details see COPYING
 '''
-
 import os
+import unittest
 
 from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
@@ -18,7 +18,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB005"
 
 
-class RMTTestBB001:
+class RMTTestBB001(unittest.TestCase):
 
     def rmttest_pos_002(self):
         "BB Basic with one requirement - reqs only from FILES"
@@ -33,16 +33,16 @@ class RMTTestBB001:
         cleanup_std_log(mout, merr)
         #        extract_container_files(["reqspricing.ods", ])
         missing_files, additional_files, diffs = compare_results(mdir)
-        assert(len(missing_files) == 0)
+        self.assertEqual(0, len(missing_files))
         if len(additional_files) != 0:
             print("ADDITIONAL FILES [%s]" % additional_files)
-        assert(len(additional_files) == 0)
+        self.assertEqual(0, len(additional_files))
         # The count stats is always different because of the timestamp
 
         if len(diffs) != 1:
             print("DIFFS '%s'" % diffs)
 
-        assert(len(diffs) == 1)
+        self.assertEqual(1, len(diffs))
         # Diffs are the from the stats count file:
         # ['---  \n',
         #  '+++  \n',
@@ -53,5 +53,5 @@ class RMTTestBB001:
         #  '+2010-07-30_20:57:36 1\n',
         #  '+2010-07-29_21:17:15 1\n',
         #  '+2010-07-29_21:09:03 1\n']
-        assert(len(diffs["stats_reqs_cnt.csv"]) == 9)
+        self.assertEqual(9, len(diffs["stats_reqs_cnt.csv"]))
         delete_result_is_dir()

@@ -64,7 +64,7 @@ class Output(Executor):
     def cmad_topic_continuum_set_pre(self, _topic_continuum_set):
         '''Initialized the global cmad.'''
         cmad_filename = self.__config.get_rvalue(
-                      'actions.create_makefile_dependencies')
+            'actions.create_makefile_dependencies')
         tracer.debug("Opening cmad file [%s]" % cmad_filename)
         self.__cmad_file = open(cmad_filename, "w")
 
