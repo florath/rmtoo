@@ -84,7 +84,7 @@ Dependencies
 To use rmtoo, other software packages must be installed.
 
 rmtoo is written in python.  At least version 2.7 of python is needed.
-(Starting with version 24 python 3 will be supported.)
+Starting with version 24 python >3.4 is also supported.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
@@ -101,11 +101,7 @@ First Project
 The recommended way of starting is to copy the provided template
 project.
 
-Using the provided template projects depends whether you use the deb
-package or the tar package.  Please consult the appropriate sections
-how to use the template project.
-
-Nevertheless the basic steps are:
+The basic steps are:
 
 1) Copy over the template project to some other directory.
 2) Set up the environment
@@ -117,8 +113,8 @@ Note that during this document the project will be called
 'MyNewProject'.  Please adapt the name for your needs.
 
 
-Using virtualenv
-================
+Installation using virtualenv / pip
+===================================
 
 This is the preferred installation method - it takes care that
 at least the python dependencies are correctly installed.
@@ -137,52 +133,40 @@ To install ``rmtoo`` in a virtualenv, execute the following steps:
    $ pip install --upgrade pip setuptools wheel
    $ pip install --only-binary=numpy,scipy numpy scipy
    $ pip install rmtoo
-   $ export RMTOO_CONTRIB=${PWD}/venv/rmtoo/contrib
 
-Please see the section 'First Project' how to use the template
-project.
-
-
-Using tar package
-=================
-
-Installation
-------------
-
-Just untar the downloaded package.  You need not to be root to do
-this.
-Change to the directory where you want to install rmtoo to.
-To refer to the current directory, it is called RMTOO_BASE_PATH.
-
-.. code:: bash
-
-   $ export RMTOO_BASE_PATH=$PWD
-   $ export RMTOO_PATH=${RMTOO_BASE_PATH}/rmtoo-YY
-   $ export RMTOO_CONTRIB=${RMTOO_PATH}/contrib
-   $ tar -xf rmtoo-YY.tar.gz
-
-To use rmtoo, you have to include
-``${RMTOO_PATH}/bin`` to your path,  include
-``${RMTOO_PATH}`` to your ``PYTHONPATH``.
-When you use the template project (see section 'First Project' some
-lines below), the shell script ``setenv.sh`` is doing this for you.
+This has only to be done once.
 
 First Project
 =============
 
-Change to a directory where you want to create the new project.  In
-the following code, please replace ``${RMTOO_PATH}`` with ``VENV`` if
-you are using virtualenv.
+Installation
+------------
+
+Change to a directory where you want to create the new project. This
+is needed only once.
 
 .. code:: bash
 
-   $ cp -r ${RMTOO_CONTRIB}/template_project MyNewProject
+   # cd to virtualenv directory - if not already there
+   $ cd RMTOO
+   $ cp -r venv/rmtoo/contrib/template_project MyNewProject
+
+Usage
+-----
+
+To create all the artifacts for the template project, execute
+
+.. code:: bash
+
    $ cd MyNewProject
-   $ source ./setenv.sh ${RMTOO_PATH}
+   $ source ./setenv.sh VENV
    $ make
    $ ls artifacts
 
 In the artifacts directory there are all the generated files.
+A typical workflow is, to change or add requirements, topics or the
+configuration in the ``MyNewProject`` directory, run ``make`` again
+and check the artifacts.
 
 Man Pages
 =========
@@ -212,9 +196,7 @@ Additional Documentation
 ------------------------
 
 Additional documentation can be found in the directories
-``${RMTOO_PATH}/rmtoo-YY`` (especially the Readme files)
-``${RMTOO_PATH}/rmtoo-YY/doc/other``.  When using ``VENV`` the
-documentation is stored in ``venv/rmtoo/doc``.
+``RMTOO/venv/rmtoo/doc`` (especially the Readme files).
 
 Other Documentation
 ===================
@@ -262,8 +244,8 @@ Emacs Mode for Editing Requirements
 
 When using the tar package, emacs mode can be loaded in emacs by:
 ``M-x load-file``
-point to ``${RMTOO_BASE_PATH}/rmtoo-YY/contrib/req-mode.el``
-All files with suffix .req will now use the requirements editing
+point to ``RMTOO/venv/rmtoo/contrib/req-mode.el``
+All files with suffix ``.req`` will now use the requirements editing
 mode.
 
 Footer

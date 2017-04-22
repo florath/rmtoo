@@ -616,35 +616,39 @@ class RequirementSet(Digraph, UsableFlag):
     # Note: the following methods are of no use any more,
     # because the 'Solved by' will be gone in near future.
 
+    def __normalize_dependencies_one_req(self, req):
+        # Remove the old 'Depends on'
+        req.record.remove("Depends on")
+
+        # Create the list of dependencies
+        onodes = []
+        for n in req.outgoing:
+            onodes.append(n.name)
+
+        # If the onodes is empty: There must no old 'Solved by'
+        # tag available - if so something completey strange has
+        # happens and it is better to stop directly.
+        if len(onodes) == 0:
+            assert not req.record.is_tag_available("Solved by")
+            # Looks that everything is ok: continue
+            return
+
+        onodes.sort()
+        on = " ".join(onodes)
+
+        # Check if there is already a 'Solved by'
+        try:
+            req.record.set_content("Solved by", on)
+        except ValueError:
+            req.record.append(RecordEntry(
+                u"Solved by", on,
+                u"Added by rmtoo-normalize-dependencies"))
+        return
+
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''
         for r in itervalues(self.__requirements):
-            # Remove the old 'Depends on'
-            r.record.remove("Depends on")
-
-            # Create the list of dependencies
-            onodes = []
-            for n in r.outgoing:
-                onodes.append(n.name)
-
-            # If the onodes is empty: There must no old 'Solved by'
-            # tag available - if so something completey strange has
-            # happens and it is better to stop directly.
-            if len(onodes) == 0:
-                assert(not r.record.is_tag_available("Solved by"))
-                # Looks that everything is ok: continue
-                continue
-
-            onodes.sort()
-            on = " ".join(onodes)
-
-            # Check if there is already a 'Solved by'
-            try:
-                r.record.set_content("Solved by", on)
-            except ValueError:
-                r.record.append(RecordEntry(
-                        u"Solved by", on,
-                        u"Added by rmtoo-normalize-dependencies"))
+            self.__normalize_dependencies_one_req(r)
         return True
 
     def write_to_filesystem(self, directory):

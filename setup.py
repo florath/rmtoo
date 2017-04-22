@@ -5,7 +5,7 @@ import os
 import sys
 
 package = 'rmtoo'
-version = '23.90.2'
+version = '24.0.0'
 
 add_data = []
 

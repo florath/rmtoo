@@ -1,0 +1,37 @@
+IMPORTANT
+=========
+
+CONFIGURATION IS UNDERGOING A MAJOR RESTRUCTURING.
+THE CURRENT VERSIONS (V22-V24) WILL (ONLY) BE ONE STEP IN THE
+DIRECTION THE CONFIGURATION WILL CHANGE TO.
+BECAUSE THE STRUCTURE CHANGED, THERE IS NO AUTOMATIC UPDATE
+POSSIBLE.
+IF YOU HAVE A RUNNING INSTALLED rmtoo THERE IS NO NEED TO UPDATE
+DIRECTLY (IF YOU DO NOT NEED ANY OF THE NEW FEATURES).
+IF YOU WANT TO USE THE NEW FEATURES, PLEASE FIRST READ THE
+DOCUMENTATION (rmtoo-config3(5)).  IF YOU HAVE PROBLEMS WITH THIS
+FEEL FREE TO CONTACT OUR SUPPORT AT rmtoo@florath.net
+
+
+24.0.0
+======
+
+User visible changes
+--------------------
+
+* Support for python3.
+* Support for virtualenv.
+* Support for installation with pip (pypi).
+* Removed dependency to legacy included versions of other projects
+  (async, git, gitdb, odfpy).
+* Complete support for UTF-8.
+
+
+Internal Changes
+----------------
+
+* Started pep8 cleanup: many small syntax changes.
+* Introduced tox, clean up setup.py, introduced requirements.txt.
+* Many, many code cleanups.
+* CI / quality checks added: codecov.io, sonarqube.com, covertity,
+  codeclimate.com

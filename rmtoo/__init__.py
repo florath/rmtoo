@@ -1,19 +1,11 @@
-#
-# rmtoo __init__.py
-#
-# (c) 2010,2017 by flonatel (rmtoo@florath.net)
-#
-# For licensing details see COPYING
-#
+'''
+ rmtoo
+   Free and Open Source Requirements Management Tool
 
-__package__ = "rmtoo"
-__all__ = ["modules", "lib", "tests", "outputs"]
+  Master __init__.py
 
-#
-# Add shared library path to sys.path
-#
-import os
-import sys
-sys.path.append(os.path.join(os.path.split(__file__)[0], sys.platform))
-del os
-del sys
+ (c) 2011,2017 by flonatel GmbH & Co. KG
+
+ For licensing details see COPYING
+'''
+__all__ = ["inputs", "lib", "tests", "outputs"]

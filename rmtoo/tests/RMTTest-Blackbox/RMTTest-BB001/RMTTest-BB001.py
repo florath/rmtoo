@@ -8,9 +8,9 @@
 
  For licensing details see COPYING
 '''
-
 import os
 import time
+import unittest
 
 from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
@@ -21,7 +21,7 @@ mdir_orig = "tests/blackbox-test/bb001-test"
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB001"
 
 
-class RMTTestBB001:
+class RMTTestBB001(unittest.TestCase):
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - reqs only from git"
