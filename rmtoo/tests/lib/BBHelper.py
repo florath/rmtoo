@@ -8,15 +8,20 @@
 
  For licensing details see COPYING
 '''
+from __future__ import print_function
+
 import io
 import os
 import shutil
 import difflib
 import zipfile
+import unittest
+import time
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
 from rmtoo.tests.lib.Utils import create_tmp_dir, hide_volatile
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
+from rmtoo.lib.RmtooMain import main_func
 
 
 def tmp_dir():
@@ -202,6 +207,7 @@ def unify_output_dir(filename):
         fd.write(d)
 
 
+# Deprecated: please use the BBHelper class
 def check_result(missing_files, additional_files, diffs, tcname):
     if len(missing_files) != 0:
         print("[%s] MISSING FILES [%s]" % (tcname, missing_files))
@@ -216,6 +222,7 @@ def check_result(missing_files, additional_files, diffs, tcname):
     assert len(diffs) == 0
 
 
+# Deprecated: please use the BBHelper class
 def prepare_stderr():
     '''Some lines of the stderr contain a date / timestamp.
        This must be unified in order to be able to compare them.'''
@@ -228,7 +235,75 @@ def prepare_stderr():
             new_stderr.write("%s" % hide_volatile(line))
 
 
+# Deprecated: please use the BBHelper class
 def check_file_results(mdir, tcname="<UNKNOWN>", relaxed=False):
     prepare_stderr()
     missing_files, additional_files, diffs = compare_results(mdir, relaxed)
     check_result(missing_files, additional_files, diffs, tcname)
+
+
+class BBHelper(unittest.TestCase):
+
+    @staticmethod
+    def myexit(n):
+        pass
+
+    def setUp(self):
+        # Stored for logging proposes
+        self.__name = type(self).__name__
+
+        if hasattr(self, "test_dir"):
+            self.__in_test_dir = self.test_dir
+            self.__out_test_dir = self.test_dir
+        else:
+            if hasattr(self, "in_test_dir"):
+                self.__in_test_dir = self.in_test_dir
+            if hasattr(self, "out_test_dir"):
+                self.__out_test_dir = self.out_test_dir
+
+        os.environ["basedir"] = self.__in_test_dir
+        os.environ["rbasedir"] = self.__out_test_dir
+
+        os.environ['TZ'] = 'Europe/Berlin'
+        time.tzset()
+
+    def __check_result(self, missing_files, additional_files, diffs):
+        if len(missing_files) != 0:
+            print("[%s] MISSING FILES [%s]"
+                  % (self.__name, missing_files))
+        self.assertEqual(0, len(missing_files))
+
+        if len(additional_files) != 0:
+            print("[%s] ADDITIONAL FILES [%s]"
+                  % (self.__name, additional_files))
+        self.assertEqual(0, len(additional_files))
+
+        if len(diffs) != 0:
+            print("[%s] DIFFS [%s]" % (self.__name, diffs))
+        self.assertEqual(0, len(diffs))
+
+    def __check_file_results(self, relaxed):
+        prepare_stderr()
+        missing_files, additional_files, diffs \
+            = compare_results(self.__out_test_dir, relaxed)
+        self.__check_result(missing_files, additional_files, diffs)
+
+    def run_test(self, relaxed=False, container_files=[],
+                 unify_output_dirs=[], cmd_line_params=[],
+                 success=True):
+        if not cmd_line_params:
+            cmd_line_params = ["-j",
+                               "file://" + self.__out_test_dir
+                               + "/input/Config.json"]
+        self.__mout, self.__merr = prepare_result_is_dir()
+        result = main_func(cmd_line_params,
+                           self.__mout, self.__merr)
+        cleanup_std_log(self.__mout, self.__merr)
+        self.assertEqual(success, result)
+        if container_files:
+            extract_container_files(container_files)
+        if unify_output_dirs:
+            for uod in unify_output_dirs:
+                unify_output_dir(uod)
+        self.__check_file_results(relaxed)
+        delete_result_is_dir()

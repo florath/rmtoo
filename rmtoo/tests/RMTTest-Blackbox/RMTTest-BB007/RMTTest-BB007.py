@@ -8,27 +8,14 @@
 
  For licensing details see COPYING
 '''
-
-import os
-
-from rmtoo.lib.RmtooMain import main_func
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
-    cleanup_std_log, delete_result_is_dir, check_file_results
-
-mdir_orig = "tests/blackbox-test/bb007-test"
-mdir = "tests/RMTTest-Blackbox/RMTTest-BB007"
+from rmtoo.tests.lib.BBHelper import BBHelper
 
 
-class RMTTestBB007:
+class RMTTestBB007(BBHelper):
+
+    out_test_dir = "tests/RMTTest-Blackbox/RMTTest-BB007"
+    in_test_dir = "tests/blackbox-test/bb007-test"
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - check log output for typo in topic"
-
-        os.environ["basedir"] = mdir_orig
-        os.environ["rbasedir"] = mdir
-        mout, merr = prepare_result_is_dir()
-        main_func(["-j", "file://" + mdir + "/input/Config.json"],
-                  mout, merr)
-        cleanup_std_log(mout, merr)
-        check_file_results(mdir)
-        delete_result_is_dir()
+        self.run_test(success=False)

@@ -8,34 +8,22 @@
 
  For licensing details see COPYING
 '''
+from rmtoo.tests.lib.BBHelper import BBHelper
 
-import os
-
-from rmtoo.lib.RmtooMain import main_impl
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
-    cleanup_std_log, delete_result_is_dir, \
-    unify_output_dir, check_file_results
-
-mdir_orig = "tests/blackbox-test/bb006-test"
-mdir = "tests/RMTTest-Blackbox/RMTTest-BB006"
+cmd_line_parsms = '''json:{"actions": {"create_makefile_dependencies":
+"${ENV:rmtoo_test_dir}/makefile_deps"}}'''
 
 
-class RMTTestBB006:
+class RMTTestBB006(BBHelper):
+
+    out_test_dir = "tests/RMTTest-Blackbox/RMTTest-BB006"
+    in_test_dir = "tests/blackbox-test/bb006-test"
 
     def rmttest_pos_001(self):
         "BB Basic with one requirement - check makefile dependencies"
-
-        def myexit(n):
-            pass
-
-        os.environ["basedir"] = mdir_orig
-        os.environ["rbasedir"] = mdir
-        mout, merr = prepare_result_is_dir()
-        main_impl(["-j", "file://" + mdir + "/input/Config.json",
-                   "-j", '''json:{"actions": {"create_makefile_dependencies":
-                 "${ENV:rmtoo_test_dir}/makefile_deps"}}'''],
-                  mout, merr, exitfun=myexit)
-        cleanup_std_log(mout, merr)
-        unify_output_dir("makefile_deps")
-        check_file_results(mdir, "BB006", True)
-        delete_result_is_dir()
+        self.run_test(unify_output_dirs=["makefile_deps"],
+                      relaxed=True,
+                      cmd_line_params=[
+                          "-j", "file://" + self.out_test_dir
+                          + "/input/Config.json",
+                          "-j", cmd_line_parsms])

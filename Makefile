@@ -14,7 +14,7 @@ force:
 # This is the way the rmtoo must be called.
 #
 CONFIG_FILE=file://doc/Config1.json
-CALL_RMTOO=./bin/rmtoo -m . -j ${CONFIG_FILE}
+CALL_RMTOO=rmtoo -m . -j ${CONFIG_FILE}
 
 #
 # Dependency handling

@@ -8,30 +8,13 @@
 
  For licensing details see COPYING
 '''
-
-import os
-
-from rmtoo.lib.RmtooMain import main_impl
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
-    cleanup_std_log, delete_result_is_dir, extract_container_files, \
-    check_file_results
-
-mdir = "tests/RMTTest-Blackbox/RMTTest-BB010"
+from rmtoo.tests.lib.BBHelper import BBHelper
 
 
-class RMTTestBB010:
+class RMTTestBB010(BBHelper):
+
+    test_dir = "tests/RMTTest-Blackbox/RMTTest-BB010"
 
     def rmttest_pos_001(self):
         "BB Basic with some requirements - used for the slides"
-
-        def myexit(n):
-            pass
-
-        os.environ["basedir"] = mdir
-        mout, merr = prepare_result_is_dir()
-        main_impl(["-j", "file://" + mdir + "/input/Config.json"],
-                  mout, merr, exitfun=myexit)
-        extract_container_files(["reqspricing.ods", ])
-        cleanup_std_log(mout, merr)
-        check_file_results(mdir, "BB010", True)
-        delete_result_is_dir()
+        self.run_test(container_files=["reqspricing.ods", ], relaxed=True)

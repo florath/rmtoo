@@ -72,6 +72,8 @@ This file is not completed now - any might be in future.
 ** testpypi
    $ python setup.py sdist upload -r testpypi
 
+   $ python setup.py bdist_wheel --universal upload
+
    Install:
    pip install -i https://testpypi.python.org/pypi rmtoo
 
