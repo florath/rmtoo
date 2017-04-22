@@ -171,14 +171,7 @@ and check the artifacts.
 Man Pages
 =========
 
-The man pages are located in the sub-directory doc/man.  Please use
-the command
-
-.. code:: bash
-
-   $ man -l ${RMTOO_PATH}/doc/man/rmtoo.7
-
-When using the virtualenv, the use
+When using the virtualenv, use
 
 .. code:: bash
 
@@ -190,7 +183,7 @@ file name with the appropriate manual page, like:
 
 .. code:: bash
 
-   $ man -l ${RMTOO_BASE_PATH}/rmtoo-YY/doc/man/rmtoo-analytics.7
+   $ man -l venv/rmtoo/doc/man/rmtoo-analytics.7
 
 Additional Documentation
 ------------------------
