@@ -15,6 +15,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.TopicSet import TopicSet

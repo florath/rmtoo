@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric

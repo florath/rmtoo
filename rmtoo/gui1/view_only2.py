@@ -9,18 +9,16 @@
 
  For licensing details see COPYING
 '''
-import pygtk
-import gtk
+import pgi
+pgi.require_version('Gtk', '3.0')  # noqa: E402
+from pgi.repository import Gtk, GObject
 
 import sys
 
-from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, \
     TopicContinuumSetIterator
-
-pygtk.require('2.0')
 
 
 def advance(iter, n):
@@ -60,14 +58,14 @@ class GTMIterator:
         return self.__str__()
 
 
-class RmtooTreeModel(gtk.GenericTreeModel):
+class RmtooTreeModel(GObject.GObject, Gtk.TreeModel):
 
     column_names = ['Requirement', ]
-#    column_types = (gtk.gdk.Pixbuf, str,)
+#    column_types = (GdkPixbuf.Pixbuf, str,)
     column_types = (str,)
 
     def __init__(self, topic_continuum_set):
-        gtk.GenericTreeModel.__init__(self)
+        GObject.GObject.__init__(self)
         self.__topic_continuum_set = topic_continuum_set
 
     def get_column_names(self):
@@ -226,12 +224,13 @@ class GUI1ViewOnly:
 
     def create_tree(self, topic_continuum_set):
         # Create a new scrolled window, with scrollbars only if needed
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 
         rmtoo_model = RmtooTreeModel(topic_continuum_set)
 
-#        tree_view = gtk.TreeView()
+#        tree_view = Gtk.TreeView()
 #        scrolled_window.add_with_viewport (tree_view)
 #        tree_view.show()
 #
@@ -239,23 +238,23 @@ class GUI1ViewOnly:
 #        selection.connect('changed', self.on_selection_changed)
 
         # create the TreeView
-        self.treeview = gtk.TreeView()
+        self.treeview = Gtk.TreeView()
 
         # create the TreeViewColumns to display the data
         column_names = rmtoo_model.get_column_names()
         self.tvcolumn = [None] * len(column_names)
-#        cellpb = gtk.CellRendererPixbuf()
-#        self.tvcolumn[0] = gtk.TreeViewColumn(column_names[0],
+#        cellpb = Gtk.CellRendererPixbuf()
+#        self.tvcolumn[0] = Gtk.TreeViewColumn(column_names[0],
 #                                              cellpb, pixbuf=0)
-#        cell = gtk.CellRendererText()
+#        cell = Gtk.CellRendererText()
 #        self.tvcolumn[0].pack_start(cell, False)
 #        self.tvcolumn[0].add_attribute(cell, 'text', 1)
 #        self.treeview.append_column(self.tvcolumn[0])
         for n in range(0, len(column_names)):
-            cell = gtk.CellRendererText()
+            cell = Gtk.CellRendererText()
 #            if n == 0:
 #                cell.set_property('xalign', 1.0)
-            self.tvcolumn[n] = gtk.TreeViewColumn(column_names[n],
+            self.tvcolumn[n] = Gtk.TreeViewColumn(column_names[n],
                                                   cell, text=n)
             self.treeview.append_column(self.tvcolumn[n])
 
@@ -278,8 +277,8 @@ class GUI1ViewOnly:
 #                    self.__add_requirements(model, iter_commit, master_node)
 #
 #
-#        cell = gtk.CellRendererText()
-#        column = gtk.TreeViewColumn("Requirements", cell, text=0)
+#        cell = Gtk.CellRendererText()
+#        column = Gtk.TreeViewColumn("Requirements", cell, text=0)
 #        tree_view.append_column(column)
 
         return scrolled_window
@@ -303,10 +302,11 @@ class GUI1ViewOnly:
 
     # Create a scrolled text area that displays a "message"
     def create_text(self):
-        view = gtk.TextView()
+        view = Gtk.TextView()
         buffer = view.get_buffer()
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.add(view)
         self.insert_text(buffer)
         scrolled_window.show_all()
@@ -320,12 +320,12 @@ class GUI1ViewOnly:
                           % rmte)
             return
 
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.set_title("rmtoo - Read only GUI")
         self.window.set_default_size(800, 600)
 
         # create a vpaned widget and add it to our toplevel window
-        hpaned = gtk.HPaned()
+        hpaned = Gtk.HPaned()
         self.window.add(hpaned)
         hpaned.set_position(200)
         hpaned.show()
@@ -342,7 +342,7 @@ class GUI1ViewOnly:
         self.window.show()
 
     def main(self):
-        gtk.main()
+        Gtk.main()
 
 
 def execute_cmds(config, input_mods, _mstdout, mstderr):
@@ -356,7 +356,7 @@ def main_impl(args, mstdout, mstderr):
        o set up logging
        o do everything'''
     config, input_mods = MainHelper.main_setup(args, mstdout, mstderr)
-    configure_logging(config)
+#    configure_logging(config)
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 

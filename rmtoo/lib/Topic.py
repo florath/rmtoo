@@ -9,6 +9,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.digraph.Digraph import Digraph

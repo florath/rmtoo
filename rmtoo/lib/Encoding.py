@@ -13,6 +13,19 @@ import sys
 
 class Encoding(object):
 
+    @staticmethod
+    def is_unicode(s):
+        if s is None:
+            return False
+        if sys.version_info[0] == 2:
+            # The noqa is needed to get pep8 run on python3
+            if type(s) != unicode:
+                print("UNIIIIIIIIIIIIIIIICCCCCCODE [%s]" % s)
+            return type(s) == unicode  # noqa: F821
+        if sys.version_info[0] == 3:
+            return type(s) == str
+        assert False
+
     # This is somewhat hackish - but the only way I found to
     # check if 's' is a unicode string.
     @staticmethod
@@ -22,18 +35,10 @@ class Encoding(object):
         if type(s) in [list, dict]:
             print("+++ ERROR: Must be a string not a [%s]" % type(s))
             assert False
-        if sys.version_info[0] == 2:
-            # The noqa is needed to get pep8 run on python3
-            if type(s) != unicode:  # noqa: F821
-                print("+++ ERROR: String [%s] must be unicode" % s)
-                assert False
-            return
-        if sys.version_info[0] == 3:
-            if type(s) != str:
-                print("+++ ERROR: String [%s] must be unicode" % s)
-                assert False
-            return
-        assert False
+        if not Encoding.is_unicode(s):
+            print("+++ ERROR: String [%s] must be unicode" % s)
+            assert False
+        return
 
     @staticmethod
     def check_unicode_list(l):

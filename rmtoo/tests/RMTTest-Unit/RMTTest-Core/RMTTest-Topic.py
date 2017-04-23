@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import unittest
 
 from rmtoo.lib.Topic import Topic

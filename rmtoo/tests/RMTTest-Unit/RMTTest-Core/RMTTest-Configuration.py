@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
 
 try:
     from StringIO import StringIO

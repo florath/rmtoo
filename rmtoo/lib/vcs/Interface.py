@@ -9,6 +9,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import abc
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig

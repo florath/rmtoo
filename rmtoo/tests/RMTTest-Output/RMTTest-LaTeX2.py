@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import os
 
 from rmtoo.outputs.latex2 import latex2

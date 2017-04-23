@@ -11,6 +11,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 from six import iteritems
 
 from rmtoo.lib.TopicContinuum import TopicContinuum, TopicContinuumIterator

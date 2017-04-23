@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import datetime
 
 from rmtoo.lib.DateUtils import parse_date

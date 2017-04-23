@@ -8,6 +8,8 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
@@ -17,4 +19,4 @@ class Constraint(BaseRMObject):
     def __init__(self, content, rid, file_path, mods, config):
         BaseRMObject.__init__(self, InputModuleTypes.ctstag, content,
                               rid, mods,
-                              config, u"constraints", file_path)
+                              config, "constraints", file_path)
