@@ -32,7 +32,6 @@ class MainHelper:
     @staticmethod
     def main_setup(args, mstdout, mstderr):
         config = MainHelper.main_setup_config(args)
-
         moddirs = config.get_value("global.modules.directories")
         if len(moddirs) != 1:
             # TODO Handle multiple module directories.

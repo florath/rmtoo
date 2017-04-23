@@ -13,10 +13,10 @@
 import os
 import json
 
+import rmtoo.lib.configuration.DictHelper as DictHelper
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 from rmtoo.lib.configuration.Utils import Utils
-from rmtoo.lib.configuration.InternalCfg import InternalCfg
 from rmtoo.lib.RMTException import RMTException
 
 
@@ -27,7 +27,7 @@ except NameError:
     unicode = str
 
 
-class Cfg(object):
+class Cfg(dict):
     '''
     Configuration Class
 
@@ -41,13 +41,14 @@ class Cfg(object):
     to simplify configuration access.
     '''
 
-    def __init__(self, initial_values=None):
-        '''Constructs an empty configuration
-           This can be filled later on with the different merge
-           methods.'''
-        self.config = {}
-        if initial_values is not None:
-            self.__init_initial_values(initial_values)
+    def __init__(self, *args, **kwargs):
+        """Constructs a configuration
+
+        This can be either emtpy and filled later on with the
+        different merge methods or a set of initial values can be
+        passed in.
+        """
+        self.update(*args, **kwargs)
 
     def __init_initial_values(self, initial_values):
         '''Initializes the initial values.
@@ -95,7 +96,7 @@ class Cfg(object):
         '''Merges the contents of the local dictionary into the
            existing one.
            If a value already exists, it is overwritten'''
-        Utils.internal_merge_dictionary(self.config, ldict)
+        Utils.internal_merge_dictionary(self, ldict)
 
     def merge_cmd_line_params(self, args):
         '''Merges the command line arguments into the
@@ -126,7 +127,7 @@ class Cfg(object):
                 # This must be removed before the evaluation, because it
                 # is possible that during the evaluation additional
                 # entries will appear.
-                del(self.config['configuration']['json'])
+                del self['configuration']['json']
                 self.__evaluate_json_once(json_config)
         except RMTException:
             # Nothing to do: JSON entries not available
@@ -138,22 +139,14 @@ class Cfg(object):
            o Read in the new configuration'''
         self.__evaluate_json()
 
-    def get_raw(self, key):
-        '''Returns the value of the given key.
-           If the key is not found a CfgEx is raised.'''
-        key = InternalCfg.convert_key(key)
-        rval = InternalCfg.get_value(key, self.config)
-        # This is the tricky part: With this construct each
-        # sub-configuration is again a configuration.
-        if type(rval) == dict:
-            return Cfg(rval)
-        return rval
-
     def get_value(self, key):
         '''Returns the value of the given key.
            If key is not found a RMTException is thrown.'''
         try:
-            return self.get_raw(key)
+            rval = DictHelper.get_raw(self, key)
+            if type(rval) == dict:
+                return Cfg(rval)
+            return rval
         except CfgEx as cex:
             raise RMTException(96, "Mandatory configuration parameter "
                                "[%s] not found. (Root cause: [%s])"
@@ -223,7 +216,7 @@ class Cfg(object):
            Replacement of ${} is done, if the key is available,
            If the key is not available, the default_value is returned.'''
         try:
-            return self.dollar_replace(self.get_raw(key))
+            return self.dollar_replace(DictHelper.get_raw(self, key))
         except CfgEx:
             return default_value
 
@@ -236,36 +229,29 @@ class Cfg(object):
         '''Return the value of the key from the configuration.
            If the key is not available, the default_value is returned.'''
         try:
-            return self.get_raw(key)
+            return DictHelper.get_raw(self, key)
         except CfgEx:
             return default_value
 
     def set_value(self, key, value):
         '''Sets the value. If the key is already there a CfgEx is
            raised.'''
-        key = InternalCfg.convert_key(key)
-        InternalCfg.set_value(self.config, key, value)
+        ckey = DictHelper.cfg_key(key)
+        DictHelper.set_value(self, ckey, value)
 
-    def append_list(self, key, value):
-        '''Appends value to existing list under key.
-           If key does not exists, a new list is created.'''
-        key = InternalCfg.convert_key(key)
-        InternalCfg.append_list(self.config, key, value)
-
-    def get_dict(self):
-        '''Returns the dictionary which holds all the values.
-           This is needed for the usage of handling easy access
-           to the configuration parameters.
-           You should really knowing what you are doing when using
-           this method.'''
-        return self.config
+#    def append_list(self, key, value):
+#        '''Appends value to existing list under key.
+#           If key does not exists, a new list is created.'''
+#        key = InternalCfg.convert_key(key)
+#        InternalCfg.append_list(self.config, key, value)
 
     def get_bool(self, key, default_value):
         '''Returns the value of the key - converted to a boolean.
            If key does not exists, the default value is returned.'''
         try:
-            return self.get_raw(key) in ['True', 'true', 'on', '1',
-                                         'Yes', 'yes', True]
+            return DictHelper.get_raw(self, key) \
+                in ['True', 'true', 'on', '1',
+                    'Yes', 'yes', True]
         except CfgEx:
             return default_value
 
@@ -273,7 +259,7 @@ class Cfg(object):
         '''Returns the value of the key - converted to an integer.
            If key does not exists, the default value is returned.'''
         try:
-            return int(self.get_raw(key))
+            return int(DictHelper.get_raw(self, key))
         except CfgEx:
             return default_value
 

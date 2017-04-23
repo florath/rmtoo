@@ -47,8 +47,7 @@ class TopicContinuumSet(UsableFlag):
            and read in the TopicContinuum.'''
         tracer.debug("Called.")
         # Step through all the available topic sets.
-        for ts_name, ts_config in iteritems(
-                self._config.get_value("topics").get_dict()):
+        for ts_name, ts_config in iteritems(self._config.get_value("topics")):
             topic_cont = TopicContinuum(ts_name, self._config, ts_config,
                                         self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont

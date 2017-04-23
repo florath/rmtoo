@@ -58,7 +58,7 @@ class RMTTestConfiguration(unittest.TestCase):
 
         self.failUnlessEqual(1, config.get_value("k"), "k is not 1")
         self.failUnlessEqual({'create_makefile_dependencies': '/tmp/cmad'},
-                             config.get_value("actions").get_dict())
+                             config.get_value("actions"))
 
     def rmttest_json_init_add_new_cmd_line_params(self):
         '''Init Cfg with JSON and adds parameters with command line options'''
