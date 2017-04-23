@@ -19,8 +19,6 @@ class Encoding(object):
             return False
         if sys.version_info[0] == 2:
             # The noqa is needed to get pep8 run on python3
-            if type(s) != unicode:
-                print("UNIIIIIIIIIIIIIIIICCCCCCODE [%s]" % s)
             return type(s) == unicode  # noqa: F821
         if sys.version_info[0] == 3:
             return type(s) == str
