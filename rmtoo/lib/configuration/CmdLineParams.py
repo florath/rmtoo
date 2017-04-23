@@ -8,9 +8,13 @@
 
  For licensing details see COPYING
 '''
+from __future__ import unicode_literals
+
 import distutils
 
 from optparse import OptionParser
+
+from rmtoo.lib.Encoding import Encoding
 
 
 class CmdLineParams:
@@ -46,20 +50,26 @@ class CmdLineParams:
         ldict = {}
 
         if options.config_file is not None:
-            ldict['configuration'] = {'deprecated':
-                                      {'config_file': options.config_file}}
+            ldict['configuration'] \
+                = {'deprecated':
+                   {'config_file': Encoding.to_unicode(options.config_file)}}
 
         if options.modules_directory is not None:
-            ldict['global'] = {'modules': {'directories':
-                                           [options.modules_directory]}}
+            ldict['global'] \
+                = {'modules': {'directories':
+                               [Encoding.to_unicode(
+                                   options.modules_directory)]}}
         else:
             # If there is no modules directory given, use the pyshared one.
             mod_dir = distutils.sysconfig.get_python_lib()
-            ldict['global'] = {'modules': {'directories': [mod_dir]}}
+            ldict['global'] = {'modules':
+                               {'directories':
+                                [Encoding.to_unicode(mod_dir)]}}
 
         if options.create_makefile_dependencies is not None:
-            ldict['actions'] = {'create_makefile_dependencies':
-                                options.create_makefile_dependencies}
+            ldict['actions'] \
+                = {'create_makefile_dependencies':
+                   Encoding.to_unicode(options.create_makefile_dependencies)}
 
         return ldict
 
@@ -80,10 +90,11 @@ class CmdLineParams:
 
         jopts = []
         for jopt in options.json:
-            if jopt.startswith("file://") or jopt.startswith("json:"):
-                jopts.append(jopt)
+            ujopt = Encoding.to_unicode(jopt)
+            if ujopt.startswith("file://") or ujopt.startswith("json:"):
+                jopts.append(ujopt)
             else:
-                jopts.append("json:" + jopt)
+                jopts.append("json:" + ujopt)
         return {'configuration': {'json': jopts}}
 
     @staticmethod

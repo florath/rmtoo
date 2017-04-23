@@ -209,7 +209,7 @@ class Cfg(dict):
         if isinstance(value, list):
             return self.__dollar_replace_list(value)
         # Never reached: unknown type
-        print("Never reached: [%s]" % type(value))
+        print("Cfg never reached [%s] [%s]" % (type(value), value))
         assert False
 
     def get_rvalue(self, key):
