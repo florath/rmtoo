@@ -8,6 +8,7 @@
 
  For licensing details see COPYING
 '''
+from functools import reduce
 
 from rmtoo.lib.configuration.CfgEx import CfgEx
 
