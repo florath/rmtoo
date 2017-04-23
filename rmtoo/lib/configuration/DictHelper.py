@@ -14,6 +14,7 @@ from __future__ import print_function
 #  This is needed, because in python3 this was moved
 #  from internal to the functool
 from functools import reduce
+from six import iteritems
 
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.Encoding import Encoding
@@ -31,19 +32,6 @@ def cfg_key(key):
     if Encoding.is_unicode(key):
         return key.split('.')
     print("Invalid key type [%s]" % type(key))
-    assert False
-
-
-def pop_value(ldict, key):
-    """Get the value of the 'path' and remove it,
-
-    Returns the value of the 'path' if exists - and remove
-    this entry from the dict.  If it does not exists, a
-    RMTException is raised.
-    """
-    # ToDo: implement
-    assert ldict
-    assert key
     assert False
 
 
@@ -77,3 +65,19 @@ def set_value(ldict, key, value):
         return dict.get(ldict, k)
 
     reduce(dict_extend, ckey[:-1], ldict)[ckey[-1]] = value
+
+
+def merge(orig_dict, new_dict):
+    """Copies all the values from the new_dict into the
+    orig_dict.  If a value already exists, it is overwritten."""
+    assert isinstance(orig_dict, dict)
+    assert isinstance(new_dict, dict)
+
+    for key, value in iteritems(new_dict):
+        if key not in orig_dict:
+            orig_dict[key] = value
+            continue
+        if isinstance(orig_dict[key], dict) and isinstance(value, dict):
+            merge(orig_dict[key], value)
+        else:
+            orig_dict[key] = value

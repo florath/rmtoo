@@ -10,21 +10,93 @@
 
  For licensing details see COPYING
 '''
+from __future__ import print_function
+
+from abc import ABCMeta, abstractmethod
 import os
 import json
+from six import iteritems
 
 import rmtoo.lib.configuration.DictHelper as DictHelper
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
-from rmtoo.lib.configuration.Utils import Utils
 from rmtoo.lib.RMTException import RMTException
 
 
-# python 2 and 3 compat hack:
-try:
-    unicode
-except NameError:
-    unicode = str
+class CfgFormatBase:
+    """Common base class for format configuration objects"""
+
+    __metaclass__ = ABCMeta
+
+    def __init__(self, cfg, name):
+        """Set up a CfgFormatJson object"""
+        self.__cfg = cfg
+        self.__name = name
+
+    @abstractmethod
+    def create_cfg_from_str(self, url):
+        """Create configuration from given string"""
+        return
+
+    @abstractmethod
+    def create_cfg_from_file(self, url):
+        """Create configuration from given file"""
+        return
+
+    def __create_cfg_from_url(self, url):
+        '''Depending on the URL the low level method to
+           create the configuration is called.'''
+        if url.startswith(self.__name + ":"):
+            return self.create_cfg_from_str(url)
+        elif url.startswith("file:"):
+            return self.create_cfg_from_file(url)
+        assert False
+
+    def __evaluate_once(self, config):
+        """Evaluates the given configuration and returns it"""
+        cfg = {}
+        for cfg_idx in config:
+            DictHelper.merge(cfg, self.__create_cfg_from_url(cfg_idx))
+        return cfg
+
+    def evaluate(self):
+        """As long as there are parameters, handle them."""
+        try:
+            while True:
+                config = self.__cfg.get_value(
+                    ['configuration', self.__name])
+                # This must be removed before the evaluation, because it
+                # is possible that during the evaluation additional
+                # entries will appear.
+                del self.__cfg['configuration'][self.__name]
+                DictHelper.merge(self.__cfg, self.__evaluate_once(config))
+        except RMTException:
+            # Nothing to do: entries not available
+            pass
+
+
+class CfgFormatJson(CfgFormatBase):
+    """Handles configuration written in JSON"""
+
+    def create_cfg_from_str(self, url):
+        """Create config from JSON string"""
+        if url.startswith("json:"):
+            url = url[5:]
+        jdict = json.loads(url)
+        if not isinstance(jdict, dict):
+            raise CfgEx("Given JSON string encodes no dictionary.")
+        return jdict
+
+    def create_cfg_from_file(self, url):
+        """Creates dict from JSON file"""
+        if url.startswith("file://"):
+            url = url[7:]
+        with open(url, "r") as jfd:
+            jdict = json.load(jfd)
+        if not isinstance(jdict, dict):
+            raise CfgEx("Given JSON string encodes no dictionary.")
+        return jdict
 
 
 class Cfg(dict):
@@ -41,110 +113,46 @@ class Cfg(dict):
     to simplify configuration access.
     '''
 
-    def __init__(self, *args, **kwargs):
-        """Constructs a configuration
-
-        This can be either emtpy and filled later on with the
-        different merge methods or a set of initial values can be
-        passed in.
-        """
-        self.update(*args, **kwargs)
-
-    def __init_initial_values(self, initial_values):
-        '''Initializes the initial values.
-           Depending on the type of the given value, the initial
-           values are set.'''
-        if type(initial_values) == dict:
-            self.__merge_dictionary(initial_values)
-            return
-        if isinstance(initial_values, Cfg):
-            self.config = initial_values.get_dict()
-            return
-        assert(False)
-
     @staticmethod
     def new_by_json_str(jstr):
-        '''Creates a new Cfg object with the contents of the given
-           string.  The string must be a valid JSON structure.
-           This is a static factory method.'''
+        """Creates a new Cfg object with the contents of the given
+        string.  The string must be a valid JSON structure.
+        This is a static factory method.
+        """
         config = Cfg()
-        config.merge_json_str(jstr)
+        cfg_format = CfgFormatJson(config, 'json')
+        DictHelper.merge(config, cfg_format.create_cfg_from_str(jstr))
         return config
 
     def merge_json_str(self, jstr):
-        '''Adds all the values from the given JSON string to
-           the existing configuration.'''
-        if jstr.startswith("json:"):
-            jstr = jstr[5:]
-        jdict = json.loads(jstr)
-        if type(jdict) != dict:
-            raise CfgEx("Given JSON string encodes no dictionary.")
-        self.__merge_dictionary(jdict)
-
-    def __merge_json_file(self, jfile):
-        '''Adds all the values from the given JSON file to
-           the existing configuration.'''
-        if jfile.startswith("file://"):
-            jfile = jfile[7:]
-        with open(jfile, "r") as jfd:
-            jdict = json.load(jfd)
-        if type(jdict) != dict:
-            raise CfgEx("Given JSON string encodes no dictionary.")
-        self.__merge_dictionary(jdict)
-
-    def __merge_dictionary(self, ldict):
-        '''Merges the contents of the local dictionary into the
-           existing one.
-           If a value already exists, it is overwritten'''
-        Utils.internal_merge_dictionary(self, ldict)
+        """Merges a JSON config into an already existing"""
+        cfg_format = CfgFormatJson(self, 'json')
+        DictHelper.merge(self, cfg_format.create_cfg_from_str(jstr))
 
     def merge_cmd_line_params(self, args):
         '''Merges the command line arguments into the
            existing configuration.'''
         ldicts = CmdLineParams.create_dicts(args)
         for ldict in ldicts:
-            self.__merge_dictionary(ldict)
-
-    def __merge_json_url(self, json_url):
-        '''Depending on the JSON URL the low level method to
-           merge the configuration is called.'''
-        if json_url.startswith("json:"):
-            self.merge_json_str(json_url)
-        elif json_url.startswith("file:"):
-            self.__merge_json_file(json_url)
-
-    def __evaluate_json_once(self, json_config):
-        '''Evaluates the given json configuration and merges it
-           into the current configuration.'''
-        for jcfg in json_config:
-            self.__merge_json_url(jcfg)
-
-    def __evaluate_json(self):
-        '''As long as there are JSON parameters, handle them.'''
-        try:
-            while True:
-                json_config = self.get_value(['configuration', 'json'])
-                # This must be removed before the evaluation, because it
-                # is possible that during the evaluation additional
-                # entries will appear.
-                del self['configuration']['json']
-                self.__evaluate_json_once(json_config)
-        except RMTException:
-            # Nothing to do: JSON entries not available
-            pass
+            DictHelper.merge(self, ldict)
 
     def evaluate(self):
-        '''Evaluates the configuration.
-           This does two things:
-           o Read in the new configuration'''
-        self.__evaluate_json()
+        """Evaluates the configuration.
+
+        This does two things: read in the different configurations
+        of different formats and merges them into one big configuration
+        object.
+        """
+        cfgs = {'json': CfgFormatJson(self, 'json')}
+        for _, cfg_obj in iteritems(cfgs):
+            cfg_obj.evaluate()
 
     def get_value(self, key):
         '''Returns the value of the given key.
            If key is not found a RMTException is thrown.'''
         try:
             rval = DictHelper.get_raw(self, key)
-            if type(rval) == dict:
+            if isinstance(rval, dict):
                 return Cfg(rval)
             return rval
         except CfgEx as cex:
@@ -196,9 +204,9 @@ class Cfg(dict):
 
     def dollar_replace(self, value):
         '''Replaces all occurrences of ${} for different types.'''
-        if type(value) in [bytes, str, unicode]:
+        if Encoding.is_unicode(value):
             return self.__dollar_replace_string(value)
-        if type(value) == list:
+        if isinstance(value, list):
             return self.__dollar_replace_list(value)
         # Never reached: unknown type
         print("Never reached: [%s]" % type(value))

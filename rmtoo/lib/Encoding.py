@@ -8,49 +8,63 @@
 
  For licensing details see COPYING
 '''
+from __future__ import print_function
+
 import sys
 
 
 class Encoding(object):
+    """Collection of functions for encoding
+
+    This class is a compatibility python 2 and 3 class.
+    It encapsulates for other classes the different
+    handling of 'str' and 'unicode'.
+    """
 
     @staticmethod
-    def is_unicode(s):
-        if s is None:
+    def is_unicode(obj):
+        """Returns is obj is unicode string.
+
+        Depending on the python version this is either 'unicode'
+        or 'str'.
+        """
+        if obj is None:
             return False
         if sys.version_info[0] == 2:
             # The noqa is needed to get pep8 run on python3
-            return type(s) == unicode  # noqa: F821
+            return isinstance(obj, unicode)  # noqa: F821
         if sys.version_info[0] == 3:
-            return type(s) == str
+            return isinstance(obj, str)
         assert False
 
-    # This is somewhat hackish - but the only way I found to
-    # check if 's' is a unicode string.
     @staticmethod
-    def check_unicode(s):
-        if s is None:
+    def check_unicode(string):
+        """Checks is string is unicode - bails out if not"""
+        if string is None:
             return
-        if type(s) in [list, dict]:
-            print("+++ ERROR: Must be a string not a [%s]" % type(s))
+        if isinstance(string, (list, dict)):
+            print("+++ ERROR: Must be a string not a [%s]" % type(string))
             assert False
-        if not Encoding.is_unicode(s):
-            print("+++ ERROR: String [%s] must be unicode" % s)
+        if not Encoding.is_unicode(string):
+            print("+++ ERROR: String [%s] must be unicode" % string)
             assert False
         return
 
     @staticmethod
-    def check_unicode_list(l):
-        if type(l) != list:
-            print("+++ ERROR: Must be a list not a [%s]" % type(l))
+    def check_unicode_list(lst):
+        """Check if given list is a list of unicode strings"""
+        if not isinstance(lst, list):
+            print("+++ ERROR: Must be a list not a [%s]" % type(lst))
             assert False
-        for s in l:
-            Encoding.check_unicode(s)
+        for string in lst:
+            Encoding.check_unicode(string)
 
     @staticmethod
-    def to_unicode(l):
+    def to_unicode(string):
+        """Convert string to unicode"""
         if sys.version_info[0] == 2:
             # The noqa is needed to get pep8 run on python3
-            return unicode(l)  # noqa: F821
+            return unicode(string)  # noqa: F821
         if sys.version_info[0] == 3:
-            return str(l)
+            return str(string)
         assert False
