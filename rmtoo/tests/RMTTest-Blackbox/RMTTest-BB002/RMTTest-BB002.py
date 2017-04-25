@@ -19,3 +19,7 @@ class RMTTestBB002(BBHelper):
     def rmttest_pos_001(self):
         """BB Hotspot in the middle of the graph 2"""
         self.run_test(relaxed=True)
+
+    def rmttest_pos_002(self):
+        """BB Hotspot in the middle of the graph 2 (yaml)"""
+        self.run_test(relaxed=True, yaml=True)

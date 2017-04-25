@@ -18,18 +18,22 @@
 .\"
 .\" (c) 2010-2011 by flonatel (rmtoo@florath.net)
 .\"
-.TH rmtoo 1 2011-11-21 "User Commands" "Requirements Management"
+.TH rmtoo 1 2017-04-25 "User Commands" "Requirements Management"
 .SH NAME
 rmtoo \- requirements management tool
 .SH SYNOPSIS
 .B rmtoo
 .B [\-h]
 .B \-j
-.I file://cfgfile
+.I file://cfgfile.json
 .B [\-j 
-.I file://cfgfile]
+.I file://cfgfile.json]
 .B [\-j
 .I cfgoption]
+.B \-y
+.I file://cfgfile.yaml
+.B [\-y
+.I file://cfgfile.yaml]
 .SH DESCRIPTION
 The
 .B rmtoo
@@ -37,6 +41,9 @@ is a requirment management tool.  It understand long and short command
 line options.  For a detailed functional description see rmtoo(7).
 
 .SH OPTIONS
+JSON and YAML can be intermixed.  They are strictly evaluated
+from left to right.
+
 .TP
 \fB\-h\fR, \fB\-\-help\fR
 Display a short usage help.
@@ -45,11 +52,16 @@ Display a short usage help.
 Any number of JSON configuration files or JSON expression.  The
 evaluation will be from left to right.  Duplicated values are
 overwritten. 
+.TP
+\fB\-y\fR \fIfile://yaml_file\fR
+Any number of YAML configuration files.  The
+evaluation will be from left to right.  Duplicated values are
+overwritten.
 
 .SH DEPRECATED OPTIONS
 The following options do still exists because of compatibility
 reasons.  They should not used in new projects.
-.B These options will be supported only until 31. 12. 2012.
+.B These options will be supported only until 31. 12. 2017.
 .TP
 \fB\-f\fR \fICONFIG_FILE\fR, \fB\-\-file-config\fR=\fICONFIG_FILE\fR
 The directory with the requirements files.
@@ -97,7 +109,7 @@ files.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010,2017 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
 
 

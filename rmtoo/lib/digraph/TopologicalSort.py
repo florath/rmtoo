@@ -14,7 +14,17 @@
 '''
 
 
-def topological_sort(dg):
+def node_list_sort(lst_of_nodes):
+    """Sorts the list ost nodes based on their name"""
+    return sorted(lst_of_nodes, key=lambda node: node.name)
+
+
+def node_list_no_sort(lst_of_nodes):
+    """Does not sort the nodes"""
+    return lst_of_nodes
+
+
+def topological_sort(dg, nodes_sort=node_list_sort):
     '''This algorithm is based upon a depth first search with 'making' some
        special nodes.
        The result is the topological sorted list of nodes.'''
@@ -29,12 +39,12 @@ def topological_sort(dg):
     def visit(node):
         if node not in visited:
             visited.append(node)
-            for m in node.outgoing:
+            for m in nodes_sort(node.outgoing):
                 visit(m)
             tsort.append(node)
 
     # The 'main' function of the topological sort
-    for node in dg.nodes:
+    for node in nodes_sort(dg.nodes):
         visit(node)
 
     return tsort

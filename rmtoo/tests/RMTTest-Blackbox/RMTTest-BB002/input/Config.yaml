@@ -1,0 +1,52 @@
+---
+global:
+  modules:
+    directories:
+    - ".."
+processing:
+  analytics:
+    stop_on_errors: false
+requirements:
+  input:
+    default_language: en_GB
+    dependency_notation:
+    - Depends on
+  inventors:
+  - flonatel
+  stakeholders:
+  - development
+  - management
+  - users
+  - customers
+topics:
+  ts_common:
+    sources:
+    - - git
+      - start_vers: a92e470b9bdc87673530bbe9cc8a57afe6d832e2
+        end_vers: bb1ccb2f4e874d82cf679e1c1d135a16d6c99a65
+        requirements_dirs:
+        - "${ENV:basedir}/input/reqs"
+        topics_dirs:
+        - "${ENV:basedir}/input/topics"
+        topic_root_node: ReqsDocument
+        constraints_dirs:
+        - "${ENV:basedir}/input/topics"
+    output:
+      graph:
+      - output_filename: "${ENV:rmtoo_test_dir}/req-graph1.dot"
+      graph2:
+      - output_filename: "${ENV:rmtoo_test_dir}/req-graph2.dot"
+      html:
+      - footer: "${ENV:rbasedir}/input/footer.html"
+        header: "${ENV:rbasedir}/input/header.html"
+        output_directory: "${ENV:rmtoo_test_dir}/html"
+      latex2:
+      - output_filename: "${ENV:rmtoo_test_dir}/reqtopics.tex"
+      prios:
+      - output_filename: "${ENV:rmtoo_test_dir}/reqsprios.tex"
+        start_date: '2011-05-10'
+      stats_reqs_cnt:
+      - output_filename: "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"
+      xml_ganttproject_2:
+      - effort_factor: 1
+        output_filename: "${ENV:rmtoo_test_dir}/gantt2.xml"

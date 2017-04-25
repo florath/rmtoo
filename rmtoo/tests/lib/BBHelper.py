@@ -290,11 +290,16 @@ class BBHelper(unittest.TestCase):
 
     def run_test(self, relaxed=False, container_files=[],
                  unify_output_dirs=[], cmd_line_params=[],
-                 success=True):
+                 success=True, yaml=False):
         if not cmd_line_params:
-            cmd_line_params = ["-j",
-                               "file://" + self.__out_test_dir
-                               + "/input/Config.json"]
+            if not yaml:
+                cmd_line_params = ["-j",
+                                   "file://" + self.__out_test_dir
+                                   + "/input/Config.json"]
+            else:
+                cmd_line_params = ["-y",
+                                   "file://" + self.__out_test_dir
+                                   + "/input/Config.yaml"]
         self.__mout, self.__merr = prepare_result_is_dir()
         result = main_func(cmd_line_params,
                            self.__mout, self.__merr)

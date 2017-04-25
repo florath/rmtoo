@@ -1,0 +1,59 @@
+---
+global:
+  modules:
+    directories:
+    - ".."
+processing:
+  analytics:
+    stop_on_errors: false
+requirements:
+  input:
+    default_language: en_GB
+    dependency_notation:
+    - Depends on
+  inventors:
+  - flonatel
+  stakeholders:
+  - development
+  - management
+  - users
+  - customers
+topics:
+  ts_common:
+    sources:
+    - - filesystem
+      - requirements_dirs:
+        - "${ENV:basedir}/input/reqs"
+        topics_dirs:
+        - "${ENV:basedir}/input/topics"
+        topic_root_node: ReqsDocument
+        constraints_dirs:
+        - "../rmtoo/collection/constraints"
+    output:
+      graph:
+      - output_filename: "${ENV:rmtoo_test_dir}/req-graph1.dot"
+      graph2:
+      - output_filename: "${ENV:rmtoo_test_dir}/req-graph2.dot"
+      html:
+      - footer: "${ENV:basedir}/input/footer.html"
+        header: "${ENV:basedir}/input/header.html"
+        output_directory: "${ENV:rmtoo_test_dir}/html"
+      latex2:
+      - output_filename: "${ENV:rmtoo_test_dir}/reqtopics.tex"
+      oopricing1:
+      - output_filename: "${ENV:rmtoo_test_dir}/reqspricing"
+      prios:
+      - end_date: '2011-05-10'
+        output_filename: "${ENV:rmtoo_test_dir}/reqsprios.tex"
+        start_date: '2011-04-01'
+      stats_burndown1:
+      - output_filename: "${ENV:rmtoo_test_dir}/stats_burndown.csv"
+        start_date: '2011-04-01'
+        end_date: '2011-05-25'
+      stats_sprint_burndown1:
+      - end_date: '2011-05-10'
+        output_filename: "${ENV:rmtoo_test_dir}/stats_sprint_burndown.csv"
+        start_date: '2011-04-01'
+      xml_ganttproject_2:
+      - effort_factor: 1
+        output_filename: "${ENV:rmtoo_test_dir}/gantt2.xml"

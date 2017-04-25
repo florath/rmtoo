@@ -16,6 +16,7 @@ from abc import ABCMeta, abstractmethod
 import os
 import json
 from six import iteritems
+import yaml
 
 import rmtoo.lib.configuration.DictHelper as DictHelper
 from rmtoo.lib.Encoding import Encoding
@@ -99,6 +100,39 @@ class CfgFormatJson(CfgFormatBase):
         return jdict
 
 
+# This takes care that all the configuration is read in
+# using unicode
+def custom_str_constructor(loader, node):
+    return Encoding.to_unicode(loader.construct_scalar(node))
+
+
+yaml.SafeLoader.add_constructor(
+    u'tag:yaml.org,2002:str', custom_str_constructor)
+
+
+class CfgFormatYaml(CfgFormatBase):
+    """Handles configuration written in YAML"""
+
+    def create_cfg_from_str(self, url):
+        """Create config from YAML string"""
+        if url.startswith("yaml:"):
+            url = url[5:]
+        ydict = yaml.safe_load(url)
+        if not isinstance(ydict, dict):
+            raise CfgEx("Given YAML string encodes no dictionary.")
+        return ydict
+
+    def create_cfg_from_file(self, url):
+        """Creates dict from YAML file"""
+        if url.startswith("file://"):
+            url = url[7:]
+        with open(url, "r") as yfd:
+            ydict = yaml.safe_load(yfd)
+        if not isinstance(ydict, dict):
+            raise CfgEx("Given YAML string encodes no dictionary.")
+        return ydict
+
+
 class Cfg(dict):
     '''
     Configuration Class
@@ -143,7 +177,8 @@ class Cfg(dict):
         of different formats and merges them into one big configuration
         object.
         """
-        cfgs = {'json': CfgFormatJson(self, 'json')}
+        cfgs = {'json': CfgFormatJson(self, 'json'),
+                'yaml': CfgFormatYaml(self, 'yaml')}
         for _, cfg_obj in iteritems(cfgs):
             cfg_obj.evaluate()
 

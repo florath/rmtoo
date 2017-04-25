@@ -19,3 +19,10 @@ class RMTTestBB001(BBHelper):
     def rmttest_pos_001(self):
         "BB Basic with one requirement - reqs only from git"
         self.run_test(container_files=["reqspricing.ods", ])
+
+# ToDo:
+# This runs into a strange error: exact in the oopricing
+# there is a difference in some (three!) attributes.
+#    def rmttest_pos_002(self):
+#        "BB Basic with one requirement - reqs only from git (yaml)"
+#        self.run_test(yaml=True, container_files=["reqspricing.ods", ])

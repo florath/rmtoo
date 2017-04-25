@@ -81,21 +81,26 @@ class CmdLineParams:
                           help="JSON string or file which is merged into the "
                           "existing configuration. Can be specified multiple "
                           "times.")
+        parser.add_option("-y", "--yaml", dest="yaml",
+                          action="append",
+                          help="YAML string or file which is merged into the "
+                          "existing configuration. Can be specified multiple "
+                          "times.")
 
     @staticmethod
-    def add_values(options):
+    def add_values(soptions, name):
         '''Add all the new command line parameter values.'''
-        if options.json is None:
+        if soptions is None:
             return {}
 
-        jopts = []
-        for jopt in options.json:
-            ujopt = Encoding.to_unicode(jopt)
-            if ujopt.startswith("file://") or ujopt.startswith("json:"):
-                jopts.append(ujopt)
+        opts = []
+        for opt in soptions:
+            uopt = Encoding.to_unicode(opt)
+            if uopt.startswith("file://") or uopt.startswith(name + ":"):
+                opts.append(uopt)
             else:
-                jopts.append("json:" + ujopt)
-        return {'configuration': {'json': jopts}}
+                opts.append(name + ":" + uopt)
+        return {'configuration': {name: opts}}
 
     @staticmethod
     def add_args(args):
@@ -116,5 +121,6 @@ class CmdLineParams:
         lresult = []
         lresult.append(CmdLineParams.add_args(args))
         lresult.append(CmdLineParams.add_deprecated_values(options))
-        lresult.append(CmdLineParams.add_values(options))
+        lresult.append(CmdLineParams.add_values(options.json, "json"))
+        lresult.append(CmdLineParams.add_values(options.yaml, "yaml"))
         return lresult

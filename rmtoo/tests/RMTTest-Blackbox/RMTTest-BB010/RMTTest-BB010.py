@@ -18,3 +18,8 @@ class RMTTestBB010(BBHelper):
     def rmttest_pos_001(self):
         "BB Basic with some requirements - used for the slides"
         self.run_test(container_files=["reqspricing.ods", ], relaxed=True)
+
+    def rmttest_pos_002(self):
+        "BB Basic with some requirements - used for the slides (yaml)"
+        self.run_test(container_files=["reqspricing.ods", ],
+                      relaxed=True, yaml=True)

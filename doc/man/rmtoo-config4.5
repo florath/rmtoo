@@ -1,5 +1,5 @@
 .\" 
-.\" Man page for rmtoo configuration version 3
+.\" Man page for rmtoo configuration version 4
 .\"
 .\" This is free documentation; you can redistribute it and/or
 .\" modify it under the terms of the GNU General Public License as
@@ -18,9 +18,9 @@
 .\"
 .\" (c) 2010-2012 by flonatel (rmtoo@florath.net)
 .\"
-.TH rmtoo-config 5 2012-03-08 "User Commands" "Requirements Management"
+.TH rmtoo-config 5 2017-04-25 "User Commands" "Requirements Management"
 .SH NAME
-rmtoo-config \- requirements management tool configuration file version 3
+rmtoo-config \- requirements management tool configuration file version 4
 .SH DESCRIPTION
 .B rmtoo
 needs some information to work, like input directories and which
@@ -28,13 +28,14 @@ artifacts should be created.  This information is stored in one or
 more configuratio files.
 .P
 The format of the configuration files is
-.B JSON.
-As alternative the same information can be provided also as
 .B YAML.
+As alternative the same information can be provided also as
+.B JSON.
 Please see the
-.B rmtoo-config4
+.B rmtoo-config3
 man page for details.
-1.SH EXAMPLE
+
+.SH EXAMPLE
 The following example is the configuration file for the 
 .B rmtoo
 requirements management tool.
@@ -49,134 +50,90 @@ This is called \fIcustomer_topic\fR.
 .sp
 .RS
 .nf
-{
-    "global": {
-        "modules": {
-            "directories": [
-                "."
-            ]
-        },
-	"logging": { 
-	    "stdout": {
-	        "loglevel": "debug"
-	    },
-	    "tracer": {
-	        "loglevel": "debug",
-		"filename": "./rmtoo.log"
-    	    }
-        }
-    }, 
-    "processing": {
-        "analytics": {
-            "stop_on_errors": false
-        }
-    }, 
-    "requirements": {
-        "input": {
-            "default_language": "en_GB", 
-            "dependency_notation": [
-                "Solved by"
-            ]
-        }, 
-        "inventors": [
-            "flonatel"
-        ], 
-        "stakeholders": [
-            "development", 
-            "management", 
-            "users", 
-            "customers"
-        ]
-    }, 
-    "topics": {
-        "ts_common": {
-	    "sources": [
-		[
-		    "git", {
-		        "start_vers": "v9", 
-			"end_vers": "v11", 
-			"requirements_dirs": [ "doc/requirements" ],
-			"topics_dirs": [ "doc/topics" ],
-			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
-		],
-		[
-		    "git", {
-		        "start_vers": "v13", 
-			"end_vers": "v17", 
-			"requirements_dirs": [ "doc/requirements" ],
-			"topics_dirs": [ "doc/topics"] ,
-			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
-		],
-	        [
-		    "filesystem", {
-		        "requirements_dirs": [ "doc/requirements" ],
-		        "testcases_dirs": [ "doc/testcases" ],
-			"topics_dirs": [ "doc/topics" ],
-			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "rmtoo/collection/constraints" ] }
-		] 
-	    ],
-            "output": {
-                "graph": [
-                    {
-                        "output_filename": "artifacts/req-graph1.dot"
-                    }
-                ], 
-                "graph2": [
-                    {
-                        "output_filename": "artifacts/req-graph2.dot"
-                    }
-                ], 
-                "html": [
-                    {
-                        "footer": "doc/html/footer.html", 
-                        "header": "doc/html/header.html", 
-                        "output_directory": "artifacts/html"
-                    }
-                ], 
-                "latex2": [
-                    {
-                        "output_filename": "artifacts/reqtopics.tex"
-                    }
-                ], 
-                "oopricing1": [
-                    {
-                        "output_filename": "artifacts/reqspricing"
-                    }
-                ], 
-                "prios": [
-                    {
-                        "output_filename": "artifacts/reqsprios.tex", 
-                        "start_date": "2011-04-25"
-                    }
-                ], 
-                "stats_burndown1": [
-                    {
-                        "output_filename": "artifacts/stats_burndown.csv", 
-                        "start_date": "2011-04-25"
-                    }
-                ], 
-                "stats_reqs_cnt": [
-                    {
-                        "output_filename": "artifacts/stats_reqs_cnt.csv"
-                    }
-                ], 
-                "tlp1": [
-                    {
-                        "output_filename": "artifacts/reqdeps1.tlp"
-                    }
-                ], 
-                "version1": [
-                    {
-                        "output_filename": "artifacts/reqs-version.txt"
-                    }
-                ]
-            }
-        }
-    }
-}
+---
+global:
+  modules:
+    directories:
+    - "."
+  logging:
+    stdout:
+      loglevel: debug
+    tracer:
+      loglevel: debug
+      filename: "./rmtoo.log"
+processing:
+  analytics:
+    stop_on_errors: false
+requirements:
+  input:
+    default_language: en_GB
+    dependency_notation:
+    - Solved by
+  inventors:
+  - flonatel
+  stakeholders:
+  - development
+  - management
+  - users
+  - customers
+topics:
+  ts_common:
+    sources:
+    - - git
+      - start_vers: v9
+        end_vers: v11
+        requirements_dirs:
+        - doc/requirements
+        topics_dirs:
+        - doc/topics
+        topic_root_node: ReqsDocument
+        constraints_dirs:
+        - rmtoo/collection/constraints
+    - - git
+      - start_vers: v13
+        end_vers: v17
+        requirements_dirs:
+        - doc/requirements
+        topics_dirs:
+        - doc/topics
+        topic_root_node: ReqsDocument
+        constraints_dirs:
+        - rmtoo/collection/constraints
+    - - filesystem
+      - requirements_dirs:
+        - doc/requirements
+        testcases_dirs:
+        - doc/testcases
+        topics_dirs:
+        - doc/topics
+        topic_root_node: ReqsDocument
+        constraints_dirs:
+        - rmtoo/collection/constraints
+    output:
+      graph:
+      - output_filename: artifacts/req-graph1.dot
+      graph2:
+      - output_filename: artifacts/req-graph2.dot
+      html:
+      - footer: doc/html/footer.html
+        header: doc/html/header.html
+        output_directory: artifacts/html
+      latex2:
+      - output_filename: artifacts/reqtopics.tex
+      oopricing1:
+      - output_filename: artifacts/reqspricing
+      prios:
+      - output_filename: artifacts/reqsprios.tex
+        start_date: '2011-04-25'
+      stats_burndown1:
+      - output_filename: artifacts/stats_burndown.csv
+        start_date: '2011-04-25'
+      stats_reqs_cnt:
+      - output_filename: artifacts/stats_reqs_cnt.csv
+      tlp1:
+      - output_filename: artifacts/reqdeps1.tlp
+      version1:
+      - output_filename: artifacts/reqs-version.txt
 
 .SH DETAILS
 The file must contain a map (dictionary) as the top level element.
@@ -380,9 +337,12 @@ output two different documents of the same type (e.g. LaTeX documents)
 for the same topic set in only one rmtoo call.
 .SH "SEE ALSO"
 .B rmtoo(7)
-- overview of rmtoo including all references to available documentation. 
+- overview of rmtoo including all references to available documentation.
+
+.B rmtoo-config3(7)
+- JSON formatted config
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010-2012 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010-2017 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
