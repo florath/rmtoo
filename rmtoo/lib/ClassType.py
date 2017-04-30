@@ -11,50 +11,55 @@
 from rmtoo.lib.RMTException import RMTException
 
 
-class ClassTypeImplementable:
+class ClassTypeBase(object):
+    """Base class of for the ClassType
 
-    @staticmethod
-    def get_output_string():
-        return "implementable"
+    This implements the complete functionality - the
+    implementations need only to call the constructor
+    and the class does the right thing.
+    """
 
-    @staticmethod
-    def is_implementable():
-        return True
+    def __init__(self, ostr, is_implementable):
+        self.__output_string = ostr
+        self.__is_implementable = is_implementable
 
+    def get_output_string(self):
+        """Returns the output string"""
+        return self.__output_string
 
-class ClassTypeDetailable:
-
-    @staticmethod
-    def get_output_string():
-        return "detailable"
-
-    @staticmethod
-    def is_implementable():
-        return False
-
-
-class ClassTypeSelected:
-
-    @staticmethod
-    def get_output_string():
-        return "selected"
-
-    @staticmethod
-    def is_implementable():
-        """Return if requirement is implementable
-
-        The selected requirement is a requirement which can be
-        (directly) implemented.
-        """
-        return True
+    def is_implementable(self):
+        """Returns if the class type is implementable"""
+        return self.__is_implementable
 
 
-def create_class_type(rid, l):
-    if l == "implementable":
+class ClassTypeImplementable(ClassTypeBase):
+    """ClassType specialization for Implementable"""
+
+    def __init__(self):
+        ClassTypeBase.__init__(self, "implementable", True)
+
+
+class ClassTypeDetailable(ClassTypeBase):
+    """ClassType specialization for Detailable"""
+
+    def __init__(self):
+        ClassTypeBase.__init__(self, "detailable", False)
+
+
+class ClassTypeSelected(ClassTypeBase):
+    """ClassType specialization for Selected"""
+
+    def __init__(self):
+        ClassTypeBase.__init__(self, "selected", True)
+
+
+def create_class_type(rid, type_desc):
+    """Creates the class typed based on the type description"""
+    if type_desc == "implementable":
         return ClassTypeImplementable()
-    if l == "detailable":
+    if type_desc == "detailable":
         return ClassTypeDetailable()
-    if l == "selected":
+    if type_desc == "selected":
         return ClassTypeSelected()
 
-    raise RMTException(95, "%s:class type invalid '%s'" % (rid, l))
+    raise RMTException(95, "%s:class type invalid '%s'" % (rid, type_desc))
