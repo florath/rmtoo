@@ -39,10 +39,10 @@ class RMTTestDescWords(unittest.TestCase):
     def rmttest_check_language_handling(self):
         "DescWords: check language handling."
 
-        tc = TestConfig1()
-        lwords = DescWords.get_lang(tc)
-        res = DescWords.analyse("lname", lwords, "Me and You, You and Me")
-        assert(res.get_value() == -30)
+        test_config = TestConfig1()
+        desc_words = DescWords(test_config)
+        res = desc_words.analyse("lname", "Me and You, You and Me")
+        self.assertEqual(-30, res.get_value())
 
         fd = StringIO()
         res.write_error(fd)

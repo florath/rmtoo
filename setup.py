@@ -183,7 +183,12 @@ setup(name=PACKAGE, version=VERSION,
               "stats_sprint_burndown1 = rmtoo.outputs.stats_sprint_burndown1:stats_sprint_burndown1",
               "tlp1 = rmtoo.outputs.tlp1:tlp1",
               "version1 = rmtoo.outputs.version1:version1",
-              "xml1 = rmtoo.outputs.xml1:xml1",
+              "xml1 = rmtoo.outputs.xml1:Xml1",
               "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"
+          ],
+          "rmtoo.output.markup" : [
+              "latex = rmtoo.lib.Markup:LaTeX",
+              "txt = rmtoo.lib.Markup:Txt",
+              "html = rmtoo.lib.Markup:Html"
           ]
       })

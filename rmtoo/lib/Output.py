@@ -68,5 +68,6 @@ class Output(Executor):
 
     @staticmethod
     def execute(config, topic_continuum_set, _mstderr, func_prefix):
+        """Run this output module"""
         output = Output(config)
         return topic_continuum_set.execute(output, func_prefix)

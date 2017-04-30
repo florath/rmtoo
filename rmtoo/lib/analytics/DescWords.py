@@ -15,7 +15,7 @@ from __future__ import unicode_literals
 
 import re
 
-from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.Markup import Markup
 from rmtoo.lib.analytics.Result import Result
 from rmtoo.lib.analytics.Base import Base
 from rmtoo.lib.logging import tracer
@@ -76,26 +76,26 @@ class DescWords(Base):
         '''Sets up the DescWord object for use.'''
         Base.__init__(self)
         self.lwords = DescWords.get_lang(config)
+        self.markup = Markup("txt")
 
     @staticmethod
     def get_lang(config):
         def_lang = config.get_value_default(
-                'requirements.input.default_language', 'en_GB')
+            'requirements.input.default_language', 'en_GB')
 
         if def_lang in DescWords.words:
             return DescWords.words[def_lang]
         tracer.warn("Language [%s] not supported, using en_GB." % def_lang)
         return DescWords.words["en_GB"]
 
-    @staticmethod
-    def analyse(lname, lwords, text):
+    def analyse(self, lname, text):
         # print("ANALYSE: [%s]" % text)
         # Must be at least some positive things to get this
         # positive. (An empty description is a bad one.)
         level = -10
         log = []
-        for wre, wlvl, wdsc in lwords:
-            plain_txt = LaTeXMarkup.replace_txt(text).strip()
+        for wre, wlvl, wdsc in self.lwords:
+            plain_txt = self.markup.replace(text).strip()
             fal = len(wre.findall(plain_txt))
             if fal > 0:
                 level += fal * wlvl
@@ -119,9 +119,8 @@ class DescWords(Base):
     def requirement(self, requirement):
         '''Checks all the requirements.
            If the result is positive, it is good.'''
-        result = DescWords.analyse(
+        result = self.analyse(
             requirement.get_id(),
-            self.lwords,
             requirement.get_value("Description").get_content())
         if result.get_value() < 0:
             self.set_failed()

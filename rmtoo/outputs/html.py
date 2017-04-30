@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 import io
 import os
 
-from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.Markup import Markup
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
@@ -32,6 +32,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         # Take care about the openess of the ul.
         self.__ul_open_stack = []
         self.__output_directory = self._config.get_rvalue('output_directory')
+        self.__markup = Markup("html")
         self.html_header_filename = self._config.get_rvalue('header')
         self.html_footer_filename = self._config.get_rvalue('footer')
         self.read_html_arts()
@@ -86,7 +87,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''Called when there is text to be outputted.'''
         fd = self.__fd_stack[-1]
         fd.write(u'<p><span class="fltext">%s</span></p>\n'
-                 % LaTeXMarkup.replace_html(text))
+                 % self.__markup.replace(text))
 
     def topic_sub_pre(self, subtopic):
         '''Prepares a new subtopic output.'''
@@ -121,15 +122,15 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
         fd.write(u'<dt><span class="dlt_description">Description</span>'
                  '</dt><dd><span class="dlv_description">%s</span></dd>' %
-                 LaTeXMarkup.replace_html(req.get_value("Description")
-                                          .get_content()))
+                 self.__markup.replace(req.get_value("Description")
+                                       .get_content()))
 
         if req.is_value_available("Rationale") \
                 and req.get_value("Rationale") is not None:
             fd.write(u'<dt><span class="dlt_rationale">Rationale</span>'
                      '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     LaTeXMarkup.replace_html_par(req.get_value("Rationale").
-                                                  get_content()))
+                     self.__markup.replace_par(req.get_value("Rationale").
+                                               get_content()))
 
         if req.is_value_available("Note") \
            and req.get_value("Note") is not None:
@@ -300,7 +301,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
             if tag == "Text":
                 fd.write(u'<p><span class="fltext">%s</span></p>\n'
-                         % LaTeXMarkup.replace_html(val))
+                         % self.__markup.replace(val))
                 continue
 
             if tag == "IncludeRequirements":

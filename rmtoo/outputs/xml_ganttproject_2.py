@@ -24,7 +24,7 @@ from __future__ import unicode_literals
 import io
 
 from xml.dom.minidom import Document
-from rmtoo.lib.LaTeXMarkup import LaTeXMarkup
+from rmtoo.lib.Markup import Markup
 from rmtoo.lib.RequirementStatus import \
     RequirementStatusAssigned, RequirementStatusFinished
 from rmtoo.lib.StdOutputParams import StdOutputParams
@@ -47,6 +47,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         self.next_id = 1
         self.__xml_doc = None
         self.__xml_obj_stack = []
+        self.__markup = Markup("txt")
 
     def get_req_id(self, name):
         '''Get an id: if the req is not there a new id will be generated.'''
@@ -143,18 +144,18 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         # Add the description and if available also the rationale and
         # note.
         notes = "== Description ==\n"
-        notes += LaTeXMarkup.replace_txt(req.get_value("Description")
-                                         .get_content())
+        notes += self.__markup.replace(
+            req.get_value("Description").get_content())
 
         if req.is_val_av_and_not_null("Rationale"):
             notes += "\n\n== Rationale ==\n"
-            notes += LaTeXMarkup.replace_txt(
+            notes += self.__markup.replace(
                 req.get_value("Rationale").get_content())
 
         if req.is_val_av_and_not_null("Note"):
             notes += "\n\n== Note ==\n"
-            notes += LaTeXMarkup.replace_txt(req.get_value("Note")
-                                             .get_content())
+            notes += self.__markup.replace(
+                req.get_value("Note").get_content())
 
         xml_note = self.__xml_doc.createElement("notes")
         xml_text = self.__xml_doc.createCDATASection(notes)
