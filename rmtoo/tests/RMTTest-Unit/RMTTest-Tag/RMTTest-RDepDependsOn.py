@@ -25,7 +25,7 @@ class RMTTestRDepDependsOn(unittest.TestCase):
         "Two node one edge digraph B -> A"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -53,7 +53,7 @@ Depends on: A''', 'B', None, imod, config)
         "Three node one edge digraph B -> A, C -> A and C -> B"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -92,7 +92,7 @@ Depends on: A B''', 'C', None, imod, config)
         "Master requirement with Depends on field"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -110,7 +110,7 @@ Depends on: A''', 'A', None, imod, config)
         "Normal requirement has no 'Depends on'"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -130,7 +130,7 @@ Type: requirement''', 'B', None, imod, config)
         "Normal requirement has empty 'Depends on'"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -151,7 +151,7 @@ Depends on:''', 'B', None, imod, config)
         "'Depends on' points to a non existing requirement"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
@@ -172,7 +172,7 @@ Depends on: C''', 'B', None, imod, config)
         "'Depends on' points to same requirement"
         config = TestConfig()
 
-        imod = InputModules("..", config)
+        imod = InputModules(config)
 
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A

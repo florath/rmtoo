@@ -9,8 +9,7 @@
 
  For licensing details see COPYING
 '''
-import os
-import copy
+from stevedore import extension
 
 from rmtoo.lib.digraph.StronglyConnectedComponents \
     import strongly_connected_components
@@ -29,27 +28,8 @@ class InputModules(Digraph):
        Therefore all the nodes (i.e. modules) must also be stored in the
        Digraph.nodes list.'''
 
-    @staticmethod
-    def _split_directory(directory):
-        '''Work with directory components: this is used for directory
-           access as well as for module name handling.
-           The local directory must be handled in a special way
-           (because there is no way to ".".join("."))'''
-        if directory == ".":
-            dir_components = []
-        else:
-            dir_components = directory.split("/")
-            # When using an absolute path, the first component is
-            # empty though! Remove this and prepend a / for the next
-            # one.
-            if len(dir_components) > 0 and dir_components[0] == "":
-                dir_components[0] = "/"
-        return dir_components
-
-    def __init__(self, directory, config,
-                 add_dir_components=["rmtoo", "inputs"],
-                 mod_components=["rmtoo", "inputs"]):
-        '''Read in the modules directory.'''
+    def __init__(self, config):
+        '''Read in the modules'''
         Digraph.__init__(self)
         self._config = config
         self.__reqdeps_sorted = None
@@ -61,45 +41,24 @@ class InputModules(Digraph):
         self.__tagtypes[InputModuleTypes.ctstag] = {}
         self.__tagtypes[InputModuleTypes.testcase] = {}
 
-        # Split it up into components
-        dir_components = self._split_directory(directory)
-        dir_components.extend(add_dir_components)
+        self.__plugin_manager = extension.ExtensionManager(
+            namespace='rmtoo.input.plugin',
+            invoke_on_load=False)
 
-        self.__load(dir_components, mod_components)
+        self.__load()
 
-    def __load(self, dir_components, mod_components):
+    def __load(self):
         '''Load the modules.'''
-        for filename in sorted(os.listdir(os.path.join(*dir_components))):
-            if not filename.endswith(".py"):
-                continue
-            modulename = filename[:-3]
-
-            # Skip __init__.py
-            if modulename == "__init__":
-                continue
-
-            # Because the mod_components can be empty, before using
-            # the mod_components append the modulename to the list.
-            # This must be done on a copy of the original list.
-            mc = copy.deepcopy(mod_components)
-            mc.append(modulename)
-
-            # Import module
-            # print("Loading module '%s' from '%s'" %
-            #      (modulename, ".".join(mod_components)))
-            module = __import__(".".join(mc),
-                                globals(), locals(), modulename)
-
-            # Create object from the module
-            o = eval("module.%s(self._config)" % modulename)
-            # Query the object itself which type it is
-            types = o.get_type_set()
+        for input_obj_name in self.__plugin_manager.entry_points_names():
+            input_obj = self.__plugin_manager[input_obj_name].plugin(
+                self._config)
+            types = input_obj.get_type_set()
             # Add the objects to the appropriate directory
             for ltype in types:
-                self.__tagtypes[ltype][modulename] = o
+                self.__tagtypes[ltype][input_obj_name] = input_obj
             # If a reqdeps type, put also the in the nodes list.
             if InputModuleTypes.reqdeps in types:
-                self.nodes.append(o)
+                self.nodes.append(input_obj)
 
         # Connect the different nodes
         # After his, all the reqdeps modules are a Digraph.
@@ -113,14 +72,14 @@ class InputModules(Digraph):
         '''Precondition: the depends_on must be set.
            The method connect all the nodes based on this value.'''
         for mod_name, mod in self.__tagtypes[InputModuleTypes.reqdeps].items():
-            for n in mod.depends_on:
+            for node in mod.depends_on:
                 # Connect in both directions
-                if n not in self.__tagtypes[InputModuleTypes.reqdeps]:
+                if node not in self.__tagtypes[InputModuleTypes.reqdeps]:
                     raise RMTException(27, "Module '%s' depends on "
                                        "'%s' - which does not exists"
-                                       % (mod_name, n))
-                self.create_edge(mod,
-                                 self.__tagtypes[InputModuleTypes.reqdeps][n])
+                                       % (mod_name, node))
+                self.create_edge(
+                    mod, self.__tagtypes[InputModuleTypes.reqdeps][node])
 
     def __check_for_circles(self):
         '''This does check if there is a directed circle (e.g. an strongly

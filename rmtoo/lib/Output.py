@@ -29,7 +29,7 @@ class Output(Executor):
     @staticmethod
     def __load_output_module(output_name):
         '''Loads the module with the given name.'''
-        tracer.debug("Loading output module [%s]" % output_name)
+        tracer.debug("Loading output module [%s]", output_name)
         # Concatenate the needed names
         output_path_parts = ["rmtoo", "outputs", output_name]
         output_path = ".".join(output_path_parts)
@@ -38,7 +38,11 @@ class Output(Executor):
         return __import__(output_path, globals(), locals(), output_path)
 
     def __create_output_module(self, output_name):
-        '''Creates the module object.'''
+        """Creates the module object.
+
+        ToDo: This implementation uses eval - use another way / library
+        of module handling (like stevedore) here.
+        """
         output_module = self.__load_output_module(output_name)  # noqa: F841
         # Create the constructor object.
         return eval("output_module.%s" % output_name)
@@ -67,7 +71,7 @@ class Output(Executor):
         '''Initialized the global cmad.'''
         cmad_filename = self.__config.get_rvalue(
             'actions.create_makefile_dependencies')
-        tracer.debug("Opening cmad file [%s]" % cmad_filename)
+        tracer.debug("Opening cmad file [%s]", cmad_filename)
         self.__cmad_file = open(cmad_filename, "w")
 
     def cmad_topic_continuum_set_post(self, _topic_continuum_set):

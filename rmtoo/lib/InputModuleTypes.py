@@ -9,7 +9,11 @@
 
  For licensing details see COPYING
 '''
-from rmtoo.lib.EnumType import EnumType
+from enum import Enum
 
 
-InputModuleTypes = EnumType('reqtag', 'reqdeps', 'ctstag', 'testcase')
+class InputModuleTypes(Enum):
+    reqtag = 0
+    reqdeps = 1
+    ctstag = 2
+    testcase = 3

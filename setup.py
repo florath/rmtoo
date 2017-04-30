@@ -1,13 +1,16 @@
 #!/usr/bin/env python
-
-from setuptools import setup
+"""
+Setup for rmToo
+"""
 import os
 import sys
 
-package = 'rmtoo'
-version = '24.0.0'
+from setuptools import setup
 
-add_data = []
+PACKAGE = 'rmtoo'
+VERSION = '24.0.0'
+
+ADD_DATA = []
 
 for dadi, destpath_prefix in [('rmtoo/tests', None),
                               ('rmtoo/collection', None),
@@ -23,34 +26,43 @@ for dadi, destpath_prefix in [('rmtoo/tests', None),
             l.append(os.path.join(path, filename))
         dpath = os.path.join(destpath_prefix, path) \
                 if destpath_prefix is not None else path
-        add_data.append((dpath, l))
+        ADD_DATA.append((dpath, l))
 
-add_data.append(
+ADD_DATA.append(
     ("rmtoo/doc/readme",
      ["Readme-Windows.txt", "gpl-3.0.txt", "Readme-GitPython.txt",
       "Readme-Hacking.txt", "Readme-OS-X.txt", "Readme-Overview.txt",
       "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
-    "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
+      "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
       "Roadmap.txt", "Readme.rst"]))
 
-def adjust(input, output):
+def adjust(input_filename, output):
+    """Function to adjust the version number
+
+    The version number seen in this file is the master.  Use
+    this function to possible adjust other parts that also needs
+    an up to date version number.
+    """
     if os.path.exists(output):
-        input_time = os.path.getmtime(input)
+        input_time = os.path.getmtime(input_filename)
         output_time = os.path.getmtime(output)
         setup_time = os.path.getmtime('setup.py')
         if output_time > input_time and output_time > setup_time:
             return
+        # stat HAS these members
+        # pylint: disable=no-member
         os.chmod(output, os.stat.S_IROTH | os.stat.S_IRGRP
                  | os.stat.S_IREAD | os.stat.S_IWRITE)
         os.remove(output)
-    sys.stdout.write('adjusting %s -> %s\n' % (input, output))
-    buffer = open(input).read()
-    file(output, 'w').write(buffer.replace('@VERSION@', version))
+    sys.stdout.write('adjusting %s -> %s\n' % (input_filename, output))
+    file_buffer = open(input_filename).read()
+    file(output, 'w').write(file_buffer.replace('@VERSION@', VERSION))
+    # pylint: disable=no-member
     os.chmod(output, os.stat.S_IROTH | os.stat.S_IRGRP
-                 | os.stat.S_IREAD | os.stat.S_IWRITE)
+             | os.stat.S_IREAD | os.stat.S_IWRITE)
 
 
-setup(name=package, version=version,
+setup(name=PACKAGE, version=VERSION,
       description='Free and OpenSource Requirements Management Tool',
       keywords='requirements management',
       author='Andreas Florath',
@@ -107,8 +119,8 @@ setup(name=package, version=version,
 
                 # Blackbox Tests
                 # are included with the 'add_data' statement.
-                ],
-      data_files=add_data,
+               ],
+      data_files=ADD_DATA,
       install_requires=[
           "numpy>=1.12.0",
           "scipy>=0.19.0",
@@ -117,6 +129,7 @@ setup(name=package, version=version,
           "gitdb==0.6.4",
           "gitpython==1.0.2",
           "pyyaml>=3.12",
+          "stevedore>=1.21",
           "odfpy==1.3.4"],
       license="GPL V3",
       platforms="all",
@@ -129,5 +142,33 @@ setup(name=package, version=version,
               "rmtoo-normalize-dependencies = "
               "rmtoo.lib.main.NormalizeDependencies:main",
               "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph:main",
+          ],
+          # Used for / with stevedore
+          'rmtoo.input.plugin': [
+              "RDepDependsOn = rmtoo.inputs.RDepDependsOn:RDepDependsOn",
+              "RDepConstraints = rmtoo.inputs.RDepConstraints:RDepConstraints",
+              "RDepMasterNodes = rmtoo.inputs.RDepMasterNodes:RDepMasterNodes",
+              "RDepNoDirectedCircles = rmtoo.inputs.RDepNoDirectedCircles:RDepNoDirectedCircles",
+              "RDepOneComponent = rmtoo.inputs.RDepOneComponent:RDepOneComponent",
+              "RDepPriority = rmtoo.inputs.RDepPriority:RDepPriority",
+              "RDepSolvedBy = rmtoo.inputs.RDepSolvedBy:RDepSolvedBy",
+              "ReqCE3 = rmtoo.inputs.ReqCE3:ReqCE3",
+              "ReqClass = rmtoo.inputs.ReqClass:ReqClass",
+              "ReqConstraints = rmtoo.inputs.ReqConstraints:ReqConstraints",
+              "ReqDescription = rmtoo.inputs.ReqDescription:ReqDescription",
+              "ReqEffortEst = rmtoo.inputs.ReqEffortEst:ReqEffortEst",
+              "ReqExpectedResult = rmtoo.inputs.ReqExpectedResult:ReqExpectedResult",
+              "ReqHistory = rmtoo.inputs.ReqHistory:ReqHistory",
+              "ReqInventedBy = rmtoo.inputs.ReqInventedBy:ReqInventedBy",
+              "ReqInventedOn = rmtoo.inputs.ReqInventedOn:ReqInventedOn",
+              "ReqName = rmtoo.inputs.ReqName:ReqName",
+              "ReqNote = rmtoo.inputs.ReqNote:ReqNote",
+              "ReqOwner = rmtoo.inputs.ReqOwner:ReqOwner",
+              "ReqPriority = rmtoo.inputs.ReqPriority:ReqPriority",
+              "ReqRationale = rmtoo.inputs.ReqRationale:ReqRationale",
+              "ReqStatus = rmtoo.inputs.ReqStatus:ReqStatus",
+              "ReqTestCase = rmtoo.inputs.ReqTestCase:ReqTestCase",
+              "ReqTopic = rmtoo.inputs.ReqTopic:ReqTopic",
+              "ReqType = rmtoo.inputs.ReqType:ReqType"
           ]
       })

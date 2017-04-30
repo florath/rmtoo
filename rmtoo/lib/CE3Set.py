@@ -30,6 +30,7 @@ class CE3Set:
     def get(self, name):
         '''Returns a CE3Set.'''
         tracer.debug("Get ce3 for requirement [%s]." % name)
+        tracer.debug("Available CE3 is [%s]" % self.__ce3s)
         return self.__ce3s[name]
 
     def length(self):
