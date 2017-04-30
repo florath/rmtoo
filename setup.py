@@ -170,5 +170,20 @@ setup(name=PACKAGE, version=VERSION,
               "ReqTestCase = rmtoo.inputs.ReqTestCase:ReqTestCase",
               "ReqTopic = rmtoo.inputs.ReqTopic:ReqTopic",
               "ReqType = rmtoo.inputs.ReqType:ReqType"
+          ],
+          "rmtoo.output.plugin" : [
+              "graph2 = rmtoo.outputs.graph2:graph2",
+              "graph = rmtoo.outputs.graph:graph",
+              "html = rmtoo.outputs.html:html",
+              "latex2 = rmtoo.outputs.latex2:latex2",
+              "oopricing1 = rmtoo.outputs.oopricing1:oopricing1",
+              "prios = rmtoo.outputs.prios:prios",
+              "stats_burndown1 = rmtoo.outputs.stats_burndown1:stats_burndown1",
+              "stats_reqs_cnt = rmtoo.outputs.stats_reqs_cnt:stats_reqs_cnt",
+              "stats_sprint_burndown1 = rmtoo.outputs.stats_sprint_burndown1:stats_sprint_burndown1",
+              "tlp1 = rmtoo.outputs.tlp1:tlp1",
+              "version1 = rmtoo.outputs.version1:version1",
+              "xml1 = rmtoo.outputs.xml1:xml1",
+              "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"
           ]
       })

@@ -10,6 +10,7 @@
 '''
 from __future__ import unicode_literals
 
+from stevedore import extension
 from six import iteritems
 
 from rmtoo.lib.Executor import Executor
@@ -25,27 +26,9 @@ class Output(Executor):
         tracer.debug("Called.")
         self.__config = config
         self.__cmad_file = None
-
-    @staticmethod
-    def __load_output_module(output_name):
-        '''Loads the module with the given name.'''
-        tracer.debug("Loading output module [%s]", output_name)
-        # Concatenate the needed names
-        output_path_parts = ["rmtoo", "outputs", output_name]
-        output_path = ".".join(output_path_parts)
-
-        # Load the module
-        return __import__(output_path, globals(), locals(), output_path)
-
-    def __create_output_module(self, output_name):
-        """Creates the module object.
-
-        ToDo: This implementation uses eval - use another way / library
-        of module handling (like stevedore) here.
-        """
-        output_module = self.__load_output_module(output_name)  # noqa: F841
-        # Create the constructor object.
-        return eval("output_module.%s" % output_name)
+        self.__plugin_manager = extension.ExtensionManager(
+            namespace='rmtoo.output.plugin',
+            invoke_on_load=False)
 
     def __common_topic_continuum_pre(self, topic_continuum, special):
         '''Common method used by cmad_ and normal callback.'''
@@ -53,9 +36,8 @@ class Output(Executor):
         output_config = topic_continuum.get_output_config()
 
         for oconfig_name, oconfig in iteritems(output_config):
-            output_module_cstr = self.__create_output_module(oconfig_name)
             for cfg in oconfig:
-                output_obj = output_module_cstr(cfg)
+                output_obj = self.__plugin_manager[oconfig_name].plugin(cfg)
                 if special != "":
                     FuncCall.pcall(output_obj, "init_" + special,
                                    self.__cmad_file)
