@@ -35,11 +35,11 @@ class RMTTestRDepSolvedBy(unittest.TestCase):
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Solved by:''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
@@ -62,11 +62,11 @@ Solved by:''', 'B', None, None, None)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Solved by: C''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
 
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
@@ -90,11 +90,11 @@ Solved by: C''', 'B', None, None, None)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, None, None)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Solved by: B''', 'B', None, None, None)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_solved_by()
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)

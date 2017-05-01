@@ -30,11 +30,11 @@ class RMTTestRDepDependsOn(unittest.TestCase):
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Depends on: A''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -58,16 +58,16 @@ Depends on: A''', 'B', None, imod, config)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Depends on: A''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
         req3 = Requirement('''Name: C
 Type: requirement
 Depends on: A B''', 'C', None, imod, config)
-        reqset._add_requirement(req3)
+        reqset.add_requirement(req3)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -98,7 +98,7 @@ Depends on: A B''', 'C', None, imod, config)
         req1 = Requirement('''Name: A
 Type: master requirement
 Depends on: A''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -115,10 +115,10 @@ Depends on: A''', 'A', None, imod, config)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -135,11 +135,11 @@ Type: requirement''', 'B', None, imod, config)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Depends on:''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -156,11 +156,11 @@ Depends on:''', 'B', None, imod, config)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Depends on: C''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)
@@ -177,11 +177,11 @@ Depends on: C''', 'B', None, imod, config)
         reqset = RequirementSet(config)
         req1 = Requirement('''Name: A
 Type: master requirement''', 'A', None, imod, config)
-        reqset._add_requirement(req1)
+        reqset.add_requirement(req1)
         req2 = Requirement('''Name: B
 Type: requirement
 Depends on: B''', 'B', None, imod, config)
-        reqset._add_requirement(req2)
+        reqset.add_requirement(req2)
         config.set_depends_on()
 
         rdep = RDepDependsOn(config)

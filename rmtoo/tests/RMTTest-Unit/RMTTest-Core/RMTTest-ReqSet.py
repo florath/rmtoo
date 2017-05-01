@@ -40,7 +40,7 @@ class RMTTestReqSet(unittest.TestCase):
         reqs = RequirementSet(None)
         req = Requirement("Hubbel: bubbel", "hubbel",
                           reqs, mods, test_config)
-        reqs._add_requirement(req)
+        reqs.add_requirement(req)
         reqs._handle_modules(mods)
 
         lstderr = hide_volatile(mstderr.getvalue())
@@ -71,7 +71,7 @@ class RMTTestReqSet(unittest.TestCase):
         reqs = RequirementSet(None)
         req = Requirement("Hubbel: bubbel\nSiebel: do", "InvalidTagReq",
                           reqs, mods, tc)
-        reqs._add_requirement(req)
+        reqs.add_requirement(req)
         reqs._handle_modules(mods)
 
         lstderr = hide_volatile(mstderr.getvalue())

@@ -11,7 +11,7 @@
 from rmtoo.lib.logging import tracer
 
 
-class CE3Set:
+class CE3Set(object):
     '''Sets which holds all the constrains execution environments.'''
 
     def __init__(self):
@@ -22,15 +22,14 @@ class CE3Set:
 
     def insert(self, name, ce3):
         '''Add a new ce3.'''
-        tracer.debug("Insert ce3 for requirement [%s]." % name)
+        tracer.debug("Insert ce3 for requirement [%s]", name)
         if ce3 in self.__ce3s:
             assert False
         self.__ce3s[name] = ce3
 
     def get(self, name):
         '''Returns a CE3Set.'''
-        tracer.debug("Get ce3 for requirement [%s]." % name)
-        tracer.debug("Available CE3 is [%s]" % self.__ce3s)
+        tracer.debug("Get ce3 for requirement [%s]", name)
         return self.__ce3s[name]
 
     def length(self):

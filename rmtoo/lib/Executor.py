@@ -14,6 +14,9 @@
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 
 
+# This is a non-abstract base class coming with some
+# NOP default implementations of methods.
+# pylint: disable=no-self-use
 class Executor(ExecutorTopicContinuum):
     '''Base class for the different executors.
        All methods are implemented: they are doing nothing.'''
