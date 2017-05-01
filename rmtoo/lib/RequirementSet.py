@@ -454,15 +454,15 @@ class RequirementSet(Digraph, UsableFlag):
         for ts in tl:
             if ts not in self.get_all_requirement_ids():
                 logger.error(LogFormatter.format(
-                             47, "'Depends on' points to a "
-                             "non-existing requirement '%s'" % ts, req.get_id()))
+                    47, "'Depends on' points to a "
+                    "non-existing requirement '%s'" % ts, req.get_id()))
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
             if ts == req.get_id():
                 logger.error(LogFormatter.format(
-                      59, "'Depends on' points to the "
-                      "requirement itself", req.get_id()))
+                    59, "'Depends on' points to the "
+                    "requirement itself", req.get_id()))
                 return False
 
             # Mark down the depends on...
