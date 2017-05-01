@@ -47,7 +47,7 @@ def execute_cmds(config, input_mods, _mstdout, mstderr):
     # file.
 
     cmad_filename = config.get_value_wo_throw(
-                       'actions.create_makefile_dependencies')
+        'actions.create_makefile_dependencies')
     if cmad_filename is not None:
         Output.execute(config, topic_continuum_set, mstderr, "cmad_")
         return True
@@ -74,15 +74,16 @@ def main_func(args, mstdout, mstderr):
     return execute_cmds(config, input_mods, mstdout, mstderr)
 
 
-def main_impl(args, mstdout, mstderr, main_func=main_func, exitfun=sys.exit):
+def main_impl(args, mstdout, mstderr, mainfunc=main_func, exitfun=sys.exit):
     '''The main entry function
     This calls the main_func function and does the exception handling.'''
     try:
-        exitfun(not main_func(args, mstdout, mstderr))
+        exitfun(not mainfunc(args, mstdout, mstderr))
     except RMTException as rmte:
         mstderr.write("+++ ERROR: Exception occurred: %s\n" % rmte)
         exitfun(1)
 
 
 def main():
+    """The high level entry function"""
     main_impl(sys.argv[1:], sys.stdout, sys.stderr)

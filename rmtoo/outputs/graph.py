@@ -56,7 +56,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_id())
 
     def topic_set_post(self, _requirement_set):
         '''Write footer - close file.'''
@@ -76,7 +76,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         for d in requirement.incoming:
             self.__output_file.write('"%s" -> "%s";\n' %
-                                     (requirement.get_id(), d.id))
+                                     (requirement.get_id(), d.get_id()))
 
 # TODO: currently the =default_config is needed for graph2
     @staticmethod
@@ -103,7 +103,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             elif isinstance(req_status, RequirementStatusAssigned):
                 nodeparam.append("fontcolor=blue")
 
-            label = 'label="%s' % req.id.replace("/", "\\n/")
+            label = 'label="%s' % req.get_id().replace("/", "\\n/")
 
             if get_conf_attr("Priority"):
                 label += "\\n[%4.2f]" % (req.get_value("Priority") * 10)

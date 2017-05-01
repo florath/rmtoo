@@ -113,14 +113,14 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_id())
 
     def requirement(self, req):
         '''Output the given requirement.'''
         # There is the need for a unique numeric id
         xml_task = self.__xml_doc.createElement("task")
-        xml_task.setAttribute("name", req.id)
-        xml_task.setAttribute("id", str(self.get_req_id(req.id)))
+        xml_task.setAttribute("name", req.get_id())
+        xml_task.setAttribute("id", str(self.get_req_id(req.get_id())))
         if req.is_val_av_and_not_null("Effort estimation"):
             # The Effort Estimation is only rounded: ganntproject can
             # only handle integers as duration
@@ -165,7 +165,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         # Dependencies
         for node in req.incoming:
             xml_depend = self.__xml_doc.createElement("depend")
-            xml_depend.setAttribute("id", str(self.get_req_id(node.id)))
+            xml_depend.setAttribute("id", str(self.get_req_id(node.get_id())))
             # There are some default attrs
             xml_depend.setAttribute("type", "2")
             xml_depend.setAttribute("difference", "0")

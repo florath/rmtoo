@@ -61,17 +61,17 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 if isinstance(status, RequirementStatusNotDone):
                     rclass = tr.values["Class"]
                     if isinstance(rclass, ClassTypeImplementable):
-                        prios_impl.append([tr.get_prio(), tr.id])
+                        prios_impl.append([tr.get_prio(), tr.get_id()])
                     elif isinstance(rclass, ClassTypeSelected):
-                        prios_selected.append([tr.get_prio(), tr.id])
+                        prios_selected.append([tr.get_prio(), tr.get_id()])
                     else:
-                        prios_detail.append([tr.get_prio(), tr.id])
+                        prios_detail.append([tr.get_prio(), tr.get_id()])
                 elif isinstance(status, RequirementStatusAssigned):
                     prios_assigned.append(tr)
                 elif isinstance(status, RequirementStatusFinished):
                     prios_finished.append(tr)
             except KeyError as ke:
-                raise RMTException(35, "%s: KeyError: %s" % (tr.id, ke))
+                raise RMTException(35, "%s: KeyError: %s" % (tr.get_id(), ke))
 
         return prios_impl, prios_detail, prios_selected, \
             prios_assigned, prios_finished

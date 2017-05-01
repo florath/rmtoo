@@ -90,7 +90,7 @@ class RequirementSet(Digraph, UsableFlag):
             # self.nodes.append(req)
         else:
             logger.error(LogFormatter.format(
-                45, "could not be parsed", req.id))
+                45, "could not be parsed", req.get_id()))
         tracer.debug("Finished.")
 
     def __read_all_requirements(self, input_handler, commit, input_mods,
@@ -359,7 +359,7 @@ class RequirementSet(Digraph, UsableFlag):
         # If available, it must not empty
         if len(content) == 0:
             logger.error(LogFormatter.format(
-                        77, "'Solved by' field has length 0", req.id))
+                        77, "'Solved by' field has length 0", req.get_id()))
             return False
 
         # Step through the list
@@ -373,10 +373,10 @@ class RequirementSet(Digraph, UsableFlag):
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
-            if dep == req.id:
+            if dep == req.get_id():
                 logger.error(LogFormatter.format(
                            75, "'Solved by' points to the "
-                           "requirement itself", req.id))
+                           "requirement itself", req.get_id()))
                 return False
 
             # Mark down the depends on...
@@ -424,7 +424,7 @@ class RequirementSet(Digraph, UsableFlag):
 
         if "Depends on" in req.brmo:
             print("+++ ERROR %s: initial requirement has "
-                  "Depends on field." % (req.id))
+                  "Depends on field." % (req.get_id()))
             return False
         # It self does not have any depends on nodes
         req.graph_depends_on = None
@@ -437,7 +437,7 @@ class RequirementSet(Digraph, UsableFlag):
             # Skip handling this requirement
             return True
         print("+++ ERROR %s: non-initial requirement has "
-              "no 'Depends on' field." % (req.id))
+              "no 'Depends on' field." % (req.get_id()))
         return False
 
     def __resolve_depends_on_one_req_impl(self, req):
@@ -446,7 +446,7 @@ class RequirementSet(Digraph, UsableFlag):
         # If available, it must not empty
         if len(t.get_content()) == 0:
             print("+++ ERROR %s: 'Depends on' field has len 0" %
-                  (req.id))
+                  (req.get_id()))
             return False
 
         # Step through the list
@@ -455,14 +455,14 @@ class RequirementSet(Digraph, UsableFlag):
             if ts not in self.get_all_requirement_ids():
                 logger.error(LogFormatter.format(
                              47, "'Depends on' points to a "
-                             "non-existing requirement '%s'" % ts, req.id))
+                             "non-existing requirement '%s'" % ts, req.get_id()))
                 return False
             # It is not allowed to have self-references: it does not
             # make any sense, that a requirement references itself.
-            if ts == req.id:
+            if ts == req.get_id():
                 logger.error(LogFormatter.format(
                       59, "'Depends on' points to the "
-                      "requirement itself", req.id))
+                      "requirement itself", req.get_id()))
                 return False
 
             # Mark down the depends on...
@@ -654,7 +654,7 @@ class RequirementSet(Digraph, UsableFlag):
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
         for r in itervalues(self.__requirements):
-            with io.open(os.path.join(directory, r.id + ".req"), "w",
+            with io.open(os.path.join(directory, r.get_id() + ".req"), "w",
                          encoding="utf-8") as fd:
                 r.record.write_fd(fd)
         return True

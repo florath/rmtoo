@@ -10,7 +10,7 @@
 '''
 
 
-class GenIterator:
+class GenIterator(object):
     '''Generic iterator: adds a current to the standard container
        iterators.'''
 
@@ -28,12 +28,10 @@ class GenIterator:
             return None
         return self._current
 
-    def _get_current(self):
-        '''Returns the current element.'''
-        return self._current
-
     def next(self):
+        """Iterate to the next element"""
         return self._next()
 
     def current(self):
+        """Returns the current element"""
         return self._current

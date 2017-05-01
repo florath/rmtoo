@@ -232,7 +232,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
             tc = odf.table.TableCell()
             if len(req.incoming) > 0:
                 # By default, the chosen is the first one.
-                p = odf.text.P(text=req.incoming[0].id)
+                p = odf.text.P(text=req.incoming[0].get_id())
                 tc.addElement(p)
             tr.addElement(tc)
         sheet.addElement(tr)
@@ -427,7 +427,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
         self.create_empty_row(sheet)
         # Second holds only the Overall sum
         tr = odf.table.TableRow()
-        self.create_text_cell(tr, req.id,
+        self.create_text_cell(tr, req.get_id(),
                               self.doc_styles["tc-bold"])
         sheet.addElement(tr)
         # Followed by an additionally empty line

@@ -187,7 +187,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_id())
 
     def __add_constraint_req_ref(self, constraint, requirement):
         if constraint not in self.__constraints_reqs_ref:
@@ -196,12 +196,12 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement(self, req):
         '''Write out one requirement.'''
-        self.__fd.write(u"%% REQ '%s'\n" % req.id)
+        self.__fd.write(u"%% REQ '%s'\n" % req.get_id())
 
         self.__fd.write(u"\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
                         % (self.level_names[self.__level + 1],
                            req.get_value("Name").get_content(),
-                           latex2.__strescape(req.id),
+                           latex2.__strescape(req.get_id()),
                            req.get_value("Description").get_content()))
 
         if req.is_val_av_and_not_null("Rationale"):
@@ -216,22 +216,24 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         if len(req.incoming) > 0:
             # Create links to the corresponding labels.
             self.__fd.write(u"\n\\textbf{Depends on:} ")
-            self.__fd.write(u", ".join(["\\ref{%s} \\nameref{%s}" %
-                                        (latex2.__strescape(d.id),
-                                         latex2.__strescape(d.id))
-                                        for d in sorted(req.incoming,
-                                                        key=lambda r: r.id)]))
+            self.__fd.write(u", ".join(
+                ["\\ref{%s} \\nameref{%s}" %
+                 (latex2.__strescape(d.get_id()),
+                  latex2.__strescape(d.get_id()))
+                 for d in sorted(req.incoming,
+                                 key=lambda r: r.get_id())]))
             self.__fd.write(u"\n")
 
         if len(req.outgoing) > 0:
             # Create links to the corresponding dependency nodes.
             self.__fd.write(u"\n\\textbf{Solved by:} ")
             # No comma at the end.
-            self.__fd.write(u", ".join(["\\ref{%s} \\nameref{%s}" %
-                                        (latex2.__strescape(d.id),
-                                         latex2.__strescape(d.id))
-                                        for d in sorted(req.outgoing,
-                                                        key=lambda r: r.id)]))
+            self.__fd.write(u", ".join(
+                ["\\ref{%s} \\nameref{%s}" %
+                 (latex2.__strescape(d.get_id()),
+                  latex2.__strescape(d.get_id()))
+                 for d in sorted(req.outgoing,
+                                 key=lambda r: r.get_id())]))
             self.__fd.write(u"\n")
 
         if self.__ce3set is not None:
@@ -278,7 +280,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         i = 0
         for rattr in self._config.get_value("req_attributes"):
             if rattr == "Id":
-                self.__fd.write(u"\\textbf{Id:} & %s " % req.id)
+                self.__fd.write(u"\\textbf{Id:} & %s " % req.get_id())
             elif rattr == "Priority":
                 self.__fd.write(u"\\textbf{Priority:} & %4.2f "
                                 % (req.get_value("Priority") * 10))

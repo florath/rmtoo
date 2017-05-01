@@ -107,16 +107,16 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement_set_sort(self, list_to_sort):
         '''Sort by id.'''
-        return sorted(list_to_sort, key=lambda r: r.id)
+        return sorted(list_to_sort, key=lambda r: r.get_id())
 
     def requirement(self, req):
         '''Output one requirement.'''
         fd = self.__fd_stack[-1]
         level = len(self.__fd_stack)
 
-        fd.write(u"\n<!-- REQ '%s' -->\n" % req.id)
+        fd.write(u"\n<!-- REQ '%s' -->\n" % req.get_id())
         fd.write(u'<h%d><a id="%s">%s</a></h%d>\n' %
-                 (level + 1, req.id, req.get_value("Name").get_content(),
+                 (level + 1, req.get_id(), req.get_value("Name").get_content(),
                   level + 1))
         fd.write(u"<dl>")
 
@@ -144,12 +144,12 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
             fd.write(u'<dt><span class="dlt_depends_on">Depends on:'
                      '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
-            for d in sorted(req.incoming, key=lambda r: r.id):
+            for d in sorted(req.incoming, key=lambda r: r.get_id()):
                 if not is_first:
                     fd.write(u", ")
                 is_first = False
                 fd.write(u'<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
+                         (d.get_value("Topic"), d.get_id(), d.get_id()))
             fd.write(u"</span></dd>")
 
         if len(req.outgoing) > 0:
@@ -157,12 +157,12 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
             fd.write(u'<dt><span class="dlt_dependent">Dependent'
                      '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in sorted(req.outgoing, key=lambda r: r.id):
+            for d in sorted(req.outgoing, key=lambda r: r.get_id()):
                 if not is_first:
                     fd.write(u", ")
                 is_first = False
                 fd.write(u'<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.id, d.id))
+                         (d.get_value("Topic"), d.get_id(), d.get_id()))
             fd.write(u"</span></dd>")
 
         status = req.get_value("Status").get_output_string()
@@ -182,7 +182,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
                  '<dd><span class="dlv_status">%s</span></dd>'
                  '<dt><span class="dlt_class">Class</span></dt>'
                  '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.id, req.get_value("Priority") * 10,
+                 % (req.get_id(), req.get_value("Priority") * 10,
                     req.get_value("Owner"),
                     req.get_value("Invented on").strftime("%Y-%m-%d"),
                     req.get_value("Invented by"), status, clstr))
@@ -316,5 +316,5 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def output_requirements(self, fd, topic):
         # Output must be sorted - to be comparable
-        for req in sorted(topic.reqs, key=lambda r: r.id):
+        for req in sorted(topic.reqs, key=lambda r: r.get_id()):
             self.output_requirement(fd, req, topic.level + 1)

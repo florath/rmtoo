@@ -97,8 +97,9 @@ class graph2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                                  % (ident, requirement.name,
                                     graph.node_attributes(requirement)))
 
-        for d in sorted(requirement.incoming, key=lambda r: r.id):
-            self.__req_dep_graph += '"%s" -> "%s";\n' % (requirement.id, d.id)
+        for d in sorted(requirement.incoming, key=lambda r: r.get_id()):
+            self.__req_dep_graph += '"%s" -> "%s";\n' \
+                                    % (requirement.get_id(), d.get_id())
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
