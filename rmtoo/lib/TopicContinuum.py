@@ -24,17 +24,17 @@ from rmtoo.lib.vcs.Factory import Factory
 from rmtoo.lib.TopicSetWCI import TopicSetWCI
 from rmtoo.lib.vcs.CommitInfo import CommitInfo
 from rmtoo.lib.FuncCall import FuncCall
-from rmtoo.lib.GenIterator import GenIterator
 
 
 class TopicContinuum(UsableFlag):
     '''A TopicContinuum holds different (historic) versions
        of TopicSets.'''
 
+    # pylint: disable=too-many-arguments
     def __init__(self, ts_name, config, ts_config, object_cache, input_mods):
         UsableFlag.__init__(self)
         self.__name = ts_name
-        tracer.info("Called: name [%s]." % self.__name)
+        tracer.info("Called: name [%s]", self.__name)
         self._config = config
         self.__topic_sets = {}
         # This is the list of all version control system ids.
@@ -51,22 +51,22 @@ class TopicContinuum(UsableFlag):
         self.__input_mods = input_mods
         self.__read_topic_sets(ts_config)
         self.__ts_config = ts_config
-        tracer.debug("Finished; topic set count [%d]" % len(self.__topic_sets))
+        tracer.debug("Finished; topic set count [%d]", len(self.__topic_sets))
 
     def __read_commits(self, input_handler, commits):
         '''Creates a TopicSet for each commit with the help of
            the input_handler.'''
         tracer.debug("Called.")
         for commit in commits:
-            tracer.debug("Handling commit [%s]" % commit)
+            tracer.debug("Handling commit [%s]", commit)
             topic_set_vcs_id = \
                 input_handler.get_vcs_id_with_type(commit, "topics")
-            tracer.debug("Read topics with oid [%s]." % topic_set_vcs_id)
+            tracer.debug("Read topics with oid [%s]", topic_set_vcs_id)
             topic_set = self.__object_cache.get("TopicSet", topic_set_vcs_id)
 
             if topic_set is None:
-                tracer.debug("TopicSet with ID [%s] not in cache."
-                             % topic_set_vcs_id)
+                tracer.debug("TopicSet with ID [%s] not in cache",
+                             topic_set_vcs_id)
                 topic_set = TopicSet(self._config, input_handler, commit,
                                      self.__object_cache, self.__input_mods)
                 self.__object_cache.add(topic_set_vcs_id,
@@ -75,7 +75,7 @@ class TopicContinuum(UsableFlag):
 
             commit_info = CommitInfo(input_handler, commit, topic_set_vcs_id)
             tswci = TopicSetWCI(topic_set, commit_info)
-            tracer.debug("Add topic set [%s]" % topic_set_vcs_id)
+            tracer.debug("Add topic set [%s]", topic_set_vcs_id)
             self.__continuum_add(commit_info, tswci)
             tracer.debug("Finished.")
 
@@ -97,17 +97,18 @@ class TopicContinuum(UsableFlag):
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuum.'''
-        tracer.debug("Calling pre [%s]." % self.__name)
+        tracer.debug("Calling pre [%s]", self.__name)
         FuncCall.pcall(executor, func_prefix + "topic_continuum_pre", self)
-        tracer.debug("Calling sub [%s]." % self.__name)
+        tracer.debug("Calling sub [%s]", self.__name)
         for topic_set in executor.topic_continuum_sort(
                 self.__vcs_commit_ids, self.__topic_sets):
             topic_set.execute(executor, func_prefix)
-        tracer.debug("Calling post [%s]." % self.__name)
+        tracer.debug("Calling post [%s]", self.__name)
         FuncCall.pcall(executor, func_prefix + "topic_continuum_post", self)
-        tracer.debug("Finished [%s]." % self.__name)
+        tracer.debug("Finished [%s]", self.__name)
 
     def get_output_config(self):
+        """Returns the configuration for the output."""
         return self.__ts_config["output"]
 
     def get_vcs_commit_ids(self):
@@ -124,38 +125,3 @@ class TopicContinuum(UsableFlag):
 
     def __str__(self):
         return "TopicContinuum [%s]" % self.__name
-
-
-class TopicContinuumIterator(GenIterator):
-    '''This class provides an iterator interface for all the subelements
-       of a topic continuum.'''
-
-    def __init__(self, topic_continuum):
-        '''Initialize the iterator.'''
-        self.__objs = []
-        for vcs_id in topic_continuum.get_vcs_commit_ids():
-            self.__objs.append([vcs_id,
-                                topic_continuum.get_topic_set(
-                                    vcs_id.get_commit())])
-        GenIterator.__init__(self, self.__objs.__iter__())
-
-#    def current(self):
-#        '''This is somewhat more complicated, because the list just contains
-#           the ids which must be looked-up first in the dictionary.'''
-#        print("MCURRENT [%s]" % self._current)
-#        return self._current
-#        return self.__topic_continuum.get_topic_set(
-#                       self._current.get_commit())
-#
-#        return RequirementSetIterator(self.__topic_continuum.get_topic_set(
-#                            self._current.get_commit()).get_requirement_set())
-#
-#    def next(self):
-#        GenIterator._next(self)
-#        return self.current()
-
-    def has_child(self):
-        '''If the current element has a child, true is returned.'''
-        return len(self.__topic_continuum.get_topic_set(
-            self._current.get_commit()).get_requirement_set()
-                   .get_master_nodes()) > 0

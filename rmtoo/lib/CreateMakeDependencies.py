@@ -11,7 +11,8 @@
 from rmtoo.lib.logging import tracer
 
 
-class CreateMakeDependencies:
+class CreateMakeDependencies(object):
+    """Class for creating the Makefile dependencies"""
 
     def __init__(self):
         '''Creates the object.'''
@@ -27,5 +28,6 @@ class CreateMakeDependencies:
         '''Writes out the dependency to all requirements.'''
         filed.write("%s: ${REQS}\n\t${CALL_RMTOO}\n" % (filename))
 
-    def _get_call_rmtoo_line(self):
+    @staticmethod
+    def _get_call_rmtoo_line():
         return "\t${CALL_RMTOO}\n"

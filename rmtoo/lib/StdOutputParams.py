@@ -17,7 +17,9 @@ from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.logging import tracer
 
 
-class StdOutputParams:
+# This is a base class - so no public methods
+# pylint: disable=too-few-public-methods
+class StdOutputParams(object):
     '''Handles the standard output parameters and sets the values
        in the self object provided.'''
 
@@ -49,10 +51,10 @@ class StdOutputParams:
         today = datetime.date.today()
         yesterday = today - datetime.timedelta(1)
         self._start_date = self.__parse_date(
-                                self._config, 'start_date', yesterday)
-        tracer.debug("Start date [%s]" % self._start_date)
+            self._config, 'start_date', yesterday)
+        tracer.debug("Start date [%s]", self._start_date)
         self._end_date = self.__parse_date(self._config, 'end_date', today)
-        tracer.debug("End date [%s]" % self._end_date)
+        tracer.debug("End date [%s]", self._end_date)
 
     def __parse(self):
         '''Parses the standard parameters.'''

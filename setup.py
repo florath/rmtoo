@@ -190,5 +190,10 @@ setup(name=PACKAGE, version=VERSION,
               "latex = rmtoo.lib.Markup:LaTeX",
               "txt = rmtoo.lib.Markup:Txt",
               "html = rmtoo.lib.Markup:Html"
+          ],
+          "rmtoo.input.requirement_status" : [
+              "not done = rmtoo.lib.RequirementStatus:RequirementStatusNotDone",
+              "assigned = rmtoo.lib.RequirementStatus:RequirementStatusAssigned",
+              "finished = rmtoo.lib.RequirementStatus:RequirementStatusFinished"
           ]
       })

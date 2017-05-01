@@ -15,7 +15,8 @@ from rmtoo.lib.analytics.TopicCohe import TopicCohe
 from rmtoo.lib.logging import tracer
 
 
-class Analytics:
+# pylint: disable=too-few-public-methods
+class Analytics(object):
     '''Collection class which calls the other analytics modules.'''
 
     @staticmethod
@@ -24,11 +25,11 @@ class Analytics:
         tracer.debug("Called.")
         success = True
         for analytic_type in [DescWords, HotSpot, ReqTopicCohe, TopicCohe]:
-            tracer.debug("Calling [%s]." % analytic_type)
+            tracer.debug("Calling [%s]", analytic_type)
             analytics = analytic_type(config)
             topic_continuum_set.execute(analytics, "")
             analytics.write_result(mstderr)
             if not analytics.get_success():
                 success = False
-        tracer.debug("Finished with success [%s]." % success)
+        tracer.debug("Finished with success [%s]", success)
         return success

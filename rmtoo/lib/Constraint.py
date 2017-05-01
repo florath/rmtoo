@@ -15,7 +15,9 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class Constraint(BaseRMObject):
+    """Defines a constraint"""
 
+    # pylint: disable=too-many-arguments
     def __init__(self, content, rid, file_path, mods, config):
         BaseRMObject.__init__(self, InputModuleTypes.ctstag, content,
                               rid, mods,

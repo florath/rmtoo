@@ -11,7 +11,9 @@
 from rmtoo.lib.logging import tracer
 
 
-class FuncCall:
+# pylint: disable=too-few-public-methods
+class FuncCall(object):
+    """Calls a function - if available"""
 
     @staticmethod
     def pcall(obj, method_name, *args):
@@ -20,10 +22,10 @@ class FuncCall:
         Call the method with the method_name on the given object
         with the given arguments - if the method exists.
         '''
-        tracer.debug("pcall: trying to call [%s]" % method_name)
+        tracer.debug("pcall: trying to call [%s]", method_name)
         if not hasattr(obj, method_name):
-            tracer.debug("pcall: method [%s] does not exist." % method_name)
+            tracer.debug("pcall: method [%s] does not exist.", method_name)
             # No way to call the method.
             return
-        tracer.debug("pcall: calling method [%s]" % method_name)
+        tracer.debug("pcall: calling method [%s]", method_name)
         return getattr(obj, method_name)(*args)

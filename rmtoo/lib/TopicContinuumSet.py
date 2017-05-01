@@ -15,7 +15,7 @@ from __future__ import unicode_literals
 
 from six import iteritems
 
-from rmtoo.lib.TopicContinuum import TopicContinuum, TopicContinuumIterator
+from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.UsableFlag import UsableFlag
@@ -86,7 +86,3 @@ class TopicContinuumSetIterator(GenIterator):
     def has_child(self):
         '''If the current element has a child, true is returned.'''
         return len(self._current[1].get_vcs_commit_ids()) > 0
-
-    def iter_children(self):
-        '''Return an iterator for the children.'''
-        return TopicContinuumIterator(self._current[1])
