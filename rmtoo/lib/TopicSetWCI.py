@@ -14,7 +14,7 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.FuncCall import FuncCall
 
 
-class TopicSetWCI:
+class TopicSetWCI(object):
     '''Class for storing topic set and it's commit info.
        This is implemented in the way it is (using fields
        instead of inheritance) because in this way the topic_set
@@ -44,13 +44,13 @@ class TopicSetWCI:
         tracer.debug("Finished.")
 
     def create_makefile_name(self, name, topicn):
+        """Create the name that can be used in a Makefile"""
         return self.__topic_set.create_makefile_name(name, topicn)
 
     def get_master_topic(self):
+        """Returns the one and only master topic"""
         return self.__topic_set.get_master_topic()
 
     def get_requirement_set(self):
+        """Get the Topic's Requirements Set"""
         return self.__topic_set.get_requirement_set()
-
-    def write_to_logger(self):
-        self.__topic_set.write_to_logger()

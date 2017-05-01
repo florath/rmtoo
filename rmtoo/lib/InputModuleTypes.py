@@ -12,7 +12,9 @@
 from enum import Enum
 
 
+# pylint: disable=too-few-public-methods
 class InputModuleTypes(Enum):
+    """Models the possible different types of input modules"""
     reqtag = 0
     reqdeps = 1
     ctstag = 2

@@ -20,6 +20,7 @@ from rmtoo.lib.logging import tracer, logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
 
 
+# pylint: disable=too-many-instance-attributes
 class BaseRMObject(UsableFlag):
     """Base of a Requirements Management Object"""
 
