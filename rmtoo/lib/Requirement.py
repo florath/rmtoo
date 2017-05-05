@@ -36,13 +36,15 @@ class RequirementType(Enum):
 
     def as_string(self):
         """Return RequirementType as string"""
-        if self == self.master_requirement:
+        # The number are used because some old python 3.4 bail out with
+        # 'RequirementType' object has no attribute 'master_requirement'
+        if self.value == 1:  # self.master_requirement:
             return "requirement"
-        if self == self.initial_requirement:
+        if self.value == 2:  # self.initial_requirement:
             return "requirement"
-        if self == self.design_decision:
+        if self.value == 3:  # self.design_decision:
             return "design decision"
-        if self == self.requirement:
+        if self.value == 4:  # self.requirement:
             return "requirement"
         assert False
 
