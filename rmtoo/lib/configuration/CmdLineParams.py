@@ -10,7 +10,7 @@
 '''
 from __future__ import unicode_literals
 
-import distutils
+import distutils.sysconfig
 
 from optparse import OptionParser
 
