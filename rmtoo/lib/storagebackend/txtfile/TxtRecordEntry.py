@@ -13,7 +13,7 @@
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
-from rmtoo.lib.StringHelper import StringHelper
+from rmtoo.lib.StringHelper import join_ate
 
 
 class TxtRecordEntry(RecordEntry):
@@ -68,7 +68,7 @@ class TxtRecordEntry(RecordEntry):
         '''Write record entry to filesystem.'''
         if self.content_raw is not None:
             fd.write(self.tag_raw)
-            fd.write(StringHelper.join_ate(u"\n", self.content_raw))
+            fd.write(join_ate(u"\n", self.content_raw))
         else:
             fd.write(self.get_tag())
             fd.write(": ")
@@ -76,7 +76,7 @@ class TxtRecordEntry(RecordEntry):
             fd.write("\n")
 
         if self.comment_raw is not None:
-            fd.write(StringHelper.join_ate(u"\n", self.comment_raw))
+            fd.write(join_ate(u"\n", self.comment_raw))
         else:
             fd.write("# ")
             fd.write(self.get_comment())

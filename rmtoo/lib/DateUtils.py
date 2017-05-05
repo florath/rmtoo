@@ -13,13 +13,15 @@ import datetime
 from rmtoo.lib.RMTException import RMTException
 
 
-def parse_date(rid, ds):
+def parse_date(rid, date_str):
+    """Parse the given date as YYYY-MM-DD"""
     try:
-        return datetime.datetime.strptime(ds, "%Y-%m-%d").date()
+        return datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
         raise RMTException(8, "%s: invalid date specified (must be "
-                           "YYYY-MM-DD) was '%s'" % (rid, ds))
+                           "YYYY-MM-DD) was '%s'" % (rid, date_str))
 
 
-def format_date(dt):
-    return dt.strftime("%Y-%m-%d")
+def format_date(date_time):
+    """Format the date as YYYY-MM-DD"""
+    return date_time.strftime("%Y-%m-%d")

@@ -11,6 +11,8 @@
 
 import operator
 
+from enum import Enum
+
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.BaseRMObject import BaseRMObject
@@ -19,36 +21,42 @@ from rmtoo.lib.FuncCall import FuncCall
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
-class Requirement(Digraph.Node, BaseRMObject):
+# pylint: disable=too-few-public-methods
+class RequirementType(Enum):
+    """Each requirement has exactly one type.
 
-    def execute(self, executor, func_prefix):
-        '''Execute the parts which are needed for Requirement.'''
-        tracer.debug("Called: name [%s]." % self.name)
-        FuncCall.pcall(executor, func_prefix + "requirement", self)
-        tracer.debug("Finished: name [%s]." % self.name)
-
-    # Requirement Type
-    # Each requirement has exactly one type.
-    # The class ReqType sets this from the contents of the file.
-    # Note: There can only be one (master requirement)
-    rt_master_requirement = 1
+    The class ReqType sets this from the contents of the file.
+    Note: There can only be one (master requirement)
+    """
+    master_requirement = 1
     # Initial requirement is deprecated
-    rt_initial_requirement = 2
-    rt_design_decision = 3
-    rt_requirement = 4
+    initial_requirement = 2
+    design_decision = 3
+    requirement = 4
 
-    @staticmethod
-    def get_type_as_str(rtype):
-        if rtype == Requirement.rt_master_requirement:
+    def as_string(self):
+        """Return RequirementType as string"""
+        if self == self.master_requirement:
             return "requirement"
-        if rtype == Requirement.rt_initial_requirement:
+        if self == self.initial_requirement:
             return "requirement"
-        if rtype == Requirement.rt_design_decision:
+        if self == self.design_decision:
             return "design decision"
-        if rtype == Requirement.rt_requirement:
+        if self == self.requirement:
             return "requirement"
         assert False
 
+
+class Requirement(Digraph.Node, BaseRMObject):
+    """Class representing a requirement"""
+
+    def execute(self, executor, func_prefix):
+        '''Execute the parts which are needed for Requirement.'''
+        tracer.debug("Called: name [%s]", self.name)
+        FuncCall.pcall(executor, func_prefix + "requirement", self)
+        tracer.debug("Finished: name [%s]", self.name)
+
+    # pylint: disable=too-many-arguments
     def __init__(self, content, rid, file_path, mods, config):
         Encoding.check_unicode(content)
         Encoding.check_unicode(rid)
@@ -58,6 +66,7 @@ class Requirement(Digraph.Node, BaseRMObject):
                               config, u"requirements", file_path)
 
     def get_prio(self):
+        """Get priority of requirement"""
         return self.values["Priority"]
 
     def __str__(self):
@@ -68,9 +77,11 @@ class Requirement(Digraph.Node, BaseRMObject):
         return self.__str__()
 
     def get_status(self):
+        """Get the requirement's status"""
         return self.values["Status"]
 
     def get_topic(self):
+        """Get the requirement's topic"""
         return self.values["Topic"]
 
     def get_efe_or_0(self):
@@ -81,15 +92,16 @@ class Requirement(Digraph.Node, BaseRMObject):
         return efe
 
     def is_implementable(self):
+        """Get if the requirement is implementable"""
         return self.values["Class"].is_implementable()
 
     def write_analytics_result(self, mstderr):
         '''Write out the analytics results.'''
-        for k, v in sorted(self.analytics.items(),
-                           key=operator.itemgetter(0)):
-            if v[0] < 0:
+        for k, val in sorted(self.analytics.items(),
+                             key=operator.itemgetter(0)):
+            if val[0] < 0:
                 mstderr.write("+++ Error:Analytics:%s:%s:result is '%+3d'\n"
-                              % (k, self.id, v[0]))
-                for l in v[1]:
+                              % (k, self.get_id(), val[0]))
+                for line in val[1]:
                     mstderr.write("+++ Error:Analytics:%s:%s:%s\n" %
-                                  (k, self.id, l))
+                                  (k, self.get_id(), line))

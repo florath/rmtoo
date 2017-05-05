@@ -17,15 +17,17 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.UsableFlag import UsableFlag
 
 
+# pylint: disable=too-many-instance-attributes
 class TopicSet(Digraph, UsableFlag):
     '''A Collection of Topics.
        With other words: a hierarchy of requirements.'''
 
+    # pylint: disable=too-many-arguments
     def __init__(self, config, input_handler, commit, object_cache,
                  input_mods):
         '''Read in all the dependent topics and the requirements.'''
-        tracer.info("Called; commit timestamp [%s]"
-                    % input_handler.get_timestamp(commit))
+        tracer.info("Called; commit timestamp [%s]",
+                    input_handler.get_timestamp(commit))
         Digraph.__init__(self)
         UsableFlag.__init__(self)
         self._config = config
@@ -64,7 +66,7 @@ class TopicSet(Digraph, UsableFlag):
            First checks if this is already available in the object cache.'''
         req_set_vcs_id = \
             self.__input_handler.get_vcs_id_with_type(
-                            self.__commit, "requirements")
+                self.__commit, "requirements")
         req_set = self.__object_cache.get("RequirementSet", req_set_vcs_id)
         if req_set is None:
             req_set = RequirementSet(self._config)
@@ -87,7 +89,7 @@ class TopicSet(Digraph, UsableFlag):
 
         topic_base = self.__input_handler.get_topic_base_file_info(
             self.__commit)
-        tracer.debug("Topic base [%s]." % topic_base)
+        tracer.debug("Topic base [%s]", topic_base)
         return Topic(self, self._config, self.__input_handler,
                      self.__commit, topic_base,
                      self.__complete_requirement_set)
@@ -107,6 +109,7 @@ class TopicSet(Digraph, UsableFlag):
         '''Return the main topic.'''
         return self.__topic
 
+    # pylint: disable=invalid-name
     def get_complete_requirement_set_count(self):
         '''Return the number of requirements in this RequirementSet.  This
            is e.g. needed for statistics.'''
@@ -117,5 +120,7 @@ class TopicSet(Digraph, UsableFlag):
         if self.__topic is not None:
             self.__topic.execute(executor, func_prefix)
 
-    def create_makefile_name(self, name, topicn):
+    @staticmethod
+    def create_makefile_name(name, topicn):
+        """Create the name for the Makefile"""
         return "TOPIC_%s_%s_DEPS" % (name, topicn)

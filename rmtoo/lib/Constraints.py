@@ -35,7 +35,7 @@ class Constraints(object):
 
         for ctr, cval in iteritems(topic_set.get_requirement_set().
                                    get_constraints()):
-            tracer.debug("Add constraint [%s]" % ctr)
+            tracer.debug("Add constraint [%s]", ctr)
             cnsts[ctr] = cval
-        tracer.debug("Finished; size [%d]" % len(cnsts))
+        tracer.debug("Finished; size [%d]", len(cnsts))
         return cnsts

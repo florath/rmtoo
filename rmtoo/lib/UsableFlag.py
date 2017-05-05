@@ -14,7 +14,8 @@
 from rmtoo.lib.logging import tracer
 
 
-class UsableFlag:
+# pylint: disable=too-few-public-methods
+class UsableFlag(object):
     '''Holding flag to show if an object is usable or not.'''
 
     def __init__(self):

@@ -15,7 +15,7 @@ import os
 from rmtoo.outputs.latex2 import latex2
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.Requirement import Requirement, RequirementType
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.CE3Set import CE3Set
 from rmtoo.lib.CE3 import CE3
@@ -78,10 +78,10 @@ class RMTTestOutputLaTeX2:
         req = Requirement(None, u"TestReq", None, None, None)
         req.values = {}
         req.values[u"Name"] = RecordEntry(u"Name", u"my name")
-        req.values[u"Type"] = Requirement.rt_requirement
+        req.values[u"Type"] = RequirementType.requirement
         req.values[u"Description"] = RecordEntry(u"Description", u"my desc")
         req.values[u"Status"] = RequirementStatusFinished(
-                None, u"rid", u"finished:meiner:2011-04-15:4h")
+            None, u"rid", u"finished:meiner:2011-04-15:4h")
         req.values[u"Class"] = ClassTypeImplementable()
 
         ce3set = CE3Set()

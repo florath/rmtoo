@@ -13,9 +13,8 @@ from __future__ import unicode_literals
 import io
 from six import iteritems
 
-from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.Constraints import Constraints
-from rmtoo.lib.TestCases import TestCases
+from rmtoo.lib.TestCases import collect
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
@@ -157,7 +156,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             assert False
         constraints = Constraints.collect(topic_set)
         self.__output_latex_constraints(constraints)
-        testcases = TestCases.collect(topic_set)
+        testcases = collect(topic_set)
         self.__output_latex_testcases(testcases)
         tracer.debug("Clean up file.")
         self.__fd.close()
@@ -271,7 +270,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()
-        rtype = Requirement.get_type_as_str(req.get_value("Type"))
+        rtype = req.get_value("Type").as_string()
 
         self.__fd.write(u"\n\\par\n{\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")

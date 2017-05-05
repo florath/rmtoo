@@ -19,7 +19,7 @@ import os
 
 from six import iteritems, itervalues
 
-from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.Requirement import Requirement, RequirementType
 from rmtoo.lib.Constraint import Constraint
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
@@ -450,7 +450,7 @@ class RequirementSet(Digraph, UsableFlag):
         # Add node to digraph
         self.add_node(req)
 
-        if req.get_value("Type") == Requirement.rt_master_requirement:
+        if req.get_value("Type") == RequirementType.master_requirement:
             return self.__resolve_depends_on_one_req_master(req)
         if "Depends on" not in req.brmo:
             return self.__resolve_depends_on_one_req_other(req, also_solved_by)

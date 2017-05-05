@@ -11,6 +11,9 @@
 '''
 
 
+# Because of the nature that mostly all methods are only dummy
+# implementations, there is no way of 'self' using.
+# pylint: disable=no-self-use
 class ExecutorTopicContinuum(object):
     """Base Executor class for TopicContinuum
 

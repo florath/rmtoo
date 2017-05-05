@@ -11,14 +11,10 @@
 '''
 
 
-class StringHelper(object):
-    '''String Helper class function collection.'''
-
-    @staticmethod
-    def join_ate(delim, jlist):
-        '''This is mostly the same as the string 'join()' method, but
-           The delimiter is also added to the end of the list.'''
-        res = u""
-        for j in jlist:
-            res += j + delim
-        return res
+def join_ate(delim, jlist):
+    '''This is mostly the same as the string 'join()' method, but
+    The delimiter is also added to the end of the list.'''
+    res = u""
+    for j in jlist:
+        res += j + delim
+    return res

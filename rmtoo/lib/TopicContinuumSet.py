@@ -54,7 +54,7 @@ class TopicContinuumSet(UsableFlag):
                                         self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
             self._adapt_usablility(topic_cont)
-        tracer.debug("Finished; count [%d]" % len(self.__continuum))
+        tracer.debug("Finished; count [%d]", len(self.__continuum))
 
     def execute(self, executor, func_prefix):
         '''Execute the parts which are needed for TopicsContinuumSet.'''
@@ -62,7 +62,7 @@ class TopicContinuumSet(UsableFlag):
         FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_pre', self)
         tracer.debug("Calling sub.")
         for continuum in executor.topic_continuum_set_sort(
-                                self.__continuum.values()):
+                self.__continuum.values()):
             continuum.execute(executor, func_prefix)
         tracer.debug("Calling Post")
         FuncCall.pcall(executor, func_prefix + 'topic_continuum_set_post',

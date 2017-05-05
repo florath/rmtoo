@@ -10,19 +10,20 @@
 '''
 import unittest
 
-from rmtoo.lib.StringHelper import StringHelper
+from rmtoo.lib.StringHelper import join_ate
 
 
 class RMTTestStringHelper(unittest.TestCase):
+    """Test cases for StringHelper module"""
 
     def rmttest_pos_01(self):
         "StringHelper.join_ate with elements"
 
-        s = StringHelper.join_ate("-", ["a", "b", "c", "d"])
-        self.assertEqual("a-b-c-d-", s)
+        join_res = join_ate("-", ["a", "b", "c", "d"])
+        self.assertEqual("a-b-c-d-", join_res)
 
     def rmttest_pos_02(self):
         "StringHelper.join_ate empty list"
 
-        s = StringHelper.join_ate("-", [])
-        self.assertEqual("", s)
+        join_res = join_ate("-", [])
+        self.assertEqual("", join_res)

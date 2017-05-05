@@ -10,7 +10,7 @@
 '''
 
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.Requirement import Requirement
+from rmtoo.lib.Requirement import RequirementType
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
@@ -22,11 +22,11 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 class ReqType(ReqTagGeneric):
     types = [
-        ["master requirement", Requirement.rt_master_requirement],
-        ["initial requirement", Requirement.rt_initial_requirement],
-        ["design decision", Requirement.rt_design_decision],
-        ["requirement", Requirement.rt_requirement],
-        ]
+        ["master requirement", RequirementType.master_requirement],
+        ["initial requirement", RequirementType.initial_requirement],
+        ["design decision", RequirementType.design_decision],
+        ["requirement", RequirementType.requirement],
+    ]
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Type",

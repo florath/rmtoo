@@ -15,6 +15,7 @@ from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
 from rmtoo.lib.ClassType import ClassTypeImplementable, \
     ClassTypeSelected
 from rmtoo.lib.StdOutputParams import StdOutputParams
+from rmtoo.lib.Requirement import RequirementType
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.configuration.Cfg import Cfg
@@ -89,10 +90,11 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         # Colorize the current requirement depending on type
         nodeparam = []
         if get_conf_attr("Type") \
-                and req.get_value("Type") == req.rt_initial_requirement:
+                and req.get_value("Type") \
+                == RequirementType.initial_requirement:
             nodeparam.append("color=orange")
         if get_conf_attr("Type") \
-                and req.get_value("Type") == req.rt_design_decision:
+                and req.get_value("Type") == RequirementType.design_decision:
             nodeparam.append("color=green")
 
         if get_conf_attr("Status"):
