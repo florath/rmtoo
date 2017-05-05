@@ -2,8 +2,8 @@
  rmtoo
    Free and Open Source Requirements Management Tool
 
-  Constraint Execution and Evaluation EnvironmentHeuristics to check the
-  quality of the requirements.
+  Constraint Execution and Evaluation Environment
+  Heuristics to check the quality of the requirements.
 
  (c) 2011-2012,2017 by flonatel GmbH & Co. KG
 
@@ -13,28 +13,31 @@ from rmtoo.lib.RMTException import RMTException
 
 
 # Some common used functions
-def ce3assert(b, errmsg):
-    if not b:
-        raise RMTException(90, "Failed CE3 assert: msg [%s]"
-                           % errmsg)
+def ce3assert(bool_expr, errmsg):
+    """Checks the bool expression; if false emits an exception"""
+    if not bool_expr:
+        raise RMTException(90, "Failed CE3 assert: msg [%s]" % errmsg)
 
 
-class CE3:
+class CE3(object):
+    """Constraint Execution and Evaluation Environment"""
 
     def __init__(self):
         self.values = {}
 
-    def eval(self, cs, class_name, cstr_call):
-        v = cs.get_value("CE3")
-
-        if v is None:
+    # This is not found because of the 'exec' call
+    # pylint: disable=no-self-use,exec-used,unused-argument
+    def eval(self, constraint, class_name, cstr_call):
+        """Evaluates the constraint using the provided parameters"""
+        constraint_value = constraint.get_value("CE3")
+        if constraint_value is None:
             return
 
-        s = ""
-        for r in v.get_content_with_nl():
-            s += r[1:] + "\n"
+        exec_str = ""
+        for exec_line in constraint_value.get_content_with_nl():
+            exec_str += exec_line[1:] + "\n"
 
-        exec(s) in globals(), locals()
+        exec(exec_str) in globals(), locals()
         exec("self.values[class_name] = %s" % cstr_call)
 
     def has_key(self, k):

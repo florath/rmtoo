@@ -11,7 +11,7 @@
 from rmtoo.lib.RMTException import RMTException
 
 
-class ReqTagGeneric:
+class ReqTagGeneric(object):
     '''This class is the base class of mostly all tags.
        It handles basic setup as well as handling of common cases.'''
 

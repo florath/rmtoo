@@ -11,7 +11,7 @@
 '''
 
 
-class StringHelper:
+class StringHelper(object):
     '''String Helper class function collection.'''
 
     @staticmethod
