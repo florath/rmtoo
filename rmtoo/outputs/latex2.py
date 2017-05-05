@@ -238,10 +238,10 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
 
         if self.__ce3set is not None:
             cnstrt = self.__ce3set.get(req.get_id())
-            if cnstrt is not None and cnstrt.len() > 0:
+            if cnstrt is not None and len(cnstrt) > 0:
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
-                for key, val in sorted(iteritems(cnstrt.get_values())):
+                for key, val in sorted(iteritems(cnstrt)):
                     refid = latex2.__strescape(key)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                              % (refid, refid)

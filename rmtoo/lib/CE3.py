@@ -19,11 +19,17 @@ def ce3assert(bool_expr, errmsg):
         raise RMTException(90, "Failed CE3 assert: msg [%s]" % errmsg)
 
 
-class CE3(object):
-    """Constraint Execution and Evaluation Environment"""
+class CE3(dict):
+    """Constraint Execution and Evaluation Environment
 
-    def __init__(self):
-        self.values = {}
+    All results from the execution phase are stored in the dict.
+    """
+
+    def __hash__(self):
+        return hash(tuple(self.keys()))
+
+    def __repr__(self):
+        return "<CE3 %s>" % list(self.keys())
 
     # This is not found because of the 'exec' call
     # pylint: disable=no-self-use,exec-used,unused-argument
@@ -38,43 +44,25 @@ class CE3(object):
             exec_str += exec_line[1:] + "\n"
 
         exec(exec_str) in globals(), locals()
-        exec("self.values[class_name] = %s" % cstr_call)
+        exec("self[class_name] = %s" % cstr_call)
 
-    def has_key(self, k):
-        return k in self.values
-
-    def get_keys(self):
-        return self.values.keys()
-
-    def get_value(self, k):
-        return self.values[k]
-
-    def set_value(self, k, v):
-        self.values[k] = v
-
-    def get_values(self):
-        return self.values
-
-    def len(self):
-        return len(self.values)
-
-    # Try to unite all given ce3s into the local ce3
     def unite(self, oce3s):
+        """Try to unite all given ce3s into the local ce3"""
         okeys = set()
-        for o in oce3s:
-            okeys = okeys.union(set(o.get_keys()))
+        for oce in oce3s:
+            okeys = okeys.union(set(oce.keys()))
 
         for k in okeys:
             # Is the key locally available?
             mobj = None
-            if k in self.values:
-                mobj = self.get_value(k)
+            if k in self:
+                mobj = self[k]
 
             lobj = []
             # Look for this in all other oce3s
-            for o in oce3s:
-                if k in o.values:
-                    lobj.append(o.get_value(k))
+            for oce in oce3s:
+                if k in oce:
+                    lobj.append(oce[k])
 
             # For the execution one object is needed
             eobj = mobj
@@ -82,9 +70,9 @@ class CE3(object):
                 eobj = lobj[0]
                 # lobj.add(eobj)
 
-            ro = eobj.unite(mobj, lobj)
+            new_constraint = eobj.unite(mobj, lobj)
 
-            if ro is not None:
+            if new_constraint is not None:
                 # There is a new constraint for the local key
                 assert mobj is None
-                self.set_value(k, ro)
+                self[k] = new_constraint

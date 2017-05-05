@@ -23,6 +23,8 @@ class CE3Set(object):
     def insert(self, name, ce3):
         '''Add a new ce3.'''
         tracer.debug("Insert ce3 for requirement [%s]", name)
+        if ce3 is None:
+            return
         if ce3 in self.__ce3s:
             assert False
         self.__ce3s[name] = ce3
