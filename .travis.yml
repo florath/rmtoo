@@ -40,7 +40,7 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: andreas@florath.net
     build_command_prepend: ""
-    build_command: ""
+    build_command: "make tests"
     branch_pattern: coverity_scan
 
 # command to run tests
