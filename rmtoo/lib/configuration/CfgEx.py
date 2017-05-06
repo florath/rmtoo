@@ -16,6 +16,7 @@ class CfgEx(Exception):
 
     def __init__(self, value):
         '''Standard exception constructor.'''
+        super(CfgEx, self).__init__("<unavailable message>")
         self.value = value
 
     def __str__(self):

@@ -130,6 +130,7 @@ setup(name=PACKAGE, version=VERSION,
           "gitpython==1.0.2",
           "pyyaml>=3.12",
           "stevedore>=1.21",
+          "pylint>=1.7.1",
           "odfpy==1.3.4"],
       license="GPL V3",
       platforms="all",
@@ -137,8 +138,6 @@ setup(name=PACKAGE, version=VERSION,
       entry_points={
           'console_scripts': [
               "rmtoo = rmtoo.lib.RmtooMain:main",
-              "rmtoo-configuration-convert = "
-              "rmtoo.lib.main.ConfigurationConvert:main",
               "rmtoo-normalize-dependencies = "
               "rmtoo.lib.main.NormalizeDependencies:main",
               "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph:main",

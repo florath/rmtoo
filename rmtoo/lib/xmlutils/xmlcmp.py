@@ -44,8 +44,7 @@ def xml_check_text_content(xml_doc_a, xml_doc_b, xpath):
         if xml_doc_a.data != xml_doc_b.data:
             return False, "Text Node data differs [%s] != [%s] at [%s]" % \
                 (xml_doc_a.data, xml_doc_b.data, xpath)
-        else:
-            return True, None
+        return True, None
     return None, None
 
 
