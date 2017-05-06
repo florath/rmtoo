@@ -10,14 +10,13 @@
 '''
 from __future__ import unicode_literals
 
+import argparse
 import distutils
-
-from optparse import OptionParser
 
 from rmtoo.lib.Encoding import Encoding
 
 
-class CmdLineParams:
+class CmdLineParams(object):
     '''Utility class for handling the old style command line
        parameters (like -f, -m and -c) as well as the new
        command line parameters.'''
@@ -29,19 +28,19 @@ class CmdLineParams:
     @staticmethod
     def initialize_parser():
         '''Initializases the command line parser.'''
-        return OptionParser()
+        return argparse.ArgumentParser()
 
     @staticmethod
     def add_deprecated_parameters(parser):
         '''Add the deprecated parameters to the given option parser.'''
-        parser.add_option("-f", "--file-config", dest="config_file",
-                          help="Configuration file")
-        parser.add_option("-m", "--modules-directory",
-                          dest="modules_directory",
-                          help="Directory with modules")
-        parser.add_option("-c", "--create-makefile-dependencies",
-                          dest="create_makefile_dependencies",
-                          help="Create makefile dependencies")
+        parser.add_argument("-f", "--file-config", dest="config_file",
+                            help="Configuration file")
+        parser.add_argument("-m", "--modules-directory",
+                            dest="modules_directory",
+                            help="Directory with modules")
+        parser.add_argument("-c", "--create-makefile-dependencies",
+                            dest="create_makefile_dependencies",
+                            help="Create makefile dependencies")
 
     @staticmethod
     def add_deprecated_values(options):
@@ -76,16 +75,18 @@ class CmdLineParams:
     @staticmethod
     def add_parameters(parser):
         '''Add the command line parameters to the given parser.'''
-        parser.add_option("-j", "--json", dest="json",
-                          action="append",
-                          help="JSON string or file which is merged into the "
-                          "existing configuration. Can be specified multiple "
-                          "times.")
-        parser.add_option("-y", "--yaml", dest="yaml",
-                          action="append",
-                          help="YAML string or file which is merged into the "
-                          "existing configuration. Can be specified multiple "
-                          "times.")
+        parser.add_argument(
+            "-j", "--json", dest="json",
+            action="append",
+            help="JSON string or file which is merged into the "
+            "existing configuration. Can be specified multiple "
+            "times.")
+        parser.add_argument(
+            "-y", "--yaml", dest="yaml",
+            action="append",
+            help="YAML string or file which is merged into the "
+            "existing configuration. Can be specified multiple "
+            "times.")
 
     @staticmethod
     def add_values(soptions, name):
@@ -116,11 +117,11 @@ class CmdLineParams:
         CmdLineParams.add_deprecated_parameters(parser)
         CmdLineParams.add_parameters(parser)
 
-        (options, args) = parser.parse_args(args=args)
+        args = parser.parse_args(args=args)
 
         lresult = []
         lresult.append(CmdLineParams.add_args(args))
-        lresult.append(CmdLineParams.add_deprecated_values(options))
-        lresult.append(CmdLineParams.add_values(options.json, "json"))
-        lresult.append(CmdLineParams.add_values(options.yaml, "yaml"))
+        lresult.append(CmdLineParams.add_deprecated_values(args))
+        lresult.append(CmdLineParams.add_values(args.json, "json"))
+        lresult.append(CmdLineParams.add_values(args.yaml, "yaml"))
         return lresult

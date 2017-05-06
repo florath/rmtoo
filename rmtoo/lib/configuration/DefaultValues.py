@@ -11,7 +11,8 @@
 from rmtoo.lib.Constraints import Constraints
 
 
-class DefaultValues:
+# pylint: disable=too-few-public-methods
+class DefaultValues(object):
     '''This calls all the appropriate functions to set the
     default values.
     Instead of merging in here everything, the information

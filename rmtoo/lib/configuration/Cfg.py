@@ -100,9 +100,10 @@ class CfgFormatJson(CfgFormatBase):
         return jdict
 
 
-# This takes care that all the configuration is read in
-# using unicode
 def custom_str_constructor(loader, node):
+    """This takes care that all the configuration is read in
+    using unicode.
+    """
     return Encoding.to_unicode(loader.construct_scalar(node))
 
 

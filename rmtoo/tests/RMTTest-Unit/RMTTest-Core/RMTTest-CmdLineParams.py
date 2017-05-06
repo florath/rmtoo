@@ -15,6 +15,7 @@ from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 
 
 class RMTTestCmdLineParser(unittest.TestCase):
+    """Test cases for command line parameter"""
 
     def rmttest_neg_01(self):
         "Command Line Parser: check -m."
@@ -24,12 +25,3 @@ class RMTTestCmdLineParser(unittest.TestCase):
         mod_dir = distutils.sysconfig.get_python_lib()
         self.assertEqual(
             [mod_dir], options[1]["global"]["modules"]["directories"])
-
-    def rmttest_additional_old_params(self):
-        "Command Line Parser: too many args"
-
-        args = ["-f", "SomeFile", "das", "ist", "was"]
-        options = CmdLineParams.create_dicts(args)
-        self.assertEqual(
-            ['das', 'ist', 'was'],
-            options[0]["general"]["command_line_arguments"])
