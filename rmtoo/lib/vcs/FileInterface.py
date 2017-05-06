@@ -28,11 +28,14 @@ class FileInterface(Interface):
     def __init__(self, config):
         Interface.__init__(self, config)
 
-    @staticmethod
-    def _abs_path(directory):
-        '''Convert the given directory path into an absolute path.'''
-        if not os.path.isabs(directory):
-            return os.path.abspath(directory)
+    # This is overloaded and therefore must be a normal method.
+    # pylint: disable=no-self-use
+    def _adapt_dir_path(self, directory):
+        return directory
+
+    # This is overloaded and therefore must be a normal method.
+    # pylint: disable=no-self-use
+    def _adapt_ext_path(self, directory):
         return directory
 
     # pylint: disable=no-self-use,unused-argument
@@ -50,13 +53,13 @@ class FileInterface(Interface):
                 tracer.info("Directory [%s] not configured - skipping.",
                             dir_type)
                 continue
-            dirs = list(map(self._abs_path, config_dirs))
+            dirs = list(map(self._adapt_dir_path, config_dirs))
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
-            for directory in config_dirs:
+            for directory in dirs:
                 self._extended_directory_check(directory)
-                new_directories.append(directory)
+                new_directories.append(self._adapt_ext_path(directory))
             all_dirs[dir_type] = new_directories
 
         for dir_type, directory in iteritems(all_dirs):
