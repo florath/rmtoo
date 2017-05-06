@@ -71,8 +71,8 @@ class TopicCohe(Base):
         if req_a.get_id() not in self.__req2topics \
            or req_b.get_id() not in self.__req2topics:
             tracer.debug("One of the requirements is not in the topic - "
-                         "skipping evaluation [%s] [%s]" %
-                         (req_a.get_id(), req_b.get_id()))
+                         "skipping evaluation [%s] [%s]",
+                         req_a.get_id(), req_b.get_id())
             return
 
         for topic_a in self.__req2topics[req_a.get_id()]:
@@ -81,6 +81,7 @@ class TopicCohe(Base):
 
     def topic_set_post(self, topic_set):
         '''This is call in the TopicsSet post-phase.'''
+        # pylint: disable=consider-iterating-dictionary
         for req_id in self.__req2topics.keys():
             req_a = topic_set.get_topic_set().get_requirement_set().\
                        get_requirement(req_id)
@@ -90,6 +91,6 @@ class TopicCohe(Base):
         for topic, cnt in iteritems(self.__tcnt):
             if cnt[0] <= cnt[1]:
                 self.add_result(Result("TopicCohe", topic,
-                                - 10, ["%s: Topic coherence inadequate: "
-                                       "inner %d / outer %d"
-                                       % (topic, cnt[0], cnt[1])]))
+                                       - 10, ["%s: Topic coherence inadequate: "
+                                              "inner %d / outer %d"
+                                              % (topic, cnt[0], cnt[1])]))

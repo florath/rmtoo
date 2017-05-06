@@ -10,7 +10,8 @@
 '''
 
 
-class Result:
+class Result(object):
+    """Class holding an analytics result"""
 
     def __init__(self, analytics_name, object_path_name,
                  analytics_value, message_list):
@@ -20,6 +21,7 @@ class Result:
         self.__message_list = message_list
 
     def get_value(self):
+        """Return the analytics value"""
         return self.__analytics_value
 
     def write_error(self, mfd):

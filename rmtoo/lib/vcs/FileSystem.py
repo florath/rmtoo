@@ -12,18 +12,20 @@ from __future__ import unicode_literals
 
 import io
 import os
-from six import iteritems
 import stat
 import time
 
+from six import iteritems
+
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
+from rmtoo.lib.vcs.FileInterface import FileInterface
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.RMTException import RMTException
 
 
-class FileSystem(Interface):
+class FileSystem(FileInterface):
     '''Implementation of the input interface for files in the file system.
        Some aspects of the used and needed things for common VCS are not
        needed here.
@@ -31,32 +33,12 @@ class FileSystem(Interface):
        The vcs id is the full (absolute) path name of a file
        or directory.'''
 
-    def __setup_directories(self, cfg):
-        '''Cleans up and unifies the directories.'''
-        tracer.debug("Called.")
-        for dir_type in ["requirements", "topics", "constraints", "testcases"]:
-            dirs = cfg.get_rvalue_default(dir_type + "_dirs", None)
-            if dirs is None:
-                tracer.info("Directory [%s] not configured - skipping.",
-                            dir_type)
-                continue
-            self._check_list_of_strings(dir_type, dirs)
-
-            new_directories = []
-            for directory in dirs:
-                new_directories.append(directory)
-            self.__dirs[dir_type] = new_directories
-
-        for dir_type, directory in iteritems(self.__dirs):
-            tracer.debug("[%s] directories [%s]" % (dir_type, directory))
-
     def __init__(self, config):
         cfg = Cfg(config)
-        Interface.__init__(self, cfg)
+        FileInterface.__init__(self, cfg)
         tracer.info("called")
         self.__topic_root_node = cfg.get_rvalue("topic_root_node")
-        self.__dirs = {}
-        self.__setup_directories(cfg)
+        self.__dirs = self._setup_directories(cfg)
 
     def get_commits(self):
         '''There is no need for an iterator here.'''
@@ -65,7 +47,7 @@ class FileSystem(Interface):
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the filename of the given dir_type.'''
         assert commit is None
-        tracer.debug("called: directory type [%s]" % dir_type)
+        tracer.debug("called: directory type [%s]", dir_type)
         return ObjectCache.create_hashable(self.__dirs[dir_type])
 
     def get_timestamp(self, commit):

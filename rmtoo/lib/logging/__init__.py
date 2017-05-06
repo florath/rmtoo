@@ -16,11 +16,6 @@ import sys
 import logging
 
 
-# The following names are uses as logging instances and therefore
-# should be lower case.
-# pylint: disable=C0103
-tracer = None
-logger = None
 
 
 LOGGING_CONFIG = {
@@ -37,25 +32,25 @@ LOGGING_CONFIG = {
 
 
 def tear_down_trace_handler():
-    # Remove the (possible) old handlers
+    """Remove the (possible) old handlers"""
     for handler in LOGGING_CONFIG["handler"]:
         tracer.removeHandler(handler)
         handler.close()
     LOGGING_CONFIG["handler"] = []
 
 
-def __setup_trace_handler():
+def __setup_trace_handler(ltracer):
     '''Based on the configuration, establish a new set of log handlers.'''
 
     tear_down_trace_handler()
 
     # Create a file handle
-    tracer_fh = logging.FileHandler(LOGGING_CONFIG["tracer"]["filename"])
-    tracer_fh.setLevel(LOGGING_CONFIG["tracer"]["loglevel"])
+    ltracer_fh = logging.FileHandler(LOGGING_CONFIG["tracer"]["filename"])
+    ltracer_fh.setLevel(LOGGING_CONFIG["tracer"]["loglevel"])
 
     # create console handler and set level to debug
-    tracer_ch = logging.StreamHandler()
-    tracer_ch.setLevel(LOGGING_CONFIG["stdout"]["loglevel"])
+    ltracer_ch = logging.StreamHandler()
+    ltracer_ch.setLevel(LOGGING_CONFIG["stdout"]["loglevel"])
 
     # create formatter
     formatter = logging.Formatter(
@@ -63,15 +58,15 @@ def __setup_trace_handler():
         '%(funcName)s;%(lineno)d;%(message)s')
 
     # add formatter to ch
-    tracer_ch.setFormatter(formatter)
-    tracer_fh.setFormatter(formatter)
+    ltracer_ch.setFormatter(formatter)
+    ltracer_fh.setFormatter(formatter)
 
     # add ch to logger
-    tracer.addHandler(tracer_fh)
-    tracer.addHandler(tracer_ch)
+    ltracer.addHandler(ltracer_fh)
+    ltracer.addHandler(ltracer_ch)
 
-    LOGGING_CONFIG["handler"].append(tracer_fh)
-    LOGGING_CONFIG["handler"].append(tracer_ch)
+    LOGGING_CONFIG["handler"].append(ltracer_fh)
+    LOGGING_CONFIG["handler"].append(ltracer_ch)
 
 
 def __setup_log_handler(mstderr=sys.stderr):
@@ -91,6 +86,7 @@ def __setup_log_handler(mstderr=sys.stderr):
 
 
 def tear_down_log_handler():
+    """Remove the (possible) old handlers"""
     for handler in LOGGING_CONFIG["log_handler"]:
         logger.removeHandler(handler)
         handler.close()
@@ -99,12 +95,11 @@ def tear_down_log_handler():
 
 def __init_logger_object():
     '''This function sets up the global logger variable.'''
-    global logger
-
     tracer.debug("rmtoo init logger.")
-    logger = logging.getLogger("rmtoo")
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
+    llogger = logging.getLogger("rmtoo")
+    llogger.setLevel(logging.INFO)
+    llogger.propagate = False
+    return llogger
 
 
 def init_logger(mstderr):
@@ -113,7 +108,7 @@ def init_logger(mstderr):
        which is typically done in the module's init phase.'''
     __setup_log_handler(mstderr)
     tracer.debug("rmtoo logger enabled.")
-    tracer.debug("logger [%s]." % logger)
+    tracer.debug("logger [%s]", logger)
 
 
 def init_tracer():
@@ -122,14 +117,12 @@ def init_tracer():
     The logging can be configured by the help of the 'configure_logging()'
     function.'''
 
-    global tracer
-
-    tracer = logging.getLogger("rmtoo-trace")
-    tracer.setLevel(logging.DEBUG)
-    tracer.propagate = False
-    __setup_trace_handler()
-
-    tracer.debug("rmtoo tracer system enabled.")
+    ltracer = logging.getLogger("rmtoo-trace")
+    ltracer.setLevel(logging.DEBUG)
+    ltracer.propagate = False
+    __setup_trace_handler(ltracer)
+    ltracer.debug("rmtoo tracer system enabled.")
+    return ltracer
 
 
 def configure_logging(cfg, mstderr):
@@ -152,17 +145,15 @@ def configure_logging(cfg, mstderr):
         LOGGING_CONFIG["tracer"]["filename"] = \
             cfg.get_value("global.logging.tracer.filename")
 
-    __setup_trace_handler()
-
     init_logger(mstderr)
 
     tracer.debug("rmtoo logging system configured.")
 
-
-init_tracer()
-
-
+# The following names are uses as logging instances and therefore
+# should be lower case.
+# pylint: disable=invalid-name
+tracer = init_tracer()
 # Only the logger object must be created here:
 # Looks that this is in another global space when calling this from this
 # init or from somewhere else.
-__init_logger_object()
+logger = __init_logger_object()

@@ -14,6 +14,11 @@ from rmtoo.lib.analytics.Base import Base
 
 
 class HotSpot(Base):
+    """Models a dependency hot-spot
+
+    This is a region where the number of incoming or
+    outgoing links is too high.
+    """
 
     max_incoming = 7
     max_outgoing = 4

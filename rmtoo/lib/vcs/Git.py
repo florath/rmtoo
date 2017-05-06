@@ -12,37 +12,33 @@
 from __future__ import unicode_literals
 
 import copy
-import git
 import os
+
+import git
 from six import iteritems
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
+from rmtoo.lib.vcs.FileInterface import FileInterface
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.RMTException import RMTException
 
 
-class Git(Interface):
+class Git(FileInterface):
     '''Handles a git repository.'''
 
-    @staticmethod
-    def __abs_path(directory):
-        '''Convert the given directory path into an absolute path.'''
-        if not os.path.isabs(directory):
-            return os.path.abspath(directory)
-        return directory
-
-    def __check_if_dir_is_in_repo(self, directory):
+    def _extended_directory_check(self, directory):
         '''Checks if all the directories are the in repository.
            The absolute path is computed if the path is relative and
            then compared to the repository base directory.'''
-        tracer.debug("called: directory [%s]" % directory)
+        tracer.debug("called: directory [%s]", directory)
         if self.__repo_base_dir is None:
             self.__setup_repo(directory)
         if not directory.startswith(self.__repo_base_dir):
             raise RMTException(28, "directory [%s] not in repository"
                                % directory)
+        return
 
     def __cut_off_repo_dir(self, directory):
         '''Cuts off the repository directory from the directory.'''
@@ -50,7 +46,8 @@ class Git(Interface):
         len_repo_base_dir = len(self.__repo_base_dir) + 1
         return directory[len_repo_base_dir:]
 
-    def __setup_directories(self, cfg):
+
+    def MY_setup_directories(self, cfg):
         '''Cleans up and unifies the directories.'''
         tracer.debug("called")
         # TODO: duplicated code - also in FileSystem
@@ -60,17 +57,18 @@ class Git(Interface):
                 tracer.info("Directory [%s] not configured - skipping." %
                             dir_type)
                 continue
-            dirs = list(map(self.__abs_path, config_dirs))
+            dirs = list(map(self._abs_path, config_dirs))
             self._check_list_of_strings(dir_type, dirs)
 
             new_directories = []
             for directory in dirs:
-                self.__check_if_dir_is_in_repo(directory)
+                self._extended_directory_check(directory)
                 new_directories.append(self.__cut_off_repo_dir(directory))
             self.__dirs[dir_type] = new_directories
 
         for dir_type, directory in iteritems(self.__dirs):
             tracer.debug("[%s] directories [%s]" % (dir_type, directory))
+
 
     def __setup_repo(self, directory):
         '''Sets up the repository.'''
@@ -102,7 +100,7 @@ class Git(Interface):
     def __init__(self, config):
         tracer.info("called")
         cfg = Cfg(config)
-        Interface.__init__(self, cfg)
+        FileInterface.__init__(self, cfg)
         self.__start_vers = cfg.get_rvalue("start_vers")
         self.__end_vers = cfg.get_rvalue("end_vers")
         self.__topic_root_node = cfg.get_rvalue("topic_root_node")
@@ -117,7 +115,8 @@ class Git(Interface):
         self.__dirs = {}
         self.__repo_base_dir = None
         self.__repo = None
-        self.__setup_directories(cfg)
+        self.__dirs = {}
+        self.MY_setup_directories(cfg)
 
     def get_commits(self):
         '''Return an iterator for all the commits.'''

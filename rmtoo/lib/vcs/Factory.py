@@ -13,7 +13,12 @@ from rmtoo.lib.vcs.FileSystem import FileSystem
 from rmtoo.lib.logging import tracer
 
 
-class Factory:
+# pylint: disable=too-few-public-methods
+class Factory(object):
+    """Factory class: create the correct input module
+
+    This can currently be either 'filesystem' or 'git'.
+    """
 
     known_input_types = \
         {"git": Git,
@@ -22,7 +27,7 @@ class Factory:
     @staticmethod
     def create(input_method, input_config):
         '''Create new input handler from given parameters.'''
-        tracer.info("Called: name [%s]." % input_method)
+        tracer.info("Called: name [%s]", input_method)
 
         if input_method.startswith("ignore:"):
             tracer.info("Ignoring factory entry.")
