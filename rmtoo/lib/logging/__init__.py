@@ -16,8 +16,6 @@ import sys
 import logging
 
 
-
-
 LOGGING_CONFIG = {
     "stdout": {
         "loglevel": logging.WARN,
@@ -148,6 +146,7 @@ def configure_logging(cfg, mstderr):
     init_logger(mstderr)
 
     tracer.debug("rmtoo logging system configured.")
+
 
 # The following names are uses as logging instances and therefore
 # should be lower case.

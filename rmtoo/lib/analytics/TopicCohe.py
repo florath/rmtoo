@@ -90,7 +90,8 @@ class TopicCohe(Base):
 
         for topic, cnt in iteritems(self.__tcnt):
             if cnt[0] <= cnt[1]:
-                self.add_result(Result("TopicCohe", topic,
-                                       - 10, ["%s: Topic coherence inadequate: "
-                                              "inner %d / outer %d"
-                                              % (topic, cnt[0], cnt[1])]))
+                self.add_result(Result(
+                    "TopicCohe", topic,
+                    - 10, ["%s: Topic coherence inadequate: "
+                           "inner %d / outer %d"
+                           % (topic, cnt[0], cnt[1])]))

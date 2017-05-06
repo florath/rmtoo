@@ -15,8 +15,6 @@ import os
 import stat
 import time
 
-from six import iteritems
-
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
 from rmtoo.lib.vcs.FileInterface import FileInterface

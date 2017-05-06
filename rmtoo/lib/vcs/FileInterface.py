@@ -12,8 +12,6 @@
 '''
 from __future__ import unicode_literals
 
-import os
-
 from six import iteritems
 
 from rmtoo.lib.vcs.Interface import Interface

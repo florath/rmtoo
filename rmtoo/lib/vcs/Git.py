@@ -15,7 +15,6 @@ import copy
 import os
 
 import git
-from six import iteritems
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.Interface import Interface
@@ -65,13 +64,13 @@ class Git(FileInterface):
         repo_found = False
         while len(directory) > 1:
             try:
-                tracer.debug("using [%s] as sample directory" % directory)
+                tracer.debug("using [%s] as sample directory", directory)
                 self.__repo = git.Repo(directory)
                 repo_found = True
                 break
             except (git.exc.InvalidGitRepositoryError,
                     git.exc.NoSuchPathError):
-                tracer.debug("Sample directory [%s] does not exists" %
+                tracer.debug("Sample directory [%s] does not exists",
                              directory)
                 directory = os.path.dirname(directory)
         if not repo_found:
@@ -79,7 +78,7 @@ class Git(FileInterface):
 
         # :-4: cut off the '/.git'.
         self.__repo_base_dir = self.__repo.git_dir[:-5]
-        tracer.debug("repository base directory [%s]" % self.__repo_base_dir)
+        tracer.debug("repository base directory [%s]", self.__repo_base_dir)
 
     def __init__(self, config):
         tracer.info("called")
@@ -89,9 +88,9 @@ class Git(FileInterface):
         self.__end_vers = cfg.get_rvalue("end_vers")
         self.__topic_root_node = cfg.get_rvalue("topic_root_node")
         tracer.debug("start version [%s] end version [%s] "
-                     "topic root node [%s]"
-                     % (self.__start_vers, self.__end_vers,
-                        self.__topic_root_node))
+                     "topic root node [%s]",
+                     self.__start_vers, self.__end_vers,
+                     self.__topic_root_node)
 
         # When the directory is not absolute, convert it to an
         # absolute path that it can be compared to the outcome of the
@@ -104,7 +103,7 @@ class Git(FileInterface):
     def get_commits(self):
         '''Return an iterator for all the commits.'''
         return self.__repo.iter_commits(
-                    self.__start_vers + ".." + self.__end_vers)
+            self.__start_vers + ".." + self.__end_vers)
 
     def get_timestamp(self, commit):
         '''Return the commit time.'''
@@ -125,8 +124,8 @@ class Git(FileInterface):
                 self.__sub_dirname = os.path.join(*self.__sub_dir)
             tracer.debug(self)
             self.__filename = os.path.join(
-                            self.__base_dirname, self.__sub_dirname,
-                            self.__blob.name)
+                self.__base_dirname, self.__sub_dirname,
+                self.__blob.name)
 
         def __str__(self):
             '''Returns the string representation.'''
