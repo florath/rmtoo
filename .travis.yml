@@ -1,5 +1,12 @@
 language: python
 
+env:
+  global:
+    # This is needed for Coverity
+    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+    #   via the "travis encrypt" command using the project repo's public key
+    - secure: "rvEsTrSfjePsAb79JxxdgW252WPcCnhd1x+SMCTMt4p7J+++jH+gMgVyWYtKzafXpdudeXWRMfKsNiLz+ZDDw0imrzYcDaFAQjfDJh0gAB6uPn3ibEg0vX9WRgPlOvOOYX6swsiZI6HOIRQh0X3Irgiuxj7QtzCGHcGGtBVhQ32X90g5hXeTmhdHPOXx4yZ65EV+HXogLWw9IK3G4z3ObHM6LuSho4he+2cBBIDDbFbx8tVaM6A29fcOzJ5IHrDqgCCDMJkEbTqTdUYlgBDRHvli01ssqXixYoTsHb5fdhjxA4K2HcNR/qWYe9IJL528gn5HNwYss0BX8KZTL0ObO64R373LkB6mYaYiNjLHnDfF7RUSxMV30m1Bp+17TKo1wFaRP+k+mIIsMFMTHbvIRApPVgi7xAjzulSZghQ/y9jpE4/lvQjuI3she6fRQGJkajS4EwdjSmhoTagpicuCCgFx1ipCsveeTqqSBWx/mlQdqAoFcK0rx228iFfQONhV/kNqyNXKLna57a1uxP1O98v3uJx28efj5KWE/JBdTPyMs7sZ6BtyiXmMKKd2vd13b4229K99a6EMW1AMb9Xa9E2xeNZtqh3zRFzgWhJ0fvFOGDj2S2wcFjsaRZMM1a6gu4K4GSGrSQii1ERog1lwkiE6QDLlfMSEcV4AP3dKNA0="
+
 git:
   depth: 5000
 
@@ -10,6 +17,10 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+
+# This is needed for Coverity
+before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 # command to install dependencies
 install:
@@ -22,6 +33,15 @@ install:
 addons:
   sonarqube:
     organization: "xppackp2o895tua4ki8o3g" # the key of the org you chose at step #3
+  # This is needed for Coverity
+  coverity_scan:
+    project:
+      name: "florath/rmtoo"
+      description: "Build submitted via Travis CI"
+    notification_email: andreas@florath.net
+    build_command_prepend: ""
+    build_command: ""
+    branch_pattern: coverity_scan
 
 # command to run tests
 script:
