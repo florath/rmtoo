@@ -12,12 +12,12 @@ VERSION = '24.0.0'
 
 ADD_DATA = []
 
-for dadi, destpath_prefix in [('rmtoo/tests', None),
-                              ('rmtoo/collection', None),
-                              ('doc', 'rmtoo'),
-                              ('contrib', 'rmtoo')]:
+for dadi, destpath_prefix in [('contrib', 'rmtoo')]:
     for (path, dirs, files) in os.walk(dadi):
         if path.endswith("__pycache__"):
+            continue
+        if path.startswith("doc/man"):
+            # Handled separately
             continue
         l = []
         for filename in files:
@@ -28,6 +28,14 @@ for dadi, destpath_prefix in [('rmtoo/tests', None),
                 if destpath_prefix is not None else path
         ADD_DATA.append((dpath, l))
 
+# pylint: disable=deprecated-lambda,cell-var-from-loop
+for man_name in os.listdir("share/man"):
+    man_dir = "share/man/%s" % man_name
+    ADD_DATA.append(
+        (man_dir,
+         list(map(lambda x: os.path.join(man_dir, x),
+                  os.listdir(man_dir)))))
+                                          
 ADD_DATA.append(
     ("rmtoo/doc/readme",
      ["Readme-Windows.txt", "gpl-3.0.txt", "Readme-GitPython.txt",
@@ -35,6 +43,7 @@ ADD_DATA.append(
       "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
       "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
       "Roadmap.txt", "Readme.rst"]))
+
 
 def adjust(input_filename, output):
     """Function to adjust the version number
@@ -89,37 +98,22 @@ setup(name=PACKAGE, version=VERSION,
           "Topic :: Software Development :: Quality Assurance",
           "Topic :: Scientific/Engineering",
       ],
-      packages=['rmtoo', 'rmtoo/lib',
-                'rmtoo/inputs', 'rmtoo/tests', 'rmtoo/outputs',
-                'rmtoo/lib/analytics',
-                'rmtoo/lib/configuration',
-                'rmtoo/lib/digraph',
-                'rmtoo/lib/logging',
-                'rmtoo/lib/main',
-                'rmtoo/lib/storagebackend', 'rmtoo/lib/xmlutils/',
-                'rmtoo/lib/storagebackend/txtfile',
-                'rmtoo/lib/vcs',
-                'rmtoo/lib/xmlutils',
-                'rmtoo/tests/lib', 'rmtoo/tests/RMTTest-Syntax',
-                'rmtoo/tests/RMTTest-Unit',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Tag',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Digraph',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules01',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules02',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules03',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules04',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules05',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules06',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules07',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Core/testdata/modules08',
-                'rmtoo/tests/RMTTest-Unit/RMTTest-Topic',
-                'rmtoo/tests/RMTTest-Output',
-
-                # Blackbox Tests
-                # are included with the 'add_data' statement.
-               ],
+      packages=[
+          "rmtoo/inputs",
+          "rmtoo/lib",
+          "rmtoo/lib/digraph",
+          "rmtoo/lib/vcs",
+          "rmtoo/lib/logging",
+          "rmtoo/lib/analytics",
+          "rmtoo/lib/xmlutils",
+          "rmtoo/lib/main",
+          "rmtoo/lib/configuration",
+          "rmtoo/lib/storagebackend",
+          "rmtoo/lib/storagebackend/txtfile",
+          "rmtoo/outputs",
+          "rmtoo/collection",
+          "rmtoo/collection/constraints",
+      ],
       data_files=ADD_DATA,
       install_requires=[
           "numpy>=1.12.0",

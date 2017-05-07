@@ -1,0 +1,16 @@
+cloud-init:
+emacs:
+evince:
+ifupdown:
+iproute2:
+isc-dhcp-client:
+graphviz:
+less:
+man:
+net-tools:
+openssh-server:
+python-pip:
+systemd-sysv:
+texlive-latex-recommended:
+virtualenv:
+xauth:

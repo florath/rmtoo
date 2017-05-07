@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+set -x
+
+# Install rmtoo system-wide
+mkdir -p /usr/local/pkg
+cd /usr/local/pkg
+virtualenv rmtoo
+# The activate needs some care
+set +u
+source rmtoo/bin/activate
+set -u
+pip install --upgrade pip setuptools wheel
+pip install --only-binary=numpy,scipy numpy scipy
+pip install rmtoo
+
+# Set the profile.d
+cat >/etc/profile.d/R50-activate-rmtoo.sh <<EOF
+source /usr/local/pkg/rmtoo/bin/activate
+MANPATH=/usr/local/pkg/rmtoo/share/man
+export MANPATH
+EOF
+chmod a+x /etc/profile.d/R50-activate-rmtoo.sh
+
+# Set the man path
+cat >/etc/manpath.config <<EOF
+MANPATH_MAP     /usr/local/pkg/rmtoo/bin /usr/local/pkg/rmtoo/rmtoo/doc/man
+MANDB_MAP       /usr/local/pkg/rmtoo/rmtoo/doc/man /var/cache/man/rmtoo
+EOF
+
+mandb
+
+# Copy over the template repository
