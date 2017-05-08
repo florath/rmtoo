@@ -30,17 +30,17 @@ class ObjectCache(object):
         '''Prints out the usage statistics.'''
         tracer.info("Usage statistics: objects [%d] object types [%d] "
                     "get called [%d] get called (cached found) [%d] "
-                    "cache hit ratio [%4.3f]."
-                    % (self.__stats_cnt_objects, self.__stats_cnt_object_types,
-                       self.__stats_cnt_get, self.__stats_cnt_get_found,
-                       float(self.__stats_cnt_get_found) /
-                       self.__stats_cnt_get))
+                    "cache hit ratio [%4.3f]",
+                    self.__stats_cnt_objects, self.__stats_cnt_object_types,
+                    self.__stats_cnt_get, self.__stats_cnt_get_found,
+                    float(self.__stats_cnt_get_found) /
+                    self.__stats_cnt_get)
 
     @staticmethod
     def create_hashable(oid):
         '''If the oid is a list, the oid is converted into a string.'''
-        tracer.debug("Called: oid [%s]." % oid)
-        if type(oid) == list:
+        tracer.debug("Called: oid [%s]", oid)
+        if isinstance(oid, list):
             if len(oid) == 1:
                 return oid[0]
             return '-'.join(oid)
@@ -50,7 +50,7 @@ class ObjectCache(object):
         '''Tries to receive an object with the given id.
            If found, the object is returned, if not found
            None is returned.'''
-        tracer.debug("called: object type [%s] oid [%s]" % (object_type, oid))
+        tracer.debug("called: object type [%s] oid [%s]", object_type, oid)
         self.__stats_cnt_get += 1
 
         if object_type in self.__objects \
@@ -63,8 +63,8 @@ class ObjectCache(object):
         '''Adds the given object to the cache using the given object id.
            Checks of the object is of the correct type and if
            the object is already in the cache.'''
-        tracer.debug("adding object with object type [%s] oid [%s]"
-                     % (object_type, oid))
+        tracer.debug("adding object with object type [%s] oid [%s]",
+                     object_type, oid)
 
         if object_type not in self.__objects:
             self.__stats_cnt_object_types += 1

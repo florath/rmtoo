@@ -114,13 +114,14 @@ class Git(FileInterface):
            Typical information are filename, vcs_id.'''
 
         def __init__(self, base_dir, sub_dir, blob):
+            Interface.FileInfo.__init__(self)
             self.__base_dir = base_dir
             self.__blob = blob
             self.__sub_dir = sub_dir
 
             self.__base_dirname = os.path.join(*self.__base_dir)
             self.__sub_dirname = ""
-            if len(self.__sub_dir) > 0:
+            if self.__sub_dir:
                 self.__sub_dirname = os.path.join(*self.__sub_dir)
             tracer.debug(self)
             self.__filename = os.path.join(
@@ -170,7 +171,7 @@ class Git(FileInterface):
 
     def __get_file_infos_from_tree_rec(self, tree, base_dir, sub_dir):
         '''Returns recursively all file infos.'''
-        tracer.info("called: base [%s] sub [%s]" % (base_dir, sub_dir))
+        tracer.info("called: base [%s] sub [%s]", base_dir, sub_dir)
         result = []
         for blob in tree.blobs:
             result.append(Git.FileInfo(base_dir, sub_dir, blob))
@@ -178,21 +179,21 @@ class Git(FileInterface):
             sub_sub_dir = copy.deepcopy(sub_dir)
             sub_sub_dir.append(stree.name)
             result.extend(self.__get_file_infos_from_tree_rec(
-                            stree, base_dir, sub_sub_dir))
+                stree, base_dir, sub_sub_dir))
         return result
 
     def __get_file_infos_from_tree(self, tree, base_dir):
         '''Returns all the file infos recursive starting with
            the given directory.'''
-        tracer.info("called: base [%s]" % base_dir)
+        tracer.info("called: base [%s]", base_dir)
         base_dir_split = base_dir.split("/")
         ltree = self.__get_tree(tree, base_dir_split)
         return self.__get_file_infos_from_tree_rec(ltree, base_dir_split, [])
 
     def get_vcs_id_with_type(self, commit, dir_type):
         '''Return the vcs id from the base dir of the given dir_type.'''
-        tracer.debug("called: commit [%s] directory type [%s]"
-                     % (commit, dir_type))
+        tracer.debug("called: commit [%s] directory type [%s]",
+                     commit, dir_type)
         result = []
         for directory in self.__dirs[dir_type]:
             dir_split = directory.split("/")
@@ -203,16 +204,16 @@ class Git(FileInterface):
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
            given directory type.'''
-        tracer.debug("called: commit [%s] directory type [%s]"
-                     % (commit, dir_type))
+        tracer.debug("called: commit [%s] directory type [%s]",
+                     commit, dir_type)
         if dir_type not in self.__dirs:
-            tracer.debug("Skipping non existent directory for [%s]" % dir_type)
+            tracer.debug("Skipping non existent directory for [%s]", dir_type)
             return []
 
         result = []
         for directory in self.__dirs[dir_type]:
             result.extend(self.__get_file_infos_from_tree(
-                                    commit.tree, directory))
+                commit.tree, directory))
         return result
 
     def __get_blob_direct(self, base_tree, filename):
@@ -229,7 +230,7 @@ class Git(FileInterface):
            If the file (blob) is not available, a None is returned.
            If the directory is not available / accessable an exception
            is thrown.'''
-        assert len(sub_path) > 0
+        assert sub_path
         full_path = base_dir.split("/")
         sub_path_split = sub_path.split("/")
         if len(sub_path_split) > 1:
@@ -239,10 +240,10 @@ class Git(FileInterface):
 
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
-        tracer.debug("called: commit [%s] file type [%s] filename [%s]"
-                     % (commit, file_type, filename))
+        tracer.debug("called: commit [%s] file type [%s] filename [%s]",
+                     commit, file_type, filename)
         for directory in self.__dirs[file_type]:
-            tracer.debug("searching in directory [%s]" % directory)
+            tracer.debug("searching in directory [%s]", directory)
             blob = self.__get_blob(commit, directory, filename)
             if blob is not None:
                 dir_split = directory.split("/")

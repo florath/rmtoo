@@ -12,16 +12,11 @@
 from __future__ import unicode_literals
 
 import abc
+
+from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.logging import tracer
-
-
-# python 2 and 3 compat hack:
-try:
-    unicode
-except NameError:
-    unicode = str
 
 
 class Interface(object):
@@ -35,13 +30,14 @@ class Interface(object):
         self._topic_root_node = config.get_value("topic_root_node")
 
     def get_txt_io_config(self):
+        """Return the appropriate TxtIOConfig"""
         return self._txt_io_config
 
     def get_topic_base_file_info(self, commit):
         '''Return the base filename for the topics.'''
         tracer.debug("called")
         return self.get_file_info_with_type(
-                        commit, "topics", self._topic_root_node + '.tic')
+            commit, "topics", self._topic_root_node + '.tic')
 
     @abc.abstractmethod
     def get_commits(self):
@@ -63,10 +59,12 @@ class Interface(object):
         assert commit
         assert False
 
+    # pylint: disable=no-init
     class FileInfo:
         '''Holds information about a file in a repository.
-           Information are filename, vcs_id and a method to
-           access the file's content.'''
+        Information are filename, vcs_id and a method to
+        access the file's content.
+        '''
         __metaclass__ = abc.ABCMeta
 
         @abc.abstractmethod
@@ -113,20 +111,20 @@ class Interface(object):
     def _check_list_of_strings(name, tbc):
         '''Checks if the given variable is a list of strings or None.'''
         if tbc is None:
-            tracer.debug("Ignoring non existent configuration for [%s]" % tbc)
+            tracer.debug("Ignoring non existent configuration for [%s]", tbc)
             return
 
-        if type(tbc) != list:
+        if not isinstance(tbc, list):
             assert False
             raise RMTException(103, "Configuration error: [%s] configuration "
                                "must be a list, is [%s]" % (name, type(tbc)))
 
-        if len(tbc) == 0:
+        if not tbc:
             raise RMTException(105, "Configuration error: [%s] configuration "
                                "must be a non empty list" % name)
 
         for string in tbc:
-            if type(string) not in [str, bytes, unicode]:
+            if not Encoding.is_unicode(string):
                 raise RMTException(104, "Configuration error: [%s].[%s] "
                                    " configuration must be a string"
                                    % (name, string))

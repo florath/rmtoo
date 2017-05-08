@@ -59,6 +59,7 @@ class FileSystem(FileInterface):
 
         def __init__(self, base_dir, sub_dir):
             '''Creates a file system file info object.'''
+            Interface.FileInfo.__init__(self)
             self.__base_dir = base_dir
             self.__sub_dir = sub_dir
             self.__filename = os.path.join(self.__base_dir, self.__sub_dir)
@@ -80,8 +81,8 @@ class FileSystem(FileInterface):
 
         def get_content(self):
             '''Returns the file content.'''
-            with io.open(self.__filename, "r", encoding="utf-8") as fd:
-                content = fd.read()
+            with io.open(self.__filename, "r", encoding="utf-8") as content_fd:
+                content = content_fd.read()
             return content
 
         def __str__(self):
@@ -90,7 +91,7 @@ class FileSystem(FileInterface):
 
     def __get_file_infos_from_dir_rec(self, base_dir, sub_dir):
         '''Recursively collect all file infos from given base directory.'''
-        tracer.debug("called: base [%s] sub [%s]" % (base_dir, sub_dir))
+        tracer.debug("called: base [%s] sub [%s]", base_dir, sub_dir)
         directory = os.path.join(base_dir, sub_dir)
         result = []
         for dentry in os.listdir(directory):
@@ -99,7 +100,7 @@ class FileSystem(FileInterface):
             if stat.S_ISDIR(mode):
                 # It's a directory, recurse into it
                 result.extend(self.__get_file_infos_from_dir_rec(
-                            base_dir, os.path.join(sub_dir, dentry)))
+                    base_dir, os.path.join(sub_dir, dentry)))
             elif stat.S_ISREG(mode):
                 # It's a file, call the callback function
                 sub_filename = os.path.join(sub_dir, dentry)
@@ -111,17 +112,17 @@ class FileSystem(FileInterface):
 
     def __get_file_infos_from_dir(self, directory):
         '''Return all the fileinfos from the given directory.'''
-        tracer.debug("called: directory [%s]" % directory)
+        tracer.debug("called: directory [%s]", directory)
         return self.__get_file_infos_from_dir_rec(directory, "")
 
     def get_file_infos(self, commit, dir_type):
         '''Return all fileinfos of the given commit and of the
            given directory type.'''
         assert commit is None
-        tracer.debug("called: directory type [%s]" % dir_type)
+        tracer.debug("called: directory type [%s]", dir_type)
         result = []
         if dir_type not in self.__dirs:
-            '''Key not available: no files.'''
+            # Key not available: no files
             return result
 
         for directory in self.__dirs[dir_type]:
@@ -131,10 +132,10 @@ class FileSystem(FileInterface):
     def get_file_info_with_type(self, commit, file_type, filename):
         '''Returns the FileInfo object for the given filename.'''
         assert commit is None
-        tracer.debug("called: file type [%s] filename [%s]"
-                     % (file_type, filename))
+        tracer.debug("called: file type [%s] filename [%s]",
+                     file_type, filename)
         for directory in self.__dirs[file_type]:
-            tracer.debug("searching in directory [%s]" % directory)
+            tracer.debug("searching in directory [%s]", directory)
             full_path = os.path.join(directory, filename)
             if os.path.exists(full_path):
                 return FileSystem.FileInfo(directory, filename)

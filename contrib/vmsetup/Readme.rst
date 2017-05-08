@@ -16,6 +16,7 @@ Use cases:
 Features:
 
 * Complete installation of rmtoo in a python virtual environment.
+  This included binaries, man-pages and tools.
 * Complete installation of all dependencies to create documents and
   graphs.
 * Template project installed and usable.
@@ -29,7 +30,8 @@ Not included:
 * No additional support (like EMail, phone or IRC)
 * No guaranteed reaction times.
 * No guaranteed bug fix times.
-* No backup or security hardening
+* No backup of data.
+* No security hardening of OS.
 * No git / no baselines    
 * No remote GUI access / only text console.
   Either ssh can be used (might be slow) or the created documents must

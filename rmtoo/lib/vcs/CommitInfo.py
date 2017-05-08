@@ -11,18 +11,20 @@
 from rmtoo.lib.logging import tracer
 
 
-class CommitInfo:
+class CommitInfo(object):
+    """Class that stores commit / id information"""
 
     def __init__(self, input_handler, commit, vcs_id):
         '''Store the data in the local object.
-           PLEASE: grab all the information which is needed and
-                   store this in local variables - do NOT hold
-                   a reference to the input handler.'''
+        PLEASE: grab all the information which is needed and
+        store this in local variables - do NOT hold
+        a reference to the input handler.
+        '''
         self.__commit = commit
         self.__vcs_id = vcs_id
         self.__timestamp = input_handler.get_timestamp(commit)
-        tracer.debug("Finished; commit info timestamp [%s]."
-                     % self.__timestamp)
+        tracer.debug("Finished; commit info timestamp [%s]",
+                     self.__timestamp)
 
     def get_vcs_id(self):
         '''Returns the vcs id of the object.'''

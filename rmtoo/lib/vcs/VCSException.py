@@ -12,6 +12,7 @@
 
 
 class VCSException(Exception):
+    """Exception for Version Control System"""
 
     def __init__(self, msg):
-        self.msg = msg
+        Exception.__init__(self, msg)
