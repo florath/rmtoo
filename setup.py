@@ -8,7 +8,7 @@ import sys
 from setuptools import setup
 
 PACKAGE = 'rmtoo'
-VERSION = '24.1.0'
+VERSION = '24.1.1'
 
 ADD_DATA = []
 
