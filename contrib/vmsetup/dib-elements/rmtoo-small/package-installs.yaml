@@ -5,6 +5,7 @@ evince:
 ifupdown:
 iproute2:
 isc-dhcp-client:
+firefox:
 ghostscript:
 gnuplot:
 graphviz:

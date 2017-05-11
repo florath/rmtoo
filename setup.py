@@ -35,15 +35,15 @@ for man_name in os.listdir("share/man"):
         (man_dir,
          list(map(lambda x: os.path.join(man_dir, x),
                   os.listdir(man_dir)))))
-                                          
+
 ADD_DATA.append(
     ("rmtoo/doc/readme",
      ["Readme-Windows.txt", "gpl-3.0.txt", "Readme-GitPython.txt",
       "Readme-Hacking.txt", "Readme-OS-X.txt", "Readme-Overview.txt",
       "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
       "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
-      "Roadmap.txt", "Readme.rst"]))
-
+      "Roadmap.txt", "Readme.rst",
+      "contrib/vmsetup/Readme-PreinstalledVM.rst"]))
 
 def adjust(input_filename, output):
     """Function to adjust the version number

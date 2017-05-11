@@ -29,11 +29,20 @@ EOF
 chmod a+x /etc/profile.d/R50-activate-rmtoo.sh
 
 # Set the man path
-cat >/etc/manpath.config <<EOF
+cat >>/etc/manpath.config <<EOF
 MANPATH_MAP     /usr/local/pkg/rmtoo/bin /usr/local/pkg/rmtoo/rmtoo/doc/man
 MANDB_MAP       /usr/local/pkg/rmtoo/rmtoo/doc/man /var/cache/man/rmtoo
 EOF
 
 mandb
 
-# Copy over the template repository
+# Adapt the motd
+
+cat >>/etc/motd <<EOF
+
+##### rmtoo
+##### Please read the Readme; execute:
+##### $ less /usr/local/pkg/rmtoo/rmtoo/doc/readme/Readme-PreinstalledVM.rst
+##### or using a browser:
+##### https://github.com/florath/rmtoo/blob/master/contrib/vmsetup/Readme-VMUsage.rst
+EOF

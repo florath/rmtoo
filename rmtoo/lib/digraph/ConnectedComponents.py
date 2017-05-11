@@ -13,7 +13,7 @@
 from rmtoo.lib.RMTException import RMTException
 
 
-class CC_Components(object):
+class ConnectedComponents(object):
 
     def __init__(self):
         self.cs = []
@@ -62,7 +62,7 @@ def connected_components(digraph):
     """Compute the connected components of the given digraph"""
     # This hold the components:
     #  the lists of the nodes which are in one component
-    components = CC_Components()
+    components = ConnectedComponents()
 
     for node in digraph.nodes:
         # Each node itself is a separate component
