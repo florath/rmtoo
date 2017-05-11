@@ -143,6 +143,22 @@ Another possibility is to transfer the data to your local computer
 using the ssh or sftp protocol.  For every (local) operating system
 there exist many different tools.  Please consult the internet.
 
+Optional: Configuring Emacs
+===========================
+
+When using emacs it is very convinient to enable syntax highlighting.
+To enable this, run
+
+.. code:: bash
+
+   emacs ~/.emacs
+
+and add the line
+
+.. code:: bash
+
+   (load-file "/usr/local/pkg/rmtoo/rmtoo/contrib/req-mode.el")
+
 Use Cases
 =========
 

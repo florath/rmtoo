@@ -30,7 +30,7 @@ chmod a+x /etc/profile.d/R50-activate-rmtoo.sh
 
 # Set the man path
 cat >>/etc/manpath.config <<EOF
-MANPATH_MAP     /usr/local/pkg/rmtoo/bin /usr/local/pkg/rmtoo/rmtoo/doc/man
+MANPATH_MAP     /usr/local/pkg/rmtoo/bin /usr/local/pkg/rmtoo/share/man
 MANDB_MAP       /usr/local/pkg/rmtoo/rmtoo/doc/man /var/cache/man/rmtoo
 EOF
 

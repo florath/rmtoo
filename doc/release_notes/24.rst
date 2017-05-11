@@ -12,6 +12,33 @@ IF YOU WANT TO USE THE NEW FEATURES, PLEASE FIRST READ THE
 DOCUMENTATION (rmtoo-config3(5)).  IF YOU HAVE PROBLEMS WITH THIS
 FEEL FREE TO CONTACT OUR SUPPORT AT rmtoo@florath.net
 
+24.1.0
+======
+
+User visible changes
+--------------------
+
+* Support for YAML configuration
+  This shortens and simplifies configuration.
+* Modularization:
+  Next level of flexibility.  It is possible to add your
+  own input, output or markup classes without changing
+  rmtoo itself.
+* Experimental support for creating a complete VM
+  for rmtoo evaulation and small projects.
+
+Internal Changes
+----------------
+
+* Many more code cleanups and refactorings
+
+Status
+------
+
+* code coverage: 92%
+* pylint: 7.55/10.0
+* sonar:  88 code smells, 0.6% duplicates
+* code climate: 2.54 GPA, 232 issues
 
 24.0.0
 ======

@@ -175,7 +175,7 @@ When using the virtualenv, use
 
 .. code:: bash
 
-   $ man -l venv/rmtoo/doc/man/rmtoo.7
+   $ man -l venv/rmtoo/share/man/man7/rmtoo.7
 
 to get an overview over all available man pages.
 Those other man pages you can read also with man. Replace the
@@ -183,7 +183,7 @@ file name with the appropriate manual page, like:
 
 .. code:: bash
 
-   $ man -l venv/rmtoo/doc/man/rmtoo-analytics.7
+   $ man -l venv/rmtoo/share/man/man7/rmtoo-analytics.7
 
 Additional Documentation
 ------------------------

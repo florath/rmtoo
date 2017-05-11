@@ -21,7 +21,7 @@ case ${DIST} in
 esac
 
 # For local testing build
-if test ${RMTOO_VM_TEST_BUILD} == "yes"; then
+if test "${RMTOO_VM_TEST_BUILD}" == "yes"; then
     export DIB_DISTRIBUTION_MIRROR=http://10.4.0.4:3142/${mirror}
     export DIB_APT_SOURCES_CONF="default:deb http://10.4.0.4:3142/${mirror} ${DIB_RELEASE} main contrib non-free"
     export DIB_DEV_USER_PWDLESS_SUDO=yes
