@@ -8,7 +8,7 @@ import sys
 from setuptools import setup
 
 PACKAGE = 'rmtoo'
-VERSION = '24.1.1'
+VERSION = '24.1.5'
 
 ADD_DATA = []
 
@@ -99,6 +99,7 @@ setup(name=PACKAGE, version=VERSION,
           "Topic :: Scientific/Engineering",
       ],
       packages=[
+          "rmtoo",
           "rmtoo/inputs",
           "rmtoo/lib",
           "rmtoo/lib/digraph",
@@ -114,6 +115,7 @@ setup(name=PACKAGE, version=VERSION,
           "rmtoo/collection",
           "rmtoo/collection/constraints",
       ],
+      include_package_data=True,
       data_files=ADD_DATA,
       install_requires=[
           "numpy>=1.12.0",

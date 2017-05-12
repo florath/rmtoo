@@ -1,0 +1,8 @@
+include *.txt
+include *.rst
+recursive-include doc *
+recursive-include contrib *
+recursive-include share *
+recursive-include rmtoo/collection *
+prune *~
+prune *.pyc

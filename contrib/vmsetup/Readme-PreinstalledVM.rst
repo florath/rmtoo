@@ -289,3 +289,36 @@ e.g. the page that describes the analytics, use
 
    man rmtoo-analytics
 
+Next Steps
+==========
+
+There are two additional example projects availble:
+
+EMail client
+------------
+A small project with eight requirements.  This can be found in
+
+.. code:: bash
+
+   /usr/local/pkg/rmtoo/rmtoo/doc/examples/EMailClient
+
+rmtoo
+-----
+Of course the requirements for rmtoo itself are written in rmtoo.
+Currently it contains about 200 requirements - including mostly
+all different types of outputs.
+
+.. code:: bash
+
+   /usr/local/pkg/rmtoo/rmtoo/doc
+
+In this directory, you can find the ``requirements``, ``topics`` and
+so on.
+
+FAQ
+===
+Some frequently asked questions with answers:
+
+.. code:: bash
+
+   /usr/local/pkg/rmtoo/rmtoo/doc/other/FAQ.txt
