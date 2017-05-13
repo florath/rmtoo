@@ -40,9 +40,13 @@ mandb
 
 cat >>/etc/motd <<EOF
 
-##### rmtoo
-##### Please read the Readme; execute:
-##### $ less /usr/local/pkg/rmtoo/rmtoo/doc/readme/Readme-PreinstalledVM.rst
-##### or using a browser:
-##### https://github.com/florath/rmtoo/blob/master/contrib/vmsetup/Readme-VMUsage.rst
+**************************************************************************
+*                                 rmToo                                  *
+*              Preinstalled Virtual Machine - Flavor: small              *
+*                                                                        *
+* To start with rmToo, read the Readme:                                  *
+* $ less /usr/local/pkg/rmtoo/rmtoo/doc/readme/Readme-PreinstalledVM.rst *
+* or use a browser:                                                      *
+* http://goo.gl/HN5uWX                                                   *
+**************************************************************************
 EOF

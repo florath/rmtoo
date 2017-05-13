@@ -14,12 +14,8 @@ be found the appropriate release notes.
 
 v24
 ===
-o Destroy old slashdot side (only old versions available)
-o Support for python3
-o Support for tox
-o Support for pypi / pip install
-o Add badges for license, issues and coverage
-o Create ready to use VM for OTC.
+o Create ready to use VM for AWS EC2.
+o Include requirements of rmtoo and EMailClient into python package.
 
 IMPORTANT
 =========

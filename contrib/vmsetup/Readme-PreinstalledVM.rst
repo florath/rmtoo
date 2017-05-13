@@ -20,7 +20,7 @@ These are:
    Any text editor is usable - preferred: emacs.
 #. Basic YAML or JSON knowledge:
    The configuration is using either format.
-   
+
 For the requirement management tool ``rmtoo`` itself:
 
 #. Concept of requirement and design decision.
@@ -37,11 +37,13 @@ not** an introduction to rmtoo.
 Copy the Template Project
 =========================
 
-Copy the template project to the home directory:
+Copy the template project to the home directory and change the working
+directory to the new project.
 
 .. code:: bash
 
    cp -r /usr/local/pkg/rmtoo/rmtoo/contrib/template_project MyProject
+   cd MyProject
 
 This is a minimalist project with only two requirements - but the
 whole environment and infrastructure is set up so that is easy to
@@ -233,7 +235,7 @@ As for the requirement, change the content of the new topic:
 .. code:: bash
 
    emacs topics/NewTopic.tic
-	  
+
 Especially change the name.  Also here it is best practice to use the
 same (or a similar) name as for the filename.
 
@@ -246,7 +248,7 @@ For example we will add here the ``NewTopic`` as a subtopic of the
    emacs topics/WhatsAbout.tic
 
 And add a line like:
-   
+
 .. code:: bash
 
    SubTopic: NewTopic
@@ -255,13 +257,13 @@ The last step is to move the requirement to the topic. Edit the
 requirement:
 
 .. code:: bash
-	  
+
    emacs requirements/req2.req
 
 And change the ``Topic:`` to:
-   
+
 .. code:: bash
-	  
+
    Topic: NewTopic
 
 To update all the artifacts based on the new data set, call
@@ -269,6 +271,17 @@ To update all the artifacts based on the new data set, call
 .. code:: bash
 
    make
+
+In rare cases - depending on how you change the files and how the VM
+is time synchronized - when adding new elements, the call to make will
+do nothing (Message: make: Nothing to be done for 'all'.).  To get
+around this, remove the Makefile dependencies and run ``make`` again.
+
+.. code:: bash
+
+   rm -f .rmtoo_dependencies
+   make
+
 
 Using man Pages
 ===============
@@ -300,7 +313,7 @@ A small project with eight requirements.  This can be found in
 
 .. code:: bash
 
-   /usr/local/pkg/rmtoo/rmtoo/doc/examples/EMailClient
+   https://github.com/florath/rmtoo/tree/master/doc/examples/EMailClient
 
 rmtoo
 -----
@@ -310,7 +323,7 @@ all different types of outputs.
 
 .. code:: bash
 
-   /usr/local/pkg/rmtoo/rmtoo/doc
+   https://github.com/florath/rmtoo/tree/master/doc
 
 In this directory, you can find the ``requirements``, ``topics`` and
 so on.
@@ -322,3 +335,18 @@ Some frequently asked questions with answers:
 .. code:: bash
 
    /usr/local/pkg/rmtoo/rmtoo/doc/other/FAQ.txt
+
+Issues and Problems
+===================
+
+If you run into issues or problems, you can report them on
+
+.. code:: bash
+
+   https://github.com/florath/rmtoo/issues
+
+Commercial Support
+==================
+
+If you need extensions or consulting setting up or using rmtoo, please
+contact: rmtoo@florath.net
