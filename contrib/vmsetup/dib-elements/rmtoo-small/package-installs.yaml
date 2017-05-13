@@ -15,6 +15,7 @@ man:
 net-tools:
 openssh-server:
 python-pip:
+sudo:
 systemd-sysv:
 texlive-font-utils:
 texlive-latex-extra:

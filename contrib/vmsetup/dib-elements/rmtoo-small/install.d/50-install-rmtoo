@@ -50,3 +50,17 @@ cat >>/etc/motd <<EOF
 * http://goo.gl/HN5uWX                                                   *
 **************************************************************************
 EOF
+
+# Depending on the distribution and defaults there is the need
+# to change the shell.
+
+DEFAULT_USERNAME=debian
+
+chsh --shell /bin/bash ${DEFAULT_USERNAME} || true
+
+# Also set a passwordless sudo
+cat > /etc/sudoers.d/${DEFAULT_USERNAME} << EOF
+${DEFAULT_USERNAME} ALL=(ALL) NOPASSWD:ALL
+EOF
+chmod 0440 /etc/sudoers.d/${DEFAULT_USERNAME}
+visudo -c || rm /etc/sudoers.d/${DEFAULT_USERNAME}

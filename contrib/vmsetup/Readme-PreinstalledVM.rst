@@ -34,6 +34,13 @@ http://rmtoo.florath.net.
 This document **is not** an introduction to Linux; this document **is
 not** an introduction to rmtoo.
 
+No automated Backup
+===================
+
+There is no backup done of any data.  If you start your own project
+you need to create backups by yourself.
+
+
 Copy the Template Project
 =========================
 
