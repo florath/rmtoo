@@ -168,6 +168,14 @@ and add the line
 
    (load-file "/usr/local/pkg/rmtoo/rmtoo/contrib/req-mode.el")
 
+If your internet connection is not that fast, you can use the emacs
+directly in the console.  To enable this, always use the ``-nw``
+option to emacs, also e.g.:
+
+.. code:: bash
+
+   emacs -nw ~/.emacs
+
 Use Cases
 =========
 

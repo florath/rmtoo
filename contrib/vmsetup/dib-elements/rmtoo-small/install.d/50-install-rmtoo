@@ -56,7 +56,8 @@ EOF
 
 DEFAULT_USERNAME=debian
 
-chsh --shell /bin/bash ${DEFAULT_USERNAME} || true
+sed -i -e "s|DSHELL=.*|DSHELL=/bin/bash|g" /etc/adduser.conf
+useradd -D --shell /bin/bash
 
 # Also set a passwordless sudo
 cat > /etc/sudoers.d/${DEFAULT_USERNAME} << EOF
@@ -64,3 +65,4 @@ ${DEFAULT_USERNAME} ALL=(ALL) NOPASSWD:ALL
 EOF
 chmod 0440 /etc/sudoers.d/${DEFAULT_USERNAME}
 visudo -c || rm /etc/sudoers.d/${DEFAULT_USERNAME}
+

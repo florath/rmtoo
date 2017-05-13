@@ -12,6 +12,15 @@ IF YOU WANT TO USE THE NEW FEATURES, PLEASE FIRST READ THE
 DOCUMENTATION (rmtoo-config3(5)).  IF YOU HAVE PROBLEMS WITH THIS
 FEEL FREE TO CONTACT OUR SUPPORT AT rmtoo@florath.net
 
+24.2.0
+======
+
+User visible changes
+--------------------
+
+* Support for preinstalled virtual machines
+
+
 24.1.5
 ======
 
