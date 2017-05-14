@@ -15,6 +15,8 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class RDepSolvedBy(Digraph.Node):
+    """Tag handling the solved by"""
+
     depends_on = []
     tag = "Solved by"
 
@@ -22,14 +24,16 @@ class RDepSolvedBy(Digraph.Node):
         Digraph.Node.__init__(self, "RDepSolvedBy")
         self.config = config
 
-    def get_type_set(self):
+    @staticmethod
+    def get_type_set():
+        """Get the type"""
         return set([InputModuleTypes.reqdeps, ])
 
     def rewrite(self, reqset):
-        # Solved by: is (historically) seen the default.
+        """Solved by: is (historically) seen the default."""
         if self.tag not in \
            self.config.get_value_default(
-               'requirements.input.dependency_notation',
-               set(["Solved by", ])):
+                   'requirements.input.dependency_notation',
+                   set(["Solved by", ])):
             return True
         return reqset.resolve_solved_by()

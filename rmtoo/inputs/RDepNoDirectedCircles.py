@@ -19,19 +19,24 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class RDepNoDirectedCircles(Digraph.Node):
+    """Class for detecting a circle"""
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
 
     def __init__(self, config):
         Digraph.Node.__init__(self, "RDepNoDirectedCircles")
         self.config = config
 
-    def get_type_set(self):
+    @staticmethod
+    def get_type_set():
+        """Get the types"""
         return set([InputModuleTypes.reqdeps, ])
 
-    # The rewrite function here does mostly a search for strongly
-    # connected components.  It uses the algorithm from Trajan for
-    # this - which is implemented in the digraph library.
-    def rewrite(self, reqset):
+    @staticmethod
+    def rewrite(reqset):
+        """The rewrite function here does mostly a search for strongly
+        connected components.  It uses the algorithm from Trajan for
+        this - which is implemented in the digraph library.
+        """
         scc = strongly_connected_components(reqset)
         result = check_for_strongly_connected_components(scc)
         if result:

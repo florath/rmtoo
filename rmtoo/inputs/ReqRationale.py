@@ -13,6 +13,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqRationale(ReqTagGeneric):
+    """Rationale attribute"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(
@@ -21,4 +22,5 @@ class ReqRationale(ReqTagGeneric):
                  InputModuleTypes.testcase]))
 
     def rewrite(self, _, req):
+        """Rewrite: standard optional"""
         return self.handle_optional_tag(req)

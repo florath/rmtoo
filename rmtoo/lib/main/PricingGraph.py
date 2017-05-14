@@ -8,22 +8,26 @@
 
  For licensing details see COPYING
 '''
+from __future__ import print_function
+
 import sys
 import csv
 
 from rmtoo.lib.Encoding import Encoding
 
 
-# Minimalistic (but working) way to parse the command line parameters
-# and to be sure that two parameters are supplied.
 def parse_argv():
+    """ Minimalistic (but working) way to parse the command line
+    parameters and to be sure that two parameters are supplied.
+    """
     if len(sys.argv) != 3:
-        print("Usage: %s csvfile dotfile")
+        print("Usage: %s csvfile dotfile" % sys.argv[0])
         sys.exit(1)
     return sys.argv[1], sys.argv[2]
 
 
 def main():
+    """The main function for the pricing graph"""
     csvfilename, graphfilename = parse_argv()
 
     # The files must be saved according to this rules:
@@ -33,9 +37,9 @@ def main():
                       delimiter=',', quotechar='"')
 
     # Open the output file and write out the header.
-    g = open(graphfilename, "w")
-    g.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
-            "nslimit=10.0;ranksep=1;\n")
+    graph_fd = open(graphfilename, "w")
+    graph_fd.write("digraph reqdeps {\nrankdir=BT;\nmclimit=10.0;\n"
+                   "nslimit=10.0;ranksep=1;\n")
 
     # Read in all the rows and store them: there is the need to run
     # multiple times and in different directions through this list.
@@ -62,11 +66,9 @@ def main():
 
         # Compute local costs (lcosts)
         # Sometimes a ',' is used to seperate 1000
-        dayrate = float(Encoding.to_unicode(row[2], 'utf-8')[:-2]
-                        .replace(",", ""))
+        dayrate = float(Encoding.to_unicode(row[2])[:-2].replace(",", ""))
         days = float(row[3])
-        material = float(Encoding.to_unicode(row[4], 'utf-8')[:-2]
-                         .replace(",", ""))
+        material = float(Encoding.to_unicode(row[4])[:-2].replace(",", ""))
         lcosts = dayrate * days + material
 
         # Check if there are dependent costs (dcosts)
@@ -80,7 +82,7 @@ def main():
         # Write out node (attributes)
         nodeparams.append('label="%s\\n%9.2f\\n%9.2f"' %
                           (row[0], ocosts, lcosts))
-        g.write("%s [%s];\n" % (row[0], ",".join(nodeparams)))
+        graph_fd.write("%s [%s];\n" % (row[0], ",".join(nodeparams)))
 
         # Add the current costs to the (possible existant) dep_costs
         acosts = 0.0
@@ -91,10 +93,10 @@ def main():
     # Output all the existant edges
     for row in rows:
         if row[5] != '0':
-            g.write("%s -> %s;\n" % (row[0], row[5]))
+            graph_fd.write("%s -> %s;\n" % (row[0], row[5]))
 
-    g.write("}")
-    g.close()
+    graph_fd.write("}")
+    graph_fd.close()
 
 
 if __name__ == "__main__":

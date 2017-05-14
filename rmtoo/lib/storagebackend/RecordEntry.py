@@ -53,16 +53,16 @@ class RecordEntry(object):
         """Get comment"""
         return self.__comment
 
-    def write_fd(self, file_des):
+    def write_fd(self, out_file):
         """Write the record entry to the given file descriptor"""
-        file_des.write(self.__tag)
-        file_des.write(u": ")
-        file_des.write(self.__content)
-        file_des.write(u"\n")
+        out_file.write(self.__tag)
+        out_file.write(u": ")
+        out_file.write(self.__content)
+        out_file.write(u"\n")
 
-        file_des.write(u"# ")
-        file_des.write(self.__comment)
-        file_des.write(u"\n")
+        out_file.write(u"# ")
+        out_file.write(self.__comment)
+        out_file.write(u"\n")
 
     def __str__(self):
         return "Tag [%s] Content [%s] Comment [%s]" % \

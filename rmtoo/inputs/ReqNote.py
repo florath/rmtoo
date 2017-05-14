@@ -14,6 +14,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqNote(ReqTagGeneric):
+    """Note attribute"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(

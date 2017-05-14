@@ -15,7 +15,7 @@ from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.configuration.DefaultValues import DefaultValues
 
 
-class MainHelper:
+class MainHelper(object):
     '''Utility class for different aspects of the different mains.'''
 
     def __init__(self):
@@ -24,6 +24,7 @@ class MainHelper:
 
     @staticmethod
     def main_setup_config(args):
+        """Setup the config for main()"""
         config = Cfg()
         DefaultValues.set_default_values(config)
         config.merge_cmd_line_params(args)
@@ -31,7 +32,8 @@ class MainHelper:
         return config
 
     @staticmethod
-    def main_setup(args, mstdout, mstderr):
+    def main_setup(args, _mstdout, _mstderr):
+        """Create the config and input modules for the main()"""
         config = MainHelper.main_setup_config(args)
         mods = InputModules(config)
         return config, mods
