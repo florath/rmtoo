@@ -24,7 +24,7 @@ def node_list_no_sort(lst_of_nodes):
     return lst_of_nodes
 
 
-def topological_sort(dg, nodes_sort=node_list_sort):
+def topological_sort(digraph, nodes_sort=node_list_sort):
     '''This algorithm is based upon a depth first search with 'making' some
        special nodes.
        The result is the topological sorted list of nodes.'''
@@ -35,16 +35,16 @@ def topological_sort(dg, nodes_sort=node_list_sort):
     # nodes themselves.)
     visited = []
 
-    # Recursive deep first search function
     def visit(node):
+        """Recursive deep first search function"""
         if node not in visited:
             visited.append(node)
-            for m in nodes_sort(node.outgoing):
-                visit(m)
+            for out_node in nodes_sort(node.outgoing):
+                visit(out_node)
             tsort.append(node)
 
     # The 'main' function of the topological sort
-    for node in nodes_sort(dg.nodes):
+    for node in nodes_sort(digraph.nodes):
         visit(node)
 
     return tsort

@@ -14,48 +14,59 @@ from rmtoo.lib.RMTException import RMTException
 
 
 class ConnectedComponents(object):
+    """Class that holds the connected components of a digraph"""
 
     def __init__(self):
-        self.cs = []
+        self.__cs = []
 
     def get_length(self):
-        return len(self.cs)
+        """Return the number of components"""
+        return len(self.__cs)
 
     @staticmethod
-    def set_as_string(cs):
-        r = set()
-        for c in cs:
-            r.add(c.name)
-        return r
+    def set_as_string(node_set):
+        """Return list of names from a set of nodes"""
+        result = set()
+        for node in node_set:
+            result.add(node.name)
+        return result
 
     def as_string(self):
-        r = []
-        for cs in self.cs:
-            r.append(self.set_as_string(cs))
-        return r
+        """Return the connected component set as list of sets"""
+        result = []
+        for node in self.__cs:
+            result.append(self.set_as_string(node))
+        return result
 
-    def add_component(self, n):
-        self.cs.append(set([n]))
+    def add_component(self, node):
+        """Add a component that contains only the single given node"""
+        self.__cs.append(set([node]))
 
-    def find(self, n):
-        c = 0
-        for i in self.cs:
-            if n in i:
-                return c, i
-            c += 1
+    def find(self, node):
+        """Search if the given node is in the connected component.
+
+        If so return the set and the index of the set.
+        If not, raise an exeption."
+        """
+        set_idx = 0
+        for cc_set in self.__cs:
+            if node in cc_set:
+                return set_idx, cc_set
+            set_idx += 1
         # Node not found
-        raise RMTException(68, "Node [%s] not found" % n)
+        raise RMTException(68, "Node [%s] not found" % node)
 
-    def contract(self, n, v):
-        _, g = self.find(n)
-        hi, h = self.find(v)
-        if g == h:
+    def contract(self, node_a, node_b):
+        """Contract the sets which contain both given nodes"""
+        _, set_a = self.find(node_a)
+        set_b_idx, set_b = self.find(node_b)
+        if set_a == set_b:
             # Already in one component - nothing to do
             return
-        # Append elements from h to g
-        g |= h
+        # Append elements from set_b to set_a
+        set_a |= set_b
         # Remove h
-        del(self.cs[hi])
+        del self.__cs[set_b_idx]
 
 
 def connected_components(digraph):

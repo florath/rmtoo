@@ -20,6 +20,7 @@ from rmtoo.lib.Encoding import Encoding
 
 
 class RecordEntry(object):
+    """Class holding one entry of a record"""
 
     def __init__(self, tag, content, comment=None):
         Encoding.check_unicode(tag)
@@ -31,31 +32,37 @@ class RecordEntry(object):
         self.__comment = comment
 
     def get_tag(self):
+        """Return the tag"""
         return self.__tag
 
     def get_content(self):
+        """Return the content (stipped)"""
         return self.__content.lstrip()
 
-    def set_content(self, c):
-        Encoding.check_unicode(c)
-        self.__content = c
+    def set_content(self, content):
+        """Set the content"""
+        Encoding.check_unicode(content)
+        self.__content = content
 
-    def set_comment(self, c):
-        Encoding.check_unicode(c)
-        self.__comment = c
+    def set_comment(self, comment):
+        """Set the comment"""
+        Encoding.check_unicode(comment)
+        self.__comment = comment
 
     def get_comment(self):
+        """Get comment"""
         return self.__comment
 
-    def write_fd(self, fd):
-        fd.write(self.__tag)
-        fd.write(u": ")
-        fd.write(self.__content)
-        fd.write(u"\n")
+    def write_fd(self, file_des):
+        """Write the record entry to the given file descriptor"""
+        file_des.write(self.__tag)
+        file_des.write(u": ")
+        file_des.write(self.__content)
+        file_des.write(u"\n")
 
-        fd.write(u"# ")
-        fd.write(self.__comment)
-        fd.write(u"\n")
+        file_des.write(u"# ")
+        file_des.write(self.__comment)
+        file_des.write(u"\n")
 
     def __str__(self):
         return "Tag [%s] Content [%s] Comment [%s]" % \
