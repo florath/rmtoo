@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+cat >/usr/bin/rmtoo-user-init <<EOF
+#!/bin/bash
+#
+# Script that sets up the environment for rmtoo usage for one user.
+#
+
+if test -e "\${HOME}/Desktop/rmtoo-system"; then
+    echo "Already initialized"
+    exit 0
+fi
+
+# Create link to rmtoo-system installation
+(cd \${HOME}/Desktop
+ ln -s /usr/local/pkg/rmtoo rmtoo-system
+)
+
+echo "(load-file '/usr/local/pkg/rmtoo/rmtoo/contrib/req-mode.el') >> ~/.emacs
+EOF
+
+chmod a+x /usr/bin/rmtoo-user-init

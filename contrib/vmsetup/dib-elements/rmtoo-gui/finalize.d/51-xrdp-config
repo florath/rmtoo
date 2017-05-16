@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+cat >/etc/xrdp/sesman.ini <<EOF
+[Globals]
+ListenAddress=0.0.0.0
+ListenPort=3350
+EnableUserWindowManager=1
+UserWindowManager=startwm.sh
+DefaultWindowManager=startwm.sh
+
+[Security]
+AllowRootLogin=1
+MaxLoginRetry=4
+TerminalServerUsers=tsusers
+TerminalServerAdmins=tsadmins
+
+[Sessions]
+X11DisplayOffset=11
+MaxSessions=10
+KillDisconnected=0
+IdleTimeLimit=0
+DisconnectedTimeLimit=0
+
+[Logging]
+LogFile=/var/log/xrdp-sesman.log
+LogLevel=DEBUG
+EnableSyslog=0
+SyslogLevel=DEBUG
+
+[X11rdp]
+param1=-bs
+param2=-ac
+param3=-nolisten
+param4=tcp
+
+[Xvnc]
+param1=-bs
+param2=-ac
+param3=-nolisten
+param4=tcp
+param5=-dpi
+param6=96
+param7=-geometry
+param8=1280x800
+
+EOF
