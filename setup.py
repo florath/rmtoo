@@ -43,7 +43,8 @@ ADD_DATA.append(
       "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
       "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
       "Roadmap.txt", "Readme.rst",
-      "contrib/vmsetup/Readme-PreinstalledVM.rst"]))
+      "contrib/vmsetup/Readme-PreinstalledVM.rst",
+      "contrib/vmsetup/Readme-PreinstalledVMGui.rst"]))
 
 def adjust(input_filename, output):
     """Function to adjust the version number

@@ -66,4 +66,3 @@ ${DEFAULT_USERNAME} ALL=(ALL) NOPASSWD:ALL
 EOF
 chmod 0440 /etc/sudoers.d/${DEFAULT_USERNAME}
 visudo -c || rm /etc/sudoers.d/${DEFAULT_USERNAME}
-

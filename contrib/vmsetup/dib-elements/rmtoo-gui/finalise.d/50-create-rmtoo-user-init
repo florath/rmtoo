@@ -22,7 +22,7 @@ fi
  ln -s /usr/local/pkg/rmtoo rmtoo-system
 )
 
-echo "(load-file '/usr/local/pkg/rmtoo/rmtoo/contrib/req-mode.el') >> ~/.emacs
+echo "(load-file '/usr/local/pkg/rmtoo/rmtoo/contrib/req-mode.el')" >> ~/.emacs
 EOF
 
 chmod a+x /usr/bin/rmtoo-user-init
