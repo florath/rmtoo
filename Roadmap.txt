@@ -16,6 +16,7 @@ v24
 ===
 o Create ready to use VM for AWS EC2.
 o Include requirements of rmtoo and EMailClient into python package.
+o Fix: Emacs highlighting on GUI VM
 
 IMPORTANT
 =========

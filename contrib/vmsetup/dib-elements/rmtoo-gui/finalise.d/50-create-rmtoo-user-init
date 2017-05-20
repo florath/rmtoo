@@ -18,7 +18,9 @@ if test -e "\${HOME}/Desktop/rmtoo-system"; then
 fi
 
 # Create link to rmtoo-system installation
-(cd \${HOME}/Desktop
+(
+ mkdir -p \${HOME}/Desktop
+ cd \${HOME}/Desktop
  ln -s /usr/local/pkg/rmtoo rmtoo-system
 )
 
