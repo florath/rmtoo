@@ -15,6 +15,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqInventedOn(ReqTagGeneric):
+    """Invented on tag"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(
@@ -23,10 +24,10 @@ class ReqInventedOn(ReqTagGeneric):
                  InputModuleTypes.testcase]))
 
     def rewrite(self, rid, req):
-        # This tag (Invented on) is mandatory
+        """This tag (Invented on) is mandatory"""
         self.check_mandatory_tag(rid, req, 7)
 
-        t = req[self.get_tag()]
-        pt = parse_date(rid, t.get_content())
+        tag = req[self.get_tag()]
+        tcontent = parse_date(rid, tag.get_content())
         del req[self.get_tag()]
-        return self.get_tag(), pt
+        return self.get_tag(), tcontent

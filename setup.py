@@ -177,7 +177,7 @@ setup(name=PACKAGE, version=VERSION,
               "stats_burndown1 = rmtoo.outputs.stats_burndown1:stats_burndown1",
               "stats_reqs_cnt = rmtoo.outputs.stats_reqs_cnt:stats_reqs_cnt",
               "stats_sprint_burndown1 = rmtoo.outputs.stats_sprint_burndown1:stats_sprint_burndown1",
-              "tlp1 = rmtoo.outputs.tlp1:tlp1",
+              "tlp1 = rmtoo.outputs.tlp1:Tlp1",
               "version1 = rmtoo.outputs.version1:version1",
               "xml1 = rmtoo.outputs.xml1:Xml1",
               "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"

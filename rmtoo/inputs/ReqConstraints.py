@@ -14,6 +14,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqConstraints(ReqTagGeneric):
+    """Constraints Tag"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Constraints",

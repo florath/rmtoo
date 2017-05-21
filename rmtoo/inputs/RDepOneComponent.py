@@ -18,19 +18,23 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class RDepOneComponent(Digraph.Node):
+    """Dependency: component checker"""
     depends_on = ["RDepDependsOn", "RDepSolvedBy"]
 
     def __init__(self, config):
         Digraph.Node.__init__(self, "RDepOneComponent")
         self.config = config
 
-    def get_type_set(self):
+    @staticmethod
+    def get_type_set():
+        """Return the type list"""
         return set([InputModuleTypes.reqdeps, ])
 
-    # The rewrite method checks if there is only one connected
-    # component.  If not an error is printed including all the found
-    # components.
     def rewrite(self, reqset):
+        """The rewrite method checks if there is only one connected
+        component.  If not an error is printed including all the found
+        components.
+        """
         tracer.debug("Called.")
         components = connected_components(reqset)
 

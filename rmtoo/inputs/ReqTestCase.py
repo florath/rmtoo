@@ -13,6 +13,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqTestCase(ReqTagGeneric):
+    """Test Case tag"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Test Cases",
@@ -23,8 +24,8 @@ class ReqTestCase(ReqTagGeneric):
         if self.get_tag() not in req:
             return self.get_tag(), None
 
-        t = req[self.get_tag()]
-        tlist = t.get_content().split()
+        tag = req[self.get_tag()]
+        tlist = tag.get_content().split()
         del req[self.get_tag()]
 
         return self.get_tag(), tlist

@@ -14,15 +14,16 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqTopic(ReqTagGeneric):
+    """Class holding a topic"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "Topic",
                                set([InputModuleTypes.reqtag, ]))
 
     def rewrite(self, rid, req):
-        # This tag (Name) is mandatory
+        """This tag (Name) is mandatory"""
         self.check_mandatory_tag(rid, req, 9)
 
-        t = req[self.get_tag()].get_content()
+        tcontent = req[self.get_tag()].get_content()
         del req[self.get_tag()]
-        return self.get_tag(), t
+        return self.get_tag(), tcontent

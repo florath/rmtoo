@@ -14,6 +14,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class ReqCE3(ReqTagGeneric):
+    """CE3 tag"""
 
     def __init__(self, config):
         ReqTagGeneric.__init__(self, config, "CE3",

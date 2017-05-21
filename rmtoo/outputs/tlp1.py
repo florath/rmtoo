@@ -15,24 +15,31 @@ from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
-class tlp1(StdOutputParams, ExecutorTopicContinuum,
+class Tlp1(StdOutputParams, ExecutorTopicContinuum,
            CreateMakeDependencies):
+    """Write tulip compatible output"""
 
-    class Id2IntMapper:
+    # pylint: disable=too-few-public-methods
+    class Id2IntMapper(object):
+        """Maps rmtoo-ids to (tuplip) ints"""
 
         def __init__(self):
             self.next_int = 0
             self.mappings = {}
             self.imapping = {}
 
-        def get(self, n):
-            if n in self.mappings:
-                return self.mappings[n]
-            oi = self.next_int
-            self.mappings[n] = oi
-            self.imapping[oi] = n
+        def get(self, req_id):
+            """Get the mapping for req_id
+
+            If not already available, create a new.
+            """
+            if req_id in self.mappings:
+                return self.mappings[req_id]
+            next_idx = self.next_int
+            self.mappings[req_id] = next_idx
+            self.imapping[next_idx] = req_id
             self.next_int += 1
-            return oi
+            return next_idx
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
@@ -47,14 +54,14 @@ class tlp1(StdOutputParams, ExecutorTopicContinuum,
 
     def requirement_set_pre(self, requirement_set):
         '''This is called in the RequirementSet pre-phase.'''
-        with open(self._output_filename, "w") as fd:
+        with open(self._output_filename, "w") as out_fd:
             reqs_count = requirement_set.get_requirements_cnt()
-            i2im = tlp1.Id2IntMapper()
-            self.write_header(fd)
-            self.write_node_ids(fd, reqs_count)
-            self.write_edges(fd, requirement_set, i2im)
-            self.write_labels(fd, i2im)
-            self.write_footer(fd)
+            i2im = Tlp1.Id2IntMapper()
+            self.write_header(out_fd)
+            self.write_node_ids(out_fd, reqs_count)
+            self.write_edges(out_fd, requirement_set, i2im)
+            self.write_labels(out_fd, i2im)
+            self.write_footer(out_fd)
 
     # Details
     def write_header(self, fd):

@@ -14,6 +14,7 @@ from rmtoo.lib.InputModuleTypes import InputModuleTypes
 
 
 class RDepMasterNodes(Digraph.Node):
+    """Handling master nodes: nodes without parents"""
     depends_on = ["RDepDependsOn", "RDepNoDirectedCircles",
                   "RDepOneComponent", "RDepSolvedBy"]
 
@@ -21,8 +22,12 @@ class RDepMasterNodes(Digraph.Node):
         Digraph.Node.__init__(self, "RDepMasterNodes")
         self.config = config
 
-    def get_type_set(self):
+    @staticmethod
+    def get_type_set():
+        """Return the requirement's types"""
         return set([InputModuleTypes.reqdeps, ])
 
-    def rewrite(self, reqset):
+    @staticmethod
+    def rewrite(reqset):
+        """Rewrite the type"""
         return reqset.find_master_nodes()
