@@ -96,7 +96,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
             fd.write(u'<span class="subtopiclist"><ul>')
             self.__ul_open_stack[-1] = True
         fd.write(u'<li><a href="%s.html">%s</a></li>\n' %
-                 (subtopic.get_topic_name(), subtopic.get_id()))
+                 (subtopic.get_id(), subtopic.get_id()))
 
     def topic_sub_post(self, subtopic):
         '''Write the header for subtopic.'''
