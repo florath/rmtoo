@@ -30,7 +30,8 @@ class RDepOneComponent(Digraph.Node):
         """Return the type list"""
         return set([InputModuleTypes.reqdeps, ])
 
-    def rewrite(self, reqset):
+    @staticmethod
+    def rewrite(reqset):
         """The rewrite method checks if there is only one connected
         component.  If not an error is printed including all the found
         components.
