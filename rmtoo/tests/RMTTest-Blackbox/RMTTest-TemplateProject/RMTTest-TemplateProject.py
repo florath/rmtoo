@@ -18,7 +18,7 @@ class RMTTestTemplateproject(BBHelper):
     out_test_dir = "tests/RMTTest-Blackbox/RMTTest-TemplateProject"
 
     def rmttest_pos_001(self):
-        """Check the template project"""
+        """Blackbox: Check the template project"""
         self.artifacts_dir = "artifacts"
 
         cfg_file = "tests/RMTTest-Blackbox/RMTTest-TemplateProject" \

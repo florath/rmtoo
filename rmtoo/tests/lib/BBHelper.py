@@ -282,7 +282,7 @@ class BBHelper(unittest.TestCase):
         time.tzset()
 
         self.config_file_subdir = "input"
-        self.artifacts_dir = ""
+        self.artifacts_dir = None
 
     def __check_result(self, missing_files, additional_files, diffs):
         if len(missing_files) != 0:
