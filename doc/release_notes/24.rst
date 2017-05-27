@@ -12,6 +12,14 @@ IF YOU WANT TO USE THE NEW FEATURES, PLEASE FIRST READ THE
 DOCUMENTATION (rmtoo-config3(5)).  IF YOU HAVE PROBLEMS WITH THIS
 FEEL FREE TO CONTACT OUR SUPPORT AT rmtoo@florath.net
 
+24.X.Y
+======
+
+User visible changes
+--------------------
+
+* Fix #7: use id instead of name for subtopics
+
 24.3.0
 ======
 

@@ -39,8 +39,14 @@ def find(mdir):
     return r
 
 
-def unified_diff(mdir, fname, sorted_diff=False):
-    with io.open(os.path.join(os.environ["rmtoo_test_dir"], fname), "r",
+def unified_diff(mdir, fname, sorted_diff=False, artifacts_dir=None):
+    if artifacts_dir is None:
+        artifacts_path = os.environ["rmtoo_test_dir"]
+    else:
+        artifacts_path = os.path.join(os.environ["rmtoo_test_dir"],
+                                      artifacts_dir)
+
+    with io.open(os.path.join(artifacts_path, fname), "r",
                  encoding="utf-8") as fa:
         a = fa.readlines()
 
@@ -85,8 +91,14 @@ def compare_xml(mdir, fname):
 #  differences in files
 # The differences is a map where the key is the filename and the
 # content is a unified diff output.
-def compare_results(mdir, relaxed=False):
-    files_is = find(os.path.join(os.environ["rmtoo_test_dir"]))
+def compare_results(mdir, relaxed=False, artifacts_dir=None):
+    if artifacts_dir is None:
+        artifacts_path = os.environ["rmtoo_test_dir"]
+    else:
+        artifacts_path = os.path.join(os.environ["rmtoo_test_dir"],
+                                      artifacts_dir)
+
+    files_is = find(artifacts_path)
     files_should = find(os.path.join(mdir, "result_should"))
 
     missing_files = files_is - files_should
@@ -106,7 +118,7 @@ def compare_results(mdir, relaxed=False):
             sorted_diff = relaxed and \
                           df in ['stderr', 'makefile_deps', 'req-graph1.dot',
                                  'reqsprios.tex']
-            ud = unified_diff(mdir, df, sorted_diff)
+            ud = unified_diff(mdir, df, sorted_diff, artifacts_dir)
             if ud is not None:
                 r[df] = ud
 
@@ -236,9 +248,11 @@ def prepare_stderr():
 
 
 # Deprecated: please use the BBHelper class
-def check_file_results(mdir, tcname="<UNKNOWN>", relaxed=False):
+def check_file_results(mdir, tcname="<UNKNOWN>", relaxed=False,
+                       artifacts_dir=None):
     prepare_stderr()
-    missing_files, additional_files, diffs = compare_results(mdir, relaxed)
+    missing_files, additional_files, diffs \
+        = compare_results(mdir, relaxed, artifacts_dir)
     check_result(missing_files, additional_files, diffs, tcname)
 
 
@@ -267,6 +281,9 @@ class BBHelper(unittest.TestCase):
         os.environ['TZ'] = 'Europe/Berlin'
         time.tzset()
 
+        self.config_file_subdir = "input"
+        self.artifacts_dir = ""
+
     def __check_result(self, missing_files, additional_files, diffs):
         if len(missing_files) != 0:
             print("[%s] MISSING FILES [%s]"
@@ -285,7 +302,8 @@ class BBHelper(unittest.TestCase):
     def __check_file_results(self, relaxed):
         prepare_stderr()
         missing_files, additional_files, diffs \
-            = compare_results(self.__out_test_dir, relaxed)
+            = compare_results(self.__out_test_dir, relaxed,
+                              self.artifacts_dir)
         self.__check_result(missing_files, additional_files, diffs)
 
     def run_test(self, relaxed=False, container_files=[],
@@ -293,14 +311,22 @@ class BBHelper(unittest.TestCase):
                  success=True, yaml=False):
         if not cmd_line_params:
             if not yaml:
-                cmd_line_params = ["-j",
-                                   "file://" + self.__out_test_dir
-                                   + "/input/Config.json"]
+                cmd_line_params = [
+                    "-j",
+                    "file://" + os.path.join(
+                        self.__out_test_dir, self.config_file_subdir,
+                        "Config.json")]
             else:
-                cmd_line_params = ["-y",
-                                   "file://" + self.__out_test_dir
-                                   + "/input/Config.yaml"]
+                cmd_line_params = [
+                    "-y",
+                    "file://" + os.path.join(
+                        self.__out_test_dir, self.config_file_subdir,
+                        "Config.yaml")]
+
         self.__mout, self.__merr = prepare_result_is_dir()
+        if self.artifacts_dir is not None:
+            makedirs2(os.path.join(os.environ["rmtoo_test_dir"],
+                                   self.artifacts_dir))
         result = main_func(cmd_line_params,
                            self.__mout, self.__merr)
         cleanup_std_log(self.__mout, self.__merr)

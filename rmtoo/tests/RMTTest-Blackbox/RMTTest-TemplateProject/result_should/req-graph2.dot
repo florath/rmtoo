@@ -1,0 +1,14 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+subgraph cluster_GRAPH_ReqsDocument {
+ label="Topic: ReqsDocument";
+ "project" [fontcolor=red,label="project\n[10.00]"];
+ subgraph cluster_GRAPH_WhatsAbout {
+  label="Topic: WhatsAbout";
+  "req1" [fontcolor=red,label="req1\n[10.00]"];
+  }
+ }
+"req1" -> "project";
+}

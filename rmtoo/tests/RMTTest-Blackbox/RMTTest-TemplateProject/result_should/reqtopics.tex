@@ -1,0 +1,33 @@
+% Output topic 'ReqsDocument'
+\chapter{project}
+This is placeholder for some introductional text.
+% REQ 'project'
+\section{project}\label{project}
+\textbf{Description:} \textsl{project} \textbf{must} exists.
+
+\textbf{Rationale:} The world needs a good, usable and free \textsl{project}.
+
+\textbf{Solved by:} \ref{req1} \nameref{req1}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & project  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-10-09  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% Output topic 'WhatsAbout'
+\section{What's all about}
+% REQ 'req1'
+\subsection{req1}\label{req1}
+\textbf{Description:} This \textbf{must} hold the description.
+
+\textbf{Rationale:} This is a dependent requirement.
+
+\textbf{Depends on:} \ref{project} \nameref{project}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & req1  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2010-10-09  & \textbf{Invented by:} & flonatel  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+

@@ -1,0 +1,9 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+"project" [fontcolor=red,label="project\n[10.00]"];
+"req1" [fontcolor=red,label="req1\n[10.00]"];
+"req1" -> "project";
+ReqVersion [shape=plaintext label="ReqVersion\nCommit [None] VCS Id [../contrib/template_project/topics]"]
+}
