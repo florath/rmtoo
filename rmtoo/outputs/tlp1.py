@@ -79,26 +79,32 @@ class Tlp1(StdOutputParams, ExecutorTopicContinuum,
             out_fd.write("%d " % i)
         out_fd.write(")\n")
 
-    def write_edges(self, fd, reqset, i2im):
-        e = 0
+    @staticmethod
+    def write_edges(out_fd, reqset, i2im):
+        """Write out all the edges"""
+        e_cnt = 0
         for rid in sorted(reqset.get_all_requirement_ids()):
-            r = reqset.get_requirement(rid)
-            ei = i2im.get(r.get_id())
-            for o in sorted(r.incoming, key=lambda t: t.name):
-                ej = i2im.get(o.get_id())
-                fd.write("(edge %d %d %d)\n" % (e, ei, ej))
-                e += 1
+            req = reqset.get_requirement(rid)
+            e_idx = i2im.get(req.get_id())
+            for in_name in sorted(req.incoming, key=lambda t: t.name):
+                e_jdx = i2im.get(in_name.get_id())
+                out_fd.write("(edge %d %d %d)\n" % (e_cnt, e_idx, e_jdx))
+                e_cnt += 1
 
-    def write_labels(self, fd, i2im):
-        fd.write('(property  0 string "viewLabel"\n')
-        fd.write('(default "" "" )')
+    @staticmethod
+    def write_labels(out_fd, i2im):
+        """Write out the labels of the nodes"""
+        out_fd.write('(property  0 string "viewLabel"\n')
+        out_fd.write('(default "" "" )')
 
-        for k, v in sorted(i2im.imapping.items()):
-            fd.write('(node %d "%s")\n' % (k, v))
-        fd.write(")\n")
+        for key, value in sorted(i2im.imapping.items()):
+            out_fd.write('(node %d "%s")\n' % (key, value))
+        out_fd.write(")\n")
 
-    def write_footer(self, fd):
-        fd.write(")\n")
+    @staticmethod
+    def write_footer(out_fd):
+        """Write the tuplip file footer"""
+        out_fd.write(")\n")
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
