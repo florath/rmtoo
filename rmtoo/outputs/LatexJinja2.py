@@ -207,29 +207,16 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
     def requirement(self, req):
         '''Write out one requirement.'''
         clstr = req.get_value("Class").get_output_string()
-        rtype = RequirementType.as_string(req.get_value("Type"))
-        obj_hash = req.get_hash()
-
         req_template = self._template_env.get_template("singleReq.tex")
         template_vars = {'req_id': self.__strescape(req.get_id()),
                          'name':  req.get_value("Name").get_content(),
-                         'desc':  req.get_value("Description").get_content(),
-                         'req_status': req.get_value("Status").get_output_string()
-                        }
+                         'description':  req.get_value("Description").get_content(),
+                         'req_status': req.get_value("Status").get_output_string()}
 
         self.__fd.write(req_template.render(template_vars))
-	return
 
 
-        '''Write out one requirement.'''
-        self.__fd.write(u"%% REQ '%s'\n" % req.get_id())
-
-        self.__fd.write(u"\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
-                        % (self.level_names[self.__level + 1],
-                           req.get_value("Name").get_content(),
-                           LatexJinja2.__strescape(req.get_id()),
-                           req.get_value("Description").get_content()))
-
+    def requirement_old_unused(self, req):
         if req.is_val_av_and_not_null("Rationale"):
             self.__fd.write(u"\n\\textbf{Rationale:} %s\n"
                             % req.get_value("Rationale").get_content())
