@@ -17,7 +17,6 @@ from contextlib import suppress
 
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.TestCases import collect
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
@@ -45,10 +44,11 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         self.__ce3set = None
         self.__fd = None
         self.__constraints_reqs_ref = {}
+        self.__testcases = None
 
         # Jinja2 initialisation
-        templateLoader = jinja2.FileSystemLoader(searchpath=oconfig['template_path'])
-        template_env_unmodded = jinja2.Environment(loader=templateLoader)
+        template_loader = jinja2.FileSystemLoader(searchpath=oconfig['template_path'])
+        template_env_unmodded = jinja2.Environment(loader=template_loader)
         self._template_env = template_env_unmodded.overlay(
             block_start_string='((*',
             block_end_string='*))',
@@ -206,8 +206,10 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         self.__constraints_reqs_ref[constraint].append(requirement)
 
     def requirement(self, req):
+        self.__fd.write(self._get_requirement(req))
+
+    def _get_requirement(self, req):
         '''Write out one requirement.'''
-        clstr = req.get_value("Class").get_output_string()
         req_template = self._template_env.get_template("singleReq.tex")
         template_vars = {'req_id': self.__strescape(req.get_id()),
                          'name':  req.get_value("Name").get_content(),
@@ -235,7 +237,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
             pass
         try:
             template_vars['clstr'] = req.get_value("Class").get_output_string()
-        except KeyError: 
+        except KeyError:
             pass
         try:
             template_vars['rtype'] = req.get_value("Type").as_string()
@@ -255,12 +257,15 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
             pass
         try:
             template_vars['inventedby'] = req.get_value("Invented by")
-        except KeyError: pass
+        except KeyError:
+            pass
 
-        self.__fd.write(req_template.render(template_vars))
+        return req_template.render(template_vars)
 
 
     def requirement_old_unused(self, req):
+        ''' This is just a placeholder until all values have been transferred
+        to the new function'''
         if self.__ce3set is not None:
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt is not None and len(cnstrt) > 0:
