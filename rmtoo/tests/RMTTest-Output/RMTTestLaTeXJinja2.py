@@ -29,13 +29,13 @@ from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 
 class RMTTestOutputLaTeXJinja22:
+    "Test-Class for the templated latex output class"
 
     def __init__(self):
         self.__tmpdir = create_tmp_dir()
-        self.__def_mconfig = {"output_filename":
-                   os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
-                   "template_path": os.path.join(os.environ['basedir'], 'latex', 'LatexJinja2') 
-                   }
+        self.__def_mconfig = {
+            "output_filename": os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
+            "template_path": os.path.join(os.environ['basedir'], 'latex', 'LatexJinja2')}
 
     def __del__(self):
         if self.__tmpdir:
@@ -58,18 +58,16 @@ class RMTTestOutputLaTeXJinja22:
         ttopic_set = TestTopicSet(rset)
 
         mconfig = self.__def_mconfig
-        l2 = latex2(mconfig)
+        req_proc = latex2(mconfig)
 
         try:
-            l2.topic_set_pre(ttopic_set)
-            topic.execute(l2, "")
-            assert(False)
+            req_proc.topic_set_pre(ttopic_set)
+            topic.execute(req_proc, "")
+            assert False
         except RMTException:
             pass
-        l2.topic_set_post(ttopic_set)
+        req_proc.topic_set_post(ttopic_set)
 
-    def rmttest_neg_02(self):
-        pass
 
     def rmttest_def_req(self):
         "LaTeX output: compare output to defined value"
@@ -104,7 +102,7 @@ my desc
         mconfig = self.__def_mconfig
         mconfig['req_attributes'] = ["Status", "Class", "DoesNotExists"]
 
-        l2 = latex2(mconfig)
+        req_proc = latex2(mconfig)
         req = Requirement(None, u"TestReq", None, None, None)
         req.values = {}
         req.values[u"Name"] = RecordEntry(u"Name", u"my name")
@@ -121,12 +119,11 @@ my desc
         rset = RequirementSet(tcfg)
         ttopic_set = TestTopicSet(rset)
 
-        req_text = l2._get_requirement(req)
+        req_text = req_proc._get_requirement(req)
         try:
-            assert(req_text == exp_value)
-        except AssertionError as e:
+            assert req_text == exp_value
+        except AssertionError:
             import difflib
             diff = difflib.ndiff(req_text.splitlines(True), exp_value.splitlines(True))
             print(''.join(diff))
             raise Exception("The template is not equal to it's expected value")
-
