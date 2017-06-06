@@ -4,7 +4,7 @@
 
   Unit test for Latex Jinja2 output
 
- (c) 2017 Kristoffer Nordström
+ (c) 2017 Kristoffer Nordstroem
 
  For licensing details see COPYING
 '''
