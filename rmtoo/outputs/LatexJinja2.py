@@ -13,7 +13,6 @@ from __future__ import unicode_literals
 import io
 import jinja2
 from six import iteritems
-from contextlib import suppress
 
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.TestCases import collect
@@ -262,11 +261,9 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
         return req_template.render(template_vars)
 
-
-    def requirement_old_unused(self, req):
-        ''' This is just a placeholder until all values have been transferred
-        to the new function'''
+        # The following has not been ported yet (TODO)
         if self.__ce3set is not None:
+            raise NotImplementedError('Not yet defined')
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt is not None and len(cnstrt) > 0:
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
@@ -288,6 +285,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
         testcases = req.get_value_default("Test Cases")
         if testcases is not None:
+            raise NotImplementedError('Not yet defined: Test Cases')
             self.__fd.write(u"\n\\textbf{Test Cases:} ")
             tcout = []
             for testcase in testcases:
