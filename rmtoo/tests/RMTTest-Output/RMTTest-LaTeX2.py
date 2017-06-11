@@ -49,15 +49,15 @@ class RMTTestOutputLaTeX2:
 
         mconfig = {"output_filename":
                    os.path.join(tmpdir, "TestLateX2Out.tex")}
-        l2 = latex2(mconfig)
+        out_l2 = latex2(mconfig)
 
         try:
-            l2.topic_set_pre(ttopic_set)
-            topic.execute(l2, "")
-            assert(False)
+            out_l2.topic_set_pre(ttopic_set)
+            topic.execute(out_l2, "")
+            assert False
         except RMTException:
             pass
-        l2.topic_set_post(ttopic_set)
+        out_l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
 
     def rmttest_neg_02(self):
@@ -74,7 +74,7 @@ class RMTTestOutputLaTeX2:
                    "output_filename":
                    os.path.join(tmpdir, "TestLateX2Out.tex")}
 
-        l2 = latex2(mconfig)
+        out_l2 = latex2(mconfig)
         req = Requirement(None, u"TestReq", None, None, None)
         req.values = {}
         req.values[u"Name"] = RecordEntry(u"Name", u"my name")
@@ -92,10 +92,10 @@ class RMTTestOutputLaTeX2:
         ttopic_set = TestTopicSet(rset)
 
         try:
-            l2.topic_set_pre(None)
-            req.execute(l2, "")
-            assert(False)
+            out_l2.topic_set_pre(None)
+            req.execute(out_l2, "")
+            assert False
         except RMTException:
             pass
-        l2.topic_set_post(ttopic_set)
+        out_l2.topic_set_post(ttopic_set)
         delete_tmp_dir(tmpdir)
