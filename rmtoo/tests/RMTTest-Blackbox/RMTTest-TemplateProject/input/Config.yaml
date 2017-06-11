@@ -42,11 +42,15 @@ topics:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/reqtopics.tex
       prios:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/reqsprios.tex
+        start_date: '2017-05-26'
+        end_date: '2017-05-30'
       stats_burndown1:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/stats_burndown.csv
-        start_date: '2011-05-01'
+        start_date: '2017-05-01'
+        end_date: '2017-05-30'
       stats_sprint_burndown1:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/stats_sprint_burndown.csv
-        start_date: '2011-05-01'
+        start_date: '2017-05-01'
+        end_date: '2017-05-30'
       version1:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/reqs-version.txt
