@@ -232,7 +232,6 @@ class Html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''Called on requirement level.'''
         self._cmad_file.write(u"REQS+=%s\n" % requirement.get_file_path())
 
-
     def cmad(self, reqscont, ofile):
         """Create Makefile Dependencies
 
