@@ -22,7 +22,8 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
-class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
+class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
+                  CreateMakeDependencies):
     default_config = {"req_attributes":
                       ["Id", "Priority", "Owner", "Invented on",
                        "Invented by", "Status", "Class"]}
@@ -46,7 +47,8 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         self.__testcases = None
 
         # Jinja2 initialisation
-        template_loader = jinja2.FileSystemLoader(searchpath=oconfig['template_path'])
+        template_loader = jinja2.FileSystemLoader(
+                searchpath=oconfig['template_path'])
         template_env_unmodded = jinja2.Environment(loader=template_loader)
         self._template_env = template_env_unmodded.overlay(
             block_start_string='((*',
@@ -189,9 +191,9 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
     def topic_text(self, text):
         '''Write out the given text.'''
-        self.__fd.write(u"%s\n" % text)
         req_template = self._template_env.get_template("topicText.tex")
         template_vars = {'text': text}
+        self.__fd.write(req_template.render(template_vars))
 
     def requirement_set_pre(self, rset):
         '''Prepare the requirements set output.'''
@@ -213,32 +215,42 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
     def _get_requirement(self, req):
         '''Write out one requirement.'''
         req_template = self._template_env.get_template("singleReq.tex")
-        template_vars = {'req_id': self.__strescape(req.get_id()),
-                         'name':  req.get_value("Name").get_content(),
-                         'description':  req.get_value("Description").get_content(),
-                         'req_status': req.get_value("Status").get_output_string()}
+        template_vars = (
+            {'req_id': self.__strescape(req.get_id()),
+             'name':  req.get_value("Name").get_content(),
+             'description':  req.get_value("Description").get_content(),
+             'req_status': req.get_value("Status").get_output_string()}
+        )
 
         if req.is_val_av_and_not_null("Rationale"):
-            template_vars['rationale'] = req.get_value("Rationale").get_content()
+            template_vars['rationale'] = (
+                req.get_value("Rationale").get_content()
+            )
         if req.is_val_av_and_not_null("Note"):
-            template_vars['note'] = req.get_value("Note").get_content()
+            template_vars['note'] = (
+                req.get_value("Note").get_content()
+            )
 
         if len(req.outgoing) > 0:
             # Create links to the corresponding dependency nodes.
-            inc = [d.get_id() for d in sorted(req.outgoing, key=lambda r: r.get_id())]
+            inc = [d.get_id() for d in
+                   sorted(req.outgoing, key=lambda r: r.get_id())]
             template_vars['solvedby'] = inc
 
         if len(req.incoming) > 0:
             # Only output the depends on when there are fields for output.
-            inc = [d.get_id() for d in sorted(req.incoming, key=lambda r: r.get_id())]
+            inc = [d.get_id() for d in
+                   sorted(req.incoming, key=lambda r: r.get_id())]
             template_vars['dependson'] = inc
 
         try:
-            template_vars['status'] = req.get_value("Status").get_output_string()
+            template_vars['status'] = (
+                    req.get_value("Status").get_output_string())
         except KeyError:
             pass
         try:
-            template_vars['clstr'] = req.get_value("Class").get_output_string()
+            template_vars['clstr'] = (
+                    req.get_value("Class").get_output_string())
         except KeyError:
             pass
         try:
@@ -254,7 +266,8 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         except KeyError:
             pass
         try:
-            template_vars['inventedon'] = req.get_value("Invented on").strftime("%Y-%m-%d")
+            template_vars['inventedon'] = (
+                    req.get_value("Invented on").strftime("%Y-%m-%d"))
         except KeyError:
             pass
         try:
@@ -300,10 +313,10 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
             self.__fd.write(u", ".join(tcout))
             self.__fd.write(u"\n")
 
-
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")
         CreateMakeDependencies.write_reqs_dep(self._cmad_file,
                                               self._output_filename)
-        self._cmad_file.write(u"REQS_LATEX2=%s\n" % self._output_filename)
+        self._cmad_file.write(u"REQS_LATEX2=%s\n" %
+                              self._output_filename)

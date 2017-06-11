@@ -34,8 +34,10 @@ class RMTTestOutputLaTeXJinja22:
     def __init__(self):
         self.__tmpdir = create_tmp_dir()
         self.__def_mconfig = {
-            "output_filename": os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
-            "template_path": os.path.join(os.environ['basedir'], 'latex', 'LatexJinja2')}
+            "output_filename":
+            os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
+            "template_path":
+            os.path.join(os.environ['basedir'], 'latex', 'LatexJinja2')}
 
     def __del__(self):
         if self.__tmpdir:
@@ -68,7 +70,6 @@ class RMTTestOutputLaTeXJinja22:
             pass
         req_proc.topic_set_post(ttopic_set)
 
-
     def rmttest_def_req(self):
         "LaTeX output: compare output to defined value"
         exp_value = r"""
@@ -94,7 +95,7 @@ my desc
    Class: & implementable
 \end{tabular}\end{center}
 }
-"""
+""" # noqa
 
         tcfg = TestConfig()
         tcfg.set_output_cfg()
@@ -116,14 +117,18 @@ my desc
         ce3 = CE3()
         ce3set.insert(u"TestReq", ce3)
 
+        ''' This is here for future? use.
         rset = RequirementSet(tcfg)
         ttopic_set = TestTopicSet(rset)
+        '''
 
         req_text = req_proc._get_requirement(req)
         try:
             assert req_text == exp_value
         except AssertionError:
             import difflib
-            diff = difflib.ndiff(req_text.splitlines(True), exp_value.splitlines(True))
+            diff = difflib.ndiff(
+                req_text.splitlines(True),
+                exp_value.splitlines(True))
             print(''.join(diff))
             raise Exception("The template is not equal to it's expected value")
