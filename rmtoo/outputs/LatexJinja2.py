@@ -152,7 +152,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
     def __output_latex_testcases(self, testcases):
         '''Write out all testcases for the topic set.'''
-        if len(testcases) == 0:
+        if not len(testcases):
             tracer.debug("No testcases to output.")
             return
 
@@ -163,8 +163,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
     def topic_set_post(self, topic_set):
         '''Print out the constraints and clean up file.'''
         tracer.debug("Called; output constraints.")
-        if topic_set is None:
-            assert False
+        assert topic_set is not None
         constraints = Constraints.collect(topic_set)
         self.__output_latex_constraints(constraints)
         testcases = collect(topic_set)
@@ -184,11 +183,15 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
     def topic_name(self, name):
         '''Output the topic name.'''
-        self.__fd.write(u"\\%s{%s}\n" % (self.level_names[self.__level], name))
+        req_template = self._template_env.get_template("topicName.tex")
+        template_vars = {'level': self.__level, 'name': name}
+        self.__fd.write(req_template.render(template_vars))
 
     def topic_text(self, text):
         '''Write out the given text.'''
         self.__fd.write(u"%s\n" % text)
+        req_template = self._template_env.get_template("topicText.tex")
+        template_vars = {'text': text}
 
     def requirement_set_pre(self, rset):
         '''Prepare the requirements set output.'''
