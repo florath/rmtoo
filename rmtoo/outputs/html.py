@@ -20,7 +20,9 @@ from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
-class html(ExecutorTopicContinuum, CreateMakeDependencies):
+# pylint: disable=too-many-instance-attributes,too-many-public-methods
+class Html(ExecutorTopicContinuum, CreateMakeDependencies):
+    """HTML output module"""
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
@@ -33,6 +35,8 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         self.__ul_open_stack = []
         self.__output_directory = self._config.get_rvalue('output_directory')
         self.__markup = Markup("html")
+        self.__tc_name = None
+        self.__topic_set = None
         self.html_header_filename = self._config.get_rvalue('header')
         self.html_footer_filename = self._config.get_rvalue('footer')
         self.read_html_arts()
@@ -50,59 +54,59 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
            the latest (newest) is used.'''
         return [topic_sets[vcs_commit_ids[-1].get_commit()]]
 
-    def topic_set_pre(self, topics_set):
+    def topic_set_pre(self, _topics_set):
         '''Do all the file and directory preparation.'''
         self.__ouput_html_topic_mkdirs()
 
-    def __output_html_topic_write_header(self, fd):
+    def __output_html_topic_write_header(self, out_fd):
         '''Write the html header.'''
-        fd.write(self.html_header)
+        out_fd.write(self.html_header)
 
     def topic_pre(self, topic):
         '''Output one topic.
            This method is called once for each topic and subtopic.'''
-        tracer.debug("Called: topic name [%s]." % topic.name)
+        tracer.debug("Called: topic name [%s]", topic.name)
         filename = os.path.join(self.__output_directory, topic.name + ".html")
-        fd = io.open(filename, "w", encoding="utf-8")
-        self.__output_html_topic_write_header(fd)
-        self.__fd_stack.append(fd)
+        out_fd = io.open(filename, "w", encoding="utf-8")
+        self.__output_html_topic_write_header(out_fd)
+        self.__fd_stack.append(out_fd)
         self.__ul_open_stack.append(False)
-        #        self.output_html_topic_output_content(fd, topic)
+        # self.output_html_topic_output_content(fd, topic)
 
     def topic_post(self, topic):
         '''Write out the footer and do clean ups.'''
-        fd = self.__fd_stack.pop()
+        out_fd = self.__fd_stack.pop()
         self.__ul_open_stack.pop()
-        self.output_html_topic_write_footer(fd)
-        fd.close()
-        tracer.debug("Finished: topic name [%s]" % topic.name)
+        self.output_html_topic_write_footer(out_fd)
+        out_fd.close()
+        tracer.debug("Finished: topic name [%s]", topic.name)
 
     def topic_name(self, name):
         '''Set the name.'''
-        fd = self.__fd_stack[-1]
+        out_fd = self.__fd_stack[-1]
         level = len(self.__fd_stack)
-        fd.write(u"<h%d>%s</h%d>\n" % (level, name, level))
+        out_fd.write(u"<h%d>%s</h%d>\n" % (level, name, level))
 
     def topic_text(self, text):
         '''Called when there is text to be outputted.'''
-        fd = self.__fd_stack[-1]
-        fd.write(u'<p><span class="fltext">%s</span></p>\n'
-                 % self.__markup.replace(text))
+        out_fd = self.__fd_stack[-1]
+        out_fd.write(u'<p><span class="fltext">%s</span></p>\n'
+                     % self.__markup.replace(text))
 
     def topic_sub_pre(self, subtopic):
         '''Prepares a new subtopic output.'''
-        fd = self.__fd_stack[-1]
+        out_fd = self.__fd_stack[-1]
         if not self.__ul_open_stack[-1]:
-            fd.write(u'<span class="subtopiclist"><ul>')
+            out_fd.write(u'<span class="subtopiclist"><ul>')
             self.__ul_open_stack[-1] = True
-        fd.write(u'<li><a href="%s.html">%s</a></li>\n' %
-                 (subtopic.get_id(), subtopic.get_topic_name()))
+        out_fd.write(u'<li><a href="%s.html">%s</a></li>\n' %
+                     (subtopic.get_id(), subtopic.get_topic_name()))
 
-    def topic_sub_post(self, subtopic):
+    def topic_sub_post(self, _subtopic):
         '''Write the header for subtopic.'''
         if self.__ul_open_stack[-1]:
-            fd = self.__fd_stack[-1]
-            fd.write(u"</ul></span>")
+            out_fd = self.__fd_stack[-1]
+            out_fd.write(u"</ul></span>")
             self.__ul_open_stack[-1] = False
 
     def requirement_set_sort(self, list_to_sort):
@@ -111,86 +115,91 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
 
     def requirement(self, req):
         '''Output one requirement.'''
-        fd = self.__fd_stack[-1]
+        out_fd = self.__fd_stack[-1]
         level = len(self.__fd_stack)
 
-        fd.write(u"\n<!-- REQ '%s' -->\n" % req.get_id())
-        fd.write(u'<h%d><a id="%s">%s</a></h%d>\n' %
-                 (level + 1, req.get_id(), req.get_value("Name").get_content(),
-                  level + 1))
-        fd.write(u"<dl>")
+        out_fd.write(u"\n<!-- REQ '%s' -->\n" % req.get_id())
+        out_fd.write(u'<h%d><a id="%s">%s</a></h%d>\n' %
+                     (level + 1, req.get_id(),
+                      req.get_value("Name").get_content(),
+                      level + 1))
+        out_fd.write(u"<dl>")
 
-        fd.write(u'<dt><span class="dlt_description">Description</span>'
-                 '</dt><dd><span class="dlv_description">%s</span></dd>' %
-                 self.__markup.replace(req.get_value("Description")
-                                       .get_content()))
+        out_fd.write(u'<dt><span class="dlt_description">Description</span>'
+                     '</dt><dd><span class="dlv_description">%s</span></dd>' %
+                     self.__markup.replace(req.get_value("Description")
+                                           .get_content()))
 
         if req.is_value_available("Rationale") \
                 and req.get_value("Rationale") is not None:
-            fd.write(u'<dt><span class="dlt_rationale">Rationale</span>'
-                     '</dt><dd><span class="dlv_rationale">%s</span></dd>' %
-                     self.__markup.replace_par(req.get_value("Rationale").
-                                               get_content()))
+            out_fd.write(
+                u'<dt><span class="dlt_rationale">Rationale</span>'
+                '</dt><dd><span class="dlv_rationale">%s</span></dd>'
+                % self.__markup.replace_par(req.get_value("Rationale").
+                                            get_content()))
 
         if req.is_value_available("Note") \
            and req.get_value("Note") is not None:
-            fd.write(u'<dt><span class="dlt_note">Note</span></dt>'
-                     '<dd><span class="dlv_note">%s</span></dd>'
-                     % req.get_value("Note").get_content())
+            out_fd.write(u'<dt><span class="dlt_note">Note</span></dt>'
+                         '<dd><span class="dlv_note">%s</span></dd>'
+                         % req.get_value("Note").get_content())
 
         # Only output the depends on when there are fields for output.
-        if len(req.incoming) > 0:
+        if req.incoming:
             # Create links to the corresponding labels.
-            fd.write(u'<dt><span class="dlt_depends_on">Depends on:'
-                     '</span></dt><dd><span class="dlv_depends_on">')
+            out_fd.write(u'<dt><span class="dlt_depends_on">Depends on:'
+                         '</span></dt><dd><span class="dlv_depends_on">')
             is_first = True
-            for d in sorted(req.incoming, key=lambda r: r.get_id()):
+            for iid in sorted(req.incoming, key=lambda r: r.get_id()):
                 if not is_first:
-                    fd.write(u", ")
+                    out_fd.write(u", ")
                 is_first = False
-                fd.write(u'<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.get_id(), d.get_id()))
-            fd.write(u"</span></dd>")
+                out_fd.write(
+                    u'<a href="%s.html#%s">%s</a>' %
+                    (iid.get_value("Topic"), iid.get_id(), iid.get_id()))
+            out_fd.write(u"</span></dd>")
 
-        if len(req.outgoing) > 0:
+        if req.outgoing:
             # Create links to the corresponding dependency nodes.
-            fd.write(u'<dt><span class="dlt_dependent">Dependent'
-                     '</span></dt><dd><span class="dlv_dependent">')
+            out_fd.write(u'<dt><span class="dlt_dependent">Dependent'
+                         '</span></dt><dd><span class="dlv_dependent">')
             is_first = True
-            for d in sorted(req.outgoing, key=lambda r: r.get_id()):
+            for iid in sorted(req.outgoing, key=lambda r: r.get_id()):
                 if not is_first:
-                    fd.write(u", ")
+                    out_fd.write(u", ")
                 is_first = False
-                fd.write(u'<a href="%s.html#%s">%s</a>' %
-                         (d.get_value("Topic"), d.get_id(), d.get_id()))
-            fd.write(u"</span></dd>")
+                out_fd.write(
+                    u'<a href="%s.html#%s">%s</a>' %
+                    (iid.get_value("Topic"), iid.get_id(), iid.get_id()))
+            out_fd.write(u"</span></dd>")
 
         status = req.get_value("Status").get_output_string()
         clstr = req.get_value("Class").get_output_string()
 
-        fd.write(u'<dt><span class="dlt_id">Id</span></dt>'
-                 '<dd><span class="dlv_id">%s</span></dd>'
-                 '<dt><span class="dlt_priority">Priority</span></dt>'
-                 '<dd><span class="dlv_priority">%4.2f</span></dd>'
-                 '<dt><span class="dlt_owner">Owner</span></dt>'
-                 '<dd><span class="dlv_owner">%s</span></dd>'
-                 '<dt><span class="dlt_invented_on">Invented on</span></dt>'
-                 '<dd><span class="dlv_invented_on">%s</span></dd>'
-                 '<dt><span class="dlt_invented_by">Invented by</span></dt>'
-                 '<dd><span class="dlv_invented_by">%s</span></dd>'
-                 '<dt><span class="dlt_status">Status</span></dt>'
-                 '<dd><span class="dlv_status">%s</span></dd>'
-                 '<dt><span class="dlt_class">Class</span></dt>'
-                 '<dd><span class="dlv_class">%s</span></dd>'
-                 % (req.get_id(), req.get_value("Priority") * 10,
-                    req.get_value("Owner"),
-                    req.get_value("Invented on").strftime("%Y-%m-%d"),
-                    req.get_value("Invented by"), status, clstr))
-        fd.write(u"</dl>")
+        out_fd.write(
+            u'<dt><span class="dlt_id">Id</span></dt>'
+            '<dd><span class="dlv_id">%s</span></dd>'
+            '<dt><span class="dlt_priority">Priority</span></dt>'
+            '<dd><span class="dlv_priority">%4.2f</span></dd>'
+            '<dt><span class="dlt_owner">Owner</span></dt>'
+            '<dd><span class="dlv_owner">%s</span></dd>'
+            '<dt><span class="dlt_invented_on">Invented on</span></dt>'
+            '<dd><span class="dlv_invented_on">%s</span></dd>'
+            '<dt><span class="dlt_invented_by">Invented by</span></dt>'
+            '<dd><span class="dlv_invented_by">%s</span></dd>'
+            '<dt><span class="dlt_status">Status</span></dt>'
+            '<dd><span class="dlv_status">%s</span></dd>'
+            '<dt><span class="dlt_class">Class</span></dt>'
+            '<dd><span class="dlv_class">%s</span></dd>'
+            % (req.get_id(), req.get_value("Priority") * 10,
+               req.get_value("Owner"),
+               req.get_value("Invented on").strftime("%Y-%m-%d"),
+               req.get_value("Invented by"), status, clstr))
+        out_fd.write(u"</dl>")
 
         # Mark the end of the requirment - then it is possible to add
         # some ruler here
-        fd.write(u'<div class="requirment_end"> </div>')
+        out_fd.write(u'<div class="requirment_end"> </div>')
 
     def cmad_topic_continuum_pre(self, topics_continuum):
         '''Save the name.'''
@@ -200,7 +209,7 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
         '''Save the name.'''
         self.__topic_set = topic_set
 
-    def cmad_topic_set_post(self, topic_set):
+    def cmad_topic_set_post(self, _topic_set):
         '''Output symbol with all the HTMLs artifacts inside.'''
         self._cmad_file.write(u"OUTPUT_HTML=")
         for topic_name in self.__topic_name_set:
@@ -218,22 +227,19 @@ class html(ExecutorTopicContinuum, CreateMakeDependencies):
              self.html_footer_filename,
              self.__topic_set.create_makefile_name(self.__tc_name, topic.name),
              self._get_call_rmtoo_line()))
-        # TODO: more is needed! (see beneath)
 
     def cmad_requirement(self, requirement):
         '''Called on requirement level.'''
         self._cmad_file.write(u"REQS+=%s\n" % requirement.get_file_path())
 
-    # TODO: Think about this!
 
-    # Create Makefile Dependencies
-    # Basic idea: each HTML file is dependend of the approriate topic
-    # file plus the header and the footer.
-    # Each html file depends on it's topic file
     def cmad(self, reqscont, ofile):
-        # ToDo: needed? (reqset is never used)
-        # reqset = reqscont.continuum_latest()
+        """Create Makefile Dependencies
 
+        Basic idea: each HTML file is dependend of the approriate topic
+        file plus the header and the footer.
+        Each html file depends on it's topic file
+        """
         # Dependencies of every single topic html page
         for topic in self.topic_set.nodes:
             ofile.write(u"%s.html: %s %s ${%s}\n\t${CALL_RMTOO}\n" %

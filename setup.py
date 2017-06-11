@@ -170,7 +170,7 @@ setup(name=PACKAGE, version=VERSION,
           "rmtoo.output.plugin" : [
               "graph2 = rmtoo.outputs.graph2:graph2",
               "graph = rmtoo.outputs.graph:graph",
-              "html = rmtoo.outputs.html:html",
+              "html = rmtoo.outputs.html:Html",
               "latex2 = rmtoo.outputs.latex2:latex2",
               "oopricing1 = rmtoo.outputs.oopricing1:oopricing1",
               "prios = rmtoo.outputs.prios:prios",
