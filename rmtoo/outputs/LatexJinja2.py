@@ -281,7 +281,8 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         if self.__ce3set is not None:
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt is not None and len(cnstrt) > 0:
-                raise NotImplementedError('Not yet defined, use latex2 output instead!')
+                raise NotImplementedError(
+                        'Not yet defined, use latex2 output instead!')
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
                 for key, val in sorted(iteritems(cnstrt)):
@@ -301,9 +302,8 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
 
         testcases = req.get_value_default("Test Cases")
         if testcases is not None:
-            #raise NotImplementedError('Not yet defined: Test Cases')
             inc = [LatexJinja2.__strescape(testcase)
-                    for testcase in testcases]
+                   for testcase in testcases]
             template_vars['testcases'] = inc
 
         return req_template.render(template_vars)
