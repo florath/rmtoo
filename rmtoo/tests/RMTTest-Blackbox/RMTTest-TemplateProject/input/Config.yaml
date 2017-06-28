@@ -29,6 +29,8 @@ topics:
         topic_root_node: ReqsDocument
         constraints_dirs:
         - ../contrib/template_project/constraints
+        testcases_dirs:
+        - ../contrib/template_project/testcases
     output:
       graph:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/req-graph1.dot
