@@ -5,10 +5,10 @@
 
 set -e
 
-# Use Debian Stretch
+# Use Debian Jessie
 
 DIST=debian-minimal
-export DIB_RELEASE=stretch
+export DIB_RELEASE=jessie
 ADD_ELEMENTS=""
 
 case ${DIST} in
@@ -32,7 +32,7 @@ if test "${RMTOO_VM_TEST_BUILD}" == "yes"; then
 fi
 
 ADD_ELEMENTS+=" rmtoo-small"
-# ADD_ELEMENTS+=" rmtoo-gui"
+ADD_ELEMENTS+=" rmtoo-gui"
 
 export DIB_DEBOOTSTRAP_EXTRA_ARGS="--include=apt-transport-https"
 export DIB_INIT_SYSTEM=systemd
@@ -40,4 +40,3 @@ export ELEMENTS_PATH=${PWD}/dib-elements
 
 VM_NAME=rmtoo-vm-${DIST}-${DIB_RELEASE}
 disk-image-create --image-size=4G -o ${VM_NAME} ${DIST} ${ADD_ELEMENTS} 2>&1 | tee ${VM_NAME}-build.log
-
