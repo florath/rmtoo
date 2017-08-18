@@ -12,3 +12,4 @@ scipy
 setuptools
 six
 tox
+jinja2

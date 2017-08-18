@@ -55,8 +55,9 @@
                         "output_directory": "artifacts/html"
                     }
                 ], 
-                "latex2": [
+                "LatexJinja2": [
                     {
+                        "template_path": "latex/LatexJinja2",
                         "output_filename": "artifacts/reqtopics.tex"
                     }
                 ], 
