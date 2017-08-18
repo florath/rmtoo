@@ -1,6 +1,13 @@
 Starting rmtoo VM on AWS EC2
 ============================
 
+Please note that the procedure as described here is not suitable
+any longer.
+
+As soon as the VMs are placed on the AWS marketplace, this description
+will be updated.
+
+
 Introduction
 ------------
 

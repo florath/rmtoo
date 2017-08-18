@@ -42,12 +42,12 @@ Starting Preinstalled VMs
 For different usage scenarios there are different VM flavors.  There
 is a dedicated document_ where the flavors are described.
 
-.. _document:: Readme-Flavors.rst
+.. _document: Readme-Flavors.rst
 
 To use the preinstalled VMs you need access to AWS EC2.  Please
 consult the Readme_ for hints and tips.
 
-.. _Readme:: Readme-AWSStartVM.rst
+.. _Readme: Readme-AWSStartVM.rst
 
 
 No automated Backup
