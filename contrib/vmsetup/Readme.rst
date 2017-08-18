@@ -36,3 +36,5 @@ Not included:
 * No remote GUI access / only text console.
   Either ssh can be used (might be slow) or the created documents must
   be transferred to a local computer to be viewed.
+
+With the start of one of the VMs you accept these statements.

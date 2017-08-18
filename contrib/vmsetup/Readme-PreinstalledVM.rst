@@ -7,6 +7,7 @@ VMs.
 In this document the example Project is called ``MyProject``.  Of
 course you can and should adapt this name to your needs.
 
+
 Prerequisites
 =============
 
@@ -16,7 +17,7 @@ These are:
 #. Basic Linux knowledge:
    Logging in a system, using a console / shell, executing a command,
    using ``make``.
-#. Using an text editor:
+#. Using a text editor:
    Any text editor is usable - preferred: emacs.
 #. Basic YAML or JSON knowledge:
    The configuration is using either format.
@@ -33,6 +34,21 @@ http://rmtoo.florath.net.
 
 This document **is not** an introduction to Linux; this document **is
 not** an introduction to rmtoo.
+
+
+Starting Preinstalled VMs
+=========================
+
+For different usage scenarios there are different VM flavors.  There
+is a dedicated document_ where the flavors are described.
+
+.. _document:: Readme-Flavors.rst
+
+To use the preinstalled VMs you need access to AWS EC2.  Please
+consult the Readme_ for hints and tips.
+
+.. _Readme:: Readme-AWSStartVM.rst
+
 
 No automated Backup
 ===================
