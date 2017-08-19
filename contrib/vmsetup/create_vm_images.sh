@@ -39,4 +39,9 @@ export DIB_INIT_SYSTEM=systemd
 export ELEMENTS_PATH=${PWD}/dib-elements
 
 VM_NAME=rmtoo-vm-${DIST}-${DIB_RELEASE}
+DOCKER_NAME=rmtoo-docker-${DIST}-${DIB_RELEASE}
+
 disk-image-create --image-size=4G -o ${VM_NAME} ${DIST} ${ADD_ELEMENTS} 2>&1 | tee ${VM_NAME}-build.log
+
+# To (also) create a docker image, uncomment the following line
+#disk-image-create -t docker --image-size=4G -o ${DOCKER_NAME} ${DIST} ${ADD_ELEMENTS} --docker-target ${DOCKER_NAME} 2>&1 | tee ${DOCKER_NAME}-build.log
