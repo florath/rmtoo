@@ -4,14 +4,14 @@
 
  Command line parameter handling.
 
- (c) 2011,2017 by flonatel GmbH & Co. KG
+ (c) 2011, 2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
 import argparse
-import distutils
+import distutils.sysconfig
 
 from rmtoo.lib.Encoding import Encoding
 
