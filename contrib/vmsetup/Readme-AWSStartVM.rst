@@ -35,6 +35,8 @@ Start VM
 
 When starting a VM (either as 'Instance' or 'Spot Request') configure:
 
+* The AMI is currently only available in US East (N. Virginia) zone.
+  (If you need it in another zone, please contact us.)
 * AMI: choose 'Search'; choose 'Community AMIs' and search for rmtoo.
   A list of all available VMs with rmtoo is presented. Choose the
   version and flavor you like - please double check that the name
