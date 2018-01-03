@@ -21,7 +21,7 @@ where
 * *size* is marker for a logical size. 
 * *variant* is a list of additional properties (like GUI).
 * *os names* the used operating system
-* *customer* is the name for the customer / company.
+* *customer* is the name of the customer / company.
 * *release* gives information about the release number
 
 For details please consult the next chapter in this document.
