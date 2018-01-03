@@ -71,6 +71,17 @@ Mac OS X users might want to read ``Readme-OS-X.txt``.
 Windows users might want to read the ``Readme-Windows.txt``.
 
 
+Preinstalled VMs
+================
+
+For evaluation proposes and running small projects there is the
+possibility to use Amazon AWS EC2 preinstalled VMs.
+
+More details are available in a dedicated Readme_.
+
+.. _Readme: contrib/vmsetup/Readme.rst
+
+
 Installation
 ============
 
