@@ -34,7 +34,8 @@
 		        "requirements_dirs": [ "requirements" ],
 			"topics_dirs": [ "topics" ],
 			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "constraints" ] }
+			"constraints_dirs": [ "constraints" ],
+			"testcases_dirs": [ "testcases" ] }
 		] 
 	    ],
             "output": {

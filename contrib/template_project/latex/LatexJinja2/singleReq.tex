@@ -18,6 +18,10 @@
 ((* for outg in dependson *)) \hyperlink{(((outg)))}{(((outg)))} ((* endfor *))
 ((* endif *))
 
+((* if testcases is defined *)) \textbf{Test Cases:}
+((* for tc in testcases *))\hyperlink{TESTCASE(((tc)))}{(((tc)))}((* if not loop.last *)),((* endif *)) ((* endfor *))
+((* endif *))
+
 \par{\small \begin{center}
 \begin{tabular}{rlrlrl}
    Id: & (((req_id)))               & Priority: & (((prio)))          & Owner: & (((owner))) \\
