@@ -75,7 +75,7 @@ class Requirement(Digraph.Node, BaseRMObject):
         s += self.get_value("Description")
         try:
             s += self.get_value("VerifMethod")
-        except KeyError as e:
+        except KeyError:
             pass
         us = s.encode('utf-8')
         return hashlib.sha256(us).hexdigest()

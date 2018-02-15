@@ -34,14 +34,13 @@ class RMTTestRequirement:
 
         desc = "QWER"
         name = "Primary Req"
-        verifMethod = "Test"
         sl = (name + desc).encode('utf-8')
 
         r = Requirement("Name: " + name + "\n"
-                    "Type: requirement\n"
-                    "Description: " + desc + "\n"
-                    "Status: not done", "1", None,
-                    None, TestConfig())
+                        "Type: requirement\n"
+                        "Description: " + desc + "\n"
+                        "Status: not done", "1", None,
+                        None, TestConfig())
         r.set_value("Description", desc)
         r.set_value("Name", name)
         h = r.get_hash()
