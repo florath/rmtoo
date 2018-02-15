@@ -9,6 +9,7 @@
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
+import hashlib
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
@@ -27,3 +28,22 @@ class RMTTestRequirement:
             assert(False)
         except RMTException as rmte:
             assert(rmte.get_id() == 81)
+
+    def rmttest_get_hash(self):
+        "Requirement: the hash of the requirement"
+
+        desc = "QWER"
+        name = "Primary Req"
+        verifMethod = "Test"
+        sl = (name + desc).encode('utf-8')
+
+        r = Requirement("Name: " + name + "\n"
+                    "Type: requirement\n"
+                    "Description: " + desc + "\n"
+                    "Status: not done", "1", None,
+                    None, TestConfig())
+        r.set_value("Description", desc)
+        r.set_value("Name", name)
+        h = r.get_hash()
+        hl = hashlib.sha256(sl).hexdigest()
+        assert(h == hl)

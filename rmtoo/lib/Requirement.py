@@ -10,6 +10,7 @@
 '''
 
 import operator
+import hashlib
 
 from enum import Enum
 
@@ -66,6 +67,18 @@ class Requirement(Digraph.Node, BaseRMObject):
         BaseRMObject.__init__(self, InputModuleTypes.reqtag,
                               content, rid, mods,
                               config, u"requirements", file_path)
+
+    def get_hash(self):
+        """Return sha256 hash of description and name"""
+        s = ""
+        s += self.get_value("Name")
+        s += self.get_value("Description")
+        try:
+            s += self.get_value("VerifMethod")
+        except KeyError as e:
+            pass
+        us = s.encode('utf-8')
+        return hashlib.sha256(us).hexdigest()
 
     def get_prio(self):
         """Get priority of requirement"""
