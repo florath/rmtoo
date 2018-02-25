@@ -5,10 +5,11 @@ author: Kristoffer Nordström
 
 # Introduction
 
-The generation of a traceability matrix[^1] with, e.g., a *requirements
-specification* and a *test report*, can be a tedious business. Especially if
-this works has to be repeated a number of times because, e.e., the
-requirements have changed.
+The generation of a [traceability
+matrix](https://en.wikipedia.org/wiki/Traceability_matrix) with, e.g., a
+*requirements specification* and a *test report*, can be a tedious business.
+Especially if this works has to be repeated a number of times because, e.e.,
+the requirements have changed.
 
 This does not lend to any agile developement where mistakes can be found early
 and corrected as high up as possible in the chain. Change the requirements
@@ -95,9 +96,3 @@ bidirectional.pdf).  This corresponds to *horizontal traceability* in the V-proc
 * Traceability information
 * Basically the same methodology
 
-
-
-
-[^1]: 
-    [as described here](https://en.wikipedia.org/wiki/Traceability_matrix)
-[^2]: 
