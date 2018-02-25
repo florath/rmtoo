@@ -78,8 +78,8 @@ o Include sub-graphs in the PDF and HTML documentation
   o Adapt presentation
 o It often happens that one requirement is resolved into two different
   'types' of solutions:
-  1) The genral properties of all 'direct' solutions
-  2) The direkt solutions.
+  1) The general properties of all 'direct' solutions
+  2) The direct solutions.
   There is currently no way to differ between those two different
   'types' of requirements. It should be elaborated if these are really
   two 'types' or if this can be described with the current implemented
@@ -123,6 +123,7 @@ o 'The only requirement management tool which comes with the
   requirements for the tool'. 
 o A requirement cannot be 'finished' if on of the dependent is not
   finished. 
+  - A requirement has a dependent status, it's own status is only passed if all dependent are.
 o Add glossary
 o Add man page for glossary
 o Add glossary to presentation
