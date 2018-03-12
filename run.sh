@@ -12,7 +12,7 @@ else
   python3 -m virtualenv venv
   . venv/bin/activate
   cd rmtoo
-  python3 setup.py install
+  python3 setup.py develop
   cd -
 fi
 
