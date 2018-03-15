@@ -64,6 +64,7 @@
                 ],
                 "TraceMatrix": [
                     {
+                        "template_path": "latex/LatexJinja2",
                         "output_filename": "artifacts/tracematrix.tex"
                     }
                 ],

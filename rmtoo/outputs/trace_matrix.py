@@ -10,6 +10,7 @@
 from __future__ import unicode_literals
 
 import io
+import jinja2
 from six import iteritems
 
 from rmtoo.lib.Constraints import Constraints
@@ -37,6 +38,23 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         self.__testcases = None
         self.__level = -1
 
+        # TODO: replace by configuration
+        self._num_files = 0
+        self._print_static = True
+
+        # Jinja2 initialisation
+        template_loader = jinja2.FileSystemLoader(
+                searchpath=oconfig['template_path'])
+        template_env_unmodded = jinja2.Environment(loader=template_loader)
+        self._template_env = template_env_unmodded.overlay(
+            block_start_string='((*',
+            block_end_string='*))',
+            variable_start_string='(((',
+            variable_end_string=')))',
+            comment_start_string='((=',
+            comment_end_string='=))')
+
+
         if not self._config.is_available('req_attributes'):
             self._config.set_value(
                 'req_attributes',
@@ -58,14 +76,25 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         '''Prepare the output file.'''
         self.__fd = io.open(self._output_filename, "w", encoding="utf-8")
 
+        req_template = self._template_env.get_template("trmat_topicName.tex")
+        template_vars = {}
+        self.__fd.write(u"%% Traceability Matrix\n\n")
+        self.__fd.write(req_template.render(template_vars))
+
+        req_template = self._template_env.get_template("trmat_tblStart.tex")
+        template_vars = {'printstatic': self._print_static, 'numfiles': self._num_files}
+        self.__fd.write(req_template.render(template_vars))
 
     def topic_set_post(self, topic_set):
-        '''Print out the constraints and clean up file.'''
+        '''Print out the end and clean up file.'''
+        req_template = self._template_env.get_template("trmat_tblEnd.tex")
+        template_vars = {}
+        self.__fd.write(req_template.render(template_vars))
+
         tracer.debug("Called; output constraints.")
-        if topic_set is None:
-            assert False
-        tracer.debug("Clean up file.")
         self.__fd.close()
+        assert(topic_set is not None)
+        tracer.debug("Clean up file.")
         tracer.debug("Finished.")
 
     def topic_pre(self, topic):
@@ -79,11 +108,11 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
     def topic_name(self, name):
         '''Output the topic name.'''
-        self.__fd.write(u"%s\n" % name)
+        self.__fd.write(u"%% %s\n" % name)
 
     def topic_text(self, text):
         '''Write out the given text.'''
-        self.__fd.write(u"%s\n" % text)
+        pass
 
     def requirement_set_pre(self, rset):
         '''Prepare the requirements set output.'''
@@ -96,35 +125,15 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
 
     def requirement(self, req):
         '''Write out one requirement.'''
-        self.__fd.write(u"%% REQ '%s'\n" % req.get_id())
-
-        self.__fd.write(u"\n\\par\n{\small \\begin{center}"
-                        "\\begin{tabular}{rlrlrl}\n")
-
-        # Put mostly three things in a line.
-        i = 0
-        for rattr in self._config.get_value("req_attributes"):
-            if rattr == "Id":
-                self.__fd.write(u"\\textbf{Id:} & %s " % req.get_id())
-            elif rattr == "Priority":
-                self.__fd.write(u"\\textbf{Priority:} & %4.2f "
-                                % (req.get_value("Priority") * 10))
-            elif rattr == "Owner":
-                self.__fd.write(u"\\textbf{Owner:} & %s" %
-                                req.get_value("Owner"))
-            elif rattr == "Invented on":
-                self.__fd.write(u"\\textbf{Invented on:} & %s "
-                                % req.get_value("Invented on")
-                                .strftime("%Y-%m-%d"))
-            elif rattr == "Invented by":
-                self.__fd.write(u"\\textbf{Invented by:} & %s "
-                                % req.get_value("Invented by"))
-            else:
-                pass
-                # This only happens when a wrong configuration is supllied.
-                # raise RMTException(85, "Wrong latex2 output configuration "
-                #                    "supplied: unknown tag [%s]" % rattr)
-
+        req_template = self._template_env.get_template("trmat_tblReq.tex")
+        template_vars = (
+            {'printstatic': self._print_static, 'numfiles': self._num_files,
+             'req_id': self.__strescape(req.get_id()),
+             'name':  req.get_value("Name").get_content(),
+             'description':  req.get_value("Description").get_content(),
+             'req_status': req.get_value("Status").get_output_string()}
+        )
+        self.__fd.write(req_template.render(template_vars))
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
