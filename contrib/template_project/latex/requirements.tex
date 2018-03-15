@@ -1,5 +1,6 @@
 \documentclass{report}
 \usepackage{longtable}
+\usepackage{booktabs}
 \usepackage{graphicx}
 % When latex aborts with
 %  pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
@@ -45,7 +46,7 @@ pdftex, bookmarks=true, colorlinks=true]{hyperref}
 
 \vfill
 
-09. October 2010
+\today
 
 \vfill
 
@@ -63,6 +64,9 @@ Requirements Version: \input{../artifacts/reqs-version.txt}
 \input{../artifacts/reqsprios.tex}
 
 \input{../artifacts/reqtopics.tex}
+
+\appendix
+\input{../artifacts/tracematrix.tex}
 
 \chapter{Statistics}
 \section{Burndown diagram for Sprint}
