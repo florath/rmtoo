@@ -11,18 +11,15 @@ from __future__ import unicode_literals
 
 import io
 import jinja2
-from six import iteritems
 
-from rmtoo.lib.Constraints import Constraints
-from rmtoo.lib.TestCases import collect
-from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.StdOutputParams import StdOutputParams
 from rmtoo.lib.ExecutorTopicContinuum import ExecutorTopicContinuum
 from rmtoo.lib.logging import tracer
 from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
-class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
+class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
+                  CreateMakeDependencies):
     default_config = {"req_attributes":
                       ["Id", "Priority", "Owner", "Invented on",
                        "Invented by", "Status", "Class"]}
@@ -54,7 +51,6 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
             comment_start_string='((=',
             comment_end_string='=))')
 
-
         if not self._config.is_available('req_attributes'):
             self._config.set_value(
                 'req_attributes',
@@ -82,7 +78,8 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencie
         self.__fd.write(req_template.render(template_vars))
 
         req_template = self._template_env.get_template("trmat_tblStart.tex")
-        template_vars = {'printstatic': self._print_static, 'numfiles': self._num_files}
+        template_vars = {'printstatic': self._print_static,
+                         'numfiles': self._num_files}
         self.__fd.write(req_template.render(template_vars))
 
     def topic_set_post(self, topic_set):
