@@ -90,6 +90,12 @@
                         "output_filename": "artifacts/reqtopics.tex"
                     }
                 ], 
+                "TraceMatrix": [
+                    {
+                        "template_path": "doc/tracemat/",
+                        "output_filename": "artifacts/tracematrix.tex"
+                    }
+                ],
                 "oopricing1": [
                     {
                         "output_filename": "artifacts/reqspricing"

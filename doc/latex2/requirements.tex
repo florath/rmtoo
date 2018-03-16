@@ -1,6 +1,7 @@
 \documentclass{report}
 \usepackage{longtable}
 \usepackage{graphicx}
+\usepackage{booktabs}
 % When latex aborts with
 %  pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
 %  fstartlink.
@@ -112,5 +113,8 @@ DAMAGE.
 
 \section{Requirements Count Statistics}
 \includegraphics{stats_reqs_cnt.pdf}
+
+\section{Traceability Matrix}
+\input{tracematrix.tex}
 
 \end{document}
