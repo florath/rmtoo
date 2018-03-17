@@ -1,10 +1,19 @@
 ((* block tblStart *))
 
-\begin{table}
-\centering
-\label{tbl:tracematrix}
-\begin{tabular}{l ((* if printstatic == true *))c((* endif *))}
+\begin{longtable}{l ((* if printstatic == true *))c((* endif *))}
+\caption{Traceability Matrix Table} \\
+\label{tbl:tracematrix} \\
 \toprule
 Req. ID & Status \\
 \midrule
+\endfirsthead
+\toprule
+Req. ID & Status \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+
 ((* endblock tblStart *))
