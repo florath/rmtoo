@@ -2,7 +2,7 @@ Name: Emace Mode to Support Traceablility
 Type: design decision
 Invented on: 2010-02-12
 Invented by: flonatel
-Description: The Emacs mode \textsl{must} support tracability.
+Description: The Emacs mode \textsl{must} support traceability.
 Rationale: Maybe this might include automatic timestamp update.
 Owner: development
 Status: not done
