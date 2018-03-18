@@ -18,7 +18,7 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusFinished, RequirementStatusAssigned
 
-import pytest
+from nose.plugins.attrib import attr
 
 
 class RMTTestReqStatus(object):
@@ -49,7 +49,8 @@ class RMTTestReqStatus(object):
 
         self.assertEqual("finished", value.get_output_string_short())
 
-    def rmttest_positive_03(self):
+    @attr(req='StatusAssigned')
+    def rmttest_positive_03__StatusAssigned(self):
         "Requirement Tag Status - tag given 'assigned'"
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "assigned:nork:2018-03-18")
