@@ -27,6 +27,10 @@ class RequirementStatusBase(object):
         """Return the output string"""
         return
 
+    def get_output_string_short(self):
+        """Return short version of the status string"""
+        return self.tval
+
 
 # pylint: disable=abstract-method
 class RequirementStatusBaseExt(RequirementStatusBase):

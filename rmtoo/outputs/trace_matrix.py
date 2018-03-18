@@ -128,7 +128,7 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
              'req_id': self.__strescape(req.get_id()),
              'name':  req.get_value("Name").get_content(),
              'description':  req.get_value("Description").get_content(),
-             'req_status': req.get_value("Status").get_output_string()}
+             'req_status': req.get_value("Status").get_output_string_short()}
         )
         self.__fd.write(req_template.render(template_vars))
 

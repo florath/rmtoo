@@ -16,7 +16,7 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusFinished
+    RequirementStatusFinished, RequirementStatusAssigned
 
 import pytest
 
@@ -33,6 +33,8 @@ class RMTTestReqStatus(object):
         assert "Status" == name
         assert isinstance(value, RequirementStatusNotDone)
 
+        self.assertEqual("not done", value.get_output_string_short())
+
     def rmttest_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
         config, req = create_parameters()
@@ -44,6 +46,20 @@ class RMTTestReqStatus(object):
         assert isinstance(value, RequirementStatusFinished)
         assert value.get_person() is None
         assert value.get_duration() is None
+
+        self.assertEqual("finished", value.get_output_string_short())
+
+    def rmttest_positive_03(self):
+        "Requirement Tag Status - tag given 'assigned'"
+        config, req = create_parameters()
+        req["Status"] = RecordEntry("Status", "assigned:nork:2018-03-18")
+
+        rt = ReqStatus(config)
+        name, value = rt.rewrite("Status-test", req)
+        self.assertEqual("Status", name)
+        self.assertTrue(isinstance(value, RequirementStatusAssigned))
+
+        self.assertEqual("assigned", value.get_output_string_short())
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"
