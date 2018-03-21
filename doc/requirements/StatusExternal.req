@@ -1,0 +1,15 @@
+Name: Status: External
+Type: requirement
+Invented on: 2018-03-22
+Invented by: nork
+Description: The status \textbf{may} be set to 'external when
+ the status of this requirement is resolved with an external
+ document.
+Rationale: To create traceability, a requirement needs to be solved in
+ a different document.
+Owner: development
+Priority: development:10
+Effort estimation: 3
+Status: not done
+Class: implementable
+Topic: ReqTagFormatDesc

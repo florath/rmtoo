@@ -9,5 +9,5 @@ Status: assigned:Florath:2011-04-27
 Priority: development:10
 Class: implementable
 Effort estimation: 1
-Solved by: StatusNotDone StatusAssigned StatusFinished
+Solved by: StatusNotDone StatusAssigned StatusFinished StatusExternal
 Topic: ReqTagFormatDesc
