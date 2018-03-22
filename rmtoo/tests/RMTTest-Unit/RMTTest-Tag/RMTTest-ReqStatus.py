@@ -16,7 +16,8 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
-    RequirementStatusFinished, RequirementStatusAssigned
+    RequirementStatusFinished, RequirementStatusAssigned, \
+    RequirementStatusExternal
 
 from nose.plugins.attrib import attr
 
@@ -61,6 +62,19 @@ class RMTTestReqStatus(object):
         self.assertTrue(isinstance(value, RequirementStatusAssigned))
 
         self.assertEqual("assigned", value.get_output_string_short())
+
+    @attr(req='StatusExternal')
+    def rmttest_positive_04__StatusExternal(self):
+        "Requirement Tag Status - tag given 'external'"
+        config, req = create_parameters()
+        req["Status"] = RecordEntry("Status", "external")
+
+        rt = ReqStatus(config)
+        name, value = rt.rewrite("Status-test", req)
+        self.assertEqual("Status", name)
+        self.assertTrue(isinstance(value, RequirementStatusExternal))
+
+        self.assertEqual("external", value.get_output_string_short())
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"

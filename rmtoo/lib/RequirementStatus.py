@@ -121,6 +121,19 @@ class RequirementStatusFinished(RequirementStatusBaseExt):
                                       self.get_date_str(), self.duration)
 
 
+class RequirementStatusExternal(RequirementStatusBase):
+    """Class representing the StatusExternal"""
+    tval = "external"
+
+    def __init__(self, _config, rid, t):
+        if t != self.tval:
+            raise RMTException(92, "%s: Not done contains "
+                               "additional data '%s'" % (rid, t))
+
+    def get_output_string(self):
+        return self.tval
+
+
 class RequirementsStatusFactory(object):
     """Factory for different RequirementStatus using stevedore"""
 

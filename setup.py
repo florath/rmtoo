@@ -193,6 +193,7 @@ setup(name=PACKAGE, version=VERSION,
           "rmtoo.input.requirement_status" : [
               "not done = rmtoo.lib.RequirementStatus:RequirementStatusNotDone",
               "assigned = rmtoo.lib.RequirementStatus:RequirementStatusAssigned",
-              "finished = rmtoo.lib.RequirementStatus:RequirementStatusFinished"
+              "finished = rmtoo.lib.RequirementStatus:RequirementStatusFinished",
+              "external = rmtoo.lib.RequirementStatus:RequirementStatusExternal"
           ]
       })
