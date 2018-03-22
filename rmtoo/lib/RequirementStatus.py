@@ -124,10 +124,16 @@ class RequirementStatusFinished(RequirementStatusBaseExt):
 class RequirementStatusExternal(RequirementStatusBase):
     """Class representing the StatusExternal"""
     tval = "external"
+    def_config = {'files': {}}
 
     def __init__(self, _config, rid, t):
+        try:
+            self._tm_config = _config['traceability']
+        except KeyError:
+            self._tm_config = self._def_config
+
         if t != self.tval:
-            raise RMTException(92, "%s: Not done contains "
+            raise RMTException(118, "%s: Not done contains "
                                "additional data '%s'" % (rid, t))
 
     def get_output_string(self):
