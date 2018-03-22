@@ -4,12 +4,12 @@ Invented on: 2018-03-22
 Invented by: nork
 Description: The status \textbf{may} be set to 'external when
  the status of this requirement is resolved with an external
- document.
-Rationale: To create traceability, a requirement needs to be solved in
- a different document.
+ reference.
+Rationale: To create traceability, a requirement needs to be solved
+ with a reference, e.g., a released document.
 Owner: development
-Priority: development:10
-Effort estimation: 3
-Status: not done
+Priority: development:2
+Effort estimation: 5
+Status: external
 Class: implementable
 Topic: ReqTagFormatDesc
