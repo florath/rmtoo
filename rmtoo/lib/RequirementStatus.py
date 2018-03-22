@@ -124,7 +124,7 @@ class RequirementStatusFinished(RequirementStatusBaseExt):
 class RequirementStatusExternal(RequirementStatusBase):
     """Class representing the StatusExternal"""
     tval = "external"
-    def_config = {'files': {}}
+    _def_config = {'files': {}}
 
     def __init__(self, _config, rid, t):
         try:
