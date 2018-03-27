@@ -8,14 +8,15 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.inputs.ReqName import ReqName
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
+import pytest
 
 
-class RMTTestReqName(unittest.TestCase):
+class RMTTestReqName(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Name - tag given"
@@ -24,8 +25,8 @@ class RMTTestReqName(unittest.TestCase):
 
         rt = ReqName(config)
         name, value = rt.rewrite("Name-test", req)
-        self.assertEqual("Name", name)
-        self.assertEqual("This is something", value)
+        assert "Name" == name
+        assert "This is something" == value
 
     def rmttest_negative_01(self):
         "Requirement Tag Name - no Name set"
@@ -33,6 +34,6 @@ class RMTTestReqName(unittest.TestCase):
 
         rt = ReqName(config)
 
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Name-test", req)
-            self.assertEqual(37, rmte.id())
+            assert 37 == rmte.id()

@@ -8,13 +8,13 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.inputs.ReqHistory import ReqHistory
 from rmtoo.tests.lib.ReqTag import create_parameters
 
 
-class RMTTestReqHistory(unittest.TestCase):
+class RMTTestReqHistory(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag History - no tag given"
@@ -22,8 +22,8 @@ class RMTTestReqHistory(unittest.TestCase):
 
         rt = ReqHistory(config)
         name, value = rt.rewrite("History-test", req)
-        self.assertEqual("History", name)
-        self.assertIsNone(value)
+        assert "History" == name
+        assert value is None
 
     def rmttest_positive_02(self):
         "Requirement Tag History - History set"
@@ -32,5 +32,5 @@ class RMTTestReqHistory(unittest.TestCase):
 
         rt = ReqHistory(config)
         name, value = rt.rewrite("History-test", req)
-        self.assertEqual("History", name)
-        self.assertEqual("something", value)
+        assert "History" == name
+        assert "something" == value

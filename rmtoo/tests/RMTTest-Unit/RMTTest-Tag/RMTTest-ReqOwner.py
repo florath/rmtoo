@@ -10,15 +10,15 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.ReqOwner import ReqOwner
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+import pytest
 
 
-class RMTTestReqOwner(unittest.TestCase):
+class RMTTestReqOwner(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Owner - tag given"
@@ -29,8 +29,8 @@ class RMTTestReqOwner(unittest.TestCase):
 
         rt = ReqOwner(config)
         name, value = rt.rewrite("Owner-test", req)
-        self.assertEqual("Owner", name)
-        self.assertEqual("marketing", value)
+        assert "Owner" == name
+        assert "marketing" == value
 
     def rmttest_negative_01(self):
         "Requirement Tag Owner - no tag given"
@@ -38,9 +38,9 @@ class RMTTestReqOwner(unittest.TestCase):
         config.stakeholders = ["marketing", "security"]
 
         rt = ReqOwner(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Owner-test", req)
-            self.assertEqual(10, rmte.id())
+            assert 10 == rmte.id()
 
     def rmttest_negative_02(self):
         "Requirement Tag Owner - invalid tag given"
@@ -50,6 +50,6 @@ class RMTTestReqOwner(unittest.TestCase):
         req["Owner"] = RecordEntry("Owner", "SomethingDifferent")
 
         rt = ReqOwner(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Owner-test", req)
-            self.assertEqual(11, rmte.id())
+            assert 11 == rmte.id()

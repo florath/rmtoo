@@ -14,7 +14,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-import unittest
+
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -37,7 +37,7 @@ Topic: ReqsDocument
 """
 
 
-class RMTTestRecordTxt3(unittest.TestCase):
+class RMTTestRecordTxt3(object):
 
     def rmttest_pos_01(self):
         "TestRecordTxt3: long long complicated input"
@@ -47,13 +47,12 @@ class RMTTestRecordTxt3(unittest.TestCase):
         txt_doc = TxtRecord.from_string(tc1i, u"rmtoo", TxtIOConfig())
         d = txt_doc.get_dict()
 
-        self.assertEqual(
-            "The world needs a good, usable and free "
-            "Requirements Management Tool.\par It looks "
-            "that there are no such programs out.\par But: it's complex!",
-            d["Rationale"].get_content())
+        assert "The world needs a good, usable and free " \
+            "Requirements Management Tool.\par It looks " \
+            "that there are no such programs out.\par But: it's complex!" == \
+            d["Rationale"].get_content()
 
-        self.assertEqual(11, len(txt_doc))
-        self.assertEqual("", txt_doc.get_comment())
+        assert 11 == len(txt_doc)
+        assert "" == txt_doc.get_comment()
 
         tear_down_log_handler()

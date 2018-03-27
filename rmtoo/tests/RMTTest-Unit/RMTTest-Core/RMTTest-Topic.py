@@ -10,16 +10,16 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.tests.lib.TestVCS import TestVCS
+import pytest
 
 
-class RMTTestTopic(unittest.TestCase):
+class RMTTestTopic(object):
 
     def rmttest_neg_01(self):
         "Topic: (internal) check if Name tag exists"
@@ -30,6 +30,6 @@ class RMTTestTopic(unittest.TestCase):
         tvcs = TestVCS(tconfig)
         tfileinfo = TestVCS.FileInfo(1)
 
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             Topic(dg, tconfig, tvcs, None, tfileinfo, None)
-            self.assertEqual(62, rmte.get_id())
+            assert 62 == rmte.get_id()

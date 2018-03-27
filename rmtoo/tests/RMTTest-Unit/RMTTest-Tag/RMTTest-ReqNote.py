@@ -8,13 +8,13 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.inputs.ReqNote import ReqNote
 from rmtoo.tests.lib.ReqTag import create_parameters
 
 
-class RMTTestReqNote(unittest.TestCase):
+class RMTTestReqNote(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Note - no tag given"
@@ -22,8 +22,8 @@ class RMTTestReqNote(unittest.TestCase):
 
         rt = ReqNote(config)
         name, value = rt.rewrite("Note-test", req)
-        self.assertEqual("Note", name)
-        self.assertIsNone(value)
+        assert "Note" == name
+        assert value is None
 
     def rmttest_positive_02(self):
         "Requirement Tag Note - Note set"
@@ -32,5 +32,5 @@ class RMTTestReqNote(unittest.TestCase):
 
         rt = ReqNote(config)
         name, value = rt.rewrite("Note-test", req)
-        self.assertEqual("Note", name)
-        self.assertEqual("something", value)
+        assert "Note" == name
+        assert "something" == value

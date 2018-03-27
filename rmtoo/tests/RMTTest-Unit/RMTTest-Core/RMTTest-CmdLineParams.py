@@ -9,12 +9,12 @@
  For licensing details see COPYING
 '''
 import distutils
-import unittest
+
 
 from rmtoo.lib.configuration.CmdLineParams import CmdLineParams
 
 
-class RMTTestCmdLineParser(unittest.TestCase):
+class RMTTestCmdLineParser(object):
     """Test cases for command line parameter"""
 
     def rmttest_neg_01(self):
@@ -23,5 +23,4 @@ class RMTTestCmdLineParser(unittest.TestCase):
         args = ["-f", "SomeFile"]
         options = CmdLineParams.create_dicts(args)
         mod_dir = distutils.sysconfig.get_python_lib()
-        self.assertEqual(
-            [mod_dir], options[1]["global"]["modules"]["directories"])
+        assert [mod_dir] == options[1]["global"]["modules"]["directories"]

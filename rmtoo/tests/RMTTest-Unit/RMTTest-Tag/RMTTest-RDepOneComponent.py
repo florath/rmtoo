@@ -8,14 +8,15 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.inputs.RDepOneComponent import RDepOneComponent
 from rmtoo.lib.RMTException import RMTException
+import pytest
 
 
-class RMTTestOutputOneComponent(unittest.TestCase):
+class RMTTestOutputOneComponent(object):
 
     def rmttest_neg_01(self):
         "RDepOneComponent: check rewrite error case"
@@ -23,6 +24,6 @@ class RMTTestOutputOneComponent(unittest.TestCase):
         oc = RDepOneComponent(None)
 
         dr = Digraph()
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             oc.rewrite(dr)
-            self.assertEqual(69, rmte.id())
+            assert 69 == rmte.id()

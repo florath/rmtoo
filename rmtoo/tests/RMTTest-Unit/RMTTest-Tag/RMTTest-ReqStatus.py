@@ -9,7 +9,7 @@
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
-import unittest
+
 
 from rmtoo.inputs.ReqStatus import ReqStatus
 from rmtoo.lib.RMTException import RMTException
@@ -18,8 +18,10 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusFinished
 
+import pytest
 
-class RMTTestReqStatus(unittest.TestCase):
+
+class RMTTestReqStatus(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Status - tag given 'not done'"
@@ -28,8 +30,8 @@ class RMTTestReqStatus(unittest.TestCase):
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        self.assertEqual("Status", name)
-        self.assertTrue(isinstance(value, RequirementStatusNotDone))
+        assert "Status" == name
+        assert isinstance(value, RequirementStatusNotDone)
 
     def rmttest_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
@@ -38,19 +40,19 @@ class RMTTestReqStatus(unittest.TestCase):
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        self.assertEqual("Status", name)
-        self.assertTrue(isinstance(value, RequirementStatusFinished))
-        self.assertIsNone(value.get_person())
-        self.assertIsNone(value.get_duration())
+        assert "Status" == name
+        assert isinstance(value, RequirementStatusFinished)
+        assert value.get_person() is None
+        assert value.get_duration() is None
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"
         config, req = create_parameters()
 
         rt = ReqStatus(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Status-test", req)
-            self.assertEqual(16, rmte.get_id())
+            assert 16 == rmte.get_id()
 
     def rmttest_negative_02(self):
         "Requirement Tag Status - invalid tag given"
@@ -58,6 +60,6 @@ class RMTTestReqStatus(unittest.TestCase):
         req["Status"] = RecordEntry("Status", "dasjibtedjarnich")
 
         rt = ReqStatus(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Status-test", req)
-            self.assertEqual(91, rmte.get_id())
+            assert 91 == rmte.get_id()

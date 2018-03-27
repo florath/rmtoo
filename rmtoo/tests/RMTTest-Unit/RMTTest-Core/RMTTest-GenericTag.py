@@ -8,11 +8,12 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
 from rmtoo.lib.InputModuleTypes import InputModuleTypes
+import pytest
 
 
 class MyTag(ReqTagGeneric):
@@ -22,7 +23,7 @@ class MyTag(ReqTagGeneric):
                                set([InputModuleTypes.reqtag, ]))
 
 
-class RMTTestGenericTag(unittest.TestCase):
+class RMTTestGenericTag(object):
 
     def rmttest_positive_01(self):
         "Generic Tag: construction"
@@ -32,7 +33,7 @@ class RMTTestGenericTag(unittest.TestCase):
         "Generic Tag: type()"
         mt = MyTag(None)
         t = mt.get_type_set()
-        self.assertEqual(set([InputModuleTypes.reqtag, ]), t)
+        assert set([InputModuleTypes.reqtag, ]) == t
 
     def rmttest_positive_03(self):
         "Generic Tag: mandatory tag"
@@ -50,8 +51,8 @@ class RMTTestGenericTag(unittest.TestCase):
         r = {"mytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        self.assertEqual("mytag", tag)
-        self.assertEqual("some value", v)
+        assert "mytag" == tag
+        assert "some value" == v
 
     def rmttest_positive_05(self):
         "Generic Tag: optional tag (not available)"
@@ -60,8 +61,8 @@ class RMTTestGenericTag(unittest.TestCase):
         r = {"notmytag": "some value"}
         tag, v = mt.handle_optional_tag(r)
 
-        self.assertEqual("mytag", tag)
-        self.assertIsNone(v)
+        assert "mytag" == tag
+        assert v is None
 
     def rmttest_negative_01(self):
         "Generic Tag: mandatory tag not available"
@@ -70,6 +71,6 @@ class RMTTestGenericTag(unittest.TestCase):
         rid = "Generic-Test-Id"
         r = {"notmytag": "some value"}
         eid = 112
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             mt.check_mandatory_tag(rid, r, eid)
-            self.assertEqual(112, rmte.id())
+            assert 112 == rmte.id()

@@ -10,15 +10,15 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.ReqInventedBy import ReqInventedBy
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+import pytest
 
 
-class RMTTestReqInventedBy(unittest.TestCase):
+class RMTTestReqInventedBy(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Invented by - tag given"
@@ -29,8 +29,8 @@ class RMTTestReqInventedBy(unittest.TestCase):
 
         rt = ReqInventedBy(config)
         name, value = rt.rewrite("InventedBy-test", req)
-        self.assertEqual("Invented by", name)
-        self.assertEqual("meinereiner", value)
+        assert "Invented by" == name
+        assert "meinereiner" == value
 
     def rmttest_negative_01(self):
         "Requirement Tag Invented by - no tag given"
@@ -38,9 +38,9 @@ class RMTTestReqInventedBy(unittest.TestCase):
         config.inventors = ["meinereiner", "keinerseiner"]
 
         rt = ReqInventedBy(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("InventedBy-test", req)
-            self.assertEqual(5, rmte.id())
+            assert 5 == rmte.id()
 
     def rmttest_negative_02(self):
         "Requirement Tag Invented by - invalid tag given"
@@ -50,6 +50,6 @@ class RMTTestReqInventedBy(unittest.TestCase):
         req["Invented by"] = RecordEntry("Invented by", "MeinNameIstHase")
 
         rt = ReqInventedBy(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("InventedBy-test", req)
-            self.assertEqual(6, rmte.id())
+            assert 6 == rmte.id()

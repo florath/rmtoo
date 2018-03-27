@@ -14,12 +14,12 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-import unittest
+
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecordEntry import TxtRecordEntry
 
 
-class RMTTestTxtRecordEntry(unittest.TestCase):
+class RMTTestTxtRecordEntry(object):
 
     def rmttest_pos_01(self):
         "Check format entry with existing comment"
@@ -27,7 +27,7 @@ class RMTTestTxtRecordEntry(unittest.TestCase):
 
         r = TxtRecordEntry.format_entry(tre)
         expres = "mtag: iline\n#  Comment\n"
-        self.assertEqual(expres, r)
+        assert expres == r
 
     def rmttest_pos_02(self):
         "Check fd output with no raw comment"
@@ -38,4 +38,4 @@ class RMTTestTxtRecordEntry(unittest.TestCase):
         tre.write_fd(fd)
 
         expres = "mtag: iline\n# A new comment\n"
-        self.assertEqual(expres, fd.getvalue())
+        assert expres == fd.getvalue()

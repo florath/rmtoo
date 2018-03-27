@@ -11,7 +11,7 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -29,15 +29,15 @@ comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
                + TxtParser.comment_in_req + "\n"
 
 
-class RMTTestRecordTxt2(unittest.TestCase):
+class RMTTestRecordTxt2(object):
 
     def rmttest_pos_01(self):
         "TestRecordTxt2: empty input"
 
         txt_doc = TxtRecord.from_string("", "Nothing", TxtIOConfig())
 
-        self.assertEqual(0, len(txt_doc))
-        self.assertEqual("", txt_doc.get_comment())
+        assert 0 == len(txt_doc)
+        assert "" == txt_doc.get_comment()
 
     def rmttest_neg_01(self):
         "TestRecordTxt2: rubbish in input"
@@ -46,14 +46,14 @@ class RMTTestRecordTxt2(unittest.TestCase):
         txt_doc = TxtRecord.from_string("rubbish", "Rubbish",
                                         TxtIOConfig())
 
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
             "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
             "not found\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_02(self):
         "TestRecordTxt2: only ':'"
@@ -61,7 +61,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
         init_logger(mstderr)
 
         txt_doc = TxtRecord.from_string(":", "Rubbish", TxtIOConfig())
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -69,7 +69,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
             = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
             "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
             "not found\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_03(self):
         "TestRecordTxt2: no chars before ':'"
@@ -78,7 +78,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
 
         txt_doc = TxtRecord.from_string(": something", "Rubbish",
                                         TxtIOConfig())
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -86,7 +86,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
             = "===DATETIMESTAMP===;rmtoo;ERROR;TxtParser;" \
             "split_entries;===LINENO===; 79:Rubbish:1:Expected tag line " \
             "not found\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_04(self):
         "TestRecordTxt2: long long line"
@@ -99,7 +99,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
         txt_doc = TxtRecord.from_string("good: but too long",
                                         "TooLong", tioconfig)
 
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -107,7 +107,7 @@ class RMTTestRecordTxt2(unittest.TestCase):
             = "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;" \
             "check_line_length;===LINENO===; 80:TooLong:1:line too long: " \
             "is [18], max allowed [7]\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_05(self):
         "TestRecordTxt2: long long line - check for lineno"
@@ -127,7 +127,7 @@ good: but too long
 """,
                                         "TooLong", tioconfig)
 
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -135,7 +135,7 @@ good: but too long
             = "===DATETIMESTAMP===;rmtoo;ERROR;TxtRecord;" \
             "check_line_length;===LINENO===; 80:TooLong:6:line too long: " \
             "is [18], max allowed [7]\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_06(self):
         "TestRecordTxt2: long long line - check for multiple errors"
@@ -161,7 +161,7 @@ d:
 """,
                                         "TooLong", tioconfig)
 
-        self.assertEqual(txt_doc.is_usable(), False)
+        assert txt_doc.is_usable() is False
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -184,7 +184,7 @@ d:
             "they are re-written with rmtoo-tools. Please consult " \
             "rmtoo-req-format(5) or rmtoo-topic-format(5)\n"
 
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_07(self):
         "TestRecordTxt2: test comments between content lines"
@@ -215,7 +215,7 @@ t4: uuuu
 """,
                                         "CommentsEverywhere", tioconfig)
 
-        self.assertEqual(txt_doc.is_usable(), True)
+        assert txt_doc.is_usable() is True
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
@@ -223,7 +223,7 @@ t4: uuuu
             = comment_line % 5 + comment_line % 9 + \
             comment_line % 13 + comment_line % 19
 
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_08(self):
         "TestRecordTxt2: only intro content line"
@@ -234,9 +234,9 @@ t4: uuuu
         txt_doc = TxtRecord.from_string("#1 com",
                                         "OnlyEntryComment", tioconfig)
 
-        self.assertEqual(txt_doc.is_usable(), True)
-        self.assertEqual(txt_doc.get_comment(), "1 com\n")
+        assert txt_doc.is_usable() is True
+        assert txt_doc.get_comment() == "1 com\n"
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
-        self.assertEquals("", lstderr)
+        assert "" == lstderr
