@@ -69,9 +69,8 @@ install:
 
 .PHONY: tests
 tests:
-	nosetests -w rmtoo -v --cover-erase --with-coverage -s \
-	 --testmatch ".*[rR][mM][tT][tT]est.*" \
-	 --cover-package=rmtoo.lib,rmtoo.outputs,rmtoo.inputs
+	(cd rmtoo && \
+		py.test --cov-report term --cov-report xml --cov=lib --cov=inputs --cov=outputs tests)
 
 .PHONY: deb
 deb:

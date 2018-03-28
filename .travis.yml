@@ -48,7 +48,7 @@ script:
   - make tests
   - tox -e pep8
   - codecov
-  - sonar-scanner
+  - sonar-scanner -X
 
 after_success:
   - codeclimate-test-reporter
