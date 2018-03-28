@@ -49,7 +49,7 @@ class RMTTestReqStatus(object):
 
         assert "finished" == value.get_output_string_short()
 
-    @attr(req='StatusAssigned')
+    @pytest.mark.req(id='StatusAssigned')
     def rmttest_positive_03__StatusAssigned(self):
         "Requirement Tag Status - tag given 'assigned'"
         config, req = create_parameters()
@@ -62,7 +62,7 @@ class RMTTestReqStatus(object):
 
         assert "assigned" == value.get_output_string_short()
 
-    @attr(req='StatusExternal')
+    @pytest.mark.req(id='StatusExternal')
     def rmttest_positive_04__StatusExternal(self):
         "Requirement Tag Status - tag given 'external'"
         config, req = create_parameters()
