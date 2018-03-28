@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-
 from rmtoo.inputs.ReqStatus import ReqStatus
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
@@ -19,7 +18,7 @@ from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
     RequirementStatusFinished, RequirementStatusAssigned, \
     RequirementStatusExternal
 
-from nose.plugins.attrib import attr
+import pytest
 
 
 class RMTTestReqStatus(object):
@@ -34,7 +33,7 @@ class RMTTestReqStatus(object):
         assert "Status" == name
         assert isinstance(value, RequirementStatusNotDone)
 
-        self.assertEqual("not done", value.get_output_string_short())
+        assert "not done" == value.get_output_string_short()
 
     def rmttest_positive_02(self):
         "Requirement Tag Status - tag given 'finished'"
@@ -48,7 +47,7 @@ class RMTTestReqStatus(object):
         assert value.get_person() is None
         assert value.get_duration() is None
 
-        self.assertEqual("finished", value.get_output_string_short())
+        assert "finished" == value.get_output_string_short()
 
     @attr(req='StatusAssigned')
     def rmttest_positive_03__StatusAssigned(self):
@@ -58,10 +57,10 @@ class RMTTestReqStatus(object):
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        self.assertEqual("Status", name)
-        self.assertTrue(isinstance(value, RequirementStatusAssigned))
+        assert "Status" == name
+        assert isinstance(value, RequirementStatusAssigned)
 
-        self.assertEqual("assigned", value.get_output_string_short())
+        assert "assigned" == value.get_output_string_short()
 
     @attr(req='StatusExternal')
     def rmttest_positive_04__StatusExternal(self):
@@ -71,10 +70,10 @@ class RMTTestReqStatus(object):
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
-        self.assertEqual("Status", name)
-        self.assertTrue(isinstance(value, RequirementStatusExternal))
+        assert "Status" == name
+        assert isinstance(value, RequirementStatusExternal)
 
-        self.assertEqual("external", value.get_output_string_short())
+        assert "external" == value.get_output_string_short()
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"
