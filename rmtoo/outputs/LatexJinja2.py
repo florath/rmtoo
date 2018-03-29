@@ -132,8 +132,10 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         self.__fd.write(u"%% TEST-CASE '%s'\n" % cname)
 
         self.__fd.write(u"\%s{%s}\label{TESTCASE%s}\n"
+                        "\hypertarget{TESTCASE%s}{}"
                         "\\textbf{Description:} %s\n"
                         % (self.level_names[1],
+                           cnstrt.get_value("Name").get_content(),
                            cnstrt.get_value("Name").get_content(),
                            cname, cnstrt.get_value(
                                "Description").get_content()))
@@ -275,13 +277,12 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         except KeyError:
             pass
 
-        return req_template.render(template_vars)
-
         # The following has not been ported yet (TODO)
         if self.__ce3set is not None:
-            raise NotImplementedError('Not yet defined')
             cnstrt = self.__ce3set.get(req.get_id())
             if cnstrt is not None and len(cnstrt) > 0:
+                raise NotImplementedError(
+                        'Not yet defined, use latex2 output instead!')
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
                 for key, val in sorted(iteritems(cnstrt)):
@@ -301,17 +302,11 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
 
         testcases = req.get_value_default("Test Cases")
         if testcases is not None:
-            raise NotImplementedError('Not yet defined: Test Cases')
-            self.__fd.write(u"\n\\textbf{Test Cases:} ")
-            tcout = []
-            for testcase in testcases:
-                refid = LatexJinja2.__strescape(testcase)
-                refctr = "\\ref{TESTCASE%s} \\nameref{TESTCASE%s}" \
-                         % (refid, refid)
-                tcout.append(refctr)
+            inc = [LatexJinja2.__strescape(testcase)
+                   for testcase in testcases]
+            template_vars['testcases'] = inc
 
-            self.__fd.write(u", ".join(tcout))
-            self.__fd.write(u"\n")
+        return req_template.render(template_vars)
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
