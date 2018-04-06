@@ -195,5 +195,8 @@ setup(name=PACKAGE, version=VERSION,
               "assigned = rmtoo.lib.RequirementStatus:RequirementStatusAssigned",
               "finished = rmtoo.lib.RequirementStatus:RequirementStatusFinished",
               "external = rmtoo.lib.RequirementStatus:RequirementStatusExternal"
+          ],
+          "rmtoo.input.requirement_status_parser" : [
+              "xunit = rmtoo.lib.RequirementStatusParser:RequirementStatusParserXUnit"
           ]
       })
