@@ -35,7 +35,7 @@ class RMTTestReqStatus(object):
 
         assert "not done" == value.get_output_string_short()
 
-    def rmttest_positive_02(self):
+    def rmttest_positive_02__StatusFinished(self):
         "Requirement Tag Status - tag given 'finished'"
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "finished")
@@ -49,9 +49,9 @@ class RMTTestReqStatus(object):
 
         assert "finished" == value.get_output_string_short()
 
-    @pytest.mark.req(id='StatusAssigned')
-    def rmttest_positive_03__StatusAssigned(self):
+    def rmttest_positive_03(self, record_property):
         "Requirement Tag Status - tag given 'assigned'"
+        record_property("req", "StatusAssigned")
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "assigned:nork:2018-03-18")
 
@@ -62,9 +62,10 @@ class RMTTestReqStatus(object):
 
         assert "assigned" == value.get_output_string_short()
 
-    @pytest.mark.req(id='StatusExternal')
-    def rmttest_positive_04__StatusExternal(self):
+    def rmttest_positive_04__StatusExternal(self, record_property):
         "Requirement Tag Status - tag given 'external'"
+        record_property("req", "StatusExternal")
+
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "external")
 
