@@ -3,6 +3,7 @@
 For licensing details see COPYING
 
 '''
+import io
 from stevedore import extension
 
 from rmtoo.lib.RMTException import RMTException
@@ -40,7 +41,7 @@ class RequirementStatusParserXUnit(object):
         self._rid = rid
 
     def parse(self):
-        with open(self._filename, 'r', encoding='utf-8') as fh:
+        with io.open(self._filename, 'r', encoding='utf-8') as fh:
             return []
         return None
 
