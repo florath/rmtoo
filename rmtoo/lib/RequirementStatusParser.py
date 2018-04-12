@@ -4,7 +4,9 @@ For licensing details see COPYING
 
 '''
 import io
+import os
 from stevedore import extension
+import xml.etree.ElementTree as ET
 
 from rmtoo.lib.RMTException import RMTException
 
@@ -27,6 +29,15 @@ class RequirementStatusParserFactory(object):
         except KeyError:
             raise RMTException(91, "%s: Status tag invalid '%s'" % (rid, parser))
 
+class RequirementStatusParsed(object):
+    def __init__(self):
+        self.bool_status = False
+        self._raw_results = None
+
+    def __bool__(self):
+        return self.bool_status
+    def __nonzero__(self):
+        return self.__bool__()
 
 class RequirementStatusParserXUnit(object):
     """Parse XUnit output where the *requirement id* is either a property
@@ -41,9 +52,32 @@ class RequirementStatusParserXUnit(object):
         self._rid = rid
 
     def parse(self):
-        with io.open(self._filename, 'r', encoding='utf-8') as fh:
-            return []
-        return None
+        if not self._filename or (not os.path.isfile(self._filename)):
+            return None
+        req_status = RequirementStatusParsed()
+
+        found_testcases = self._parse_xml_node()
+        if not found_testcases:
+            return req_status
+
+        req_status._raw_results = found_testcases
+        req_status.bool_status = True
+        for testcase in found_testcases:
+            failure = testcase.findall('failure')
+            if failure:
+                req_status.bool_status = False
+        return req_status
+
+    def _parse_xml_node(self):
+        tree = ET.parse(self._filename)
+        root = tree.getroot()
+
+        testcases = []
+        for i in root.findall(
+                ".//properties/property[@name='req'][@value='" +
+                self._rid + "']/../.."):
+            testcases.append(i)
+        return testcases
 
 
 PARSE_FACTORY = RequirementStatusParserFactory()

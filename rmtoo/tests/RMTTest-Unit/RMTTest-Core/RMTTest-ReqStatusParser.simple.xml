@@ -1,1 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skips="0" tests="6" time="3.406"><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="25" name="rmttest_positive_01" time="0.004778861999511719"></testcase><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="37" name="rmttest_positive_02__StatusFinished" time="0.0021729469299316406"></testcase><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="51" name="rmttest_positive_03" time="0.017876625061035156"><properties><property name="req" value="StatusAssigned"/></properties></testcase><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="64" name="rmttest_positive_04__StatusExternal" time="0.0017845630645751953"><properties><property name="req" value="StatusExternal"/></properties></testcase><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="78" name="rmttest_negative_01" time="0.003342151641845703"></testcase><testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="87" name="rmttest_negative_02" time="0.0017809867858886719"></testcase></testsuite>
+<?xml version="1.0" encoding="utf-8"?>
+<testsuite errors="0" failures="1" name="pytest" skips="0" tests="7" time="3.406">
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="25" name="rmttest_positive_01" time="0.004778861999511719">
+  </testcase>
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="37" name="rmttest_positive_02__StatusFinished" time="0.0021729469299316406">
+  </testcase>
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="51" name="rmttest_positive_03" time="0.017876625061035156">
+    <properties>
+      <property name="req" value="StatusAssigned"/>
+    </properties>
+  </testcase>
+
+    <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="51" name="rmttest_positive_04" time="0.017876625061035156">
+    <properties>
+      <property name="req" value="StatusAssigned"/>
+    </properties>
+  </testcase>
+
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="64" name="rmttest_positive_04__StatusExternal" time="0.0017845630645751953">
+    <properties>
+      <property name="req" value="StatusExternal"/>
+    </properties>
+  </testcase>
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="78" name="rmttest_negative_01" time="0.003342151641845703">
+  </testcase>
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="87" name="rmttest_negative_02" time="0.0017809867858886719">
+  </testcase>
+
+  <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Core.RMTTest-ReqStatusParser" file="rmtoo/tests/RMTTest-Unit/RMTTest-Core/RMTTest-ReqStatusParser.py" line="22" name="rmttest_negative_test_by_design" time="0.012341737747192383">
+    <properties>
+      <property name="req" value="FailsAlways"/>
+    </properties>
+    <failure message="assert False">record_property = &lt;function record_property.&lt;locals&gt;.append_property at 0x7fe750957ae8&gt;
+
+    def rmttest_negative_test_by_design(record_property):
+        &quot;Non-existing parser fails&quot;
+        record_property(&quot;req&quot;, &quot;FailsAlways&quot;)
+    
+&gt;       assert False
+E       assert False
+
+tests/RMTTest-Unit/RMTTest-Core/RMTTest-ReqStatusParser.py:27: AssertionError
+    </failure>
+  </testcase>
+
+</testsuite>
