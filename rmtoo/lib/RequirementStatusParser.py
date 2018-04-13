@@ -3,10 +3,10 @@
 For licensing details see COPYING
 
 '''
-import io
 import os
-from stevedore import extension
 import xml.etree.ElementTree as ET
+
+from stevedore import extension
 
 from rmtoo.lib.RMTException import RMTException
 
@@ -29,7 +29,7 @@ class RequirementStatusParserFactory(object):
         except KeyError:
             raise RMTException(91, "%s: Status tag invalid '%s'" % (rid, parser))
 
-class RequirementStatusParsed(object):
+class RequirementStatusParserFileInfo(object):
     def __init__(self):
         self.bool_status = False
         self._raw_results = None
@@ -45,7 +45,7 @@ class RequirementStatusParserXUnit(object):
     the preferred variant.
 
     Alternatively the *requirement id* can be the a suffix to the testcase.
-
+    This is not supported at the moment however.
     """
     def __init__(self, rid, filename):
         self._filename = filename
@@ -54,7 +54,7 @@ class RequirementStatusParserXUnit(object):
     def parse(self):
         if not self._filename or (not os.path.isfile(self._filename)):
             return None
-        req_status = RequirementStatusParsed()
+        req_status = RequirementStatusParserFileInfo()
 
         found_testcases = self._parse_xml_node()
         if not found_testcases:
@@ -85,3 +85,9 @@ PARSE_FACTORY = RequirementStatusParserFactory()
 def parse_file_with_requirement(rid, filename, parser):
     """ Parse a file with a parser that has been registered in stevedore"""
     return PARSE_FACTORY.parse(rid, filename, parser)
+
+def parse_config_with_requirement(rid, config):
+    result = dict()
+    for file_id_short, file_info in config['files']:
+        result[file_id_short] = parse_file_with_requirement(rid, file_info[0], file_info[1])
+    return result

@@ -125,8 +125,10 @@ class RequirementStatusExternal(RequirementStatusBase):
     """Class representing the StatusExternal"""
     tval = "external"
     _def_config = {'files': {}}
+    _parsed_status = None
 
     def __init__(self, _config, rid, t):
+        self._rid = rid
         try:
             self._tm_config = _config['traceability']
         except KeyError:
@@ -137,6 +139,9 @@ class RequirementStatusExternal(RequirementStatusBase):
                                "additional data '%s'" % (rid, t))
 
     def get_output_string(self):
+        if self._parsed_status is None:
+            self._parsed_status = parse_config_with_requirement(
+                self._rid, self._tm_config)
         return self.tval
 
 
