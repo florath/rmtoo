@@ -10,6 +10,7 @@ from stevedore import extension
 
 from rmtoo.lib.RMTException import RMTException
 
+
 class RequirementStatusParserFactory(object):
     """Factory handling parser parsing with stevedore"""
     def __init__(self):
@@ -27,7 +28,9 @@ class RequirementStatusParserFactory(object):
             return self.__plugin_manager[parser].plugin(
                 rid, filename)
         except KeyError:
-            raise RMTException(91, "%s: Status tag invalid '%s'" % (rid, parser))
+            raise RMTException(91, "%s: Status tag invalid '%s'" % (
+                rid, parser))
+
 
 class RequirementStatusParserFileInfo(object):
     def __init__(self):
@@ -37,8 +40,10 @@ class RequirementStatusParserFileInfo(object):
 
     def __bool__(self):
         return self.bool_status
+
     def __nonzero__(self):
         return self.__bool__()
+
 
 class RequirementStatusParserXUnit(object):
     """Parse XUnit output where the *requirement id* is either a property
@@ -85,9 +90,11 @@ class RequirementStatusParserXUnit(object):
 
 PARSE_FACTORY = RequirementStatusParserFactory()
 
+
 def parse_file_with_requirement(rid, filename, parser):
     """ Parse a file with a parser that has been registered in stevedore"""
     return PARSE_FACTORY.parse(rid, filename, parser)
+
 
 def parse_config_with_requirement(rid, config):
     return RequirementStatusParserRidInfo(rid, config)
@@ -96,13 +103,16 @@ def parse_config_with_requirement(rid, config):
 class RequirementStatusParserRidInfo(object):
     """Contains information about requirement id
 
-    :ivar rid_match: anything matched, i.e., if False, requirement is untouched.
-    :ivar parsed_status: pass/fail criterion (if rid_match is True).
+    :ivar rid_match: anything matched, i.e., if False, requirement is
+    untouched.
+    :ivar parsed_status: pass/fail criterion (if rid_match
+    is True).
 
     """
 
     def __bool__(self):
         return self.parsed_status
+
     def __nonzero__(self):
         return self.__bool__()
 

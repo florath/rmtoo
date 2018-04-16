@@ -12,25 +12,26 @@ from __future__ import unicode_literals
 import os
 import pytest
 
-from rmtoo.inputs.ReqStatus import ReqStatus
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.ReqTag import create_parameters
-from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 from rmtoo.lib.RequirementStatusParser import (
     parse_file_with_requirement, parse_config_with_requirement)
 
 
-#def rmttest_negative_test_by_design(record_property):
-#    "Non-existing parser fails, needed to generate sample XML"
-#    record_property("req", "FailsAlways")
-#    assert False
+"""
+def rmttest_negative_test_by_design(record_property):
+    "Non-existing parser fails, needed to generate sample XML"
+    record_property("req", "FailsAlways")
+    assert False
+"""
+
 
 def rmttest_negative_test_parser_not_existing():
     "Non-existing parser fails"
     with pytest.raises(RMTException) as excinfo:
         parse_file_with_requirement(None, None, 'dummyParser')
         assert excinfo.lid == 91
+
 
 def rmttest_negative_test_xunit_no_file():
     "Non-existing file will fail"
@@ -42,6 +43,7 @@ def rmttest_negative_test_xunit_no_file():
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_NAME_SIMPLE = os.path.join(FILE_DIR, "RMTTest-ReqStatusParser.simple.xml")
 
+
 def rmttest_negative_test_simple_example():
     "Simple query to xunit output with property req"
     filename = FILE_NAME_SIMPLE
@@ -50,6 +52,7 @@ def rmttest_negative_test_simple_example():
     assert ret is not None
     # dummyReq does not exists
     assert not ret
+
 
 def rmttest_positive_test_StatusAssigned_req(record_property):
     "Simple query to xunit output with property req"
