@@ -35,8 +35,8 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
         self.__testcases = None
         self.__level = -1
 
-        # TODO: replace by configuration
-        self._num_files = 0
+        self._ifiles = oconfig['input_files']
+        self._num_files = len(self._ifiles)
         self._print_static = True
 
         # Jinja2 initialisation
@@ -79,7 +79,8 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
 
         req_template = self._template_env.get_template("trmat_tblStart.tex")
         template_vars = {'printstatic': self._print_static,
-                         'numfiles': self._num_files}
+                         'numfiles': self._num_files,
+                         'ifiles': self._ifiles}
         self.__fd.write(req_template.render(template_vars))
 
     def topic_set_post(self, topic_set):
@@ -122,13 +123,25 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
 
     def requirement(self, req):
         '''Write out one requirement.'''
+        # Get status information from requirement
+        file_status = []
+        for fname in self._ifiles:
+            try:
+                i = req.get_value("Status").get_status_file_string(fname)
+            except (KeyError, AttributeError):
+                file_status.append("")
+            else:
+                file_status.append(i)
+
         req_template = self._template_env.get_template("trmat_tblReq.tex")
         template_vars = (
             {'printstatic': self._print_static, 'numfiles': self._num_files,
              'req_id': self.__strescape(req.get_id()),
              'name':  req.get_value("Name").get_content(),
              'description':  req.get_value("Description").get_content(),
-             'req_status': req.get_value("Status").get_output_string_short()}
+             'req_status':
+             req.get_value("Status").get_output_string_short(),
+             'file_statuses': file_status}
         )
         self.__fd.write(req_template.render(template_vars))
 

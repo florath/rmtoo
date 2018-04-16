@@ -1,14 +1,16 @@
 ((* block tblStart *))
 
-\begin{longtable}{l ((* if printstatic == true *))c((* endif *))}
+\begin{longtable}{l ((* if printstatic == true *))c((* endif *)) ((* for ifile in ifiles *)) c ((* endfor *))}
 \caption{Traceability Matrix Table} \\
 \label{tbl:tracematrix} \\
 \toprule
-Req. ID & Status \\
+Req. ID ((* if printstatic == true *)) & Status ((* endif *))
+((* for ifile in ifiles *)) & ((( ifile ))) ((* endfor *)) \\
 \midrule
 \endfirsthead
 \toprule
-Req. ID & Status \\
+Req. ID ((* if printstatic == true *)) & Status ((* endif *))
+((* for ifile in ifiles *)) & ((( ifile ))) ((* endfor *)) \\
 \midrule
 \endhead
 \bottomrule

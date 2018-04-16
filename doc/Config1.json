@@ -99,7 +99,8 @@
                 "TraceMatrix": [
                     {
                         "template_path": "doc/tracemat/",
-                        "output_filename": "artifacts/tracematrix.tex"
+                        "output_filename": "artifacts/tracematrix.tex",
+                        "input_files": ["UT"]
                     }
                 ],
                 "oopricing1": [

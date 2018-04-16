@@ -44,6 +44,14 @@ class RequirementStatusParserFileInfo(object):
     def __nonzero__(self):
         return self.__bool__()
 
+    def get_output_string_short(self):
+        if not self.rid_match:
+            return "open"
+        elif self:
+            return "passed"
+        else:
+            return "failed"
+
 
 class RequirementStatusParserXUnit(object):
     """Parse XUnit output where the *requirement id* is either a property

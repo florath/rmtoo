@@ -153,6 +153,11 @@ class RequirementStatusExternal(RequirementStatusBase):
         self._parse_status()
         return self._parsed_status.get_output_string()
 
+    def get_status_file_string(self, file_id_short):
+        self._parse_status()
+        result = self._parsed_status.result[file_id_short]
+        return result.get_output_string()
+
 
 class RequirementsStatusFactory(object):
     """Factory for different RequirementStatus using stevedore"""
