@@ -31,6 +31,7 @@ class RequirementStatusParserFactory(object):
 
 class RequirementStatusParserFileInfo(object):
     def __init__(self):
+        self.rid_match = False
         self.bool_status = False
         self._raw_results = None
 
@@ -59,6 +60,8 @@ class RequirementStatusParserXUnit(object):
         found_testcases = self._parse_xml_node()
         if not found_testcases:
             return req_status
+        else:
+            req_status.rid_match = True
 
         req_status._raw_results = found_testcases
         req_status.bool_status = True
@@ -87,7 +90,30 @@ def parse_file_with_requirement(rid, filename, parser):
     return PARSE_FACTORY.parse(rid, filename, parser)
 
 def parse_config_with_requirement(rid, config):
-    result = dict()
-    for file_id_short, file_info in config['files']:
-        result[file_id_short] = parse_file_with_requirement(rid, file_info[0], file_info[1])
-    return result
+    return RequirementStatusParserRidInfo(rid, config)
+
+
+class RequirementStatusParserRidInfo(object):
+    """Contains information about requirement id
+
+    :ivar rid_match: anything matched, i.e., if False, requirement is untouched.
+    :ivar parsed_status: pass/fail criterion (if rid_match is True).
+
+    """
+
+    def __bool__(self):
+        return self.parsed_status
+    def __nonzero__(self):
+        return self.__bool__()
+
+    def __init__(self, rid, config):
+        self.rid_match = False
+        self.parsed_status = True
+        self._raw_results = None
+
+        result = dict()
+        for file_id_short, file_info in config['files'].items():
+            parsed_file = parse_file_with_requirement(rid, file_info[0], file_info[1])
+            self.rid_match = self.rid_match or parsed_file.rid_match
+            self.parsed_status = self.parsed_status and bool(parsed_file)
+            result[file_id_short] = parsed_file

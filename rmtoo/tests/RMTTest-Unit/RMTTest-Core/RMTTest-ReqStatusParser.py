@@ -17,7 +17,8 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
-from rmtoo.lib.RequirementStatusParser import parse_file_with_requirement
+from rmtoo.lib.RequirementStatusParser import (
+    parse_file_with_requirement, parse_config_with_requirement)
 
 
 #def rmttest_negative_test_by_design(record_property):
@@ -36,6 +37,8 @@ def rmttest_negative_test_xunit_no_file():
     i = parse_file_with_requirement(None, None, 'xunit')
     assert i is None
 
+
+"""Define tests that parse the file defined hereafter."""
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_NAME_SIMPLE = os.path.join(FILE_DIR, "RMTTest-ReqStatusParser.simple.xml")
 
@@ -48,8 +51,9 @@ def rmttest_negative_test_simple_example():
     # dummyReq does not exists
     assert not ret
 
-def rmttest_positive_test_StatusAssigned_req():
+def rmttest_positive_test_StatusAssigned_req(record_property):
     "Simple query to xunit output with property req"
+    record_property("req", "ReqToBeDefinedEventually")
     filedir = os.path.dirname(os.path.abspath(__file__))
     filename = os.path.join(filedir, "RMTTest-ReqStatusParser.simple.xml")
     ret = parse_file_with_requirement("StatusAssigned", filename, 'xunit')
@@ -63,3 +67,17 @@ def rmttest_positive_test_failed_test():
     filename = os.path.join(filedir, "RMTTest-ReqStatusParser.simple.xml")
     ret = parse_file_with_requirement("FailsAlways", filename, 'xunit')
     assert not ret
+
+
+"""Parse a configuration for one or more files"""
+SIMPLE_CONFIG = {'files': {"UT": (FILE_NAME_SIMPLE, "xunit")}}
+
+def rmttest_positive_test_config_parser_1(record_property):
+    """Simple configuration test with rid *StatusAssigned* to xunit output
+    with property req
+
+    """
+    record_property("req", "ReqToBeDefinedEventually2")
+    ret = parse_config_with_requirement("StatusAssigned", SIMPLE_CONFIG)
+    assert ret.rid_match is True
+    assert bool(ret) is True
