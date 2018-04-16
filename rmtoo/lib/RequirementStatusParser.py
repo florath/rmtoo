@@ -109,11 +109,29 @@ class RequirementStatusParserRidInfo(object):
     def __init__(self, rid, config):
         self.rid_match = False
         self.parsed_status = True
-        self._raw_results = None
+        self.result = dict()
 
-        result = dict()
         for file_id_short, file_info in config['files'].items():
-            parsed_file = parse_file_with_requirement(rid, file_info[0], file_info[1])
-            self.rid_match = self.rid_match or parsed_file.rid_match
+            parsed_file = parse_file_with_requirement(
+                rid, file_info[0], file_info[1])
+            if parsed_file:
+                self.rid_match = self.rid_match or parsed_file.rid_match
             self.parsed_status = self.parsed_status and bool(parsed_file)
-            result[file_id_short] = parsed_file
+            self.result[file_id_short] = parsed_file
+
+    def get_output_string_short(self):
+        if not self.rid_match:
+            return "open"
+        elif self:
+            return "passed"
+        else:
+            return "failed"
+
+    def get_output_string(self):
+        """ This might be subject to change soon. """
+        if not self.rid_match:
+            return "open"
+        elif self:
+            return "passed"
+        else:
+            return "failed"

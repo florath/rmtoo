@@ -73,8 +73,8 @@ class RMTTestReqStatus(object):
         name, value = rt.rewrite("Status-test", req)
         assert "Status" == name
         assert isinstance(value, RequirementStatusExternal)
-
-        assert "external" == value.get_output_string_short()
+        assert "open" == value.get_output_string_short()
+        assert "external" == value.tval
 
     def rmttest_negative_01(self):
         "Requirement Tag Status - no tag given"

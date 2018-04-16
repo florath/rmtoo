@@ -14,6 +14,7 @@ from stevedore import extension
 
 from rmtoo.lib.DateUtils import parse_date, format_date
 from rmtoo.lib.RMTException import RMTException
+from rmtoo.lib.RequirementStatusParser import parse_config_with_requirement
 
 
 # pylint: disable=too-few-public-methods
@@ -138,11 +139,19 @@ class RequirementStatusExternal(RequirementStatusBase):
             raise RMTException(118, "%s: Not done contains "
                                "additional data '%s'" % (rid, t))
 
-    def get_output_string(self):
+    def _parse_status(self):
         if self._parsed_status is None:
             self._parsed_status = parse_config_with_requirement(
                 self._rid, self._tm_config)
-        return self.tval
+
+    def get_output_string_short(self):
+        """Overwrite base, not interested in the class' type."""
+        self._parse_status()
+        return self._parsed_status.get_output_string_short()
+
+    def get_output_string(self):
+        self._parse_status()
+        return self._parsed_status.get_output_string()
 
 
 class RequirementsStatusFactory(object):

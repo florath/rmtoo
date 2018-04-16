@@ -71,6 +71,9 @@ def rmttest_positive_test_failed_test():
 
 """Parse a configuration for one or more files"""
 SIMPLE_CONFIG = {'files': {"UT": (FILE_NAME_SIMPLE, "xunit")}}
+DOUBLE_CONFIG = {'files': {"UT": (FILE_NAME_SIMPLE, "xunit"),
+                           "SPE": (FILE_NAME_SIMPLE, "xunit")}}
+
 
 def rmttest_positive_test_config_parser_1(record_property):
     """Simple configuration test with rid *StatusAssigned* to xunit output
@@ -81,3 +84,16 @@ def rmttest_positive_test_config_parser_1(record_property):
     ret = parse_config_with_requirement("StatusAssigned", SIMPLE_CONFIG)
     assert ret.rid_match is True
     assert bool(ret) is True
+
+
+def rmttest_positive_test_config_parser_2(record_property):
+    """Simple configuration test with rid *StatusAssigned* to xunit output
+    with property req. Test with two files parsed twice for
+    simplicity.
+
+    """
+    record_property("req", "ReqToBeDefinedEventually2")
+    ret = parse_config_with_requirement("StatusAssigned", DOUBLE_CONFIG)
+    assert ret.rid_match is True
+    assert bool(ret) is True
+    assert len(ret.result) == 2
