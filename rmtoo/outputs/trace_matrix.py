@@ -135,14 +135,16 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
 
         req_template = self._template_env.get_template("trmat_tblReq.tex")
         template_vars = (
-            {'printstatic': self._print_static, 'numfiles': self._num_files,
-             'req_id': self.__strescape(req.get_id()),
-             'name':  req.get_value("Name").get_content(),
-             'description':  req.get_value("Description").get_content(),
-             'req_status':
-             req.get_status().get_output_string_short(),
-             'file_statuses': file_status,
-             'hash': req.get_hash()
+            {
+                'printstatic': self._print_static,
+                'numfiles': self._num_files,
+                'req_id': self.__strescape(req.get_id()),
+                'name': req.get_value("Name").get_content(),
+                'description': req.get_value("Description").get_content(),
+                'req_status':
+                req.get_status().get_output_string_short(),
+                'file_statuses': file_status,
+                'hash': req.get_hash()
             }
         )
         self.__fd.write(req_template.render(template_vars))
