@@ -68,10 +68,11 @@ class RMTTestReqStatus(object):
 
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "external")
-        req.rid_hash = "deadbeef"
 
         rt = ReqStatus(config)
         name, value = rt.rewrite("Status-test", req)
+        value.rid_hash = "deadbeef"
+
         assert "Status" == name
         assert isinstance(value, RequirementStatusExternal)
         assert "open" == value.get_output_string_short()

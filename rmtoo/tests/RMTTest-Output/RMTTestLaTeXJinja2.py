@@ -97,7 +97,7 @@ my desc
 \begin{tabular}{rlrlrl}
    Id: & TestReq               & Priority: &           & Owner: &  \\
    Invented on: &  & Invented by: &  & Status: & finished (meiner, 2011-04-15, 4 h) \\
-   Class: & implementable
+   Class: & implementable & Hash: & 
 \end{tabular}\end{center}
 }
 """ # noqa
