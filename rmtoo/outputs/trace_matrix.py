@@ -127,7 +127,7 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
         file_status = []
         for fname in self._ifiles:
             try:
-                i = req.get_value("Status").get_status_file_string(fname)
+                i = req.get_status().get_status_file_string(fname)
             except (KeyError, AttributeError):
                 file_status.append("")
             else:
@@ -140,8 +140,10 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
              'name':  req.get_value("Name").get_content(),
              'description':  req.get_value("Description").get_content(),
              'req_status':
-             req.get_value("Status").get_output_string_short(),
-             'file_statuses': file_status}
+             req.get_status().get_output_string_short(),
+             'file_statuses': file_status,
+             'hash': req.get_hash()
+            }
         )
         self.__fd.write(req_template.render(template_vars))
 

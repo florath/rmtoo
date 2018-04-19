@@ -221,7 +221,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
             {'req_id': self.__strescape(req.get_id()),
              'name':  req.get_value("Name").get_content(),
              'description':  req.get_value("Description").get_content(),
-             'req_status': req.get_value("Status").get_output_string()}
+             'req_status': req.get_status().get_output_string()}
         )
 
         if req.is_val_av_and_not_null("Rationale"):
@@ -247,7 +247,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
 
         try:
             template_vars['status'] = (
-                    req.get_value("Status").get_output_string())
+                    req.get_status().get_output_string())
         except KeyError:
             pass
         try:

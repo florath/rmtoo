@@ -90,10 +90,10 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         sprios_selected = sorted(prios_selected, key=operator.itemgetter(0, 1),
                                  reverse=True)
         sprios_assigned = sorted(
-            prios_assigned, key=lambda x: x.get_value("Status").get_date_str(),
+            prios_assigned, key=lambda x: x.get_status().get_date_str(),
             reverse=False)
         sprios_finished = sorted(
-            prios_finished, key=lambda x: x.get_value("Status").get_date_str(),
+            prios_finished, key=lambda x: x.get_status().get_date_str(),
             reverse=False)
 
         # Write everything to a file.

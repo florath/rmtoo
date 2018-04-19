@@ -23,9 +23,6 @@ from rmtoo.lib.CreateMakeDependencies import CreateMakeDependencies
 
 
 class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
-    default_config = {"req_attributes":
-                      ["Id", "Priority", "Owner", "Invented on",
-                       "Invented by", "Status", "Class"]}
 
     level_names = [
         "chapter",
@@ -268,9 +265,10 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             self.__fd.write(u", ".join(tcout))
             self.__fd.write(u"\n")
 
-        status = req.get_value("Status").get_output_string()
+        status = req.get_status().get_output_string()
         clstr = req.get_value("Class").get_output_string()
         rtype = req.get_value("Type").as_string()
+        rid_hash = req.get_hash()
 
         self.__fd.write(u"\n\\par\n{\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")
@@ -299,6 +297,8 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 self.__fd.write(u"\\textbf{Class:} & %s " % clstr)
             elif rattr == "Type":
                 self.__fd.write(u"\\textbf{Type:} & %s " % rtype)
+            elif rattr == "Hash":
+                self.__fd.write(u"\\textbf{Hash:} & %s " % rid_hash)
             else:
                 # This only happens when a wrong configuration is supllied.
                 raise RMTException(85, "Wrong latex2 output configuration "

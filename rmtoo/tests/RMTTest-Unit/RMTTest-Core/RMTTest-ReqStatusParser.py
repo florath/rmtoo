@@ -84,7 +84,8 @@ def rmttest_positive_test_config_parser_1(record_property):
 
     """
     record_property("req", "ReqToBeDefinedEventually2")
-    ret = parse_config_with_requirement("StatusAssigned", SIMPLE_CONFIG)
+    ret = parse_config_with_requirement(
+        "StatusAssigned", "deadbeef", SIMPLE_CONFIG)
     assert ret.rid_match is True
     assert bool(ret) is True
 
@@ -96,7 +97,8 @@ def rmttest_positive_test_config_parser_2(record_property):
 
     """
     record_property("req", "ReqToBeDefinedEventually2")
-    ret = parse_config_with_requirement("StatusAssigned", DOUBLE_CONFIG)
+    ret = parse_config_with_requirement(
+        "StatusAssigned", "deadbeef", DOUBLE_CONFIG)
     assert ret.rid_match is True
     assert bool(ret) is True
     assert len(ret.result) == 2

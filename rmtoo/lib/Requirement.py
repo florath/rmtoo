@@ -61,6 +61,7 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     # pylint: disable=too-many-arguments
     def __init__(self, content, rid, file_path, mods, config):
+        self._hash = None
         Encoding.check_unicode(content)
         Encoding.check_unicode(rid)
         Digraph.Node.__init__(self, rid)
@@ -70,15 +71,17 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def get_hash(self):
         """Return sha256 hash of description and name"""
-        s = ""
-        s += self.get_value("Name")
-        s += self.get_value("Description")
-        try:
-            s += self.get_value("VerifMethod")
-        except KeyError:
-            pass
-        us = s.encode('utf-8')
-        return hashlib.sha256(us).hexdigest()
+        if self._hash is None:
+            s = ""
+            s += str(self.get_value("Name"))
+            s += str(self.get_value("Description"))
+            try:
+                s += self.get_value("VerifMethod")
+            except KeyError:
+                pass
+            us = s.encode('utf-8')
+            self._hash = hashlib.sha256(us).hexdigest()
+        return self._hash[0:8]
 
     def get_prio(self):
         """Get priority of requirement"""
@@ -93,7 +96,10 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def get_status(self):
         """Get the requirement's status"""
-        return self.values["Status"]
+        status = self.values["Status"]
+        if status.rid_hash is None:
+            status.rid_hash = self.get_hash()
+        return status
 
     def get_topic(self):
         """Get the requirement's topic"""

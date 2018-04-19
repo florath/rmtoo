@@ -45,4 +45,4 @@ class RMTTestRequirement:
         r.set_value("Name", name)
         h = r.get_hash()
         hl = hashlib.sha256(sl).hexdigest()
-        assert(h == hl)
+        assert(h == hl[0:8])

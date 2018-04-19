@@ -22,6 +22,7 @@ class RequirementStatusBase(object):
     """Base class for StatusBase"""
 
     __metaclass__ = abc.ABCMeta
+    rid_hash = None
 
     @abc.abstractmethod
     def get_output_string(self):
@@ -141,8 +142,11 @@ class RequirementStatusExternal(RequirementStatusBase):
 
     def _parse_status(self):
         if self._parsed_status is None:
-            self._parsed_status = parse_config_with_requirement(
-                self._rid, self._tm_config)
+            if self.rid_hash is not None:
+                self._parsed_status = parse_config_with_requirement(
+                    self._rid, self.rid_hash, self._tm_config)
+            else:
+                raise RMTException(119, "No hash available")
 
     def get_output_string_short(self):
         """Overwrite base, not interested in the class' type."""
@@ -156,7 +160,7 @@ class RequirementStatusExternal(RequirementStatusBase):
     def get_status_file_string(self, file_id_short):
         self._parse_status()
         result = self._parsed_status.result[file_id_short]
-        return result.get_output_string()
+        return result.get_output_string_short()
 
 
 class RequirementsStatusFactory(object):

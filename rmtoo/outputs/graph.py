@@ -98,7 +98,7 @@ class graph(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             nodeparam.append("color=green")
 
         if get_conf_attr("Status"):
-            req_status = req.get_value("Status")
+            req_status = req.get_status()
 
             if isinstance(req_status, RequirementStatusNotDone):
                 nodeparam.append("fontcolor=red")

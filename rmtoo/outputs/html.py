@@ -173,7 +173,7 @@ class Html(ExecutorTopicContinuum, CreateMakeDependencies):
                     (iid.get_value("Topic"), iid.get_id(), iid.get_id()))
             out_fd.write(u"</span></dd>")
 
-        status = req.get_value("Status").get_output_string()
+        status = req.get_status().get_output_string()
         clstr = req.get_value("Class").get_output_string()
 
         out_fd.write(
