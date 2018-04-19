@@ -93,7 +93,10 @@
                 ], 
                 "latex2": [
                     {
-                        "output_filename": "artifacts/reqtopics.tex"
+                        "output_filename": "artifacts/reqtopics.tex",
+			"req_attributes":
+			["Id", "Priority", "Owner", "Invented on",
+			 "Invented by", "Status", "Class", "Hash"]
                     }
                 ], 
                 "TraceMatrix": [
