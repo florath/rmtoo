@@ -9,9 +9,9 @@
  For licensing details see COPYING
 '''
 
+from builtins import str
 import operator
 import hashlib
-
 from enum import Enum
 
 from rmtoo.lib.Encoding import Encoding
@@ -72,8 +72,7 @@ class Requirement(Digraph.Node, BaseRMObject):
     def get_hash(self):
         """Return sha256 hash of description and name"""
         if self._hash is None:
-            s = ""
-            s += str(self.get_value("Name"))
+            s = str(self.get_value("Name"))
             s += str(self.get_value("Description"))
             try:
                 s += self.get_value("VerifMethod")
