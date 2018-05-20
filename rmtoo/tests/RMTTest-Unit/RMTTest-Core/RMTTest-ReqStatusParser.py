@@ -51,7 +51,7 @@ def rmttest_negative_test_simple_example():
     # File exists
     assert ret is not None
     # dummyReq does not exists
-    assert not ret
+    assert not bool(ret)
 
 
 def rmttest_positive_test_StatusAssigned_req(record_property):
@@ -88,6 +88,7 @@ def rmttest_positive_test_config_parser_1(record_property):
         "StatusAssigned", "deadbeef", SIMPLE_CONFIG)
     assert ret.rid_match is True
     assert bool(ret) is True
+    assert ret.get_output_string() == "passed"
 
 
 def rmttest_positive_test_config_parser_2(record_property):
@@ -102,3 +103,32 @@ def rmttest_positive_test_config_parser_2(record_property):
     assert ret.rid_match is True
     assert bool(ret) is True
     assert len(ret.result) == 2
+    assert ret.get_output_string() == "passed"
+
+
+def rmttest_positive_test_config_parser_3(record_property):
+    """Simple configuration test with rid *FailsAlways* to xunit output
+    with property req. Make sure the test fails and is reported appropriately.
+
+    """
+    record_property("req", "ReqToBeDefinedEventually2")
+    ret = parse_config_with_requirement(
+        "FailsAlways", "deadbeef", DOUBLE_CONFIG)
+    assert ret.rid_match is True
+    assert bool(ret) is False
+    assert len(ret.result) == 2
+    assert ret.get_output_string() == "failed"
+
+
+def rmttest_positive_test_config_parser_4(record_property):
+    """Simple configuration test with rid not found in xunit output.
+    Test shouldn't fail but report open
+
+    """
+    record_property("req", "ReqToBeDefinedEventually2")
+    ret = parse_config_with_requirement(
+        "InexistingReqForTestPurposes", "deadbeef", DOUBLE_CONFIG)
+    assert ret.rid_match is False
+    assert bool(ret) is False
+    assert len(ret.result) == 2  # Parsing two files
+    assert ret.get_output_string() == "open"

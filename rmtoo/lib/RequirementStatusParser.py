@@ -39,7 +39,7 @@ class RequirementStatusParserFileInfo(object):
         self._raw_results = None
 
     def __bool__(self):
-        return self.bool_status
+        return self.rid_match and self.bool_status
 
     def __nonzero__(self):
         return self.__bool__()
@@ -119,7 +119,7 @@ class RequirementStatusParserRidInfo(object):
     """
 
     def __bool__(self):
-        return self.parsed_status
+        return self.rid_match and self.parsed_status
 
     def __nonzero__(self):
         return self.__bool__()
