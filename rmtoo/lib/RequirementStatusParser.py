@@ -89,10 +89,12 @@ class RequirementStatusParserXUnit(object):
         root = tree.getroot()
 
         testcases = []
-        for i in root.findall(
-                ".//properties/property[@name='req'][@value='" +
-                self._rid + "']/../.."):
-            testcases.append(i)
+        for i in root.findall(".//properties/property[@name='req']/../.."):
+            if i:
+                property_req = i.find("properties/property[@name='req']")
+                req_id = property_req.get('value')
+                if req_id.startswith(self._rid):
+                    testcases.append(i)
         return testcases
 
 
