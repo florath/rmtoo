@@ -18,7 +18,7 @@
 
   <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="64" name="rmttest_positive_04__StatusExternal" time="0.0017845630645751953">
     <properties>
-      <property name="req" value="StatusExternal"/>
+      <property name="req" value="StatusExternal-deadbeef"/>
     </properties>
   </testcase>
   <testcase classname="rmtoo.tests.RMTTest-Unit.RMTTest-Tag.RMTTest-ReqStatus.RMTTestReqStatus" file="rmtoo/tests/RMTTest-Unit/RMTTest-Tag/RMTTest-ReqStatus.py" line="78" name="rmttest_negative_01" time="0.003342151641845703">

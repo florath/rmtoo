@@ -4,6 +4,7 @@ For licensing details see COPYING
 
 '''
 import os
+import re
 import xml.etree.ElementTree as ET
 
 from stevedore import extension
@@ -18,15 +19,15 @@ class RequirementStatusParserFactory(object):
             namespace='rmtoo.input.requirement_status_parser',
             invoke_on_load=False)
 
-    def parse(self, rid, filename, parser):
+    def parse(self, rid, rhash, filename, parser):
         """Parse file with given parser"""
-        parser = self._get_parser(rid, filename, parser)
+        parser = self._get_parser(rid, rhash, filename, parser)
         return parser.parse()
 
-    def _get_parser(self, rid, filename, parser):
+    def _get_parser(self, rid, rhash, filename, parser):
         try:
             return self.__plugin_manager[parser].plugin(
-                rid, filename)
+                rid, rhash, filename)
         except KeyError:
             raise RMTException(91, "%s: Status tag invalid '%s'" % (
                 rid, parser))
@@ -60,10 +61,13 @@ class RequirementStatusParserXUnit(object):
 
     Alternatively the *requirement id* can be the a suffix to the testcase.
     This is not supported at the moment however.
+
+    rhash -- Hash uniquely identifying the requirement. Ignored if None.
     """
-    def __init__(self, rid, filename):
+    def __init__(self, rid, rhash, filename):
         self._filename = filename
         self._rid = rid
+        self._hash = rhash
 
     def parse(self):
         if not self._filename or (not os.path.isfile(self._filename)):
@@ -79,6 +83,12 @@ class RequirementStatusParserXUnit(object):
         req_status._raw_results = found_testcases
         req_status.bool_status = True
         for testcase in found_testcases:
+            property_req = testcase.find("properties/property[@name='req']")
+            req_id = property_req.get('value')
+            if self._hash is not None:
+                a = re.match(self._rid + "." + self._hash, req_id)
+                if not a:
+                    req_status.bool_status = False
             failure = testcase.findall('failure')
             if failure:
                 req_status.bool_status = False
@@ -101,13 +111,13 @@ class RequirementStatusParserXUnit(object):
 PARSE_FACTORY = RequirementStatusParserFactory()
 
 
-def parse_file_with_requirement(rid, filename, parser):
+def parse_file_with_requirement(rid, rhash, filename, parser):
     """ Parse a file with a parser that has been registered in stevedore"""
-    return PARSE_FACTORY.parse(rid, filename, parser)
+    return PARSE_FACTORY.parse(rid, rhash, filename, parser)
 
 
-def parse_config_with_requirement(rid, rid_hash, config):
-    return RequirementStatusParserRidInfo(rid, config)
+def parse_config_with_requirement(rid, rhash, config):
+    return RequirementStatusParserRidInfo(rid, rhash, config)
 
 
 class RequirementStatusParserRidInfo(object):
@@ -126,14 +136,14 @@ class RequirementStatusParserRidInfo(object):
     def __nonzero__(self):
         return self.__bool__()
 
-    def __init__(self, rid, config):
+    def __init__(self, rid, rhash, config):
         self.rid_match = False
         self.parsed_status = True
         self.result = dict()
 
         for file_id_short, file_info in config['files'].items():
             parsed_file = parse_file_with_requirement(
-                rid, file_info[0], file_info[1])
+                rid, rhash, file_info[0], file_info[1])
             if parsed_file is not None:
                 self.rid_match = self.rid_match or parsed_file.rid_match
             self.parsed_status = self.parsed_status and bool(parsed_file)

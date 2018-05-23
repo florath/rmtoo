@@ -64,7 +64,7 @@ class RMTTestReqStatus(object):
 
     def rmttest_positive_04__StatusExternal(self, record_property):
         "Requirement Tag Status - tag given 'external'"
-        record_property("req", "StatusExternal")
+        record_property("req", "StatusExternal-09cf9374")
 
         config, req = create_parameters()
         req["Status"] = RecordEntry("Status", "external")
