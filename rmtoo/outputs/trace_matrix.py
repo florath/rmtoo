@@ -149,6 +149,15 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
         )
         self.__fd.write(req_template.render(template_vars))
 
+        ''' Create a grep'able output for every requirement '''
+        if req.get_status().get_status_failed():
+            self.__fd.write("%%% TRACEMAT_RID_FAILED : " +
+                            self.__strescape(req.get_id()) + "\n")
+        else:
+            self.__fd.write("%%% TRACEMAT_RID_FINE : " +
+                            self.__strescape(req.get_id()) + "\n")
+
+
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")

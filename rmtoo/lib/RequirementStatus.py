@@ -33,6 +33,10 @@ class RequirementStatusBase(object):
         """Return short version of the status string"""
         return self.tval
 
+    def get_status_failed(self):
+        """ Only for external at the moment """
+        return False
+
 
 # pylint: disable=abstract-method
 class RequirementStatusBaseExt(RequirementStatusBase):
@@ -161,6 +165,12 @@ class RequirementStatusExternal(RequirementStatusBase):
         self._parse_status()
         result = self._parsed_status.result[file_id_short]
         return result.get_output_string_short()
+
+    def get_status_failed(self):
+        if self._parsed_status.rid_match and not self._parsed_status.parsed_status:
+            return True
+        else:
+            return False
 
 
 class RequirementsStatusFactory(object):
