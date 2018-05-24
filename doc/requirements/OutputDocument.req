@@ -13,4 +13,5 @@ Priority: customers:8
 Effort estimation: 8
 Topic: Output
 Solved by: OutputGraph OutputGraph2 OutputPricing OutputTextDocument
+ TraceabilityMatrix
 # Added by rmtoo-normalize-dependencies

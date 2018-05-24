@@ -12,4 +12,5 @@ Priority: development:2
 Effort estimation: 5
 Status: external
 Class: implementable
+Solved by: StatusExternalParser
 Topic: ReqTagFormatDesc
