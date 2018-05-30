@@ -55,8 +55,11 @@ def rmttest_negative_test_simple_example():
 
 
 def rmttest_positive_test_StatusAssigned_req(record_property):
-    "Simple query to xunit output with property req"
-    record_property("req", "ReqToBeDefinedEventually")
+    """Simple query to xunit output with property req. Simplest status
+    parser test at the moment.
+
+    """
+    record_property("req", "StatusExternalParser-db77a22c")
     filedir = os.path.dirname(os.path.abspath(__file__))
     filename = os.path.join(filedir, "RMTTest-ReqStatusParser.simple.xml")
     ret = parse_file_with_requirement("StatusAssigned", None,

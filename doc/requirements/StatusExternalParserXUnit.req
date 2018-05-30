@@ -1,0 +1,13 @@
+Name: Requirement's Status XUnit Parser 
+Type: requirement
+Invented on: 2018-05-24
+Invented by: nork
+Description: The requirement's status is parsed from an xunit log
+ file. The following example shows the required XML-tags.
+  
+ The value of the \emph{property} tag is the name of the requirement
+ followed by its hash.
+Rationale: Create traceability matrix directly from your unit-tests
+Owner: development
+Status: finished:nork:2018-05-24:4h
+Topic: StatusParsers

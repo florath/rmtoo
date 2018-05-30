@@ -157,7 +157,6 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
             self.__fd.write("%%% TRACEMAT_RID_FINE : " +
                             self.__strescape(req.get_id()) + "\n")
 
-
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
         tracer.debug("Called.")

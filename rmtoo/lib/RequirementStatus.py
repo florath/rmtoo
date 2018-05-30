@@ -167,7 +167,8 @@ class RequirementStatusExternal(RequirementStatusBase):
         return result.get_output_string_short()
 
     def get_status_failed(self):
-        if self._parsed_status.rid_match and not self._parsed_status.parsed_status:
+        if self._parsed_status.rid_match and (
+                not self._parsed_status.parsed_status):
             return True
         else:
             return False
