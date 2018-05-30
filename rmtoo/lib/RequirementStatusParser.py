@@ -103,7 +103,7 @@ class RequirementStatusParserXUnit(object):
             if i:
                 property_req = i.find("properties/property[@name='req']")
                 req_id = property_req.get('value')
-                if req_id.startswith(self._rid):
+                if re.match(r"\b" + self._rid + r"\b", req_id):
                     testcases.append(i)
         return testcases
 
