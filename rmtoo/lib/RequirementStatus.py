@@ -14,7 +14,7 @@ from stevedore import extension
 
 from rmtoo.lib.DateUtils import parse_date, format_date
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.lib.RequirementStatusParser import parse_config_with_requirement
+from rmtoo.lib.VerificationStatusParser import parse_config_with_requirement
 
 
 # pylint: disable=too-few-public-methods
@@ -30,7 +30,12 @@ class RequirementStatusBase(object):
         return
 
     def get_output_string_short(self):
-        """Return short version of the status string"""
+        """Return short version of the status string
+
+        This is currently only required for the traceability matrix
+        and should be replaced with a call the verification status
+
+        """
         return self.tval
 
 
@@ -124,10 +129,15 @@ class RequirementStatusFinished(RequirementStatusBaseExt):
 
 
 class RequirementStatusExternal(RequirementStatusBase):
-    """Class representing the StatusExternal"""
+    """Class representing the StatusExternal
+
+    The status corresponds to the verification status of its
+    requirement.
+
+    """
     tval = "external"
     _def_config = {'files': {}}
-    _parsed_status = None
+    _verification_status = None
 
     def __init__(self, _config, rid, t):
         self._rid = rid
@@ -140,31 +150,35 @@ class RequirementStatusExternal(RequirementStatusBase):
             raise RMTException(118, "%s: Not done contains "
                                "additional data '%s'" % (rid, t))
 
+    def get_output_string_short(self):
+        """Overwrite base, not interested in the class' type."""
+        return self.verification_status.get_output_string_short()
+
+    def get_output_string(self):
+        return self.verification_status.get_output_string()
+
+    @property
+    def verification_status(self):
+        self._parse_status()
+        return self._verification_status
+
     def _parse_status(self):
-        if self._parsed_status is None:
+        if self._verification_status is None:
             if self.rid_hash is not None:
-                self._parsed_status = parse_config_with_requirement(
+                self._verification_status = parse_config_with_requirement(
                     self._rid, self.rid_hash, self._tm_config)
             else:
                 raise RMTException(119, "No hash available")
 
-    def get_output_string_short(self):
-        """Overwrite base, not interested in the class' type."""
-        self._parse_status()
-        return self._parsed_status.get_output_string_short()
-
-    def get_output_string(self):
-        self._parse_status()
-        return self._parsed_status.get_output_string()
-
+    # TO BE DELETED!
     def get_status_file_string(self, file_id_short):
         self._parse_status()
-        result = self._parsed_status.result[file_id_short]
+        result = self._verification_status.result[file_id_short]
         return result.get_output_string_short()
 
     def get_status_failed(self):
-        if self._parsed_status.rid_match and (
-                not self._parsed_status.parsed_status):
+        if self._verification_status.rid_match and (
+                not self._verification_status.parsed_status):
             return True
         else:
             return False

@@ -12,7 +12,7 @@ from stevedore import extension
 from rmtoo.lib.RMTException import RMTException
 
 
-class RequirementStatusParserFactory(object):
+class VerificationStatusParserFactory(object):
     """Factory handling parser parsing with stevedore"""
     def __init__(self):
         self.__plugin_manager = extension.ExtensionManager(
@@ -33,7 +33,7 @@ class RequirementStatusParserFactory(object):
                 rid, parser))
 
 
-class RequirementStatusParserFileInfo(object):
+class VerificationStatusParserFileInfo(object):
     def __init__(self):
         self.rid_match = False
         self.bool_status = False
@@ -54,7 +54,7 @@ class RequirementStatusParserFileInfo(object):
             return "failed"
 
 
-class RequirementStatusParserXUnit(object):
+class VerificationStatusParserXUnit(object):
     """Parse XUnit output where the *requirement id* is either a property
     of the testcase with name="req" and the value="req_id". This is
     the preferred variant.
@@ -72,7 +72,7 @@ class RequirementStatusParserXUnit(object):
     def parse(self):
         if not self._filename or (not os.path.isfile(self._filename)):
             return None
-        req_status = RequirementStatusParserFileInfo()
+        req_status = VerificationStatusParserFileInfo()
 
         found_testcases = self._parse_xml_node()
         if not found_testcases:
@@ -108,7 +108,7 @@ class RequirementStatusParserXUnit(object):
         return testcases
 
 
-PARSE_FACTORY = RequirementStatusParserFactory()
+PARSE_FACTORY = VerificationStatusParserFactory()
 
 
 def parse_file_with_requirement(rid, rhash, filename, parser):
@@ -117,11 +117,11 @@ def parse_file_with_requirement(rid, rhash, filename, parser):
 
 
 def parse_config_with_requirement(rid, rhash, config):
-    return RequirementStatusParserRidInfo(rid, rhash, config)
+    return VerificationStatusParserRidInfo(rid, rhash, config)
 
 
-class RequirementStatusParserRidInfo(object):
-    """Contains information about requirement id
+class VerificationStatusParserRidInfo(object):
+    """Contains verification information about requirement id
 
     :ivar rid_match: anything matched, i.e., if False, requirement is
     untouched.

@@ -14,7 +14,7 @@ import pytest
 
 from rmtoo.lib.RMTException import RMTException
 
-from rmtoo.lib.RequirementStatusParser import (
+from rmtoo.lib.VerificationStatusParser import (
     parse_file_with_requirement, parse_config_with_requirement)
 
 
