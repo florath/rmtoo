@@ -127,7 +127,8 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
         file_status = []
         for fname in self._ifiles:
             try:
-                i = req.get_status().get_status_file_string(fname)
+                i = (req.get_status().verification_status.
+                     get_file_status_string_short(fname))
             except (KeyError, AttributeError):
                 file_status.append("")
             else:
@@ -151,7 +152,8 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
 
         ''' Create a grep'able output for every requirement '''
         try:
-            rid_status_failed = req.get_status().get_status_failed()
+            rid_status_failed = (req.get_status().verification_status.
+                                 get_status_failed())
         except AttributeError:
             ''' Not a failure if status doesn't support this method '''
             rid_status_failed = False
