@@ -150,7 +150,12 @@ class TraceMatrix(StdOutputParams, ExecutorTopicContinuum,
         self.__fd.write(req_template.render(template_vars))
 
         ''' Create a grep'able output for every requirement '''
-        if req.get_status().get_status_failed():
+        try:
+            rid_status_failed = req.get_status().get_status_failed()
+        except AttributeError:
+            ''' Not a failure if status doesn't support this method '''
+            rid_status_failed = False
+        if rid_status_failed:
             self.__fd.write("%%% TRACEMAT_RID_FAILED : " +
                             self.__strescape(req.get_id()) + "\n")
         else:

@@ -33,10 +33,6 @@ class RequirementStatusBase(object):
         """Return short version of the status string"""
         return self.tval
 
-    def get_status_failed(self):
-        """ Only for external at the moment """
-        return False
-
 
 # pylint: disable=abstract-method
 class RequirementStatusBaseExt(RequirementStatusBase):
