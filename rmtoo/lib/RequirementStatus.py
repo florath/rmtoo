@@ -170,19 +170,6 @@ class RequirementStatusExternal(RequirementStatusBase):
             else:
                 raise RMTException(119, "No hash available")
 
-    # TO BE DELETED!
-    def get_status_file_string(self, file_id_short):
-        self._parse_status()
-        result = self._verification_status.result[file_id_short]
-        return result.get_output_string_short()
-
-    def get_status_failed(self):
-        if self._verification_status.rid_match and (
-                not self._verification_status.parsed_status):
-            return True
-        else:
-            return False
-
 
 class RequirementsStatusFactory(object):
     """Factory for different RequirementStatus using stevedore"""

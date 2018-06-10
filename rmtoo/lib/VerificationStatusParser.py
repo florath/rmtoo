@@ -158,10 +158,26 @@ class VerificationStatusParserRidInfo(object):
             return "failed"
 
     def get_output_string(self):
-        """ This might be subject to change soon. """
-        if not self.rid_match:
-            return "open"
-        elif self:
-            return "passed"
+        """This might be subject to change soon.
+
+        The idea is to provide detailed information where to find the
+        close-out reference.
+
+        """
+        return self.get_output_string_short()
+
+    def get_file_status_string_short(self, file_id_short):
+        result = self.result[file_id_short]
+        return result.get_output_string_short()
+
+    def get_status_failed(self):
+        """Return true if requirement id matched and not passed.
+
+        This indicates that action is required by the user.
+
+        """
+        if self._verification_status.rid_match and (
+                not self._verification_status.parsed_status):
+            return True
         else:
-            return "failed"
+            return False
