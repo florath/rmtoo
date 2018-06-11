@@ -4,14 +4,14 @@ Invented on: 2018-04-24
 Invented by: nork
 Owner: development
 Description: The traceability matrix must contain all requirements and
- their status. It must list all close-out references with the
- requirements' status for every reference.
+ their verification status. It must list all close-out references with the
+ requirements' verification status for every reference.
 Rationale: An automatically generated traceability matrix is
  desired. All close-out references must be listed to easily find and
  change mistakes.
-Status: finished
+Status: not done
 Priority: development:10
 Effort estimation: 21
 Topic: Output
-Solved by: StatusExternal
+Solved by: VerificationStatusParser
 # Added by rmtoo-normalize-dependencies

@@ -1,4 +1,3 @@
-Name: Status Parsers
-Text: Document the various options for the external status parsers
+Name: Verification
+Text: The verification of the requirements shall be done automatically. The verification status requires an external document to ensure compliance with various standard, e.g., EN 50128. This section sets the requirements for this part.
 IncludeRequirements: full
-

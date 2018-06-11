@@ -2,15 +2,14 @@ Name: Status: External
 Type: requirement
 Invented on: 2018-03-22
 Invented by: nork
-Description: The status \textbf{may} be set to 'external when
- the status of this requirement is resolved with an external
- reference.
-Rationale: To create traceability, a requirement needs to be solved
+Description: The status \textbf{may} be set to \emph{external} when
+ the status of this requirement corresponds to its traceability status.
+Rationale: To create traceability a requirement needs to be solved
  with a reference, e.g., a released document.
 Owner: development
 Priority: development:2
 Effort estimation: 5
 Status: external
 Class: implementable
-Solved by: StatusExternalParser
+Solved by: VerificationStatusParser
 Topic: ReqTagFormatDesc

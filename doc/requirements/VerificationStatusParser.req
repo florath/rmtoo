@@ -1,0 +1,11 @@
+Name: Verification Status Parser
+Type: requirement
+Invented on: 2018-05-24
+Invented by: nork
+Description: The \emph{verification status} \textbf{must} be parsed
+ from an external source.
+Rationale: Automate traceability.
+Owner: development
+Status: finished:nork:2018-05-24:2h
+Solved by: VerificationStatusParserXUnit
+Topic: StatusParsers
