@@ -24,4 +24,4 @@ doc/presentations/reqspricing.png
 make_tests.log
 .tox
 MANIFEST
-
+.ropeproject
