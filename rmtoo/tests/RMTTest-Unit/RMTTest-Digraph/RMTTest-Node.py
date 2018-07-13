@@ -8,23 +8,23 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.digraph.Digraph import Digraph
 
 
-class RMTTestNode(unittest.TestCase):
+class RMTTestNode(object):
 
     def rmttest_neg_01(self):
         "Node test: not find outgoing node which is not there"
 
         n = Digraph.Node()
         r = n.find_outgoing("nixdamit")
-        self.assertIsNone(r)
+        assert r is None
 
     def rmttest_neg_02(self):
         "Node test: check if is_self_of_ancient is correct"
 
         n = Digraph.Node()
         r = n.is_self_of_ancient(None)
-        self.assertFalse(r)
+        assert not r

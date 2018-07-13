@@ -8,7 +8,7 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
@@ -41,7 +41,7 @@ def create_test_graph_01():
     return mg
 
 
-class InheritanceTest(unittest.TestCase):
+class RMTTestInheritanceTest(object):
 
     def rmttest_inherit_001(self):
         "Test creation syntax check"
@@ -51,13 +51,13 @@ class InheritanceTest(unittest.TestCase):
         "Output check"
         mg = create_test_graph_01()
         d = mg.output_to_dict()
-        self.assertEqual(d, {'A': ['B', 'C'], 'C': [], 'B': ['C']},
-                         "incorrect dictionary output")
+        assert d == {'A': ['B', 'C'], 'C': [], 'B': ['C']}, \
+            "incorrect dictionary output"
 
     def rmttest_inherit_003(self):
         "Topological sort check"
         mg = create_test_graph_01()
         tsort = topological_sort(mg)
         tnames = node_list_to_node_name_list(tsort)
-        self.assertEqual(tnames, ['C', 'B', 'A'],
-                         "incorrect topological sort")
+        assert tnames == ['C', 'B', 'A'], \
+            "incorrect topological sort"

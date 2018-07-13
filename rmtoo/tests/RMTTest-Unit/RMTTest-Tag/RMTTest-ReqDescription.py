@@ -10,15 +10,15 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.ReqDescription import ReqDescription
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+import pytest
 
 
-class RMTTestReqClass(unittest.TestCase):
+class RMTTestReqClass(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Description - one word Description"
@@ -27,8 +27,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqDescription(config)
         name, value = rt.rewrite("Description-test", req)
-        self.assertEqual("Description", name)
-        self.assertEqual("short", value.get_content())
+        assert "Description" == name
+        assert "short" == value.get_content()
 
     def rmttest_positive_02(self):
         "Requirement Tag Description - some words Description"
@@ -38,8 +38,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqDescription(config)
         name, value = rt.rewrite("Description-test", req)
-        self.assertEqual("Description", name)
-        self.assertEqual(d, value.get_content())
+        assert "Description" == name
+        assert d == value.get_content()
 
     def rmttest_positive_03(self):
         "Requirement Tag Description - 500 chars description"
@@ -51,17 +51,17 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqDescription(config)
         name, value = rt.rewrite("Description-test", req)
-        self.assertEqual("Description", name)
-        self.assertEqual(long_text, value.get_content())
+        assert "Description" == name
+        assert long_text == value.get_content()
 
     def rmttest_negative_01(self):
         "Requirement Tag Description - empty reqs"
         config, req = create_parameters()
 
         rt = ReqDescription(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Description-test", req)
-            self.assertEqual(2, rmte.id())
+            assert 2 == rmte.id()
 
     def rmttest_negative_02(self):
         "Requirement Tag Description - description much too long"
@@ -72,6 +72,6 @@ class RMTTestReqClass(unittest.TestCase):
         req = {"Description": RecordEntry("Description", long_text)}
 
         rt = ReqDescription(config)
-        with self.assertRaises(RMTException) as rmte:
+        with pytest.raises(RMTException) as rmte:
             rt.rewrite("Description-test", req)
-            self.assertEqual(3, rmte.id())
+            assert 3 == rmte.id()

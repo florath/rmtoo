@@ -8,13 +8,13 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
 from rmtoo.tests.lib.TestConfig import TestConfig
 
 
-class RMTTestTopicCohe(unittest.TestCase):
+class RMTTestTopicCohe(object):
 
     def rmttest_pos_01(self):
         "TopicCohe: Check different ways of topic coherence"
@@ -31,5 +31,4 @@ class RMTTestTopicCohe(unittest.TestCase):
         topic_cohe = TopicCohe(cfg)
         topic_cohe._add_topic_relation(LNTopic("first"), LNTopic("second"))
 
-        self.assertEqual(
-            {'second': [0, 1], 'first': [0, 1]}, topic_cohe._get_tcnt())
+        assert {'second': [0, 1], 'first': [0, 1]} == topic_cohe._get_tcnt()

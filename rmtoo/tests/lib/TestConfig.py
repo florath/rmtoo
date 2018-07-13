@@ -15,9 +15,6 @@ from rmtoo.lib.configuration.Cfg import Cfg
 
 class TestConfig(Cfg):
 
-    def __init__(self):
-        Cfg.__init__(self)
-
     def set_solved_by(self):
         self.set_value('requirements.input.dependency_notation', "Solved by")
 

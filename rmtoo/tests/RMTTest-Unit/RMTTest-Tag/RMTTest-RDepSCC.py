@@ -11,13 +11,12 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.tests.lib.RDep import create_parameters
 from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
 
-class RMTTestRDepSCC(unittest.TestCase):
+class RMTTestRDepSCC(object):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
@@ -27,7 +26,7 @@ class RMTTestRDepSCC(unittest.TestCase):
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        self.assertTrue(result)
+        assert result
 
     def rmttest_positive_02(self):
         "small digraph D -> B -> A and D -> C -> A"
@@ -38,7 +37,7 @@ class RMTTestRDepSCC(unittest.TestCase):
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        self.assertTrue(result)
+        assert result
 
     def rmttest_negative_01(self):
         "small digraph D -> B -> A and A -> C -> D"
@@ -49,4 +48,4 @@ class RMTTestRDepSCC(unittest.TestCase):
         rdep = RDepNoDirectedCircles(config)
         result = rdep.rewrite(reqset)
 
-        self.assertFalse(result)
+        assert not result

@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.RDepDependsOn import RDepDependsOn
 from rmtoo.lib.Requirement import Requirement
@@ -19,7 +18,7 @@ from rmtoo.tests.lib.TestConfig import TestConfig
 from rmtoo.lib.InputModules import InputModules
 
 
-class RMTTestRDepDependsOn(unittest.TestCase):
+class RMTTestRDepDependsOn(object):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
@@ -40,14 +39,10 @@ Depends on: A''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        self.assertEqual(
-            [], reqset.get_requirement("A").incoming_as_named_list())
-        self.assertEqual(
-            ["B"], reqset.get_requirement("A").outgoing_as_named_list())
-        self.assertEqual(
-            ["A"], reqset.get_requirement("B").incoming_as_named_list())
-        self.assertEqual(
-            [], reqset.get_requirement("B").outgoing_as_named_list())
+        assert [] == reqset.get_requirement("A").incoming_as_named_list()
+        assert ["B"] == reqset.get_requirement("A").outgoing_as_named_list()
+        assert ["A"] == reqset.get_requirement("B").incoming_as_named_list()
+        assert [] == reqset.get_requirement("B").outgoing_as_named_list()
 
     def rmttest_positive_02(self):
         "Three node one edge digraph B -> A, C -> A and C -> B"
@@ -73,20 +68,15 @@ Depends on: A B''', 'C', None, imod, config)
         rdep = RDepDependsOn(config)
         rdep.rewrite(reqset)
 
-        self.assertEqual(
-            [], reqset.get_requirement("A").incoming_as_named_list())
+        assert [] == reqset.get_requirement("A").incoming_as_named_list()
         # There are two possible valid results
-        self.assertTrue(
-            reqset.get_requirement("A").outgoing_as_named_list()
-            in [["C", "B"], ["B", "C"]])
-        self.assertEqual(
-            ["A"], reqset.get_requirement("B").incoming_as_named_list())
-        self.assertEqual(
-            ["C"], reqset.get_requirement("B").outgoing_as_named_list())
-        self.assertEqual(
-            ["A", "B"], reqset.get_requirement("C").incoming_as_named_list())
-        self.assertEqual(
-            [], reqset.get_requirement("C").outgoing_as_named_list())
+        assert reqset.get_requirement("A").outgoing_as_named_list() \
+            in [["C", "B"], ["B", "C"]]
+        assert ["A"] == reqset.get_requirement("B").incoming_as_named_list()
+        assert ["C"] == reqset.get_requirement("B").outgoing_as_named_list()
+        assert ["A", "B"] == reqset.get_requirement(
+            "C").incoming_as_named_list()
+        assert [] == reqset.get_requirement("C").outgoing_as_named_list()
 
     def rmttest_negative_01(self):
         "Master requirement with Depends on field"
@@ -104,7 +94,7 @@ Depends on: A''', 'A', None, imod, config)
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
 
     def rmttest_negative_03(self):
         "Normal requirement has no 'Depends on'"
@@ -124,7 +114,7 @@ Type: requirement''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
 
     def rmttest_negative_04(self):
         "Normal requirement has empty 'Depends on'"
@@ -145,7 +135,7 @@ Depends on:''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
 
     def rmttest_negative_05(self):
         "'Depends on' points to a non existing requirement"
@@ -166,7 +156,7 @@ Depends on: C''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
 
     def rmttest_negative_07(self):
         "'Depends on' points to same requirement"
@@ -187,4 +177,4 @@ Depends on: B''', 'B', None, imod, config)
         rdep = RDepDependsOn(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status

@@ -11,7 +11,7 @@
 
 import os
 import shutil
-import unittest
+
 
 from rmtoo.lib.main.NormalizeDependencies import main_impl, main_func
 from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
@@ -20,7 +20,7 @@ from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB015"
 
 
-class RMTTestBB015(unittest.TestCase):
+class RMTTestBB015(object):
 
     def rmttest_pos_01(self):
         "Normalization test"
@@ -40,7 +40,7 @@ class RMTTestBB015(unittest.TestCase):
         # Call the converter
         main_impl(["-j", "file://" + mdir + "/input/Config.json"],
                   mout, merr, main_func, myexit)
-        self.assertEqual(0, self.rval)
+        assert 0 == self.rval
         cleanup_std_log(mout, merr)
         check_file_results(mdir)
         delete_result_is_dir()

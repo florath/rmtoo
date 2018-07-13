@@ -10,7 +10,7 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -24,7 +24,7 @@ from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
 
 
-class RMTTestRDepSolvedBy(unittest.TestCase):
+class RMTTestRDepSolvedBy(object):
 
     def rmttest_neg_empty_solved_by(self):
         "Normal requirement has empty 'Solved by'"
@@ -44,14 +44,14 @@ Solved by:''', 'B', None, None, None)
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
             "__resolve_solved_by_one_req_deps;===LINENO===; " \
             "77:B:'Solved by' field has length 0\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_solved_by_to_nonex_req(self):
         "'Solved by' points to a non existing requirement"
@@ -72,14 +72,14 @@ Solved by: C''', 'B', None, None, None)
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
             "__resolve_solved_by_one_req_deps;===LINENO===; " \
             "74:B:'Solved by' points to a non-existing requirement 'C'\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr
 
     def rmttest_neg_point_to_self(self):
         "'Solved by' points to same requirement"
@@ -99,11 +99,11 @@ Solved by: B''', 'B', None, None, None)
         rdep = RDepSolvedBy(config)
         status = rdep.rewrite(reqset)
 
-        self.assertFalse(status)
+        assert not status
         lstderr = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
         result_expected \
             = "===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;" \
             "__resolve_solved_by_one_req_deps;===LINENO===; " \
             "75:B:'Solved by' points to the requirement itself\n"
-        self.assertEquals(result_expected, lstderr)
+        assert result_expected == lstderr

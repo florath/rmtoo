@@ -10,16 +10,16 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.inputs.ReqEffortEst import ReqEffortEst
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+import pytest
 
 
-class RMTTestReqClass(unittest.TestCase):
+class RMTTestReqClass(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Effort Estimation - no tag given"
@@ -27,8 +27,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqEffortEst(config)
         name, value = rt.rewrite("EffortEstimation-test", req)
-        self.assertEqual("Effort estimation", name)
-        self.assertIsNone(value)
+        assert "Effort estimation" == name
+        assert value is None
 
     def rmttest_positive_02(self):
         "Requirement Tag Effort Estimation - tag given with all valid numbers"
@@ -39,8 +39,8 @@ class RMTTestReqClass(unittest.TestCase):
                                                    Encoding.to_unicode(i))
             rt = ReqEffortEst(config)
             name, value = rt.rewrite("EffortEstimation-test", req)
-            self.assertEqual("Effort estimation", name)
-            self.assertEqual(i, value)
+            assert "Effort estimation" == name
+            assert i == value
 
     def rmttest_negative_01(self):
         "Requirement Tag Effort Estimation - tag given with invalid numbers"
@@ -52,6 +52,6 @@ class RMTTestReqClass(unittest.TestCase):
                                                    Encoding.to_unicode(i))
             rt = ReqEffortEst(config)
 
-            with self.assertRaises(RMTException) as rmte:
+            with pytest.raises(RMTException) as rmte:
                 rt.rewrite("EffortEstimation-test", req)
-                self.assertEqual(4, rmte.id())
+                assert 4 == rmte.id()

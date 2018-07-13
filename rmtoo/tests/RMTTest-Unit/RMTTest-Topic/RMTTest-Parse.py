@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.lib.TopicSet import TopicSet
 from rmtoo.tests.lib.TestVCS import TestVCS
@@ -19,7 +18,7 @@ from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 
 
-class RMTTestParse(unittest.TestCase):
+class RMTTestParse(object):
 
     def rmttest_positive_01(self):
         "TopicSet - constructor with only one element"
@@ -35,7 +34,7 @@ class RMTTestParse(unittest.TestCase):
             tobjcache = ObjectCache()
             tinmod = TestInputModules()
             TopicSet(cfg, tvcs, "bkdkd", tobjcache, tinmod)
-            self.assertTrue(False)
+            assert False
         except AssertionError:
             pass
 

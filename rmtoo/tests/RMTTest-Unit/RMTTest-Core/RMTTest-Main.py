@@ -10,13 +10,13 @@
 '''
 
 import sys
-import unittest
+
 
 from rmtoo.lib.RmtooMain import main_impl
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTestMain(unittest.TestCase):
+class RMTTestMain(object):
 
     def rmttest_positive_01(self):
         "main: check if result is correctly handled: True"
@@ -35,8 +35,8 @@ class RMTTestMain(unittest.TestCase):
             return True
 
         main_impl(None, None, None, mymain, myexit)
-        self.assertTrue(myexit_called)
-        self.assertEqual(0, myexit_val)
+        assert myexit_called
+        assert 0 == myexit_val
 
     def rmttest_positive_02(self):
         "main: check if result is correctly handled: False"
@@ -55,8 +55,8 @@ class RMTTestMain(unittest.TestCase):
             return False
 
         main_impl(None, None, None, mymain, myexit)
-        self.assertTrue(myexit_called)
-        self.assertEqual(1, myexit_val)
+        assert myexit_called
+        assert 1 == myexit_val
 
     def rmttest_neg_01(self):
         "main: check if result is correctly handled: Exception"
@@ -75,5 +75,5 @@ class RMTTestMain(unittest.TestCase):
             raise RMTException(63, "test thingy")
 
         main_impl(None, None, sys.stderr, mymain, myexit)
-        self.assertTrue(myexit_called)
-        self.assertEqual(1, myexit_val)
+        assert myexit_called
+        assert 1 == myexit_val

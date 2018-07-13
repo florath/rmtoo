@@ -15,7 +15,7 @@ import os
 import shutil
 import difflib
 import zipfile
-import unittest
+
 import time
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
@@ -116,7 +116,7 @@ def compare_results(mdir, relaxed=False, artifacts_dir=None):
                 r[df] = "XML files differ"
         else:
             sorted_diff = relaxed and \
-                          df in ['stderr', 'makefile_deps', 'req-graph1.dot',
+                df in ['stderr', 'makefile_deps', 'req-graph1.dot',
                                  'reqsprios.tex']
             ud = unified_diff(mdir, df, sorted_diff, artifacts_dir)
             if ud is not None:
@@ -256,13 +256,13 @@ def check_file_results(mdir, tcname="<UNKNOWN>", relaxed=False,
     check_result(missing_files, additional_files, diffs, tcname)
 
 
-class BBHelper(unittest.TestCase):
+class BBHelper(object):
 
     @staticmethod
     def myexit(n):
         pass
 
-    def setUp(self):
+    def setup_class(self):
         # Stored for logging proposes
         self.__name = type(self).__name__
 
@@ -288,16 +288,16 @@ class BBHelper(unittest.TestCase):
         if len(missing_files) != 0:
             print("[%s] MISSING FILES [%s]"
                   % (self.__name, missing_files))
-        self.assertEqual(0, len(missing_files))
+        assert 0 == len(missing_files)
 
         if len(additional_files) != 0:
             print("[%s] ADDITIONAL FILES [%s]"
                   % (self.__name, additional_files))
-        self.assertEqual(0, len(additional_files))
+        assert 0 == len(additional_files)
 
         if len(diffs) != 0:
             print("[%s] DIFFS [%s]" % (self.__name, diffs))
-        self.assertEqual(0, len(diffs))
+        assert 0 == len(diffs)
 
     def __check_file_results(self, relaxed):
         prepare_stderr()
@@ -330,7 +330,7 @@ class BBHelper(unittest.TestCase):
         result = main_func(cmd_line_params,
                            self.__mout, self.__merr)
         cleanup_std_log(self.__mout, self.__merr)
-        self.assertEqual(success, result)
+        assert success == result
         if container_files:
             extract_container_files(container_files)
         if unify_output_dirs:

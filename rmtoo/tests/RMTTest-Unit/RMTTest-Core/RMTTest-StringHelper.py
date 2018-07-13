@@ -8,22 +8,22 @@
 
  For licensing details see COPYING
 '''
-import unittest
+
 
 from rmtoo.lib.StringHelper import join_ate
 
 
-class RMTTestStringHelper(unittest.TestCase):
+class RMTTestStringHelper(object):
     """Test cases for StringHelper module"""
 
     def rmttest_pos_01(self):
         "StringHelper.join_ate with elements"
 
         join_res = join_ate("-", ["a", "b", "c", "d"])
-        self.assertEqual("a-b-c-d-", join_res)
+        assert "a-b-c-d-" == join_res
 
     def rmttest_pos_02(self):
         "StringHelper.join_ate empty list"
 
         join_res = join_ate("-", [])
-        self.assertEqual("", join_res)
+        assert "" == join_res

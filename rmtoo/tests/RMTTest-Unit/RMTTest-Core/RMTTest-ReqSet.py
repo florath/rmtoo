@@ -15,7 +15,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-import unittest
+
 
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.InputModules import InputModules
@@ -25,7 +25,7 @@ from rmtoo.lib.logging import init_logger, tear_down_log_handler
 from rmtoo.tests.lib.Utils import hide_volatile
 
 
-class RMTTestReqSet(unittest.TestCase):
+class RMTTestReqSet(object):
     """Test cases for Requirment Set"""
 
     def rmttest_positive_01(self):
@@ -57,7 +57,7 @@ class RMTTestReqSet(unittest.TestCase):
 
         lstderr_last_two_lines = lstderr.split("\n")[-3:-1]
 
-        self.assertEquals(result_expected, lstderr_last_two_lines)
+        assert result_expected == lstderr_last_two_lines
 
     def rmttest_positive_02(self):
         "Requirement contains a tag where no handler exists - multiple tags"
@@ -95,5 +95,5 @@ class RMTTestReqSet(unittest.TestCase):
                 "and checking - can't continue.$",
                 lstderr_last_two_lines[1])
 
-        self.assertTrue(result0)
-        self.assertTrue(result1)
+        assert result0
+        assert result1

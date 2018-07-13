@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 try:
     from StringIO import StringIO
@@ -48,7 +47,7 @@ expected_result = \
     "===LINENO===; 90:Wrong module type [mytag] not in [[1, 2, 3]]\n"
 
 
-class RMTTestBaseRMObject(unittest.TestCase):
+class RMTTestBaseRMObject(object):
 
     def rmttest_neg_01(self):
         "BaseRMObject: check for module which has wrong type"
@@ -61,4 +60,4 @@ class RMTTestBaseRMObject(unittest.TestCase):
         result = hide_volatile(mstderr.getvalue())
         tear_down_log_handler()
 
-        self.assertEqual(expected_result, result)
+        assert expected_result == result

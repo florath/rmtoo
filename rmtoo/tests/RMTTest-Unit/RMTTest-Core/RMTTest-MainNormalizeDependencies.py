@@ -10,13 +10,13 @@
 '''
 
 import sys
-import unittest
+
 
 from rmtoo.lib.main.NormalizeDependencies import main_impl
 from rmtoo.lib.RMTException import RMTException
 
 
-class RMTTestMainNormalizeDependencies(unittest.TestCase):
+class RMTTestMainNormalizeDependencies(object):
 
     def rmttest_neg_01(self):
         """NormalizeDependencies: is result is correctly handled: Exception"""
@@ -35,5 +35,5 @@ class RMTTestMainNormalizeDependencies(unittest.TestCase):
             raise RMTException(63, "test thingy")
 
         main_impl(None, None, sys.stderr, mymain, myexit)
-        self.assertTrue(myexit_called)
-        self.assertEqual(1, myexit_val)
+        assert myexit_called
+        assert 1 == myexit_val

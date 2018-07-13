@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.ReqClass import ReqClass
 from rmtoo.lib.RMTException import RMTException
@@ -19,7 +18,7 @@ from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 from rmtoo.lib.ClassType import ClassTypeDetailable, ClassTypeImplementable
 
 
-class RMTTestReqClass(unittest.TestCase):
+class RMTTestReqClass(object):
 
     def rmttest_positive_01(self):
         "Requirement Tag Class - no Class tag given"
@@ -27,8 +26,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        self.assertEqual("Class", name)
-        self.assertTrue(isinstance(value, ClassTypeDetailable))
+        assert "Class" == name
+        assert isinstance(value, ClassTypeDetailable)
 
     def rmttest_positive_02(self):
         "Requirement Tag Class - Class set to 'detailable'"
@@ -37,8 +36,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        self.assertEqual("Class", name)
-        self.assertTrue(isinstance(value, ClassTypeDetailable))
+        assert "Class" == name
+        assert isinstance(value, ClassTypeDetailable)
 
     def rmttest_positive_03(self):
         "Requirement Tag Class - no Class implementable"
@@ -47,8 +46,8 @@ class RMTTestReqClass(unittest.TestCase):
 
         rt = ReqClass(config)
         name, value = rt.rewrite("Class-test", req)
-        self.assertEqual("Class", name)
-        self.assertTrue(isinstance(value, ClassTypeImplementable))
+        assert "Class" == name
+        assert isinstance(value, ClassTypeImplementable)
 
     def rmttest_negative_01(self):
         "Requirement Tag Class - unsupported Class value"
@@ -58,6 +57,6 @@ class RMTTestReqClass(unittest.TestCase):
         rt = ReqClass(config)
         try:
             name, value = rt.rewrite("Class-test", req)
-            self.assertTrue(False)
+            assert False
         except RMTException as rmte:
-            self.assertEqual(95, rmte.get_id())
+            assert 95 == rmte.get_id()

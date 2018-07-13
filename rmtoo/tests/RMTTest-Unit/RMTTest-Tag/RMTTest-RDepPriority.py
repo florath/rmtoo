@@ -10,7 +10,6 @@
 '''
 from __future__ import unicode_literals
 
-import unittest
 
 from rmtoo.inputs.RDepPriority import RDepPriority
 from rmtoo.tests.lib.TestConfig import TestConfig
@@ -18,7 +17,7 @@ from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 
 
-class RMTTestRDepPriority(unittest.TestCase):
+class RMTTestRDepPriority(object):
 
     def rmttest_positive_01(self):
         "Two node one edge digraph B -> A"
@@ -41,10 +40,8 @@ Type: requirement''', 'B', None, None, None)
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
 
-        self.assertEqual(
-            1.0, reqset.get_named_node("A").get_value("Priority"))
-        self.assertEqual(
-            0.8, reqset.get_named_node("B").get_value("Priority"))
+        assert 1.0 == reqset.get_named_node("A").get_value("Priority")
+        assert 0.8 == reqset.get_named_node("B").get_value("Priority")
 
     def rmttest_positive_02(self):
         "Three node digraph C -> B -> A"
@@ -73,12 +70,9 @@ Type: requirement''', 'C', None, None, None)
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
 
-        self.assertEqual(
-            1.0, reqset.get_named_node("A").get_value("Priority"))
-        self.assertEqual(
-            0.8, reqset.get_named_node("B").get_value("Priority"))
-        self.assertEqual(
-            0.4, reqset.get_named_node("C").get_value("Priority"))
+        assert 1.0 == reqset.get_named_node("A").get_value("Priority")
+        assert 0.8 == reqset.get_named_node("B").get_value("Priority")
+        assert 0.4 == reqset.get_named_node("C").get_value("Priority")
 
     def rmttest_positive_03(self):
         "Four node digraph D -> B -> A and D -> C -> A"
@@ -112,11 +106,7 @@ Type: requirement''', 'D', None, None, None)
         rdep = RDepPriority(config)
         rdep.rewrite(reqset)
 
-        self.assertEqual(
-            1.0, reqset.get_named_node("A").get_value("Priority"))
-        self.assertEqual(
-            0.2, reqset.get_named_node("B").get_value("Priority"))
-        self.assertEqual(
-            0.4, reqset.get_named_node("C").get_value("Priority"))
-        self.assertEqual(
-            0.2, reqset.get_named_node("D").get_value("Priority"))
+        assert 1.0 == reqset.get_named_node("A").get_value("Priority")
+        assert 0.2 == reqset.get_named_node("B").get_value("Priority")
+        assert 0.4 == reqset.get_named_node("C").get_value("Priority")
+        assert 0.2 == reqset.get_named_node("D").get_value("Priority")

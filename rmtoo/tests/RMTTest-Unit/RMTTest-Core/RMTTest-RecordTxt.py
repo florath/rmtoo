@@ -12,7 +12,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-import unittest
+
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
@@ -55,7 +55,7 @@ dpC1 = u""" Comment for whole record
 """
 
 
-class RMTTestRecordTxt(unittest.TestCase):
+class RMTTestRecordTxt(object):
 
     def rmttest_pos_01(self):
         "Check top level RecordAsDict (string)"
@@ -63,11 +63,11 @@ class RMTTestRecordTxt(unittest.TestCase):
         txt_doc = TxtRecord.from_string(doc1, u"Nothing", TxtIOConfig())
         txt_doc_dict = txt_doc.get_dict()
 
-        self.assertEqual(dpC1, txt_doc.get_comment())
-        self.assertEqual("meiner", txt_doc_dict["Name"].get_content())
-        self.assertEqual("This is my Note.",
-                         txt_doc_dict["Note"].get_content())
-        self.assertEqual(doc1, txt_doc.to_string())
+        assert dpC1 == txt_doc.get_comment()
+        assert "meiner" == txt_doc_dict["Name"].get_content()
+        assert "This is my Note." == \
+            txt_doc_dict["Note"].get_content()
+        assert doc1 == txt_doc.to_string()
 
     def rmttest_pos_02(self):
         "Check top level RecordAsDict (fd)"
@@ -76,11 +76,11 @@ class RMTTestRecordTxt(unittest.TestCase):
         txt_doc = TxtRecord.from_fd(fd, u"Nothing", TxtIOConfig())
         txt_doc_dict = txt_doc.get_dict()
 
-        self.assertEqual(dpC1, txt_doc.get_comment())
-        self.assertEqual("meiner", txt_doc_dict["Name"].get_content())
-        self.assertEqual("This is my Note.",
-                         txt_doc_dict["Note"].get_content())
-        self.assertEqual(doc1, txt_doc.to_string())
+        assert dpC1 == txt_doc.get_comment()
+        assert "meiner" == txt_doc_dict["Name"].get_content()
+        assert "This is my Note." == \
+            txt_doc_dict["Note"].get_content()
+        assert doc1 == txt_doc.to_string()
 
     def rmttest_pos_03(self):
         "Check top level Record: insert entry"
@@ -89,11 +89,11 @@ class RMTTestRecordTxt(unittest.TestCase):
         txt_doc.insert(2, RecordEntry(u"Hinzu", u"This is quite new."))
         txt_doc_dict = txt_doc.get_dict()
 
-        self.assertEqual(dpC1, txt_doc.get_comment())
-        self.assertEqual("meiner", txt_doc_dict["Name"].get_content())
-        self.assertEqual("This is my Note.",
-                         txt_doc_dict["Note"].get_content())
-        self.assertEqual(doc2, txt_doc.to_string())
+        assert dpC1 == txt_doc.get_comment()
+        assert "meiner" == txt_doc_dict["Name"].get_content()
+        assert "This is my Note." == \
+            txt_doc_dict["Note"].get_content()
+        assert doc2 == txt_doc.to_string()
 
     def rmttest_pos_04(self):
         "Check top level Record: append entry"
@@ -102,11 +102,11 @@ class RMTTestRecordTxt(unittest.TestCase):
         txt_doc.append(RecordEntry(u"Hinzu", u"This is quite new."))
         txt_doc_dict = txt_doc.get_dict()
 
-        self.assertEqual(dpC1, txt_doc.get_comment())
-        self.assertEqual("meiner", txt_doc_dict["Name"].get_content())
-        self.assertEqual("This is my Note.",
-                         txt_doc_dict["Note"].get_content())
-        self.assertEqual(doc4, txt_doc.to_string())
+        assert dpC1 == txt_doc.get_comment()
+        assert "meiner" == txt_doc_dict["Name"].get_content()
+        assert "This is my Note." == \
+            txt_doc_dict["Note"].get_content()
+        assert doc4 == txt_doc.to_string()
 
     def rmttest_pos_05(self):
         "Check top level Record: remove entry"
@@ -115,15 +115,15 @@ class RMTTestRecordTxt(unittest.TestCase):
         del(txt_doc[2])
         txt_doc_dict = txt_doc.get_dict()
 
-        self.assertEqual(dpC1, txt_doc.get_comment())
-        self.assertEqual("meiner", txt_doc_dict["Name"].get_content())
+        assert dpC1 == txt_doc.get_comment()
+        assert "meiner" == txt_doc_dict["Name"].get_content()
         # 'Note' is not available - it was deleted.
         try:
             txt_doc_dict["Note"].get_content()
-            self.assertTrue(False)
+            assert False
         except KeyError:
             pass
-        self.assertEqual(doc3, txt_doc.to_string())
+        assert doc3 == txt_doc.to_string()
 
     def rmttest_pos_06(self):
         "Check top level Record: is_tag_available"
@@ -131,5 +131,5 @@ class RMTTestRecordTxt(unittest.TestCase):
         txt_doc = TxtRecord.from_string(doc1, u"Nothing", TxtIOConfig())
         txt_doc.insert(2, RecordEntry(u"Hinzu", u"This is quite new."))
 
-        self.assertTrue(txt_doc.is_tag_available("Hinzu"))
-        self.assertFalse(txt_doc.is_tag_available("NichtDa"))
+        assert txt_doc.is_tag_available("Hinzu")
+        assert not txt_doc.is_tag_available("NichtDa")

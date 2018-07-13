@@ -28,18 +28,21 @@ from rmtoo.tests.lib.TestTopicSet import TestTopicSet
 from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
 
 
-class RMTTestOutputLaTeXJinja22:
+class RMTTestOutputLaTeXJinja2(object):
     "Test-Class for the templated latex output class"
 
-    def __init__(self):
+    @classmethod
+    def setup_class(self):
         self.__tmpdir = create_tmp_dir()
         self.__def_mconfig = {
             "output_filename":
             os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
             "template_path":
-            os.path.join(os.environ['basedir'], 'latex', 'LatexJinja2')}
+            os.path.join(os.environ['contribdir'],
+                         'latex', 'LatexJinja2')}
 
-    def __del__(self):
+    @classmethod
+    def teardown_class(self):
         if self.__tmpdir:
             delete_tmp_dir(self.__tmpdir)
 
