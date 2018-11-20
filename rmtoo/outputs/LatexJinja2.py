@@ -86,7 +86,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         tracer.debug("Output constraint [%s]." % cname)
         self.__fd.write(u"%% CONSTRAINT '%s'\n" % cname)
 
-        self.__fd.write(u"\%s{%s}\label{CONSTRAINT%s}\n"
+        self.__fd.write(u"\\%s{%s}\\label{CONSTRAINT%s}\n"
                         "\\textbf{Description:} %s\n"
                         % (self.level_names[1],
                            cnstrt.get_value("Name").get_content(),
@@ -131,8 +131,8 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         tracer.debug("Output testcase [%s]." % cname)
         self.__fd.write(u"%% TEST-CASE '%s'\n" % cname)
 
-        self.__fd.write(u"\%s{%s}\label{TESTCASE%s}\n"
-                        "\hypertarget{TESTCASE%s}{}"
+        self.__fd.write(u"\\%s{%s}\\label{TESTCASE%s}\n"
+                        "\\hypertarget{TESTCASE%s}{}"
                         "\\textbf{Description:} %s\n"
                         % (self.level_names[1],
                            cnstrt.get_value("Name").get_content(),

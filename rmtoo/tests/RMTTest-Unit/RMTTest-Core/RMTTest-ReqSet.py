@@ -81,14 +81,14 @@ class RMTTestReqSet(object):
 
         result0 \
             = re.match(
-                "^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
-                "__all_tags_handled;===LINENO===; 57:InvalidTagReq:"
-                "No tag handler found "
-                "for tag\(s\) '\[.*\]' - Hint: typo in tag\(s\)\?$",
+                r"^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
+                r"__all_tags_handled;===LINENO===; 57:InvalidTagReq:"
+                r"No tag handler found "
+                r"for tag\(s\) '\[.*\]' - Hint: typo in tag\(s\)\?$",
                 lstderr_last_two_lines[0])
         result1 \
             = re.match(
-                "^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
+                r"^===DATETIMESTAMP===;rmtoo;ERROR;RequirementSet;"
                 "_handle_modules;"
                 "===LINENO===; 56:There were errors encountered "
                 "during parsing "

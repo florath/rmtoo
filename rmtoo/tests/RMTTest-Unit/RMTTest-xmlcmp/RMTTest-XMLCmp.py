@@ -40,17 +40,17 @@ class RMTTestXMLCmp(object):
         "xmlcmp: types of subnode differ"
         r, s = xmlcmp_strings('<hu>Mein Text</hu>', '<hu><uj></uj></hu>')
         assert not r
-        assert re.match("Child node \[<DOM Text node \"u?'Mein Text'\">\] "
-                        "not found at \[\] - last error was "
-                        "\[Node types differ \[3\] != \[1\] at \[/hu\]\]", s)
+        assert re.match(r"Child node \[<DOM Text node \"u?'Mein Text'\">\] "
+                        r"not found at \[\] - last error was "
+                        r"\[Node types differ \[3\] != \[1\] at \[/hu\]\]", s)
 
     def rmttest_neg03(self):
         "xmlcmp: text data differs"
         r, s = xmlcmp_strings('<hu>Was</hu>', '<hu>Ist</hu>')
         assert not r
-        assert re.match("Child node \[<DOM Text node \"u?'Was'\">\] "
-                        "not found at \[\] - last error was \[Text Node "
-                        "data differs \[Was\] != \[Ist\] at \[/hu\]\]", s)
+        assert re.match(r"Child node \[<DOM Text node \"u?'Was'\">\] "
+                        r"not found at \[\] - last error was \[Text Node "
+                        r"data differs \[Was\] != \[Ist\] at \[/hu\]\]", s)
 
     def rmttest_neg04(self):
         "xmlcmp: number of child nodes differ"
@@ -63,8 +63,8 @@ class RMTTestXMLCmp(object):
         "xmlcmp: Text node in sub node differs"
         r, s = xmlcmp_strings('<hu><hi>Was</hi></hu>', '<hu><hi>Ist</hi></hu>')
         assert not r
-        assert re.match("Child node \[<DOM Element: hi at 0x[0-9a-f]*>\] "
-                        "not found at \[\] - last error was \[Child node "
-                        "\[<DOM Text node \"u?'Was'\">\] not found at \[/hu\] "
-                        "- last error was \[Text Node data differs \[Was\] "
-                        "!= \[Ist\] at \[/hu/hi\]\]\]", s)
+        assert re.match(r"Child node \[<DOM Element: hi at 0x[0-9a-f]*>\] "
+                        r"not found at \[\] - last error was \[Child node "
+                        r"\[<DOM Text node \"u?'Was'\">\] not found at \[/hu\]"
+                        r" - last error was \[Text Node data differs \[Was\] "
+                        r"!= \[Ist\] at \[/hu/hi\]\]\]", s)
