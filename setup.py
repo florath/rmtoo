@@ -101,6 +101,7 @@ setup(name=PACKAGE, version=VERSION,
       ],
       packages=[
           "rmtoo",
+          "rmtoo/imports",
           "rmtoo/inputs",
           "rmtoo/lib",
           "rmtoo/lib/digraph",
@@ -129,7 +130,8 @@ setup(name=PACKAGE, version=VERSION,
           "stevedore>=1.21",
           "pylint>=1.7.1",
           "odfpy==1.3.4",
-          "jinja2>=2.10"],
+          "jinja2>=2.10",
+          "openpyxl>=2.5.6" ],
       license="GPL V3",
       platforms="all",
 
@@ -182,6 +184,7 @@ setup(name=PACKAGE, version=VERSION,
               "tlp1 = rmtoo.outputs.tlp1:Tlp1",
               "version1 = rmtoo.outputs.version1:version1",
               "xml1 = rmtoo.outputs.xml1:Xml1",
+              "xls = rmtoo.outputs.xls:Xls",
               "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"
           ],
           "rmtoo.output.markup" : [
@@ -193,5 +196,8 @@ setup(name=PACKAGE, version=VERSION,
               "not done = rmtoo.lib.RequirementStatus:RequirementStatusNotDone",
               "assigned = rmtoo.lib.RequirementStatus:RequirementStatusAssigned",
               "finished = rmtoo.lib.RequirementStatus:RequirementStatusFinished"
+          ],
+          "rmtoo.imports.plugin" : [
+              "xls = rmtoo.imports.xls:XlsImport"
           ]
       })

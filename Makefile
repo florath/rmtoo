@@ -1,7 +1,8 @@
 .PHONY: all
 .PHONY: all_html
 all: artifacts/requirements.pdf artifacts/req-graph1.png \
-	artifacts/req-graph2.png all_html
+	artifacts/requirements.xlsx artifacts/req-graph2.png \
+	all_html
 
 # Adding new files (especially requirements) can not automatically
 # handled.  The 'force' target tries to handle this.
@@ -57,6 +58,7 @@ clean:
 		artifacts/requirements.aux artifacts/requirements.dvi \
 		artifacts/requirements.log artifacts/requirements.out \
 		artifacts/requirements.pdf artifacts/requirements.toc \
+		artifacts/requirements.xlsx \
 		add_data.py*
 	rm -fr debian/rmtoo build
 

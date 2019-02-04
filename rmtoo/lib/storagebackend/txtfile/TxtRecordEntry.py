@@ -94,3 +94,7 @@ class TxtRecordEntry(RecordEntry):
     def get_content_with_nl(self):
         """Return the raw content"""
         return self.content_raw
+
+    def get_content_trimmed_with_nl(self):
+        """Return the raw content"""
+        return [x.strip() for x in self.content_raw]

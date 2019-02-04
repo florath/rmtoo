@@ -12,5 +12,5 @@ Priority: customers:8
 Effort estimation: 8
 Topic: Output
 Solved by: OutputBaseReqRefs OutputBaseTags OutputConfgbl OutputHTML 
- OutputPDF OutputTextSameBase Output/DiffOfTwoVersions
+ OutputPDF OutputXLS OutputTextSameBase Output/DiffOfTwoVersions
 # Added by rmtoo-normalize-dependencies

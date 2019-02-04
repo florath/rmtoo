@@ -20,11 +20,14 @@ from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet
 from rmtoo.lib.Analytics import Analytics
 from rmtoo.lib.Output import Output
+from rmtoo.lib.Import import Import
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.logging import configure_logging
 
 
 def execute_cmds(config, input_mods, _mstdout, mstderr):
+    Import.execute(config)  # Import foreign data
+
     '''Checks are always done - to be sure that e.g. the dependencies
        are correct.
        Please note: there is no 'ONE' latest continuum any more

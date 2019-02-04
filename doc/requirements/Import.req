@@ -1,0 +1,12 @@
+Name: Import Requirements
+Type: requirement
+Invented on: 2018-07-01
+Invented by: kno
+Description: Import requirements from other sources.
+Note: Provide a simpler interface to the text files.
+Owner: development
+Status: not done
+Priority: development:10
+Effort estimation: 5
+Topic: Import
+Solved by: Import/Xls
