@@ -8,7 +8,8 @@ scipy
 setuptools
 six
 jinja2>=2.10
-openpyxl>=2.5.6
+openpyxl>=2.6.0; python_version != '3.4'
+openpyxl==2.5.14; python_version == '3.4'
 
 tox
 pytest

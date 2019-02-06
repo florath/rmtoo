@@ -78,7 +78,7 @@ class XlsImport(AbcImports):
 
         topics = OrderedDict()
         topics_ws = self._wb[self._cfg['topics_sheet']]
-        for row in topics_ws:
+        for row in topics_ws.rows:
             if row[0].value:
                 topic_name = row[0].value
                 topics[topic_name] = []

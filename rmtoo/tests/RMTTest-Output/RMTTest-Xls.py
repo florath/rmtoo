@@ -91,8 +91,7 @@ class RMTTestOutputXls:
         xlsh.add_req(create_req(u'SW-102'))
         xlsh.write()
 
-        twb = openpyxl.load_workbook(filename=self._filename,
-                                     guess_types=True)
+        twb = openpyxl.load_workbook(filename=self._filename)
         rws = twb['Requirements']
         assert rws['A2'].value == "SW-101"
         assert rws['G2'].value == "007"
@@ -121,8 +120,7 @@ class RMTTestOutputXls:
         xlsh.add_topic(topic)
         xlsh.write()
 
-        twb = openpyxl.load_workbook(filename=self._filename,
-                                     guess_types=True)
+        twb = openpyxl.load_workbook(filename=self._filename)
         rws = twb['Topics']
         assert rws['A1'].value == "SuperTopic"
         assert rws['B1'].value == "asdf"
@@ -150,8 +148,7 @@ class RMTTestOutputXlsTemplate:
         xlsh.add_req(create_req(u'SW-102'))
         xlsh.write()
 
-        twb = openpyxl.load_workbook(filename=self._filename,
-                                     guess_types=True)
+        twb = openpyxl.load_workbook(filename=self._filename)
         rws = twb['Requirements']
         assert rws['A3'].value == "SW-101"
         assert rws['G3'].value == "007"
