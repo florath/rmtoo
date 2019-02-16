@@ -73,7 +73,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Output constraint [%s]." % cname)
         self.__fd.write(u"%% CONSTRAINT '%s'\n" % cname)
 
-        self.__fd.write(u"\%s{%s}\label{CONSTRAINT%s}\n"
+        self.__fd.write(u"\\%s{%s}\\label{CONSTRAINT%s}\n"
                         "\\textbf{Description:} %s\n"
                         % (self.level_names[1],
                            cnstrt.get_value("Name").get_content(),
@@ -118,7 +118,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         tracer.debug("Output testcase [%s]." % cname)
         self.__fd.write(u"%% TEST-CASE '%s'\n" % cname)
 
-        self.__fd.write(u"\%s{%s}\label{TESTCASE%s}\n"
+        self.__fd.write(u"\\%s{%s}\\label{TESTCASE%s}\n"
                         "\\textbf{Description:} %s\n"
                         % (self.level_names[1],
                            cnstrt.get_value("Name").get_content(),
@@ -197,7 +197,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         '''Write out one requirement.'''
         self.__fd.write(u"%% REQ '%s'\n" % req.get_id())
 
-        self.__fd.write(u"\%s{%s}\label{%s}\n\\textbf{Description:} %s\n"
+        self.__fd.write(u"\\%s{%s}\\label{%s}\n\\textbf{Description:} %s\n"
                         % (self.level_names[self.__level + 1],
                            req.get_value("Name").get_content(),
                            latex2.__strescape(req.get_id()),
@@ -272,7 +272,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
         clstr = req.get_value("Class").get_output_string()
         rtype = req.get_value("Type").as_string()
 
-        self.__fd.write(u"\n\\par\n{\small \\begin{center}"
+        self.__fd.write(u"\n\\par\n{\\small \\begin{center}"
                         "\\begin{tabular}{rlrlrl}\n")
 
         # Put mostly three things in a line.
@@ -306,14 +306,14 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             i += 1
             if i == 3:
                 i = 0
-                self.__fd.write(u"\\\ \n")
+                self.__fd.write(u"\\\\ \n")
             else:
                 self.__fd.write(u" & ")
         while i < 2:
             self.__fd.write(u"& & ")
             i += 1
 
-        self.__fd.write(u"\end{tabular}\end{center} }\n\n")
+        self.__fd.write(u"\\end{tabular}\\end{center} }\n\n")
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''

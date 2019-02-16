@@ -25,10 +25,10 @@ Type: master requirement
 Invented on: 2010-02-06
 Invented by: flonatel
 Owner: development
-Description: \textsl{rmtoo} \textbf{must} exists.
+Description: \\textsl{rmtoo} \\textbf{must} exists.
 Rationale: The world needs a good, usable and free Requirements
- Management Tool.\par
- It looks that there are no such programs out.\par
+ Management Tool.\\par
+ It looks that there are no such programs out.\\par
  But: it's complex!
 Status: not done
 Priority: development:10
@@ -48,8 +48,8 @@ class RMTTestRecordTxt3(object):
         d = txt_doc.get_dict()
 
         assert "The world needs a good, usable and free " \
-            "Requirements Management Tool.\par It looks " \
-            "that there are no such programs out.\par But: it's complex!" == \
+            "Requirements Management Tool.\\par It looks " \
+            "that there are no such programs out.\\par But: it's complex!" == \
             d["Rationale"].get_content()
 
         assert 11 == len(txt_doc)
