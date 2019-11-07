@@ -1,0 +1,48 @@
+image: ubuntu:latest
+
+# to make this faster, setup a custom runner for it (and tag it)
+
+variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    #- .cache/pip
+    - venv/
+
+# https://docs.gitlab.com/ee/ci/caching/
+# see caching python dependencies for virtualenv???
+
+before_script:
+    - echo $PWD
+    - apt-get update
+    - apt-get -y install tzdata 
+    - echo "America/New_York" > /etc/timezone
+    - dpkg-reconfigure -f noninteractive tzdata
+    - apt-get -yq install gnuplot graphviz python-pip python-virtualenv
+    - apt-get -yq install texlive-font-utils texlive-latex-extra texlive-latex-recommended
+    - apt-get upgrade
+    # Setting VENV
+    - cd ..
+    - virtualenv venv
+    - source venv/bin/activate
+    - cd requirements
+    # back to git directory
+    - pip install --upgrade pip setuptools wheel
+    - pip install --only-binary=numpy,scipy numpy scipy
+    - pip install rmtoo
+    - if ! test -f "./Makefile"; then cp ../venv/rmtoo/contrib/template_project/Makefile .; fi
+    - if ! test -f "./setenv.sh"; then cp ../venv/rmtoo/contrib/template_project/setenv.sh .; fi
+    
+createArtifacts:
+    stage: build
+    script:
+        - source ./setenv.sh VENV
+        - make
+        - ls artifacts
+    artifacts:
+        #untracked: true
+        name: "$CI_JOB_NAME"
+        paths:
+            - ./artifacts/*
+        expire_in: 1 yrs
