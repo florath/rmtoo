@@ -1,0 +1,32 @@
+image: michaellundquist/rmtoobase:latest
+
+# to make this faster, setup a custom runner for it (and tag it)
+
+variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - /var/cache/apt/archives/
+    - ./downloads
+
+before_script:
+    - pip install rmtoo
+    # copy rmtoo's default Makefile and setenv.sh if the repo doesn't have them.
+    - if ! test -f "./Makefile"; then cp ${RMTOO_CONTRIB_DIR}/rmtoo/contrib/template_project/Makefile .; fi
+    - if ! test -f "./setenv.sh"; then cp ${RMTOO_CONTRIB_DIR}/rmtoo/contrib/template_project/setenv.sh .; fi
+    - source ./setenv.sh DEB
+    
+createArtifacts:
+    stage: build
+    #tags: rmtoo #add this in when you create a custom runner
+    script:
+        
+        - make clean
+        - make
+        - ls artifacts
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - ./artifacts/*
+        expire_in: 1 yrs
