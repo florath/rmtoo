@@ -6,7 +6,6 @@ git:
 dist: trusty
 
 python:
-  - "3.4"
   - "3.5"
   - "3.6"
 
