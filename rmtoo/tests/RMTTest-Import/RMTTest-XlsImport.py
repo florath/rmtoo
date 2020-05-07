@@ -162,3 +162,24 @@ class RMTTestXlsImport:
             if i and i[0] == 'Name: GUI':
                 found = True
         assert found
+
+
+class RMTTestXlsImportRegressionTests:
+    """Regression tests for the xls import functionality"""
+    imp_fn = os.path.join(LDIR, 'test-reqs.xlsx')
+    config = {u'import_filename': imp_fn,
+              u'requirement_ws': u'Specification',
+              u'topics_sheet': u'Topics'}
+
+    def rmttest_regression_test_import_empty(self, dest_dir):
+        imp_fn = os.path.join(LDIR, 'regression-import_empty.xlsx')
+        tmpdir = dest_dir['requirements_dirs'][0]
+        tmp_fn = os.path.join(tmpdir, 'regression-import_empty.xlsx')
+        config = dict(self.config)
+        config[u'import_filename'] = tmp_fn
+        distutils.file_util.copy_file(imp_fn, tmp_fn)
+
+        importer = XlsImport(config, dest_dir)
+        assert importer.useable
+        importer.run()
+        assert importer._entries[0]['Solved by'] == 'SW-AS-100 SW-AS-101'
