@@ -3,11 +3,11 @@ language: python
 git:
   depth: 5000
 
-dist: focal
+dist:  bionic
 
 python:
-  - "3.5"
   - "3.6"
+  - "3.7"
   - "3.8"
 
 # Required to run the respective python env in tox
