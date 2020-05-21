@@ -12,7 +12,7 @@
 At a glance the car must look normally.
 
 == Rationale ==
-The car is over and over bloody.]]>			</notes>
+The car is over and over bloody.]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="3" id="4" name="CleanUpSeats">
@@ -21,7 +21,7 @@ The car is over and over bloody.]]>			</notes>
 The seats must be cleaned.
 
 == Rationale ==
-It is not possible to completely clean the seats - therefore they will additionally be covered.]]>			</notes>
+It is not possible to completely clean the seats - therefore they will additionally be covered.]]></notes>
 			<depend difference="0" hardness="Strong" id="2" type="2"/>
 		</task>
 		<task complete="0" duration="6" id="5" name="CleanUpVicentAndJules">
@@ -30,7 +30,7 @@ It is not possible to completely clean the seats - therefore they will additiona
 Vincent and Jules must be cleaned.
 
 == Rationale ==
-Both are splattered with blood.]]>			</notes>
+Both are splattered with blood.]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="6" id="6" name="CorpseInTrunk">
@@ -39,13 +39,13 @@ Both are splattered with blood.]]>			</notes>
 The corpse must be put into the trunk.
 
 == Rationale ==
-The corpse can be transported in this way without any notice of anybody else.]]>			</notes>
+The corpse can be transported in this way without any notice of anybody else.]]></notes>
 			<depend difference="0" hardness="Strong" id="7" type="2"/>
 		</task>
 		<task complete="0" duration="3" id="8" name="CoverWithBlankets">
 			<notes>
 <![CDATA[== Description ==
-The seats must be covered with blankets after they are roughly cleaned.]]>			</notes>
+The seats must be covered with blankets after they are roughly cleaned.]]></notes>
 			<depend difference="0" hardness="Strong" id="4" type="2"/>
 			<depend difference="0" hardness="Strong" id="9" type="2"/>
 		</task>
@@ -58,7 +58,7 @@ The accidental death of a man must be disguised.
 There are some different things which must be cleaned and others which must vanish.
 
 == Note ==
-There is only 40 minutes time to do the whole job.]]>			</notes>
+There is only 40 minutes time to do the whole job.]]></notes>
 		</task>
 		<task complete="0" duration="6" id="7" name="DeadManDisapper">
 			<notes>
@@ -66,7 +66,7 @@ There is only 40 minutes time to do the whole job.]]>			</notes>
 The dead man must disappear.
 
 == Rationale ==
-The accidental killed man must vanish.]]>			</notes>
+The accidental killed man must vanish.]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="4" id="10" name="DetergentForCar">
@@ -78,7 +78,7 @@ The car must be cleaned with detergents.
 The car is over and over bloody - so detergents are needed. 
 
 == Note ==
-The detergents are place in the kitchen under the sink.]]>			</notes>
+The detergents are place in the kitchen under the sink.]]></notes>
 			<depend difference="0" hardness="Strong" id="2" type="2"/>
 		</task>
 		<task complete="0" duration="3" id="9" name="RoughlyCleanUpSeats">
@@ -87,7 +87,7 @@ The detergents are place in the kitchen under the sink.]]>			</notes>
 The seats must be roughly cleaned.
 
 == Rationale ==
-It is not possible to completely clean the back seat. ]]>			</notes>
+It is not possible to completely clean the back seat. ]]></notes>
 			<depend difference="0" hardness="Strong" id="4" type="2"/>
 		</task>
 		<task complete="0" duration="3" id="11" name="SoapAndColdWater">
@@ -96,7 +96,7 @@ It is not possible to completely clean the back seat. ]]>			</notes>
 Vincent and Jules must clean themselves with soap and cold water.
 
 == Rationale ==
-They are bloody.]]>			</notes>
+They are bloody.]]></notes>
 			<depend difference="0" hardness="Strong" id="5" type="2"/>
 			<depend difference="0" hardness="Strong" id="12" type="2"/>
 		</task>
@@ -106,7 +106,7 @@ They are bloody.]]>			</notes>
 Vincent and Jules' clothing must be taken care off.
 
 == Rationale ==
-It's bloody - Otto the refuse collector should not see this.]]>			</notes>
+It's bloody - Otto the refuse collector should not see this.]]></notes>
 			<depend difference="0" hardness="Strong" id="5" type="2"/>
 			<depend difference="0" hardness="Strong" id="12" type="2"/>
 		</task>
@@ -119,7 +119,7 @@ Vincent and Jules must take off their whole clothing.
 It's bloody.
 
 == Note ==
-Wulf: 'Down to the bare ass'.]]>			</notes>
+Wulf: 'Down to the bare ass'.]]></notes>
 			<depend difference="0" hardness="Strong" id="5" type="2"/>
 		</task>
 	</task>

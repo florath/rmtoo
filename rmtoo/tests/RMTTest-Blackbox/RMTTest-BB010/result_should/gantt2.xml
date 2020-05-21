@@ -15,7 +15,7 @@ The requirements must be analyzed.
 It is hard to write good requirements - as far as possible rmtoo should support writing good requirements.
 
 == Note ==
-Analytics are implemented using modules with a defined interface. ]]>			</notes>
+Analytics are implemented using modules with a defined interface. ]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="4" id="4" name="AutomaticGeneration">
@@ -24,7 +24,7 @@ Analytics are implemented using modules with a defined interface. ]]>			</notes>
 rmtoo must support the automatic genration of outputs.
 
 == Rationale ==
-Because rmtoo is aimed to be used in productive development environments, there is the need that all the different outputs (e.g. PDFs, graphs, ...) must be generated automatically (without user interaction).]]>			</notes>
+Because rmtoo is aimed to be used in productive development environments, there is the need that all the different outputs (e.g. PDFs, graphs, ...) must be generated automatically (without user interaction).]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="6" id="5" name="DocManPage">
@@ -33,7 +33,7 @@ Because rmtoo is aimed to be used in productive development environments, there 
 rmtoo must come with a (*nix) man page describing the basic behaviour.
 
 == Rationale ==
-This typically describes the input and output and all the parameters needed (but not the ideas behind).]]>			</notes>
+This typically describes the input and output and all the parameters needed (but not the ideas behind).]]></notes>
 			<depend difference="0" hardness="Strong" id="6" type="2"/>
 		</task>
 		<task complete="100" duration="14" id="7" name="DocSlides">
@@ -42,13 +42,13 @@ This typically describes the input and output and all the parameters needed (but
 For documentation purposes there must exists a slide show introducing the major features.
 
 == Rationale ==
-Software not only needs to be good --- also the 'marketing' aspect should be considered: the more people / companies rmtoo using, the more bug reports and comments there will be, the better rmtoo will be.]]>			</notes>
+Software not only needs to be good --- also the 'marketing' aspect should be considered: the more people / companies rmtoo using, the more bug reports and comments there will be, the better rmtoo will be.]]></notes>
 			<depend difference="0" hardness="Strong" id="6" type="2"/>
 		</task>
 		<task complete="0" duration="4" id="6" name="Documentation">
 			<notes>
 <![CDATA[== Description ==
-rmtoo must be documented.]]>			</notes>
+rmtoo must be documented.]]></notes>
 			<depend difference="0" hardness="Strong" id="8" type="2"/>
 		</task>
 		<task complete="0" duration="9" id="9" name="Input">
@@ -57,7 +57,7 @@ rmtoo must be documented.]]>			</notes>
 rmtoo must support different types of input files - one type for each usage.
 
 == Note ==
-A usage is e.g. documenting requirements or handling topics.]]>			</notes>
+A usage is e.g. documenting requirements or handling topics.]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="50" duration="22" id="10" name="Output">
@@ -66,7 +66,7 @@ A usage is e.g. documenting requirements or handling topics.]]>			</notes>
 rmtoo must support generation of different outputs. 
 
 == Rationale ==
-It's not very easy to e.g. visualize the dependency graph. Also typically for the testing department a document is needed that decribes the requirements (features) of the product.]]>			</notes>
+It's not very easy to e.g. visualize the dependency graph. Also typically for the testing department a document is needed that decribes the requirements (features) of the product.]]></notes>
 			<depend difference="0" hardness="Strong" id="3" type="2"/>
 		</task>
 		<task complete="0" duration="22" id="3" name="Processing">
@@ -78,7 +78,7 @@ rmtoo must process the requirements by means of a defined order.
 First the requirements must be read in (and checked for syntactic - and if possible for semantic) problems. Then the requirements must be analyzed. As a last step the output artifacts must be generated.
 
 == Note ==
-Please see the depended requirements for more details.]]>			</notes>
+Please see the depended requirements for more details.]]></notes>
 			<depend difference="0" hardness="Strong" id="8" type="2"/>
 		</task>
 		<task complete="0" duration="22" id="11" name="Simplicity">
@@ -87,7 +87,7 @@ Please see the depended requirements for more details.]]>			</notes>
 rmtoo must be simple.
 
 == Rationale ==
-To get started, concentrate on the major things, which are really needed. Use techniques which are available.]]>			</notes>
+To get started, concentrate on the major things, which are really needed. Use techniques which are available.]]></notes>
 			<depend difference="0" hardness="Strong" id="8" type="2"/>
 		</task>
 		<task complete="0" duration="14" id="12" name="TestIntegration">
@@ -96,7 +96,7 @@ To get started, concentrate on the major things, which are really needed. Use te
 For each requirement there must be a integration test which tests the requirement in a larger context.
 
 == Rationale ==
-This tests the interaction between the different layers of implementation and makes sure that the interaction works.]]>			</notes>
+This tests the interaction between the different layers of implementation and makes sure that the interaction works.]]></notes>
 			<depend difference="0" hardness="Strong" id="13" type="2"/>
 		</task>
 		<task complete="0" duration="14" id="14" name="TestUnit">
@@ -105,7 +105,7 @@ This tests the interaction between the different layers of implementation and ma
 For each code path there must be a unit test.
 
 == Rationale ==
-Each class, function and method must be tested.  Each decision and error condition must be tested.]]>			</notes>
+Each class, function and method must be tested.  Each decision and error condition must be tested.]]></notes>
 			<depend difference="0" hardness="Strong" id="13" type="2"/>
 		</task>
 		<task complete="0" duration="4" id="13" name="Testing">
@@ -114,7 +114,7 @@ Each class, function and method must be tested.  Each decision and error conditi
 Each feature of rmtoo must be automatically testable.
 
 == Rationale ==
-This gives the possibility to run a set of regression test and check the whole functionality of rmtoo.]]>			</notes>
+This gives the possibility to run a set of regression test and check the whole functionality of rmtoo.]]></notes>
 			<depend difference="0" hardness="Strong" id="8" type="2"/>
 		</task>
 		<task complete="0" duration="6" id="8" name="rmtoo">
@@ -123,7 +123,7 @@ This gives the possibility to run a set of regression test and check the whole f
 rmtoo must exists.
 
 == Rationale ==
-The world needs a good, usable and free Requirements Management Tool. It looks that there are no such programs out. But: it's complex! ]]>			</notes>
+The world needs a good, usable and free Requirements Management Tool. It looks that there are no such programs out. But: it's complex! ]]></notes>
 		</task>
 	</task>
 </project>
