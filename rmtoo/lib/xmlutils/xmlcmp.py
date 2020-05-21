@@ -11,7 +11,7 @@ def xmlcmp_files(file1, file2):
     xdiff = main.diff_files(file1, file2)
     if xdiff == []:
         return True, None
-    return False, "Files not equal"
+    return False, str(xdiff)
 
 
 def xmlcmp_strings(str1, str2):
