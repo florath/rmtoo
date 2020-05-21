@@ -1,0 +1,17 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "rmtoo"
+author = "Kristoffer Nordström"
+author-email = "kristoffer@nordstroem.ch"
+description-file = "Readme.rst"
+home-page = "https://github.com/kown7/rmtoo"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+
+[tool.flit.metadata.requires-extra]
+test = ["pytest", "pytest-cov", "tox"]
+
+[tool.flit.scripts]
+rmtoo = "RmToo:main"
