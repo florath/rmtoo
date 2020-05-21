@@ -90,7 +90,7 @@ class DescWords(Base):
 
         if def_lang in DescWords.words:
             return DescWords.words[def_lang]
-        tracer.warn("Language [%s] not supported, using en_GB", def_lang)
+        tracer.warning("Language [%s] not supported, using en_GB", def_lang)
         return DescWords.words["en_GB"]
 
     def analyse(self, lname, text):

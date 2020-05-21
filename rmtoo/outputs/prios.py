@@ -106,7 +106,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 return " "
 
         # Local function which outputs one set of requirements.
-        def output_prio_table(name, l):
+        def output_prio_table(name, reqlist):
             # XXX This must be configurable
             f.write("\\section{%s}\n" % name)
             f.write("\\begin{longtable}{|r|c|p{7cm}||r|r|} \\hline\n")
@@ -115,7 +115,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     "\\textbf{Sum} \\\\ \\hline\\endhead\n")
 
             s = 0
-            for p in l:
+            for p in reqlist:
                 if topic_set.get_requirement_set().get_requirement(
                         p[1]).get_value("Effort estimation") is not None:
                     efest = topic_set.get_requirement_set().\
@@ -131,14 +131,14 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                         % (p[0] * 10, p[1], p[1], efest_str, s))
             f.write("\\end{longtable}")
 
-        def output_assigned_table(name, l):
+        def output_assigned_table(name, trr):
             f.write("\\section{%s}\n" % name)
             f.write("\\begin{longtable}{|r|c|p{6.5cm}||r|l|l|} \\hline\n")
             f.write("\\textbf{Prio} & \\textbf{Chap} & "
                     "\\textbf{Requirement Id} & \\textbf{EfE} & "
                     "\\textbf{Person} & \\textbf{Date} \\\\ "
                     "\\hline\\endhead\n")
-            for tr in l:
+            for tr in trr:
                 status = tr.get_status()
                 f.write("%4.2f & \\ref{%s} & \\nameref{%s} & %s & %s & %s "
                         "\\\\ \\hline\n"
@@ -147,7 +147,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                            status.get_date_str()))
             f.write("\\end{longtable}")
 
-        def output_finished_table(name, l):
+        def output_finished_table(name, trr):
             f.write("\\section{%s}\n" % name)
             f.write("{\\small ")
             f.write("\\begin{longtable}{|c|p{5.5cm}||r|l|l|r|r|} \\hline\n")
@@ -156,7 +156,7 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                     "\\textbf{Person} & \\textbf{Date} & "
                     "\\textbf{Time} & \\textbf{Rel} "
                     "\\\\ \\hline\\endhead\n")
-            for tr in l:
+            for tr in trr:
                 status = tr.get_status()
                 rel = "\\ "
                 dur = status.get_duration()

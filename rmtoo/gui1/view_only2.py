@@ -1,4 +1,4 @@
-'''
+"""
  rmtoo
    Free and Open Source Requirements Management Tool
 
@@ -8,17 +8,17 @@
  (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
-'''
-import pgi
-pgi.require_version('Gtk', '3.0')  # noqa: E402
-from pgi.repository import Gtk, GObject
-
+"""
 import sys
+import pgi
+from pgi.repository import Gtk, GObject
 
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, \
     TopicContinuumSetIterator
+
+pgi.require_version('Gtk', '3.0')  # noqa: E402
 
 
 def advance(iter, n):
