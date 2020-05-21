@@ -91,7 +91,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         # Write it out.
         with io.open(self._output_filename, "w",
                      encoding="utf-8") as self.__fd:
-            self.__fd.write(self.__xml_doc.toprettyxml())
+            self.__fd.write(self.__xml_doc.toprettyxml(indent=""))
 
     def topic_pre(self, topic):
         '''This is called in the Topic pre-phase.'''
