@@ -1,0 +1,110 @@
+# (c) 2020
+# SPDX-License-Identifier: GPL-3.0-or-later
+# This file is part of rmtoo.
+
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "rmtoo"
+dist-name = "rmtoo"
+author = "Andreas Florath"
+author-email = "rmtoo@florath.net"
+description-file = "Readme.rst"
+home-page = "https://github.com/florath/rmtoo"
+classifiers=[
+    "Development Status :: 6 - Mature",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Telecommunications Industry",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: OS Independent",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Scientific/Engineering",
+]
+requires=[
+    "setuptools",
+    "numpy>=1.12.0",
+    "scipy>=0.19.0",
+    "six>=1.10.0",
+    "future>=0.16.0",
+    "gitdb==0.6.4",
+    "gitpython==1.0.2",
+    "pyyaml>=3.12",
+    "stevedore>=1.21",
+    "pylint>=1.7.1",
+    "odfpy==1.3.4",
+    "jinja2>=2.10"
+]
+
+[tool.flit.metadata.requires-extra]
+test = ["pytest", "pytest-cov", "tox", "flake8", "xmldiff==2.4"]
+
+[tool.flit.scripts]
+rmtoo = "rmtoo.lib.RmtooMain:main"
+"rmtoo-normalize-dependencies" = "rmtoo.lib.main.NormalizeDependencies:main"
+"rmtoo-pricing-graph" = "rmtoo.lib.main.PricingGraph:main"
+
+# Stevedore plugins
+[tool.flit.entrypoints."rmtoo.input.plugin"]
+"RDepDependsOn" = "rmtoo.inputs.RDepDependsOn:RDepDependsOn"
+"RDepConstraints" = "rmtoo.inputs.RDepConstraints:RDepConstraints"
+"RDepMasterNodes" = "rmtoo.inputs.RDepMasterNodes:RDepMasterNodes"
+"RDepNoDirectedCircles" = "rmtoo.inputs.RDepNoDirectedCircles:RDepNoDirectedCircles"
+"RDepOneComponent" = "rmtoo.inputs.RDepOneComponent:RDepOneComponent"
+"RDepPriority" = "rmtoo.inputs.RDepPriority:RDepPriority"
+"RDepSolvedBy" = "rmtoo.inputs.RDepSolvedBy:RDepSolvedBy"
+"ReqCE3" = "rmtoo.inputs.ReqCE3:ReqCE3"
+"ReqClass" = "rmtoo.inputs.ReqClass:ReqClass"
+"ReqConstraints" = "rmtoo.inputs.ReqConstraints:ReqConstraints"
+"ReqDescription" = "rmtoo.inputs.ReqDescription:ReqDescription"
+"ReqEffortEst" = "rmtoo.inputs.ReqEffortEst:ReqEffortEst"
+"ReqExpectedResult" = "rmtoo.inputs.ReqExpectedResult:ReqExpectedResult"
+"ReqHistory" = "rmtoo.inputs.ReqHistory:ReqHistory"
+"ReqInventedBy" = "rmtoo.inputs.ReqInventedBy:ReqInventedBy"
+"ReqInventedOn" = "rmtoo.inputs.ReqInventedOn:ReqInventedOn"
+"ReqName" = "rmtoo.inputs.ReqName:ReqName"
+"ReqNote" = "rmtoo.inputs.ReqNote:ReqNote"
+"ReqOwner" = "rmtoo.inputs.ReqOwner:ReqOwner"
+"ReqPriority" = "rmtoo.inputs.ReqPriority:ReqPriority"
+"ReqRationale" = "rmtoo.inputs.ReqRationale:ReqRationale"
+"ReqStatus" = "rmtoo.inputs.ReqStatus:ReqStatus"
+"ReqTestCase" = "rmtoo.inputs.ReqTestCase:ReqTestCase"
+"ReqTopic" = "rmtoo.inputs.ReqTopic:ReqTopic"
+"ReqType" = "rmtoo.inputs.ReqType:ReqType"
+
+[tool.flit.entrypoints."rmtoo.output.plugin"]
+"graph2" = "rmtoo.outputs.graph2:graph2"
+"graph" = "rmtoo.outputs.graph:graph"
+"html" = "rmtoo.outputs.html:Html"
+"latex2" = "rmtoo.outputs.latex2:latex2"
+"LatexJinja2" = "rmtoo.outputs.LatexJinja2:LatexJinja2"
+"oopricing1" = "rmtoo.outputs.oopricing1:oopricing1"
+"prios" = "rmtoo.outputs.prios:prios"
+"stats_burndown1" = "rmtoo.outputs.stats_burndown1:stats_burndown1"
+"stats_reqs_cnt" = "rmtoo.outputs.stats_reqs_cnt:stats_reqs_cnt"
+"stats_sprint_burndown1" = "rmtoo.outputs.stats_sprint_burndown1:stats_sprint_burndown1"
+"tlp1" = "rmtoo.outputs.tlp1:Tlp1"
+"version1" = "rmtoo.outputs.version1:version1"
+"xml1" = "rmtoo.outputs.xml1:Xml1"
+"xml_ganttproject_2" = "rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"
+
+[tool.flit.entrypoints."rmtoo.output.markup"]
+"latex" = "rmtoo.lib.Markup:LaTeX"
+"txt" = "rmtoo.lib.Markup:Txt"
+"html" = "rmtoo.lib.Markup:Html"
+
+[tool.flit.entrypoints."rmtoo.input.requirement_status"]
+"not done" = "rmtoo.lib.RequirementStatus:RequirementStatusNotDone"
+"assigned" = "rmtoo.lib.RequirementStatus:RequirementStatusAssigned"
+"finished" = "rmtoo.lib.RequirementStatus:RequirementStatusFinished"
