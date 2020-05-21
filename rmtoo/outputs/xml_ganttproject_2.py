@@ -163,7 +163,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         xml_task.appendChild(xml_note)
 
         # Dependencies
-        for node in req.incoming:
+        for node in sorted(req.incoming, key=lambda icm: icm.get_id()):
             xml_depend = self.__xml_doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.get_id())))
             # There are some default attrs
