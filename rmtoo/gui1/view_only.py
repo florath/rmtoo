@@ -1,4 +1,4 @@
-'''
+"""
  rmtoo
    Free and Open Source Requirements Management Tool
 
@@ -8,12 +8,12 @@
  (c) 2012,2017 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
-'''
+"""
+import sys
+from six import iteritems
 import gtk
 import gobject
-import sys
 import pygtk
-from six import iteritems
 
 from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper

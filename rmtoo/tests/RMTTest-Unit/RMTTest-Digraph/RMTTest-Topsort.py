@@ -54,7 +54,7 @@ class RMTTestTopologicalSearchTests(object):
         assert self.__list_order(tnames, "B", "A")
 
     @staticmethod
-    def __list_order(l, x, y):
+    def __list_order(l, x, y):  # noqa: E741
         return l.index(x) < l.index(y)
 
     def rmttest_tsort_005(self):

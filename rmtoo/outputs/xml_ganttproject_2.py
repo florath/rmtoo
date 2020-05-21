@@ -91,7 +91,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         # Write it out.
         with io.open(self._output_filename, "w",
                      encoding="utf-8") as self.__fd:
-            self.__fd.write(self.__xml_doc.toprettyxml())
+            self.__fd.write(self.__xml_doc.toprettyxml(indent=""))
 
     def topic_pre(self, topic):
         '''This is called in the Topic pre-phase.'''
@@ -163,7 +163,7 @@ class xml_ganttproject_2(StdOutputParams, ExecutorTopicContinuum,
         xml_task.appendChild(xml_note)
 
         # Dependencies
-        for node in req.incoming:
+        for node in sorted(req.incoming, key=lambda icm: icm.get_id()):
             xml_depend = self.__xml_doc.createElement("depend")
             xml_depend.setAttribute("id", str(self.get_req_id(node.get_id())))
             # There are some default attrs
