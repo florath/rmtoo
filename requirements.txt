@@ -13,3 +13,4 @@ tox
 pytest
 pytest-cov
 flake8
+xmldiff==2.4
