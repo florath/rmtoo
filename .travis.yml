@@ -18,6 +18,9 @@ script:
   - tox
   - tox -e pep8
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 jobs:
   include:
     - stage: deploy
