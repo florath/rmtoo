@@ -24,4 +24,6 @@ doc/presentations/reqspricing.png
 make_tests.log
 .tox
 MANIFEST
-.ropeproject
+dist
+rmtoo/coverage.xml
+rmtoo/result.xml

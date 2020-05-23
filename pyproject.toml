@@ -4,6 +4,7 @@ build-backend = "flit.buildapi"
 
 [tool.flit.metadata]
 module = "rmtoo"
+dist-name = "sltoo"
 author = "Kristoffer Nordström"
 author-email = "kristoffer@nordstroem.ch"
 description-file = "Readme.rst"

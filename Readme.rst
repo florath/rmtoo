@@ -78,7 +78,7 @@ python-scipy package is needed.
 Typically the packages from your distribution will work. For Ubuntu the
 following packages are needed:
 
-.. code:: bash
+.. code:: 
 
     sudo apt-get install texlive-font-utils texlive-latex-base \
     texlive-font-utils graphviz
@@ -86,7 +86,7 @@ following packages are needed:
 
 For Fedora these packets:
 
-.. code:: bash
+.. code:: 
 
     sudo dnf install gnuplot texlive-latex texlive-tocloft \
     texlive-fancyhdr texlive-epstodpf texlive-metafont texlive-mfware
@@ -121,7 +121,7 @@ Installation
 
 To install ``sltoo`` in a virtualenv, execute the following steps:
 
-.. code:: bash
+.. code::
 
    $ virtualenv venv
    $ source venv/bin/activate
@@ -138,7 +138,7 @@ Installation
 Change to a directory where you want to create the new project. This
 is needed only once.
 
-.. code:: bash
+.. code:: 
 
    # cd to virtualenv directory - if not already there
    $ cd RMTOO
@@ -149,7 +149,7 @@ Usage
 
 To create all the artifacts for the template project, execute
 
-.. code:: bash
+.. code::
 
    $ cd MyNewProject
    $ source ./setenv.sh VENV
