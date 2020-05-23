@@ -27,5 +27,8 @@ doc/presentations/reqspricing.png
 make_tests.log
 result.xml
 rmtoo.egg-info/
+.tox
+MANIFEST
+dist
 rmtoo/coverage.xml
 rmtoo/result.xml

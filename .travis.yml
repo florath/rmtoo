@@ -31,9 +31,22 @@ python:
   - "3.8"
 
 # Required to run the respective python env in tox
-install: pip install tox-travis
+install: pip install tox-travis flit
 
 # command to run tests
 script:
   - tox
   - tox -e pep8
+
+jobs:
+  include:
+    - stage: deploy
+      python: 3.8
+      script: flit build
+      deploy:
+        provider: pypi
+        distributions: build -h # we dont need it
+        username: __token__
+        edge: true # opt in to dpl v2
+        on:
+          tags: true
