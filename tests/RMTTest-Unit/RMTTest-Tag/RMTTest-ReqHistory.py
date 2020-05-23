@@ -11,7 +11,7 @@
 
 
 from rmtoo.inputs.ReqHistory import ReqHistory
-from rmtoo.tests.lib.ReqTag import create_parameters
+from ReqTag import create_parameters
 
 
 class RMTTestReqHistory(object):

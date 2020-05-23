@@ -14,7 +14,7 @@ import shutil
 
 
 from rmtoo.lib.main.NormalizeDependencies import main_impl, main_func
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, \
+from BBHelper import prepare_result_is_dir, \
     cleanup_std_log, delete_result_is_dir, tmp_dir, check_file_results
 
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB015"

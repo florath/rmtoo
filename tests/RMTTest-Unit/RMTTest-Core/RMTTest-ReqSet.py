@@ -20,9 +20,9 @@ except ImportError:
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.InputModules import InputModules
 from rmtoo.lib.Requirement import Requirement
-from rmtoo.tests.lib.TestConfig import TestConfig
+from TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_volatile
+from Utils import hide_volatile
 
 
 class RMTTestReqSet(object):

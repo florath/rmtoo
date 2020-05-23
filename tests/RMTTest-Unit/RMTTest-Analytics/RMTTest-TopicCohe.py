@@ -11,7 +11,7 @@
 
 
 from rmtoo.lib.analytics.TopicCohe import TopicCohe
-from rmtoo.tests.lib.TestConfig import TestConfig
+from TestConfig import TestConfig
 
 
 class RMTTestTopicCohe(object):

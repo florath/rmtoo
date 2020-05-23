@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 
 from rmtoo.inputs.ReqRationale import ReqRationale
-from rmtoo.tests.lib.ReqTag import create_parameters
+from ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 
 

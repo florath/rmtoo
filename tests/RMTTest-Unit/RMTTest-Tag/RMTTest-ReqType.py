@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 from rmtoo.inputs.ReqType import ReqType
 from rmtoo.lib.Requirement import RequirementType
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.ReqTag import create_parameters
+from ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
 import pytest
 

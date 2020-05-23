@@ -37,7 +37,7 @@ import zipfile
 import time
 
 from rmtoo.lib.xmlutils.xmlcmp import xmlcmp_files
-from rmtoo.tests.lib.Utils import create_tmp_dir, hide_volatile
+from Utils import create_tmp_dir, hide_volatile
 from rmtoo.lib.logging import tear_down_log_handler, tear_down_trace_handler
 from rmtoo.lib.RmtooMain import main_func
 

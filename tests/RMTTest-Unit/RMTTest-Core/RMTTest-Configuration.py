@@ -22,9 +22,9 @@ import shutil
 
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.Utils import create_tmp_dir
+from Utils import create_tmp_dir
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_volatile
+from Utils import hide_volatile
 import pytest
 
 

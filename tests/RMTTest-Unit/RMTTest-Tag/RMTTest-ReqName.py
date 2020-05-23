@@ -12,7 +12,7 @@
 
 from rmtoo.inputs.ReqName import ReqName
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.ReqTag import create_parameters
+from ReqTag import create_parameters
 import pytest
 
 

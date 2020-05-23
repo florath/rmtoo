@@ -12,7 +12,7 @@
 from __future__ import unicode_literals
 
 
-from rmtoo.tests.lib.RDep import create_parameters
+from RDep import create_parameters
 from rmtoo.inputs.RDepNoDirectedCircles import RDepNoDirectedCircles
 
 

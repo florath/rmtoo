@@ -17,9 +17,9 @@ except ImportError:
     from io import StringIO
 
 from rmtoo.lib.BaseRMObject import BaseRMObject
-from rmtoo.tests.lib.TestConfig import TestConfig
+from TestConfig import TestConfig
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_volatile
+from Utils import hide_volatile
 
 
 class TMods:

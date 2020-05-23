@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 
 from rmtoo.inputs.RDepPriority import RDepPriority
-from rmtoo.tests.lib.TestConfig import TestConfig
+from TestConfig import TestConfig
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.Requirement import Requirement
 

@@ -12,8 +12,8 @@ from __future__ import unicode_literals
 
 
 from rmtoo.lib.TopicSet import TopicSet
-from rmtoo.tests.lib.TestVCS import TestVCS
-from rmtoo.tests.lib.TestInputModules import TestInputModules
+from TestVCS import TestVCS
+from TestInputModules import TestInputModules
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.vcs.ObjectCache import ObjectCache
 

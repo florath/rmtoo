@@ -14,8 +14,8 @@ from __future__ import unicode_literals
 from rmtoo.lib.Topic import Topic
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.TestConfig import TestConfig
-from rmtoo.tests.lib.TestVCS import TestVCS
+from TestConfig import TestConfig
+from TestVCS import TestVCS
 import pytest
 
 

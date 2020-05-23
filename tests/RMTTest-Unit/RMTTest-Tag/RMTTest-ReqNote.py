@@ -11,7 +11,7 @@
 
 
 from rmtoo.inputs.ReqNote import ReqNote
-from rmtoo.tests.lib.ReqTag import create_parameters
+from ReqTag import create_parameters
 
 
 class RMTTestReqNote(object):

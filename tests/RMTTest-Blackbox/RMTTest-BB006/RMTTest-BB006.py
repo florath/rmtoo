@@ -8,7 +8,7 @@
 
  For licensing details see COPYING
 '''
-from rmtoo.tests.lib.BBHelper import BBHelper
+from BBHelper import BBHelper
 
 cmd_line_parsms = '''json:{"actions": {"create_makefile_dependencies":
 "${ENV:rmtoo_test_dir}/makefile_deps"}}'''

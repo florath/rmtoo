@@ -8,7 +8,7 @@
 
  For licensing details see COPYING
 '''
-from rmtoo.tests.lib.BBHelper import BBHelper
+from BBHelper import BBHelper
 
 
 class RMTTestBB004(BBHelper):

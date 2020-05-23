@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 from rmtoo.lib.Requirement import Requirement
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.TestConfig import TestConfig
+from TestConfig import TestConfig
 
 
 class RMTTestRequirement:

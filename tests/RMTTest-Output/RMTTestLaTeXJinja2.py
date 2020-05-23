@@ -22,10 +22,10 @@ from rmtoo.lib.CE3 import CE3
 from rmtoo.lib.RequirementSet import RequirementSet
 from rmtoo.lib.RequirementStatus import RequirementStatusFinished
 from rmtoo.lib.ClassType import ClassTypeImplementable
-from rmtoo.tests.lib.TestVCS import TestVCS
-from rmtoo.tests.lib.TestConfig import TestConfig
-from rmtoo.tests.lib.TestTopicSet import TestTopicSet
-from rmtoo.tests.lib.Utils import create_tmp_dir, delete_tmp_dir
+from TestVCS import TestVCS
+from TestConfig import TestConfig
+from TestTopicSet import TestTopicSet
+from Utils import create_tmp_dir, delete_tmp_dir
 
 
 class RMTTestOutputLaTeXJinja2(object):
@@ -33,13 +33,13 @@ class RMTTestOutputLaTeXJinja2(object):
 
     @classmethod
     def setup_class(self):
+        cdir = os.path.dirname(os.path.realpath(__file__))
         self.__tmpdir = create_tmp_dir()
         self.__def_mconfig = {
             "output_filename":
             os.path.join(self.__tmpdir, "TestLateXJinja2Out.tex"),
             "template_path":
-            os.path.join(os.environ['contribdir'],
-                         'latex', 'LatexJinja2')}
+            os.path.join(cdir, 'LatexJinja2')}
 
     @classmethod
     def teardown_class(self):

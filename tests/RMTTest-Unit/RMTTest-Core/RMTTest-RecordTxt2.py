@@ -22,7 +22,7 @@ from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
 from rmtoo.lib.configuration.Cfg import Cfg
 from rmtoo.lib.logging import init_logger, tear_down_log_handler
-from rmtoo.tests.lib.Utils import hide_volatile
+from Utils import hide_volatile
 
 comment_line = "===DATETIMESTAMP===;rmtoo;INFO;TxtParser;" \
                "split_next_record;===LINENO===; 80:CommentsEverywhere:%s:" \

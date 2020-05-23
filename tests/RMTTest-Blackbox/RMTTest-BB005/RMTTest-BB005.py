@@ -12,7 +12,7 @@ import os
 
 
 from rmtoo.lib.RmtooMain import main_impl
-from rmtoo.tests.lib.BBHelper import prepare_result_is_dir, compare_results, \
+from BBHelper import prepare_result_is_dir, compare_results, \
     cleanup_std_log, delete_result_is_dir
 
 mdir = "tests/RMTTest-Blackbox/RMTTest-BB005"

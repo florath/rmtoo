@@ -6,9 +6,13 @@
 
 (((description)))
 
+((* if rationale is defined *))
 \textbf{Rationale:} (((rationale)))
+((* endif *))
 
+((* if note is defined *))
 \textbf{Note:} (((note)))
+((* endif *))
 
 ((* if solvedby is defined *)) \textbf{Solved by:}
 ((* for incoming in solvedby *)) \hyperlink{(((incoming)))}{(((incoming)))} ((* endfor *))
@@ -26,7 +30,7 @@
 \begin{tabular}{rlrlrl}
    Id: & (((req_id)))               & Priority: & (((prio)))          & Owner: & (((owner))) \\
    Invented on: & (((inventedon))) & Invented by: & (((inventedby))) & Status: & (((status))) \\
-   Class: & (((clstr)))
+   Class: & (((clstr))) & Hash: & (((hash)))
 \end{tabular}\end{center}
 }
 ((* endblock singleReq *))

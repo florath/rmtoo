@@ -13,8 +13,8 @@ from __future__ import unicode_literals
 
 from rmtoo.inputs.ReqOwner import ReqOwner
 from rmtoo.lib.RMTException import RMTException
-from rmtoo.tests.lib.ReqTag import create_parameters
 from rmtoo.lib.storagebackend.RecordEntry import RecordEntry
+from ReqTag import create_parameters
 import pytest
 
 
