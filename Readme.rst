@@ -17,56 +17,35 @@ Open Source Software development Life cycle Tool
 .. COMMENT pypi stats are not working
 .. COMMENT .. image:: https://img.shields.io/pypi/dm/sltoo.svg
 .. COMMENT    :target: https://pypi.python.org/pypi/sltoo
-	     
+
 Introduction
 ============
 
-This is a fork of ``rmtoo``. This fork is supposed to offer 
-software life-cycle management options as well, e.g., traceability.
+This is a fork of ``rmtoo``. This fork is supposed to offer
+software development life-cycle management SDLC_ options as well, e.g.,
+traceability.
 
 At the moment the only difference is the Excel import and export.
 
+.. _SDLC: https://en.wikipedia.org/wiki/Software_development_process
 
 Content
 =======
 
-See rmtoo_
+This file contains the following chapters:
 
-.. _rmtoo: https://github.com/florath/rmtoo
-
-
-Conventions
-===========
-
-``YY``
-  names the version of rmtoo.  You have to replace this with the real
-  version number.
-
-``$ cmd``
-  This is a command you have to type in.  The ``$`` is a replacement for
-  the shell prompt - do not enter it as a part of the command.
-
-
-Operating System Support
-========================
-
-It supports Python 3.6 and 3.8. Older version of Python should 
-work without problems, but are officially deprecated.
-
+.. contents:: Table of Contents
 
 Installation
 ============
 
-Run ``pip install sltoo``. See `Installation using virtualenv / pip`_.
-
-
 Dependencies
 ------------
 
-To use rmtoo, other software packages must be installed.
+To use ``sltoo``, other software packages must be installed.
 
-rmtoo is written in python.  At least version 2.7 of python is needed.
-Starting with version 24 python >3.4 is also supported.
+``sltoo`` is written in python.  At least version 3.6 and 3.8 are supported,
+but other versions should work just fine.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
@@ -78,7 +57,7 @@ python-scipy package is needed.
 Typically the packages from your distribution will work. For Ubuntu the
 following packages are needed:
 
-.. code:: 
+.. code::
 
     sudo apt-get install texlive-font-utils texlive-latex-base \
     texlive-font-utils graphviz
@@ -86,63 +65,43 @@ following packages are needed:
 
 For Fedora these packets:
 
-.. code:: 
+.. code::
 
     sudo dnf install gnuplot texlive-latex texlive-tocloft \
     texlive-fancyhdr texlive-epstodpf texlive-metafont texlive-mfware
 
 
-First Project
--------------
+virtualenv / pip
+----------------
 
-The recommended way of starting is to copy the provided template
-project.
-
-The basic steps are:
-
-1) Copy over the template project to some other directory.
-2) Set up the environment
-3) Run ``make``
-4) Check, if everything worked
-5) Start changing / adapting things to your needs
-
-Note that during this document the project will be called
-'MyNewProject'.  Please adapt the name for your needs.
-
-
-Installation using virtualenv / pip
-===================================
-
-This is the preferred installation method - it takes care that
-at least the python dependencies are correctly installed.
-
-Installation
-------------
+This is the preferred installation method — it takes care of installing the
+python dependencies correctly.
 
 To install ``sltoo`` in a virtualenv, execute the following steps:
 
 .. code::
 
-   $ virtualenv venv
-   $ source venv/bin/activate
-   $ pip install sltoo
+   python3 -m virtualenv
+   source venv/bin/activate
+   pip install sltoo
 
-This has only to be done once.
+This has to be done once.
+
 
 First Project
 =============
 
-Installation
-------------
+Setup
+-----
 
-Change to a directory where you want to create the new project. This
-is needed only once.
+Change to a directory where you want to create the new project. We assume the
+``virtualenv`` is available is the same directory (this is not necessary).
 
-.. code:: 
+.. code::
 
-   # cd to virtualenv directory - if not already there
-   $ cd RMTOO
-   $ cp -r venv/rmtoo/contrib/template_project MyNewProject
+   git clone git@github.com:kown7/rmtoo.git
+   cp -r rmtoo/contrib/template_project MyNewProject
+
 
 Usage
 -----
@@ -151,13 +110,23 @@ To create all the artifacts for the template project, execute
 
 .. code::
 
-   $ cd MyNewProject
-   $ source ./setenv.sh VENV
-   $ make
-   $ ls artifacts
+   cd MyNewProject
+   export RMTOO_CONTRIB_DIR=`pwd`/../rmtoo/
+   make
+   ls artifacts
 
-In the artifacts directory there are all the generated files.
-A typical workflow is, to change or add requirements, topics or the
+All the generated files are in the artifacts directory.
+
+A typical workflow is to change or add requirements, topics or the
 configuration in the ``MyNewProject`` directory, run ``make`` again
 and check the artifacts.
 
+
+Release History
+===================
+
+* 24.3.x
+
+    * Fix tests for `py38`
+    * Testing automatic deployment
+    * Fixes the issues related to rmtoo, see https://github.com/florath/rmtoo/issues/36
