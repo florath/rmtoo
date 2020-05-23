@@ -3,7 +3,7 @@
 # This file is part of rmtoo.
 
 [build-system]
-requires = ["flit"]
+requires = ["flit>=2.0"]
 build-backend = "flit.buildapi"
 
 [tool.flit.metadata]
@@ -49,6 +49,9 @@ requires=[
 
 [tool.flit.metadata.requires-extra]
 test = ["pytest", "pytest-cov", "tox", "flake8", "xmldiff==2.4"]
+
+[tool.flit.sdist]
+include = ["contrib/"]
 
 [tool.flit.scripts]
 rmtoo = "rmtoo.lib.RmtooMain:main"
