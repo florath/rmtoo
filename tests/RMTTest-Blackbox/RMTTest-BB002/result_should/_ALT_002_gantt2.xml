@@ -113,7 +113,7 @@ C05 must exists.]]></notes>
 C06 must exists.]]></notes>
 				<depend id="16" type="2" difference="0" hardness="Strong"/>
 			</task>
-			<task name="C07" id="23" duration="6" complete="0">
+			<task name="C07" id="23" duration="6" complete="100">
 				<notes><![CDATA[== Description ==
 C07 must exists.]]></notes>
 				<depend id="16" type="2" difference="0" hardness="Strong"/>

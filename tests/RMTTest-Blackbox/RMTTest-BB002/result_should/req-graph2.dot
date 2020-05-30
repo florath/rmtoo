@@ -25,7 +25,7 @@ subgraph cluster_GRAPH_ReqsDocument {
   "C04" [fontcolor=red,label="C04\n[10.00]"];
   "C05" [fontcolor=red,label="C05\n[10.00]"];
   "C06" [fontcolor=red,label="C06\n[10.00]"];
-  "C07" [fontcolor=red,label="C07\n[10.00]"];
+  "C07" [label="C07\n[10.00]"];
   "C08" [fontcolor=red,label="C08\n[10.00]"];
   "C09" [fontcolor=red,label="C09\n[10.00]"];
   "C10" [fontcolor=red,label="C10\n[10.00]"];
