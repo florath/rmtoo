@@ -14,7 +14,7 @@ from BBHelper import BBHelper
 class RMTTestTemplateproject(BBHelper):
     """Tests the template project"""
 
-    in_test_dir = "../contrib/template_project"
+    in_test_dir = "contrib/template_project"
     out_test_dir = "tests/RMTTest-Blackbox/RMTTest-TemplateProject"
 
     def rmttest_pos_001(self):

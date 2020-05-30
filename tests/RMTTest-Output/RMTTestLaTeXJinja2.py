@@ -83,9 +83,9 @@ class RMTTestOutputLaTeXJinja2(object):
 
 my desc
 
-\textbf{Rationale:} 
 
-\textbf{Note:} 
+
+
 
 
 

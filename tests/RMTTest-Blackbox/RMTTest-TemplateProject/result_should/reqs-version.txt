@@ -1,1 +1,1 @@
-Commit [None] VCS Id [../contrib/template_project/topics]
+Commit [None] VCS Id [contrib/template_project/topics]

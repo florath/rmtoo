@@ -10,7 +10,7 @@ requirements:
     default_language: en_GB
     dependency_notation:
     - Solved by
-    directory: ../contrib/template_project/requirements
+    directory: contrib/template_project/requirements
   inventors:
   - flonatel
   stakeholders:
@@ -23,22 +23,22 @@ topics:
     sources:
     - - filesystem
       - requirements_dirs:
-        - ../contrib/template_project/requirements
+        - contrib/template_project/requirements
         topics_dirs:
-        - ../contrib/template_project/topics
+        - contrib/template_project/topics
         topic_root_node: ReqsDocument
         constraints_dirs:
-        - ../contrib/template_project/constraints
+        - contrib/template_project/constraints
         testcases_dirs:
-        - ../contrib/template_project/testcases
+        - contrib/template_project/testcases
     output:
       graph:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/req-graph1.dot
       graph2:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/req-graph2.dot
       html:
-      - footer: ../contrib/template_project/html/footer.html
-        header: ../contrib/template_project/html/header.html
+      - footer: contrib/template_project/html/footer.html
+        header: contrib/template_project/html/header.html
         output_directory: ${ENV:rmtoo_test_dir}/artifacts/html
       latex2:
       - output_filename: ${ENV:rmtoo_test_dir}/artifacts/reqtopics.tex

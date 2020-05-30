@@ -35,10 +35,10 @@
 		    "git", {
 		        "start_vers": "a8d5b085caf6f93677ef4c7bd30ad9393059833f", 
 			"end_vers": "c35f8e918ab1d05ab3e2ba0be52a3f4092035663", 
-			"requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
-			"topics_dirs": [ "${ENV:basedir}/input/topics"] ,
+			"requirements_dirs": [ "${ENV:rbasedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:rbasedir}/input/topics"] ,
 			"topic_root_node": "ReqsDocument",
-			"constraints_dirs": [ "${ENV:basedir}/input/reqs" ] }
+			"constraints_dirs": [ "${ENV:rbasedir}/input/reqs" ] }
 		]
 	    ],
             "output": {
