@@ -9,16 +9,16 @@
 
  For licensing details see COPYING
 '''
-import pgi
-pgi.require_version('Gtk', '3.0')  # noqa: E402
-from pgi.repository import Gtk, GObject
-
 import sys
 
 from rmtoo.lib.main.MainHelper import MainHelper
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.TopicContinuumSet import TopicContinuumSet, \
     TopicContinuumSetIterator
+
+import pgi
+pgi.require_version('Gtk', '3.0')  # noqa: E402
+from pgi.repository import Gtk, GObject  # noqa: E402
 
 
 def advance(iter, n):

@@ -59,8 +59,8 @@ def unified_diff(mdir, fname, sorted_diff=False, artifacts_dir=None):
         b = sorted(b)
 
     r = []
-    for l in difflib.unified_diff(a, b):
-        r.append(l)
+    for line in difflib.unified_diff(a, b):
+        r.append(line)
 
     if len(r) == 0:
         return None
