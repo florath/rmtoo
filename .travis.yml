@@ -10,7 +10,6 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
-  - "3.9"
 
 # Required to run the respective python env in tox
 install: pip install tox-travis
