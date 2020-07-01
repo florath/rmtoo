@@ -92,8 +92,9 @@ Dependencies
 
 To use rmtoo, other software packages must be installed.
 
-rmtoo is written in python.  At least version 2.7 of python is needed.
-Starting with version 24 python >3.4 is also supported.
+rmtoo is written in python.  At least version 3.5 of python is needed.
+python 3.8 may work, but there is a problem (bug (fix)?) is python 3.8
+which create different XML elements as the previous versions.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
