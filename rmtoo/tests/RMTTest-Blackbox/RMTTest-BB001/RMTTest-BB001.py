@@ -27,6 +27,7 @@ class RMTTestBB001(BBHelper):
 #        "BB Basic with one requirement - reqs only from git (yaml)"
 #        self.run_test(yaml=True, container_files=["reqspricing.ods", ])
 
+
 if __name__ == '__main__':
     rtest = RMTTestBB001()
     rtest.rmttest_pos_001()
