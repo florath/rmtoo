@@ -8,9 +8,8 @@
 	<task id="1" name="ReqsDocument">
 		<task id="2" name="B1">
 			<task complete="0" duration="6" id="3" name="A1">
-				<notes>
-<![CDATA[== Description ==
-A1 must exists.]]>				</notes>
+				<notes><![CDATA[== Description ==
+A1 must exists.]]></notes>
 			</task>
 		</task>
 	</task>
