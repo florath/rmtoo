@@ -1,6 +1,9 @@
 *.pyc
 *~
 .coverage
+.ropeproject
+.tox
+MANIFEST
 artifacts
 build
 build-stamp
@@ -22,6 +25,7 @@ doc/html/reqs
 doc/presentations/reqspricing.dot
 doc/presentations/reqspricing.png
 make_tests.log
-.tox
-MANIFEST
-.ropeproject
+result.xml
+rmtoo.egg-info/
+rmtoo/coverage.xml
+rmtoo/result.xml
