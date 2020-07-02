@@ -262,4 +262,6 @@ http://rmtoo.florath.net
 | flonatel GmbH & Co. KG
 | Andreas Florath
 | rmtoo@florath.net
-| 2017-04-14
+
+(c) 2010-2012,2017,2020 by flonatel GmbH & Co. KG
+For licensing details see COPYING
