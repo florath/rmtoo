@@ -27,6 +27,9 @@ class ReqEffortEst(ReqTagGeneric):
         ReqTagGeneric.__init__(self, config, "Effort estimation",
                                set([InputModuleTypes.reqtag, ]))
 
+        self.__value_check = self.get_config().get_value_default(
+            "requirements.effort_estimation_values_check", True)
+
     def rewrite(self, rid, req):
         '''This attrbute is optional.'''
         tag, value = self.handle_optional_tag(req)
@@ -34,7 +37,8 @@ class ReqEffortEst(ReqTagGeneric):
             return tag, value
 
         ival = int(value.get_content())
-        if ival not in self.valid_values:
+        if self.__value_check \
+           and self.valid_values and ival not in self.valid_values:
             raise RMTException(4, "%s: effort estimation must be one of %s"
                                % (rid, self.valid_values))
         return tag, ival
