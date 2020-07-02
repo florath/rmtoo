@@ -4,7 +4,7 @@
 
   Effort estimation attribute
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2020 by flonatel GmbH & Co. KG
 
  For licensing details see COPYING
 '''
