@@ -308,5 +308,6 @@ class Cfg(dict):
             return default_value
 
     def is_available(self, key):
-        '''Returns true if the given key is available in the configuration.'''
+        '''Returns true if the given key is available in the configuration
+        and the valus is not None.'''
         return self.get_value_wo_throw(key) is not None
