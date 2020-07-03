@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<project>
+	<taskdisplaycolumns>
+		<displaycolumn property-id="tpd3" width="125"/>
+		<displaycolumn property-id="tpd4" width="25"/>
+		<displaycolumn property-id="tpd5" width="25"/>
+	</taskdisplaycolumns>
+	<task name="PulpFiction" id="1">
+		<task name="CleanUpCar" id="2" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+Auf den ersten Blick muss das Auto normal aussehen. 
+
+== Rationale ==
+Aktuell ist das Auto voller Blut.]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="CleanUpSeats" id="4" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Die Autositzte müssen gereinigt werden.]]></notes>
+			<depend id="2" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="CleanUpVicentAndJules" id="5" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+Vincent und Jules müssen gereinigt werden.
+
+== Rationale ==
+Beide sind über und über mit Blut bedeckt.]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="CorpseInTrunk" id="6" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+Die Leiche muss in den Kofferraum.
+
+== Rationale ==
+Das fahrende Auto darf kein Aufsehen erregen - so kann der Tote transportiert werden.]]></notes>
+			<depend id="7" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="CoverWithBlankets" id="8" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Die Autositze müssen mit Decken abgedeckt werden.
+
+== Rationale ==
+Es ist nicht möglich, die Sitze vollständig zu reinigen. ]]></notes>
+			<depend id="4" type="2" difference="0" hardness="Strong"/>
+			<depend id="9" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="CreateOrder" id="3" duration="14" complete="0">
+			<notes><![CDATA[== Description ==
+The unglückliche Unfall, der einen Mann getötet hat, muss versteckt werden.
+
+== Rationale ==
+Es gibt einige dreckige und mit Blut verschmierte Sachen, die gereinigt werden müssen.
+
+== Note ==
+Sie haben nur 40 Minuten für alles.]]></notes>
+		</task>
+		<task name="DeadManDisapper" id="7" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+Der tote Mann muss verschwinden.
+
+== Rationale ==
+Der bei einem Unfall zu Tode gekommene muss verschwinden.]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="DetergentForCar" id="10" duration="4" complete="0">
+			<notes><![CDATA[== Description ==
+Das Auto muss mit Putzmitteln gereinigt werden. 
+
+== Rationale ==
+Das Auto ist voller Blut - daher ist Putzmittel notwendig es zu reinigen.
+
+== Note ==
+Die Putzmittel stehen in der Küche unter der Spüle.]]></notes>
+			<depend id="2" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="RoughlyCleanUpSeats" id="9" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Die Autositzte müssen grob gereinigt werden.
+
+== Rationale ==
+Es ist nicht möglich sie vollständig zu reinigen - es werden noch Decken hinübergelegt.]]></notes>
+			<depend id="4" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="SoapAndColdWater" id="11" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Vincent und Jules müssen sich mit Seife und kaltem Wasser vom Blut reinigen.
+
+== Rationale ==
+Sie sind blutig.]]></notes>
+			<depend id="5" type="2" difference="0" hardness="Strong"/>
+			<depend id="12" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="TakeCareOfClothing" id="13" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Auf Vincent und Jules' Kleidung muss geachtet werden. 
+
+== Rationale ==
+Die Kleidung ist blutig - Otto der Müllmann wird sich weigern dies einzusammeln.]]></notes>
+			<depend id="5" type="2" difference="0" hardness="Strong"/>
+			<depend id="12" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="TakeOff" id="12" duration="3" complete="0">
+			<notes><![CDATA[== Description ==
+Vincent und Jules müssen ihre Kleider ausziehen. 
+
+== Rationale ==
+Sie sind blutig.
+
+== Note ==
+Wulf: 'Bis auf den nackten Arsch'.]]></notes>
+			<depend id="5" type="2" difference="0" hardness="Strong"/>
+		</task>
+	</task>
+</project>

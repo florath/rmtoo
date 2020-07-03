@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<project>
+	<taskdisplaycolumns>
+		<displaycolumn property-id="tpd3" width="125"/>
+		<displaycolumn property-id="tpd4" width="25"/>
+		<displaycolumn property-id="tpd5" width="25"/>
+	</taskdisplaycolumns>
+	<task name="ReqsDocument" id="1">
+		<task name="B1" id="2">
+			<task name="A1" id="3" duration="6" complete="0">
+				<notes><![CDATA[== Description ==
+A1 must exists.]]></notes>
+			</task>
+		</task>
+	</task>
+</project>

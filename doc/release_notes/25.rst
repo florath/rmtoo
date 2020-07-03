@@ -25,6 +25,8 @@ User visible changes
 --------------------
 
 * Drop support for python 2 - which is EOL
+* Include support / tests for all currently supported
+  python versions: 3.5, 3.6, 3.7, 3.8
 * Effort estimation: introduce flag to allow any value
   for the effort estimation.
 

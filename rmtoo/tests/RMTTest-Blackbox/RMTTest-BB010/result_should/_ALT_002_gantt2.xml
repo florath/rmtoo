@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+<project>
+	<taskdisplaycolumns>
+		<displaycolumn property-id="tpd3" width="125"/>
+		<displaycolumn property-id="tpd4" width="25"/>
+		<displaycolumn property-id="tpd5" width="25"/>
+	</taskdisplaycolumns>
+	<task name="ReqsDocument" id="1">
+		<task name="Analytics" id="2" duration="6" complete="100">
+			<notes><![CDATA[== Description ==
+The requirements must be analyzed.
+
+== Rationale ==
+It is hard to write good requirements - as far as possible rmtoo should support writing good requirements.
+
+== Note ==
+Analytics are implemented using modules with a defined interface. ]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="AutomaticGeneration" id="4" duration="4" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must support the automatic genration of outputs.
+
+== Rationale ==
+Because rmtoo is aimed to be used in productive development environments, there is the need that all the different outputs (e.g. PDFs, graphs, ...) must be generated automatically (without user interaction).]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="DocManPage" id="5" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must come with a (*nix) man page describing the basic behaviour.
+
+== Rationale ==
+This typically describes the input and output and all the parameters needed (but not the ideas behind).]]></notes>
+			<depend id="6" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="DocSlides" id="7" duration="14" complete="100">
+			<notes><![CDATA[== Description ==
+For documentation purposes there must exists a slide show introducing the major features.
+
+== Rationale ==
+Software not only needs to be good --- also the 'marketing' aspect should be considered: the more people / companies rmtoo using, the more bug reports and comments there will be, the better rmtoo will be.]]></notes>
+			<depend id="6" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Documentation" id="6" duration="4" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must be documented.]]></notes>
+			<depend id="8" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Input" id="9" duration="9" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must support different types of input files - one type for each usage.
+
+== Note ==
+A usage is e.g. documenting requirements or handling topics.]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Output" id="10" duration="22" complete="50">
+			<notes><![CDATA[== Description ==
+rmtoo must support generation of different outputs. 
+
+== Rationale ==
+It's not very easy to e.g. visualize the dependency graph. Also typically for the testing department a document is needed that decribes the requirements (features) of the product.]]></notes>
+			<depend id="3" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Processing" id="3" duration="22" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must process the requirements by means of a defined order.
+
+== Rationale ==
+First the requirements must be read in (and checked for syntactic - and if possible for semantic) problems. Then the requirements must be analyzed. As a last step the output artifacts must be generated.
+
+== Note ==
+Please see the depended requirements for more details.]]></notes>
+			<depend id="8" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Simplicity" id="11" duration="22" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must be simple.
+
+== Rationale ==
+To get started, concentrate on the major things, which are really needed. Use techniques which are available.]]></notes>
+			<depend id="8" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="TestIntegration" id="12" duration="14" complete="0">
+			<notes><![CDATA[== Description ==
+For each requirement there must be a integration test which tests the requirement in a larger context.
+
+== Rationale ==
+This tests the interaction between the different layers of implementation and makes sure that the interaction works.]]></notes>
+			<depend id="13" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="TestUnit" id="14" duration="14" complete="0">
+			<notes><![CDATA[== Description ==
+For each code path there must be a unit test.
+
+== Rationale ==
+Each class, function and method must be tested.  Each decision and error condition must be tested.]]></notes>
+			<depend id="13" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="Testing" id="13" duration="4" complete="0">
+			<notes><![CDATA[== Description ==
+Each feature of rmtoo must be automatically testable.
+
+== Rationale ==
+This gives the possibility to run a set of regression test and check the whole functionality of rmtoo.]]></notes>
+			<depend id="8" type="2" difference="0" hardness="Strong"/>
+		</task>
+		<task name="rmtoo" id="8" duration="6" complete="0">
+			<notes><![CDATA[== Description ==
+rmtoo must exists.
+
+== Rationale ==
+The world needs a good, usable and free Requirements Management Tool. It looks that there are no such programs out. But: it's complex! ]]></notes>
+		</task>
+	</task>
+</project>

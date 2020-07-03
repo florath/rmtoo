@@ -4,16 +4,34 @@
 
   Blackbox helper
 
- (c) 2010,2017 by flonatel GmbH & Co. KG
-
+ (c) 2010,2017,2020 by flonatel GmbH & Co. KG
  For licensing details see COPYING
+
+ SPDX-License-Identifier: GPL-3.0-or-later
+
+ This file is part of rmtoo.
+
+ rmtoo is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ rmtoo is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with rmtoo.  If not, see <https://www.gnu.org/licenses/>.
 '''
+
 from __future__ import print_function
 
 import io
 import os
 import shutil
 import difflib
+import sys
 import zipfile
 
 import time
@@ -39,18 +57,19 @@ def find(mdir):
     return r
 
 
-def unified_diff(mdir, fname, sorted_diff=False, artifacts_dir=None):
+def unified_diff(mdir, fname_is, fname_should,
+                 sorted_diff=False, artifacts_dir=None):
     if artifacts_dir is None:
         artifacts_path = os.environ["rmtoo_test_dir"]
     else:
         artifacts_path = os.path.join(os.environ["rmtoo_test_dir"],
                                       artifacts_dir)
 
-    with io.open(os.path.join(artifacts_path, fname), "r",
+    with io.open(os.path.join(artifacts_path, fname_is), "r",
                  encoding="utf-8") as fa:
         a = fa.readlines()
 
-    with io.open(os.path.join(mdir, "result_should", fname), "r",
+    with io.open(os.path.join(mdir, "result_should", fname_should), "r",
                  encoding="utf-8") as fb:
         b = fb.readlines()
 
@@ -69,20 +88,102 @@ def unified_diff(mdir, fname, sorted_diff=False, artifacts_dir=None):
 
 # This implements the compare_xml with the help of the xmldiff
 # package.
-def compare_xml(mdir, fname):
-    if fname == "reqspricing.ods-extracted/content.xml":
+def compare_xml(mdir, fname_is, fname_should):
+    if fname_is == "reqspricing.ods-extracted/content.xml":
         # Skip this (output from oomodule)
         return True
 
-    file1 = os.path.join(os.environ["rmtoo_test_dir"], fname)
-    file2 = os.path.join(mdir, "result_should", fname)
+    file1 = os.path.join(os.environ["rmtoo_test_dir"], fname_is)
+    file2 = os.path.join(mdir, "result_should", fname_should)
 
     r, s = xmlcmp_files(file1, file2)
 
     if not r:
-        print("XMLCmp difference: file [%s] diff [%s]" % (fname, s))
+        print("XMLCmp difference: file [%s]-[%s] diff [%s]" %
+              (fname_is, fname_should, s))
 
     return r
+
+
+def search_matches(fis, files_should):
+    '''Search matched of the fis in the files_should'''
+
+    normal_match = None
+    alt_match_set = set()
+
+    for fshould in files_should:
+        if fis == fshould:
+            assert normal_match is None
+            normal_match = fis
+            continue
+
+        if fshould.startswith("_ALT_") and fshould.endswith(fis):
+            alt_match_set.add(fshould)
+
+    return normal_match, alt_match_set
+
+
+def extract_alternative_ids(alt_match_set):
+    '''Extract the alternative ids'''
+    res_map = {}
+    for amatch in alt_match_set:
+        res_map[amatch[5:8]] = amatch
+    return res_map
+
+
+def choose_alternative_id(alt_ids):
+    '''Choose the correct alternative from a give set of ids'''
+    if set(alt_ids.keys()) == set(['001', '002']):
+        if sys.version_info.major != 3:
+            print("Invalid alternative set")
+            assert False
+        if sys.version_info.minor <= 7:
+            return '001'
+        return '002'
+
+    print("Not implemented alternative id set")
+    assert False
+
+
+def handle_alternative_result_files(files_is, files_should):
+    '''Try to work around some result subtilities.
+
+    From time to time even python internal things change. This is
+    e.g. the case in the XML writer which changed from python 3.7 to
+    3.8.  Both ways of the XML are (more or less) correct, but result
+    in a different object tree.
+
+    This function tries to handle this by picking the correct result
+    file.
+    '''
+
+    res_missing_files = set()
+    res_files_mapping = {}
+    matched_files = set()
+    for fis in files_is:
+        normal_match, alt_match_set = search_matches(fis, files_should)
+
+        if normal_match and alt_match_set:
+            print("Normal and alternative match: error in test case")
+            assert False
+
+        if not normal_match and not alt_match_set:
+            res_missing_files.add(fis)
+            continue
+
+        if normal_match:
+            res_files_mapping[fis] = fis
+            matched_files.add(fis)
+            continue
+
+        alt_ids = extract_alternative_ids(alt_match_set)
+        alt_id = choose_alternative_id(alt_ids)
+        res_files_mapping[fis] = alt_ids[alt_id]
+        matched_files = matched_files.union(alt_match_set)
+
+    res_additional_files = files_should - matched_files
+
+    return res_additional_files, res_missing_files, res_files_mapping
 
 
 # This returns a trippel:
@@ -101,26 +202,25 @@ def compare_results(mdir, relaxed=False, artifacts_dir=None):
     files_is = find(artifacts_path)
     files_should = find(os.path.join(mdir, "result_should"))
 
-    missing_files = files_is - files_should
-    additional_files = files_should - files_is
-
-    files_to_compare = files_is.intersection(files_should)
+    additional_files, missing_files, files_mapping \
+        = handle_alternative_result_files(files_is, files_should)
 
     r = {}
-    for df in files_to_compare:
+    for df_is, df_should in files_mapping.items():
         # XML files must be handled differently: they might be
         # different when compared with diff but might have the same
         # semantic.
-        if df.endswith(".xml"):
-            if not compare_xml(mdir, df):
-                r[df] = "XML files differ"
+        if df_is.endswith(".xml"):
+            if not compare_xml(mdir, df_is, df_should):
+                r[df_is] = "XML files differ"
         else:
             sorted_diff = relaxed and \
-                df in ['stderr', 'makefile_deps', 'req-graph1.dot',
-                                 'reqsprios.tex']
-            ud = unified_diff(mdir, df, sorted_diff, artifacts_dir)
+                df_is in ['stderr', 'makefile_deps', 'req-graph1.dot',
+                          'reqsprios.tex']
+            ud = unified_diff(mdir, df_is, df_should,
+                              sorted_diff, artifacts_dir)
             if ud is not None:
-                r[df] = ud
+                r[df_is] = ud
 
     return missing_files, additional_files, r
 
