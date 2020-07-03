@@ -17,15 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with rmtoo.  If not, see <https://www.gnu.org/licenses/>.
 
-Name: Effort Estimation Allowed Measure Unit
+Name: Effort Estimation Unit Configuration
 Type: design decision
-Invented on: 2010-03-06
+Invented on: 2020-07-03
 Invented by: flonatel
-Description: The effort estimation \textbf{must} be one of {0, 1, 2,
- 3, 5, 8, 13, 21, 34}.
-Rationale: This is the typically used start of the fibonacci numbers
- for this.  0 is no effort, 1 is tiny effort and so on until 34 is
- huge effort.
+Description: The effort estimation \textbf{must} be configuable that
+ different checks can be used
+Rationale: This can / should be done on on project level.
 Owner: development
 Status: finished
 Class: implementable

@@ -16,7 +16,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010-2012 by flonatel (rmtoo@florath.net)
+.\" (c) 2010-2012,2020 by flonatel (rmtoo@florath.net)
 .\"
 .TH rmtoo-req-format 5 2012-03-23 "File Formats" "Requirements Management"
 .SH NAME
@@ -126,6 +126,17 @@ burn-down speed and the expected finished date.
 .P
 .B 21
 - huge effort (same as very big effort and big effort)
+.P
+.B 34
+- imense effort (mostly too big to do in one step)
+.P
+If this way of providing effort does not fit to the project,
+the check / enforcing can be switched off by setting the configuration
+parameter
+.B
+requirements.effort_estimation_values_check
+.P
+to false.
 .SH KEY 'Constraints'
 This must be a list of constraints - including possible
 arguments. Please consult the
@@ -167,6 +178,6 @@ is the one which should be used in new projects.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010-2011 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010-2011,2020 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
 

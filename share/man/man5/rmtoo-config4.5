@@ -16,7 +16,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010-2012 by flonatel (rmtoo@florath.net)
+.\" (c) 2010-2012,2020 by flonatel (rmtoo@florath.net)
 .\"
 .TH rmtoo-config 5 2017-04-25 "User Commands" "Requirements Management"
 .SH NAME
@@ -219,6 +219,10 @@ This must be a list of strings specifying the stakeholders.
 Stakeholders can own a and prioritize a requirement.  Tags:
 \fIOwner\fR and \fIPriority\fR.
 
+.SS effort_estimation_values_check
+A boolean which flags if the effort estimation check is performed.
+Default: \fItrue\fR
+
 .SH TOPICS DETAILS
 Each topic contains configuration is a map as a value which the name
 of the topic set as the key.
@@ -344,5 +348,5 @@ for the same topic set in only one rmtoo call.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010-2017 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010-2017,2020 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
