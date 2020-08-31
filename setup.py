@@ -8,9 +8,12 @@ import sys
 from setuptools import setup
 
 PACKAGE = 'rmtoo'
-VERSION = '24.3.0'
+VERSION = '25.0.0'
 
 ADD_DATA = []
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 for dadi, destpath_prefix in [('contrib', 'rmtoo')]:
     for (path, dirs, files) in os.walk(dadi):
@@ -74,6 +77,7 @@ def adjust(input_filename, output):
 
 setup(name=PACKAGE, version=VERSION,
       description='Free and OpenSource Requirements Management Tool',
+      long_description=long_description,
       keywords='requirements management',
       author='Andreas Florath',
       author_email='rmtoo@florath.net',
