@@ -8,11 +8,11 @@ import sys
 from setuptools import setup
 
 PACKAGE = 'rmtoo'
-VERSION = '25.0.0'
+VERSION = '25.0.1'
 
 ADD_DATA = []
 
-with open("README.md", "r") as fh:
+with open("Readme.rst", "r") as fh:
     long_description = fh.read()
 
 for dadi, destpath_prefix in [('contrib', 'rmtoo')]:
@@ -78,6 +78,7 @@ def adjust(input_filename, output):
 setup(name=PACKAGE, version=VERSION,
       description='Free and OpenSource Requirements Management Tool',
       long_description=long_description,
+      long_description_content_type='text/x-rst',
       keywords='requirements management',
       author='Andreas Florath',
       author_email='rmtoo@florath.net',
