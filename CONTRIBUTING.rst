@@ -31,7 +31,7 @@ Contributor License Agreement
 When you actively push changes to one of our development platforms,
 e.g. using a pull or merge request, you agree that your contribution
 is placed under GPL3 for the complete project - except the contents of
-the contrib/template_project folder which is placed under Apache 2
+the doc/template_project folder which is placed under Apache 2
 license.
 
 New files must include an appropriate license header - including the

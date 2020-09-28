@@ -98,7 +98,7 @@ possibility to use Amazon AWS EC2 preinstalled VMs.
 
 More details are available in a dedicated Readme_.
 
-.. _Readme: contrib/vmsetup/Readme.rst
+.. _Readme: doc/vmsetup/Readme.rst
 
 
 Installation
@@ -135,7 +135,6 @@ project.
 The basic steps are:
 
 1) Copy over the template project to some other directory.
-2) Set up the environment
 3) Run ``make``
 4) Check, if everything worked
 5) Start changing / adapting things to your needs
@@ -180,7 +179,8 @@ is needed only once.
 
    # cd to virtualenv directory - if not already there
    $ cd RMTOO
-   $ cp -r venv/rmtoo/contrib/template_project MyNewProject
+   $ git clone https://github.com/florath/rmtoo.git
+   $ cp -r rmtoo/doc/template_project MyNewProject
 
 Usage
 -----
@@ -190,7 +190,6 @@ To create all the artifacts for the template project, execute
 .. code:: bash
 
    $ cd MyNewProject
-   $ source ./setenv.sh VENV
    $ make
    $ ls artifacts
 
@@ -206,7 +205,7 @@ When using the virtualenv, use
 
 .. code:: bash
 
-   $ man -l venv/rmtoo/share/man/man7/rmtoo.7
+   $ man -l rmtoo/share/man/man7/rmtoo.7
 
 to get an overview over all available man pages.
 Those other man pages you can read also with man. Replace the
@@ -214,13 +213,13 @@ file name with the appropriate manual page, like:
 
 .. code:: bash
 
-   $ man -l venv/rmtoo/share/man/man7/rmtoo-analytics.7
+   $ man -l rmtoo/share/man/man7/rmtoo-analytics.7
 
 Additional Documentation
 ------------------------
 
 Additional documentation can be found in the directories
-``RMTOO/venv/rmtoo/doc`` (especially the Readme files).
+``RMTOO/rmtoo/doc`` (especially the Readme files).
 
 Other Documentation
 ===================
@@ -268,7 +267,7 @@ Emacs Mode for Editing Requirements
 
 When using the tar package, emacs mode can be loaded in emacs by:
 ``M-x load-file``
-point to ``RMTOO/venv/rmtoo/contrib/req-mode.el``
+point to ``RMTOO/rmtoo/src/rmtoo/contrib/req-mode.el``
 All files with suffix ``.req`` will now use the requirements editing
 mode.
 
