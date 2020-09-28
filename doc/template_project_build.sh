@@ -1,11 +1,11 @@
 #!/bin/bash
 
-TP_RESULT_SHOULD=rmtoo/tests/RMTTest-Blackbox/TemplateProject/result_should
+TP_RESULT_SHOULD=tests/RMTTest-Blackbox/RMTTest-TemplateProject/result_should
 
 WD=$(mktemp --directory -q --tmpdir rmtoo-template-projct-XXXXXXXX)
 # trap "rm -fr $WD" EXIT
 
-cp -r contrib/template_project ${WD}/MyProject
+cp -r doc/template_project ${WD}/MyProject
 
 (
     cd ${WD}/MyProject
