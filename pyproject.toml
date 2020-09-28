@@ -50,13 +50,11 @@ requires=[
 [tool.flit.metadata.requires-extra]
 test = ["pytest", "pytest-cov", "tox", "flake8", "xmldiff==2.4"]
 
-[tool.flit.sdist]
-include = ["contrib/"]
-
 [tool.flit.scripts]
 rmtoo = "rmtoo.lib.RmtooMain:main"
 "rmtoo-normalize-dependencies" = "rmtoo.lib.main.NormalizeDependencies:main"
 "rmtoo-pricing-graph" = "rmtoo.lib.main.PricingGraph:main"
+"rmtoo-contrib-dir" = "rmtoo:rmtoo_contrib_dir"
 
 # Stevedore plugins
 [tool.flit.entrypoints."rmtoo.input.plugin"]

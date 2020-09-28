@@ -8,5 +8,15 @@
 
  For licensing details see COPYING
 '''
+import os
+from pathlib import Path
+
+
 __all__ = ["inputs", "lib", "tests", "outputs"]
 __version__ = "24.4.1"
+
+
+def rmtoo_contrib_dir():
+    """Prints the path of the `contrib` directory"""
+    file_wd = Path(__file__).parent
+    print(os.path.join(file_wd, "contrib"))
