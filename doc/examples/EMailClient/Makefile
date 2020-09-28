@@ -19,8 +19,10 @@ force:
 # ie:
 #      make RMTOO_CONFIG=YourConfig.json
 #
+RMTOO_CALL ?= rmtoo
 RMTOO_CONFIG=Config.json
 CALL_RMTOO=${RMTOO_CALL} -j file://${RMTOO_CONFIG}
+RMTOO_CONTRIB_DIR ?= $(shell rmtoo-contrib-dir)
 
 #
 # Dependency handling
@@ -46,13 +48,13 @@ artifacts/req-graph2.png: artifacts/req-graph2.dot
 # backlog creation.
 artifacts/requirements.pdf: ${REQS_LATEX2} latex/requirements.tex
 	(cd artifacts && \
-	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_reqs_cnt.inc && \
+	   gnuplot ${RMTOO_CONTRIB_DIR}/gnuplot_stats_reqs_cnt.inc && \
 	   epstopdf stats_reqs_cnt.eps)
 	(cd artifacts && \
-	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_burndown.inc && \
+	   gnuplot ${RMTOO_CONTRIB_DIR}/gnuplot_stats_burndown.inc && \
 	   epstopdf stats_burndown.eps)
 	(cd artifacts && \
-	   gnuplot ${RMTOO_CONTRIB_DIR}/contrib/gnuplot_stats_sprint_burndown.inc && \
+	   gnuplot ${RMTOO_CONTRIB_DIR}/gnuplot_stats_sprint_burndown.inc && \
 	   epstopdf stats_sprint_burndown.eps)
 	(cd artifacts && pdflatex ../latex/requirements.tex; \
 		pdflatex ../latex/requirements.tex; \

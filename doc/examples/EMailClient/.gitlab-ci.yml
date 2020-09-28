@@ -10,12 +10,6 @@ cache:
     - /var/cache/apt/archives/
     - ./downloads
 
-before_script:
-    # copy rmtoo's default Makefile and setenv.sh if the repo doesn't have them.
-    - if ! test -f "./setenv.sh"; then cp /usr/share/doc/rmtoo/contrib/template_project/setenv.sh .; fi
-    - source ./setenv.sh DEB
-    - if ! test -f "./Makefile"; then cp ${RMTOO_CONTRIB_DIR}/rmtoo/contrib/template_project/Makefile .; fi
-    
 createArtifacts:
     stage: build
     #tags: rmtoo #add this in when you create a custom runner
