@@ -1,5 +1,5 @@
 
-Ein Requirement ist eine durch andere Requirements vorgegebenes
+Ein Requirement ist ein(e) durch andere Requirements vorgegebenes
 Verhalten, Aktion oder Ausprägung.
 
 Ein Constraint sind Einschränkungen auf den Lösungsraum eines
@@ -11,7 +11,7 @@ Requirement auf alle davon abhängigen Requirements.
 Constraints sind (in Massen) automatisch verifizierbar.
 
 
-Beipiel: Es soll ein digitales Thermometer desinged werden, dass 
+Beispiel: Es soll ein digitales Thermometer designed werden, das 
 Beschleunigungen von 7G verträgt.
 
 Name: Thermometer
@@ -22,7 +22,7 @@ Constraints: BeschleunigungMax7G
 Hier vererbt sich die Eigenschaft (Constraint) auf alle Einzelteile.
 
 Falls z.B. aus früheren Projekten ein Gehäuse existiert, welches aber
-nur maximal 5G Beschleunigung vertägt, und hier eingesetzt werden
+nur maximal 5G Beschleunigung verträgt, und hier eingesetzt werden
 soll, führt dieses zum Konflikt.
 
 Name: Gehäuse A
