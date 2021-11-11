@@ -1,0 +1,36 @@
+((* block singleReq *))
+\paragraph{(((name)))}
+
+\hypertarget{(((req_id)))}{(((req_id)))} 
+\label{(((req_id)))}
+
+(((description)))
+
+((* if rationale is defined *))
+\textbf{Rationale:} (((rationale)))
+((* endif *))
+
+((* if note is defined *))
+\textbf{Note:} (((note)))
+((* endif *))
+
+((* if solvedby is defined *)) \textbf{Solved by:}
+((* for incoming in solvedby *)) \hyperlink{(((incoming)))}{(((incoming)))} ((* endfor *))
+((* endif *))
+
+((* if dependson is defined *)) \textbf{Depends on:}
+((* for outg in dependson *)) \hyperlink{(((outg)))}{(((outg)))} ((* endfor *))
+((* endif *))
+
+((* if testcases is defined *)) \textbf{Test Cases:}
+((* for tc in testcases *))\hyperlink{TESTCASE(((tc)))}{(((tc)))}((* if not loop.last *)),((* endif *)) ((* endfor *))
+((* endif *))
+
+\par{\small \begin{center}
+\begin{tabular}{rlrlrl}
+   Id: & (((req_id)))               & Priority: & (((prio)))          & Owner: & (((owner))) \\
+   Invented on: & (((inventedon))) & Invented by: & (((inventedby))) & Status: & (((status))) \\
+   Class: & (((clstr))) & Hash: & (((hash)))
+\end{tabular}\end{center}
+}
+((* endblock singleReq *))

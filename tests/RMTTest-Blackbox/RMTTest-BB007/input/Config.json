@@ -1,0 +1,60 @@
+{
+    "global": {
+        "modules": {
+            "directories": [
+                ".."
+            ]
+        }
+    }, 
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "default_language": "en_GB", 
+            "dependency_notation": [
+                "Depends on"
+            ]
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    }, 
+    "topics": {
+        "ts_common": {
+ 	    "sources": [
+		[
+		    "git", {
+		        "start_vers": "c2b3c92af881f555e5fc4087647921c297325fba",
+			"end_vers": "8749db9cd65d43da9831de2baf50481289ec235f",
+			"requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:basedir}/input/topics"] ,
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "collection/constraints" ] }
+		],
+	        [
+		    "filesystem", {
+		        "requirements_dirs": [ "${ENV:basedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:basedir}/input/topics" ],
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "collection/constraints" ] }
+		]
+	    ],
+            "output": {
+                "graph2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/req-graph2.dot"
+                    }
+                ]
+            }
+        }
+    }
+}

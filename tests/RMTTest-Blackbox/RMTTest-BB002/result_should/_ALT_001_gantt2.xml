@@ -1,0 +1,196 @@
+<?xml version="1.0" ?>
+<project>
+	<taskdisplaycolumns>
+		<displaycolumn property-id="tpd3" width="125"/>
+		<displaycolumn property-id="tpd4" width="25"/>
+		<displaycolumn property-id="tpd5" width="25"/>
+	</taskdisplaycolumns>
+	<task id="1" name="ReqsDocument">
+		<task id="2" name="B1">
+			<task complete="0" duration="6" id="3" name="A01">
+				<notes>
+<![CDATA[== Description ==
+A01 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="5" name="A02">
+				<notes>
+<![CDATA[== Description ==
+A02 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="6" name="A03">
+				<notes>
+<![CDATA[== Description ==
+A03 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="7" name="A04">
+				<notes>
+<![CDATA[== Description ==
+A04 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="8" name="A05">
+				<notes>
+<![CDATA[== Description ==
+A05 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="9" name="A06">
+				<notes>
+<![CDATA[== Description ==
+A06 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="10" name="A07">
+				<notes>
+<![CDATA[== Description ==
+A07 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="11" name="A08">
+				<notes>
+<![CDATA[== Description ==
+A08 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="12" name="A09">
+				<notes>
+<![CDATA[== Description ==
+A09 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="13" name="A10">
+				<notes>
+<![CDATA[== Description ==
+A10 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="14" name="A11">
+				<notes>
+<![CDATA[== Description ==
+A11 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="15" name="A12">
+				<notes>
+<![CDATA[== Description ==
+A12 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="4" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="16" name="B01">
+				<notes>
+<![CDATA[== Description ==
+B01 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="3" type="2"/>
+				<depend difference="0" hardness="Strong" id="5" type="2"/>
+				<depend difference="0" hardness="Strong" id="6" type="2"/>
+				<depend difference="0" hardness="Strong" id="7" type="2"/>
+				<depend difference="0" hardness="Strong" id="8" type="2"/>
+				<depend difference="0" hardness="Strong" id="9" type="2"/>
+				<depend difference="0" hardness="Strong" id="10" type="2"/>
+				<depend difference="0" hardness="Strong" id="11" type="2"/>
+				<depend difference="0" hardness="Strong" id="12" type="2"/>
+				<depend difference="0" hardness="Strong" id="13" type="2"/>
+				<depend difference="0" hardness="Strong" id="14" type="2"/>
+				<depend difference="0" hardness="Strong" id="15" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="17" name="C01">
+				<notes>
+<![CDATA[== Description ==
+C01 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="18" name="C02">
+				<notes>
+<![CDATA[== Description ==
+C02 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="19" name="C03">
+				<notes>
+<![CDATA[== Description ==
+C03 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="20" name="C04">
+				<notes>
+<![CDATA[== Description ==
+C04 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="21" name="C05">
+				<notes>
+<![CDATA[== Description ==
+C05 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="22" name="C06">
+				<notes>
+<![CDATA[== Description ==
+C06 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="100" duration="6" id="23" name="C07">
+				<notes>
+<![CDATA[== Description ==
+C07 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="24" name="C08">
+				<notes>
+<![CDATA[== Description ==
+C08 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="25" name="C09">
+				<notes>
+<![CDATA[== Description ==
+C09 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="26" name="C10">
+				<notes>
+<![CDATA[== Description ==
+C10 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="27" name="C11">
+				<notes>
+<![CDATA[== Description ==
+C11 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="28" name="C12">
+				<notes>
+<![CDATA[== Description ==
+C12 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="29" name="C13">
+				<notes>
+<![CDATA[== Description ==
+C13 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="30" name="C14">
+				<notes>
+<![CDATA[== Description ==
+C14 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="31" name="C15">
+				<notes>
+<![CDATA[== Description ==
+C15 must exists.]]>				</notes>
+				<depend difference="0" hardness="Strong" id="16" type="2"/>
+			</task>
+			<task complete="0" duration="6" id="4" name="M">
+				<notes>
+<![CDATA[== Description ==
+M must exists.]]>				</notes>
+			</task>
+		</task>
+	</task>
+</project>

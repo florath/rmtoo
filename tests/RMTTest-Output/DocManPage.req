@@ -1,0 +1,17 @@
+Name: Documentation Man Page
+Type: design decision
+Invented on: 1970-01-01
+Invented by: flonatel
+Owner: development
+Description: \textsl{rmtoo} \textbf{must} come with a (*nix) man page
+ describing the basic behaviour.
+Rationale: This typically describes the input and output and all the
+ parameters needed (but not the ideas behind).
+Status: not done
+Priority: development:10 customers:5
+Class: detailable
+Effort estimation: 5
+Topic: Documentation
+
+Solved by: ManEmacsMode ManOverview ManSecAnalytics ManSecArtifacts ManSecFileFormats ManSecGeneric
+# Added by rmtoo-normalize-dependencies

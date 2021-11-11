@@ -40,10 +40,10 @@ artifacts/req-graph2.png: artifacts/req-graph2.dot
 # backlog creation.
 artifacts/requirements.pdf: ${REQS_LATEX2} doc/latex2/requirements.tex
 	(cd artifacts && \
-	   gnuplot ../contrib/gnuplot_stats_reqs_cnt.inc && \
+	   gnuplot ../src/rmtoo/contrib/gnuplot_stats_reqs_cnt.inc && \
 	   epstopdf stats_reqs_cnt.eps)
 	(cd artifacts && \
-	   gnuplot ../contrib/gnuplot_stats_burndown.inc && \
+	   gnuplot ../src/rmtoo/contrib/gnuplot_stats_burndown.inc && \
 	   epstopdf stats_burndown.eps)
 	(cd artifacts && pdflatex ../doc/latex2/requirements.tex; \
 		pdflatex ../doc/latex2/requirements.tex; \

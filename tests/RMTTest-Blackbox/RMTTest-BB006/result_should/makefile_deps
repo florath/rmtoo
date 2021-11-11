@@ -1,0 +1,19 @@
+===SYMBOLIC-OUTPUT-DIR===/req-graph1.dot: ${REQS}
+	${CALL_RMTOO}
+===SYMBOLIC-OUTPUT-DIR===/req-graph2.dot: ${REQS}
+	${CALL_RMTOO}
+===SYMBOLIC-OUTPUT-DIR===/html/ReqsDocument.html: tests/RMTTest-Blackbox/RMTTest-BB006/input/header.html tests/RMTTest-Blackbox/RMTTest-BB006/input/footer.html ${TOPIC_ts_common_ReqsDocument_DEPS}
+	${CALL_RMTOO}
+===SYMBOLIC-OUTPUT-DIR===/html/B1.html: tests/RMTTest-Blackbox/RMTTest-BB006/input/header.html tests/RMTTest-Blackbox/RMTTest-BB006/input/footer.html ${TOPIC_ts_common_B1_DEPS}
+	${CALL_RMTOO}
+REQS+=tests/RMTTest-Blackbox/RMTTest-BB006/input/reqs/A1.req
+OUTPUT_HTML====SYMBOLIC-OUTPUT-DIR===/html/ReqsDocument.html ===SYMBOLIC-OUTPUT-DIR===/html/B1.html 
+===SYMBOLIC-OUTPUT-DIR===/reqtopics.tex: ${REQS}
+	${CALL_RMTOO}
+REQS_LATEX2====SYMBOLIC-OUTPUT-DIR===/reqtopics.tex
+===SYMBOLIC-OUTPUT-DIR===/reqspricing: ${REQS}
+	${CALL_RMTOO}
+===SYMBOLIC-OUTPUT-DIR===/reqsprios.tex: ${REQS}
+	${CALL_RMTOO}
+===SYMBOLIC-OUTPUT-DIR===/stats_reqs_cnt.csv: ${REQS}
+	${CALL_RMTOO}

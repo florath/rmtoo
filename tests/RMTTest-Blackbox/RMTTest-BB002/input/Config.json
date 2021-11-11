@@ -1,0 +1,87 @@
+{
+    "global": {
+        "modules": {
+            "directories": [
+                ".."
+            ]
+        }
+    }, 
+    "processing": {
+        "analytics": {
+            "stop_on_errors": false
+        }
+    }, 
+    "requirements": {
+        "input": {
+            "default_language": "en_GB", 
+            "dependency_notation": [
+                "Depends on"
+            ]
+        }, 
+        "inventors": [
+            "flonatel"
+        ], 
+        "stakeholders": [
+            "development", 
+            "management", 
+            "users", 
+            "customers"
+        ]
+    }, 
+    "topics": {
+        "ts_common": {
+	    "sources": [
+		[
+		    "git", {
+		        "start_vers": "c2b3c92af881f555e5fc4087647921c297325fba",
+			"end_vers": "8749db9cd65d43da9831de2baf50481289ec235f",
+			"requirements_dirs": [ "${ENV:rbasedir}/input/reqs" ],
+			"topics_dirs": [ "${ENV:rbasedir}/input/topics"] ,
+			"topic_root_node": "ReqsDocument",
+			"constraints_dirs": [ "${ENV:rbasedir}/input/topics" ] }
+		]
+	    ],
+            "output": {
+                "graph": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/req-graph1.dot"
+                    }
+                ], 
+                "graph2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/req-graph2.dot"
+                    }
+                ], 
+                "html": [
+                    {
+                        "footer": "${ENV:rbasedir}/input/footer.html", 
+                        "header": "${ENV:rbasedir}/input/header.html", 
+                        "output_directory": "${ENV:rmtoo_test_dir}/html"
+                    }
+                ], 
+                "latex2": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqtopics.tex"
+                    }
+                ], 
+                "prios": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/reqsprios.tex", 
+                        "start_date": "2011-05-10"
+                    }
+                ], 
+                "stats_reqs_cnt": [
+                    {
+                        "output_filename": "${ENV:rmtoo_test_dir}/stats_reqs_cnt.csv"
+                    }
+                ], 
+                "xml_ganttproject_2": [
+                    {
+                        "effort_factor": 1, 
+                        "output_filename": "${ENV:rmtoo_test_dir}/gantt2.xml"
+                    }
+                ]
+            }
+        }
+    }
+}
