@@ -44,11 +44,11 @@ This file contains the following chapters:
 [Operating System Support](#Operating-System-Support)  
 [Preinstalled VMs](#Preinstalled-VMs)  
 [Installation](#Installation)  
-[Installation using virtualenv / pip](#Installation-using-virtualenv-/-pip)  
+[Installation using virtualenv](#Installation-using-virtualenv)  
 [First Project](#First-Project)  
 [Man Pages](#Man-Pages)  
 [Other Documentation](#Other-Documentation)  
-[Emacs Mode for Editing Requirements](#Emacs-Mode-fo- Editin- Requirements)  
+[Emacs Mode for Editing Requirements](#Emacs-Mode-for-Editing-Requirements)  
 [Footer](#Footer)
 
 ## Conventions
@@ -116,7 +116,7 @@ The basic steps are:
 Note that during this document the project will be called
 \'MyNewProject\'. Please adapt the name for your needs.
 
-## Installation using virtualenv / pip
+## Installation using virtualenv
 
 This is the preferred installation method - it takes care that at least
 the python dependencies are correctly installed.
