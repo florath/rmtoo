@@ -40,15 +40,15 @@ documentation for rmtoo.
 
 This file contains the following chapters:
 
-[Conventions](#Conventions)
-[Operating System Support](#Operating System Support)
-[Preinstalled VMs](#Preinstalled VMs)
-[Installation](#Installation)
-[Installation using virtualenv / pip](#Installation using virtualenv / pip)
-[First Project](#First Project)
-[Man Pages](#Man Pages)
-[Other Documentation](#Other Documentation)
-[Emacs Mode for Editing Requirements](#Emacs Mode for Editing Requirements)
+[Conventions](#Conventions)  
+[Operating System Support](#Operating-System-Support)  
+[Preinstalled VMs](#Preinstalled-VMs)  
+[Installation](#Installation)  
+[Installation using virtualenv / pip](#Installation-using-virtualenv-/-pip)  
+[First Project](#First-Project)  
+[Man Pages](#Man-Pages)  
+[Other Documentation](#Other-Documentation)  
+[Emacs Mode for Editing Requirements](#Emacs-Mode-fo- Editin- Requirements)  
 [Footer](#Footer)
 
 ## Conventions
