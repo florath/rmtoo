@@ -22,23 +22,13 @@
 Open Source Requirements Management Tool
 
 [![image](https://img.shields.io/github/release/florath/rmtoo.svg)](https://github.com/florath/rmtoo/releases)
-
 [![image](https://travis-ci.org/florath/rmtoo.svg?branch=master)](https://travis-ci.org/florath/rmtoo)
-
 [![image](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
-
 [![image](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/florath/rmtoo)
-
 [![image](https://img.shields.io/github/downloads/florath/rmtoo/total.svg)](http://rmtoo.florath.net)
-
 [![image](https://img.shields.io/pypi/v/rmtoo.svg)](https://pypi.python.org/pypi/rmtoo)
-
 [![image](https://img.shields.io/coverity/scan/12488.svg)](https://scan.coverity.com/projects/rmtoo)
-
 [![Code Climate](https://codeclimate.com/github/florath/rmtoo/badges/gpa.svg)](https://codeclimate.com/github/florath/rmtoo)
-
-[![Test Coverage](https://codeclimate.com/github/florath/rmtoo/badges/coverage.svg)](https://codeclimate.com/github/florath/rmtoo/coverage)
-
 [![Issue Count](https://codeclimate.com/github/florath/rmtoo/badges/issue_count.svg)](https://codeclimate.com/github/florath/rmtoo)
 
 ## Introduction
@@ -50,20 +40,23 @@ documentation for rmtoo.
 
 This file contains the following chapters:
 
-::: {.contents}
-Table of Contents
-:::
+[Conventions](#Conventions)
+[Operating System Support](#Operating System Support)
+[Preinstalled VMs](#Preinstalled VMs)
+[Installation](#Installation)
+[Installation using virtualenv / pip](#Installation using virtualenv / pip)
+[First Project](#First Project)
+[Man Pages](#Man Pages)
+[Other Documentation](#Other Documentation)
+[Emacs Mode for Editing Requirements](#Emacs Mode for Editing Requirements)
+[Footer](#Footer)
 
 ## Conventions
 
-`YY`
-
-:   names the version of rmtoo. You have to replace this with the real
+`YY`: names the version of rmtoo. You have to replace this with the real
     version number.
 
-`$ cmd`
-
-:   This is a command you have to type in. The `$` is a replacement for
+`$ cmd`: This is a command you have to type in. The `$` is a replacement for
     the shell prompt - do not enter it as a part of the command.
 
 ## Operating System Support
@@ -246,9 +239,9 @@ to visit the project home page
 
 <http://rmtoo.florath.net>
 
-| flonatel GmbH & Co. KG
-| Andreas Florath
+| flonatel GmbH & Co. KG  
+| Andreas Florath  
 | <rmtoo@florath.net>
 
-\(c\) 2010-2012,2017,2020,2022 by flonatel GmbH & Co. KG For licensing
-details see COPYING
+\(c\) 2010-2012,2017,2020,2022 by flonatel GmbH & Co. KG  
+For licensing details see COPYING
