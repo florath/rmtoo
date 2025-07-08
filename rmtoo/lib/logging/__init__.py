@@ -23,7 +23,8 @@ LOGGING_CONFIG = {
     },
     "tracer": {
         "loglevel": logging.DEBUG,
-        "filename": os.path.join(tempfile.gettempdir(), f"rmtoo-{os.getpid()}.log")
+        "filename": os.path.join(tempfile.gettempdir(),
+                                 f"rmtoo-{os.getpid()}.log")
     },
     "handler": [],
     "log_handler": []
