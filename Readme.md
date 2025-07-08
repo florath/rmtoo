@@ -22,7 +22,7 @@
 Open Source Requirements Management Tool
 
 [![image](https://img.shields.io/github/release/florath/rmtoo.svg)](https://github.com/florath/rmtoo/releases)
-[![image](https://travis-ci.org/florath/rmtoo.svg?branch=master)](https://travis-ci.org/florath/rmtoo)
+[![Build Status](https://github.com/florath/rmtoo/workflows/CI/badge.svg)](https://github.com/florath/rmtoo/actions)
 [![image](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![image](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/florath/rmtoo)
 [![image](https://img.shields.io/github/downloads/florath/rmtoo/total.svg)](http://rmtoo.florath.net)
