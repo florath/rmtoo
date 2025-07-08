@@ -3,6 +3,12 @@ This file is not completed now - any might be in future.
 
 * Development Environment
 
+** Running test cases locally
+
+   export PYTHONPATH=${PWD}
+   cd rmtoo
+   pytest --junit-xml=result.xml --cov-report term --cov-report xml --cov=lib --cov=inputs --cov=outputs tests
+
 ** Tools
 
 *** Mandatory

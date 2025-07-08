@@ -42,7 +42,6 @@ This file contains the following chapters:
 
 [Conventions](#Conventions)  
 [Operating System Support](#Operating-System-Support)  
-[Preinstalled VMs](#Preinstalled-VMs)  
 [Installation](#Installation)  
 [Installation using virtualenv](#Installation-using-virtualenv)  
 [First Project](#First-Project)  
@@ -69,14 +68,6 @@ Mac OS X users might want to read `Readme-OS-X.txt`.
 
 Windows users might want to read the `Readme-Windows.txt`.
 
-## Preinstalled VMs
-
-For evaluation proposes and running small projects there is the
-possibility to use Amazon AWS EC2 preinstalled VMs.
-
-More details are available in a dedicated
-[Readme](contrib/vmsetup/Readme.rst).
-
 ## Installation
 
 The following sections assume, that you are using Linux. Please refer to
@@ -87,9 +78,7 @@ information if you do not use Linux.
 
 To use rmtoo, other software packages must be installed.
 
-rmtoo is written in python. At least version 3.5 of python is needed.
-python 3.8 may work, but there is a problem (bug (fix)?) is python 3.8
-which create different XML elements as the previous versions.
+rmtoo is written in python. At least version 3.9 of python is needed.
 
 When you want to create LaTeX or PDF documentation, LaTeX is needed.
 
@@ -198,8 +187,7 @@ the past - including the answers.
 
 There are also two presentations about the design and features of rmtoo.
 Theese presentations can be found in the download section of the
-sourceforge project page. Please visit the projects home page
-<http://rmtoo.florath.net>
+sourceforge project page. 
 
 ### Readme-Overview.txt
 
@@ -243,5 +231,5 @@ to visit the project home page
 | Andreas Florath  
 | <rmtoo@florath.net>
 
-\(c\) 2010-2012,2017,2020,2022 by flonatel GmbH & Co. KG  
+\(c\) 2010-2012,2017,2020,2022,2025 by flonatel GmbH & Co. KG  
 For licensing details see COPYING

@@ -13,3 +13,4 @@ tox
 pytest
 pytest-cov
 flake8
+stevedore>=1.21
