@@ -13,6 +13,27 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+          pip install tox
+
+      - name: Run tests with tox
+        run: |
+          tox
+          
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
+        run: tox -e py
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
