@@ -12,7 +12,7 @@ VERSION = '25.0.1'
 
 ADD_DATA = []
 
-with open("Readme.rst", "r") as fh:
+with open("Readme.md", "r") as fh:
     long_description = fh.read()
 
 for dadi, destpath_prefix in [('contrib', 'rmtoo')]:
