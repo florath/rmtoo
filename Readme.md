@@ -28,8 +28,7 @@ Open Source Requirements Management Tool
 [![image](https://img.shields.io/github/downloads/florath/rmtoo/total.svg)](http://rmtoo.florath.net)
 [![PyPI version](https://img.shields.io/pypi/v/rmtoo)](https://pypi.org/project/rmtoo/)
 [![image](https://img.shields.io/coverity/scan/12488.svg)](https://scan.coverity.com/projects/rmtoo)
-[![Code Climate](https://codeclimate.com/github/florath/rmtoo/badges/gpa.svg)](https://codeclimate.com/github/florath/rmtoo)
-[![Issue Count](https://codeclimate.com/github/florath/rmtoo/badges/issue_count.svg)](https://codeclimate.com/github/florath/rmtoo)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=florath_rmtoo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=florath_rmtoo)
 
 ## Introduction
 
