@@ -9,13 +9,9 @@
 
  For licensing details see COPYING
 '''
-from __future__ import unicode_literals
 
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from io import StringIO
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtParser import TxtParser

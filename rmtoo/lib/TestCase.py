@@ -8,7 +8,6 @@
 
  For licensing details see COPYING
 '''
-from __future__ import unicode_literals
 
 from rmtoo.lib.BaseRMObject import BaseRMObject
 from rmtoo.lib.InputModuleTypes import InputModuleTypes

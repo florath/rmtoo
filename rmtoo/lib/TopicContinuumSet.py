@@ -11,7 +11,6 @@
 
  For licensing details see COPYING
 '''
-from __future__ import unicode_literals
 
 
 from rmtoo.lib.TopicContinuum import TopicContinuum

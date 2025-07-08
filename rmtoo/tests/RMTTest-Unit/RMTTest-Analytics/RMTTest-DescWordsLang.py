@@ -8,13 +8,9 @@
 
  For licensing details see COPYING
 '''
-from __future__ import unicode_literals
 
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from io import StringIO
 
 from rmtoo.lib.analytics.DescWords import DescWords
 from rmtoo.lib.configuration.Cfg import Cfg

@@ -9,7 +9,6 @@
 
  For licensing details see COPYING
 '''
-from __future__ import unicode_literals
 
 
 from rmtoo.tests.lib.RDep import create_parameters

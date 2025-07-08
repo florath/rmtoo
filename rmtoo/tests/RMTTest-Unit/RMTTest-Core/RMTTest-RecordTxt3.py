@@ -10,10 +10,7 @@
 
  For licensing details see COPYING
 '''
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from io import StringIO
 
 
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord

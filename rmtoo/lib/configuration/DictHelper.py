@@ -8,7 +8,6 @@
 
  For licensing details see COPYING
 '''
-from __future__ import print_function
 
 # pylint: disable=W0622
 #  This is needed, because in python3 this was moved

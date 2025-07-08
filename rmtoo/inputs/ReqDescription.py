@@ -8,7 +8,6 @@
 
  For licensing details see COPYING
 '''
-from __future__ import print_function
 
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.ReqTagGeneric import ReqTagGeneric
