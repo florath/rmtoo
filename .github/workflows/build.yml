@@ -30,10 +30,6 @@ jobs:
         run: |
           tox
           
-      - name: Install tox and any other packages
-        run: pip install tox
-      - name: Run tox
-        run: tox -e py
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
