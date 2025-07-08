@@ -4,7 +4,7 @@
 
   Unit test for Topic
 
- (c) 2011-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -23,4 +23,4 @@ class RMTTestTxtIOConfig:
 
         tic = TxtIOConfig(config, 'requirement')
 
-        assert(tic.get_max_line_length() == 77)
+        assert tic.get_max_line_length() == 77

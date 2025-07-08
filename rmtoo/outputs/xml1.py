@@ -4,7 +4,7 @@
 
  This is a first version of xml output.
 
- (c) 2011,2017 by flonatel
+ (c) 2011,2017.2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -67,7 +67,7 @@ class Xml1:
             elif req.tags["Type"] == Requirement.rt_requirement:
                 tn = doc.createTextNode("requirement")
             else:
-                assert(False)
+                assert False
             tm.appendChild(tn)
 
         if "Class" in req.tags:

@@ -4,7 +4,7 @@
 
  Record Text Test Class
 
- (c) 2010-2011,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2011,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -112,7 +112,7 @@ class RMTTestRecordTxt(object):
         "Check top level Record: remove entry"
 
         txt_doc = TxtRecord.from_string(doc1, u"Nothing", TxtIOConfig())
-        del(txt_doc[2])
+        del txt_doc[2]
         txt_doc_dict = txt_doc.get_dict()
 
         assert dpC1 == txt_doc.get_comment()

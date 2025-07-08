@@ -4,7 +4,7 @@
 
   Unit Test cases for Requirement
 
- (c) 2010,2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010,2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -24,6 +24,6 @@ class RMTTestRequirement:
             Requirement("DTag: content1\n"
                         "DTag: content2\n", "1", None,
                         None, TestConfig())
-            assert(False)
+            assert False
         except RMTException as rmte:
-            assert(rmte.get_id() == 81)
+            assert rmte.get_id() == 81
