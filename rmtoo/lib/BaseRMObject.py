@@ -7,7 +7,7 @@
   major management objects like 'Requirement' or 'Constraint'.
   (Maybe this might also be used for the 'Topic'.)
 
- (c) 2011-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -94,11 +94,12 @@ class BaseRMObject(UsableFlag):
         # is raised.
 
         # Handle all the modules (Semantic input)
-        tracer.debug("BaseRMObject [%s]: processing modules, available tags: %s", 
-                    self._id, list(brmo.keys()))
+        tracer.debug("BaseRMObject [%s]: "
+                     "processing modules, available tags: %s",
+                     self._id, list(brmo.keys()))
         self.handle_modules_tag(brmo)
-        tracer.debug("BaseRMObject [%s]: after processing, values: %s", 
-                    self._id, list(self.values.keys()))
+        tracer.debug("BaseRMObject [%s]: after processing, values: %s",
+                     self._id, list(self.values.keys()))
 
         # Do not check for remaining tags here. There must be some
         # left over: all those that work on the whole requirement set

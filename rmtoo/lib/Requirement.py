@@ -84,10 +84,6 @@ class Requirement(Digraph.Node, BaseRMObject):
 
     def get_topic(self):
         """Get the requirement's topic"""
-        if "Topic" not in self.values:
-            tracer.error("Requirement [%s] missing Topic field. Available fields: %s", 
-                        self.get_id(), list(self.values.keys()))
-            raise KeyError("Topic field missing for requirement %s" % self.get_id())
         return self.values["Topic"]
 
     def get_efe_or_0(self):
