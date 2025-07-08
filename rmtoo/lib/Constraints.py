@@ -4,13 +4,12 @@
 
   Constraints handling
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
-from six import iteritems
 
 from rmtoo.lib.logging import tracer
 
@@ -33,8 +32,8 @@ class Constraints(object):
         if topic_set is None:
             assert False
 
-        for ctr, cval in iteritems(topic_set.get_requirement_set().
-                                   get_constraints()):
+        for ctr, cval in \
+                topic_set.get_requirement_set().get_constraints().items():
             tracer.debug("Add constraint [%s]", ctr)
             cnsts[ctr] = cval
         tracer.debug("Finished; size [%d]", len(cnsts))

@@ -7,13 +7,12 @@
   from the whole time of being.
   The key to access this is the 'name' under 'topic' (in the configuration).
 
- (c) 2011-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
-from six import iteritems
 
 from rmtoo.lib.TopicContinuum import TopicContinuum
 from rmtoo.lib.logging import tracer
@@ -49,7 +48,7 @@ class TopicContinuumSet(UsableFlag):
            and read in the TopicContinuum.'''
         tracer.debug("Called.")
         # Step through all the available topic sets.
-        for ts_name, ts_config in iteritems(self._config.get_value("topics")):
+        for ts_name, ts_config in self._config.get_value("topics").items():
             topic_cont = TopicContinuum(ts_name, self._config, ts_config,
                                         self.__object_cache, self.__input_mods)
             self.__continuum[ts_name] = topic_cont
@@ -81,7 +80,7 @@ class TopicContinuumSetIterator(GenIterator):
     def __init__(self, topic_continuum_set):
         '''Initialize the iterator.'''
         GenIterator.__init__(
-            self, iteritems(topic_continuum_set.get_continuum_dict()))
+            self, topic_continuum_set.get_continuum_dict().items())
 
     def has_child(self):
         '''If the current element has a child, true is returned.'''

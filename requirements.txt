@@ -11,6 +11,5 @@ pytest-cov
 pyyaml
 scipy
 setuptools
-six~=1.12
 stevedore>=1.21
 tox

@@ -6,7 +6,7 @@
  sources, i.e. configuration class, JSON configuration objects and the
  command line.
 
- (c) 2011-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -15,7 +15,6 @@ from __future__ import print_function
 from abc import ABCMeta, abstractmethod
 import os
 import json
-from six import iteritems
 import yaml
 
 import rmtoo.lib.configuration.DictHelper as DictHelper
@@ -180,7 +179,7 @@ class Cfg(dict):
         """
         cfgs = {'json': CfgFormatJson(self, 'json'),
                 'yaml': CfgFormatYaml(self, 'yaml')}
-        for _, cfg_obj in iteritems(cfgs):
+        for _, cfg_obj in cfgs.items():
             cfg_obj.evaluate()
 
     def get_value(self, key):

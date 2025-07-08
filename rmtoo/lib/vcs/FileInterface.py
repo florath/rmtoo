@@ -6,13 +6,12 @@
   This is a specialization for files stored in the file system
   (like plain filesystem or VCS).
 
- (c) 2017 by flonatel GmbH & Co. KG
+ (c) 2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
-from six import iteritems
 
 from rmtoo.lib.vcs.Interface import Interface
 from rmtoo.lib.logging import tracer
@@ -60,7 +59,7 @@ class FileInterface(Interface):
                 new_directories.append(self._adapt_ext_path(directory))
             all_dirs[dir_type] = new_directories
 
-        for dir_type, directory in iteritems(all_dirs):
+        for dir_type, directory in all_dirs.items():
             tracer.debug("[%s] directories [%s]", dir_type, directory)
 
         return all_dirs

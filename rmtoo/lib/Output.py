@@ -4,14 +4,13 @@
 
   Output class.
 
- (c) 2011-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
 from stevedore import extension
-from six import iteritems
 
 from rmtoo.lib.Executor import Executor
 from rmtoo.lib.logging import tracer
@@ -35,7 +34,7 @@ class Output(Executor):
         tracer.info("Called.")
         output_config = topic_continuum.get_output_config()
 
-        for oconfig_name, oconfig in iteritems(output_config):
+        for oconfig_name, oconfig in output_config.items():
             for cfg in oconfig:
                 output_obj = self.__plugin_manager[oconfig_name].plugin(cfg)
                 if special != "":

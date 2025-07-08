@@ -5,11 +5,10 @@
 
   OpenOffice Pricing output class for rmtoo
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
-from six import iteritems
 
 from rmtoo.lib.digraph.TopologicalSort import topological_sort
 from rmtoo.lib.StdOutputParams import StdOutputParams
@@ -119,7 +118,7 @@ class oopricing1(StdOutputParams, ExecutorTopicContinuum,
 
         # The sorted() is done to get always the same XML document -
         # which is important for comparison in tests.
-        for name, size in sorted(iteritems(colstyles)):
+        for name, size in sorted(colstyles.items()):
             s = odf.style.Style(name=name, family="table-column")
             s.addElement(
                 odf.style.TableColumnProperties(columnwidth=size))

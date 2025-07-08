@@ -4,7 +4,7 @@
 
  LaTeX output with jinja templating engine.
 
- (c) 2017 Kristoffer Nordstrom
+ (c) 2017,2025 Kristoffer Nordstrom / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -12,7 +12,6 @@ from __future__ import unicode_literals
 
 import io
 import jinja2
-from six import iteritems
 
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.TestCases import collect
@@ -121,7 +120,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
             return
 
         self.__fd.write(u"\\%s{Constraints}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(iteritems(constraints)):
+        for cname, cnstrt in sorted(constraints.items()):
             self.__output_latex_one_constraint(cname, cnstrt)
 
     # TODO: Code duplication from constraints
@@ -161,7 +160,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
             return
 
         self.__fd.write(u"\\%s{Test Cases}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(iteritems(testcases)):
+        for cname, cnstrt in sorted(testcases.items()):
             self.__output_latex_one_testcase(cname, cnstrt)
 
     def topic_set_post(self, topic_set):
@@ -285,7 +284,7 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
                         'Not yet defined, use latex2 output instead!')
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
-                for key, val in sorted(iteritems(cnstrt)):
+                for key, val in sorted(cnstrt.items()):
                     refid = LatexJinja2.__strescape(key)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                              % (refid, refid)

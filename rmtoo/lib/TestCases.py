@@ -4,11 +4,10 @@
 
   TestCases handling
 
- (c) 2012,2017 by flonatel GmbH & Co. KG
+ (c) 2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
-from six import iteritems
 
 from rmtoo.lib.logging import tracer
 
@@ -20,8 +19,8 @@ def collect(topic_set):
 
     tracer.debug("Called for topic set.")
     testcases = {}
-    for testcase, tcval in iteritems(topic_set.get_requirement_set().
-                                     get_testcases()):
+    for testcase, tcval in \
+            topic_set.get_requirement_set().get_testcases().items():
         tracer.debug("Add constraint [%s]", testcase)
         testcases[testcase] = tcval
     tracer.debug("Finished; size [%d]", len(testcases))

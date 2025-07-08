@@ -4,7 +4,7 @@
 
  Helper to simply access and handle a hirachical dict.
 
- (c) 2017 by flonatel GmbH & Co. KG
+ (c) 2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -14,7 +14,6 @@ from __future__ import print_function
 #  This is needed, because in python3 this was moved
 #  from internal to the functool
 from functools import reduce
-from six import iteritems
 
 from rmtoo.lib.configuration.CfgEx import CfgEx
 from rmtoo.lib.Encoding import Encoding
@@ -73,7 +72,7 @@ def merge(orig_dict, new_dict):
     assert isinstance(orig_dict, dict)
     assert isinstance(new_dict, dict)
 
-    for key, value in iteritems(new_dict):
+    for key, value in new_dict.items():
         if key not in orig_dict:
             orig_dict[key] = value
             continue

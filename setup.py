@@ -126,7 +126,6 @@ setup(name=PACKAGE, version=VERSION,
       install_requires=[
           "numpy>=1.12.0",
           "scipy>=0.19.0",
-          "six>=1.10.0",
           "future>=0.16.0",
           "gitdb>=4.0.1",
           "gitpython>=3.1.41",

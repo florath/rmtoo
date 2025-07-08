@@ -4,7 +4,7 @@
 
   Common statistics functions
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''

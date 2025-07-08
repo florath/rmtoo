@@ -6,7 +6,7 @@
   Note that the TopicSet is a tree where the leaves are
   orders - i.e. it is not possible to put them into a set_value.
 
- (c) 2010-2011,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2011,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -17,7 +17,6 @@ import io
 import json
 import os
 
-from six import iteritems, itervalues
 
 from rmtoo.lib.Requirement import Requirement, RequirementType
 from rmtoo.lib.Constraint import Constraint
@@ -566,7 +565,7 @@ class RequirementSet(Digraph, UsableFlag):
 
     def get_requirements_iteritems(self):
         '''Return the iteritems() iterator of all requirements.'''
-        return iteritems(self.__requirements)
+        return self.__requirements.items()
 
     def get_ce3set(self):
         '''Return the ce3 set which belongs to this requirement set.'''
@@ -615,13 +614,13 @@ class RequirementSet(Digraph, UsableFlag):
 
     def normalize_dependencies(self):
         '''Normalize the dependencies to 'Depends on'.'''
-        for req in itervalues(self.__requirements):
+        for req in self.__requirements.values():
             self.__normalize_dependencies_one_req(req)
         return True
 
     def write_to_filesystem(self, directory):
         '''Write the requirements back to the filesystem.'''
-        for req in itervalues(self.__requirements):
+        for req in self.__requirements.values():
             with io.open(os.path.join(directory, req.get_id() + ".req"), "w",
                          encoding="utf-8") as req_fd:
                 req.record.write_fd(req_fd)

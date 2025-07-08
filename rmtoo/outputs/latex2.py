@@ -4,14 +4,13 @@
 
  LaTeX output class version 2.
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 from __future__ import unicode_literals
 
 import io
-from six import iteritems
 
 from rmtoo.lib.Constraints import Constraints
 from rmtoo.lib.TestCases import collect
@@ -108,7 +107,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             return
 
         self.__fd.write(u"\\%s{Constraints}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(iteritems(constraints)):
+        for cname, cnstrt in sorted(constraints.items()):
             self.__output_latex_one_constraint(cname, cnstrt)
 
     # TODO: Code duplication from constraints
@@ -146,7 +145,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             return
 
         self.__fd.write(u"\\%s{Test Cases}\n" % self.level_names[0])
-        for cname, cnstrt in sorted(iteritems(testcases)):
+        for cname, cnstrt in sorted(testcases.items()):
             self.__output_latex_one_testcase(cname, cnstrt)
 
     def topic_set_post(self, topic_set):
@@ -240,7 +239,7 @@ class latex2(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
             if cnstrt is not None and len(cnstrt) > 0:
                 self.__fd.write(u"\n\\textbf{Constraints:} ")
                 cstrs = []
-                for key, val in sorted(iteritems(cnstrt)):
+                for key, val in sorted(cnstrt.items()):
                     refid = latex2.__strescape(key)
                     refctr = "\\ref{CONSTRAINT%s} \\nameref{CONSTRAINT%s}" \
                              % (refid, refid)

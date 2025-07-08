@@ -5,13 +5,12 @@
   Converts the (allowed) LaTeX markup to other output markup
   formats.
 
- (c) 2010,2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010,2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
 import re
 
-from six import iteritems
 from stevedore import extension
 
 # General remark:
@@ -33,7 +32,7 @@ class MarkupBase(object):
 
     def replace(self, raw_input_str):
         """Replace the raw_input_str based on the existing markup_map"""
-        for pattern, replacement in iteritems(self.__markup_map):
+        for pattern, replacement in self.__markup_map.items():
             raw_input_str = re.sub(pattern, replacement,
                                    raw_input_str, flags=re.UNICODE)
         return raw_input_str

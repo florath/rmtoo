@@ -5,7 +5,7 @@
   First GUI:
     This is read only.
 
- (c) 2012,2017 by flonatel GmbH & Co. KG
+ (c) 2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
  For licensing details see COPYING
 '''
@@ -13,7 +13,6 @@ import gtk
 import gobject
 import sys
 import pygtk
-from six import iteritems
 
 from rmtoo.lib.logging.EventLogging import configure_logging
 from rmtoo.lib.main.MainHelper import MainHelper
@@ -54,8 +53,8 @@ class GUI1ViewOnly:
         selection = tree_view.get_selection()
         selection.connect('changed', self.on_selection_changed)
 
-        for name, continuum in iteritems(
-                topic_continuum_set .get_continuum_dict()):
+        for name, continuum in \
+                topic_continuum_set.get_continuum_dict().items():
             iter_continuum = model.append(None)
             model.set(iter_continuum, 0, name)
             for commit_id in continuum.get_vcs_commit_ids():
