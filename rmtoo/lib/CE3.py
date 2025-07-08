@@ -43,8 +43,11 @@ class CE3(dict):
         for exec_line in constraint_value.get_content_with_nl():
             exec_str += exec_line[1:] + "\n"
 
-        exec(exec_str) in globals(), locals()
-        exec("self[class_name] = %s" % cstr_call)
+        # Use explicit namespace dict for Python 3.13 compatibility
+        exec_namespace = {'self': self, 'class_name': class_name}
+        exec_globals = globals()
+        exec(exec_str, exec_globals, exec_namespace)
+        exec("self[class_name] = %s" % cstr_call, exec_globals, exec_namespace)
 
     def unite(self, oce3s):
         """Try to unite all given ce3s into the local ce3"""
