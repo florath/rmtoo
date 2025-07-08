@@ -26,7 +26,7 @@ Open Source Requirements Management Tool
 [![image](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![image](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/florath/rmtoo)
 [![image](https://img.shields.io/github/downloads/florath/rmtoo/total.svg)](http://rmtoo.florath.net)
-[![image](https://img.shields.io/pypi/v/rmtoo.svg)](https://pypi.python.org/pypi/rmtoo)
+[![PyPI version](https://img.shields.io/pypi/v/rmtoo)](https://pypi.org/project/rmtoo/)
 [![image](https://img.shields.io/coverity/scan/12488.svg)](https://scan.coverity.com/projects/rmtoo)
 [![Code Climate](https://codeclimate.com/github/florath/rmtoo/badges/gpa.svg)](https://codeclimate.com/github/florath/rmtoo)
 [![Issue Count](https://codeclimate.com/github/florath/rmtoo/badges/issue_count.svg)](https://codeclimate.com/github/florath/rmtoo)
