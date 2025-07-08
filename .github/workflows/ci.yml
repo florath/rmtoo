@@ -51,18 +51,6 @@ jobs:
 
     - name: Run tests with tox
       run: |
-        env
-        git log -n 10
-
-        echo "PWD ${PWD}"
-        export PYTHONPATH=${PWD}
-        pip list
-
-        cd rmtoo
-        pytest tests/RMTTest-Blackbox/RMTTest-BB001/RMTTest-BB001.py -v -s || true
-        cat /tmp/rmtoo.log
-        cd ..
-        
         tox
 
     - name: Run PEP8 checks
