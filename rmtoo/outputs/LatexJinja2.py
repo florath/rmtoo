@@ -48,7 +48,9 @@ class LatexJinja2(StdOutputParams, ExecutorTopicContinuum,
         # Jinja2 initialisation
         template_loader = jinja2.FileSystemLoader(
                 searchpath=oconfig['template_path'])
-        template_env_unmodded = jinja2.Environment(loader=template_loader)
+        template_env_unmodded = jinja2.Environment(
+            loader=template_loader,
+            autoescape=True)
         self._template_env = template_env_unmodded.overlay(
             block_start_string='((*',
             block_end_string='*))',
