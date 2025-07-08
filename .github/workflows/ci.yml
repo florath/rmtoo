@@ -48,7 +48,16 @@ jobs:
         pip install tox
 
     - name: Run tests with tox
-      run: tox
+      run: |
+        env
+        git log -n 10
+
+        export PYTHONPATH=${PWD}
+        cd rmtoo
+        pytest tests/RMTTest-Blackbox/RMTTest-BB001/RMTTest-BB001.py -v -s
+        cd ..
+        
+        tox
 
     - name: Run PEP8 checks
       run: tox -e pep8

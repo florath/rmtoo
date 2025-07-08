@@ -94,7 +94,11 @@ class BaseRMObject(UsableFlag):
         # is raised.
 
         # Handle all the modules (Semantic input)
+        tracer.debug("BaseRMObject [%s]: processing modules, available tags: %s", 
+                    self._id, list(brmo.keys()))
         self.handle_modules_tag(brmo)
+        tracer.debug("BaseRMObject [%s]: after processing, values: %s", 
+                    self._id, list(self.values.keys()))
 
         # Do not check for remaining tags here. There must be some
         # left over: all those that work on the whole requirement set
