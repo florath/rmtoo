@@ -52,13 +52,11 @@ jobs:
       run: |
         env
         git log -n 10
-        echo "Start commit"
-        git show a8d5b085caf6f93677ef4c7bd30ad9393059833f
-        echo "End commit"
-        git show c35f8e918ab1d05ab3e2ba0be52a3f4092035663
+
+        echo "PWD ${PWD}"
+        export PYTHONPATH=${PWD}
         pip list
 
-        export PYTHONPATH=${PWD}
         cd rmtoo
         pytest tests/RMTTest-Blackbox/RMTTest-BB001/RMTTest-BB001.py -v -s || true
         cat /tmp/rmtoo.log
