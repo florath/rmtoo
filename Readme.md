@@ -159,7 +159,7 @@ artifacts.
 When using the virtualenv, use
 
 ``` {.bash}
-$ man -l venv/rmtoo/share/man/man7/rmtoo.7
+$ man venv/share/man/man7/rmtoo.7
 ```
 
 to get an overview over all available man pages. Those other man pages
@@ -167,7 +167,7 @@ you can read also with man. Replace the file name with the appropriate
 manual page, like:
 
 ``` {.bash}
-$ man -l venv/rmtoo/share/man/man7/rmtoo-analytics.7
+$ man venv/share/man/man7/rmtoo-analytics.7
 ```
 
 ### Additional Documentation
