@@ -45,7 +45,7 @@ ADD_DATA.append(
       "Readme-Hacking.txt", "Readme-OS-X.txt", "Readme-Overview.txt",
       "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
       "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
-      "Roadmap.txt", "Readme.rst",
+      "Roadmap.txt", "Readme.md",
       "contrib/vmsetup/Readme-PreinstalledVM.rst",
       "contrib/vmsetup/Readme-PreinstalledVMGui.rst"]))
 
