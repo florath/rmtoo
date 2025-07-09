@@ -92,7 +92,7 @@ jobs:
         
         # Create package directory with same structure as build_tar.sh
         mkdir -p package/${PACKAGE_NAME}
-        for d in COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme-GitPython.txt Readme-Hacking.txt Readme-OS-X.txt Readme-Overview.txt Readme-RmtooOnRmtoo.txt Readme.md Readme-Windows.txt Makefile contrib; do
+        for d in COPYING doc gpl-3.0.txt rmtoo setenv.sh README.md docs Readme-GitPython.txt Readme-Hacking.txt Readme-OS-X.txt Readme-Overview.txt Readme-RmtooOnRmtoo.txt Readme-Windows.txt Makefile contrib; do
           if [ -e "$d" ]; then
             cp -r "$d" package/${PACKAGE_NAME}/
           fi

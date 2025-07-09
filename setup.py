@@ -12,7 +12,7 @@ VERSION = '26.0.0'
 
 ADD_DATA = []
 
-with open("Readme.md", "r") as fh:
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 for dadi, destpath_prefix in [('contrib', 'rmtoo')]:
@@ -41,13 +41,7 @@ for man_name in os.listdir("share/man"):
 
 ADD_DATA.append(
     ("rmtoo/doc/readme",
-     ["Readme-Windows.txt", "gpl-3.0.txt", "Readme-GitPython.txt",
-      "Readme-Hacking.txt", "Readme-OS-X.txt", "Readme-Overview.txt",
-      "Readme-RmtooOnRmtoo.txt", "Readme-Windows.txt",
-      "requirements.txt", "RequirementVsConstraint.txt", "RMTEx.txt",
-      "Roadmap.txt", "Readme.md",
-      "contrib/vmsetup/Readme-PreinstalledVM.rst",
-      "contrib/vmsetup/Readme-PreinstalledVMGui.rst"]))
+     ["README.md", "docs/**/*"]))
 
 def adjust(input_filename, output):
     """Function to adjust the version number
