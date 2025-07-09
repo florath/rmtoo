@@ -78,7 +78,7 @@ def adjust(input_filename, output):
 setup(name=PACKAGE, version=VERSION,
       description='Free and OpenSource Requirements Management Tool',
       long_description=long_description,
-      long_description_content_type='text/x-rst',
+      long_description_content_type='text/markdown',
       keywords='requirements management',
       author='Andreas Florath',
       author_email='rmtoo@florath.net',
