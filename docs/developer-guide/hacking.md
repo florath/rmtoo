@@ -158,7 +158,7 @@ open htmlcov/index.html
 - **Configuration**: Hierarchical config system
 
 ### Plugin Development
-See the [Plugin Development Guide](plugins/) for details on creating new input and output plugins.
+See the setuptools entry points in `setup.py` for examples of creating new input and output plugins.
 
 ## Release Process
 

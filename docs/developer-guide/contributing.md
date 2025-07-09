@@ -139,7 +139,7 @@ git push origin feature-your-feature-name
 - Follow the documentation style guide
 
 ### Plugin Development
-- See the [Plugin Development Guide](plugins/)
+- See the setuptools entry points in `setup.py` for examples
 - Follow the plugin architecture patterns
 - Include tests and documentation
 - Register plugins in setup.py
