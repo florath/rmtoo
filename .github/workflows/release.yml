@@ -1,0 +1,193 @@
+# (c) 2025 by flonatel GmbH & Co. KG / Andreas Florath
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# This file is part of rmtoo.
+#
+# rmtoo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# rmtoo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with rmtoo.  If not, see <https://www.gnu.org/licenses/>.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on tags like v25.0.2, v26.0.0, etc.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases
+      id-token: write  # Required for PyPI trusted publishing
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Get full history for release notes
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y graphviz gnuplot texlive-latex-recommended texlive-latex-extra
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -e .
+        pip install build twine
+
+    - name: Extract version from tag
+      id: extract_version
+      run: |
+        TAG_NAME=${GITHUB_REF#refs/tags/}
+        VERSION=${TAG_NAME#v}  # Remove 'v' prefix
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+
+    - name: Update version in setup.py
+      run: |
+        sed -i "s/VERSION = '[^']*'/VERSION = '${{ steps.extract_version.outputs.version }}'/" setup.py
+
+    - name: Generate documentation (like build_tar.sh)
+      run: |
+        # Generate documentation as done in build_tar.sh
+        make clean
+        make all
+        
+        # Store generated docs (preserving build_tar.sh behavior)
+        mkdir -p release_artifacts
+        cp artifacts/requirements.pdf release_artifacts/
+        cp artifacts/req-graph1.png release_artifacts/
+        cp artifacts/req-graph2.png release_artifacts/
+        
+        # Clean up for packaging
+        make clean
+
+    - name: Build Python packages for PyPI
+      run: |
+        # Build both source distribution and wheel for PyPI
+        python -m build
+
+    - name: Create traditional release tarball (like build_tar.sh)
+      run: |
+        PACKAGE_NAME=rmtoo-${{ steps.extract_version.outputs.version }}
+        
+        # Create package directory with same structure as build_tar.sh
+        mkdir -p package/${PACKAGE_NAME}
+        for d in COPYING doc gpl-3.0.txt rmtoo setenv.sh Readme-GitPython.txt Readme-Hacking.txt Readme-OS-X.txt Readme-Overview.txt Readme-RmtooOnRmtoo.txt Readme.md Readme-Windows.txt Makefile contrib; do
+          if [ -e "$d" ]; then
+            cp -r "$d" package/${PACKAGE_NAME}/
+          fi
+        done
+        
+        # Include generated documentation
+        cp release_artifacts/* package/${PACKAGE_NAME}/doc/
+        
+        # Clean up unwanted files (like build_tar.sh)
+        find package/${PACKAGE_NAME} -name "*~" -delete
+        find package/${PACKAGE_NAME} -name "*.pyc" -delete
+        rm -rf package/${PACKAGE_NAME}/doc/presentations
+        
+        # Create artifacts directory
+        mkdir -p package/${PACKAGE_NAME}/artifacts
+        
+        # Create tarball
+        (cd package && tar -czf ${PACKAGE_NAME}.tar.gz ${PACKAGE_NAME})
+        mv package/${PACKAGE_NAME}.tar.gz ./rmtoo-${{ steps.extract_version.outputs.version }}-full.tar.gz
+        
+        # Clean up
+        rm -rf package
+
+    - name: Find and extract release notes
+      id: release_notes
+      run: |
+        VERSION="${{ steps.extract_version.outputs.version }}"
+        MAJOR_VERSION=$(echo $VERSION | cut -d. -f1)
+        
+        # Look for release notes in order of preference: .md, .rst, .txt
+        RELEASE_NOTES_FILE=""
+        if [ -f "doc/release_notes/$MAJOR_VERSION.md" ]; then
+          RELEASE_NOTES_FILE="doc/release_notes/$MAJOR_VERSION.md"
+        elif [ -f "doc/release_notes/$MAJOR_VERSION.rst" ]; then
+          RELEASE_NOTES_FILE="doc/release_notes/$MAJOR_VERSION.rst"
+        elif [ -f "doc/release_notes/$MAJOR_VERSION.txt" ]; then
+          RELEASE_NOTES_FILE="doc/release_notes/$MAJOR_VERSION.txt"
+        fi
+        
+        if [ -n "$RELEASE_NOTES_FILE" ]; then
+          echo "release_notes_file=$RELEASE_NOTES_FILE" >> $GITHUB_OUTPUT
+          
+          # Extract release notes for current version
+          if [[ "$RELEASE_NOTES_FILE" == *.md ]]; then
+            # For markdown files, extract content between ## Version headers
+            awk -v version="$VERSION" '
+              /^## / {
+                if ($0 ~ version) {
+                  found = 1
+                  next
+                } else if (found) {
+                  exit
+                }
+              }
+              found { print }
+            ' "$RELEASE_NOTES_FILE" > release_notes.txt
+          else
+            # For .rst/.txt files, extract from version header to next version
+            awk -v version="$VERSION" '
+              /^[0-9]+\.[0-9]+\.[0-9]+/ {
+                if ($0 ~ version) {
+                  found = 1
+                  next
+                } else if (found) {
+                  exit
+                }
+              }
+              found && !/^===*$/ && !/^---*$/ { print }
+            ' "$RELEASE_NOTES_FILE" > release_notes.txt
+          fi
+        else
+          echo "Release $VERSION" > release_notes.txt
+          echo "" >> release_notes.txt
+          echo "See doc/release_notes/ for detailed release notes." >> release_notes.txt
+        fi
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.extract_version.outputs.tag_name }}
+        name: rmToo ${{ steps.extract_version.outputs.version }}
+        body_path: release_notes.txt
+        draft: false
+        prerelease: false
+        files: |
+          dist/rmtoo-${{ steps.extract_version.outputs.version }}.tar.gz
+          dist/rmtoo-${{ steps.extract_version.outputs.version }}-py3-none-any.whl
+          rmtoo-${{ steps.extract_version.outputs.version }}-full.tar.gz
+          release_artifacts/requirements.pdf
+          release_artifacts/req-graph1.png
+          release_artifacts/req-graph2.png
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        # Uses PyPI trusted publishing - no API key needed
+        # You'll need to configure this at: https://pypi.org/manage/account/publishing/
+        verbose: true
