@@ -143,7 +143,7 @@ class Statistics(object):
         # pylint: disable=invalid-name
         with open(filename + ".est", "w") as eofile:
             x = list(i for i in range(0, len(result_vec)))
-            y = list(x[0] + x[1] for x in result_vec)
+            y = list(item[0] + item[1] for item in result_vec)
 
             gradient, intercept, _r_value, _p_value, _std_err \
                 = stats.linregress(x, y)
@@ -154,8 +154,21 @@ class Statistics(object):
                 eofile.close()
                 return
 
+            # Gradient too small, no meaningful progress
+            if abs(gradient) < 0.001:
+                print("+++ WARN: gradient is too small [%e]: "
+                      "no meaningful progress detected" % gradient)
+                eofile.close()
+                return
+
             d = intercept / -gradient
-            end_date = start_date + datetime.timedelta(d)
+            try:
+                end_date = start_date + datetime.timedelta(d)
+            except OverflowError:
+                print("+++ WARN: calculated end date would overflow: "
+                      "prediction too far in the future")
+                eofile.close()
+                return
 
             eofile.write("%s %d\n" % (start_date, intercept))
             eofile.write("%s 0\n" % end_date)

@@ -240,17 +240,28 @@ class prios(StdOutputParams, ExecutorTopicContinuum, CreateMakeDependencies):
                 rv = Statistics.get_units(topic_set.get_requirement_set(),
                                           self._start_date, self._end_date)
                 x = list(i for i in range(0, len(rv)))
-                y = list(x[0] + x[1] for x in rv)
+                y = list(item[0] + item[1] for item in rv)
 
                 gradient, intercept, r_value, p_value, std_err \
                     = stats.linregress(x, y)
 
+                tracer.info("DEBUG: gradient=%s, intercept=%s" %
+                            (gradient, intercept))
+
                 if gradient >= 0.0:
+                    f.write("Estimated End date & unpredictable & \\\\ \n")
+                # Gradient too small, no meaningful progress
+                elif abs(gradient) < 0.001:
                     f.write("Estimated End date & unpredictable & \\\\ \n")
                 else:
                     d = intercept / -gradient
-                    end_date = self._start_date + datetime.timedelta(d)
-                    f.write("Estimated End date & %s & \\\\ \n" % end_date)
+                    # Check if the calculated days would cause an overflow
+                    # datetime.date range is 0001-01-01 to 9999-12-31
+                    try:
+                        end_date = self._start_date + datetime.timedelta(d)
+                        f.write("Estimated End date & %s & \\\\ \n" % end_date)
+                    except OverflowError:
+                        f.write("Estimated End date & unpredictable & \\\\ \n")
 
             f.write("\\end{longtable}")
 
