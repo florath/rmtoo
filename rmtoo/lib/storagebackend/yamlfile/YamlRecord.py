@@ -75,9 +75,12 @@ class YamlRecord(Record):
             yaml.safe_load(content)
             return True
         except yaml.YAMLError as e:
+            line_num = 1
+            if hasattr(e, 'problem_mark') and e.problem_mark:
+                line_num = e.problem_mark.line + 1
             logger.error(LogFormatter.format(
                 79, "Invalid YAML content: %s" % str(e),
-                rid, getattr(e, 'problem_mark', {}).get('line', 1) + 1))
+                rid, line_num))
             self._set_not_usable()
             return False
 

@@ -33,9 +33,12 @@ class YamlParser(object):
                                    rid, 1)
             return data
         except yaml.YAMLError as e:
+            line_num = 1
+            if hasattr(e, 'problem_mark') and e.problem_mark:
+                line_num = e.problem_mark.line + 1
             raise RMTException(
                 79, "YAML parsing error: %s" % str(e),
-                rid, getattr(e, 'problem_mark', {}).get('line', 1) + 1)
+                rid, line_num)
 
     @staticmethod
     def convert_dict_to_records(data, rid):
@@ -108,4 +111,6 @@ class YamlParser(object):
         """Add newlines to content - for YAML this is the original content"""
         if not content:
             return ""
+        if isinstance(content, list):
+            return "\n".join(content) + "\n"
         return content if content.endswith('\n') else content + '\n'
