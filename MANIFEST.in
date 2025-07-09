@@ -1,5 +1,6 @@
 include *.txt
 include *.rst
+include *.md
 recursive-include doc *
 recursive-include contrib *
 recursive-include share *

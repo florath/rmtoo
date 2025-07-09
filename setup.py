@@ -8,7 +8,7 @@ import sys
 from setuptools import setup
 
 PACKAGE = 'rmtoo'
-VERSION = '25.0.1'
+VERSION = '26.0.0'
 
 ADD_DATA = []
 
@@ -91,7 +91,6 @@ setup(name=PACKAGE, version=VERSION,
           "Intended Audience :: End Users/Desktop",
           "Intended Audience :: Manufacturing",
           "Intended Audience :: Telecommunications Industry",
-          "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
           "Operating System :: MacOS",
           "Operating System :: Microsoft :: Windows",
           "Operating System :: OS Independent",
@@ -138,7 +137,7 @@ setup(name=PACKAGE, version=VERSION,
           "pylint>=1.7.1",
           "odfpy==1.3.4",
           "jinja2>=2.10"],
-      license="GPL V3",
+      license="GPL-3.0-or-later",
       platforms="all",
 
       entry_points={
