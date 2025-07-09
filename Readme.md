@@ -224,8 +224,6 @@ files with suffix `.req` will now use the requirements editing mode.
 If you have some problems, remarks or feature request, you\'re welcome
 to visit the project home page
 
-<http://rmtoo.florath.net>
-
 | flonatel GmbH & Co. KG  
 | Andreas Florath  
 | <rmtoo@florath.net>
