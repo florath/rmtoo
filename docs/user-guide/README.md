@@ -2,121 +2,97 @@
 
 Complete guide to using rmToo effectively for requirements management.
 
+## Installation
+
+Install rmToo on your system:
+
+- **[Linux Installation](installation/linux.md)** - Complete installation guide for Linux distributions
+- **[macOS Installation](installation/macos.md)** - Installation using macports (community supported)
+- **[Windows Installation](installation/windows.md)** - Installation using Cygwin or WSL (community supported)
+
+## Getting Started
+
+- **[Overview](getting-started/overview.md)** - What rmToo is and its unique features
+- **[Requirements vs Constraints](requirements/constraints.md)** - Understanding the fundamental concepts
+
 ## Quick Start
 
-New to rmToo? Start here:
+1. **Install rmToo**:
+   ```bash
+   pip install rmtoo
+   ```
 
-1. **[Installation](installation/)** - Install rmToo on your system
-2. **[Getting Started](getting-started/)** - Your first steps with rmToo
-3. **[Template Project](getting-started/template-project.md)** - Create your first project
+2. **Create your first project**:
+   ```bash
+   cp -r "$(rmtoo-contrib-dir)/template_project" MyProject
+   cd MyProject
+   source ./setenv.sh VENV
+   make
+   ```
 
-## Core Concepts
+3. **View the generated artifacts**:
+   ```bash
+   ls artifacts/
+   ```
 
-### [📝 Requirements](requirements/)
-Learn how to write and manage requirements:
-- [Format and Syntax](requirements/format.md)
-- [Tags and Fields](requirements/tags.md)
-- [Dependencies](requirements/dependencies.md)
-- [Constraints](requirements/constraints.md)
+## Key Concepts
 
-### [📁 Topics](topics/)
-Organize your requirements hierarchically:
-- [Format and Structure](topics/format.md)
-- [Hierarchy Management](topics/hierarchy.md)
+### Requirements Management
+rmToo uses a text-based approach where:
+- Each requirement is stored in a separate `.req` file
+- Requirements have tags like Name, Description, Status, Priority
+- Dependencies are managed through `Solved by` relationships
+- Constraints define limitations on the solution space
 
-### [⚙️ Configuration](configuration/)
-Configure rmToo for your project:
-- [Configuration Files](configuration/config-files.md)
-- [File Formats](configuration/formats.md)
-- [Variables and Substitution](configuration/variables.md)
+### Topics
+- Topics organize requirements hierarchically
+- Stored in `.tic` files 
+- Provide structure for documentation output
+- Support nested topic relationships
 
-## Output and Reports
+### Configuration
+- JSON or YAML configuration files
+- Control input sources, output formats, and processing options
+- Support for variable substitution
+- Hierarchical configuration merging
 
-### [📊 Outputs](outputs/)
-Generate documentation and artifacts:
-- [HTML Documentation](outputs/html.md)
-- [LaTeX/PDF Generation](outputs/latex.md)
-- [Dependency Graphs](outputs/graphs.md)
-- [Statistics and Reports](outputs/statistics.md)
+## Output Formats
 
-### [🔍 Analytics](analytics/)
-Quality checking and metrics:
-- [Overview](analytics/overview.md)
-- [Quality Checks](analytics/quality-checks.md)
-- [Metrics and Statistics](analytics/metrics.md)
+rmToo can generate multiple output formats:
+- **HTML documentation** with cross-references and navigation
+- **LaTeX/PDF documents** for formal documentation
+- **Dependency graphs** showing requirement relationships
+- **Statistics and reports** for project tracking
+- **Gantt charts** for project planning
 
-## Workflow Integration
+## Basic Workflow
 
-### Version Control
-- Git integration for history and baselines
-- Branching strategies for requirements
-- Tagging and release management
+1. **Write requirements** in `.req` files using supported tags
+2. **Organize with topics** in `.tic` files for hierarchical structure
+3. **Configure outputs** in JSON/YAML configuration files
+4. **Generate artifacts** using `make` or direct rmToo commands
+5. **Review and iterate** on generated documentation
 
-### Build Systems
-- Makefile integration
-- CI/CD pipeline setup
-- Automated artifact generation
+## Advanced Features
 
-### Development Tools
-- Text editor integration
-- Emacs mode for requirements editing
-- IDE plugins and extensions
+### Version Control Integration
+- Git integration for requirement history
+- Baseline management through version control
+- Change tracking and impact analysis
 
-## Best Practices
+### Quality Analytics
+- Automated quality checks for requirements
+- Metrics and statistics generation
+- Consistency validation
 
-### Requirements Writing
-- Clear and concise descriptions
-- Proper dependency management
-- Effective use of tags and metadata
-
-### Project Organization
-- File and directory structure
-- Naming conventions
-- Version control practices
-
-### Team Collaboration
-- Review processes
-- Change management
-- Documentation standards
-
-## Common Use Cases
-
-### Agile Development
-- Sprint planning with effort estimation
-- Backlog management
-- Progress tracking
-
-### Enterprise Requirements
-- Large-scale requirement management
-- Compliance and traceability
-- Stakeholder documentation
-
-### Open Source Projects
-- Feature specification
-- API documentation
-- Community contribution guidelines
-
-## Troubleshooting
-
-Common issues and solutions:
-- Installation problems
-- Configuration errors
-- Build failures
-- Format issues
-
-For more detailed troubleshooting, see the [FAQ](../faq.md).
+### Extensibility
+- Plugin architecture for custom inputs and outputs
+- Custom analytics modules
+- Integration with external tools
 
 ## Getting Help
 
-- **Quick Reference**: [CLI Commands](../reference/cli/)
-- **Detailed Reference**: [File Formats](../reference/file-formats/)
+- **[FAQ](../faq.md)** - Frequently asked questions and troubleshooting
+- **[Developer Guide](../developer-guide/)** - For contributors and advanced users
 - **Community**: [GitHub Issues](https://github.com/florath/rmtoo/issues)
-- **Support**: rmtoo@florath.net
-
-## Next Steps
-
-After mastering the basics:
-1. Explore [advanced configuration](configuration/)
-2. Learn about [analytics and quality](analytics/)
-3. Integrate with your [development workflow](../developer-guide/)
-4. Contribute to the [rmToo project](../developer-guide/contributing.md)
+- **Contact**: rmtoo@florath.net

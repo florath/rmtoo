@@ -1,121 +1,41 @@
 # Developer Guide
 
-Complete guide for rmToo developers, contributors, and plugin authors.
+Complete guide for rmToo developers, contributors, and advanced users.
 
 ## Getting Started
 
-### [🚀 Development Setup](hacking.md)
-Set up your development environment:
-- Prerequisites and dependencies
-- Virtual environment setup
-- Running tests locally
-- Development workflow
+### Development Setup
+- **[Development Environment](hacking.md)** - Setting up your development environment
+- **[Contributing](contributing.md)** - How to contribute to rmToo
+- **[Self-Hosting](self-hosting.md)** - Running rmToo on rmToo's own requirements
 
-### [🤝 Contributing](contributing.md)
-How to contribute to rmToo:
-- Code style and standards
-- Pull request process
-- License requirements
-- Community guidelines
+### Planning and Vision
+- **[Roadmap](roadmap.md)** - Future development plans and features
+- **[Internal Notes](internal-notes.md)** - Development tracking and conventions
 
-### [🗺️ Roadmap](roadmap.md)
-Future development plans:
-- Planned features and enhancements
-- Long-term vision
-- Priority and timeline
-- How to influence development
+## Architecture Overview
 
-### [🔄 Self-Hosting](self-hosting.md)
-Running rmToo on rmToo:
-- Using rmToo as an example
-- Generating rmToo's own documentation
-- Learning from real-world usage
-- Development workflow
+### Core Components
+rmToo follows a plugin-based architecture:
 
-## Architecture
+#### Input Processing
+- **Input Plugins**: Parse requirement tags and dependencies (e.g., ReqName, ReqDescription, RDepDependsOn)
+- **Storage Backend**: Support for text files and YAML formats
+- **Validation**: Syntax and semantic error checking
 
-### [🏗️ System Architecture](architecture.md)
-Understanding rmToo's design:
-- Core components and data flow
-- Plugin architecture
-- Configuration system
-- Extension points
+#### Processing Engine
+- **TopicContinuumSet**: Version-controlled collection of requirements and topics
+- **Dependency Resolution**: Automatic dependency graph creation
+- **Analytics**: Quality checking modules (DescWords, HotSpot, TopicCohe, ReqTopicCohe)
 
-### [📦 Plugin Development](plugins/)
-Create custom input and output plugins:
-- [Input Plugins](plugins/input-plugins.md)
-- [Output Plugins](plugins/output-plugins.md)
-- Plugin registration
-- Best practices
+#### Output Generation
+- **Output Plugins**: Generate different artifact formats (html, latex2, graph2, xml1, etc.)
+- **Template System**: Jinja2-based template processing
+- **Multi-format Support**: Parallel generation of multiple output types
 
-## Testing
-
-### [🧪 Testing Guide](testing.md)
-Comprehensive testing approach:
-- Test structure and categories
-- Running different test suites
-- Writing effective tests
-- Coverage requirements
-
-### Test Categories
-- **Unit Tests**: Core component testing
-- **Blackbox Tests**: Full integration testing
-- **Output Tests**: Format-specific validation
-- **Syntax Tests**: Input validation
-
-## Code Quality
-
-### Standards and Practices
-- PEP 8 compliance
-- Code documentation
-- Type hints usage
-- Performance considerations
-
-### Tools and Automation
-- Linting with flake8 and pylint
-- Code coverage with pytest-cov
-- CI/CD integration
-- Automated testing with tox
-
-## Core Components
-
-### Input Processing
-- Requirement parsing
-- Topic processing
-- Dependency resolution
-- Validation and error handling
-
-### Output Generation
-- Template systems
-- Format conversion
-- Artifact creation
-- Multi-format support
-
-### Analytics Engine
-- Quality metrics
-- Statistical analysis
-- Report generation
-- Extensibility
-
-## Plugin Architecture
-
-### Input Plugins
-Input plugins parse requirement tags and handle different input formats:
-- Tag parsers (ReqName, ReqDescription, etc.)
-- Dependency parsers (RDepDependsOn, etc.)
-- Custom format support
-- Validation integration
-
-### Output Plugins
-Output plugins generate different artifact formats:
-- HTML documentation
-- LaTeX/PDF generation
-- Graph visualization
-- XML export
-- Custom formats
-
-### Plugin Registration
+### Plugin Architecture
 All plugins are registered through setuptools entry points:
+
 ```python
 entry_points={
     'rmtoo.input.plugin': [
@@ -131,134 +51,89 @@ entry_points={
 
 ## Development Workflow
 
-### Code Changes
+### Setting Up Development Environment
+1. Clone the repository
+2. Create virtual environment
+3. Install in development mode: `pip install -e .`
+4. Run tests: `tox` or `pytest`
+
+### Making Changes
 1. Create feature branch
-2. Implement changes
-3. Add/update tests
-4. Run test suite
-5. Submit pull request
+2. Implement changes with tests
+3. Run full test suite
+4. Submit pull request
 
-### Testing Process
-```bash
-# Run all tests
-tox
+### Testing
+- **Unit Tests**: Core component testing
+- **Blackbox Tests**: Full integration testing
+- **Output Tests**: Format-specific validation
+- **Syntax Tests**: Input validation
 
-# Run specific test category
-pytest tests/RMTTest-Unit/
+Run tests with: `tox` (recommended) or `pytest`
 
-# Check coverage
-pytest --cov=lib --cov=inputs --cov=outputs tests
-```
+### Code Quality
+- Follow PEP 8 standards
+- Use meaningful names
+- Add docstrings for public interfaces
+- Include type hints where appropriate
 
-### Release Process
-1. Update version numbers
-2. Update changelog
-3. Create release branch
-4. Run full test suite
-5. Tag release
-6. Upload to PyPI
+## Extending rmToo
 
-## Debugging
+### Adding Input Plugins
+1. Create class in `rmtoo/inputs/` inheriting from appropriate base
+2. Add entry point in setup.py
+3. Implement required methods for tag parsing
+4. Add tests
 
-### Common Issues
-- Plugin loading problems
-- Configuration errors
-- Template rendering issues
-- Dependency resolution failures
+### Adding Output Plugins
+1. Create class in `rmtoo/outputs/` inheriting from `ExecutorTopicContinuum`
+2. Add entry point in setup.py
+3. Implement lifecycle methods for artifact generation
+4. Add tests
 
-### Debugging Tools
-- Python debugger (pdb)
-- Logging framework
-- Test isolation
-- Error reproduction
+### Configuration System
+- Hierarchical configuration merging
+- JSON/YAML format support
+- Variable substitution: `"${variable_name}"`
+- Environment variable support
 
-## Performance
+## Key Development Areas
 
-### Optimization Areas
-- Large requirement sets
-- Complex dependency graphs
-- Output generation speed
-- Memory usage
+### Quality Assurance
+- Comprehensive test coverage (95%+)
+- Multiple Python version support (3.8-3.13)
+- Continuous integration with GitHub Actions
+- Code quality monitoring with SonarCloud
 
-### Profiling
-- Performance measurement
-- Memory profiling
-- Bottleneck identification
-- Optimization strategies
+### Performance Considerations
+- Efficient dependency graph processing
+- Optimized template rendering
+- Memory-conscious large requirement set handling
 
-## Documentation
-
-### Code Documentation
-- Docstring standards
-- API documentation
-- Inline comments
-- Type annotations
-
-### User Documentation
-- User guide updates
-- Example creation
-- Tutorial development
-- FAQ maintenance
-
-## Community
-
-### Communication
-- GitHub issues and discussions
-- Code review process
-- Developer meetings
-- Community feedback
-
-### Mentoring
-- New contributor onboarding
-- Code review guidance
-- Knowledge sharing
-- Best practice development
-
-## Advanced Topics
-
-### Custom Analytics
-- Implementing quality metrics
-- Statistical analysis
-- Custom reporting
-- Integration with external tools
-
-### Integration
-- CI/CD pipeline integration
-- IDE plugin development
-- External tool integration
-- API development
-
-### Internationalization
-- Multi-language support
-- Localization framework
-- Translation management
-- Cultural considerations
-
-## Resources
-
-### Documentation
-- [API Reference](../reference/)
-- [Plugin Examples](plugins/)
-- [Testing Examples](testing.md)
-- [Architecture Diagrams](architecture.md)
-
-### Tools
-- Development environment setup
-- Testing frameworks
-- Code quality tools
-- Build automation
-
-### Community
-- [GitHub Repository](https://github.com/florath/rmtoo)
-- [Issue Tracker](https://github.com/florath/rmtoo/issues)
-- [Developer Mailing List](mailto:rmtoo@florath.net)
-- [Contributing Guidelines](contributing.md)
+### Compatibility
+- Cross-platform support (Linux, macOS, Windows)
+- Multiple Python versions
+- Backward compatibility maintenance
 
 ## Getting Help
 
-- **Technical Questions**: GitHub Issues
-- **Development Discussion**: Developer mailing list
-- **Code Review**: Pull request comments
-- **Architecture Questions**: Contact maintainers
+### Development Resources
+- **GitHub Repository**: [florath/rmtoo](https://github.com/florath/rmtoo)
+- **Issues**: [GitHub Issues](https://github.com/florath/rmtoo/issues)
+- **Contact**: rmtoo@florath.net
 
-Ready to contribute? Start with the [Contributing Guide](contributing.md) and [Development Setup](hacking.md)!
+### Documentation
+- Man pages: `man rmtoo`
+- Code documentation: Well-documented source code
+- Example projects: Template project and email client example
+
+## Contributing
+
+We welcome contributions! Please:
+1. Read the [Contributing Guide](contributing.md)
+2. Set up your [Development Environment](hacking.md)
+3. Follow our coding standards
+4. Include tests with your changes
+5. Submit pull requests for review
+
+Ready to contribute? Start with the [Contributing Guide](contributing.md)!

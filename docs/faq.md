@@ -182,12 +182,10 @@ sudo port install graphviz
 **Solution**: Ensure Config.json exists in your project directory
 
 **Problem**: Invalid configuration
-**Solution**: Validate your JSON/YAML syntax and check the [configuration guide](user-guide/configuration/)
+**Solution**: Validate your JSON/YAML syntax
 
 ## Getting More Help
 
-- Check the [User Guide](user-guide/) for comprehensive documentation
-- Review the [Reference Documentation](reference/) for detailed information
 - Report bugs on [GitHub Issues](https://github.com/florath/rmtoo/issues)
 - Contact: rmtoo@florath.net
 - Man pages: `man rmtoo` for overview
