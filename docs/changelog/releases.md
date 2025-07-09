@@ -128,31 +128,7 @@ This release represents over 4 years of continuous development and modernization
 
 ## Historical Releases
 
-For detailed information about releases prior to 25.0.0, see the individual release notes in the `doc/release_notes/` directory:
-
-- [Version 24](../doc/release_notes/24.rst)
-- [Version 23](../doc/release_notes/23.txt)
-- [Version 22](../doc/release_notes/22.txt)
-- [Version 21](../doc/release_notes/21.txt)
-- [Version 20](../doc/release_notes/20.txt)
-- [Version 19](../doc/release_notes/19.txt)
-- [Version 18](../doc/release_notes/18.txt)
-- [Version 17](../doc/release_notes/17.txt)
-- [Version 16](../doc/release_notes/16.txt)
-- [Version 15](../doc/release_notes/15.txt)
-- [Version 14](../doc/release_notes/14.txt)
-- [Version 13](../doc/release_notes/13.txt)
-- [Version 12](../doc/release_notes/12.txt)
-- [Version 11](../doc/release_notes/11.txt)
-- [Version 10](../doc/release_notes/10.txt)
-- [Version 9](../doc/release_notes/09.txt)
-- [Version 8](../doc/release_notes/08.txt)
-- [Version 7](../doc/release_notes/07.txt)
-- [Version 6](../doc/release_notes/06.txt)
-- [Version 5](../doc/release_notes/05.txt)
-- [Version 4](../doc/release_notes/04.txt)
-- [Version 3](../doc/release_notes/03.txt)
-- [Version 2](../doc/release_notes/02.txt)
+For detailed information about releases prior to 25.0.0, see the individual release notes in the `doc/release_notes/` directory.
 
 ## 🙏 Acknowledgments
 

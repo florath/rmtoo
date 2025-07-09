@@ -93,7 +93,7 @@ pip install -e .
 
 Test the installation:
 ```bash
-rmtoo --version
+rmtoo --help
 rmtoo-contrib-dir
 ```
 
@@ -210,6 +210,5 @@ eval "$(rmtoo --completion bash)"
 
 If you encounter issues:
 1. Check the [FAQ](../../faq.md)
-2. Review the [troubleshooting guide](../../troubleshooting.md)
-3. Report issues on [GitHub](https://github.com/florath/rmtoo/issues)
-4. Include your distribution and versions in bug reports
+2. Report issues on [GitHub](https://github.com/florath/rmtoo/issues)
+3. Include your distribution and versions in bug reports

@@ -184,15 +184,11 @@ git push origin feature-your-feature-name
 
 ### Development Questions
 - Check existing [GitHub issues](https://github.com/florath/rmtoo/issues)
-- Review the [architecture documentation](architecture.md)
 - Ask questions in pull requests
 - Contact maintainers: rmtoo@florath.net
 
 ### Resources
 - [Development Guide](hacking.md)
-- [Plugin Development](plugins/)
-- [Testing Guide](testing.md)
-- [Architecture Overview](architecture.md)
 
 ## Community Guidelines
 

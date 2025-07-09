@@ -38,7 +38,7 @@ pip install rmtoo
 ### Verification
 Test the installation:
 ```bash
-rmtoo --version
+rmtoo --help
 ```
 
 ## First Project

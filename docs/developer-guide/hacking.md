@@ -200,7 +200,6 @@ When reviewing forks, consider:
 
 ### Development Questions
 - Check existing [GitHub issues](https://github.com/florath/rmtoo/issues)
-- Review the [architecture documentation](architecture.md)
 - Contact the maintainers: rmtoo@florath.net
 
 ### Documentation

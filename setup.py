@@ -41,7 +41,7 @@ for man_name in os.listdir("share/man"):
 
 ADD_DATA.append(
     ("rmtoo/doc/readme",
-     ["README.md", "docs/**/*"]))
+     ["README.md"]))
 
 def adjust(input_filename, output):
     """Function to adjust the version number

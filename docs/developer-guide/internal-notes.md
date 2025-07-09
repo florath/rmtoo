@@ -59,5 +59,3 @@ The project includes various internal files for development tracking:
 
 - [Contributing Guide](contributing.md) - How to contribute to rmToo
 - [Development Guide](hacking.md) - Setting up development environment
-- [Testing Guide](testing.md) - Running and writing tests
-- [Architecture Overview](architecture.md) - System design and structure

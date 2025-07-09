@@ -72,16 +72,15 @@ pip install rmtoo
 
 After installation, verify rmToo is working:
 ```bash
-rmtoo --version
+rmtoo --help
 rmtoo-contrib-dir
 ```
 
 ## Next Steps
 
 After installation:
-1. Read the [Getting Started](../getting-started/) guide
-2. Try the [Template Project](../getting-started/template-project.md)
-3. Learn about [Configuration](../configuration/)
+1. Read the [Getting Started](../getting-started/overview.md) guide
+2. Learn about [Requirements vs Constraints](../requirements/constraints.md)
 
 ## Troubleshooting
 

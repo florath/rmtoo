@@ -54,16 +54,13 @@ ls artifacts/
 
 - **[📖 User Guide](docs/user-guide/)** - Installation, getting started, and usage
 - **[🔧 Developer Guide](docs/developer-guide/)** - Contributing and development
-- **[📚 Reference](docs/reference/)** - Detailed API and format reference
-- **[💡 Examples](docs/examples/)** - Real-world examples and templates
 - **[❓ FAQ](docs/faq.md)** - Frequently asked questions
 
 ### Quick Links
 
 - **[Installation Guide](docs/user-guide/installation/)** - Install on Linux, macOS, or Windows
-- **[Getting Started](docs/user-guide/getting-started/)** - Your first steps with rmToo
-- **[Requirements Format](docs/user-guide/requirements/)** - How to write requirements
-- **[Configuration](docs/user-guide/configuration/)** - Configure rmToo for your needs
+- **[Getting Started](docs/user-guide/getting-started/overview.md)** - Overview and features
+- **[Requirements vs Constraints](docs/user-guide/requirements/constraints.md)** - Core concepts
 
 ## Platform Support
 

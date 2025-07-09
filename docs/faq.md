@@ -6,7 +6,7 @@
 
 The file should be plain text containing a sequence of details. Each detail is a group of lines in `name: value` pairs. For multiline values, indent by one space on the lines after the first. You can leave blank lines between requirements for readability.
 
-For detailed information, see the [Requirements Format](reference/file-formats/requirements.md) documentation.
+For more details, see the man page: `man rmtoo-req-format`
 
 ### What tags are supported?
 
@@ -24,7 +24,7 @@ Currently the following tags are supported:
 - **Status** - `not done` or `finished`
 - **Type** - `master requirement`, `requirement`, or `design decision`
 
-For detailed semantics, see the [Requirements Format](reference/file-formats/requirements.md) documentation.
+For detailed semantics, see the man page: `man rmtoo-req-format`
 
 ### Can I split a large set of requirements into separate files?
 
