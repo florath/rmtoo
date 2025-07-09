@@ -1,0 +1,16 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+subgraph cluster_GRAPH_YAMLDemo {
+ label="Topic: YAMLDemo";
+ "CreateFiles" [fontcolor=red,label="CreateFiles\n[8.00]"];
+ "SetupProject" [fontcolor=red,label="SetupProject\n[10.00]"];
+ "SimpleReq" [fontcolor=red,label="SimpleReq\n[10.00]"];
+ "TestExecution" [fontcolor=red,label="TestExecution\n[9.00]"];
+ }
+"CreateFiles" -> "SetupProject";
+"SetupProject" -> "SimpleReq";
+"TestExecution" -> "CreateFiles";
+"TestExecution" -> "SetupProject";
+}

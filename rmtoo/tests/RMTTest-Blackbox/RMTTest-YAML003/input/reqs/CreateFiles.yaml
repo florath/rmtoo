@@ -1,0 +1,12 @@
+Name: Create Files
+Type: requirement
+Invented on: 2024-01-01
+Invented by: YAMLDemo
+Owner: development
+Description: YAML files \textbf{must} be created for demonstration.
+Rationale: To show YAML support working in rmToo.
+Solved by: TestExecution
+Status: not done
+Priority: development:8
+Effort estimation: 2
+Topic: YAMLDemo

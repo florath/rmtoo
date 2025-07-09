@@ -16,18 +16,26 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010 by flonatel (rmtoo@florath.net)
+.\" (c) 2010,2025 by flonatel GmbH & Co. KG / Andreas Florath
 .\"
-.TH rmtoo-topic-format 5 2010-06-25 "File Formats" "Requirements Management"
+.TH rmtoo-topic-format 5 2025-07-09 "File Formats" "Requirements Management"
 .SH NAME
 rmtoo-topic-format \- requirements management tool: topic format
 .SH FILE FORMAT
-Each topic must be in its own file.  The filename must end
-in '.tic'.  Only ASCII characters are allowed.  Each line must at
-maximum 80 characters long.
+Each topic must be in its own file.  Topics can be written in
+two formats:
 .P
-The topic must be written as a set of 'key: value' pairs.  A
-value is extended if the first column of a line is a space.
+.B Traditional format:
+The filename must end in '.tic'.  Only ASCII characters are allowed.  
+Each line must at maximum 80 characters long.  The topic must be 
+written as a set of 'key: value' pairs.  A value is extended if the 
+first column of a line is a space.
+.P
+.B YAML format:
+The filename must end in '.yaml' or '.yml'.  The topic must be 
+written as a valid YAML document with the same keys as the traditional 
+format.  Multi-line values use YAML syntax (e.g., using '|' for literal 
+blocks).
 .P
 A key can exists multiple times in a topic data file.  Order matters.
 .SH KEYS
@@ -44,6 +52,7 @@ in the output document.  The value must be the string 'full'.
 The value of the subtopic must be the id of another topic.  This
 topic is inserted at the point of occurance.
 .SH EXAMPLE
+.SS Traditional Format (.tic)
 Note that the following example has some initial indent resulting
 from the word processing program.  The keywords must start at the
 first column.  Additional lines must have a space in column one.
@@ -57,6 +66,22 @@ Text: The text appears between the SomeMoreDetails
  topic and the requirements themselves.
 IncludeRequirements: full
 Text: The text after the requirements.
+.fi
+.RE
+.SS YAML Format (.yaml/.yml)
+The same topic in YAML format:
+.sp
+.RS
+.nf
+Name: Example Topic
+Text: |
+  This is an introduction to the Example Topic.
+  
+  The text appears between the SomeMoreDetails
+  topic and the requirements themselves.
+IncludeRequirements: full
+.fi
+.RE
 
 .SH "SEE ALSO"
 .B rmtoo(7)
@@ -65,6 +90,6 @@ can be found there.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010,2025 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
 

@@ -1,0 +1,14 @@
+digraph reqdeps {
+rankdir=BT;
+mclimit=10.0;
+nslimit=10.0;ranksep=1;
+"CreateFiles" [fontcolor=red,label="CreateFiles\n[8.00]"];
+"CreateFiles" -> "SetupProject";
+"SetupProject" [fontcolor=red,label="SetupProject\n[10.00]"];
+"SetupProject" -> "SimpleReq";
+"SimpleReq" [fontcolor=red,label="SimpleReq\n[10.00]"];
+"TestExecution" [fontcolor=red,label="TestExecution\n[9.00]"];
+"TestExecution" -> "CreateFiles";
+"TestExecution" -> "SetupProject";
+ReqVersion [shape=plaintext label="ReqVersion\nCommit [None] VCS Id [tests/RMTTest-Blackbox/RMTTest-YAML003/input/topics]"]
+}

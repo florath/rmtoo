@@ -5,7 +5,9 @@
   Abstract Base Class (ABC) to handle different version control systems.
   This includes also reading in the latest version from the file system.
 
- (c) 2011,2017 by flonatel GmbH & Co. KG
+ (c) 2011,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
+
+ SPDX-License-Identifier: GPL-3.0-or-later
 
  For licensing details see COPYING
 '''
@@ -15,6 +17,7 @@ import abc
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.storagebackend.yamlfile.YamlIOConfig import YamlIOConfig
 from rmtoo.lib.logging import tracer
 
 
@@ -26,15 +29,29 @@ class Interface(object):
     def __init__(self, config):
         self._config = config
         self._txt_io_config = TxtIOConfig(config)
+        self._yaml_io_config = YamlIOConfig(config)
         self._topic_root_node = config.get_value("topic_root_node")
 
     def get_txt_io_config(self):
         """Return the appropriate TxtIOConfig"""
         return self._txt_io_config
 
+    def get_yaml_io_config(self):
+        """Return the appropriate YamlIOConfig"""
+        return self._yaml_io_config
+
     def get_topic_base_file_info(self, commit):
         '''Return the base filename for the topics.'''
         tracer.debug("called")
+        # Try different extensions for topic files
+        for ext in ['.tic', '.yaml', '.yml']:
+            try:
+                return self.get_file_info_with_type(
+                    commit, "topics", self._topic_root_node + ext)
+            except RMTException:
+                continue
+        # If no file found with any extension, raise error with .tic for
+        # backward compatibility
         return self.get_file_info_with_type(
             commit, "topics", self._topic_root_node + '.tic')
 

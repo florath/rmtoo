@@ -8,6 +8,8 @@
 
  (c) 2010-2011,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
+ SPDX-License-Identifier: GPL-3.0-or-later
+
  For licensing details see COPYING
 '''
 
@@ -62,12 +64,20 @@ class RequirementSet(Digraph, UsableFlag):
         '''Read in one requirement from the file info.'''
         tracer.debug("Called.")
         # Check for correct filename
-        if not fileinfo.get_filename().endswith(".req"):
-            tracer.info("skipping file [%s]", fileinfo.get_filename())
+        filename = fileinfo.get_filename()
+        if not (filename.endswith(".req") or filename.endswith(".yaml") or
+                filename.endswith(".yml")):
+            tracer.info("skipping file [%s]", filename)
             return
         # Handle caching.
         vcs_id = fileinfo.get_vcs_id()
-        rid = fileinfo.get_filename_sub_part()[:-4]
+        # Extract requirement ID - handle different extensions
+        if filename.endswith(".req"):
+            rid = fileinfo.get_filename_sub_part()[:-4]
+        elif filename.endswith(".yaml"):
+            rid = fileinfo.get_filename_sub_part()[:-5]
+        elif filename.endswith(".yml"):
+            rid = fileinfo.get_filename_sub_part()[:-4]
         req = object_cache.get("Requirement", vcs_id)
         tracer.info("Reading requirement [%s]", rid)
 

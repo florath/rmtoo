@@ -1,0 +1,70 @@
+% Output topic 'YAMLDemo'
+\chapter{YAML Demonstration}
+This is a demonstration of YAML file support in rmToo.
+It shows that both requirement files (.yaml/.yml) and topic files (.yaml)
+can be used seamlessly alongside traditional .req/.tic files.
+
+The YAML format provides a more structured and readable way to define
+requirements and topics while maintaining full compatibility with
+existing rmToo functionality.
+
+% REQ 'CreateFiles'
+\section{Create Files}\label{CreateFiles}
+\textbf{Description:} YAML files \textbf{must} be created for demonstration.
+
+\textbf{Rationale:} To show YAML support working in rmToo.
+
+\textbf{Depends on:} \ref{SetupProject} \nameref{SetupProject}
+
+\textbf{Solved by:} \ref{TestExecution} \nameref{TestExecution}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & CreateFiles  & \textbf{Priority:} & 8.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2024-01-01  & \textbf{Invented by:} & YAMLDemo  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'SetupProject'
+\section{Setup Project}\label{SetupProject}
+\textbf{Description:} The project \textbf{must} be set up correctly.
+
+\textbf{Rationale:} Initial project setup is required for all subsequent work.
+
+\textbf{Depends on:} \ref{SimpleReq} \nameref{SimpleReq}
+
+\textbf{Solved by:} \ref{CreateFiles} \nameref{CreateFiles}, \ref{TestExecution} \nameref{TestExecution}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & SetupProject  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2024-01-01  & \textbf{Invented by:} & YAMLDemo  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'SimpleReq'
+\section{Simple Requirement}\label{SimpleReq}
+\textbf{Description:} A simple YAML requirement for testing.
+
+\textbf{Rationale:} To demonstrate YAML support in rmToo.
+
+\textbf{Solved by:} \ref{SetupProject} \nameref{SetupProject}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & SimpleReq  & \textbf{Priority:} & 10.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2024-01-01  & \textbf{Invented by:} & YAMLDemo  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+
+% REQ 'TestExecution'
+\section{Test Execution}\label{TestExecution}
+\textbf{Description:} The test \textbf{must} execute successfully.
+
+\textbf{Rationale:} To verify YAML support is working correctly.
+
+\textbf{Depends on:} \ref{CreateFiles} \nameref{CreateFiles}, \ref{SetupProject} \nameref{SetupProject}
+
+\par
+{\small \begin{center}\begin{tabular}{rlrlrl}
+\textbf{Id:} & TestExecution  & \textbf{Priority:} & 9.00  & \textbf{Owner:} & development\\ 
+\textbf{Invented on:} & 2024-01-01  & \textbf{Invented by:} & TestUser  & \textbf{Status:} & not done \\ 
+\textbf{Class:} & detailable  & & & \end{tabular}\end{center} }
+

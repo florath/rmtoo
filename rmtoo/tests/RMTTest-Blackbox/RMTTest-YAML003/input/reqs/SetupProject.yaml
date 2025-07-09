@@ -1,0 +1,12 @@
+Name: Setup Project
+Type: master requirement
+Invented on: 2024-01-01
+Invented by: YAMLDemo
+Owner: development
+Description: The project \textbf{must} be set up correctly.
+Rationale: Initial project setup is required for all subsequent work.
+Solved by: CreateFiles TestExecution
+Status: not done
+Priority: development:10
+Effort estimation: 3
+Topic: YAMLDemo

@@ -5,13 +5,16 @@
   Topic
    This holds one topic - and all subtopics of this topic
 
- (c) 2010-2012,2017 by flonatel GmbH & Co. KG
+ (c) 2010-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
+
+ SPDX-License-Identifier: GPL-3.0-or-later
 
  For licensing details see COPYING
 '''
 
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
+from rmtoo.lib.storagebackend.yamlfile.YamlRecord import YamlRecord
 from rmtoo.lib.digraph.Digraph import Digraph
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.logging import tracer
@@ -30,15 +33,46 @@ class Topic(Digraph.Node):
     def __read(self, tname, input_handler, commit, file_info, req_set):
         '''Read in the topic and create all the tags.'''
         Encoding.check_unicode(tname)
-        self.__tags = TxtRecord.from_string(
-            file_info.get_content(),
-            tname, input_handler.get_txt_io_config())
+
+        # Detect file format and use appropriate parser
+        try:
+            filename = file_info.get_filename()
+            is_yaml = filename.endswith('.yaml') or filename.endswith('.yml')
+        except (AssertionError, AttributeError):
+            # Handle test mocks that don't implement get_filename()
+            is_yaml = False
+        if is_yaml:
+            # Use YAML parser
+            self.__tags = YamlRecord.from_string(
+                file_info.get_content(),
+                tname, input_handler.get_yaml_io_config())
+        else:
+            # Use TXT parser
+            self.__tags = TxtRecord.from_string(
+                file_info.get_content(),
+                tname, input_handler.get_txt_io_config())
 
         for tag in self.__tags:
             # If the topic has subtopics, read them also in.
             if tag.get_tag() == "SubTopic":
-                lfile_info = input_handler.get_file_info_with_type(
-                    commit, "topics", tag.get_content() + ".tic")
+                # Try different file extensions for subtopics
+                subtopic_name = tag.get_content()
+                lfile_info = None
+
+                # Try extensions in order: .yaml, .yml, .tic
+                for ext in [".yaml", ".yml", ".tic"]:
+                    try:
+                        lfile_info = input_handler.get_file_info_with_type(
+                            commit, "topics", subtopic_name + ext)
+                        break
+                    except Exception:
+                        continue
+
+                if lfile_info is None:
+                    raise RMTException(
+                        113, "SubTopic file not found for [%s]" %
+                        subtopic_name, self.name)
+
                 ntopic = Topic(self.__digraph, self._config, input_handler,
                                commit, lfile_info, req_set)
                 self.__digraph.add_node(ntopic)
@@ -63,7 +97,18 @@ class Topic(Digraph.Node):
 
     def __init__(self, digraph, config, input_handler, commit, file_info,
                  req_set):
-        tname = file_info.get_filename_sub_part()[:-4]
+        # Extract topic name - handle different extensions
+        try:
+            filename = file_info.get_filename()
+            if filename.endswith('.yaml'):
+                tname = file_info.get_filename_sub_part()[:-5]
+            elif filename.endswith('.yml'):
+                tname = file_info.get_filename_sub_part()[:-4]
+            else:  # .tic
+                tname = file_info.get_filename_sub_part()[:-4]
+        except (AssertionError, AttributeError):
+            # Handle test mocks that don't implement get_filename()
+            tname = file_info.get_filename_sub_part()[:-4]
         # The 'name' in the digraph node is the ID
         Digraph.Node.__init__(self, tname)
         # This is the name of the topic (short description)

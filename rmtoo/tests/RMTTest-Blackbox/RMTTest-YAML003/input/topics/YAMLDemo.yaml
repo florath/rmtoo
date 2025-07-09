@@ -1,0 +1,10 @@
+Name: YAML Demonstration
+Text: |
+  This is a demonstration of YAML file support in rmToo.
+  It shows that both requirement files (.yaml/.yml) and topic files (.yaml)
+  can be used seamlessly alongside traditional .req/.tic files.
+  
+  The YAML format provides a more structured and readable way to define
+  requirements and topics while maintaining full compatibility with
+  existing rmToo functionality.
+IncludeRequirements: full

@@ -16,18 +16,26 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.\" (c) 2010-2012,2020 by flonatel (rmtoo@florath.net)
+.\" (c) 2010-2012,2020,2025 by flonatel GmbH & Co. KG / Andreas Florath
 .\"
-.TH rmtoo-req-format 5 2012-03-23 "File Formats" "Requirements Management"
+.TH rmtoo-req-format 5 2025-07-09 "File Formats" "Requirements Management"
 .SH NAME
 rmtoo-req-format \- requirements management tool: requirements format
 .SH FILE FORMAT
-Each requirement must be in its own file.  The filename must be end
-in '.req'.  Only ASCII characters are allowed.  Each line must at
-maximum 80 characters long.
+Each requirement must be in its own file.  Requirements can be written in
+two formats:
 .P
-The requirement must be written as a set of 'key: value' pairs.  A
-value is extended if the first column of a line is a space.
+.B Traditional format:
+The filename must end in '.req'.  Only ASCII characters are allowed.  
+Each line must at maximum 80 characters long.  The requirement must be 
+written as a set of 'key: value' pairs.  A value is extended if the 
+first column of a line is a space.
+.P
+.B YAML format:
+The filename must end in '.yaml' or '.yml'.  The requirement must be 
+written as a valid YAML document with the same keys as the traditional 
+format.  Multi-line values use YAML syntax (e.g., using '|' for literal 
+blocks).
 .P
 A key can only exists once in a requirement description file. 
 .SH KEYS
@@ -143,6 +151,7 @@ arguments. Please consult the
 .B rmtoo-constraints(5)
 man page for more details.
 .SH EXAMPLE
+.SS Traditional Format (.req)
 Note that the following example has some initial indent resulting
 from the word processing program.  The keywords must start at the
 first column.  Additional lines must have a space in column one.
@@ -161,6 +170,29 @@ Owner: security
 Solved by: DetailedRequirement
 Status: not done
 Constraints: [ "MinShockResistance(5)" ]
+.fi
+.RE
+.SS YAML Format (.yaml/.yml)
+The same requirement in YAML format:
+.sp
+.RS
+.nf
+Name: Example Requirement
+Type: requirement
+Invented on: 2010-02-14
+Invented by: Mustermann
+Description: |
+  The example application must use TCP/IP for
+  communication with the database instance.
+Rationale: |
+  Here are some reasons why this must be
+  implemented in this way.
+Owner: security
+Solved by: DetailedRequirement
+Status: not done
+Constraints: [ "MinShockResistance(5)" ]
+.fi
+.RE
 
 .SH "SEE ALSO"
 .B rmtoo(7)
@@ -178,6 +210,6 @@ is the one which should be used in new projects.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT
-Copyright \(co 2010-2011,2020 by flonatel (rmtoo@florath.net).
+Copyright \(co 2010-2011,2020,2025 by flonatel (rmtoo@florath.net).
 License GPLv3+: GNU GPL version 3 or later
 

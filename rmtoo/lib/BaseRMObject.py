@@ -9,12 +9,16 @@
 
  (c) 2011-2012,2017,2025 by flonatel GmbH & Co. KG / Andreas Florath
 
+ SPDX-License-Identifier: GPL-3.0-or-later
+
  For licensing details see COPYING
 '''
 from rmtoo.lib.Encoding import Encoding
 from rmtoo.lib.RMTException import RMTException
 from rmtoo.lib.storagebackend.txtfile.TxtRecord import TxtRecord
 from rmtoo.lib.storagebackend.txtfile.TxtIOConfig import TxtIOConfig
+from rmtoo.lib.storagebackend.yamlfile.YamlRecord import YamlRecord
+from rmtoo.lib.storagebackend.yamlfile.YamlIOConfig import YamlIOConfig
 from rmtoo.lib.UsableFlag import UsableFlag
 from rmtoo.lib.logging import tracer, logger
 from rmtoo.lib.logging.LogFormatter import LogFormatter
@@ -85,9 +89,19 @@ class BaseRMObject(UsableFlag):
 
     def __input(self, content):
         '''Read it in from the file (Syntactic input).'''
-        txtio = TxtIOConfig(self.config, self.type_str)
         Encoding.check_unicode(content)
-        self.record = TxtRecord.from_string(content, self._id, txtio)
+
+        # Detect file format based on file extension
+        if (self._file_path and isinstance(self._file_path, str) and
+                (self._file_path.endswith('.yaml') or
+                 self._file_path.endswith('.yml'))):
+            # Use YAML parser
+            yamlconfig = YamlIOConfig(self.config, self.type_str)
+            self.record = YamlRecord.from_string(content, self._id, yamlconfig)
+        else:
+            # Use default TXT parser
+            txtio = TxtIOConfig(self.config, self.type_str)
+            self.record = TxtRecord.from_string(content, self._id, txtio)
 
         brmo = self.record.get_dict()
         # This 'brmo' is always valid - if there is a problem, an exception
