@@ -79,7 +79,22 @@ Each requirement which is 'solved' by other requirements must have one
 or more children.  The 'Solved by' tag contains a list of these
 children. 
 .SH KEY 'Status'
-The status can be one of 'not done' or 'finished'.
+The status can be one of the following formats:
+.P
+.B not done
+\- The requirement has not been started yet.
+.P
+.B assigned:person:date
+\- The requirement is assigned to a specific person on a given date.
+The date must be in YYYY-MM-DD format (e.g., assigned:Florath:2011-04-27).
+.P
+.B finished
+\- The requirement is completed (legacy format).
+.P
+.B finished:person:date:duration
+\- The requirement is completed with detailed information.
+The date must be in YYYY-MM-DD format and duration in hours with 'h' suffix
+(e.g., finished:Florath:2011-04-27:1h).
 .SH KEY 'Topic'
 This is the topic this requirement belongs to.
 .SH KEY 'Class'
