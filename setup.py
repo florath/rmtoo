@@ -124,6 +124,9 @@ setup(name=PACKAGE, version=VERSION,
           "rmtoo/collection/constraints",
       ],
       include_package_data=True,
+      package_data={
+          'rmtoo': ['contrib/**/*'],
+      },
       data_files=ADD_DATA,
       install_requires=[
           "numpy>=1.12.0",
@@ -144,6 +147,7 @@ setup(name=PACKAGE, version=VERSION,
               "rmtoo-normalize-dependencies = "
               "rmtoo.lib.main.NormalizeDependencies:main",
               "rmtoo-pricing-graph = rmtoo.lib.main.PricingGraph:main",
+              "rmtoo-contrib-dir = rmtoo.lib.main.ContribDir:main",
           ],
           # Used for / with stevedore
           'rmtoo.input.plugin': [

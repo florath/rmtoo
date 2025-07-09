@@ -135,7 +135,7 @@ needed only once.
 ``` {.bash}
 # cd to virtualenv directory - if not already there
 $ cd RMTOO
-$ cp -r venv/rmtoo/contrib/template_project MyNewProject
+$ cp -r "$(rmtoo-contrib-dir)/template_project" MyNewProject
 ```
 
 ### Usage
@@ -174,6 +174,24 @@ $ man venv/share/man/man7/rmtoo-analytics.7
 
 Additional documentation can be found in the directories
 `RMTOO/venv/rmtoo/doc` (especially the Readme files).
+
+### Finding Contrib Resources
+
+rmtoo provides a `rmtoo-contrib-dir` command that prints the path to the
+contrib directory, which contains template projects and other resources:
+
+``` {.bash}
+$ rmtoo-contrib-dir
+/path/to/rmtoo/contrib
+
+# Use it to copy the template project
+$ cp -r "$(rmtoo-contrib-dir)/template_project" MyNewProject
+
+# Or access other contrib resources
+$ ls "$(rmtoo-contrib-dir)"
+```
+
+This command works regardless of how rmtoo was installed (pip, system package, or development mode).
 
 ## Other Documentation
 
@@ -216,7 +234,7 @@ Some note about the (internal) use of GitPython.
 ## Emacs Mode for Editing Requirements
 
 When using the tar package, emacs mode can be loaded in emacs by:
-`M-x load-file` point to `RMTOO/venv/rmtoo/contrib/req-mode.el` All
+`M-x load-file` point to `$(rmtoo-contrib-dir)/req-mode.el` All
 files with suffix `.req` will now use the requirements editing mode.
 
 ## Footer

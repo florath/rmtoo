@@ -1,0 +1,78 @@
+.\" 
+.\" Man page for rmtoo-contrib-dir
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" (c) 2025 by flonatel (rmtoo@florath.net)
+.\"
+.TH rmtoo-contrib-dir 1 2025-01-01 "User Commands" "Requirements Management"
+.SH NAME
+rmtoo-contrib-dir \- requirements management tool: locate contrib directory
+.SH SYNOPSIS
+.B rmtoo-contrib-dir
+.SH DESCRIPTION
+.B rmtoo-contrib-dir
+prints the absolute path to the rmtoo contrib directory, which contains
+template projects, helper scripts, and other contributed resources.
+.P
+This command provides a reliable way to locate the contrib directory
+regardless of how rmtoo was installed (pip, system package, or development
+mode). The contrib directory contains:
+.P
+.RS
+.IP \(bu 4
+template_project/ - A complete template for starting new rmtoo projects
+.IP \(bu 4
+gnuplot scripts for statistics visualization
+.IP \(bu 4
+Icons and graphics resources
+.IP \(bu 4
+Helper scripts and utilities
+.IP \(bu 4
+VM setup scripts and documentation
+.RE
+.P
+The command works in both development and installed modes, automatically
+detecting the correct location of the contrib directory.
+.SH EXAMPLES
+.TP
+Get the contrib directory path:
+.B $ rmtoo-contrib-dir
+.br
+/usr/local/lib/python3.11/site-packages/rmtoo/contrib
+.TP
+Copy the template project to start a new project:
+.B $ cp -r "$(rmtoo-contrib-dir)/template_project" MyProject
+.TP
+Use in shell scripts:
+.B $ CONTRIB_DIR=$(rmtoo-contrib-dir)
+.br
+.B $ ls "$CONTRIB_DIR"
+.SH RETURN
+.B rmtoo-contrib-dir
+returns 0 when the contrib directory is successfully located and printed,
+and 1 when the directory cannot be found.
+.SH "SEE ALSO"
+.B rmtoo(7)
+- overview of rmtoo including all references to available documentation.
+.br
+.B rmtoo-template-project(1)
+- information about using the template project.
+.SH AUTHOR
+Written by Andreas Florath (rmtoo@florath.net)
+.SH COPYRIGHT
+Copyright \(co 2025 by flonatel (rmtoo@florath.net).
+License GPLv3+: GNU GPL version 3 or later

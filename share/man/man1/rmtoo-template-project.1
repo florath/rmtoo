@@ -29,11 +29,20 @@ The template project comes with only a few requirements and
 topics. The environment is set up in the way, that 'make' can be used
 to create mostly all available artifacts.
 .P
-To start with the template project, copy the directory
-contrib/template_project and start editing.
+To start with the template project, copy the directory using the
+rmtoo-contrib-dir command and start editing:
+.sp
+.RS
+.nf
+   cp -r "$(rmtoo-contrib-dir)/template_project" MyProject
+.fi
+.RE
 .SH "SEE ALSO"
 .B rmtoo(7)
-- overview of rmtoo including all references to available documentation. 
+- overview of rmtoo including all references to available documentation.
+.br
+.B rmtoo-contrib-dir(1)
+- command to locate the contrib directory.
 .SH AUTHOR
 Written by Andreas Florath (rmtoo@florath.net)
 .SH COPYRIGHT

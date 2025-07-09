@@ -52,11 +52,24 @@ python setup.py install --prefix=${DESTDIR}/usr --install-scripts=${DESTDIR}/usr
 
 ### Example Project Workflow
 ```bash
-# Set up template project
-cp -r contrib/template_project MyProject
+# Set up template project using rmtoo-contrib-dir
+cp -r "$(rmtoo-contrib-dir)/template_project" MyProject
 cd MyProject
 source ./setenv.sh VENV
 make clean && make
+```
+
+### Using rmtoo-contrib-dir Command
+```bash
+# Get the contrib directory path
+rmtoo-contrib-dir
+
+# Copy template project to start a new project
+cp -r "$(rmtoo-contrib-dir)/template_project" MyProject
+
+# Access other contrib resources
+ls "$(rmtoo-contrib-dir)"
+gnuplot "$(rmtoo-contrib-dir)/gnuplot_stats_reqs_cnt.inc"
 ```
 
 ### Git / GitHub
