@@ -12,14 +12,34 @@ The release process now includes:
 
 ## Quick Release Steps
 
-1. **Update version** in `setup.py` if needed
-2. **Create/update release notes** in `doc/release_notes/XX.md` (or `.rst`)
-3. **Create and push git tag**:
+1. **Update version** in `setup.py`:
    ```bash
-   git tag v25.0.2
-   git push origin v25.0.2
+   # Update version (replace X.Y.Z with your version)
+   sed -i "s/VERSION = '[^']*'/VERSION = 'X.Y.Z'/" setup.py
+   
+   # Example for version 26.0.0:
+   sed -i "s/VERSION = '[^']*'/VERSION = '26.0.0'/" setup.py
    ```
-4. **GitHub Actions automatically**:
+
+2. **Create/update release notes** in `doc/release_notes/XX.md` (or `.rst`)
+
+3. **Commit version update**:
+   ```bash
+   git add setup.py
+   git commit -m "Bump version to X.Y.Z"
+   ```
+
+4. **Create and push git tag**:
+   ```bash
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+   
+   # Example for version 26.0.0:
+   git tag v26.0.0
+   git push origin v26.0.0
+   ```
+
+5. **GitHub Actions automatically**:
    - Builds documentation (PDF, graphs)
    - Creates Python packages (wheel + source)
    - Creates traditional full tarball
@@ -39,6 +59,31 @@ To enable automatic PyPI publishing, you need to set up **trusted publishing**:
    - **Environment name**: (leave empty)
 
 This is more secure than API keys - GitHub Actions will authenticate automatically.
+
+## Complete Example: Releasing Version 26.0.0
+
+Here are the exact commands to release version 26.0.0:
+
+```bash
+# 1. Update version in setup.py
+sed -i "s/VERSION = '[^']*'/VERSION = '26.0.0'/" setup.py
+
+# 2. Commit the version update
+git add setup.py
+git commit -m "Bump version to 26.0.0"
+
+# 3. Create and push the tag
+git tag v26.0.0
+git push origin v26.0.0
+
+# 4. Monitor the release (optional)
+echo "Release started! Monitor at:"
+echo "- GitHub Actions: https://github.com/florath/rmtoo/actions"
+echo "- PyPI: https://pypi.org/project/rmtoo/"
+echo "- Releases: https://github.com/florath/rmtoo/releases"
+```
+
+**That's it!** The automated workflow will handle everything else.
 
 ## Release Notes Format
 
