@@ -146,10 +146,10 @@ def configure_logging(cfg, mstderr):
             cfg.get_value("global.logging.tracer.filename")
 
     init_logger(mstderr)
-    
+
     # Reconfigure tracer with updated settings
-    global tracer
-    tracer = init_tracer()
+    tear_down_trace_handler()
+    __setup_trace_handler(tracer)
 
     tracer.debug("rmtoo logging system configured.")
 
