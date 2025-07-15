@@ -44,29 +44,41 @@ def __setup_trace_handler(ltracer):
 
     tear_down_trace_handler()
 
-    # Create a file handle
-    ltracer_fh = logging.FileHandler(LOGGING_CONFIG["tracer"]["filename"])
-    ltracer_fh.setLevel(LOGGING_CONFIG["tracer"]["loglevel"])
+    # Only create file handler if tracer logging is enabled
+    if LOGGING_CONFIG["tracer"]["loglevel"] <= logging.CRITICAL:
+        # Create a file handle
+        ltracer_fh = logging.FileHandler(LOGGING_CONFIG["tracer"]["filename"])
+        ltracer_fh.setLevel(LOGGING_CONFIG["tracer"]["loglevel"])
 
-    # create console handler and set level to debug
-    ltracer_ch = logging.StreamHandler()
-    ltracer_ch.setLevel(LOGGING_CONFIG["stdout"]["loglevel"])
+        # create formatter
+        formatter = logging.Formatter(
+            '%(asctime)s;%(name)s;%(levelname)s;%(module)s;'
+            '%(funcName)s;%(lineno)d;%(message)s')
 
-    # create formatter
-    formatter = logging.Formatter(
-        '%(asctime)s;%(name)s;%(levelname)s;%(module)s;'
-        '%(funcName)s;%(lineno)d;%(message)s')
+        # add formatter to fh
+        ltracer_fh.setFormatter(formatter)
 
-    # add formatter to ch
-    ltracer_ch.setFormatter(formatter)
-    ltracer_fh.setFormatter(formatter)
+        # add fh to logger
+        ltracer.addHandler(ltracer_fh)
+        LOGGING_CONFIG["handler"].append(ltracer_fh)
 
-    # add ch to logger
-    ltracer.addHandler(ltracer_fh)
-    ltracer.addHandler(ltracer_ch)
+    # Only create console handler if stdout logging is enabled
+    if LOGGING_CONFIG["stdout"]["loglevel"] <= logging.CRITICAL:
+        # create console handler and set level to debug
+        ltracer_ch = logging.StreamHandler()
+        ltracer_ch.setLevel(LOGGING_CONFIG["stdout"]["loglevel"])
 
-    LOGGING_CONFIG["handler"].append(ltracer_fh)
-    LOGGING_CONFIG["handler"].append(ltracer_ch)
+        # create formatter
+        formatter = logging.Formatter(
+            '%(asctime)s;%(name)s;%(levelname)s;%(module)s;'
+            '%(funcName)s;%(lineno)d;%(message)s')
+
+        # add formatter to ch
+        ltracer_ch.setFormatter(formatter)
+
+        # add ch to logger
+        ltracer.addHandler(ltracer_ch)
+        LOGGING_CONFIG["handler"].append(ltracer_ch)
 
 
 def __setup_log_handler(mstderr=sys.stderr):
@@ -120,8 +132,10 @@ def init_tracer():
     ltracer = logging.getLogger("rmtoo-trace")
     ltracer.setLevel(logging.DEBUG)
     ltracer.propagate = False
-    __setup_trace_handler(ltracer)
-    ltracer.debug("rmtoo tracer system enabled.")
+    
+    # Don't set up any handlers initially - wait for configure_logging()
+    # This prevents the default temp file from being created
+    
     return ltracer
 
 
@@ -132,6 +146,18 @@ def configure_logging(cfg, mstderr):
              "warn": logging.WARN,
              "error": logging.ERROR,
              "critical": logging.CRITICAL}
+
+    # Check for new verbose and logfile options
+    verbose_enabled = cfg.get_value_default("global.logging.verbose", False)
+    custom_logfile = cfg.get_value_default("global.logging.logfile", None)
+    
+    # If neither verbose nor logfile is specified, disable logging entirely
+    if not verbose_enabled and custom_logfile is None:
+        # Disable all logging by setting very high log level
+        LOGGING_CONFIG["stdout"]["loglevel"] = logging.CRITICAL + 1
+        LOGGING_CONFIG["tracer"]["loglevel"] = logging.CRITICAL + 1
+        # Don't initialize any handlers - just return
+        return
 
     if not cfg.is_available("global.logging"):
         tracer.debug("No logging configuration found - continue with default.")
@@ -145,13 +171,24 @@ def configure_logging(cfg, mstderr):
         LOGGING_CONFIG["tracer"]["filename"] = \
             cfg.get_value("global.logging.tracer.filename")
 
+    # Handle custom logfile
+    if custom_logfile is not None:
+        LOGGING_CONFIG["tracer"]["filename"] = custom_logfile
+
+    # Handle verbose mode - enable debug level logging to stdout
+    if verbose_enabled:
+        LOGGING_CONFIG["stdout"]["loglevel"] = logging.DEBUG
+        LOGGING_CONFIG["tracer"]["loglevel"] = logging.DEBUG
+
     init_logger(mstderr)
 
     # Reconfigure tracer with updated settings
     tear_down_trace_handler()
     __setup_trace_handler(tracer)
 
-    tracer.debug("rmtoo logging system configured.")
+    # Only log debug message if logging is actually enabled
+    if verbose_enabled or custom_logfile is not None:
+        tracer.debug("rmtoo logging system configured.")
 
 
 # The following names are uses as logging instances and therefore

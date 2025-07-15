@@ -69,6 +69,21 @@ class CmdLineParams(object):
                 = {'create_makefile_dependencies':
                    Encoding.to_unicode(options.create_makefile_dependencies)}
 
+        # Handle new logging options
+        if hasattr(options, 'verbose') and options.verbose:
+            if 'global' not in ldict:
+                ldict['global'] = {}
+            if 'logging' not in ldict['global']:
+                ldict['global']['logging'] = {}
+            ldict['global']['logging']['verbose'] = True
+
+        if hasattr(options, 'logfile') and options.logfile is not None:
+            if 'global' not in ldict:
+                ldict['global'] = {}
+            if 'logging' not in ldict['global']:
+                ldict['global']['logging'] = {}
+            ldict['global']['logging']['logfile'] = Encoding.to_unicode(options.logfile)
+
         return ldict
 
     @staticmethod
@@ -86,6 +101,13 @@ class CmdLineParams(object):
             help="YAML string or file which is merged into the "
             "existing configuration. Can be specified multiple "
             "times.")
+        parser.add_argument(
+            "-v", "--verbose", dest="verbose",
+            action="store_true",
+            help="Enable verbose logging to stdout/stderr")
+        parser.add_argument(
+            "--logfile", dest="logfile",
+            help="Log to specified file instead of default location")
 
     @staticmethod
     def add_values(soptions, name):
