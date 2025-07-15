@@ -21,16 +21,18 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
 
     def __init__(self, oconfig):
         '''Create a graph output object.'''
-        tracer.debug("Called.")
+        tracer.info("Called with config: %s", oconfig)
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
         self.__ofile = None
-        tracer.debug("Finished.")
+        tracer.info("Finished. Output filename: %s", getattr(self, '_output_filename', 'NOT_SET'))
 
     def topic_continuum_pre(self, _topics_continuum):
         '''Prepare file.'''
+        tracer.info("Opening output file: %s", self._output_filename)
         self.__ofile = open(self._output_filename, "w")
         self.__data_written = False
+        tracer.info("File opened successfully")
 
     def topic_continuum_post(self, _topics_continuum):
         '''Cleanup file.'''
@@ -42,13 +44,18 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
 
     def topic_set_pre(self, tset):
         '''Output the data for this topics set.'''
+        tracer.info("Processing topic set")
+        req_count = tset.get_topic_set().get_complete_requirement_set_count()
+        timestamp = tset.get_commit_info().get_timestamp()
+        tracer.info("Requirements count: %d, timestamp: %s", req_count, timestamp)
+        
         self.__ofile.write(
             "%s %d\n" %
             (time.strftime("%Y-%m-%d_%H:%M:%S",
-                           time.localtime(
-                               tset.get_commit_info().get_timestamp())),
-             tset.get_topic_set().get_complete_requirement_set_count()))
+                           time.localtime(timestamp)),
+             req_count))
         self.__data_written = True
+        tracer.info("Data written to file")
 
     def cmad_topic_continuum_pre(self, _):
         '''Write out the one and only dependency to all the requirements.'''
