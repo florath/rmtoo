@@ -84,6 +84,13 @@ class CmdLineParams(object):
                 ldict['global']['logging'] = {}
             ldict['global']['logging']['logfile'] = Encoding.to_unicode(options.logfile)
 
+        if hasattr(options, 'log_level') and options.log_level is not None:
+            if 'global' not in ldict:
+                ldict['global'] = {}
+            if 'logging' not in ldict['global']:
+                ldict['global']['logging'] = {}
+            ldict['global']['logging']['log_level'] = options.log_level
+
         return ldict
 
     @staticmethod
@@ -108,6 +115,11 @@ class CmdLineParams(object):
         parser.add_argument(
             "--logfile", dest="logfile",
             help="Log to specified file instead of default location")
+        parser.add_argument(
+            "--log-level", dest="log_level",
+            choices=["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"],
+            default="INFO",
+            help="Set logging level (default: INFO)")
 
     @staticmethod
     def add_values(soptions, name):

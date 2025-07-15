@@ -147,9 +147,10 @@ def configure_logging(cfg, mstderr):
              "error": logging.ERROR,
              "critical": logging.CRITICAL}
 
-    # Check for new verbose and logfile options
+    # Check for new verbose, logfile, and log-level options
     verbose_enabled = cfg.get_value_default("global.logging.verbose", False)
     custom_logfile = cfg.get_value_default("global.logging.logfile", None)
+    log_level = cfg.get_value_default("global.logging.log_level", "INFO")
     
     # If neither verbose nor logfile is specified, disable logging entirely
     if not verbose_enabled and custom_logfile is None:
@@ -175,10 +176,15 @@ def configure_logging(cfg, mstderr):
     if custom_logfile is not None:
         LOGGING_CONFIG["tracer"]["filename"] = custom_logfile
 
-    # Handle verbose mode - enable debug level logging to stdout
-    if verbose_enabled:
-        LOGGING_CONFIG["stdout"]["loglevel"] = logging.DEBUG
-        LOGGING_CONFIG["tracer"]["loglevel"] = logging.DEBUG
+    # Handle verbose mode and log level
+    if verbose_enabled or custom_logfile is not None:
+        # Convert log level string to logging level
+        log_level_value = llmap.get(log_level.lower(), logging.INFO)
+        
+        if verbose_enabled:
+            LOGGING_CONFIG["stdout"]["loglevel"] = log_level_value
+        if custom_logfile is not None:
+            LOGGING_CONFIG["tracer"]["loglevel"] = log_level_value
 
     init_logger(mstderr)
 
