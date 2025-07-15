@@ -29,6 +29,20 @@ def main_func(args, mstdout, mstderr):
         except Exception:
             pass
 
+        # Try to find contrib in site-packages data files (PyPI install)
+        try:
+            import rmtoo
+            rmtoo_path = os.path.dirname(rmtoo.__file__)
+            # Go up to virtualenv root: site-packages/rmtoo -> site-packages -> lib -> python3.x -> v-rmtoo
+            site_packages = os.path.dirname(rmtoo_path)
+            venv_root = os.path.dirname(os.path.dirname(os.path.dirname(site_packages)))
+            contrib_path = os.path.join(venv_root, 'rmtoo', 'contrib')
+            if os.path.exists(contrib_path):
+                mstdout.write("%s\n" % contrib_path)
+                return True
+        except Exception:
+            pass
+
         # Fallback: try to find contrib in development mode (relative to
         # package)
         try:
