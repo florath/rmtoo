@@ -10,6 +10,7 @@
 '''
 
 import datetime
+import math
 from scipy import stats
 
 from rmtoo.lib.RequirementStatus import RequirementStatusNotDone, \
@@ -128,6 +129,12 @@ class Statistics(object):
     def _output_stat_files_stats(filename, start_date, result_vec):
         """Write the stats file"""
         with open(filename, "w") as ofile:
+            if not result_vec:
+                # Write minimal fallback data for empty result set
+                ofile.write("# No data available for statistics\n")
+                ofile.write("%s 0 0 0 0\n" % start_date.isoformat())
+                return
+            
             one_day = datetime.timedelta(1)
             iday = start_date
             for result in result_vec:
@@ -145,8 +152,26 @@ class Statistics(object):
             x = list(i for i in range(0, len(result_vec)))
             y = list(item[0] + item[1] for item in result_vec)
 
+            # Check for sufficient data before regression analysis
+            if len(result_vec) < 2:
+                print("+++ WARN: insufficient data for regression analysis")
+                # Write minimal fallback data for visualization
+                eofile.write("# Insufficient data for regression analysis\n")
+                eofile.write("%s 0\n" % start_date)
+                eofile.close()
+                return
+
             gradient, intercept, _r_value, _p_value, _std_err \
                 = stats.linregress(x, y)
+
+            # Check for NaN values from insufficient data
+            if math.isnan(gradient) or math.isnan(intercept):
+                print("+++ WARN: insufficient data for regression analysis")
+                # Write minimal fallback data for visualization
+                eofile.write("# Insufficient data for regression analysis\n")
+                eofile.write("%s 0\n" % start_date)
+                eofile.close()
+                return
 
             if gradient >= 0.0:
                 print("+++ WARN: gradient is positive [%d]: "
