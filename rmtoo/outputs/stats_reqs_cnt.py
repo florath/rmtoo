@@ -25,7 +25,8 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
         StdOutputParams.__init__(self, oconfig)
         CreateMakeDependencies.__init__(self)
         self.__ofile = None
-        tracer.info("Finished. Output filename: %s", getattr(self, '_output_filename', 'NOT_SET'))
+        tracer.info("Finished. Output filename: %s",
+                    getattr(self, '_output_filename', 'NOT_SET'))
 
     def topic_continuum_pre(self, _topics_continuum):
         '''Prepare file.'''
@@ -38,7 +39,8 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
         '''Cleanup file.'''
         if not self.__data_written:
             # Write minimal fallback data for empty topic continuum
-            self.__ofile.write("# No data available for requirement count statistics\n")
+            self.__ofile.write(
+                "# No data available for requirement count statistics\n")
             self.__ofile.write("%s 0\n" % time.strftime("%Y-%m-%d_%H:%M:%S"))
         self.__ofile.close()
 
@@ -47,8 +49,9 @@ class stats_reqs_cnt(StdOutputParams, ExecutorTopicContinuum,
         tracer.info("Processing topic set")
         req_count = tset.get_topic_set().get_complete_requirement_set_count()
         timestamp = tset.get_commit_info().get_timestamp()
-        tracer.info("Requirements count: %d, timestamp: %s", req_count, timestamp)
-        
+        tracer.info("Requirements count: %d, timestamp: %s",
+                    req_count, timestamp)
+
         self.__ofile.write(
             "%s %d\n" %
             (time.strftime("%Y-%m-%d_%H:%M:%S",

@@ -134,7 +134,7 @@ class Statistics(object):
                 ofile.write("# No data available for statistics\n")
                 ofile.write("%s 0 0 0 0\n" % start_date.isoformat())
                 return
-            
+
             one_day = datetime.timedelta(1)
             iday = start_date
             for result in result_vec:

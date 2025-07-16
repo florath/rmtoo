@@ -82,7 +82,8 @@ class CmdLineParams(object):
                 ldict['global'] = {}
             if 'logging' not in ldict['global']:
                 ldict['global']['logging'] = {}
-            ldict['global']['logging']['logfile'] = Encoding.to_unicode(options.logfile)
+            ldict['global']['logging']['logfile'] = \
+                Encoding.to_unicode(options.logfile)
 
         if hasattr(options, 'log_level') and options.log_level is not None:
             if 'global' not in ldict:

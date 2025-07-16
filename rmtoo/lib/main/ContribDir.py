@@ -33,9 +33,12 @@ def main_func(args, mstdout, mstderr):
         try:
             import rmtoo
             rmtoo_path = os.path.dirname(rmtoo.__file__)
-            # Go up to virtualenv root: site-packages/rmtoo -> site-packages -> lib -> python3.x -> v-rmtoo
+            # Go up to virtualenv root:
+            # site-packages/rmtoo -> site-packages ->
+            #   lib -> python3.x -> v-rmtoo
             site_packages = os.path.dirname(rmtoo_path)
-            venv_root = os.path.dirname(os.path.dirname(os.path.dirname(site_packages)))
+            venv_root = os.path.dirname(
+                os.path.dirname(os.path.dirname(site_packages)))
             contrib_path = os.path.join(venv_root, 'rmtoo', 'contrib')
             if os.path.exists(contrib_path):
                 mstdout.write("%s\n" % contrib_path)
