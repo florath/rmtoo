@@ -132,10 +132,10 @@ def init_tracer():
     ltracer = logging.getLogger("rmtoo-trace")
     ltracer.setLevel(logging.DEBUG)
     ltracer.propagate = False
-    
+
     # Don't set up any handlers initially - wait for configure_logging()
     # This prevents the default temp file from being created
-    
+
     return ltracer
 
 
@@ -151,13 +151,15 @@ def configure_logging(cfg, mstderr):
     verbose_enabled = cfg.get_value_default("global.logging.verbose", False)
     custom_logfile = cfg.get_value_default("global.logging.logfile", None)
     log_level = cfg.get_value_default("global.logging.log_level", "INFO")
-    
-    # If neither verbose nor logfile is specified, disable logging entirely
+
+    # If neither verbose nor logfile is specified, disable tracing
+    # but keep logger active
     if not verbose_enabled and custom_logfile is None:
         # Disable all logging by setting very high log level
         LOGGING_CONFIG["stdout"]["loglevel"] = logging.CRITICAL + 1
         LOGGING_CONFIG["tracer"]["loglevel"] = logging.CRITICAL + 1
-        # Don't initialize any handlers - just return
+        # Still initialize logger to ensure logger.error() goes to stderr
+        init_logger(mstderr)
         return
 
     if not cfg.is_available("global.logging"):
@@ -180,7 +182,7 @@ def configure_logging(cfg, mstderr):
     if verbose_enabled or custom_logfile is not None:
         # Convert log level string to logging level
         log_level_value = llmap.get(log_level.lower(), logging.INFO)
-        
+
         if verbose_enabled:
             LOGGING_CONFIG["stdout"]["loglevel"] = log_level_value
         if custom_logfile is not None:
