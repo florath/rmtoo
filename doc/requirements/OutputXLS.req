@@ -1,0 +1,11 @@
+Name: Output of XLS
+Topic: Output
+Description: \textsl{rmtoo} \textbf{must} support genration of XLS file output with all requirements. 
+Status: finished
+Owner: development
+Invented by: kno
+Invented on: 2010-02-12
+Rationale: Suits love to handle their data in Excel.
+Type: design decision
+Priority: management:8
+Effort estimation: 8

@@ -20,6 +20,11 @@
             "stop_on_errors": false
         }
     }, 
+    "import": {
+        "xls": {
+            "import_filename": "doc/import/requirements.xlsx"
+        }
+    },
     "requirements": {
         "input": {
             "default_language": "en_GB", 
@@ -28,7 +33,8 @@
             ]
         }, 
         "inventors": [
-            "flonatel"
+            "flonatel",
+            "kno"
         ], 
         "stakeholders": [
             "development", 
@@ -90,6 +96,11 @@
                         "output_filename": "artifacts/reqtopics.tex"
                     }
                 ], 
+                "xls": [
+                    {
+                        "output_filename": "artifacts/requirements.xlsx"
+                    }
+                ],
                 "oopricing1": [
                     {
                         "output_filename": "artifacts/reqspricing"

@@ -3,29 +3,29 @@
         "analytics": {
             "stop_on_errors": false
         }
-    }, 
+    },
     "requirements": {
         "input": {
             "commit_interval": {
-                "begin": "FILES", 
+                "begin": "FILES",
                 "end": "FILES"
-            }, 
-            "default_language": "en_GB", 
+            },
+            "default_language": "en_GB",
             "dependency_notation": [
                 "Solved by"
-            ], 
+            ],
             "directory": "requirements"
-        }, 
+        },
         "inventors": [
             "flonatel"
-        ], 
+        ],
         "stakeholders": [
-            "development", 
-            "management", 
-            "users", 
+            "development",
+            "management",
+            "users",
             "customers"
         ]
-    }, 
+    },
     "topics": {
         "ts_common": {
 	    "sources": [
@@ -36,54 +36,61 @@
 			"topic_root_node": "ReqsDocument",
 			"constraints_dirs": [ "constraints" ],
 			"testcases_dirs": [ "testcases" ] }
-		] 
+		]
 	    ],
             "output": {
                 "graph": [
                     {
                         "output_filename": "artifacts/req-graph1.dot"
                     }
-                ], 
+                ],
                 "graph2": [
                     {
                         "output_filename": "artifacts/req-graph2.dot"
                     }
-                ], 
+                ],
                 "html": [
                     {
-                        "footer": "html/footer.html", 
-                        "header": "html/header.html", 
+                        "footer": "html/footer.html",
+                        "header": "html/header.html",
                         "output_directory": "artifacts/html"
                     }
-                ], 
+                ],
                 "LatexJinja2": [
                     {
                         "template_path": "latex/LatexJinja2",
                         "output_filename": "artifacts/reqtopics.tex"
                     }
-                ], 
+                ],
+                "xls": [
+                    {
+                        "output_filename": "artifacts/specification.xlsx",
+                        "template_filename": "import/specification-template.xlsx",
+                        "req_sheet": "Specification"
+                    }
+                ],
                 "prios": [
                     {
                         "output_filename": "artifacts/reqsprios.tex"
                     }
-                ], 
+                ],
                 "stats_burndown1": [
                     {
-                        "output_filename": "artifacts/stats_burndown.csv", 
+                        "output_filename": "artifacts/stats_burndown.csv",
                         "start_date": "2011-05-01"
                     }
-                ], 
+                ],
                 "stats_reqs_cnt": [
                     {
                         "output_filename": "artifacts/stats_reqs_cnt.csv"
                     }
-                ], 
+                ],
                 "stats_sprint_burndown1": [
                     {
-                        "output_filename": "artifacts/stats_sprint_burndown.csv", 
+                        "output_filename": "artifacts/stats_sprint_burndown.csv",
                         "start_date": "2011-05-01"
                     }
-                ], 
+                ],
                 "version1": [
                     {
                         "output_filename": "artifacts/reqs-version.txt"

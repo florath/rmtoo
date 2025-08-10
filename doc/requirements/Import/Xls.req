@@ -1,0 +1,15 @@
+Name: Xlsx Import
+Type: design decision
+Invented on: 2018-09-23
+Invented by: kno
+Owner: development
+Description: Import requirement files from the exported xlsx
+ file.
+Rationale: Some people prefer to handle their requirements in
+ familiar tools.
+Status: not done
+Priority: development:10
+Effort estimation: 3
+Topic: Import
+Solved by: Import/XlsDefaultSolvedby Import/XlsFutureInventedOn
+ Import/XlsBackupImportFile

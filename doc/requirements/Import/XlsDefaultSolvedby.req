@@ -1,0 +1,14 @@
+Name: Default SolvedBy argument
+Type: requirement
+Invented on: 2018-09-23
+Invented by: kno
+Owner: development
+Description: New requirements without a parent-requirement, i.e. it's
+ not in any \emph{SolvedBy} list, are attached to the first
+ requirement in the list.
+Rationale: To make handling easier, don't burden people with hierarchy
+ and deeper complexities of the tool if it isn't required.
+Status: finished:kno:2018-10-12:2h
+Priority: development:10
+Effort estimation: 1
+Topic: Import

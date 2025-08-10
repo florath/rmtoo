@@ -131,7 +131,9 @@ setup(name=PACKAGE, version=VERSION,
           "stevedore>=1.21",
           "pylint>=1.7.1",
           "odfpy==1.3.4",
-          "jinja2>=2.10"],
+          "jinja2>=2.10",
+          "six>=1.17",
+          "openpyxl>=2.5.6"],
       license="GPL-3.0-or-later",
       platforms="all",
 
@@ -185,7 +187,11 @@ setup(name=PACKAGE, version=VERSION,
               "tlp1 = rmtoo.outputs.tlp1:Tlp1",
               "version1 = rmtoo.outputs.version1:version1",
               "xml1 = rmtoo.outputs.xml1:Xml1",
-              "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2"
+              "xml_ganttproject_2 = rmtoo.outputs.xml_ganttproject_2:xml_ganttproject_2",
+              "xls = rmtoo.outputs.xls:Xls"
+          ],
+          "rmtoo.imports.plugin" : [
+              "xls = rmtoo.imports.xls:XlsImport"
           ],
           "rmtoo.output.markup" : [
               "latex = rmtoo.lib.Markup:LaTeX",

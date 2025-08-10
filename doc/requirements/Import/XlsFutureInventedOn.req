@@ -1,0 +1,12 @@
+Name: Constrain valid Invented On
+Type: requirement
+Invented on: 2018-10-02
+Invented by: kno
+Owner: development
+Description: Imported requirements may not have a \emph{InventedOn}
+ date in the future.
+Rationale: Leads to cryptic errors messages
+Status: finished:kno:2018-10-06:4h
+Priority: development:1
+Effort estimation: 1
+Topic: Import

@@ -1,0 +1,12 @@
+Name: Backup Imported File
+Type: requirement
+Invented on: 2018-10-12
+Invented by: kno
+Owner: development
+Description: Xlsx files that have been successfully imported are
+ renamed to its current name with the current timestamp appended.
+Rationale: Avoid importing files multiple times.
+Status: assigned:kno:2018-10-12
+Priority: development:10
+Effort estimation: 1
+Topic: Import
